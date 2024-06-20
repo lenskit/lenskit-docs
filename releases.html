@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Release Notes &mdash; LensKit 0.8.1 documentation</title>
+  <title>Release Notes &mdash; LensKit 0.8.4 documentation</title>
   
 
   
@@ -86,7 +86,7 @@ READTHEDOCS_DATA['source_suffix'] = ".md"
             
             
               <div class="version">
-                0.8.1
+                0.8.4
               </div>
             
           
@@ -123,21 +123,23 @@ READTHEDOCS_DATA['source_suffix'] = ".md"
 <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">0.8.0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">0.8.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">0.8.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">0.8.0</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#infrastructure-updates">Infrastructure Updates</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#algorithm-updates">Algorithm Updates</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">0.7.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">0.6.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">0.6.0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id4">0.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">0.6.0</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#internal-changes">Internal Changes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">0.5.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id6">0.3.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id7">0.2.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id8">0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id7">0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id8">0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id9">0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id10">0.1.0</a></li>
 </ul>
 </li>
 </ul>
@@ -192,7 +194,7 @@ READTHEDOCS_DATA['source_suffix'] = ".md"
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.8.1/doc/releases.md" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.8.4/doc/releases.md" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -233,7 +235,25 @@ READTHEDOCS_DATA['source_suffix'] = ".md"
 <div class="section" id="release-notes">
 <h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2>0.8.0<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>0.8.4<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>This release cleans up dependency problems to make it easier to reliably install LensKit.  We remove
+some unused utility code that had compatibility problems.</p>
+<ul class="simple">
+<li><p>Remove <code class="docutils literal notranslate"><span class="pre">CSR.sort_values</span></code> - we were no longer using this function, and it failed to compile with Numba 0.46.</p></li>
+<li><p>Change dependency versions</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>0.8.3<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Deprecated <code class="docutils literal notranslate"><span class="pre">lenskit.util.write_parquet</span></code></p></li>
+<li><p>Made <code class="docutils literal notranslate"><span class="pre">MultiEval</span></code> use directories of parquet files, instead of appending to a single file,
+for writing multiple results to improve performance without fastparquet.</p></li>
+<li><p>Updated Numba dependency to fix incompatibilities (#129).</p></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>0.8.0<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>See the <a class="reference external" href="https://github.com/lenskit/lkpy/milestone/5">GitHub milestone</a> for full change list.</p>
 <div class="section" id="infrastructure-updates">
 <h3>Infrastructure Updates<a class="headerlink" href="#infrastructure-updates" title="Permalink to this headline">¶</a></h3>
@@ -254,8 +274,8 @@ LU-based solver is still available with <code class="docutils literal notranslat
 </ul>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>0.7.0<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>0.7.0<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>See the <a class="reference external" href="https://github.com/lenskit/lkpy/milestone/3">GitHub milestone</a> for full change list.</p>
 <ul class="simple">
 <li><p>Use <a class="reference external" href="https://joblib.readthedocs.io">Joblib</a> for parallelism in batch routines.</p></li>
@@ -270,8 +290,8 @@ if they lack recommendation lists.</p></li>
 <li><p>Performance improvements to algorithms and evaluation.</p></li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h2>0.6.1<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>0.6.1<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>See the <a class="reference external" href="https://github.com/lenskit/lkpy/milestone/4">GitHub milestone</a> for full change list.</p>
 <ul class="simple">
 <li><p>Fix inconsistency in both code and docs for recommend list sizes for top-<em>N</em> evaluation.</p></li>
@@ -279,8 +299,8 @@ if they lack recommendation lists.</p></li>
 <li><p>Improve performance and documentation</p></li>
 </ul>
 </div>
-<div class="section" id="id4">
-<h2>0.6.0<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>0.6.0<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>See the <a class="reference external" href="https://github.com/lenskit/lkpy/milestone/1">GitHub milestone</a> for a summary of what’s happening!</p>
 <ul class="simple">
 <li><p>The <code class="docutils literal notranslate"><span class="pre">save</span></code> and <code class="docutils literal notranslate"><span class="pre">load</span></code> methods on algorithms have been removed.  Just pickle fitted models to save
@@ -305,8 +325,8 @@ indirect. It is available in the <code class="docutils literal notranslate"><spa
 </ul>
 </div>
 </div>
-<div class="section" id="id5">
-<h2>0.5.0<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h2>0.5.0<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>LensKit 0.5.0 modifies the algorithm APIs to follow the SciKit design patterns instead of
 our previous custom patterns.  Highlights of this change:</p>
 <ul class="simple">
@@ -319,16 +339,16 @@ our previous custom patterns.  Highlights of this change:</p>
 <li><p>Ben Frederickson’s Implicit library</p></li>
 </ul>
 </div>
-<div class="section" id="id6">
-<h2>0.3.0<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h2>0.3.0<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>A number of improvements, including replacing Cython/OpenMP with Numba and adding ALS.</p>
 </div>
-<div class="section" id="id7">
-<h2>0.2.0<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h2>0.2.0<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <p>A lot of fixes to get ready for RecSys.</p>
 </div>
-<div class="section" id="id8">
-<h2>0.1.0<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id10">
+<h2>0.1.0<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
 <p>Hello, world!</p>
 </div>
 </div>
@@ -354,7 +374,7 @@ our previous custom patterns.  Highlights of this change:</p>
         &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>178f534a</code>.
+          Revision <code>fafdbd14</code>.
         </span>
       
 
@@ -375,7 +395,7 @@ our previous custom patterns.  Highlights of this change:</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.8.1
+      v: 0.8.4
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -385,6 +405,8 @@ our previous custom patterns.  Highlights of this change:</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.8.4/">0.8.4</a></dd>
         
           <dd><a href="/en/0.8.1/">0.8.1</a></dd>
         

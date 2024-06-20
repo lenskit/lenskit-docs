@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Matrix Utilities &mdash; LensKit 0.8.1 documentation</title>
+  <title>Matrix Utilities &mdash; LensKit 0.8.4 documentation</title>
   
 
   
@@ -87,7 +87,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
             
             
               <div class="version">
-                0.8.1
+                0.8.4
               </div>
             
           
@@ -187,7 +187,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.8.1/doc/matrix.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.8.4/doc/matrix.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -261,7 +261,7 @@ algorithms.</p>
 <dd><p>The rating matrix, with users on rows and items on columns.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR">CSR</a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.3.3)">scipy.sparse.csr_matrix</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR">CSR</a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.4.1)">scipy.sparse.csr_matrix</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -299,7 +299,7 @@ be used from accelerated algorithm implementations.</p>
 <dl class="class">
 <dt id="lenskit.matrix.CSR">
 <em class="property">class </em><code class="sig-prename descclassname">lenskit.matrix.</code><code class="sig-name descname">CSR</code><span class="sig-paren">(</span><em class="sig-param">nrows=None</em>, <em class="sig-param">ncols=None</em>, <em class="sig-param">nnz=None</em>, <em class="sig-param">ptrs=None</em>, <em class="sig-param">inds=None</em>, <em class="sig-param">vals=None</em>, <em class="sig-param">N=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simple compressed sparse row matrix.  This is like <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.3.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>, with
+<dd><p>Simple compressed sparse row matrix.  This is like <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>, with
 a couple of useful differences:</p>
 <ul class="simple">
 <li><p>It is backed by a Numba jitclass, so it can be directly used from Numba-optimized functions.</p></li>
@@ -446,7 +446,7 @@ jitclass but which are useful from interpreted code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mat</strong> (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.spmatrix.html#scipy.sparse.spmatrix" title="(in SciPy v1.3.3)"><em>scipy.sparse.spmatrix</em></a>) – a SciPy sparse matrix.</p></li>
+<li><p><strong>mat</strong> (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.spmatrix.html#scipy.sparse.spmatrix" title="(in SciPy v1.4.1)"><em>scipy.sparse.spmatrix</em></a>) – a SciPy sparse matrix.</p></li>
 <li><p><strong>copy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – if <code class="docutils literal notranslate"><span class="pre">False</span></code>, reuse the SciPy storage if possible.</p></li>
 </ul>
 </dd>
@@ -567,16 +567,6 @@ CSR data.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="lenskit.matrix.CSR.sort_values">
-<code class="sig-name descname">sort_values</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.sort_values" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sort CSR rows in nonincreasing order by value.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This method is not available from Numba.</p>
-</div>
-</dd></dl>
-
-<dl class="method">
 <dt id="lenskit.matrix.CSR.subset_rows">
 <code class="sig-name descname">subset_rows</code><span class="sig-paren">(</span><em class="sig-param">begin</em>, <em class="sig-param">end</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.subset_rows" title="Permalink to this definition">¶</a></dt>
 <dd><p>Subset the rows in this matrix.</p>
@@ -585,7 +575,7 @@ CSR data.</p>
 <dl class="method">
 <dt id="lenskit.matrix.CSR.to_scipy">
 <code class="sig-name descname">to_scipy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.to_scipy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a CSR matrix to a SciPy <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.3.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>.  Avoids copying
+<dd><p>Convert a CSR matrix to a SciPy <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>.  Avoids copying
 if possible.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -595,7 +585,7 @@ if possible.</p>
 <dd class="field-even"><p>A SciPy sparse matrix with the same data.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.3.3)">scipy.sparse.csr_matrix</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.4.1)">scipy.sparse.csr_matrix</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -658,7 +648,7 @@ zero-length if no values are present.  This eases Numba type-checking.</p>
         &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>178f534a</code>.
+          Revision <code>fafdbd14</code>.
         </span>
       
 
@@ -679,7 +669,7 @@ zero-length if no values are present.  This eases Numba type-checking.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.8.1
+      v: 0.8.4
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -689,6 +679,8 @@ zero-length if no values are present.  This eases Numba type-checking.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.8.4/">0.8.4</a></dd>
         
           <dd><a href="/en/0.8.1/">0.8.1</a></dd>
         
