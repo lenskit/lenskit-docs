@@ -1,6 +1,6 @@
 var READTHEDOCS_DATA = {
     project: "lkpy",
-    version: "0.10.0",
+    version: "0.10.1",
     language: "en",
     programming_language: "py",
     subprojects: {},
@@ -13,7 +13,7 @@ var READTHEDOCS_DATA = {
     
     proxied_api_host: "/_",
     
-    commit: "58256cdc",
+    commit: "c7b4a9e0",
     ad_free: false,
 
     global_analytics_code: "UA-17997319-1",

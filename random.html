@@ -1,15 +1,18 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Random Number Generation &mdash; LensKit 0.10.0 documentation</title>
+  <title>Random Number Generation &mdash; LensKit 0.10.1 documentation</title>
   
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
 
   
   
@@ -17,7 +20,9 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -33,10 +38,6 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="LensKit Internals" href="internals.html" />
@@ -76,7 +77,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
           
 
           
-            <a href="index.html" class="icon icon-home"> LensKit
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> LensKit
           
 
           
@@ -87,7 +88,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
             
             
               <div class="version">
-                0.10.0
+                0.10.1
               </div>
             
           
@@ -104,6 +105,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -156,6 +158,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -194,7 +197,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Random Number Generation</li>
     
@@ -203,7 +206,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.10.0/doc/random.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.10.1/doc/random.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -256,6 +259,14 @@ and <a class="reference external" href="https://numpy.org/doc/stable/reference/r
 number generation and initialization.  LensKit is compatible with older versions
 of NumPy, but the RNG reproducibility logic will not fully function, and some
 functions will not work.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For fully reproducible research, including random seeds and the use thereof,
+make sure that you are running on the same platform with the same verions of all
+packages (particularly LensKit, NumPy, SciPy, Pandas, and related packages),
+and are using at least NumPy 1.17.  LensKit manages state for older versions of
+NumPy on a best-effort basis.</p>
+</div>
 <p>Developers <em>using</em> LensKit will be primarily intrested in the <a class="reference internal" href="#lenskit.util.random.init_rng" title="lenskit.util.random.init_rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">init_rng()</span></code></a>
 function, so they can initialize LensKit’s random seed.  LensKit components using
 randomization also take an <code class="docutils literal notranslate"><span class="pre">rng</span></code> option, usually in their constructor, to set
@@ -301,14 +312,17 @@ specified seed.</p>
 
 <dl class="py function">
 <dt id="lenskit.util.random.derive_seed">
-<code class="sig-prename descclassname">lenskit.util.random.</code><code class="sig-name descname">derive_seed</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">keys</span></em>, <em class="sig-param"><span class="n">base</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.random.derive_seed" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.util.random.</code><code class="sig-name descname">derive_seed</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">keys</span></em>, <em class="sig-param"><span class="n">base</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">none_on_old_numpy</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.random.derive_seed" title="Permalink to this definition">¶</a></dt>
 <dd><p>Derive a seed from the root seed, optionally with additional seed keys.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>keys</strong> (<em>list of int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Additional components to add to the spawn key for reproducible derivation.
-If unspecified, the seed’s internal counter is incremented.</p></li>
+If unspecified, the seed’s internal counter is incremented (by calling
+<a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.spawn.html#numpy.random.SeedSequence.spawn" title="(in NumPy v1.18)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">numpy.random.SeedSequence.spawn()</span></code></a>).</p></li>
 <li><p><strong>base</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v1.18)"><em>numpy.random.SeedSequence</em></a>) – The base seed to use.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses the root seed.</p></li>
+<li><p><strong>none_on_old_numpy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, return <code class="docutils literal notranslate"><span class="pre">None</span></code> instead of raising <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a>
+if running on an old version of NumPy.</p></li>
 </ul>
 </dd>
 </dl>
@@ -416,16 +430,23 @@ the <code class="docutils literal notranslate"><span class="pre">legacy</span></
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2018–2019 Boise State University
-      
-        <span class="commit">
-          Revision <code>58256cdc</code>.
-        </span>
-      
+      <span class="commit">
+        
+        Revision <code>c7b4a9e0</code>.
+      </span>
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
 <p>This material is based upon work supported by the National Science Foundation under
 Grant No. <a href="https://md.ekstrandom.net/research/career">IIS 17-51278</a>. Any
 opinions, findings, and conclusions or recommendations expressed in this material
@@ -449,7 +470,7 @@ Boise State University and does not reflect official university positions.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.10.0
+      v: 0.10.1
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -459,6 +480,8 @@ Boise State University and does not reflect official university positions.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.10.1/">0.10.1</a></dd>
         
           <dd><a href="/en/0.10.0/">0.10.0</a></dd>
         
@@ -490,6 +513,7 @@ Boise State University and does not reflect official university positions.</p>
         
       </dl>
       <dl>
+        
         <dt>On Read the Docs</dt>
           <dd>
             <a href="//readthedocs.org/projects/lkpy/?fromdocs=lkpy">Project Home</a>
@@ -498,12 +522,8 @@ Boise State University and does not reflect official university positions.</p>
             <a href="//readthedocs.org/builds/lkpy/?fromdocs=lkpy">Builds</a>
           </dd>
       </dl>
-      <hr/>
-      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
-
     </div>
   </div>
-
 
 
   <script type="text/javascript">
