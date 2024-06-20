@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Algorithms &mdash; LensKit 0.3.0 documentation</title>
+  <title>Hierarchical Poisson Factorization &mdash; LensKit 0.3.0 documentation</title>
   
 
   
@@ -28,8 +28,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Algorithm Interfaces" href="interfaces.html" />
-    <link rel="prev" title="Top-N Accuracy Metrics" href="evaluation/topn-metrics.html" /> 
+    <link rel="next" title="Utility Functions" href="util.html" />
+    <link rel="prev" title="Classic Matrix Factorization" href="mf.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -41,7 +41,7 @@
 Always link to the latest version, as canonical.
 http://docs.readthedocs.org/en/latest/canonical.html
 -->
-<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/algorithms.html" />
+<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/hpf.html" />
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
@@ -49,7 +49,7 @@ http://docs.readthedocs.org/en/latest/canonical.html
 
 <!-- Add page-specific data, which must exist in the page js, not global -->
 <script type="text/javascript">
-READTHEDOCS_DATA['page'] = 'algorithms'
+READTHEDOCS_DATA['page'] = 'hpf'
 READTHEDOCS_DATA['source_suffix'] = '.rst'
 </script>
 
@@ -111,12 +111,12 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommendations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Algorithms</a><ul>
+<li class="toctree-l1 current"><a class="reference internal" href="algorithms.html">Algorithms</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="hpf.html">Hierarchical Poisson Factorization</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Hierarchical Poisson Factorization</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
@@ -165,14 +165,16 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Algorithms</li>
+          <li><a href="algorithms.html">Algorithms</a> &raquo;</li>
+        
+      <li>Hierarchical Poisson Factorization</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.3.0/doc/algorithms.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.3.0/doc/hpf.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -210,20 +212,83 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
     text-align: unset;
 }
 </style>
-<div class="section" id="algorithms">
-<h1>Algorithms<a class="headerlink" href="#algorithms" title="Permalink to this headline">¶</a></h1>
-<p>LKPY provides general algorithmic concepts, along with implementations of several
-algorithms.</p>
-<div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">Algorithm Families:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="hpf.html">Hierarchical Poisson Factorization</a></li>
+<div class="section" id="module-lenskit.algorithms.hpf">
+<span id="hierarchical-poisson-factorization"></span><h1>Hierarchical Poisson Factorization<a class="headerlink" href="#module-lenskit.algorithms.hpf" title="Permalink to this headline">¶</a></h1>
+<p>This module provides a LensKit bridge to the <a class="reference external" href="https://hpfrec.readthedocs.io/en/latest/">hpfrec</a> library implementing hierarchical Poisson
+factorization <a class="reference internal" href="#ghb2013" id="id1">[GHB2013]</a>.</p>
+<table class="docutils citation" frame="void" id="ghb2013" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[GHB2013]</a></td><td>Prem Gopalan, Jake M. Hofman, and David M. Blei. 2013.
+Scalable Recommendation with Poisson Factorization.
+arXiv:1311.1704 [cs, stat] (November 2013). Retrieved February 9, 2017
+from <a class="reference external" href="http://arxiv.org/abs/1311.1704">http://arxiv.org/abs/1311.1704</a>.</td></tr>
+</tbody>
+</table>
+<dl class="class">
+<dt id="lenskit.algorithms.hpf.HPF">
+<em class="property">class </em><code class="descclassname">lenskit.algorithms.hpf.</code><code class="descname">HPF</code><span class="sig-paren">(</span><em>features</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hierarchical Poisson factorization, provided by <a class="reference external" href="https://hpfrec.readthedocs.io/en/latest/">hpfrec</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of features</li>
+<li><strong>**kwargs</strong> – arguments passed to <a class="reference external" href="https://hpfrec.readthedocs.io/en/latest/source/hpfrec.html#hpfrec.HPF" title="(in hpfrec v0.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpfrec.HPF</span></code></a>.</li>
 </ul>
-</div>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lenskit.algorithms.hpf.HPF.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>model: lenskit.algorithms.mf_common.MFModel</em>, <em>user</em>, <em>items</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute predictions for a user and items.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model</strong> – the trained model to use.  Either <code class="docutils literal notranslate"><span class="pre">None</span></code> or the ratings matrix if the
+algorithm has no concept of training.</li>
+<li><strong>user</strong> – the user ID</li>
+<li><strong>items</strong> (<em>array-like</em>) – the items to predict</li>
+<li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">scores for the items, indexed by item id.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)">pandas.Series</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.hpf.HPF.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>ratings</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train the model on rating/consumption data.  Training methods that require additional
+data may accept it as additional parameters or via class members.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – rating data, as a matrix with columns ‘user’, ‘item’, and ‘rating’. The
+user and item identifiers may be of any type.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the trained model (of an implementation-defined type).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 
 
@@ -234,10 +299,10 @@ algorithms.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="interfaces.html" class="btn btn-neutral float-right" title="Algorithm Interfaces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="util.html" class="btn btn-neutral float-right" title="Utility Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="evaluation/topn-metrics.html" class="btn btn-neutral" title="Top-N Accuracy Metrics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="mf.html" class="btn btn-neutral" title="Classic Matrix Factorization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

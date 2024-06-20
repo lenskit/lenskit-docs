@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting Started &mdash; LensKit 0.2.0 documentation</title>
+  <title>Getting Started &mdash; LensKit 0.3.0 documentation</title>
   
 
   
@@ -27,9 +27,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Crossfold preparation" href="crossfold.html" />
-    <link rel="prev" title="LensKit" href="index.html" /> 
+    <link rel="search" title="Search" href="search.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,7 +79,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.2.0
+                0.3.0
               </div>
             
           
@@ -106,10 +104,11 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a></li>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommendations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
 </ul>
@@ -164,7 +163,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.2.0/doc/quickstart.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.3.0/doc/quickstart.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -178,14 +177,38 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="getting-started">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="getting-started">
 <h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
 <p>We’re working on documentation!</p>
 <p>For now, this example computes nDCG for an item-based k-NN collaborative filter:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">lenskit</span> <span class="k">import</span> <span class="n">batch</span><span class="p">,</span> <span class="n">topn</span>
 <span class="kn">from</span> <span class="nn">lenskit</span> <span class="k">import</span> <span class="n">crossfold</span> <span class="k">as</span> <span class="n">xf</span>
-<span class="kn">from</span> <span class="nn">lenskit.algorithms</span> <span class="k">import</span> <span class="n">knn</span>
+<span class="kn">from</span> <span class="nn">lenskit.algorithms</span> <span class="k">import</span> <span class="n">item_knn</span> <span class="k">as</span> <span class="n">knn</span>
 
 <span class="n">ratings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;ml-100k/u.data&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span>
         <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">])</span>
@@ -206,7 +229,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 
 <span class="c1"># compute evaluation</span>
 <span class="n">splits</span> <span class="o">=</span> <span class="n">xf</span><span class="o">.</span><span class="n">partition_users</span><span class="p">(</span><span class="n">ratings</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span>
-        <span class="n">xf</span><span class="o">.</span><span class="n">SampleFrac</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)</span>
+        <span class="n">xf</span><span class="o">.</span><span class="n">SampleFrac</span><span class="p">(</span><span class="mf">0.2</span><span class="p">))</span>
 <span class="n">recs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="nb">eval</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span>
                 <span class="k">for</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="n">splits</span><span class="p">))</span>
 
@@ -222,15 +245,6 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
           </div>
           <footer>
   
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="crossfold.html" class="btn btn-neutral float-right" title="Crossfold preparation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="index.html" class="btn btn-neutral" title="LensKit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
-  
 
   <hr/>
 
@@ -239,7 +253,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>58f19fe0</code>.
+          Revision <code>25c3df65</code>.
         </span>
       
 
@@ -260,7 +274,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.2.0
+      v: 0.3.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -281,11 +295,11 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
       <dl>
         <dt>Downloads</dt>
         
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.2.0/">pdf</a></dd>
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.3.0/">pdf</a></dd>
         
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.2.0/">htmlzip</a></dd>
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.3.0/">htmlzip</a></dd>
         
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.2.0/">epub</a></dd>
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.3.0/">epub</a></dd>
         
       </dl>
       <dl>
@@ -309,22 +323,14 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 
     
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'0.2.0',
-              LANGUAGE:'en',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
         <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
 
   

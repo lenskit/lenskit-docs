@@ -1,0 +1,384 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Evaluating Recommender Output &mdash; LensKit 0.3.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Prediction Accuracy Metrics" href="predict-metrics.html" />
+    <link rel="prev" title="Batch-Running Recommendations" href="../batch.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/evaluation/" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'evaluation/index'
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LensKit
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../GettingStarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../crossfold.html">Crossfold preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch.html">Batch-Running Recommendations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Evaluating Recommender Output</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="predict-metrics.html">Prediction Accuracy Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topn-metrics.html">Top-<em>N</em> Accuracy Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#loading-outputs">Loading Outputs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../util.html">Utility Functions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LensKit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Evaluating Recommender Output</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/lenskit/lkpy/blob/0.3.0/doc/evaluation/index.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="evaluating-recommender-output">
+<h1>Evaluating Recommender Output<a class="headerlink" href="#evaluating-recommender-output" title="Permalink to this headline">¶</a></h1>
+<p>LensKit’s evaluation support is based on post-processing the output of recommenders
+and predictors.  The <a class="reference external" href="batch.html">batch utilities</a> provide support for generating these outputs.</p>
+<p>We generally recommend using <a class="reference external" href="https://jupyter.org">Jupyter</a> notebooks for evaluation.</p>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Evaluation Topics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="predict-metrics.html">Prediction Accuracy Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="predict-metrics.html#metric-functions">Metric Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="predict-metrics.html#working-with-missing-data">Working with Missing Data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="topn-metrics.html">Top-<em>N</em> Accuracy Metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="topn-metrics.html#classification-metrics">Classification Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topn-metrics.html#ranked-list-metrics">Ranked List Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="topn-metrics.html#utility-metrics">Utility Metrics</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="loading-outputs">
+<h2>Loading Outputs<a class="headerlink" href="#loading-outputs" title="Permalink to this headline">¶</a></h2>
+<p>We typically store the output of recommendation runs in LensKit experiments in CSV or
+Parquet files.  The <a class="reference internal" href="../batch.html#lenskit.batch.MultiEval" title="lenskit.batch.MultiEval"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.batch.MultiEval</span></code></a> class arranges to run a set
+of algorithms over a set of data sets, and store the results in a collection of Parquet
+files in a specified output directory.</p>
+<p>There are several files:</p>
+<dl class="docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">runs.parquet</span></code></dt>
+<dd>The _runs_, algorithm-dataset combinations.  This file contains the names &amp; any associated
+properties of each algorithm and data set run, such as a feature count.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">recommendations.parquet</span></code></dt>
+<dd>The recommendations, with columns <code class="docutils literal notranslate"><span class="pre">RunId</span></code>, <code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">rank</span></code>, <code class="docutils literal notranslate"><span class="pre">item</span></code>, and <code class="docutils literal notranslate"><span class="pre">rating</span></code>.</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">predictions.parquet</span></code></dt>
+<dd>The rating predictions, if the test data includes ratings.</dd>
+</dl>
+<p>For example, if you want to examine nDCG by neighborhood count for a set of runs on a single
+data set, you can do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">lenskit.metrics</span> <span class="k">import</span> <span class="n">topn</span> <span class="k">as</span> <span class="n">lm</span>
+
+<span class="n">runs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s1">&#39;eval-dir/runs.parquet&#39;</span><span class="p">)</span>
+<span class="n">recs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s1">&#39;eval-dir/recs.parquet&#39;</span><span class="p">)</span>
+<span class="n">meta</span> <span class="o">=</span> <span class="n">runs</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;RunId&#39;</span><span class="p">,</span> <span class="s1">&#39;max_neighbors&#39;</span><span class="p">]]</span>
+
+<span class="c1"># compute each user&#39;s nDCG</span>
+<span class="n">user_ndcg</span> <span class="o">=</span> <span class="n">recs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;RunId&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">rating</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">ndcg</span><span class="p">)</span>
+<span class="n">user_ndcg</span> <span class="o">=</span> <span class="n">user_ndcg</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;nDCG&#39;</span><span class="p">)</span>
+<span class="c1"># combine with metadata for feature count</span>
+<span class="n">user_ndcg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">user_ndcg</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span>
+<span class="c1"># group and aggregate</span>
+<span class="n">nbr_ndcg</span> <span class="o">=</span> <span class="n">user_ndcg</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;max_neighbors&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">nDCG</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">nbr_ndcg</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="predict-metrics.html" class="btn btn-neutral float-right" title="Prediction Accuracy Metrics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../batch.html" class="btn btn-neutral" title="Batch-Running Recommendations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018 Boise State University
+      
+        <span class="commit">
+          Revision <code>25c3df65</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.3.0
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.3.0/">0.3.0</a></dd>
+        
+          <dd><a href="/en/0.2.0/">0.2.0</a></dd>
+        
+          <dd><a href="/en/0.1.0/">0.1.0</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.3.0/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.3.0/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.3.0/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/lkpy/?fromdocs=lkpy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/lkpy/?fromdocs=lkpy">Builds</a>
+          </dd>
+      </dl>
+      <hr/>
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

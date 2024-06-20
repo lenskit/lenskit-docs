@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Basic and Utility Algorithms &mdash; LensKit 0.2.0 documentation</title>
+  <title>Basic and Utility Algorithms &mdash; LensKit 0.3.0 documentation</title>
   
 
   
@@ -81,7 +81,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.2.0
+                0.3.0
               </div>
             
           
@@ -107,9 +107,10 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommendations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="algorithms.html">Algorithms</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Basic and Utility Algorithms</a><ul>
@@ -120,6 +121,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 </li>
 <li class="toctree-l2"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hpf.html">Hierarchical Poisson Factorization</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
@@ -177,7 +179,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.2.0/doc/basic.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.3.0/doc/basic.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -191,23 +193,279 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-lenskit.algorithms.basic">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-lenskit.algorithms.basic">
 <span id="basic-and-utility-algorithms"></span><h1>Basic and Utility Algorithms<a class="headerlink" href="#module-lenskit.algorithms.basic" title="Permalink to this headline">¶</a></h1>
 <p>The <a class="reference internal" href="#module-lenskit.algorithms.basic" title="lenskit.algorithms.basic"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.algorithms.basic</span></code></a> module contains baseline and utility algorithms
 for nonpersonalized recommendation and testing.</p>
 <div class="section" id="personalized-mean-rating-prediction">
 <h2>Personalized Mean Rating Prediction<a class="headerlink" href="#personalized-mean-rating-prediction" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lenskit.algorithms.basic.Bias">
+<em class="property">class </em><code class="descclassname">lenskit.algorithms.basic.</code><code class="descname">Bias</code><span class="sig-paren">(</span><em>items=True</em>, <em>users=True</em>, <em>damping=0.0</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Bias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Predictor</span></code></a>, <a class="reference internal" href="interfaces.html#lenskit.algorithms.Trainable" title="lenskit.algorithms.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Trainable</span></code></a></p>
+<p>A user-item bias rating prediction algorithm.  This implements the following
+predictor algorithm:</p>
+<div class="math notranslate nohighlight">
+\[s(u,i) = \mu + b_i + b_u\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mu\)</span> is the global mean rating, <span class="math notranslate nohighlight">\(b_i\)</span> is item bias, and
+<span class="math notranslate nohighlight">\(b_u\)</span> is the user bias.  With the provided damping values
+<span class="math notranslate nohighlight">\(\beta_{\mathrm{u}}\)</span> and <span class="math notranslate nohighlight">\(\beta_{\mathrm{i}}\)</span>, they are computed
+as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{align*}
+\mu &amp; = \frac{\sum_{r_{ui} \in R} r_{ui}}{|R|} &amp;
+b_i &amp; = \frac{\sum_{r_{ui} \in R_i} (r_{ui} - \mu)}{|R_i| + \beta_{\mathrm{i}}} &amp;
+b_u &amp; = \frac{\sum_{r_{ui} \in R_u} (r_{ui} - \mu - b_i)}{|R_u| + \beta_{\mathrm{u}}}
+\end{align*}\]</div>
+<p>The damping values can be interpreted as the number of default (mean) ratings to assume
+<em>a priori</em> for each user or item, damping low-information users and items towards a mean instead
+of permitting them to take on extreme values based on few ratings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>items</strong> – whether to compute item biases</li>
+<li><strong>users</strong> – whether to compute user biases</li>
+<li><strong>damping</strong> (<em>number</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a>) – Bayesian damping to apply to computed biases.  Either a number, to
+damp both user and item biases the same amount, or a (user,item) tuple
+providing separate damping values.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lenskit.algorithms.basic.Bias.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>model</em>, <em>user</em>, <em>items</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Bias.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute predictions for a user and items.  Unknown users and items
+are assumed to have zero bias.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model</strong> (<a class="reference internal" href="#lenskit.algorithms.basic.BiasModel" title="lenskit.algorithms.basic.BiasModel"><em>BiasModel</em></a>) – the trained model to use.</li>
+<li><strong>user</strong> – the user ID</li>
+<li><strong>items</strong> (<em>array-like</em>) – the items to predict</li>
+<li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if
+provided, will be used to recompute the user’s
+bias at prediction time.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">scores for the items, indexed by item id.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)">pandas.Series</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.basic.Bias.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Bias.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train the bias model on some rating data.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>DataFrame</em>) – a data frame of ratings. Must have at least <cite>user</cite>,
+<cite>item</cite>, and <cite>rating</cite> columns.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a trained model with the desired biases computed.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#lenskit.algorithms.basic.BiasModel" title="lenskit.algorithms.basic.BiasModel">BiasModel</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="lenskit.algorithms.basic.BiasModel">
+<em class="property">class </em><code class="descclassname">lenskit.algorithms.basic.</code><code class="descname">BiasModel</code><a class="headerlink" href="#lenskit.algorithms.basic.BiasModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Trained model for the <a class="reference internal" href="#lenskit.algorithms.basic.Bias" title="lenskit.algorithms.basic.Bias"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bias</span></code></a> algorithm.</p>
+<dl class="attribute">
+<dt id="lenskit.algorithms.basic.BiasModel.mean">
+<code class="descname">mean</code><a class="headerlink" href="#lenskit.algorithms.basic.BiasModel.mean" title="Permalink to this definition">¶</a></dt>
+<dd><p>the global mean.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lenskit.algorithms.basic.BiasModel.items">
+<code class="descname">items</code><a class="headerlink" href="#lenskit.algorithms.basic.BiasModel.items" title="Permalink to this definition">¶</a></dt>
+<dd><p>the item means.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)">pandas.Series</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lenskit.algorithms.basic.BiasModel.users">
+<code class="descname">users</code><a class="headerlink" href="#lenskit.algorithms.basic.BiasModel.users" title="Permalink to this definition">¶</a></dt>
+<dd><p>the user means.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)">pandas.Series</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="fallback-predictor">
 <h2>Fallback Predictor<a class="headerlink" href="#fallback-predictor" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">Fallback</span></code> rating predictor is a simple hybrid that takes a list of composite algorithms,
 and uses the first one to return a result to predict the rating for each item.</p>
-<p>A common case is to fill in with <code class="xref py py-class docutils literal notranslate"><span class="pre">Bias</span></code> when a primary predictor cannot score an item.</p>
+<p>A common case is to fill in with <a class="reference internal" href="#lenskit.algorithms.basic.Bias" title="lenskit.algorithms.basic.Bias"><code class="xref py py-class docutils literal notranslate"><span class="pre">Bias</span></code></a> when a primary predictor cannot score an item.</p>
+<dl class="class">
+<dt id="lenskit.algorithms.basic.Fallback">
+<em class="property">class </em><code class="descclassname">lenskit.algorithms.basic.</code><code class="descname">Fallback</code><span class="sig-paren">(</span><em>*algorithms</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Fallback" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Predictor</span></code></a>, <a class="reference internal" href="interfaces.html#lenskit.algorithms.Trainable" title="lenskit.algorithms.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Trainable</span></code></a></p>
+<p>The Fallback algorithm predicts with its first component, uses the second to fill in
+missing values, and so forth.</p>
+<dl class="method">
+<dt id="lenskit.algorithms.basic.Fallback.load_model">
+<code class="descname">load_model</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Fallback.load_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a trained model to a file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the path to file from which to load the model.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the re-loaded model (of an implementation-defined type).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.basic.Fallback.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>model</em>, <em>user</em>, <em>items</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Fallback.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute predictions for a user and items.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model</strong> – the trained model to use.  Either <code class="docutils literal notranslate"><span class="pre">None</span></code> or the ratings matrix if the
+algorithm has no concept of training.</li>
+<li><strong>user</strong> – the user ID</li>
+<li><strong>items</strong> (<em>array-like</em>) – the items to predict</li>
+<li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">scores for the items, indexed by item id.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)">pandas.Series</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.basic.Fallback.save_model">
+<code class="descname">save_model</code><span class="sig-paren">(</span><em>model</em>, <em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Fallback.save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a trained model to a file or directory.  The default implementation pickles
+the model.</p>
+<p>Algorithms are allowed to use any format for saving their models, including
+directories.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>model</strong> – the trained model.</li>
+<li><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the path at which to save the model.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.basic.Fallback.train">
+<code class="descname">train</code><span class="sig-paren">(</span><em>ratings</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Fallback.train" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train the model on rating/consumption data.  Training methods that require additional
+data may accept it as additional parameters or via class members.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – rating data, as a matrix with columns ‘user’, ‘item’, and ‘rating’. The
+user and item identifiers may be of any type.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the trained model (of an implementation-defined type).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 </div>
 <div class="section" id="memorized-predictor">
 <h2>Memorized Predictor<a class="headerlink" href="#memorized-predictor" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">Memorized</span></code> recommender is primarily useful for test cases.  It memorizes a set of
 rating predictions and returns them.</p>
+<dl class="class">
+<dt id="lenskit.algorithms.basic.Memorized">
+<em class="property">class </em><code class="descclassname">lenskit.algorithms.basic.</code><code class="descname">Memorized</code><span class="sig-paren">(</span><em>scores</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Memorized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>The memorized algorithm memorizes scores &amp; repeats them.</p>
+</dd></dl>
+
 </div>
 </div>
 
@@ -234,7 +492,7 @@ rating predictions and returns them.</p>
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>58f19fe0</code>.
+          Revision <code>25c3df65</code>.
         </span>
       
 
@@ -255,7 +513,7 @@ rating predictions and returns them.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.2.0
+      v: 0.3.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -276,11 +534,11 @@ rating predictions and returns them.</p>
       <dl>
         <dt>Downloads</dt>
         
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.2.0/">pdf</a></dd>
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.3.0/">pdf</a></dd>
         
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.2.0/">htmlzip</a></dd>
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.3.0/">htmlzip</a></dd>
         
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.2.0/">epub</a></dd>
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.3.0/">epub</a></dd>
         
       </dl>
       <dl>
@@ -304,22 +562,14 @@ rating predictions and returns them.</p>
 
     
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'0.2.0',
-              LANGUAGE:'en',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
         <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
 
   

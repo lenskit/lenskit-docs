@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>LensKit &mdash; LensKit 0.2.0 documentation</title>
+  <title>LensKit &mdash; LensKit 0.3.0 documentation</title>
   
 
   
@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Getting Started" href="quickstart.html" /> 
+    <link rel="next" title="Getting Started" href="GettingStarted.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -80,7 +80,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.2.0
+                0.3.0
               </div>
             
           
@@ -106,9 +106,10 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommendations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
 </ul>
@@ -163,7 +164,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.2.0/doc/index.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.3.0/doc/index.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -177,7 +178,31 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="lenskit">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="lenskit">
 <h1>LensKit<a class="headerlink" href="#lenskit" title="Permalink to this headline">¶</a></h1>
 <p>LensKit is a set of Python tools for experimenting with and studying recommender
 systems.  It provides support for training, running, and evaluating recommender
@@ -209,7 +234,13 @@ project.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="GettingStarted.html#Setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GettingStarted.html#Loading-Data">Loading Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GettingStarted.html#Defining-Algorithms">Defining Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="GettingStarted.html#Running-the-Evaluation">Running the Evaluation</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="crossfold.html#row-based-splitting">Row-based splitting</a></li>
 <li class="toctree-l2"><a class="reference internal" href="crossfold.html#user-based-splitting">User-based splitting</a></li>
@@ -217,7 +248,15 @@ project.</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommendations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="batch.html#recommendation">Recommendation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="batch.html#rating-prediction">Rating Prediction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="batch.html#scripting-evaluation">Scripting Evaluation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="evaluation/predict-metrics.html">Prediction Accuracy Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluation/topn-metrics.html">Top-<em>N</em> Accuracy Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluation/index.html#loading-outputs">Loading Outputs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a><ul>
@@ -225,9 +264,13 @@ project.</p>
 <li class="toctree-l2"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hpf.html">Hierarchical Poisson Factorization</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="util.html#module-lenskit.matrix">Matrix Utilities</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -249,7 +292,7 @@ project.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="quickstart.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="GettingStarted.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>
@@ -262,7 +305,7 @@ project.</p>
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>58f19fe0</code>.
+          Revision <code>25c3df65</code>.
         </span>
       
 
@@ -283,7 +326,7 @@ project.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.2.0
+      v: 0.3.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -304,11 +347,11 @@ project.</p>
       <dl>
         <dt>Downloads</dt>
         
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.2.0/">pdf</a></dd>
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.3.0/">pdf</a></dd>
         
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.2.0/">htmlzip</a></dd>
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.3.0/">htmlzip</a></dd>
         
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.2.0/">epub</a></dd>
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.3.0/">epub</a></dd>
         
       </dl>
       <dl>
@@ -332,22 +375,14 @@ project.</p>
 
     
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'0.2.0',
-              LANGUAGE:'en',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
         <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
 
   

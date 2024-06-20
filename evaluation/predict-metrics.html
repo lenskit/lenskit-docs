@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Prediction Accuracy Metrics &mdash; LensKit 0.3.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Top-N Accuracy Metrics" href="topn-metrics.html" />
+    <link rel="prev" title="Evaluating Recommender Output" href="index.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/evaluation/predict-metrics.html" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'evaluation/predict-metrics'
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> LensKit
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../GettingStarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../crossfold.html">Crossfold preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../batch.html">Batch-Running Recommendations</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Evaluating Recommender Output</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Prediction Accuracy Metrics</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#metric-functions">Metric Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#working-with-missing-data">Working with Missing Data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="topn-metrics.html">Top-<em>N</em> Accuracy Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#loading-outputs">Loading Outputs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../util.html">Utility Functions</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">LensKit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Evaluating Recommender Output</a> &raquo;</li>
+        
+      <li>Prediction Accuracy Metrics</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/lenskit/lkpy/blob/0.3.0/doc/evaluation/predict-metrics.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-lenskit.metrics.predict">
+<span id="prediction-accuracy-metrics"></span><h1>Prediction Accuracy Metrics<a class="headerlink" href="#module-lenskit.metrics.predict" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-lenskit.metrics.predict" title="lenskit.metrics.predict"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.metrics.predict</span></code></a> module containins prediction accuracy metrics.</p>
+<div class="section" id="metric-functions">
+<h2>Metric Functions<a class="headerlink" href="#metric-functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="lenskit.metrics.predict.rmse">
+<code class="descclassname">lenskit.metrics.predict.</code><code class="descname">rmse</code><span class="sig-paren">(</span><em>predictions</em>, <em>truth</em>, <em>missing='error'</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.predict.rmse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute RMSE (root mean squared error).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>predictions</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><em>pandas.Series</em></a>) – the predictions</li>
+<li><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><em>pandas.Series</em></a>) – the ground truth ratings from data</li>
+<li><strong>missing</strong> (<em>string</em>) – how to handle predictions without truth. Can be one of
+<code class="docutils literal notranslate"><span class="pre">'error'</span></code> or <code class="docutils literal notranslate"><span class="pre">'ignore'</span></code>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the root mean squared approximation error</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">double</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="lenskit.metrics.predict.mae">
+<code class="descclassname">lenskit.metrics.predict.</code><code class="descname">mae</code><span class="sig-paren">(</span><em>predictions</em>, <em>truth</em>, <em>missing='error'</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.predict.mae" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute MAE (mean absolute error).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>predictions</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><em>pandas.Series</em></a>) – the predictions</li>
+<li><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><em>pandas.Series</em></a>) – the ground truth ratings from data</li>
+<li><strong>missing</strong> (<em>string</em>) – how to handle predictions without truth. Can be one of
+<code class="docutils literal notranslate"><span class="pre">'error'</span></code> or <code class="docutils literal notranslate"><span class="pre">'ignore'</span></code>.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the mean absolute approximation error</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">double</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="working-with-missing-data">
+<h2>Working with Missing Data<a class="headerlink" href="#working-with-missing-data" title="Permalink to this headline">¶</a></h2>
+<p>LensKit rating predictors do not report predictions when their core model is unable
+to predict.  For example, a nearest-neighbor recommender will not score an item if
+it cannot find any suitable neighbors.  Following the Pandas convention, these items
+are given a score of NaN (when Pandas implements better missing data handling, it will
+use that, so use <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.isna.html#pandas.Series.isna" title="(in pandas v0.23.4)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.isna()</span></code></a>/<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.notna.html#pandas.Series.notna" title="(in pandas v0.23.4)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.notna()</span></code></a>, not the
+<code class="docutils literal notranslate"><span class="pre">isnan</span></code> versions.</p>
+<p>However, this causes problems when computing predictive accuracy: recommenders are not
+being tested on the same set of items. If a recommender only scores the easy items, for
+example, it could do much better than a recommender that is willing to attempt more
+difficult items.</p>
+<p>A good solution to this is to use a <em>fallback predictor</em> so that every item has a
+prediction.  In LensKit, <a class="reference internal" href="../basic.html#lenskit.algorithms.basic.Fallback" title="lenskit.algorithms.basic.Fallback"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.basic.Fallback</span></code></a> implements
+this functionality; it wraps a sequence of recommenders, and for each item, uses
+the first one that generates a score.</p>
+<p>You set it up like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cf</span> <span class="o">=</span> <span class="n">ItemItem</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">base</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">(</span><span class="n">damping</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">algo</span> <span class="o">=</span> <span class="n">Fallback</span><span class="p">(</span><span class="n">cf</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="topn-metrics.html" class="btn btn-neutral float-right" title="Top-N Accuracy Metrics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral" title="Evaluating Recommender Output" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018 Boise State University
+      
+        <span class="commit">
+          Revision <code>25c3df65</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.3.0
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.3.0/">0.3.0</a></dd>
+        
+          <dd><a href="/en/0.2.0/">0.2.0</a></dd>
+        
+          <dd><a href="/en/0.1.0/">0.1.0</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.3.0/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.3.0/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.3.0/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/lkpy/?fromdocs=lkpy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/lkpy/?fromdocs=lkpy">Builds</a>
+          </dd>
+      </dl>
+      <hr/>
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

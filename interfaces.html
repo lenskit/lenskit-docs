@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Algorithm Interfaces &mdash; LensKit 0.2.0 documentation</title>
+  <title>Algorithm Interfaces &mdash; LensKit 0.3.0 documentation</title>
   
 
   
@@ -81,7 +81,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.2.0
+                0.3.0
               </div>
             
           
@@ -107,11 +107,13 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommendations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="algorithms.html">Algorithms</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Algorithm Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#recommendation">Recommendation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rating-prediction">Rating Prediction</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#model-training">Model Training</a></li>
 </ul>
@@ -119,6 +121,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <li class="toctree-l2"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hpf.html">Hierarchical Poisson Factorization</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
@@ -176,7 +179,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.2.0/doc/interfaces.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.3.0/doc/interfaces.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -190,13 +193,103 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-lenskit.algorithms">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-lenskit.algorithms">
 <span id="algorithm-interfaces"></span><h1>Algorithm Interfaces<a class="headerlink" href="#module-lenskit.algorithms" title="Permalink to this headline">¶</a></h1>
 <p>LKPY’s batch routines and utility support for managing algorithms expect algorithms
 to implement consistent interfaces.  This page describes those interfaces.</p>
 <p>The interfaces are realized as abstract base classes with the Python <a class="reference external" href="https://docs.python.org/3/library/abc.html#module-abc" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abc</span></code></a> module.
 Implementations must be registered with their interfaces, either by subclassing the interface
 or by calling <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABCMeta.register" title="(in Python v3.7)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">abc.ABCMeta.register()</span></code></a>.</p>
+<div class="section" id="recommendation">
+<h2>Recommendation<a class="headerlink" href="#recommendation" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#lenskit.algorithms.Recommender" title="lenskit.algorithms.Recommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recommender</span></code></a> interface provides an interface to generating recommendations.  Not
+all algorithms implement it; call <a class="reference internal" href="#lenskit.algorithms.Recommender.adapt" title="lenskit.algorithms.Recommender.adapt"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Recommender.adapt()</span></code></a> on an algorithm to get a recommender
+for any algorithm that at least implements <a class="reference internal" href="#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>.  For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pred</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">(</span><span class="n">damping</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">rec</span> <span class="o">=</span> <span class="n">Recommender</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="class">
+<dt id="lenskit.algorithms.Recommender">
+<em class="property">class </em><code class="descclassname">lenskit.algorithms.</code><code class="descname">Recommender</code><a class="headerlink" href="#lenskit.algorithms.Recommender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recommends items for a user.</p>
+<dl class="classmethod">
+<dt id="lenskit.algorithms.Recommender.adapt">
+<em class="property">classmethod </em><code class="descname">adapt</code><span class="sig-paren">(</span><em>algo</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Recommender.adapt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adapt an algorithm to be a recommender.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>algo</strong> – the algorithm to adapt.  If the algorithm implements <a class="reference internal" href="#lenskit.algorithms.Recommender" title="lenskit.algorithms.Recommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recommender</span></code></a>,
+it is returned as-is; if it implements <a class="reference internal" href="#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>, then a top-N
+recommender using the predictor’s scores is returned.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a recommendation interface to <code class="docutils literal notranslate"><span class="pre">algo</span></code>.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#lenskit.algorithms.Recommender" title="lenskit.algorithms.Recommender">Recommender</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.Recommender.recommend">
+<code class="descname">recommend</code><span class="sig-paren">(</span><em>model</em>, <em>user</em>, <em>n=None</em>, <em>candidates=None</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Recommender.recommend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute recommendations for a user.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>model</strong> – the trained model to use.  Either <code class="docutils literal notranslate"><span class="pre">None</span></code> or the ratings matrix if the
+algorithm has no concept of training.</li>
+<li><strong>user</strong> – the user ID</li>
+<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of recommendations to produce (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</li>
+<li><strong>candidates</strong> (<em>array-like</em>) – the set of valid candidate items.</li>
+<li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a frame with an <code class="docutils literal notranslate"><span class="pre">item</span></code> column; if the recommender also produces scores,
+they will be in a <code class="docutils literal notranslate"><span class="pre">score</span></code> column.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)">pandas.DataFrame</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="rating-prediction">
 <h2>Rating Prediction<a class="headerlink" href="#rating-prediction" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -264,8 +357,9 @@ user and item identifiers may be of any type.</td>
 
 <dl class="method">
 <dt id="lenskit.algorithms.Trainable.save_model">
-<code class="descname">save_model</code><span class="sig-paren">(</span><em>model</em>, <em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Trainable.save_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save a trained model to a file.  The default implementation pickles the model.</p>
+<code class="descname">save_model</code><span class="sig-paren">(</span><em>model</em>, <em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Trainable.save_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a trained model to a file or directory.  The default implementation pickles
+the model.</p>
 <p>Algorithms are allowed to use any format for saving their models, including
 directories.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -274,7 +368,7 @@ directories.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>model</strong> – the trained model.</li>
-<li><strong>file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the file in which to save the model.</li>
+<li><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the path at which to save the model.</li>
 </ul>
 </td>
 </tr>
@@ -284,13 +378,13 @@ directories.</p>
 
 <dl class="method">
 <dt id="lenskit.algorithms.Trainable.load_model">
-<code class="descname">load_model</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Trainable.load_model" title="Permalink to this definition">¶</a></dt>
+<code class="descname">load_model</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Trainable.load_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save a trained model to a file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the path to file from which to load the model.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the path to file from which to load the model.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the re-loaded model (of an implementation-defined type).</td>
 </tr>
@@ -326,7 +420,7 @@ directories.</p>
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>58f19fe0</code>.
+          Revision <code>25c3df65</code>.
         </span>
       
 
@@ -347,7 +441,7 @@ directories.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.2.0
+      v: 0.3.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -368,11 +462,11 @@ directories.</p>
       <dl>
         <dt>Downloads</dt>
         
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.2.0/">pdf</a></dd>
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.3.0/">pdf</a></dd>
         
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.2.0/">htmlzip</a></dd>
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.3.0/">htmlzip</a></dd>
         
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.2.0/">epub</a></dd>
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.3.0/">epub</a></dd>
         
       </dl>
       <dl>
@@ -396,22 +490,14 @@ directories.</p>
 
     
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'0.2.0',
-              LANGUAGE:'en',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
         <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
 
   

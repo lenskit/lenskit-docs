@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Batch-Running Recommendations &mdash; LensKit 0.2.0 documentation</title>
+  <title>Batch-Running Recommendations &mdash; LensKit 0.3.0 documentation</title>
   
 
   
@@ -28,7 +28,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Algorithms" href="algorithms.html" />
+    <link rel="next" title="Evaluating Recommender Output" href="evaluation/index.html" />
     <link rel="prev" title="Crossfold preparation" href="crossfold.html" /> 
 
   
@@ -81,7 +81,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.2.0
+                0.3.0
               </div>
             
           
@@ -107,12 +107,15 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Batch-Running Recommendations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#recommendation">Recommendation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#rating-prediction">Rating Prediction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scripting-evaluation">Scripting Evaluation</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
 </ul>
@@ -167,7 +170,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.2.0/doc/batch.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.3.0/doc/batch.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -181,15 +184,73 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="module-lenskit.batch">
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-lenskit.batch">
 <span id="batch-running-recommendations"></span><h1>Batch-Running Recommendations<a class="headerlink" href="#module-lenskit.batch" title="Permalink to this headline">¶</a></h1>
 <p>The <a class="reference internal" href="#module-lenskit.batch" title="lenskit.batch"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.batch</span></code></a> module contains support for <em>batch-running</em> recommender and predictor
 algorithms.  This is often used as part of a recommender evaluation experiment.</p>
+<div class="section" id="recommendation">
+<h2>Recommendation<a class="headerlink" href="#recommendation" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="lenskit.batch.recommend">
+<code class="descclassname">lenskit.batch.</code><code class="descname">recommend</code><span class="sig-paren">(</span><em>algo</em>, <em>model</em>, <em>users</em>, <em>n</em>, <em>candidates</em>, <em>ratings=None</em>, <em>nprocs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.recommend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Batch-recommend for multiple users.  The provided algorithm should be a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.Recommender</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.Predictor</span></code> (which
+will be converted to a top-N recommender).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>algo</strong> – the algorithm</li>
+<li><strong>model</strong> – The algorithm model</li>
+<li><strong>users</strong> (<em>array-like</em>) – the users to recommend for</li>
+<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of recommendations to generate (None for unlimited)</li>
+<li><strong>candidates</strong> – the users’ candidate sets. This can be a function, in which case it will
+be passed each user ID; it can also be a dictionary, in which case user
+IDs will be looked up in it.</li>
+<li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – if not <code class="docutils literal notranslate"><span class="pre">None</span></code>, a data frame of ratings to attach to recommendations when
+available.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A frame with at least the columns <code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">rank</span></code>, and <code class="docutils literal notranslate"><span class="pre">item</span></code>; possibly also
+<code class="docutils literal notranslate"><span class="pre">score</span></code>, and any other columns returned by the recommender.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 <div class="section" id="rating-prediction">
 <h2>Rating Prediction<a class="headerlink" href="#rating-prediction" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lenskit.batch.predict">
-<code class="descclassname">lenskit.batch.</code><code class="descname">predict</code><span class="sig-paren">(</span><em>algo</em>, <em>pairs</em>, <em>model=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.predict" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lenskit.batch.</code><code class="descname">predict</code><span class="sig-paren">(</span><em>algo</em>, <em>pairs</em>, <em>model=None</em>, <em>nprocs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate predictions for user-item pairs.  The provided algorithm should be a
 <code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.Predictor</span></code> or a function of two arguments: the user ID and
 a list of item IDs. It should return a dictionary or a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>
@@ -220,6 +281,85 @@ result will also contain a <cite>rating</cite> column.</p>
 </dd></dl>
 
 </div>
+<div class="section" id="scripting-evaluation">
+<h2>Scripting Evaluation<a class="headerlink" href="#scripting-evaluation" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="lenskit.batch.MultiEval">
+<em class="property">class </em><code class="descclassname">lenskit.batch.</code><code class="descname">MultiEval</code><span class="sig-paren">(</span><em>path</em>, <em>predict=True</em>, <em>recommend=100</em>, <em>candidates=&lt;class 'lenskit.topn.UnratedCandidates'&gt;</em>, <em>nprocs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval" title="Permalink to this definition">¶</a></dt>
+<dd><p>A runner for carrying out multiple evaluations, such as parameter sweeps.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>path</strong> (str or <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a>) – the working directory for this evaluation.
+It will be created if it does not exist.</li>
+<li><strong>predict</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – whether to generate rating predictions.</li>
+<li><strong>recommend</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of recommendations to generate per user (None to disable top-N).</li>
+<li><strong>candidates</strong> (<em>function</em>) – the default candidate set generator for recommendations.  It should take the
+training data and return a candidate generator, itself a function mapping user
+IDs to candidate sets.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="lenskit.batch.MultiEval.add_algorithms">
+<code class="descname">add_algorithms</code><span class="sig-paren">(</span><em>algos</em>, <em>parallel=False</em>, <em>attrs=[]</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.add_algorithms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add one or more algorithms to the run.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>algos</strong> (<em>algorithm</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – the algorithm(s) to add.</li>
+<li><strong>parallel</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – if <code class="docutils literal notranslate"><span class="pre">True</span></code>, allow this algorithm to be trained in parallel with others.</li>
+<li><strong>attrs</strong> (<em>list of str</em>) – a list of attributes to extract from the algorithm objects and include in
+the run descriptions.</li>
+<li><strong>kwargs</strong> – additional attributes to include in the run descriptions.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.batch.MultiEval.add_datasets">
+<code class="descname">add_datasets</code><span class="sig-paren">(</span><em>data</em>, <em>name=None</em>, <em>candidates=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.add_datasets" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add one or more datasets to the run.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>data</strong> – <p>the input data set(s) to run. Can be one of the followin:</p>
+<ul>
+<li>A tuple of (train, test) data.</li>
+<li>An iterable of (train, test) pairs, in which case the iterable
+is not consumed until it is needed.</li>
+<li>A function yielding either of the above, to defer data load
+until it is needed.</li>
+</ul>
+</li>
+<li><strong>kwargs</strong> – additional attributes pertaining to these data sets.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.batch.MultiEval.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the evaluation.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 </div>
 
 
@@ -230,7 +370,7 @@ result will also contain a <cite>rating</cite> column.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="algorithms.html" class="btn btn-neutral float-right" title="Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="evaluation/index.html" class="btn btn-neutral float-right" title="Evaluating Recommender Output" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="crossfold.html" class="btn btn-neutral" title="Crossfold preparation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -245,7 +385,7 @@ result will also contain a <cite>rating</cite> column.</p>
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>58f19fe0</code>.
+          Revision <code>25c3df65</code>.
         </span>
       
 
@@ -266,7 +406,7 @@ result will also contain a <cite>rating</cite> column.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.2.0
+      v: 0.3.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -287,11 +427,11 @@ result will also contain a <cite>rating</cite> column.</p>
       <dl>
         <dt>Downloads</dt>
         
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.2.0/">pdf</a></dd>
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.3.0/">pdf</a></dd>
         
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.2.0/">htmlzip</a></dd>
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.3.0/">htmlzip</a></dd>
         
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.2.0/">epub</a></dd>
+          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.3.0/">epub</a></dd>
         
       </dl>
       <dl>
@@ -315,22 +455,14 @@ result will also contain a <cite>rating</cite> column.</p>
 
     
     
-      <script type="text/javascript">
-          var DOCUMENTATION_OPTIONS = {
-              URL_ROOT:'./',
-              VERSION:'0.2.0',
-              LANGUAGE:'en',
-              COLLAPSE_INDEX:false,
-              FILE_SUFFIX:'.html',
-              HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: '.txt'
-          };
-      </script>
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
         <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
 
   
