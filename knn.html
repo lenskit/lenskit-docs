@@ -1,22 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>k-NN Collaborative Filtering &mdash; LensKit 0.14.2 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/knn.html" />
+  <title>k-NN Collaborative Filtering &mdash; LensKit 0.14.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=a9ba800c"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="/_/static/javascript/readthedocs-doc-embed.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -29,7 +30,7 @@
 
 <link rel="stylesheet" href="/_/static/css/readthedocs-doc-embed.css" type="text/css" />
 
-<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2022-08-16T20:27:49Z", "builder": "sphinx", "canonical_url": null, "commit": "3069e87e", "docroot": "/docs/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "knn", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {"lenskit-hpf": "https://lkpy.readthedocs.io/projects/lenskit-hpf/en/stable/", "lenskit-implicit": "https://lkpy.readthedocs.io/projects/lenskit-implicit/en/latest/", "lenskit-tf": "https://lkpy.readthedocs.io/projects/lenskit-tf/en/latest/"}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.14.2"}</script>
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "builder": "sphinx", "canonical_url": null, "docroot": "/docs/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "knn", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {"lenskit-hpf": "https://lkpy.readthedocs.io/projects/lenskit-hpf/en/stable/", "lenskit-implicit": "https://lkpy.readthedocs.io/projects/lenskit-implicit/en/latest/", "lenskit-tf": "https://lkpy.readthedocs.io/projects/lenskit-tf/en/latest/"}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.14.3"}</script>
 
 <!--
 Using this variable directly instead of using `JSON.parse` is deprecated.
@@ -49,14 +50,18 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> LensKit
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            LensKit
           </a>
               <div class="version">
-                0.14.2
+                0.14.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -84,8 +89,37 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 <li class="toctree-l1"><a class="reference internal" href="ranking.html">Ranking Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bias.html">Bias</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">k-NN Collaborative Filtering</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-lenskit.algorithms.item_knn">Item-based k-NN</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-lenskit.algorithms.user_knn">User-based k-NN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lenskit.algorithms.item_knn">Item-based k-NN</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lenskit.algorithms.item_knn.ItemItem"><code class="docutils literal notranslate"><span class="pre">ItemItem</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.item_knn.ItemItem.item_index_"><code class="docutils literal notranslate"><span class="pre">ItemItem.item_index_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.item_knn.ItemItem.item_means_"><code class="docutils literal notranslate"><span class="pre">ItemItem.item_means_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.item_knn.ItemItem.item_counts_"><code class="docutils literal notranslate"><span class="pre">ItemItem.item_counts_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.item_knn.ItemItem.sim_matrix_"><code class="docutils literal notranslate"><span class="pre">ItemItem.sim_matrix_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.item_knn.ItemItem.user_index_"><code class="docutils literal notranslate"><span class="pre">ItemItem.user_index_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.item_knn.ItemItem.rating_matrix_"><code class="docutils literal notranslate"><span class="pre">ItemItem.rating_matrix_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.item_knn.ItemItem.IGNORED_PARAMS"><code class="docutils literal notranslate"><span class="pre">ItemItem.IGNORED_PARAMS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.item_knn.ItemItem.EXTRA_PARAMS"><code class="docutils literal notranslate"><span class="pre">ItemItem.EXTRA_PARAMS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.item_knn.ItemItem.fit"><code class="docutils literal notranslate"><span class="pre">ItemItem.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.item_knn.ItemItem.predict_for_user"><code class="docutils literal notranslate"><span class="pre">ItemItem.predict_for_user()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lenskit.algorithms.user_knn">User-based k-NN</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lenskit.algorithms.user_knn.UserUser"><code class="docutils literal notranslate"><span class="pre">UserUser</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.user_knn.UserUser.user_index_"><code class="docutils literal notranslate"><span class="pre">UserUser.user_index_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.user_knn.UserUser.item_index_"><code class="docutils literal notranslate"><span class="pre">UserUser.item_index_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.user_knn.UserUser.user_means_"><code class="docutils literal notranslate"><span class="pre">UserUser.user_means_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.user_knn.UserUser.rating_matrix_"><code class="docutils literal notranslate"><span class="pre">UserUser.rating_matrix_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.user_knn.UserUser.transpose_matrix_"><code class="docutils literal notranslate"><span class="pre">UserUser.transpose_matrix_</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.user_knn.UserUser.IGNORED_PARAMS"><code class="docutils literal notranslate"><span class="pre">UserUser.IGNORED_PARAMS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.user_knn.UserUser.EXTRA_PARAMS"><code class="docutils literal notranslate"><span class="pre">UserUser.EXTRA_PARAMS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.user_knn.UserUser.fit"><code class="docutils literal notranslate"><span class="pre">UserUser.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.algorithms.user_knn.UserUser.predict_for_user"><code class="docutils literal notranslate"><span class="pre">UserUser.predict_for_user()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
@@ -120,10 +154,10 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>k-NN Collaborative Filtering</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">k-NN Collaborative Filtering</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/lenskit/lkpy/blob/0.14.2/docs/knn.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.14.3/docs/knn.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -131,32 +165,8 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="k-nn-collaborative-filtering">
-<h1>k-NN Collaborative Filtering<a class="headerlink" href="#k-nn-collaborative-filtering" title="Permalink to this heading"></a></h1>
+  <section id="k-nn-collaborative-filtering">
+<h1>k-NN Collaborative Filtering<a class="headerlink" href="#k-nn-collaborative-filtering" title="Link to this heading"></a></h1>
 <p>LKPY provides user- and item-based classical k-NN collaborative Filtering
 implementations.  These lightly-configurable implementations are intended
 to capture the behavior of the Java-based LensKit implementations to provide
@@ -183,11 +193,11 @@ In previous versions, you need to specifically configure each option.</p>
 <div class="toctree-wrapper compound">
 </div>
 <section id="module-lenskit.algorithms.item_knn">
-<span id="item-based-k-nn"></span><h2>Item-based k-NN<a class="headerlink" href="#module-lenskit.algorithms.item_knn" title="Permalink to this heading"></a></h2>
+<span id="item-based-k-nn"></span><h2>Item-based k-NN<a class="headerlink" href="#module-lenskit.algorithms.item_knn" title="Link to this heading"></a></h2>
 <p>This is LensKit’s item-based k-NN model, based on the description by <span id="id1">Deshpande and Karypis [<a class="reference internal" href="references.html#id28" title="Mukund Deshpande and George Karypis. Item-based Top-N recommendation algorithms. ACM Transactions on Information Systems, 22(1):143–177, January 2004. URL: https://doi.org/10.1145/963770.963776, doi:10.1145/963770.963776.">DK04</a>]</span>.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.algorithms.item_knn.ItemItem">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.item_knn.</span></span><span class="sig-name descname"><span class="pre">ItemItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nnbrs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_nbrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_sim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_nbrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'explicit'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.item_knn.</span></span><span class="sig-name descname"><span class="pre">ItemItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nnbrs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_nbrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_sim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_nbrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'explicit'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a></p>
 <p>Item-item nearest-neighbor collaborative filtering with ratings. This item-item implementation
 is not terribly configurable; it hard-codes design decisions found to work well in the previous
@@ -203,14 +213,14 @@ regardless of the rating the user gave the items.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>nnbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the maximum number of neighbors for scoring each item (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
-<li><p><strong>min_nbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the minimum number of neighbors for scoring each item</p></li>
-<li><p><strong>min_sim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – minimum similarity threshold for considering a neighbor</p></li>
-<li><p><strong>save_nbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – the number of neighbors to save per item in the trained model
+<li><p><strong>nnbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – the maximum number of neighbors for scoring each item (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
+<li><p><strong>min_nbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – the minimum number of neighbors for scoring each item</p></li>
+<li><p><strong>min_sim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – minimum similarity threshold for considering a neighbor</p></li>
+<li><p><strong>save_nbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – the number of neighbors to save per item in the trained model
 (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
-<li><p><strong>feedback</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – <p>Control how feedback should be interpreted.  Specifies defaults for the other
+<li><p><strong>feedback</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Control how feedback should be interpreted.  Specifies defaults for the other
 settings, which can be overridden individually; can be one of the following values:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">explicit</span></code></dt><dd><p>Configure for explicit-feedback mode: use rating values, center ratings, and
@@ -222,54 +232,54 @@ and use the <code class="docutils literal notranslate"><span class="pre">sum</sp
 </dd>
 </dl>
 </p></li>
-<li><p><strong>center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – whether to normalize (mean-center) rating vectors prior to computing similarities
+<li><p><strong>center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – whether to normalize (mean-center) rating vectors prior to computing similarities
 and aggregating user rating values.  Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>; turn this off when working
 with unary data and other data types that don’t respond well to centering.</p></li>
-<li><p><strong>aggregate</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the type of aggregation to do. Can be <code class="docutils literal notranslate"><span class="pre">weighted-average</span></code> (the default) or <code class="docutils literal notranslate"><span class="pre">sum</span></code>.</p></li>
-<li><p><strong>use_ratings</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – whether or not to use the rating values. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, it ignores rating values and
+<li><p><strong>aggregate</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the type of aggregation to do. Can be <code class="docutils literal notranslate"><span class="pre">weighted-average</span></code> (the default) or <code class="docutils literal notranslate"><span class="pre">sum</span></code>.</p></li>
+<li><p><strong>use_ratings</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – whether or not to use the rating values. If <code class="docutils literal notranslate"><span class="pre">False</span></code>, it ignores rating values and
 considers an implicit feedback signal of 1 for every (user,item) pair present.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.algorithms.item_knn.ItemItem.item_index_">
-<span class="sig-name descname"><span class="pre">item_index_</span></span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.item_index_" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">item_index_</span></span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.item_index_" title="Link to this definition"></a></dt>
 <dd><p>the index of item IDs.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.4.3)">pandas.Index</a></p>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v2.2.0)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.algorithms.item_knn.ItemItem.item_means_">
-<span class="sig-name descname"><span class="pre">item_means_</span></span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.item_means_" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">item_means_</span></span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.item_means_" title="Link to this definition"></a></dt>
 <dd><p>the mean rating for each known item.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)">numpy.ndarray</a></p>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.algorithms.item_knn.ItemItem.item_counts_">
-<span class="sig-name descname"><span class="pre">item_counts_</span></span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.item_counts_" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">item_counts_</span></span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.item_counts_" title="Link to this definition"></a></dt>
 <dd><p>the number of saved neighbors for each item.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)">numpy.ndarray</a></p>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.algorithms.item_knn.ItemItem.sim_matrix_">
-<span class="sig-name descname"><span class="pre">sim_matrix_</span></span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.sim_matrix_" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">sim_matrix_</span></span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.sim_matrix_" title="Link to this definition"></a></dt>
 <dd><p>the similarity matrix.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>matrix.CSR</p>
 </dd>
 </dl>
@@ -277,21 +287,21 @@ considers an implicit feedback signal of 1 for every (user,item) pair present.</
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.algorithms.item_knn.ItemItem.user_index_">
-<span class="sig-name descname"><span class="pre">user_index_</span></span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.user_index_" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">user_index_</span></span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.user_index_" title="Link to this definition"></a></dt>
 <dd><p>the index of known user IDs for the rating matrix.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.4.3)">pandas.Index</a></p>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v2.2.0)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.algorithms.item_knn.ItemItem.rating_matrix_">
-<span class="sig-name descname"><span class="pre">rating_matrix_</span></span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.rating_matrix_" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rating_matrix_</span></span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.rating_matrix_" title="Link to this definition"></a></dt>
 <dd><p>the user-item rating matrix for looking up users’ ratings.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>matrix.CSR</p>
 </dd>
 </dl>
@@ -299,48 +309,48 @@ considers an implicit feedback signal of 1 for every (user,item) pair present.</
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.algorithms.item_knn.ItemItem.IGNORED_PARAMS">
-<span class="sig-name descname"><span class="pre">IGNORED_PARAMS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['feedback']</span></em><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.IGNORED_PARAMS" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">IGNORED_PARAMS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['feedback']</span></em><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.IGNORED_PARAMS" title="Link to this definition"></a></dt>
 <dd><p>Names of parameters to ignore in <code class="xref py py-meth docutils literal notranslate"><span class="pre">get_params()</span></code>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.algorithms.item_knn.ItemItem.EXTRA_PARAMS">
-<span class="sig-name descname"><span class="pre">EXTRA_PARAMS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['center',</span> <span class="pre">'aggregate',</span> <span class="pre">'use_ratings']</span></em><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.EXTRA_PARAMS" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">EXTRA_PARAMS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['center',</span> <span class="pre">'aggregate',</span> <span class="pre">'use_ratings']</span></em><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.EXTRA_PARAMS" title="Link to this definition"></a></dt>
 <dd><p>Names of extra parameters to include in <code class="xref py py-meth docutils literal notranslate"><span class="pre">get_params()</span></code>.  Useful when the
 constructor takes <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.algorithms.item_knn.ItemItem.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ratings</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.fit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ratings</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.fit" title="Link to this definition"></a></dt>
 <dd><p>Train a model.</p>
 <p>The model-training process depends on <code class="docutils literal notranslate"><span class="pre">save_nbrs</span></code> and <code class="docutils literal notranslate"><span class="pre">min_sim</span></code>, but <em>not</em> on other
 algorithm parameters.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.4.3)"><em>pandas.DataFrame</em></a>) – (user,item,rating) data for computing item similarities.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.0)"><em>pandas.DataFrame</em></a>) – (user,item,rating) data for computing item similarities.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.algorithms.item_knn.ItemItem.predict_for_user">
-<span class="sig-name descname"><span class="pre">predict_for_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.predict_for_user" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">predict_for_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.predict_for_user" title="Link to this definition"></a></dt>
 <dd><p>Compute predictions for a user and items.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>user</strong> – the user ID</p></li>
 <li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
-<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.3)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.0)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
 override or augment the model’s notion of a user’s preferences.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>scores for the items, indexed by item id.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.3)">pandas.Series</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.0)">pandas.Series</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -349,21 +359,21 @@ override or augment the model’s notion of a user’s preferences.</p></li>
 
 </section>
 <section id="module-lenskit.algorithms.user_knn">
-<span id="user-based-k-nn"></span><h2>User-based k-NN<a class="headerlink" href="#module-lenskit.algorithms.user_knn" title="Permalink to this heading"></a></h2>
+<span id="user-based-k-nn"></span><h2>User-based k-NN<a class="headerlink" href="#module-lenskit.algorithms.user_knn" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.algorithms.user_knn.UserUser">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.user_knn.</span></span><span class="sig-name descname"><span class="pre">UserUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nnbrs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_nbrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_sim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'explicit'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.user_knn.</span></span><span class="sig-name descname"><span class="pre">UserUser</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nnbrs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_nbrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_sim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feedback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'explicit'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a></p>
 <p>User-user nearest-neighbor collaborative filtering with ratings. This user-user implementation
 is not terribly configurable; it hard-codes design decisions found to work well in the previous
 Java-based LensKit code.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>nnbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the maximum number of neighbors for scoring each item (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
-<li><p><strong>min_nbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.10)"><em>int</em></a>) – the minimum number of neighbors for scoring each item</p></li>
-<li><p><strong>min_sim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)"><em>float</em></a>) – minimum similarity threshold for considering a neighbor</p></li>
-<li><p><strong>feedback</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – <p>Control how feedback should be interpreted.  Specifies defaults for the other
+<li><p><strong>nnbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – the maximum number of neighbors for scoring each item (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
+<li><p><strong>min_nbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – the minimum number of neighbors for scoring each item</p></li>
+<li><p><strong>min_sim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – minimum similarity threshold for considering a neighbor</p></li>
+<li><p><strong>feedback</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Control how feedback should be interpreted.  Specifies defaults for the other
 settings, which can be overridden individually; can be one of the following values:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">explicit</span></code></dt><dd><p>Configure for explicit-feedback mode: use rating values, center ratings, and
@@ -375,53 +385,53 @@ and use the <code class="docutils literal notranslate"><span class="pre">sum</sp
 </dd>
 </dl>
 </p></li>
-<li><p><strong>center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – whether to normalize (mean-center) rating vectors.  Turn this off when working
+<li><p><strong>center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – whether to normalize (mean-center) rating vectors.  Turn this off when working
 with unary data and other data types that don’t respond well to centering.</p></li>
-<li><p><strong>aggregate</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – the type of aggregation to do. Can be <code class="docutils literal notranslate"><span class="pre">weighted-average</span></code> or <code class="docutils literal notranslate"><span class="pre">sum</span></code>.</p></li>
-<li><p><strong>use_ratings</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.10)"><em>bool</em></a>) – whether or not to use rating values; default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.  If <code class="docutils literal notranslate"><span class="pre">False</span></code>, it ignores
+<li><p><strong>aggregate</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the type of aggregation to do. Can be <code class="docutils literal notranslate"><span class="pre">weighted-average</span></code> or <code class="docutils literal notranslate"><span class="pre">sum</span></code>.</p></li>
+<li><p><strong>use_ratings</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – whether or not to use rating values; default is <code class="docutils literal notranslate"><span class="pre">True</span></code>.  If <code class="docutils literal notranslate"><span class="pre">False</span></code>, it ignores
 rating values and treates every present rating as 1.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.algorithms.user_knn.UserUser.user_index_">
-<span class="sig-name descname"><span class="pre">user_index_</span></span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.user_index_" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">user_index_</span></span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.user_index_" title="Link to this definition"></a></dt>
 <dd><p>User index.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.4.3)">pandas.Index</a></p>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v2.2.0)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.algorithms.user_knn.UserUser.item_index_">
-<span class="sig-name descname"><span class="pre">item_index_</span></span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.item_index_" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">item_index_</span></span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.item_index_" title="Link to this definition"></a></dt>
 <dd><p>Item index.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.4.3)">pandas.Index</a></p>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v2.2.0)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.algorithms.user_knn.UserUser.user_means_">
-<span class="sig-name descname"><span class="pre">user_means_</span></span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.user_means_" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">user_means_</span></span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.user_means_" title="Link to this definition"></a></dt>
 <dd><p>User mean ratings.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.23)">numpy.ndarray</a></p>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.26)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.algorithms.user_knn.UserUser.rating_matrix_">
-<span class="sig-name descname"><span class="pre">rating_matrix_</span></span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.rating_matrix_" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">rating_matrix_</span></span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.rating_matrix_" title="Link to this definition"></a></dt>
 <dd><p>Normalized user-item rating matrix.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>matrix.CSR</p>
 </dd>
 </dl>
@@ -429,10 +439,10 @@ rating values and treates every present rating as 1.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.algorithms.user_knn.UserUser.transpose_matrix_">
-<span class="sig-name descname"><span class="pre">transpose_matrix_</span></span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.transpose_matrix_" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">transpose_matrix_</span></span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.transpose_matrix_" title="Link to this definition"></a></dt>
 <dd><p>Transposed un-normalized rating matrix.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>matrix.CSR</p>
 </dd>
 </dl>
@@ -440,47 +450,47 @@ rating values and treates every present rating as 1.</p></li>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.algorithms.user_knn.UserUser.IGNORED_PARAMS">
-<span class="sig-name descname"><span class="pre">IGNORED_PARAMS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['feedback']</span></em><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.IGNORED_PARAMS" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">IGNORED_PARAMS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['feedback']</span></em><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.IGNORED_PARAMS" title="Link to this definition"></a></dt>
 <dd><p>Names of parameters to ignore in <code class="xref py py-meth docutils literal notranslate"><span class="pre">get_params()</span></code>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.algorithms.user_knn.UserUser.EXTRA_PARAMS">
-<span class="sig-name descname"><span class="pre">EXTRA_PARAMS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['center',</span> <span class="pre">'aggregate',</span> <span class="pre">'use_ratings']</span></em><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.EXTRA_PARAMS" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">EXTRA_PARAMS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">['center',</span> <span class="pre">'aggregate',</span> <span class="pre">'use_ratings']</span></em><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.EXTRA_PARAMS" title="Link to this definition"></a></dt>
 <dd><p>Names of extra parameters to include in <code class="xref py py-meth docutils literal notranslate"><span class="pre">get_params()</span></code>.  Useful when the
 constructor takes <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.algorithms.user_knn.UserUser.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ratings</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.fit" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ratings</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.fit" title="Link to this definition"></a></dt>
 <dd><p>“Train” a user-user CF model.  This memorizes the rating data in a format that is usable
 for future computations.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.4.3)"><em>pandas.DataFrame</em></a>) – (user, item, rating) data for collaborative filtering.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.0)"><em>pandas.DataFrame</em></a>) – (user, item, rating) data for collaborative filtering.</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.algorithms.user_knn.UserUser.predict_for_user">
-<span class="sig-name descname"><span class="pre">predict_for_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.predict_for_user" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">predict_for_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.predict_for_user" title="Link to this definition"></a></dt>
 <dd><p>Compute predictions for a user and items.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>user</strong> – the user ID</p></li>
 <li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
-<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.3)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, will be used to
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.0)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, will be used to
 recompute the user’s bias at prediction time.</p></li>
 </ul>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>scores for the items, indexed by item id.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.3)">pandas.Series</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.0)">pandas.Series</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -502,7 +512,7 @@ recompute the user’s bias at prediction time.</p></li>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018–2019 Boise State University.
-      <span class="commit">Revision <code>3069e87e</code>.
+      <span class="commit">Revision <code>f34809ae</code>.
       </span></p>
   </div>
 
@@ -530,7 +540,7 @@ Boise State University and does not reflect official university positions.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="Versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.14.2
+      v: 0.14.3
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -540,6 +550,8 @@ Boise State University and does not reflect official university positions.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.14.3/">0.14.3</a></dd>
         
           <dd><a href="/en/0.14.2/">0.14.2</a></dd>
         

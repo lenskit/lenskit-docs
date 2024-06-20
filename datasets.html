@@ -1,22 +1,23 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="./">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Loading Data &mdash; LensKit 0.14.2 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/datasets.html" />
+  <title>Loading Data &mdash; LensKit 0.14.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
-        <script src="_static/doctools.js"></script>
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=a9ba800c"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="/_/static/javascript/readthedocs-doc-embed.js"></script>
     <script src="_static/js/theme.js"></script>
@@ -29,7 +30,7 @@
 
 <link rel="stylesheet" href="/_/static/css/readthedocs-doc-embed.css" type="text/css" />
 
-<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2022-08-16T20:27:49Z", "builder": "sphinx", "canonical_url": null, "commit": "3069e87e", "docroot": "/docs/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "datasets", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {"lenskit-hpf": "https://lkpy.readthedocs.io/projects/lenskit-hpf/en/stable/", "lenskit-implicit": "https://lkpy.readthedocs.io/projects/lenskit-implicit/en/latest/", "lenskit-tf": "https://lkpy.readthedocs.io/projects/lenskit-tf/en/latest/"}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.14.2"}</script>
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "builder": "sphinx", "canonical_url": null, "docroot": "/docs/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "datasets", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {"lenskit-hpf": "https://lkpy.readthedocs.io/projects/lenskit-hpf/en/stable/", "lenskit-implicit": "https://lkpy.readthedocs.io/projects/lenskit-implicit/en/latest/", "lenskit-tf": "https://lkpy.readthedocs.io/projects/lenskit-tf/en/latest/"}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.14.3"}</script>
 
 <!--
 Using this variable directly instead of using `JSON.parse` is deprecated.
@@ -49,14 +50,18 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="index.html" class="icon icon-home"> LensKit
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            LensKit
           </a>
               <div class="version">
-                0.14.2
+                0.14.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -73,7 +78,35 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Loading Data</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-lenskit.datasets">Data Loaders</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#movielens-data-sets">MovieLens Data Sets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#movielens-data-sets">MovieLens Data Sets</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#lenskit.datasets.MovieLens"><code class="docutils literal notranslate"><span class="pre">MovieLens</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.datasets.MovieLens.ratings"><code class="docutils literal notranslate"><span class="pre">MovieLens.ratings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.datasets.MovieLens.movies"><code class="docutils literal notranslate"><span class="pre">MovieLens.movies</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.datasets.MovieLens.links"><code class="docutils literal notranslate"><span class="pre">MovieLens.links</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.datasets.MovieLens.tags"><code class="docutils literal notranslate"><span class="pre">MovieLens.tags</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.datasets.MovieLens.tag_genome"><code class="docutils literal notranslate"><span class="pre">MovieLens.tag_genome</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#lenskit.datasets.ML100K"><code class="docutils literal notranslate"><span class="pre">ML100K</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.datasets.ML100K.available"><code class="docutils literal notranslate"><span class="pre">ML100K.available</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.datasets.ML100K.ratings"><code class="docutils literal notranslate"><span class="pre">ML100K.ratings</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.datasets.ML100K.users"><code class="docutils literal notranslate"><span class="pre">ML100K.users</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.datasets.ML100K.movies"><code class="docutils literal notranslate"><span class="pre">ML100K.movies</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#lenskit.datasets.ML1M"><code class="docutils literal notranslate"><span class="pre">ML1M</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.datasets.ML1M.users"><code class="docutils literal notranslate"><span class="pre">ML1M.users</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.datasets.ML1M.movies"><code class="docutils literal notranslate"><span class="pre">ML1M.movies</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.datasets.ML1M.ratings"><code class="docutils literal notranslate"><span class="pre">ML1M.ratings</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#lenskit.datasets.ML10M"><code class="docutils literal notranslate"><span class="pre">ML10M</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.datasets.ML10M.movies"><code class="docutils literal notranslate"><span class="pre">ML10M.movies</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lenskit.datasets.ML10M.ratings"><code class="docutils literal notranslate"><span class="pre">ML10M.ratings</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Splitting Data</a></li>
@@ -120,10 +153,10 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>Loading Data</li>
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Loading Data</li>
       <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/lenskit/lkpy/blob/0.14.2/docs/datasets.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.14.3/docs/datasets.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
   <hr/>
@@ -131,39 +164,15 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  
-<style>
-/* CSS overrides for sphinx_rtd_theme */
-
-/* 24px margin */
-.nbinput.nblast.container,
-.nboutput.nblast.container {
-    margin-bottom: 19px;  /* padding has already 5px */
-}
-
-/* ... except between code cells! */
-.nblast.container + .nbinput.container {
-    margin-top: -19px;
-}
-
-.admonition > p:before {
-    margin-right: 4px;  /* make room for the exclamation icon */
-}
-
-/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
-.math {
-    text-align: unset;
-}
-</style>
-<section id="loading-data">
-<h1>Loading Data<a class="headerlink" href="#loading-data" title="Permalink to this heading"></a></h1>
-<p>LensKit can work with any data in a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.4.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> with the expected
+  <section id="loading-data">
+<h1>Loading Data<a class="headerlink" href="#loading-data" title="Link to this heading"></a></h1>
+<p>LensKit can work with any data in a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> with the expected
 columns.  LensKit algorithms expect a <code class="docutils literal notranslate"><span class="pre">ratings</span></code> frame to contain the following
 columns (in any order):</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">user</span></code>, containing user identifiers.  No requirements are placed on user IDs —
 if an algorithm requires something specific, such as contiguous 0-based identifiers
-for indexing into an array — it will use a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.4.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Index</span></code></a> to map them.</p></li>
+for indexing into an array — it will use a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v2.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Index</span></code></a> to map them.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">item</span></code>, containing item identifiers. The same comments apply as for <code class="docutils literal notranslate"><span class="pre">user</span></code>.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">rating</span></code>, containing user ratings (if available).  Implicit-feedback code will
 not require ratings.</p></li>
@@ -177,7 +186,7 @@ through unchanged.  Algorithms ignore extra data objects they receive.  This all
 you to build algorithms that train on data besides user-item interactions, such as
 user metadata or item content.</p>
 <section id="module-lenskit.datasets">
-<span id="data-loaders"></span><h2>Data Loaders<a class="headerlink" href="#module-lenskit.datasets" title="Permalink to this heading"></a></h2>
+<span id="data-loaders"></span><h2>Data Loaders<a class="headerlink" href="#module-lenskit.datasets" title="Link to this heading"></a></h2>
 <p>The <a class="reference internal" href="#module-lenskit.datasets" title="lenskit.datasets"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.datasets</span></code></a> module provides utilities for reading a variety
 of commonly-used LensKit data sets.  It does not package or automatically
 download them, but loads them from a local directory where you have unpacked
@@ -207,24 +216,24 @@ ID (e.g. <a class="reference internal" href="#lenskit.datasets.MovieLens.ratings
 </ul>
 </section>
 <section id="movielens-data-sets">
-<h2>MovieLens Data Sets<a class="headerlink" href="#movielens-data-sets" title="Permalink to this heading"></a></h2>
+<h2>MovieLens Data Sets<a class="headerlink" href="#movielens-data-sets" title="Link to this heading"></a></h2>
 <p>The GroupLens research group provides several data sets extracted from the
 MovieLens service <span id="id1">[]</span>.
 These can be downloaded from <a class="reference external" href="https://grouplens.org/datasets/movielens/">https://grouplens.org/datasets/movielens/</a>.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.datasets.MovieLens">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.datasets.</span></span><span class="sig-name descname"><span class="pre">MovieLens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/ml-20m'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.datasets.MovieLens" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.datasets.</span></span><span class="sig-name descname"><span class="pre">MovieLens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/ml-20m'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.datasets.MovieLens" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Code for reading current MovieLens data sets, including ML-20M, ML-Latest, and
 ML-Latest-Small.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.10)"><em>pathlib.Path</em></a>) – Path to the directory containing the data set.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.12)"><em>pathlib.Path</em></a>) – Path to the directory containing the data set.</p>
 </dd>
 </dl>
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.datasets.MovieLens.ratings">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ratings</span></span><a class="headerlink" href="#lenskit.datasets.MovieLens.ratings" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ratings</span></span><a class="headerlink" href="#lenskit.datasets.MovieLens.ratings" title="Link to this definition"></a></dt>
 <dd><p>The rating table.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mlsmall</span> <span class="o">=</span> <span class="n">MovieLens</span><span class="p">(</span><span class="s1">&#39;data/ml-latest-small&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mlsmall</span><span class="o">.</span><span class="n">ratings</span>
@@ -234,7 +243,7 @@ ML-Latest-Small.</p>
 <span class="go">2          1  1061     3.0  1260759182</span>
 <span class="go">3          1  1129     2.0  1260759185</span>
 <span class="go">4          1  1172     4.0  1260759205</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 <span class="go">[100004 rows x 4 columns]</span>
 </pre></div>
 </div>
@@ -242,7 +251,7 @@ ML-Latest-Small.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.datasets.MovieLens.movies">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">movies</span></span><a class="headerlink" href="#lenskit.datasets.MovieLens.movies" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">movies</span></span><a class="headerlink" href="#lenskit.datasets.MovieLens.movies" title="Link to this definition"></a></dt>
 <dd><p>The movie table, with titles and genres.  It is indexed by movie ID.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mlsmall</span> <span class="o">=</span> <span class="n">MovieLens</span><span class="p">(</span><span class="s1">&#39;data/ml-latest-small&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mlsmall</span><span class="o">.</span><span class="n">movies</span>
@@ -253,7 +262,7 @@ ML-Latest-Small.</p>
 <span class="go">3                                 Grumpier Old Men (1995)                                   Comedy|Romance</span>
 <span class="go">4                                Waiting to Exhale (1995)                             Comedy|Drama|Romance</span>
 <span class="go">5                      Father of the Bride Part II (1995)                                           Comedy</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 <span class="go">[9125 rows x 2 columns]</span>
 </pre></div>
 </div>
@@ -261,7 +270,7 @@ ML-Latest-Small.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.datasets.MovieLens.links">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">links</span></span><a class="headerlink" href="#lenskit.datasets.MovieLens.links" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">links</span></span><a class="headerlink" href="#lenskit.datasets.MovieLens.links" title="Link to this definition"></a></dt>
 <dd><p>The movie link table, connecting movie IDs to external identifiers.  It is indexed
 by movie ID.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mlsmall</span> <span class="o">=</span> <span class="n">MovieLens</span><span class="p">(</span><span class="s1">&#39;data/ml-latest-small&#39;</span><span class="p">)</span>
@@ -273,7 +282,7 @@ by movie ID.</p>
 <span class="go">3        113228   15602</span>
 <span class="go">4        114885   31357</span>
 <span class="go">5        113041   11862</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 <span class="go">[9125 rows x 2 columns]</span>
 </pre></div>
 </div>
@@ -281,7 +290,7 @@ by movie ID.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.datasets.MovieLens.tags">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tags</span></span><a class="headerlink" href="#lenskit.datasets.MovieLens.tags" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tags</span></span><a class="headerlink" href="#lenskit.datasets.MovieLens.tags" title="Link to this definition"></a></dt>
 <dd><p>The tag application table, recording user-supplied tags for movies.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mlsmall</span> <span class="o">=</span> <span class="n">MovieLens</span><span class="p">(</span><span class="s1">&#39;data/ml-latest-small&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">mlsmall</span><span class="o">.</span><span class="n">tags</span>
@@ -291,7 +300,7 @@ by movie ID.</p>
 <span class="go">2       15  ...  1170560997</span>
 <span class="go">3       15  ...  1170626366</span>
 <span class="go">4       15  ...  1141391765</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 <span class="go">[1296 rows x 4 columns]</span>
 </pre></div>
 </div>
@@ -299,7 +308,7 @@ by movie ID.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.datasets.MovieLens.tag_genome">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tag_genome</span></span><a class="headerlink" href="#lenskit.datasets.MovieLens.tag_genome" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tag_genome</span></span><a class="headerlink" href="#lenskit.datasets.MovieLens.tag_genome" title="Link to this definition"></a></dt>
 <dd><p>The tag genome table, recording inferred item-tag relevance scores.  This gets returned
 as a wide Pandas data frame, with rows indexed by item ID.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ml20m</span> <span class="o">=</span> <span class="n">MovieLens</span><span class="p">(</span><span class="s1">&#39;data/ml-20m&#39;</span><span class="p">)</span>
@@ -311,7 +320,7 @@ as a wide Pandas data frame, with rows indexed by item ID.</p>
 <span class="go">3       0.04350       0.05475       0.02800  ...  0.01950  0.09700  0.01850</span>
 <span class="go">4       0.03725       0.03950       0.03675  ...  0.01525  0.06450  0.01300</span>
 <span class="go">5       0.04200       0.05275       0.05925  ...  0.01675  0.10750  0.01825</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 <span class="go">[10381 rows x 1128 columns]</span>
 </pre></div>
 </div>
@@ -321,19 +330,19 @@ as a wide Pandas data frame, with rows indexed by item ID.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.datasets.ML100K">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.datasets.</span></span><span class="sig-name descname"><span class="pre">ML100K</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/ml-100k'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.datasets.ML100K" title="Permalink to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.datasets.</span></span><span class="sig-name descname"><span class="pre">ML100K</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/ml-100k'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.datasets.ML100K" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>The MovieLens 100K data set.  This older data set is in a different format from
 the more current data sets loaded by <a class="reference internal" href="#lenskit.datasets.MovieLens" title="lenskit.datasets.MovieLens"><code class="xref py py-class docutils literal notranslate"><span class="pre">MovieLens</span></code></a>.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.datasets.ML100K.available">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">available</span></span><a class="headerlink" href="#lenskit.datasets.ML100K.available" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">available</span></span><a class="headerlink" href="#lenskit.datasets.ML100K.available" title="Link to this definition"></a></dt>
 <dd><p>Query whether the data set exists.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.datasets.ML100K.ratings">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ratings</span></span><a class="headerlink" href="#lenskit.datasets.ML100K.ratings" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ratings</span></span><a class="headerlink" href="#lenskit.datasets.ML100K.ratings" title="Link to this definition"></a></dt>
 <dd><p>Return the rating data (from <code class="docutils literal notranslate"><span class="pre">u.data</span></code>).</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span> <span class="o">=</span> <span class="n">ML100K</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span><span class="o">.</span><span class="n">ratings</span>
@@ -343,7 +352,7 @@ the more current data sets loaded by <a class="reference internal" href="#lenski
 <span class="go">2        22   377     1.0  878887116</span>
 <span class="go">3       244    51     2.0  880606923</span>
 <span class="go">4       166   346     1.0  886397596</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 <span class="go">[100000 rows x 4 columns]</span>
 </pre></div>
 </div>
@@ -351,7 +360,7 @@ the more current data sets loaded by <a class="reference internal" href="#lenski
 
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.datasets.ML100K.users">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">users</span></span><a class="headerlink" href="#lenskit.datasets.ML100K.users" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">users</span></span><a class="headerlink" href="#lenskit.datasets.ML100K.users" title="Link to this definition"></a></dt>
 <dd><p>Return the user data (from <code class="docutils literal notranslate"><span class="pre">u.user</span></code>).</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span> <span class="o">=</span> <span class="n">ML100K</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span><span class="o">.</span><span class="n">users</span>
@@ -362,7 +371,7 @@ the more current data sets loaded by <a class="reference internal" href="#lenski
 <span class="go">3      23      M         writer   32067</span>
 <span class="go">4      24      M     technician   43537</span>
 <span class="go">5      33      F          other   15213</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 <span class="go">[943 rows x 4 columns]</span>
 </pre></div>
 </div>
@@ -370,7 +379,7 @@ the more current data sets loaded by <a class="reference internal" href="#lenski
 
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.datasets.ML100K.movies">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">movies</span></span><a class="headerlink" href="#lenskit.datasets.ML100K.movies" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">movies</span></span><a class="headerlink" href="#lenskit.datasets.ML100K.movies" title="Link to this definition"></a></dt>
 <dd><p>Return the user data (from <code class="docutils literal notranslate"><span class="pre">u.user</span></code>).</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span> <span class="o">=</span> <span class="n">ML100K</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span><span class="o">.</span><span class="n">movies</span>
@@ -381,7 +390,7 @@ the more current data sets loaded by <a class="reference internal" href="#lenski
 <span class="go">3                             Four Rooms (1995)  01-Jan-1995  ...    0       0</span>
 <span class="go">4                             Get Shorty (1995)  01-Jan-1995  ...    0       0</span>
 <span class="go">5                                Copycat (1995)  01-Jan-1995  ...    0       0</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 <span class="go">[1682 rows x 23 columns]</span>
 </pre></div>
 </div>
@@ -391,7 +400,7 @@ the more current data sets loaded by <a class="reference internal" href="#lenski
 
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.datasets.ML1M">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.datasets.</span></span><span class="sig-name descname"><span class="pre">ML1M</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/ml-1m'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.datasets.ML1M" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.datasets.</span></span><span class="sig-name descname"><span class="pre">ML1M</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/ml-1m'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.datasets.ML1M" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MLM</span></code></p>
 <p>MovieLens 1M data set.</p>
 <div class="admonition note">
@@ -401,7 +410,7 @@ with the 10M data set.</p>
 </div>
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.datasets.ML1M.users">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">users</span></span><a class="headerlink" href="#lenskit.datasets.ML1M.users" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">users</span></span><a class="headerlink" href="#lenskit.datasets.ML1M.users" title="Link to this definition"></a></dt>
 <dd><p>Return the movie data (from <code class="docutils literal notranslate"><span class="pre">users.dat</span></code>).  Indexed by user ID.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span> <span class="o">=</span> <span class="n">ML1M</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span><span class="o">.</span><span class="n">users</span>
@@ -412,7 +421,7 @@ with the 10M data set.</p>
 <span class="go">3         M   25  55117</span>
 <span class="go">4         M   45  02460</span>
 <span class="go">5         M   25  55455</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 <span class="go">[6040 rows x 3 columns]</span>
 </pre></div>
 </div>
@@ -420,7 +429,7 @@ with the 10M data set.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.datasets.ML1M.movies">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">movies</span></span><a class="headerlink" href="#lenskit.datasets.ML1M.movies" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">movies</span></span><a class="headerlink" href="#lenskit.datasets.ML1M.movies" title="Link to this definition"></a></dt>
 <dd><p>Return the movie data (from <code class="docutils literal notranslate"><span class="pre">movies.dat</span></code>).  Indexed by movie ID.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span> <span class="o">=</span> <span class="n">ML10M</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span><span class="o">.</span><span class="n">movies</span>
@@ -431,7 +440,7 @@ with the 10M data set.</p>
 <span class="go">3                                 Grumpier Old Men (1995)                                   Comedy|Romance</span>
 <span class="go">4                                Waiting to Exhale (1995)                             Comedy|Drama|Romance</span>
 <span class="go">5                      Father of the Bride Part II (1995)                                           Comedy</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 <span class="go">[10681 rows x 2 columns]</span>
 </pre></div>
 </div>
@@ -439,7 +448,7 @@ with the 10M data set.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.datasets.ML1M.ratings">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ratings</span></span><a class="headerlink" href="#lenskit.datasets.ML1M.ratings" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ratings</span></span><a class="headerlink" href="#lenskit.datasets.ML1M.ratings" title="Link to this definition"></a></dt>
 <dd><p>Return the rating data (from <code class="docutils literal notranslate"><span class="pre">ratings.dat</span></code>).</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span> <span class="o">=</span> <span class="n">ML10M</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span><span class="o">.</span><span class="n">ratings</span>
@@ -449,7 +458,7 @@ with the 10M data set.</p>
 <span class="go">2             1   231     5.0  838983392</span>
 <span class="go">3             1   292     5.0  838983421</span>
 <span class="go">4             1   316     5.0  838983392</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 <span class="go">[10000054 rows x 4 columns]</span>
 </pre></div>
 </div>
@@ -459,12 +468,12 @@ with the 10M data set.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.datasets.ML10M">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.datasets.</span></span><span class="sig-name descname"><span class="pre">ML10M</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/ml-10M100K'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.datasets.ML10M" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.datasets.</span></span><span class="sig-name descname"><span class="pre">ML10M</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'data/ml-10M100K'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.datasets.ML10M" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">MLM</span></code></p>
 <p>MovieLens 10M100K data set.</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.datasets.ML10M.movies">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">movies</span></span><a class="headerlink" href="#lenskit.datasets.ML10M.movies" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">movies</span></span><a class="headerlink" href="#lenskit.datasets.ML10M.movies" title="Link to this definition"></a></dt>
 <dd><p>Return the movie data (from <code class="docutils literal notranslate"><span class="pre">movies.dat</span></code>).  Indexed by movie ID.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span> <span class="o">=</span> <span class="n">ML10M</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span><span class="o">.</span><span class="n">movies</span>
@@ -475,7 +484,7 @@ with the 10M data set.</p>
 <span class="go">3                                 Grumpier Old Men (1995)                                   Comedy|Romance</span>
 <span class="go">4                                Waiting to Exhale (1995)                             Comedy|Drama|Romance</span>
 <span class="go">5                      Father of the Bride Part II (1995)                                           Comedy</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 <span class="go">[10681 rows x 2 columns]</span>
 </pre></div>
 </div>
@@ -483,7 +492,7 @@ with the 10M data set.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.datasets.ML10M.ratings">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ratings</span></span><a class="headerlink" href="#lenskit.datasets.ML10M.ratings" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ratings</span></span><a class="headerlink" href="#lenskit.datasets.ML10M.ratings" title="Link to this definition"></a></dt>
 <dd><p>Return the rating data (from <code class="docutils literal notranslate"><span class="pre">ratings.dat</span></code>).</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span> <span class="o">=</span> <span class="n">ML10M</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ml</span><span class="o">.</span><span class="n">ratings</span>
@@ -493,7 +502,7 @@ with the 10M data set.</p>
 <span class="go">2             1   231     5.0  838983392</span>
 <span class="go">3             1   292     5.0  838983421</span>
 <span class="go">4             1   316     5.0  838983392</span>
-<span class="gp">...</span>
+<span class="go">...</span>
 <span class="go">[10000054 rows x 4 columns]</span>
 </pre></div>
 </div>
@@ -516,7 +525,7 @@ with the 10M data set.</p>
 
   <div role="contentinfo">
     <p>&#169; Copyright 2018–2019 Boise State University.
-      <span class="commit">Revision <code>3069e87e</code>.
+      <span class="commit">Revision <code>f34809ae</code>.
       </span></p>
   </div>
 
@@ -544,7 +553,7 @@ Boise State University and does not reflect official university positions.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="Versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.14.2
+      v: 0.14.3
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -554,6 +563,8 @@ Boise State University and does not reflect official university positions.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.14.3/">0.14.3</a></dd>
         
           <dd><a href="/en/0.14.2/">0.14.2</a></dd>
         
