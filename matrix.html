@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Matrix Utilities &mdash; LensKit 0.6.1 documentation</title>
+  <title>Matrix Utilities &mdash; LensKit 0.7.0 documentation</title>
   
 
   
@@ -86,7 +86,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.6.1
+                0.7.0
               </div>
             
           
@@ -117,7 +117,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
-<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Data Set Utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="util.html">Utility Functions</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Matrix Utilities</a><ul>
@@ -129,6 +129,8 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <li class="toctree-l2"><a class="reference internal" href="util.html#module-lenskit.util">Miscellaneous</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
 </ul>
 
@@ -184,7 +186,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.6.1/doc/matrix.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.7.0/doc/matrix.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -258,7 +260,7 @@ algorithms.</p>
 <dd><p>The rating matrix, with users on rows and items on columns.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR">CSR</a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.2.1)">scipy.sparse.csr_matrix</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR">CSR</a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.3.0)">scipy.sparse.csr_matrix</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -296,7 +298,7 @@ be used from accelerated algorithm implementations.</p>
 <dl class="class">
 <dt id="lenskit.matrix.CSR">
 <em class="property">class </em><code class="descclassname">lenskit.matrix.</code><code class="descname">CSR</code><span class="sig-paren">(</span><em>nrows=None</em>, <em>ncols=None</em>, <em>nnz=None</em>, <em>ptrs=None</em>, <em>inds=None</em>, <em>vals=None</em>, <em>N=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simple compressed sparse row matrix.  This is like <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>, with
+<dd><p>Simple compressed sparse row matrix.  This is like <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.3.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>, with
 a couple of useful differences:</p>
 <ul class="simple">
 <li><p>It is backed by a Numba jitclass, so it can be directly used from Numba-optimized functions.</p></li>
@@ -390,6 +392,20 @@ jitclass but which are useful from interpreted code.</p>
 </dd></dl>
 
 <dl class="classmethod">
+<dt id="lenskit.matrix.CSR.empty">
+<em class="property">classmethod </em><code class="descname">empty</code><span class="sig-paren">(</span><em>shape</em>, <em>row_nnzs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an empty CSR matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a>) – the array shape (rows,cols)</p></li>
+<li><p><strong>row_nnzs</strong> (<em>array-like</em>) – the number of nonzero entries for each row</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="classmethod">
 <dt id="lenskit.matrix.CSR.from_coo">
 <em class="property">classmethod </em><code class="descname">from_coo</code><span class="sig-paren">(</span><em>rows</em>, <em>cols</em>, <em>vals</em>, <em>shape=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.from_coo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a CSR matrix from data in COO format.</p>
@@ -412,7 +428,7 @@ jitclass but which are useful from interpreted code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mat</strong> (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.spmatrix.html#scipy.sparse.spmatrix" title="(in SciPy v1.2.1)"><em>scipy.sparse.spmatrix</em></a>) – a SciPy sparse matrix.</p></li>
+<li><p><strong>mat</strong> (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.spmatrix.html#scipy.sparse.spmatrix" title="(in SciPy v1.3.0)"><em>scipy.sparse.spmatrix</em></a>) – a SciPy sparse matrix.</p></li>
 <li><p><strong>copy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – if <code class="docutils literal notranslate"><span class="pre">False</span></code>, reuse the SciPy storage if possible.</p></li>
 </ul>
 </dd>
@@ -421,6 +437,37 @@ jitclass but which are useful from interpreted code.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p><a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR">CSR</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.matrix.CSR.normalize_rows">
+<code class="descname">normalize_rows</code><span class="sig-paren">(</span><em>normalization</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.normalize_rows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalize the rows of the matrix.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The normalization <em>ignores</em> missing values instead of treating
+them as 0.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method is not available from Numba.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>normalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – <p>The normalization to perform. Can be one of:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">'center'</span></code> - center rows about the mean</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'unit'</span></code> - convert rows to a unit vector</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The normalization values for each row.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -514,7 +561,8 @@ CSR data.</p>
 <dl class="method">
 <dt id="lenskit.matrix.CSR.to_scipy">
 <code class="descname">to_scipy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.to_scipy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a CSR matrix to a SciPy <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>.</p>
+<dd><p>Convert a CSR matrix to a SciPy <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.3.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>.  Avoids copying
+if possible.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>self</strong> (<a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR"><em>CSR</em></a>) – A CSR matrix.</p>
@@ -523,7 +571,7 @@ CSR data.</p>
 <dd class="field-even"><p>A SciPy sparse matrix with the same data.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.2.1)">scipy.sparse.csr_matrix</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.3.0)">scipy.sparse.csr_matrix</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -581,10 +629,10 @@ you will use this.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018 Boise State University
+        &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>d5b1b86b</code>.
+          Revision <code>6514695d</code>.
         </span>
       
 
@@ -605,7 +653,7 @@ you will use this.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.6.1
+      v: 0.7.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -615,6 +663,8 @@ you will use this.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.7.0/">0.7.0</a></dd>
         
           <dd><a href="/en/0.6.1/">0.6.1</a></dd>
         

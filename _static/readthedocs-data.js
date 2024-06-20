@@ -1,6 +1,6 @@
 var READTHEDOCS_DATA = {
     project: "lkpy",
-    version: "0.6.1",
+    version: "0.7.0",
     language: "en",
     programming_language: "py",
     subprojects: {},
@@ -10,7 +10,7 @@ var READTHEDOCS_DATA = {
     docroot: "/doc/",
     source_suffix: ".rst",
     api_host: "https://readthedocs.org",
-    commit: "d5b1b86b",
+    commit: "6514695d",
     ad_free: false,
 
     global_analytics_code: 'UA-17997319-1',

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Top-N Evaluation &mdash; LensKit 0.6.1 documentation</title>
+  <title>Top-N Evaluation &mdash; LensKit 0.7.0 documentation</title>
   
 
   
@@ -38,7 +38,7 @@
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Errors and Diagnostics" href="../diagnostics.html" />
+    <link rel="next" title="Data Set Utilities" href="../datasets.html" />
     <link rel="prev" title="Prediction Accuracy Metrics" href="predict-metrics.html" /> 
 
 <!-- RTD Extra Head -->
@@ -86,7 +86,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.6.1
+                0.7.0
               </div>
             
           
@@ -131,9 +131,11 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <li class="toctree-l2"><a class="reference internal" href="index.html#loading-outputs">Loading Outputs</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../diagnostics.html">Errors and Diagnostics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../datasets.html">Data Set Utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../util.html">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../diagnostics.html">Errors and Diagnostics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../impl-tips.html">Algorithm Implementation Tips</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../releases.html">Release Notes</a></li>
 </ul>
 
@@ -189,7 +191,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.6.1/doc/evaluation/topn-metrics.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.7.0/doc/evaluation/topn-metrics.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -287,6 +289,12 @@ columns is all columns <em>except</em> the following:</p>
 grouping columns, and contain at least an <code class="docutils literal notranslate"><span class="pre">item</span></code> column.  If it also
 contains a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, that is used as the users’ rating for
 metrics that require it; otherwise, a rating value of 1 is assumed.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Currently, RecListAnalysis will silently drop users who received
+no recommendations.  We are working on an ergonomic API for fixing
+this problem.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>group_cols</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – The columns to group by, or <code class="docutils literal notranslate"><span class="pre">None</span></code> to use the default.</p>
@@ -313,13 +321,16 @@ re-exported from <a class="reference internal" href="#module-lenskit.topn" title
 
 <dl class="method">
 <dt id="lenskit.topn.RecListAnalysis.compute">
-<code class="descname">compute</code><span class="sig-paren">(</span><em>recs</em>, <em>truth</em>, <em>*</em>, <em>progress=&lt;function RecListAnalysis.&lt;lambda&gt;&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.topn.RecListAnalysis.compute" title="Permalink to this definition">¶</a></dt>
+<code class="descname">compute</code><span class="sig-paren">(</span><em>recs</em>, <em>truth</em>, <em>*</em>, <em>include_missing=False</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.topn.RecListAnalysis.compute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run the analysis.  Neither data frame should be meaningfully indexed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – A data frame of recommendations.</p></li>
 <li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – A data frame of ground truth (test) data.</p></li>
+<li><p><strong>include_missing</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> to include users from truth missing from recs.
+Matches are done via group columns that appear in both
+<code class="docutils literal notranslate"><span class="pre">recs</span></code> and <code class="docutils literal notranslate"><span class="pre">truth</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -431,7 +442,7 @@ if the discount is greater than 1.</p></li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../diagnostics.html" class="btn btn-neutral float-right" title="Errors and Diagnostics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../datasets.html" class="btn btn-neutral float-right" title="Data Set Utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="predict-metrics.html" class="btn btn-neutral float-left" title="Prediction Accuracy Metrics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -443,10 +454,10 @@ if the discount is greater than 1.</p></li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018 Boise State University
+        &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>d5b1b86b</code>.
+          Revision <code>6514695d</code>.
         </span>
       
 
@@ -467,7 +478,7 @@ if the discount is greater than 1.</p></li>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.6.1
+      v: 0.7.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -477,6 +488,8 @@ if the discount is greater than 1.</p></li>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.7.0/">0.7.0</a></dd>
         
           <dd><a href="/en/0.6.1/">0.6.1</a></dd>
         

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Utility Functions &mdash; LensKit 0.6.1 documentation</title>
+  <title>Utility Functions &mdash; LensKit 0.7.0 documentation</title>
   
 
   
@@ -86,7 +86,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.6.1
+                0.7.0
               </div>
             
           
@@ -117,7 +117,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
-<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Data Set Utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Utility Functions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="matrix.html">Matrix Utilities</a></li>
@@ -125,6 +125,8 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <li class="toctree-l2"><a class="reference internal" href="#module-lenskit.util">Miscellaneous</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
 </ul>
 
@@ -178,7 +180,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.6.1/doc/util.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.7.0/doc/util.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -256,67 +258,6 @@ to use that if you need more general capabilities.</p>
 </div>
 </dd></dl>
 
-<dl class="function">
-<dt id="lenskit.util.fspath">
-<code class="descclassname">lenskit.util.</code><code class="descname">fspath</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.fspath" title="Permalink to this definition">¶</a></dt>
-<dd><p>Backport of <a class="reference external" href="https://docs.python.org/3/library/os.html#os.fspath" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.fspath()</span></code></a> function for Python 3.5.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="lenskit.util.load_ml_ratings">
-<code class="descclassname">lenskit.util.</code><code class="descname">load_ml_ratings</code><span class="sig-paren">(</span><em>path='ml-latest-small'</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.load_ml_ratings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Load the ratings from a modern MovieLens data set (ML-20M or one of the ‘latest’ data sets).</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">load_ml_ratings</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-<span class="go">    user item rating  timestamp</span>
-<span class="go">0   1      31    2.5 1260759144</span>
-<span class="go">1   1    1029    3.0 1260759179</span>
-<span class="go">2   1    1061    3.0 1260759182</span>
-<span class="go">3   1    1129    2.0 1260759185</span>
-<span class="go">4   1    1172    4.0 1260759205</span>
-</pre></div>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>path</strong> – The path where the MovieLens data is unpacked.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The rating data, with user and item columns named properly for LensKit.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)">pandas.DataFrame</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="lenskit.util.read_df_detect">
-<code class="descclassname">lenskit.util.</code><code class="descname">read_df_detect</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.read_df_detect" title="Permalink to this definition">¶</a></dt>
-<dd><p>Read a Pandas data frame, auto-detecting the file format based on filename suffix.
-The following file types are supported:</p>
-<dl class="simple">
-<dt>CSV</dt><dd><p>File has suffix <code class="docutils literal notranslate"><span class="pre">.csv</span></code>, read with <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv" title="(in pandas v0.24.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pandas.read_csv()</span></code></a>.</p>
-</dd>
-<dt>Parquet</dt><dd><p>File has suffix <code class="docutils literal notranslate"><span class="pre">.parquet</span></code>, <code class="docutils literal notranslate"><span class="pre">.parq</span></code>, or <code class="docutils literal notranslate"><span class="pre">.pq</span></code>, read with
-<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_parquet.html#pandas.read_parquet" title="(in pandas v0.24.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pandas.read_parquet()</span></code></a>.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="function">
-<dt id="lenskit.util.write_parquet">
-<code class="descclassname">lenskit.util.</code><code class="descname">write_parquet</code><span class="sig-paren">(</span><em>path</em>, <em>frame</em>, <em>append=False</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.write_parquet" title="Permalink to this definition">¶</a></dt>
-<dd><p>Write a Parquet file.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.7)"><em>pathlib.Path</em></a>) – The path of the Parquet file to write.</p></li>
-<li><p><strong>frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – The data to write.</p></li>
-<li><p><strong>append</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Whether to append to the file or overwrite it.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </div>
 </div>
 
@@ -340,10 +281,10 @@ The following file types are supported:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018 Boise State University
+        &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>d5b1b86b</code>.
+          Revision <code>6514695d</code>.
         </span>
       
 
@@ -364,7 +305,7 @@ The following file types are supported:</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.6.1
+      v: 0.7.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -374,6 +315,8 @@ The following file types are supported:</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.7.0/">0.7.0</a></dd>
         
           <dd><a href="/en/0.6.1/">0.6.1</a></dd>
         

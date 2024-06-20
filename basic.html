@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Basic and Utility Algorithms &mdash; LensKit 0.6.1 documentation</title>
+  <title>Basic and Utility Algorithms &mdash; LensKit 0.7.0 documentation</title>
   
 
   
@@ -86,7 +86,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.6.1
+                0.7.0
               </div>
             
           
@@ -117,10 +117,13 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
-<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Data Set Utilities</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="algorithms.html">Algorithms</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Basic and Utility Algorithms</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#personalized-mean-rating-prediction">Personalized Mean Rating Prediction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#most-popular-item-recommendation">Most Popular Item Recommendation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#top-n-recommender">Top-N Recommender</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#unrated-item-candidate-selector">Unrated Item Candidate Selector</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#fallback-predictor">Fallback Predictor</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#memorized-predictor">Memorized Predictor</a></li>
 </ul>
@@ -129,9 +132,15 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <li class="toctree-l2"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hpf.html">Hierarchical Poisson Factorization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="implicit.html">Implicit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html#basic-algorithms">Basic Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html#k-nn-algorithms">k-NN Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html#matrix-factorization">Matrix Factorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html#references">References</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
 </ul>
 
@@ -187,7 +196,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.6.1/doc/basic.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.7.0/doc/basic.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -341,6 +350,259 @@ bias at prediction time.</p></li>
 </dd></dl>
 
 </div>
+<div class="section" id="most-popular-item-recommendation">
+<h2>Most Popular Item Recommendation<a class="headerlink" href="#most-popular-item-recommendation" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#lenskit.algorithms.basic.Popular" title="lenskit.algorithms.basic.Popular"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popular</span></code></a> algorithm implements most-popular-item recommendation.</p>
+<dl class="class">
+<dt id="lenskit.algorithms.basic.Popular">
+<em class="property">class </em><code class="descclassname">lenskit.algorithms.basic.</code><code class="descname">Popular</code><span class="sig-paren">(</span><em>selector=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Popular" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.algorithms.Recommender" title="lenskit.algorithms.Recommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Recommender</span></code></a></p>
+<p>Recommend the most popular items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>selector</strong> (<a class="reference internal" href="interfaces.html#lenskit.algorithms.CandidateSelector" title="lenskit.algorithms.CandidateSelector"><em>CandidateSelector</em></a>) – The candidate selector to use. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses a new
+<a class="reference internal" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector" title="lenskit.algorithms.basic.UnratedItemCandidateSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnratedItemCandidateSelector</span></code></a>.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="lenskit.algorithms.basic.Popular.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>ratings</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Popular.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a model using the specified ratings (or similar) data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – The ratings data.</p></li>
+<li><p><strong>args</strong> – Additional training data the algorithm may require.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The algorithm object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.basic.Popular.recommend">
+<code class="descname">recommend</code><span class="sig-paren">(</span><em>user</em>, <em>n=None</em>, <em>candidates=None</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Popular.recommend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute recommendations for a user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – the user ID</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of recommendations to produce (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
+<li><p><strong>candidates</strong> (<em>array-like</em>) – The set of valid candidate items; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, a default set will be used.
+For many algorithms, this is their <code class="xref py py-class docutils literal notranslate"><span class="pre">CandidateSelector</span></code>.</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a frame with an <code class="docutils literal notranslate"><span class="pre">item</span></code> column; if the recommender also produces scores,
+they will be in a <code class="docutils literal notranslate"><span class="pre">score</span></code> column.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)">pandas.DataFrame</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="top-n-recommender">
+<h2>Top-N Recommender<a class="headerlink" href="#top-n-recommender" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#lenskit.algorithms.basic.TopN" title="lenskit.algorithms.basic.TopN"><code class="xref py py-class docutils literal notranslate"><span class="pre">TopN</span></code></a> class implements a standard top-<em>N</em> recommender that wraps a
+<a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a> and <a class="reference internal" href="interfaces.html#lenskit.algorithms.CandidateSelector" title="lenskit.algorithms.CandidateSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">CandidateSelector</span></code></a> and returns the top <em>N</em>
+candidate items by predicted rating.  It is the type of recommender returned by
+<a class="reference internal" href="interfaces.html#lenskit.algorithms.Recommender.adapt" title="lenskit.algorithms.Recommender.adapt"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Recommender.adapt()</span></code></a> if the provided algorithm is not a recommender.</p>
+<dl class="class">
+<dt id="lenskit.algorithms.basic.TopN">
+<em class="property">class </em><code class="descclassname">lenskit.algorithms.basic.</code><code class="descname">TopN</code><span class="sig-paren">(</span><em>predictor</em>, <em>selector=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.TopN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.algorithms.Recommender" title="lenskit.algorithms.Recommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Recommender</span></code></a>, <a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Predictor</span></code></a></p>
+<p>Basic recommender that implements top-N recommendation using a predictor.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This class does not do anything of its own in <a class="reference internal" href="#lenskit.algorithms.basic.TopN.fit" title="lenskit.algorithms.basic.TopN.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a>.  If its
+predictor and candidate selector are both fit, the top-N recommender
+does not need to be fit.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>predictor</strong> (<a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><em>Predictor</em></a>) – The underlying predictor.</p></li>
+<li><p><strong>selector</strong> (<a class="reference internal" href="interfaces.html#lenskit.algorithms.CandidateSelector" title="lenskit.algorithms.CandidateSelector"><em>CandidateSelector</em></a>) – The candidate selector.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses <a class="reference internal" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector" title="lenskit.algorithms.basic.UnratedItemCandidateSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnratedItemCandidateSelector</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="method">
+<dt id="lenskit.algorithms.basic.TopN.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>ratings</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.TopN.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the recommender.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – The rating or interaction data.  Passed changed to the predictor and
+candidate selector.</p></li>
+<li><p><strong>kwargs</strong> (<em>args</em><em>,</em>) – Additional arguments for the predictor to use in its training process.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.basic.TopN.predict">
+<code class="descname">predict</code><span class="sig-paren">(</span><em>pairs</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.TopN.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute predictions for user-item pairs.  This method is designed to be compatible with the
+general SciKit paradigm; applications typically want to use <a class="reference internal" href="#lenskit.algorithms.basic.TopN.predict_for_user" title="lenskit.algorithms.basic.TopN.predict_for_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_user()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pairs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – The user-item pairs, as <code class="docutils literal notranslate"><span class="pre">user</span></code> and <code class="docutils literal notranslate"><span class="pre">item</span></code> columns.</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – user-item rating data to replace memorized data.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The predicted scores for each user-item pair.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)">pandas.Series</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.basic.TopN.predict_for_user">
+<code class="descname">predict_for_user</code><span class="sig-paren">(</span><em>user</em>, <em>items</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.TopN.predict_for_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute predictions for a user and items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – the user ID</p></li>
+<li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>scores for the items, indexed by item id.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)">pandas.Series</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.basic.TopN.recommend">
+<code class="descname">recommend</code><span class="sig-paren">(</span><em>user</em>, <em>n=None</em>, <em>candidates=None</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.TopN.recommend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute recommendations for a user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – the user ID</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of recommendations to produce (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
+<li><p><strong>candidates</strong> (<em>array-like</em>) – The set of valid candidate items; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, a default set will be used.
+For many algorithms, this is their <code class="xref py py-class docutils literal notranslate"><span class="pre">CandidateSelector</span></code>.</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a frame with an <code class="docutils literal notranslate"><span class="pre">item</span></code> column; if the recommender also produces scores,
+they will be in a <code class="docutils literal notranslate"><span class="pre">score</span></code> column.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)">pandas.DataFrame</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="unrated-item-candidate-selector">
+<h2>Unrated Item Candidate Selector<a class="headerlink" href="#unrated-item-candidate-selector" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector" title="lenskit.algorithms.basic.UnratedItemCandidateSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnratedItemCandidateSelector</span></code></a> is a candidate selector that remembers items
+users have rated, and returns a candidate set consisting of all unrated items.  It is the
+default candidate selector for <a class="reference internal" href="#lenskit.algorithms.basic.TopN" title="lenskit.algorithms.basic.TopN"><code class="xref py py-class docutils literal notranslate"><span class="pre">TopN</span></code></a>.</p>
+<dl class="class">
+<dt id="lenskit.algorithms.basic.UnratedItemCandidateSelector">
+<em class="property">class </em><code class="descclassname">lenskit.algorithms.basic.</code><code class="descname">UnratedItemCandidateSelector</code><a class="headerlink" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.algorithms.CandidateSelector" title="lenskit.algorithms.CandidateSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.CandidateSelector</span></code></a></p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">CandidateSelector</span></code> that selects items a user has not rated as
+candidates.  When this selector is fit, it memorizes the rated items.</p>
+<dl class="attribute">
+<dt id="lenskit.algorithms.basic.UnratedItemCandidateSelector.items_">
+<code class="descname">items_</code><a class="headerlink" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector.items_" title="Permalink to this definition">¶</a></dt>
+<dd><p>All known items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v0.24.2)">pandas.Index</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lenskit.algorithms.basic.UnratedItemCandidateSelector.users_">
+<code class="descname">users_</code><a class="headerlink" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector.users_" title="Permalink to this definition">¶</a></dt>
+<dd><p>All known users.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v0.24.2)">pandas.Index</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lenskit.algorithms.basic.UnratedItemCandidateSelector.user_items_">
+<code class="descname">user_items_</code><a class="headerlink" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector.user_items_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Items rated by each known user, as positions in the <code class="docutils literal notranslate"><span class="pre">items</span></code> index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="matrix.html#lenskit.matrix.CSR" title="lenskit.matrix.CSR">CSR</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.basic.UnratedItemCandidateSelector.candidates">
+<code class="descname">candidates</code><span class="sig-paren">(</span><em>user</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector.candidates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select candidates for the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – The user key or ID.</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)"><em>pandas.Series</em></a><em> or </em><em>array-like</em>) – Ratings or items to use instead of whatever ratings were memorized
+for this user.  If a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>, the series index
+is used; if it is another array-like it is assumed to be an array
+of items.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.basic.UnratedItemCandidateSelector.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>ratings</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a model using the specified ratings (or similar) data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – The ratings data.</p></li>
+<li><p><strong>args</strong> – Additional training data the algorithm may require.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The algorithm object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="fallback-predictor">
 <h2>Fallback Predictor<a class="headerlink" href="#fallback-predictor" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">Fallback</span></code> rating predictor is a simple hybrid that takes a list of composite algorithms,
@@ -469,10 +731,10 @@ override or augment the model’s notion of a user’s preferences.</p></li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018 Boise State University
+        &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>d5b1b86b</code>.
+          Revision <code>6514695d</code>.
         </span>
       
 
@@ -493,7 +755,7 @@ override or augment the model’s notion of a user’s preferences.</p></li>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.6.1
+      v: 0.7.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -503,6 +765,8 @@ override or augment the model’s notion of a user’s preferences.</p></li>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.7.0/">0.7.0</a></dd>
         
           <dd><a href="/en/0.6.1/">0.6.1</a></dd>
         

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Algorithms &mdash; LensKit 0.6.1 documentation</title>
+  <title>Algorithms &mdash; LensKit 0.7.0 documentation</title>
   
 
   
@@ -39,7 +39,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Basic and Utility Algorithms" href="basic.html" />
-    <link rel="prev" title="Errors and Diagnostics" href="diagnostics.html" /> 
+    <link rel="prev" title="Data Set Utilities" href="datasets.html" /> 
 
 <!-- RTD Extra Head -->
 
@@ -86,7 +86,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.6.1
+                0.7.0
               </div>
             
           
@@ -117,16 +117,22 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
-<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Data Set Utilities</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Algorithms</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hpf.html">Hierarchical Poisson Factorization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="implicit.html">Implicit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#basic-algorithms">Basic Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#k-nn-algorithms">k-NN Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#matrix-factorization">Matrix Factorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
 </ul>
 
@@ -180,7 +186,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.6.1/doc/algorithms.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.7.0/doc/algorithms.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -218,20 +224,11 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
     text-align: unset;
 }
 </style>
-<div class="section" id="algorithms">
-<h1>Algorithms<a class="headerlink" href="#algorithms" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-lenskit.algorithms">
+<span id="algorithms"></span><h1>Algorithms<a class="headerlink" href="#module-lenskit.algorithms" title="Permalink to this headline">¶</a></h1>
 <p>LKPY provides general algorithmic concepts, along with implementations of several
 algorithms.  These algorithm interfaces are based on the SciKit design patterns
 <a class="reference internal" href="#skapi" id="id1"><span>[SKAPI]</span></a>, adapted for Pandas-based data structures.</p>
-<dl class="citation">
-<dt class="label" id="skapi"><span class="brackets"><a class="fn-backref" href="#id1">SKAPI</a></span></dt>
-<dd><p>Lars Buitinck, Gilles Louppe, Mathieu Blondel, Fabian Pedregosa, Andreas Mueller,
-Olivier Grisel, Vlad Niculae, Peter Prettenhofer, Alexandre Gramfort, Jaques Grobler,
-Robert Layton, Jake Vanderplas, Arnaud Joly, Brian Holt, and Gaël Varoquaux. 2013.
-API design for machine learning software: experiences from the scikit-learn project.
-arXiv:<a class="reference external" href="http://arxiv.org/abs/1309.0238">1309.0238</a> [cs.LG].</p>
-</dd>
-</dl>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Algorithm Families:</span></p>
 <ul>
@@ -241,6 +238,102 @@ arXiv:<a class="reference external" href="http://arxiv.org/abs/1309.0238">1309.0
 <li class="toctree-l1"><a class="reference internal" href="hpf.html">Hierarchical Poisson Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit.html">Implicit</a></li>
 </ul>
+</div>
+<div class="section" id="basic-algorithms">
+<h2>Basic Algorithms<a class="headerlink" href="#basic-algorithms" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="basic.html#lenskit.algorithms.basic.Bias" title="lenskit.algorithms.basic.Bias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">basic.Bias</span></code></a>([items, users, damping])</p></td>
+<td><p>A user-item bias rating prediction algorithm.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="basic.html#lenskit.algorithms.basic.Popular" title="lenskit.algorithms.basic.Popular"><code class="xref py py-obj docutils literal notranslate"><span class="pre">basic.Popular</span></code></a>([selector])</p></td>
+<td><p>Recommend the most popular items.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="basic.html#lenskit.algorithms.basic.TopN" title="lenskit.algorithms.basic.TopN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">basic.TopN</span></code></a>(predictor[, selector])</p></td>
+<td><p>Basic recommender that implements top-N recommendation using a predictor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="basic.html#lenskit.algorithms.basic.Fallback" title="lenskit.algorithms.basic.Fallback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">basic.Fallback</span></code></a>(algorithms, *others)</p></td>
+<td><p>The Fallback algorithm predicts with its first component, uses the second to fill in missing values, and so forth.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="basic.html#lenskit.algorithms.basic.UnratedItemCandidateSelector" title="lenskit.algorithms.basic.UnratedItemCandidateSelector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">basic.UnratedItemCandidateSelector</span></code></a></p></td>
+<td><p><a class="reference internal" href="interfaces.html#lenskit.algorithms.CandidateSelector" title="lenskit.algorithms.CandidateSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">CandidateSelector</span></code></a> that selects items a user has not rated as candidates.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="basic.html#lenskit.algorithms.basic.Memorized" title="lenskit.algorithms.basic.Memorized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">basic.Memorized</span></code></a>(scores)</p></td>
+<td><p>The memorized algorithm memorizes socres provided at construction time.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="k-nn-algorithms">
+<h2>k-NN Algorithms<a class="headerlink" href="#k-nn-algorithms" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="knn.html#lenskit.algorithms.user_knn.UserUser" title="lenskit.algorithms.user_knn.UserUser"><code class="xref py py-obj docutils literal notranslate"><span class="pre">user_knn.UserUser</span></code></a>(nnbrs[, min_nbrs, …])</p></td>
+<td><p>User-user nearest-neighbor collaborative filtering with ratings.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="knn.html#lenskit.algorithms.item_knn.ItemItem" title="lenskit.algorithms.item_knn.ItemItem"><code class="xref py py-obj docutils literal notranslate"><span class="pre">item_knn.ItemItem</span></code></a>(nnbrs[, min_nbrs, …])</p></td>
+<td><p>Item-item nearest-neighbor collaborative filtering with ratings.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="matrix-factorization">
+<h2>Matrix Factorization<a class="headerlink" href="#matrix-factorization" title="Permalink to this headline">¶</a></h2>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="mf.html#lenskit.algorithms.als.BiasedMF" title="lenskit.algorithms.als.BiasedMF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">als.BiasedMF</span></code></a>(features, *[, iterations, reg, …])</p></td>
+<td><p>Biased matrix factorization trained with alternating least squares <a class="reference internal" href="mf.html#zwsp2008" id="id2"><span>[ZWSP2008]</span></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="mf.html#lenskit.algorithms.als.ImplicitMF" title="lenskit.algorithms.als.ImplicitMF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">als.ImplicitMF</span></code></a>(features, *[, iterations, …])</p></td>
+<td><p>Implicit matrix factorization trained with alternating least squares <a class="reference internal" href="mf.html#hkv2008" id="id3"><span>[HKV2008]</span></a>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="mf.html#lenskit.algorithms.funksvd.FunkSVD" title="lenskit.algorithms.funksvd.FunkSVD"><code class="xref py py-obj docutils literal notranslate"><span class="pre">funksvd.FunkSVD</span></code></a>(features[, iterations, …])</p></td>
+<td><p>Algorithm class implementing FunkSVD matrix factorization.</p></td>
+</tr>
+</tbody>
+</table>
+<p>External Library Wrappers</p>
+<table class="longtable docutils align-center">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="implicit.html#lenskit.algorithms.implicit.BPR" title="lenskit.algorithms.implicit.BPR"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit.BPR</span></code></a>(*args, **kwargs)</p></td>
+<td><p>LensKit interface to <code class="xref py py-mod docutils literal notranslate"><span class="pre">implicit.bpr</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="implicit.html#lenskit.algorithms.implicit.ALS" title="lenskit.algorithms.implicit.ALS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">implicit.ALS</span></code></a>(*args, **kwargs)</p></td>
+<td><p>LensKit interface to <code class="xref py py-mod docutils literal notranslate"><span class="pre">implicit.als</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="hpf.html#lenskit.algorithms.hpf.HPF" title="lenskit.algorithms.hpf.HPF"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hpf.HPF</span></code></a>(features, **kwargs)</p></td>
+<td><p>Hierarchical Poisson factorization, provided by <a href="#id5"><span class="problematic" id="id6">hpfrec_</span></a>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
+<dl class="citation">
+<dt class="label" id="skapi"><span class="brackets"><a class="fn-backref" href="#id1">SKAPI</a></span></dt>
+<dd><p>Lars Buitinck, Gilles Louppe, Mathieu Blondel, Fabian Pedregosa, Andreas Mueller,
+Olivier Grisel, Vlad Niculae, Peter Prettenhofer, Alexandre Gramfort, Jaques Grobler,
+Robert Layton, Jake Vanderplas, Arnaud Joly, Brian Holt, and Gaël Varoquaux. 2013.
+API design for machine learning software: experiences from the scikit-learn project.
+arXiv:<a class="reference external" href="http://arxiv.org/abs/1309.0238">1309.0238</a> [cs.LG].</p>
+</dd>
+</dl>
 </div>
 </div>
 
@@ -255,7 +348,7 @@ arXiv:<a class="reference external" href="http://arxiv.org/abs/1309.0238">1309.0
         <a href="basic.html" class="btn btn-neutral float-right" title="Basic and Utility Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="diagnostics.html" class="btn btn-neutral float-left" title="Errors and Diagnostics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="datasets.html" class="btn btn-neutral float-left" title="Data Set Utilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -264,10 +357,10 @@ arXiv:<a class="reference external" href="http://arxiv.org/abs/1309.0238">1309.0
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018 Boise State University
+        &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>d5b1b86b</code>.
+          Revision <code>6514695d</code>.
         </span>
       
 
@@ -288,7 +381,7 @@ arXiv:<a class="reference external" href="http://arxiv.org/abs/1309.0238">1309.0
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.6.1
+      v: 0.7.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -298,6 +391,8 @@ arXiv:<a class="reference external" href="http://arxiv.org/abs/1309.0238">1309.0
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.7.0/">0.7.0</a></dd>
         
           <dd><a href="/en/0.6.1/">0.6.1</a></dd>
         

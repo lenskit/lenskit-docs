@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>k-NN Collaborative Filtering &mdash; LensKit 0.6.1 documentation</title>
+  <title>k-NN Collaborative Filtering &mdash; LensKit 0.7.0 documentation</title>
   
 
   
@@ -86,7 +86,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.6.1
+                0.7.0
               </div>
             
           
@@ -117,7 +117,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
-<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Data Set Utilities</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="algorithms.html">Algorithms</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">k-NN Collaborative Filtering</a><ul>
@@ -128,9 +128,15 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <li class="toctree-l2"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hpf.html">Hierarchical Poisson Factorization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="implicit.html">Implicit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html#basic-algorithms">Basic Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html#k-nn-algorithms">k-NN Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html#matrix-factorization">Matrix Factorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="algorithms.html#references">References</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
 </ul>
 
@@ -186,7 +192,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.6.1/doc/knn.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.7.0/doc/knn.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -241,6 +247,20 @@ a good upgrade path and enable basic experiments out of the box.</p>
 <p>Item-item nearest-neighbor collaborative filtering with ratings. This item-item implementation
 is not terribly configurable; it hard-codes design decisions found to work well in the previous
 Java-based LensKit code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nnbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the maximum number of neighbors for scoring each item (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
+<li><p><strong>min_nbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the minimum number of neighbors for scoring each item</p></li>
+<li><p><strong>min_sim</strong> (<em>double</em>) – minimum similarity threshold for considering a neighbor</p></li>
+<li><p><strong>save_nbrs</strong> (<em>double</em>) – the number of neighbors to save per item in the trained model
+(<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
+<li><p><strong>center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – whether to normalize (mean-center) rating vectors.  Turn this off when working
+with unary data and other data types that don’t respond well to centering.</p></li>
+<li><p><strong>aggregate</strong> – the type of aggregation to do. Can be <code class="docutils literal notranslate"><span class="pre">weighted-average</span></code> or <code class="docutils literal notranslate"><span class="pre">sum</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="attribute">
 <dt id="lenskit.algorithms.item_knn.ItemItem.item_index_">
 <code class="descname">item_index_</code><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.item_index_" title="Permalink to this definition">¶</a></dt>
@@ -354,6 +374,18 @@ override or augment the model’s notion of a user’s preferences.</p></li>
 <p>User-user nearest-neighbor collaborative filtering with ratings. This user-user implementation
 is not terribly configurable; it hard-codes design decisions found to work well in the previous
 Java-based LensKit code.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nnbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the maximum number of neighbors for scoring each item (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
+<li><p><strong>min_nbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the minimum number of neighbors for scoring each item</p></li>
+<li><p><strong>min_sim</strong> (<em>double</em>) – minimum similarity threshold for considering a neighbor</p></li>
+<li><p><strong>center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – whether to normalize (mean-center) rating vectors.  Turn this off when working
+with unary data and other data types that don’t respond well to centering.</p></li>
+<li><p><strong>aggregate</strong> – the type of aggregation to do. Can be <code class="docutils literal notranslate"><span class="pre">weighted-average</span></code> or <code class="docutils literal notranslate"><span class="pre">sum</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
 <dl class="attribute">
 <dt id="lenskit.algorithms.user_knn.UserUser.user_index_">
 <code class="descname">user_index_</code><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.user_index_" title="Permalink to this definition">¶</a></dt>
@@ -474,10 +506,10 @@ recompute the user’s bias at prediction time.</p></li>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018 Boise State University
+        &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>d5b1b86b</code>.
+          Revision <code>6514695d</code>.
         </span>
       
 
@@ -498,7 +530,7 @@ recompute the user’s bias at prediction time.</p></li>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.6.1
+      v: 0.7.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -508,6 +540,8 @@ recompute the user’s bias at prediction time.</p></li>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.7.0/">0.7.0</a></dd>
         
           <dd><a href="/en/0.6.1/">0.6.1</a></dd>
         
