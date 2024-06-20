@@ -1,0 +1,648 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>TensorFlow Algorithms &mdash; LensKit 0.10.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Hierarchical Poisson Factorization" href="hpf.html" />
+    <link rel="prev" title="Classic Matrix Factorization" href="mf.html" /> 
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/tf.html" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = "tf"
+READTHEDOCS_DATA['source_suffix'] = ".rst"
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js" async="async"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> LensKit
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.10.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Overview</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install LensKit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/lenskit/lkpy/releases">Release Notes</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Running Experiments</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Loading Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crossfold.html">Splitting Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Algorithms</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithm Summary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TensorFlow Algorithms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#biased-mf">Biased MF</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#bias-based">Bias-Based</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fully-integrated">Fully Integrated</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#bayesian-personalized-rating">Bayesian Personalized Rating</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hpf.html">Hierarchical Poisson Factorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implicit.html">Implicit</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Tips and Tricks</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Configuration and Internals</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="random.html">Random Number Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals.html">LensKit Internals</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">LensKit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>TensorFlow Algorithms</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/lenskit/lkpy/blob/0.10.0/doc/tf.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-lenskit.algorithms.tf">
+<span id="tensorflow-algorithms"></span><h1>TensorFlow Algorithms<a class="headerlink" href="#module-lenskit.algorithms.tf" title="Permalink to this headline">¶</a></h1>
+<p>LKPY provides several algorithm implementations, particularly matrix
+factorization, using <a class="reference external" href="https://tensorflow.org">TensorFlow</a>.  These algorithms serve two purposes:</p>
+<ul class="simple">
+<li><p>Provide classic algorithms ready to use for recommendation or as
+baselines for new techniques.</p></li>
+<li><p>Demonstrate how to connect TensorFlow to LensKit for use in your own
+experiments.</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="biased-mf">
+<h2>Biased MF<a class="headerlink" href="#biased-mf" title="Permalink to this headline">¶</a></h2>
+<p>These models implement the standard biased matrix factorization model, like
+<a class="reference internal" href="mf.html#lenskit.algorithms.als.BiasedMF" title="lenskit.algorithms.als.BiasedMF"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.als.BiasedMF</span></code></a>, but learn the model parameters
+using TensorFlow’s gradient descent instead of the alternating least squares
+algorithm.</p>
+<div class="section" id="bias-based">
+<h3>Bias-Based<a class="headerlink" href="#bias-based" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="lenskit.algorithms.tf.BiasedMF">
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.algorithms.tf.</code><code class="sig-name descname">BiasedMF</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">features</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">bias</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">damping</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">epochs</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">reg</span><span class="o">=</span><span class="default_value">0.02</span></em>, <em class="sig-param"><span class="n">rng_spec</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.tf.BiasedMF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="mf.html#lenskit.algorithms.mf_common.BiasMFPredictor" title="lenskit.algorithms.mf_common.BiasMFPredictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.mf_common.BiasMFPredictor</span></code></a></p>
+<p>Biased matrix factorization model for explicit feedback, optimized with
+TensorFlow.</p>
+<p>This is a basic TensorFlow implementation of the biased matrix factorization
+model for rating prediction:</p>
+<div class="math notranslate nohighlight">
+\[s(i|u) = b + b_u + b_i + \vec{p}_u \cdot \vec{q_i}\]</div>
+<p>User and item embedding matrices are regularized with <span class="math notranslate nohighlight">\(L_2\)</span> regularization,
+governed by a regularization term <span class="math notranslate nohighlight">\(\lambda\)</span>.  Regularizations for the user
+and item embeddings are then computed as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\lambda_u = \lambda / |U| \\
+\lambda_i = \lambda / |I| \\\end{split}\]</div>
+<p>This rescaling allows the regularization term to be independent of the number of
+users and items.</p>
+<p>Because the model is very simple, this algorithm works best with large
+batch sizes.</p>
+<p>This implementation uses <a class="reference internal" href="basic.html#lenskit.algorithms.basic.Bias" title="lenskit.algorithms.basic.Bias"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.basic.Bias</span></code></a> for computing
+the biases, and uses TensorFlow to fit a matrix factorization on the residuals.
+It then extracts the resulting matrices, and relies on <code class="xref py py-class docutils literal notranslate"><span class="pre">BiasedMFPredictor</span></code>
+to implement the prediction logic, like <a class="reference internal" href="mf.html#lenskit.algorithms.als.BiasedMF" title="lenskit.algorithms.als.BiasedMF"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.als.BiasedMF</span></code></a>.
+Its code is suitable as an example of how to build a Keras/TensorFlow algorithm
+implementation for LensKit where TF is only used in the train stage.</p>
+<p>A variety of resources informed the design, most notably <a class="reference external" href="https://towardsdatascience.com/1fba34180699">this one</a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of latent features to learn.</p></li>
+<li><p><strong>bias</strong> – The bias model to use.</p></li>
+<li><p><strong>damping</strong> – The bias damping, if <code class="docutils literal notranslate"><span class="pre">bias</span></code> is <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>epochs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of epochs to train.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The Keras batch size.</p></li>
+<li><p><strong>reg</strong> (<em>double</em>) – The regularization term <span class="math notranslate nohighlight">\(\lambda\)</span> used to derive embedding vector
+regularizations.</p></li>
+<li><p><strong>rng_spec</strong> – The random number generator initialization.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="lenskit.algorithms.tf.BiasedMF.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ratings</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.tf.BiasedMF.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a model using the specified ratings (or similar) data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.4)"><em>pandas.DataFrame</em></a>) – The ratings data.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms should
+avoid using the same keyword arguments for different purposes, so that
+they can be more easily hybridized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The algorithm object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lenskit.algorithms.tf.BiasedMF.predict_for_user">
+<code class="sig-name descname">predict_for_user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">items</span></em>, <em class="sig-param"><span class="n">ratings</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.tf.BiasedMF.predict_for_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute predictions for a user and items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – the user ID</p></li>
+<li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.4)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>scores for the items, indexed by item id.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.4)">pandas.Series</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="fully-integrated">
+<h3>Fully Integrated<a class="headerlink" href="#fully-integrated" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt id="lenskit.algorithms.tf.IntegratedBiasMF">
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.algorithms.tf.</code><code class="sig-name descname">IntegratedBiasMF</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">features</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">epochs</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">reg</span><span class="o">=</span><span class="default_value">0.02</span></em>, <em class="sig-param"><span class="n">bias_reg</span><span class="o">=</span><span class="default_value">0.2</span></em>, <em class="sig-param"><span class="n">rng_spec</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.tf.IntegratedBiasMF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Predictor</span></code></a></p>
+<p>Biased matrix factorization model for explicit feedback, optimizing both bias
+and embeddings with TensorFlow.</p>
+<p>This is a basic TensorFlow implementation of the biased matrix factorization
+model for rating prediction:</p>
+<div class="math notranslate nohighlight">
+\[s(i|u) = b + b_u + b_i + \vec{p}_u \cdot \vec{q_i}\]</div>
+<p>User and item embedding matrices are regularized with <span class="math notranslate nohighlight">\(L_2\)</span> regularization,
+governed by a regularization term <span class="math notranslate nohighlight">\(\lambda\)</span>.  Regularizations for the user
+and item embeddings are then computed as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\lambda_u = \lambda / |U| \\
+\lambda_i = \lambda / |I| \\\end{split}\]</div>
+<p>This rescaling allows the regularization term to be independent of the number of
+users and items.  The same rescaling applies to the bias regularization.</p>
+<p>Because the model is very simple, this algorithm works best with large
+batch sizes.</p>
+<p>This implementation uses TensorFlow to fit the entire model, including user/item
+biases and residuals, and uses TensorFlow to do the final predictions as well.
+Its code is suitable as an example of how to build a Keras/TensorFlow algorithm
+implementation for LensKit where TF used for the entire process.</p>
+<p>A variety of resources informed the design, most notably <a class="reference external" href="https://towardsdatascience.com/1fba34180699">this one</a> and
+<a href="#id2"><span class="problematic" id="id3">`Chin-chi Hsu's example code`_</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of latent features to learn.</p></li>
+<li><p><strong>epochs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of epochs to train.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The Keras batch size.</p></li>
+<li><p><strong>reg</strong> (<em>double</em>) – The regularization term for the embedding vectors.</p></li>
+<li><p><strong>bias_reg</strong> (<em>double</em>) – The regularization term for the bias vectors.</p></li>
+<li><p><strong>rng_spec</strong> – The random number generator initialization.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="lenskit.algorithms.tf.IntegratedBiasMF.model">
+<code class="sig-name descname">model</code><a class="headerlink" href="#lenskit.algorithms.tf.IntegratedBiasMF.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Keras model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lenskit.algorithms.tf.IntegratedBiasMF.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ratings</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.tf.IntegratedBiasMF.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a model using the specified ratings (or similar) data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.4)"><em>pandas.DataFrame</em></a>) – The ratings data.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms should
+avoid using the same keyword arguments for different purposes, so that
+they can be more easily hybridized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The algorithm object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lenskit.algorithms.tf.IntegratedBiasMF.predict_for_user">
+<code class="sig-name descname">predict_for_user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">items</span></em>, <em class="sig-param"><span class="n">ratings</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.tf.IntegratedBiasMF.predict_for_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute predictions for a user and items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – the user ID</p></li>
+<li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.4)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>scores for the items, indexed by item id.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.4)">pandas.Series</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="bayesian-personalized-rating">
+<h2>Bayesian Personalized Rating<a class="headerlink" href="#bayesian-personalized-rating" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="lenskit.algorithms.tf.BPR">
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.algorithms.tf.</code><code class="sig-name descname">BPR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">features</span><span class="o">=</span><span class="default_value">50</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">epochs</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">batch_size</span><span class="o">=</span><span class="default_value">10000</span></em>, <em class="sig-param"><span class="n">reg</span><span class="o">=</span><span class="default_value">0.02</span></em>, <em class="sig-param"><span class="n">neg_count</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">rng_spec</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.tf.BPR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Predictor</span></code></a></p>
+<p>Bayesian Personalized Ranking with matrix factorization, optimized with TensorFlow.</p>
+<p>This is a basic TensorFlow implementation of the BPR algorithm _[BPR].</p>
+<p>User and item embedding matrices are regularized with <span class="math notranslate nohighlight">\(L_2\)</span> regularization,
+governed by a regularization term <span class="math notranslate nohighlight">\(\lambda\)</span>.  Regularizations for the user
+and item embeddings are then computed as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\lambda_u = \lambda / |U| \\
+\lambda_i = \lambda / |I| \\\end{split}\]</div>
+<p>This rescaling allows the regularization term to be independent of the number of
+users and items.</p>
+<p>Because the model is relatively simple, optimization works best with large
+batch sizes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of latent features to learn.</p></li>
+<li><p><strong>epochs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of epochs to train.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The Keras batch size.  This is the number of <strong>positive</strong> examples
+to sample in each batch.  If <code class="docutils literal notranslate"><span class="pre">neg_count</span></code> is greater than 1, the
+batch size will be similarly multipled.</p></li>
+<li><p><strong>reg</strong> (<em>double</em>) – The regularization term for the embedding vectors.</p></li>
+<li><p><strong>neg_count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of negative examples to sample for each positive one.</p></li>
+<li><p><strong>rng_spec</strong> – The random number generator initialization.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="lenskit.algorithms.tf.BPR.model">
+<code class="sig-name descname">model</code><a class="headerlink" href="#lenskit.algorithms.tf.BPR.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Keras model.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lenskit.algorithms.tf.BPR.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ratings</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.tf.BPR.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a model using the specified ratings (or similar) data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.4)"><em>pandas.DataFrame</em></a>) – The ratings data.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms should
+avoid using the same keyword arguments for different purposes, so that
+they can be more easily hybridized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The algorithm object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lenskit.algorithms.tf.BPR.predict_for_user">
+<code class="sig-name descname">predict_for_user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">items</span></em>, <em class="sig-param"><span class="n">ratings</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.tf.BPR.predict_for_user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute predictions for a user and items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – the user ID</p></li>
+<li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.4)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>scores for the items, indexed by item id.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.4)">pandas.Series</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="hpf.html" class="btn btn-neutral float-right" title="Hierarchical Poisson Factorization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mf.html" class="btn btn-neutral float-left" title="Classic Matrix Factorization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018–2019 Boise State University
+      
+        <span class="commit">
+          Revision <code>58256cdc</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+<p>This material is based upon work supported by the National Science Foundation under
+Grant No. <a href="https://md.ekstrandom.net/research/career">IIS 17-51278</a>. Any
+opinions, findings, and conclusions or recommendations expressed in this material
+are those of the author(s) and do not necessarily reflect the views of the
+National Science Foundation.  This page has not been approved by
+Boise State University and does not reflect official university positions.</p>
+<script data-goatcounter="https://lenskit.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.10.0
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.10.0/">0.10.0</a></dd>
+        
+          <dd><a href="/en/0.9.0/">0.9.0</a></dd>
+        
+          <dd><a href="/en/0.8.4/">0.8.4</a></dd>
+        
+          <dd><a href="/en/0.8.1/">0.8.1</a></dd>
+        
+          <dd><a href="/en/0.8.0/">0.8.0</a></dd>
+        
+          <dd><a href="/en/0.7.0/">0.7.0</a></dd>
+        
+          <dd><a href="/en/0.6.1/">0.6.1</a></dd>
+        
+          <dd><a href="/en/0.6.0/">0.6.0</a></dd>
+        
+          <dd><a href="/en/0.5.0/">0.5.0</a></dd>
+        
+          <dd><a href="/en/0.3.0/">0.3.0</a></dd>
+        
+          <dd><a href="/en/0.2.0/">0.2.0</a></dd>
+        
+          <dd><a href="/en/0.1.0/">0.1.0</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/lkpy/?fromdocs=lkpy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/lkpy/?fromdocs=lkpy">Builds</a>
+          </dd>
+      </dl>
+      <hr/>
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+   
+
+</body>
+</html>

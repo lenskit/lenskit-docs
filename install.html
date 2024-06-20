@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Hierarchical Poisson Factorization &mdash; LensKit 0.10.0 documentation</title>
+  <title>Install LensKit &mdash; LensKit 0.10.0 documentation</title>
   
 
   
@@ -39,8 +39,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Implicit" href="implicit.html" />
-    <link rel="prev" title="TensorFlow Algorithms" href="tf.html" /> 
+    <link rel="next" title="Getting Started" href="GettingStarted.html" />
+    <link rel="prev" title="LensKit" href="index.html" /> 
 
 <!-- RTD Extra Head -->
 
@@ -48,7 +48,7 @@
 Always link to the latest version, as canonical.
 http://docs.readthedocs.org/en/latest/canonical.html
 -->
-<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/hpf.html" />
+<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/install.html" />
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
@@ -56,7 +56,7 @@ http://docs.readthedocs.org/en/latest/canonical.html
 
 <!-- Add page-specific data, which must exist in the page js, not global -->
 <script type="text/javascript">
-READTHEDOCS_DATA['page'] = "hpf"
+READTHEDOCS_DATA['page'] = "install"
 READTHEDOCS_DATA['source_suffix'] = ".rst"
 </script>
 
@@ -112,8 +112,8 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
             
             
               <p class="caption"><span class="caption-text">Overview</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="install.html">Install LensKit</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Install LensKit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/lenskit/lkpy/releases">Release Notes</a></li>
@@ -126,14 +126,14 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Algorithms</span></p>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithm Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tf.html">TensorFlow Algorithms</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Hierarchical Poisson Factorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hpf.html">Hierarchical Poisson Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implicit.html">Implicit</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Tips and Tricks</span></p>
@@ -192,14 +192,14 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Hierarchical Poisson Factorization</li>
+      <li>Install LensKit</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.10.0/doc/hpf.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.10.0/doc/install.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -237,75 +237,32 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
     text-align: unset;
 }
 </style>
-<div class="section" id="module-lenskit.algorithms.hpf">
-<span id="hierarchical-poisson-factorization"></span><h1>Hierarchical Poisson Factorization<a class="headerlink" href="#module-lenskit.algorithms.hpf" title="Permalink to this headline">¶</a></h1>
-<p>This module provides a LensKit bridge to the <a class="reference external" href="https://hpfrec.readthedocs.io/en/latest/">hpfrec</a> library implementing hierarchical Poisson
-factorization <a class="reference internal" href="#ghb2013" id="id1"><span>[GHB2013]</span></a>.</p>
-<dl class="citation">
-<dt class="label" id="ghb2013"><span class="brackets"><a class="fn-backref" href="#id1">GHB2013</a></span></dt>
-<dd><p>Prem Gopalan, Jake M. Hofman, and David M. Blei. 2013.
-Scalable Recommendation with Poisson Factorization.
-arXiv:1311.1704 [cs, stat] (November 2013). Retrieved February 9, 2017
-from <a class="reference external" href="http://arxiv.org/abs/1311.1704">http://arxiv.org/abs/1311.1704</a>.</p>
-</dd>
-</dl>
-<dl class="py class">
-<dt id="lenskit.algorithms.hpf.HPF">
-<em class="property">class </em><code class="sig-prename descclassname">lenskit.algorithms.hpf.</code><code class="sig-name descname">HPF</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">features</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="mf.html#lenskit.algorithms.mf_common.MFPredictor" title="lenskit.algorithms.mf_common.MFPredictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.mf_common.MFPredictor</span></code></a></p>
-<p>Hierarchical Poisson factorization, provided by
-<a class="reference external" href="https://hpfrec.readthedocs.io/en/latest/">hpfrec</a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the number of features</p></li>
-<li><p><strong>**kwargs</strong> – arguments passed to <a class="reference external" href="https://hpfrec.readthedocs.io/en/latest/source/hpfrec.html#hpfrec.HPF" title="(in hpfrec v0.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpfrec.HPF</span></code></a>.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt id="lenskit.algorithms.hpf.HPF.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ratings</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF.fit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Train a model using the specified ratings (or similar) data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.4)"><em>pandas.DataFrame</em></a>) – The ratings data.</p></li>
-<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms should
-avoid using the same keyword arguments for different purposes, so that
-they can be more easily hybridized.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The algorithm object.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt id="lenskit.algorithms.hpf.HPF.predict_for_user">
-<code class="sig-name descname">predict_for_user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">items</span></em>, <em class="sig-param"><span class="n">ratings</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF.predict_for_user" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute predictions for a user and items.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>user</strong> – the user ID</p></li>
-<li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
-<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.4)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
-override or augment the model’s notion of a user’s preferences.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>scores for the items, indexed by item id.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.4)">pandas.Series</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
+<div class="section" id="install-lenskit">
+<h1>Install LensKit<a class="headerlink" href="#install-lenskit" title="Permalink to this headline">¶</a></h1>
+<p>To install the current release with Anaconda (recommended):</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="n">c</span> <span class="n">lenskit</span> <span class="n">lenskit</span>
+</pre></div>
+</div>
+<p>The packages in the <code class="docutils literal notranslate"><span class="pre">lenskit</span></code> channel are intended to be used with
+Anaconda’s default channels.  We publish packages for Python 3.6, 3.7,
+and 3.8.</p>
+<p>You can also use <code class="docutils literal notranslate"><span class="pre">pip</span></code> to install LensKit in a stock Python environment,
+such as a virtual environment:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">lenskit</span>
+</pre></div>
+</div>
+<p>To use the latest development version, install directly from GitHub:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">git</span><span class="o">+</span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">lenskit</span><span class="o">/</span><span class="n">lkpy</span>
+</pre></div>
+</div>
+<p>Then see <a class="reference external" href="GettingStarted.html">Getting Started</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>LensKit is optimized for MKL-based Anaconda installs. It works in other
+Python environments, but performance will usually suffer for some
+algorithms.  <a class="reference internal" href="knn.html#module-lenskit.algorithms.item_knn" title="lenskit.algorithms.item_knn"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.item_knn</span></code></a> is particularly
+affected by this.</p>
+</div>
 </div>
 
 
@@ -316,10 +273,10 @@ override or augment the model’s notion of a user’s preferences.</p></li>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="implicit.html" class="btn btn-neutral float-right" title="Implicit" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="GettingStarted.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="tf.html" class="btn btn-neutral float-left" title="TensorFlow Algorithms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="LensKit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
