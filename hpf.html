@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Hierarchical Poisson Factorization &mdash; LensKit 0.7.0 documentation</title>
+  <title>Hierarchical Poisson Factorization &mdash; LensKit 0.8.0 documentation</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -55,8 +56,8 @@ http://docs.readthedocs.org/en/latest/canonical.html
 
 <!-- Add page-specific data, which must exist in the page js, not global -->
 <script type="text/javascript">
-READTHEDOCS_DATA['page'] = 'hpf'
-READTHEDOCS_DATA['source_suffix'] = '.rst'
+READTHEDOCS_DATA['page'] = "hpf"
+READTHEDOCS_DATA['source_suffix'] = ".rst"
 </script>
 
 <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
@@ -86,7 +87,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.7.0
+                0.8.0
               </div>
             
           
@@ -188,7 +189,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.7.0/doc/hpf.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.8.0/doc/hpf.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -207,13 +208,13 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
-.nbinput.nblast,
-.nboutput.nblast {
+.nbinput.nblast.container,
+.nboutput.nblast.container {
     margin-bottom: 19px;  /* padding has already 5px */
 }
 
 /* ... except between code cells! */
-.nblast + .nbinput {
+.nblast.container + .nbinput.container {
     margin-top: -19px;
 }
 
@@ -240,26 +241,27 @@ from <a class="reference external" href="http://arxiv.org/abs/1311.1704">http://
 </dl>
 <dl class="class">
 <dt id="lenskit.algorithms.hpf.HPF">
-<em class="property">class </em><code class="descclassname">lenskit.algorithms.hpf.</code><code class="descname">HPF</code><span class="sig-paren">(</span><em>features</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.algorithms.hpf.</code><code class="sig-name descname">HPF</code><span class="sig-paren">(</span><em class="sig-param">features</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF" title="Permalink to this definition">¶</a></dt>
 <dd><p>Hierarchical Poisson factorization, provided by <a class="reference external" href="https://hpfrec.readthedocs.io/en/latest/">hpfrec</a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of features</p></li>
+<li><p><strong>features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the number of features</p></li>
 <li><p><strong>**kwargs</strong> – arguments passed to <a class="reference external" href="https://hpfrec.readthedocs.io/en/latest/source/hpfrec.html#hpfrec.HPF" title="(in hpfrec v0.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">hpfrec.HPF</span></code></a>.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="method">
 <dt id="lenskit.algorithms.hpf.HPF.fit">
-<code class="descname">fit</code><span class="sig-paren">(</span><em>ratings</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF.fit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">ratings</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train a model using the specified ratings (or similar) data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – The ratings data.</p></li>
-<li><p><strong>args</strong> – Additional training data the algorithm may require.</p></li>
-<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.3)"><em>pandas.DataFrame</em></a>) – The ratings data.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms should
+avoid using the same keyword arguments for different purposes, so that
+they can be more easily hybridized.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -270,14 +272,14 @@ from <a class="reference external" href="http://arxiv.org/abs/1311.1704">http://
 
 <dl class="method">
 <dt id="lenskit.algorithms.hpf.HPF.predict_for_user">
-<code class="descname">predict_for_user</code><span class="sig-paren">(</span><em>user</em>, <em>items</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF.predict_for_user" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">predict_for_user</code><span class="sig-paren">(</span><em class="sig-param">user</em>, <em class="sig-param">items</em>, <em class="sig-param">ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF.predict_for_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute predictions for a user and items.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>user</strong> – the user ID</p></li>
 <li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
-<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.25.3)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
 override or augment the model’s notion of a user’s preferences.</p></li>
 </ul>
 </dd>
@@ -285,7 +287,7 @@ override or augment the model’s notion of a user’s preferences.</p></li>
 <dd class="field-even"><p>scores for the items, indexed by item id.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)">pandas.Series</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.25.3)">pandas.Series</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -317,7 +319,7 @@ override or augment the model’s notion of a user’s preferences.</p></li>
         &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>6514695d</code>.
+          Revision <code>64c4e776</code>.
         </span>
       
 
@@ -338,7 +340,7 @@ override or augment the model’s notion of a user’s preferences.</p></li>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.7.0
+      v: 0.8.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -348,6 +350,8 @@ override or augment the model’s notion of a user’s preferences.</p></li>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.8.0/">0.8.0</a></dd>
         
           <dd><a href="/en/0.7.0/">0.7.0</a></dd>
         

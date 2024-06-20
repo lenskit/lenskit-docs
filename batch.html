@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Batch-Running Recommenders &mdash; LensKit 0.7.0 documentation</title>
+  <title>Batch-Running Recommenders &mdash; LensKit 0.8.0 documentation</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -55,8 +56,8 @@ http://docs.readthedocs.org/en/latest/canonical.html
 
 <!-- Add page-specific data, which must exist in the page js, not global -->
 <script type="text/javascript">
-READTHEDOCS_DATA['page'] = 'batch'
-READTHEDOCS_DATA['source_suffix'] = '.rst'
+READTHEDOCS_DATA['page'] = "batch"
+READTHEDOCS_DATA['source_suffix'] = ".rst"
 </script>
 
 <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
@@ -86,7 +87,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.7.0
+                0.8.0
               </div>
             
           
@@ -183,7 +184,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.7.0/doc/batch.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.8.0/doc/batch.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -202,13 +203,13 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
-.nbinput.nblast,
-.nboutput.nblast {
+.nbinput.nblast.container,
+.nboutput.nblast.container {
     margin-bottom: 19px;  /* padding has already 5px */
 }
 
 /* ... except between code cells! */
-.nblast + .nbinput {
+.nblast.container + .nbinput.container {
     margin-top: -19px;
 }
 
@@ -229,7 +230,7 @@ predictions at the same time, useful for evaluations and experiments.</p>
 <h2>Recommendation<a class="headerlink" href="#recommendation" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lenskit.batch.recommend">
-<code class="descclassname">lenskit.batch.</code><code class="descname">recommend</code><span class="sig-paren">(</span><em>algo</em>, <em>users</em>, <em>n</em>, <em>candidates=None</em>, <em>*</em>, <em>n_jobs=None</em>, <em>dask_result=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.recommend" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.batch.</code><code class="sig-name descname">recommend</code><span class="sig-paren">(</span><em class="sig-param">algo</em>, <em class="sig-param">users</em>, <em class="sig-param">n</em>, <em class="sig-param">candidates=None</em>, <em class="sig-param">*</em>, <em class="sig-param">n_jobs=None</em>, <em class="sig-param">dask_result=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.recommend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch-recommend for multiple users.  The provided algorithm should be a
 <code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.Recommender</span></code>.</p>
 <dl class="field-list simple">
@@ -237,12 +238,12 @@ predictions at the same time, useful for evaluations and experiments.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>algo</strong> – the algorithm</p></li>
 <li><p><strong>users</strong> (<em>array-like</em>) – the users to recommend for</p></li>
-<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of recommendations to generate (None for unlimited)</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the number of recommendations to generate (None for unlimited)</p></li>
 <li><p><strong>candidates</strong> – the users’ candidate sets. This can be a function, in which case it will
 be passed each user ID; it can also be a dictionary, in which case user
 IDs will be looked up in it.  Pass <code class="docutils literal notranslate"><span class="pre">None</span></code> to use the recommender’s
 built-in candidate selector (usually recommended).</p></li>
-<li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – <p>The number of processes to use for parallel recommendations.  Passed as
+<li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – <p>The number of processes to use for parallel recommendations.  Passed as
 <code class="docutils literal notranslate"><span class="pre">n_jobs</span></code> to <a href="#id1"><span class="problematic" id="id2">:cls:`joblib.Parallel`</span></a>.  The default, <code class="docutils literal notranslate"><span class="pre">None</span></code>, will make
 the process sequential _unless_ called inside the <code class="xref py py-func docutils literal notranslate"><span class="pre">joblib.parallel_backend()</span></code>
 context manager.</p>
@@ -251,7 +252,7 @@ context manager.</p>
 <p><code class="docutils literal notranslate"><span class="pre">nprocs</span></code> is accepted as a deprecated alias.</p>
 </div>
 </p></li>
-<li><p><strong>dask_result</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Whether to return a Dask data frame instead of a Pandas one.</p></li>
+<li><p><strong>dask_result</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – Whether to return a Dask data frame instead of a Pandas one.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -266,10 +267,10 @@ context manager.</p>
 <h2>Rating Prediction<a class="headerlink" href="#rating-prediction" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lenskit.batch.predict">
-<code class="descclassname">lenskit.batch.</code><code class="descname">predict</code><span class="sig-paren">(</span><em>algo</em>, <em>pairs</em>, <em>*</em>, <em>n_jobs=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.predict" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.batch.</code><code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">algo</em>, <em class="sig-param">pairs</em>, <em class="sig-param">*</em>, <em class="sig-param">n_jobs=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate predictions for user-item pairs.  The provided algorithm should be a
 <code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.Predictor</span></code> or a function of two arguments: the user ID and
-a list of item IDs. It should return a dictionary or a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>
+a list of item IDs. It should return a dictionary or a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.25.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>
 mapping item IDs to predictions.</p>
 <p>To use this function, provide a pre-fit algorithm:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.algorithms.basic</span> <span class="kn">import</span> <span class="n">Bias</span>
@@ -294,9 +295,9 @@ mapping item IDs to predictions.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>algo</strong> (<a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><em>lenskit.algorithms.Predictor</em></a>) – A rating predictor function or algorithm.</p></li>
-<li><p><strong>pairs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – A data frame of (<code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">item</span></code>) pairs to predict for. If this frame also
+<li><p><strong>pairs</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.3)"><em>pandas.DataFrame</em></a>) – A data frame of (<code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">item</span></code>) pairs to predict for. If this frame also
 contains a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, it will be included in the result.</p></li>
-<li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – <p>The number of processes to use for parallel batch prediction.  Passed as
+<li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – <p>The number of processes to use for parallel batch prediction.  Passed as
 <code class="docutils literal notranslate"><span class="pre">n_jobs</span></code> to <a href="#id3"><span class="problematic" id="id4">:cls:`joblib.Parallel`</span></a>.  The default, <code class="docutils literal notranslate"><span class="pre">None</span></code>, will make
 the process sequential _unless_ called inside the <code class="xref py py-func docutils literal notranslate"><span class="pre">joblib.parallel_backend()</span></code>
 context manager.</p>
@@ -313,7 +314,7 @@ the prediction results. If <code class="docutils literal notranslate"><span clas
 result will also contain a <cite>rating</cite> column.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)">pandas.DataFrame</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.3)">pandas.DataFrame</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -325,11 +326,11 @@ result will also contain a <cite>rating</cite> column.</p>
 or algorithm variants, simultaneously, across multiple data sets. It can extract parameters
 from algorithms and include them in the output, useful for hyperparameter search.</p>
 <p>For example:</p>
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lenskit.batch</span> <span class="k">import</span> <span class="n">MultiEval</span>
-<span class="kn">from</span> <span class="nn">lenskit.crossfold</span> <span class="k">import</span> <span class="n">partition_users</span><span class="p">,</span> <span class="n">SampleN</span>
-<span class="kn">from</span> <span class="nn">lenskit.algorithms</span> <span class="k">import</span> <span class="n">basic</span><span class="p">,</span> <span class="n">als</span>
-<span class="kn">from</span> <span class="nn">lenskit.util</span> <span class="k">import</span> <span class="n">load_ml_ratings</span>
-<span class="kn">from</span> <span class="nn">lenskit</span> <span class="k">import</span> <span class="n">topn</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lenskit.batch</span> <span class="kn">import</span> <span class="n">MultiEval</span>
+<span class="kn">from</span> <span class="nn">lenskit.crossfold</span> <span class="kn">import</span> <span class="n">partition_users</span><span class="p">,</span> <span class="n">SampleN</span>
+<span class="kn">from</span> <span class="nn">lenskit.algorithms</span> <span class="kn">import</span> <span class="n">basic</span><span class="p">,</span> <span class="n">als</span>
+<span class="kn">from</span> <span class="nn">lenskit.util</span> <span class="kn">import</span> <span class="n">load_ml_ratings</span>
+<span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">topn</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 </div>
@@ -644,40 +645,40 @@ algorithm configuration:</p>
 <h3>Multi-Eval Class Reference<a class="headerlink" href="#multi-eval-class-reference" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="lenskit.batch.MultiEval">
-<em class="property">class </em><code class="descclassname">lenskit.batch.</code><code class="descname">MultiEval</code><span class="sig-paren">(</span><em>path</em>, <em>*</em>, <em>predict=True</em>, <em>recommend=100</em>, <em>candidates=None</em>, <em>save_models=False</em>, <em>eval_n_jobs=None</em>, <em>combine=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.batch.</code><code class="sig-name descname">MultiEval</code><span class="sig-paren">(</span><em class="sig-param">path</em>, <em class="sig-param">*</em>, <em class="sig-param">predict=True</em>, <em class="sig-param">recommend=100</em>, <em class="sig-param">candidates=None</em>, <em class="sig-param">save_models=False</em>, <em class="sig-param">eval_n_jobs=None</em>, <em class="sig-param">combine=True</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval" title="Permalink to this definition">¶</a></dt>
 <dd><p>A runner for carrying out multiple evaluations, such as parameter sweeps.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>path</strong> (str or <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a>) – the working directory for this evaluation.
+<li><p><strong>path</strong> (str or <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a>) – the working directory for this evaluation.
 It will be created if it does not exist.</p></li>
-<li><p><strong>predict</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – whether to generate rating predictions.</p></li>
-<li><p><strong>recommend</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of recommendations to generate per user. Any false-y value (<code class="docutils literal notranslate"><span class="pre">None</span></code>,
+<li><p><strong>predict</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – whether to generate rating predictions.</p></li>
+<li><p><strong>recommend</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the number of recommendations to generate per user. Any false-y value (<code class="docutils literal notranslate"><span class="pre">None</span></code>,
 <code class="docutils literal notranslate"><span class="pre">False</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code>) will disable top-n. The literal value <code class="docutils literal notranslate"><span class="pre">True</span></code> will generate
 recommendation lists of unlimited size.</p></li>
 <li><p><strong>candidates</strong> (<em>function</em>) – the default candidate set generator for recommendations.  It should take the
 training data and return a candidate generator, itself a function mapping user
 IDs to candidate sets.  Pass <code class="docutils literal notranslate"><span class="pre">None</span></code> to use the default candidate set configured
 for each algorithm (recommended).</p></li>
-<li><p><strong>save_models</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – save individual estimated models to disk.  If <code class="docutils literal notranslate"><span class="pre">True</span></code>, models are pickled to
+<li><p><strong>save_models</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – save individual estimated models to disk.  If <code class="docutils literal notranslate"><span class="pre">True</span></code>, models are pickled to
 <code class="docutils literal notranslate"><span class="pre">.pkl</span></code> files; if <code class="docutils literal notranslate"><span class="pre">'gzip'</span></code>, they are pickled to gzip-compressed <code class="docutils literal notranslate"><span class="pre">.pkl.gz</span></code>
 files; if <code class="docutils literal notranslate"><span class="pre">'joblib'</span></code>, they are pickled with <code class="xref py py-func docutils literal notranslate"><span class="pre">joblib.dump()</span></code> to uncompressed
 <code class="docutils literal notranslate"><span class="pre">.jlpkl</span></code> files.</p></li>
-<li><p><strong>eval_n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – Value to pass to the <code class="docutils literal notranslate"><span class="pre">n_jobs</span></code> parameter in <a class="reference internal" href="#lenskit.batch.predict" title="lenskit.batch.predict"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.batch.predict()</span></code></a> and
+<li><p><strong>eval_n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a>) – Value to pass to the <code class="docutils literal notranslate"><span class="pre">n_jobs</span></code> parameter in <a class="reference internal" href="#lenskit.batch.predict" title="lenskit.batch.predict"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.batch.predict()</span></code></a> and
 <a class="reference internal" href="#lenskit.batch.recommend" title="lenskit.batch.recommend"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.batch.recommend()</span></code></a>.</p></li>
-<li><p><strong>combine</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – whether to combine output; if <code class="docutils literal notranslate"><span class="pre">False</span></code>, output will be left in separate files, if
+<li><p><strong>combine</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – whether to combine output; if <code class="docutils literal notranslate"><span class="pre">False</span></code>, output will be left in separate files, if
 <code class="docutils literal notranslate"><span class="pre">True</span></code>, it will be in a single set of files (runs, recommendations, and predictions).</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="method">
 <dt id="lenskit.batch.MultiEval.add_algorithms">
-<code class="descname">add_algorithms</code><span class="sig-paren">(</span><em>algos</em>, <em>attrs=[]</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.add_algorithms" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_algorithms</code><span class="sig-paren">(</span><em class="sig-param">algos</em>, <em class="sig-param">attrs=[]</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.add_algorithms" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add one or more algorithms to the run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>algos</strong> (<em>algorithm</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – the algorithm(s) to add.</p></li>
+<li><p><strong>algos</strong> (<em>algorithm</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – the algorithm(s) to add.</p></li>
 <li><p><strong>attrs</strong> (<em>list of str</em>) – a list of attributes to extract from the algorithm objects and include in
 the run descriptions.</p></li>
 <li><p><strong>kwargs</strong> – additional attributes to include in the run descriptions.</p></li>
@@ -688,7 +689,7 @@ the run descriptions.</p></li>
 
 <dl class="method">
 <dt id="lenskit.batch.MultiEval.add_datasets">
-<code class="descname">add_datasets</code><span class="sig-paren">(</span><em>data</em>, <em>name=None</em>, <em>candidates=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.add_datasets" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_datasets</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">name=None</em>, <em class="sig-param">candidates=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.add_datasets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add one or more datasets to the run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -712,25 +713,25 @@ detection using <code class="xref py py-func docutils literal notranslate"><span
 
 <dl class="method">
 <dt id="lenskit.batch.MultiEval.collect_results">
-<code class="descname">collect_results</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.collect_results" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">collect_results</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.collect_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect the results from non-combined runs into combined output files.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lenskit.batch.MultiEval.persist_data">
-<code class="descname">persist_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.persist_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">persist_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.persist_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Persist the data for an experiment, replacing in-memory data sets with file names.
 Once this has been called, the sweep can be pickled.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="lenskit.batch.MultiEval.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>runs=None</em>, <em>*</em>, <em>progress=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.run" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><em class="sig-param">runs=None</em>, <em class="sig-param">*</em>, <em class="sig-param">progress=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run the evaluation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>runs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> or </em><em>set-like</em>) – If provided, a specific set of runs to run.  Useful for splitting
+<li><p><strong>runs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> or </em><em>set-like</em>) – If provided, a specific set of runs to run.  Useful for splitting
 an experiment into individual runs.  This is a set of 1-based run
 IDs, not 0-based indexes.</p></li>
 <li><p><strong>progress</strong> – A <code class="xref py py-func docutils literal notranslate"><span class="pre">tqdm.tqdm()</span></code>-compatible progress function.</p></li>
@@ -741,7 +742,7 @@ IDs, not 0-based indexes.</p></li>
 
 <dl class="method">
 <dt id="lenskit.batch.MultiEval.run_count">
-<code class="descname">run_count</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.run_count" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">run_count</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.run_count" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the number of runs in this evaluation.</p>
 </dd></dl>
 
@@ -774,7 +775,7 @@ IDs, not 0-based indexes.</p></li>
         &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>6514695d</code>.
+          Revision <code>64c4e776</code>.
         </span>
       
 
@@ -795,7 +796,7 @@ IDs, not 0-based indexes.</p></li>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.7.0
+      v: 0.8.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -805,6 +806,8 @@ IDs, not 0-based indexes.</p></li>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.8.0/">0.8.0</a></dd>
         
           <dd><a href="/en/0.7.0/">0.7.0</a></dd>
         

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Crossfold preparation &mdash; LensKit 0.7.0 documentation</title>
+  <title>Crossfold preparation &mdash; LensKit 0.8.0 documentation</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -55,8 +56,8 @@ http://docs.readthedocs.org/en/latest/canonical.html
 
 <!-- Add page-specific data, which must exist in the page js, not global -->
 <script type="text/javascript">
-READTHEDOCS_DATA['page'] = 'crossfold'
-READTHEDOCS_DATA['source_suffix'] = '.rst'
+READTHEDOCS_DATA['page'] = "crossfold"
+READTHEDOCS_DATA['source_suffix'] = ".rst"
 </script>
 
 <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
@@ -86,7 +87,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.7.0
+                0.8.0
               </div>
             
           
@@ -183,7 +184,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.7.0/doc/crossfold.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.8.0/doc/crossfold.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -202,13 +203,13 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
-.nbinput.nblast,
-.nboutput.nblast {
+.nbinput.nblast.container,
+.nboutput.nblast.container {
     margin-bottom: 19px;  /* padding has already 5px */
 }
 
 /* ... except between code cells! */
-.nblast + .nbinput {
+.nblast.container + .nbinput.container {
     margin-top: -19px;
 }
 
@@ -254,13 +255,13 @@ splits, each of which extracts 20% of the rows for testing and leaves 80% for
 training.</p>
 <dl class="function">
 <dt id="lenskit.crossfold.partition_rows">
-<code class="descclassname">lenskit.crossfold.</code><code class="descname">partition_rows</code><span class="sig-paren">(</span><em>data</em>, <em>partitions</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.partition_rows" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">partition_rows</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">partitions</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.partition_rows" title="Permalink to this definition">¶</a></dt>
 <dd><p>Partition a frame of ratings or other datainto train-test partitions.  This function does not
 care what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFrame (or equivalent).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or equivalent) – a data frame containing ratings or other data you wish to partition.</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or equivalent) – a data frame containing ratings or other data you wish to partition.</p></li>
 <li><p><strong>partitions</strong> (<em>integer</em>) – the number of partitions to produce</p></li>
 </ul>
 </dd>
@@ -275,7 +276,7 @@ care what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFr
 
 <dl class="function">
 <dt id="lenskit.crossfold.sample_rows">
-<code class="descclassname">lenskit.crossfold.</code><code class="descname">sample_rows</code><span class="sig-paren">(</span><em>data</em>, <em>partitions</em>, <em>size</em>, <em>disjoint=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.sample_rows" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">sample_rows</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">partitions</em>, <em class="sig-param">size</em>, <em class="sig-param">disjoint=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.sample_rows" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sample train-test a frame of ratings into train-test partitions.  This function does not care
 what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFrame (or equivalent).</p>
 <p>We can loop over a sequence of train-test pairs:</p>
@@ -300,11 +301,11 @@ what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFrame (
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – Data frame containing ratings or other data to partition.</p></li>
-<li><p><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – The number of partitions to produce.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, produce a _single_ train-test
+<li><p><strong>data</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.3)"><em>pandas.DataFrame</em></a>) – Data frame containing ratings or other data to partition.</p></li>
+<li><p><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a>) – The number of partitions to produce.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, produce a _single_ train-test
 pair instead of an iterator or list.</p></li>
-<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The size of each sample.</p></li>
-<li><p><strong>disjoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, force samples to be disjoint.</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The size of each sample.</p></li>
+<li><p><strong>disjoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, force samples to be disjoint.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -335,14 +336,14 @@ require that the input data frame have a <cite>user</cite> column with the user 
 </ol>
 <dl class="function">
 <dt id="lenskit.crossfold.partition_users">
-<code class="descclassname">lenskit.crossfold.</code><code class="descname">partition_users</code><span class="sig-paren">(</span><em>data</em>, <em>partitions: int</em>, <em>method: lenskit.crossfold.PartitionMethod</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.partition_users" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">partition_users</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">partitions: int</em>, <em class="sig-param">method: lenskit.crossfold.PartitionMethod</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.partition_users" title="Permalink to this definition">¶</a></dt>
 <dd><p>Partition a frame of ratings or other data into train-test partitions user-by-user.
 This function does not care what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFrame
 (or equivalent) and has a <cite>user</cite> column.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or equivalent) – a data frame containing ratings or other data you wish to partition.</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or equivalent) – a data frame containing ratings or other data you wish to partition.</p></li>
 <li><p><strong>partitions</strong> (<em>integer</em>) – the number of partitions to produce</p></li>
 <li><p><strong>method</strong> – The method for selecting test rows for each user.</p></li>
 </ul>
@@ -358,16 +359,16 @@ This function does not care what kind of data is in <cite>data</cite>, so long a
 
 <dl class="function">
 <dt id="lenskit.crossfold.sample_users">
-<code class="descclassname">lenskit.crossfold.</code><code class="descname">sample_users</code><span class="sig-paren">(</span><em>data</em>, <em>partitions: int</em>, <em>size: int</em>, <em>method: lenskit.crossfold.PartitionMethod</em>, <em>disjoint=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.sample_users" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">sample_users</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">partitions: int</em>, <em class="sig-param">size: int</em>, <em class="sig-param">method: lenskit.crossfold.PartitionMethod</em>, <em class="sig-param">disjoint=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.sample_users" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create train-test partitions by sampling users.
 This function does not care what kind of data is in <cite>data</cite>, so long as it is
 a Pandas DataFrame (or equivalent) and has a <cite>user</cite> column.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – Data frame containing ratings or other data you wish to partition.</p></li>
-<li><p><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The number of partitions.</p></li>
-<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The sample size.</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.3)"><em>pandas.DataFrame</em></a>) – Data frame containing ratings or other data you wish to partition.</p></li>
+<li><p><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of partitions.</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The sample size.</p></li>
 <li><p><strong>method</strong> (<a class="reference internal" href="#lenskit.crossfold.PartitionMethod" title="lenskit.crossfold.PartitionMethod"><em>PartitionMethod</em></a>) – The method for obtaining user test ratings.</p></li>
 </ul>
 </dd>
@@ -389,7 +390,7 @@ happens by default with common means of implementing samples).</p>
 <p>We provide several partition method factories:</p>
 <dl class="function">
 <dt id="lenskit.crossfold.SampleN">
-<code class="descclassname">lenskit.crossfold.</code><code class="descname">SampleN</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.SampleN" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">SampleN</code><span class="sig-paren">(</span><em class="sig-param">n</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.SampleN" title="Permalink to this definition">¶</a></dt>
 <dd><p>Randomly select a fixed number of test rows per user/item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -400,7 +401,7 @@ happens by default with common means of implementing samples).</p>
 
 <dl class="function">
 <dt id="lenskit.crossfold.SampleFrac">
-<code class="descclassname">lenskit.crossfold.</code><code class="descname">SampleFrac</code><span class="sig-paren">(</span><em>frac</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.SampleFrac" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">SampleFrac</code><span class="sig-paren">(</span><em class="sig-param">frac</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.SampleFrac" title="Permalink to this definition">¶</a></dt>
 <dd><p>Randomly select a fraction of test rows per user/item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -411,7 +412,7 @@ happens by default with common means of implementing samples).</p>
 
 <dl class="function">
 <dt id="lenskit.crossfold.LastN">
-<code class="descclassname">lenskit.crossfold.</code><code class="descname">LastN</code><span class="sig-paren">(</span><em>n</em>, <em>col='timestamp'</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.LastN" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">LastN</code><span class="sig-paren">(</span><em class="sig-param">n</em>, <em class="sig-param">col='timestamp'</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.LastN" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select a fixed number of test rows per user/item, based on ordering by a
 column.</p>
 <dl class="field-list simple">
@@ -426,7 +427,7 @@ column.</p>
 
 <dl class="function">
 <dt id="lenskit.crossfold.LastFrac">
-<code class="descclassname">lenskit.crossfold.</code><code class="descname">LastFrac</code><span class="sig-paren">(</span><em>frac</em>, <em>col='timestamp'</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.LastFrac" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">LastFrac</code><span class="sig-paren">(</span><em class="sig-param">frac</em>, <em class="sig-param">col='timestamp'</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.LastFrac" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select a fraction of test rows per user/item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -444,12 +445,12 @@ column.</p>
 <h2>Utility Classes<a class="headerlink" href="#utility-classes" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lenskit.crossfold.PartitionMethod">
-<em class="property">class </em><code class="descclassname">lenskit.crossfold.</code><code class="descname">PartitionMethod</code><a class="headerlink" href="#lenskit.crossfold.PartitionMethod" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">PartitionMethod</code><a class="headerlink" href="#lenskit.crossfold.PartitionMethod" title="Permalink to this definition">¶</a></dt>
 <dd><p>Partition methods select test rows for a user or item.  Partition methods
 are callable; when called with a data frame, they return the test rows.</p>
 <dl class="method">
 <dt id="lenskit.crossfold.PartitionMethod.__call__">
-<code class="descname">__call__</code><span class="sig-paren">(</span><em>udf</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.PartitionMethod.__call__" title="Permalink to this definition">¶</a></dt>
+<em class="property">abstract </em><code class="sig-name descname">__call__</code><span class="sig-paren">(</span><em class="sig-param">udf</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.PartitionMethod.__call__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Subset a data frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -465,17 +466,17 @@ are callable; when called with a data frame, they return the test rows.</p>
 
 <dl class="class">
 <dt id="lenskit.crossfold.TTPair">
-<em class="property">class </em><code class="descclassname">lenskit.crossfold.</code><code class="descname">TTPair</code><a class="headerlink" href="#lenskit.crossfold.TTPair" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">TTPair</code><a class="headerlink" href="#lenskit.crossfold.TTPair" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train-test pair (named tuple).</p>
-<dl class="attribute">
+<dl class="method">
 <dt id="lenskit.crossfold.TTPair.test">
-<code class="descname">test</code><a class="headerlink" href="#lenskit.crossfold.TTPair.test" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">test</code><a class="headerlink" href="#lenskit.crossfold.TTPair.test" title="Permalink to this definition">¶</a></dt>
 <dd><p>Test data for this pair.</p>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="method">
 <dt id="lenskit.crossfold.TTPair.train">
-<code class="descname">train</code><a class="headerlink" href="#lenskit.crossfold.TTPair.train" title="Permalink to this definition">¶</a></dt>
+<em class="property">property </em><code class="sig-name descname">train</code><a class="headerlink" href="#lenskit.crossfold.TTPair.train" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train data for this pair.</p>
 </dd></dl>
 
@@ -507,7 +508,7 @@ are callable; when called with a data frame, they return the test rows.</p>
         &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>6514695d</code>.
+          Revision <code>64c4e776</code>.
         </span>
       
 
@@ -528,7 +529,7 @@ are callable; when called with a data frame, they return the test rows.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.7.0
+      v: 0.8.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -538,6 +539,8 @@ are callable; when called with a data frame, they return the test rows.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.8.0/">0.8.0</a></dd>
         
           <dd><a href="/en/0.7.0/">0.7.0</a></dd>
         

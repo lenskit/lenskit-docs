@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Utility Functions &mdash; LensKit 0.7.0 documentation</title>
+  <title>Utility Functions &mdash; LensKit 0.8.0 documentation</title>
   
 
   
@@ -25,6 +25,7 @@
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
         <script type="text/javascript" src="_static/language_data.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -55,8 +56,8 @@ http://docs.readthedocs.org/en/latest/canonical.html
 
 <!-- Add page-specific data, which must exist in the page js, not global -->
 <script type="text/javascript">
-READTHEDOCS_DATA['page'] = 'util'
-READTHEDOCS_DATA['source_suffix'] = '.rst'
+READTHEDOCS_DATA['page'] = "util"
+READTHEDOCS_DATA['source_suffix'] = ".rst"
 </script>
 
 <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
@@ -86,7 +87,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.7.0
+                0.8.0
               </div>
             
           
@@ -180,7 +181,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.7.0/doc/util.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.8.0/doc/util.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -199,13 +200,13 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 /* CSS overrides for sphinx_rtd_theme */
 
 /* 24px margin */
-.nbinput.nblast,
-.nboutput.nblast {
+.nbinput.nblast.container,
+.nboutput.nblast.container {
     margin-bottom: 19px;  /* padding has already 5px */
 }
 
 /* ... except between code cells! */
-.nblast + .nbinput {
+.nblast.container + .nbinput.container {
     margin-top: -19px;
 }
 
@@ -241,13 +242,13 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <p>Miscellaneous utility functions.</p>
 <dl class="function">
 <dt id="lenskit.util.clone">
-<code class="descclassname">lenskit.util.</code><code class="descname">clone</code><span class="sig-paren">(</span><em>algo</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.clone" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.util.</code><code class="sig-name descname">clone</code><span class="sig-paren">(</span><em class="sig-param">algo</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.clone" title="Permalink to this definition">¶</a></dt>
 <dd><p>Clone an algorithm, but not its fitted data.  This is like
 <code class="xref py py-func docutils literal notranslate"><span class="pre">scikit.base.clone()</span></code>, but may not work on arbitrary SciKit estimators.
 LensKit algorithms are compatible with SciKit clone, however, so feel free
 to use that if you need more general capabilities.</p>
 <p>This function is somewhat derived from the SciKit one.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.algorithms.basic</span> <span class="k">import</span> <span class="n">Bias</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.algorithms.basic</span> <span class="kn">import</span> <span class="n">Bias</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">orig</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">copy</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">orig</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">copy</span> <span class="ow">is</span> <span class="n">orig</span>
@@ -256,6 +257,18 @@ to use that if you need more general capabilities.</p>
 <span class="go">True</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="function">
+<dt id="lenskit.util.cur_memory">
+<code class="sig-prename descclassname">lenskit.util.</code><code class="sig-name descname">cur_memory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.cur_memory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current memory use for this process</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lenskit.util.max_memory">
+<code class="sig-prename descclassname">lenskit.util.</code><code class="sig-name descname">max_memory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.max_memory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the maximum memory use for this process</p>
 </dd></dl>
 
 </div>
@@ -284,7 +297,7 @@ to use that if you need more general capabilities.</p>
         &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>6514695d</code>.
+          Revision <code>64c4e776</code>.
         </span>
       
 
@@ -305,7 +318,7 @@ to use that if you need more general capabilities.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.7.0
+      v: 0.8.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -315,6 +328,8 @@ to use that if you need more general capabilities.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.8.0/">0.8.0</a></dd>
         
           <dd><a href="/en/0.7.0/">0.7.0</a></dd>
         
