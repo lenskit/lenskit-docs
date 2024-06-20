@@ -1,38 +1,73 @@
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="../">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Top-N Evaluation &mdash; LensKit 0.14.4 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Top-N Evaluation" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="evaluation/topn-metrics.html" />
+<meta property="og:site_name" content="LensKit" />
+<meta property="og:description" content="LensKit’s support for top- N evaluation is in two parts, because there are some subtle complexities that make it more dfficult to get the right data in the right place for computing metrics correct..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary_evaluation_topn-metrics_677413bb.png" />
+<meta property="og:image:alt" content="LensKit’s support for top- N evaluation is in two parts, because there are some subtle complexities that make it more dfficult to get the right data in the r..." />
+<meta name="description" content="LensKit’s support for top- N evaluation is in two parts, because there are some subtle complexities that make it more dfficult to get the right data in the right place for computing metrics correct..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Top-N Evaluation &#8212; LensKit 0.1.0.dev50+g3a6d85e.d20240615 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
 
   
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="/_/static/css/badge_only.css" />
   
-        <script src="../_static/jquery.js?v=5d32c60e"></script>
-        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="../_static/documentation_options.js?v=623310c1"></script>
-        <script src="../_static/doctools.js?v=888ff710"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-        <script async="async" src="/_/static/javascript/readthedocs-doc-embed.js"></script>
-    <script src="../_static/js/theme.js"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="../_static/documentation_options.js?v=39fa19e0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script async="async" src="/_/static/javascript/readthedocs-doc-embed.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'evaluation/topn-metrics';</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Algorithm Interfaces" href="../interfaces.html" />
-    <link rel="prev" title="Prediction Accuracy Metrics" href="predict-metrics.html" /> 
-
+    <link rel="next" title="Documenting Experiments" href="../documenting.html" />
+    <link rel="prev" title="Prediction Accuracy Metrics" href="predict-metrics.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  
 <!-- RTD Extra Head -->
 
 <link rel="stylesheet" href="/_/static/css/readthedocs-doc-embed.css" type="text/css" />
 
-<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "builder": "sphinx", "canonical_url": null, "docroot": "/docs/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "evaluation/topn-metrics", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {"lenskit-hpf": "https://lkpy.readthedocs.io/projects/lenskit-hpf/en/stable/", "lenskit-implicit": "https://lkpy.readthedocs.io/projects/lenskit-implicit/en/latest/", "lenskit-tf": "https://lkpy.readthedocs.io/projects/lenskit-tf/en/latest/"}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.14.4"}</script>
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "builder": "sphinx", "canonical_url": null, "docroot": "/docs/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "evaluation/topn-metrics", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {"lenskit-hpf": "http://lkpy.lenskit.org/projects/lenskit-hpf/en/stable/", "lenskit-implicit": "http://lkpy.lenskit.org/projects/lenskit-implicit/en/latest/", "lenskit-tf": "http://lkpy.lenskit.org/projects/lenskit-tf/en/latest/"}, "theme": "sphinx_book_theme", "user_analytics_code": "", "version": "latest"}</script>
 
 <!--
 Using this variable directly instead of using `JSON.parse` is deprecated.
@@ -46,120 +81,400 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 
 <!-- end RTD <extrahead> -->
 </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            LensKit
-          </a>
-              <div class="version">
-                0.14.4
-              </div>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
-<ul>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.1.0.dev50+g3a6d85e.d20240615 documentation - Home"/>
+    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.1.0.dev50+g3a6d85e.d20240615 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    LensKit
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Install LensKit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/lenskit/lkpy/releases">Release Notes</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../releases/index.html">Release Notes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../releases/2024.html">2024 Releases</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/lenskit/lkpy/releases">Older Versions</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Running Experiments</span></p>
-<ul class="current">
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Experiments</span></p>
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../datasets.html">Loading Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../crossfold.html">Splitting Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../batch.html">Batch-Running Recommenders</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Evaluating Recommender Output</a><ul class="current">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Evaluating Recommender Output</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="predict-metrics.html">Prediction Accuracy Metrics</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Top-<em>N</em> Evaluation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#module-lenskit.topn">Top-<em>N</em> Analysis</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#lenskit.topn.RecListAnalysis"><code class="docutils literal notranslate"><span class="pre">RecListAnalysis</span></code></a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Top-<em>N</em> Evaluation</a></li>
 </ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#module-lenskit.metrics.topn">Metrics</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#classification-metrics">Classification Metrics</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#ranked-list-metrics">Ranked List Metrics</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#utility-metrics">Utility Metrics</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#writing-a-metric">Writing a Metric</a></li>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../documenting.html">Documenting Experiments</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../parallel.html">Parallel Execution</a></li>
 </ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="index.html#saving-and-loading-outputs">Saving and Loading Outputs</a></li>
-</ul>
-</li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
-<ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../algorithms.html">Algorithm Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../basic.html">Basic and Utility Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../ranking.html">Ranking Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bias.html">Bias</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../knn.html">k-NN Collaborative Filtering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../mf.html">Classic Matrix Factorization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../addons.html">Add-On Algorithms</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../knn.html">k-NN Collaborative Filtering</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tips and Tricks</span></p>
-<ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../mf.html">Classic Matrix Factorization</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../addons/index.html">Add-On Algorithms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../addons/implicit.html">Implicit wrappers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../addons/hpf.html">Poisson factorization</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://lkpy.lenskit.org/projects/lenskit-tf/">TensorFlow algorithms</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tips and Tricks</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../performance.html">Performance Tips</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../diagnostics.html">Errors and Diagnostics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../impl-tips.html">Algorithm Implementation Tips</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Configuration and Internals</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="../util.html">Utility Functions</a></li>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Configuration and Internals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../util.html">Utility Functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../data.html">Data Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../math.html">Math utilities</a></li>
+</ul>
+</details></li>
 <li class="toctree-l1"><a class="reference internal" href="../internals.html">LensKit Internals</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Links</span></p>
-<ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
 </ul>
 
-        </div>
-      </div>
-    </nav>
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">LensKit</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="index.html">Evaluating Recommender Output</a></li>
-      <li class="breadcrumb-item active">Top-<em>N</em> Evaluation</li>
-      <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/lenskit/lkpy/blob/0.14.4/docs/evaluation/topn-metrics.rst" class="fa fa-github"> Edit on GitHub</a>
-      </li>
-  </ul>
-  <hr/>
+  <div id="ethical-ad-placement"
+       class="flat"
+       data-ea-publisher="readthedocs"
+       data-ea-type="readthedocs-sidebar"
+       data-ea-manual="true">
+  </div>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/lenskit/lkpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/lenskit/lkpy/blob/main/docs/evaluation/topn-metrics.rst?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/lenskit/lkpy/issues/new?title=Issue%20on%20page%20%2Fevaluation/topn-metrics.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Top-N Evaluation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-lenskit.topn">Top-<em>N</em> Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.topn.RecListAnalysis"><code class="docutils literal notranslate"><span class="pre">RecListAnalysis</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.topn.RecListAnalysis.add_metric"><code class="docutils literal notranslate"><span class="pre">RecListAnalysis.add_metric()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.topn.RecListAnalysis.compute"><code class="docutils literal notranslate"><span class="pre">RecListAnalysis.compute()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-lenskit.metrics.topn">Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-metrics">Classification Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn.precision"><code class="docutils literal notranslate"><span class="pre">precision()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn.recall"><code class="docutils literal notranslate"><span class="pre">recall()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn.hit"><code class="docutils literal notranslate"><span class="pre">hit()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ranked-list-metrics">Ranked List Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn.recip_rank"><code class="docutils literal notranslate"><span class="pre">recip_rank()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#utility-metrics">Utility Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn.ndcg"><code class="docutils literal notranslate"><span class="pre">ndcg()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn.dcg"><code class="docutils literal notranslate"><span class="pre">dcg()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn._dcg"><code class="docutils literal notranslate"><span class="pre">_dcg()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-a-metric">Writing a Metric</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn.bulk_impl"><code class="docutils literal notranslate"><span class="pre">bulk_impl()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <section id="top-n-evaluation">
-<h1>Top-<em>N</em> Evaluation<a class="headerlink" href="#top-n-evaluation" title="Link to this heading"></a></h1>
+<h1>Top-<em>N</em> Evaluation<a class="headerlink" href="#top-n-evaluation" title="Link to this heading">#</a></h1>
 <p>LensKit’s support for top-<em>N</em> evaluation is in two parts, because there are some
 subtle complexities that make it more dfficult to get the right data in the right
 place for computing metrics correctly.</p>
 <section id="module-lenskit.topn">
-<span id="top-n-analysis"></span><h2>Top-<em>N</em> Analysis<a class="headerlink" href="#module-lenskit.topn" title="Link to this heading"></a></h2>
+<span id="top-n-analysis"></span><h2>Top-<em>N</em> Analysis<a class="headerlink" href="#module-lenskit.topn" title="Link to this heading">#</a></h2>
 <p>The <a class="reference internal" href="#module-lenskit.topn" title="lenskit.topn"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.topn</span></code></a> module contains the utilities for carrying out top-<em>N</em>
 analysis, in conjucntion with <a class="reference internal" href="../batch.html#lenskit.batch.recommend" title="lenskit.batch.recommend"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.batch.recommend()</span></code></a>.</p>
 <p>The entry point to this is <a class="reference internal" href="#lenskit.topn.RecListAnalysis" title="lenskit.topn.RecListAnalysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecListAnalysis</span></code></a>.  This class encapsulates
@@ -200,7 +515,7 @@ list identifier) and <cite>LKTruthID</cite> (the truth list identifier), that ar
 frames.  Custom metric classes will see these on the data frames instead of other identifying columns.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.topn.RecListAnalysis">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.topn.</span></span><span class="sig-name descname"><span class="pre">RecListAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.topn.RecListAnalysis" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.topn.</span></span><span class="sig-name descname"><span class="pre">RecListAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">group_cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.topn.RecListAnalysis" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Compute one or more top-N metrics over recommendation lists.</p>
 <p>This method groups the recommendations by the specified columns,
@@ -223,7 +538,7 @@ metrics that require it; otherwise, a rating value of 1 is assumed.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.topn.RecListAnalysis.add_metric">
-<span class="sig-name descname"><span class="pre">add_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.topn.RecListAnalysis.add_metric" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">add_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.topn.RecListAnalysis.add_metric" title="Link to this definition">#</a></dt>
 <dd><p>Add a metric to the analysis.</p>
 <p>A metric is a function of two arguments: the a single group of the recommendation
 frame, and the corresponding truth frame.  The truth frame will be indexed by
@@ -243,13 +558,13 @@ are defined in <a class="reference internal" href="#module-lenskit.metrics.topn"
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.topn.RecListAnalysis.compute">
-<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.topn.RecListAnalysis.compute" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">compute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.topn.RecListAnalysis.compute" title="Link to this definition">#</a></dt>
 <dd><p>Run the analysis.  Neither data frame should be meaningfully indexed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.0)"><em>pandas.DataFrame</em></a>) – A data frame of recommendations.</p></li>
-<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.0)"><em>pandas.DataFrame</em></a>) – A data frame of ground truth (test) data.</p></li>
+<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>pandas.DataFrame</em></a>) – A data frame of recommendations.</p></li>
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>pandas.DataFrame</em></a>) – A data frame of ground truth (test) data.</p></li>
 <li><p><strong>include_missing</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> to include users from truth missing from recs.
 Matches are done via group columns that appear in both
 <code class="docutils literal notranslate"><span class="pre">recs</span></code> and <code class="docutils literal notranslate"><span class="pre">truth</span></code>.</p></li>
@@ -259,7 +574,7 @@ Matches are done via group columns that appear in both
 <dd class="field-even"><p>The results of the analysis.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.0)">pandas.DataFrame</a></p>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)">pandas.DataFrame</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -268,7 +583,7 @@ Matches are done via group columns that appear in both
 
 </section>
 <section id="module-lenskit.metrics.topn">
-<span id="metrics"></span><h2>Metrics<a class="headerlink" href="#module-lenskit.metrics.topn" title="Link to this heading"></a></h2>
+<span id="metrics"></span><h2>Metrics<a class="headerlink" href="#module-lenskit.metrics.topn" title="Link to this heading">#</a></h2>
 <p>The <a class="reference internal" href="#module-lenskit.metrics.topn" title="lenskit.metrics.topn"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.metrics.topn</span></code></a> module contains metrics for evaluating top-<em>N</em>
 recommendation lists.</p>
 <p>Each of the top-<em>N</em> metrics supports an optional keyword argument <code class="docutils literal notranslate"><span class="pre">k</span></code> that specifies the expected list
@@ -286,73 +601,131 @@ more test ratings than there are recommended items, the default makes sense. For
 lists you will usually need to specify <code class="docutils literal notranslate"><span class="pre">k</span></code>.  Unfortunately, there isn’t a practical way to guess <code class="docutils literal notranslate"><span class="pre">k</span></code>,
 because shorter lists may mean that the recommender could not produce a full-length list.</p>
 <section id="classification-metrics">
-<h3>Classification Metrics<a class="headerlink" href="#classification-metrics" title="Link to this heading"></a></h3>
+<h3>Classification Metrics<a class="headerlink" href="#classification-metrics" title="Link to this heading">#</a></h3>
 <p>These metrics treat the recommendation list as a classification of relevant items.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.metrics.topn.precision">
-<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">precision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.precision" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">precision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.precision" title="Link to this definition">#</a></dt>
 <dd><p>Compute recommendation precision.  This is computed as:</p>
 <div class="math notranslate nohighlight">
 \[\frac{|L \cap I_u^{\mathrm{test}}|}{|L|}\]</div>
 <p>In the uncommon case that <code class="docutils literal notranslate"><span class="pre">k</span></code> is specified and <code class="docutils literal notranslate"><span class="pre">len(recs)</span> <span class="pre">&lt;</span> <span class="pre">k</span></code>, this metric uses
 <code class="docutils literal notranslate"><span class="pre">len(recs)</span></code> as the denominator.</p>
 <p>This metric has a bulk implementation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
+with the recommended item IDs; all other columns are ignored.</p></li>
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
+it has a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, that is used as the item gains; otherwise,
+each item has gain 1. All other columns are ignored.</p></li>
+<li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>) – The maximum list length to consider.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a> | None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.metrics.topn.recall">
-<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">recall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.recall" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">recall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.recall" title="Link to this definition">#</a></dt>
 <dd><p>Compute recommendation recall.  This is computed as:</p>
 <div class="math notranslate nohighlight">
-\[\frac{|L \cap I_u^{\mathrm{test}}|}{\operatorname{max}\{|I_u^{\mathrm{test}}|, k\}}\]</div>
+\[\frac{|L \cap I_u^{\mathrm{test}}|}{\operatorname{min}\{|I_u^{\mathrm{test}}|, k\}}\]</div>
 <p>This metric has a bulk implementation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
+with the recommended item IDs; all other columns are ignored.</p></li>
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
+it has a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, that is used as the item gains; otherwise,
+each item has gain 1. All other columns are ignored.</p></li>
+<li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>) – The maximum list length to consider.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a> | None</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.metrics.topn.hit">
-<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">hit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.hit" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">hit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.hit" title="Link to this definition">#</a></dt>
 <dd><p>Compute whether or not a list is a hit; any list with at least one relevant item in the
 first <span class="math notranslate nohighlight">\(k\)</span> positions (<span class="math notranslate nohighlight">\(L_{\le k} \cap I_u^{\mathrm{test}} \ne \emptyset\)</span>)
 is scored as 1, and lists with no relevant items as 0.  When averaged over the recommendation
-lists, this computes the <em>hit rate</em> <span id="id1">[<a class="reference internal" href="../references.html#id28" title="Mukund Deshpande and George Karypis. Item-based Top-N recommendation algorithms. ACM Transactions on Information Systems, 22(1):143–177, January 2004. URL: https://doi.org/10.1145/963770.963776, doi:10.1145/963770.963776.">DK04</a>]</span>.</p>
-<div class="math notranslate nohighlight">
-\[\frac{|L \cap I_u^{\mathrm{test}}|}{\operatorname{max}\{|I_u^{\mathrm{test}}|, k\}}\]</div>
+lists, this computes the <em>hit rate</em> <span id="id1">[<a class="reference internal" href="../references.html#id8" title="Mukund Deshpande and George Karypis. Item-based top-N Recommendation Algorithms. ACM Trans. Inf. Syst., 22(1):143–177, January 2004. doi:10.1145/963770.963776.">DK04</a>]</span>.</p>
 <p>This metric has a bulk implementation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
+with the recommended item IDs; all other columns are ignored.</p></li>
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
+it has a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, that is used as the item gains; otherwise,
+each item has gain 1. All other columns are ignored.</p></li>
+<li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>) – The maximum list length to consider.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a> | None</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
 <section id="ranked-list-metrics">
-<h3>Ranked List Metrics<a class="headerlink" href="#ranked-list-metrics" title="Link to this heading"></a></h3>
+<h3>Ranked List Metrics<a class="headerlink" href="#ranked-list-metrics" title="Link to this heading">#</a></h3>
 <p>These metrics treat the recommendation list as a ranked list of items that may or may not
 be relevant.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.metrics.topn.recip_rank">
-<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">recip_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.recip_rank" title="Link to this definition"></a></dt>
-<dd><p>Compute the reciprocal rank <span id="id2">[<a class="reference internal" href="../references.html#id12" title="Paul B Kantor and Ellen Voorhees. Report on the TREC-5 confusion track. In The Fifth Text REtrieval Conference (TREC-5). October 1997. URL: http://trec.nist.gov/pubs/trec5/t5_proceedings.html.">KV97</a>]</span> of the first relevant
+<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">recip_rank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.recip_rank" title="Link to this definition">#</a></dt>
+<dd><p>Compute the reciprocal rank <span id="id2">[<a class="reference internal" href="../references.html#id55" title="Paul B Kantor and Ellen Voorhees. Report on the TREC-5 Confusion Track. In The Fifth Text REtrieval Conference (TREC-5). October 1997.">KV97</a>]</span> of the first relevant
 item in a list of recommendations. Let <span class="math notranslate nohighlight">\(\kappa\)</span> denote the 1-based
 rank of the first relevant item in <span class="math notranslate nohighlight">\(L\)</span>, with <span class="math notranslate nohighlight">\(\kappa=\infty\)</span>
 if none of the first <span class="math notranslate nohighlight">\(k\)</span> items in <span class="math notranslate nohighlight">\(L\)</span> are relevant; then the
 reciprocal rank is <span class="math notranslate nohighlight">\(1 / \kappa\)</span>. If no elements are relevant, the
-reciprocal rank is therefore 0.  <span id="id3">Deshpande and Karypis [<a class="reference internal" href="../references.html#id28" title="Mukund Deshpande and George Karypis. Item-based Top-N recommendation algorithms. ACM Transactions on Information Systems, 22(1):143–177, January 2004. URL: https://doi.org/10.1145/963770.963776, doi:10.1145/963770.963776.">DK04</a>]</span> call this the
+reciprocal rank is therefore 0.  <span id="id3">Deshpande and Karypis [<a class="reference internal" href="../references.html#id8" title="Mukund Deshpande and George Karypis. Item-based top-N Recommendation Algorithms. ACM Trans. Inf. Syst., 22(1):143–177, January 2004. doi:10.1145/963770.963776.">DK04</a>]</span> call this the
 “reciprocal hit rate”.</p>
 <p>This metric has a bulk equivalent.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
+with the recommended item IDs; all other columns are ignored.</p></li>
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
+it has a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, that is used as the item gains; otherwise,
+each item has gain 1. All other columns are ignored.</p></li>
+<li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>) – The maximum list length to consider.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a> | None</p>
+</dd>
+</dl>
 </dd></dl>
 
 </section>
 <section id="utility-metrics">
-<h3>Utility Metrics<a class="headerlink" href="#utility-metrics" title="Link to this heading"></a></h3>
+<h3>Utility Metrics<a class="headerlink" href="#utility-metrics" title="Link to this heading">#</a></h3>
 <p>The NDCG function estimates a utility score for a ranked list of recommendations.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.metrics.topn.ndcg">
-<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">ndcg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount=&lt;ufunc</span> <span class="pre">'log2'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.ndcg" title="Link to this definition"></a></dt>
-<dd><p>Compute the normalized discounted cumulative gain <span id="id4">[<a class="reference internal" href="../references.html#id26" title="Kalervo Järvelin and Jaana Kekäläinen. Cumulated gain-based evaluation of IR techniques. ACM Transactions on Information Systems, 20(4):422–446, October 2002. URL: https://doi.org/10.1145/582415.582418, doi:10.1145/582415.582418.">JarvelinKekalainen02</a>]</span>.</p>
+<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">ndcg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount=&lt;ufunc</span> <span class="pre">'log2'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.ndcg" title="Link to this definition">#</a></dt>
+<dd><p>Compute the normalized discounted cumulative gain <span id="id4">[<a class="reference internal" href="../references.html#id36" title="Kalervo Järvelin and Jaana Kekäläinen. Cumulated gain-based evaluation of IR techniques. ACM Transactions on Information Systems, 20(4):422–446, October 2002. doi:10.1145/582415.582418.">JarvelinKekalainen02</a>]</span>.</p>
 <p>Discounted cumultative gain is computed as:</p>
 <div class="math notranslate nohighlight">
 \[\begin{align*}
 \mathrm{DCG}(L,u) &amp; = \sum_{i=1}^{|L|} \frac{r_{ui}}{d(i)}
 \end{align*}\]</div>
-<p>Unrated items are assumed to have a utility of 0; if no rating values are provided in the
-truth frame, item ratings are assumed to be 1.</p>
+<p>Unrated items are assumed to have a utility of 0; if no rating values are
+provided in the truth frame, item ratings are assumed to be 1.</p>
 <p>This is then normalized as follows:</p>
 <div class="math notranslate nohighlight">
 \[\begin{align*}
@@ -362,20 +735,26 @@ truth frame, item ratings are assumed to be 1.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>recs</strong> – The recommendation list.</p></li>
-<li><p><strong>truth</strong> – The user’s test data.</p></li>
-<li><p><strong>discount</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ufunc.html#numpy.ufunc" title="(in NumPy v1.26)"><em>numpy.ufunc</em></a>) – The rank discount function.  Each item’s score will be divided the discount of its rank,
-if the discount is greater than 1.</p></li>
-<li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The maximum list length.</p></li>
+<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
+with the recommended item IDs; all other columns are ignored.</p></li>
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
+it has a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, that is used as the item gains; otherwise,
+each item has gain 1. All other columns are ignored.</p></li>
+<li><p><strong>discount</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><em>Callable</em></a>) – The rank discount function.  Each item’s score will be divided the
+discount of its rank, if the discount is greater than 1.</p></li>
+<li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>) – The maximum list length.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a> | None</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.metrics.topn.dcg">
-<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">dcg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount=&lt;ufunc</span> <span class="pre">'log2'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.dcg" title="Link to this definition"></a></dt>
-<dd><p>Compute the <strong>unnormalized</strong> discounted cumulative gain <span id="id5">[<a class="reference internal" href="../references.html#id26" title="Kalervo Järvelin and Jaana Kekäläinen. Cumulated gain-based evaluation of IR techniques. ACM Transactions on Information Systems, 20(4):422–446, October 2002. URL: https://doi.org/10.1145/582415.582418, doi:10.1145/582415.582418.">JarvelinKekalainen02</a>]</span>.</p>
+<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">dcg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount=&lt;ufunc</span> <span class="pre">'log2'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.dcg" title="Link to this definition">#</a></dt>
+<dd><p>Compute the <strong>unnormalized</strong> discounted cumulative gain <span id="id5">[<a class="reference internal" href="../references.html#id36" title="Kalervo Järvelin and Jaana Kekäläinen. Cumulated gain-based evaluation of IR techniques. ACM Transactions on Information Systems, 20(4):422–446, October 2002. doi:10.1145/582415.582418.">JarvelinKekalainen02</a>]</span>.</p>
 <p>Discounted cumultative gain is computed as:</p>
 <div class="math notranslate nohighlight">
 \[\begin{align*}
@@ -386,11 +765,17 @@ truth frame, item ratings are assumed to be 1.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>recs</strong> – The recommendation list.</p></li>
-<li><p><strong>truth</strong> – The user’s test data.</p></li>
-<li><p><strong>discount</strong> (<em>ufunc</em>) – The rank discount function.  Each item’s score will be divided the discount of its rank,
+<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
+with the recommended item IDs; all other columns are ignored.</p></li>
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
+it has a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, that is used as the item gains; otherwise,
+each item has gain 1. All other columns are ignored.</p></li>
+<li><p><strong>discount</strong> – The rank discount function.  Each item’s score will be divided the discount of its rank,
 if the discount is greater than 1.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)">float</a> | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -398,7 +783,7 @@ if the discount is greater than 1.</p></li>
 <p>We also expose the internal DCG computation directly.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.metrics.topn._dcg">
-<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">_dcg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount=&lt;ufunc</span> <span class="pre">'log2'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn._dcg" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">_dcg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount=&lt;ufunc</span> <span class="pre">'log2'&gt;</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn._dcg" title="Link to this definition">#</a></dt>
 <dd><p>Compute the Discounted Cumulative Gain of a series of recommended items with rating scores.
 These should be relevance scores; they can be <span class="math notranslate nohighlight">\({0,1}\)</span> for binary relevance data.</p>
 <p>This is not a true top-N metric, but is a utility function for other metrics.</p>
@@ -421,7 +806,7 @@ if the discount is greater than 1.</p></li>
 
 </section>
 <section id="writing-a-metric">
-<h3>Writing a Metric<a class="headerlink" href="#writing-a-metric" title="Link to this heading"></a></h3>
+<h3>Writing a Metric<a class="headerlink" href="#writing-a-metric" title="Link to this heading">#</a></h3>
 <p>A metric is a function that takes two positional parameters:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">recs</span></code>, a data frame of recommendations for a single recommendation list.</p></li>
@@ -448,7 +833,7 @@ passed to a bulk implementation includes a 1-based <em>rank</em> for each recomm
 when the corresponding metric is passed to <a class="reference internal" href="#lenskit.topn.RecListAnalysis.add_metric" title="lenskit.topn.RecListAnalysis.add_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_metric()</span></code></a>.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.metrics.topn.bulk_impl">
-<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">bulk_impl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.bulk_impl" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.topn.</span></span><span class="sig-name descname"><span class="pre">bulk_impl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.bulk_impl" title="Link to this definition">#</a></dt>
 <dd><p>Decorator to register a bulk implementation for a metric.</p>
 </dd></dl>
 
@@ -457,130 +842,133 @@ when the corresponding metric is passed to <a class="reference internal" href="#
 </section>
 
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="predict-metrics.html" class="btn btn-neutral float-left" title="Prediction Accuracy Metrics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../interfaces.html" class="btn btn-neutral float-right" title="Algorithm Interfaces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+                </article>
+              
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2018–2019 Boise State University.
-      <span class="commit">Revision <code>4dfa4107</code>.
-      </span></p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
-<p>This material is based upon work supported by the National Science Foundation under
-Grant No. <a href="https://md.ekstrandom.net/research/career">IIS 17-51278</a>. Any
-opinions, findings, and conclusions or recommendations expressed in this material
-are those of the author(s) and do not necessarily reflect the views of the
-National Science Foundation.  This page has not been approved by
-Boise State University and does not reflect official university positions.</p>
-<script data-goatcounter="https://lenskit.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
-
-
-</footer>
-        </div>
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="predict-metrics.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Prediction Accuracy Metrics</p>
       </div>
-    </section>
+    </a>
+    <a class="right-next"
+       href="../documenting.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Documenting Experiments</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-lenskit.topn">Top-<em>N</em> Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.topn.RecListAnalysis"><code class="docutils literal notranslate"><span class="pre">RecListAnalysis</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.topn.RecListAnalysis.add_metric"><code class="docutils literal notranslate"><span class="pre">RecListAnalysis.add_metric()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.topn.RecListAnalysis.compute"><code class="docutils literal notranslate"><span class="pre">RecListAnalysis.compute()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-lenskit.metrics.topn">Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-metrics">Classification Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn.precision"><code class="docutils literal notranslate"><span class="pre">precision()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn.recall"><code class="docutils literal notranslate"><span class="pre">recall()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn.hit"><code class="docutils literal notranslate"><span class="pre">hit()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ranked-list-metrics">Ranked List Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn.recip_rank"><code class="docutils literal notranslate"><span class="pre">recip_rank()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#utility-metrics">Utility Metrics</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn.ndcg"><code class="docutils literal notranslate"><span class="pre">ndcg()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn.dcg"><code class="docutils literal notranslate"><span class="pre">dcg()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn._dcg"><code class="docutils literal notranslate"><span class="pre">_dcg()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-a-metric">Writing a Metric</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.topn.bulk_impl"><code class="docutils literal notranslate"><span class="pre">bulk_impl()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Michael D. Ekstrand
+</p>
+
   </div>
   
+  <div class="footer-item">
+    
 
-  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="Versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      <span class="fa fa-book"> Read the Docs</span>
-      v: 0.14.4
-      <span class="fa fa-caret-down"></span>
-    </span>
-    <div class="rst-other-versions">
-      <dl>
-        <dt>Versions</dt>
+  <p class="copyright">
+    
+      © Copyright 2018–2024 Drexel University, Boise State University, and collaborators.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
         
-          <dd><a href="/en/latest/">latest</a></dd>
-        
-          <dd><a href="/en/stable/">stable</a></dd>
-        
-          <dd><a href="/en/0.14.4/">0.14.4</a></dd>
-        
-          <dd><a href="/en/0.14.3/">0.14.3</a></dd>
-        
-          <dd><a href="/en/0.14.2/">0.14.2</a></dd>
-        
-          <dd><a href="/en/0.14.1/">0.14.1</a></dd>
-        
-          <dd><a href="/en/0.14.0/">0.14.0</a></dd>
-        
-          <dd><a href="/en/0.13.1/">0.13.1</a></dd>
-        
-          <dd><a href="/en/0.13.0/">0.13.0</a></dd>
-        
-          <dd><a href="/en/0.12.3/">0.12.3</a></dd>
-        
-          <dd><a href="/en/0.12.2/">0.12.2</a></dd>
-        
-          <dd><a href="/en/0.12.1/">0.12.1</a></dd>
-        
-          <dd><a href="/en/0.12.0/">0.12.0</a></dd>
-        
-          <dd><a href="/en/0.11.1/">0.11.1</a></dd>
-        
-          <dd><a href="/en/0.11.0/">0.11.0</a></dd>
-        
-          <dd><a href="/en/0.10.1/">0.10.1</a></dd>
-        
-          <dd><a href="/en/0.10.0/">0.10.0</a></dd>
-        
-          <dd><a href="/en/0.9.0/">0.9.0</a></dd>
-        
-          <dd><a href="/en/0.8.4/">0.8.4</a></dd>
-        
-          <dd><a href="/en/0.8.1/">0.8.1</a></dd>
-        
-          <dd><a href="/en/0.8.0/">0.8.0</a></dd>
-        
-          <dd><a href="/en/0.7.0/">0.7.0</a></dd>
-        
-          <dd><a href="/en/0.6.1/">0.6.1</a></dd>
-        
-          <dd><a href="/en/0.6.0/">0.6.0</a></dd>
-        
-          <dd><a href="/en/0.5.0/">0.5.0</a></dd>
-        
-          <dd><a href="/en/0.3.0/">0.3.0</a></dd>
-        
-          <dd><a href="/en/0.2.0/">0.2.0</a></dd>
-        
-          <dd><a href="/en/0.1.0/">0.1.0</a></dd>
-        
-      </dl>
-      <dl>
-        <dt>Downloads</dt>
-        
-      </dl>
-      <dl>
-        
-        <dt>On Read the Docs</dt>
-          <dd>
-            <a href="//readthedocs.org/projects/lkpy/?fromdocs=lkpy">Project Home</a>
-          </dd>
-          <dd>
-            <a href="//readthedocs.org/builds/lkpy/?fromdocs=lkpy">Builds</a>
-          </dd>
-      </dl>
+
+      </main>
     </div>
   </div>
-<script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
 
-</body>
+  <footer class="bd-footer">
+  </footer>
+  </body>
 </html>

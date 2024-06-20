@@ -1,36 +1,72 @@
+
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Parallel Execution &mdash; LensKit 0.14.4 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Parallel Execution" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="parallel.html" />
+<meta property="og:site_name" content="LensKit" />
+<meta property="og:description" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its : Batch operations using multi-process execution., Parallel model training. For most models p..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary_parallel_926841ee.png" />
+<meta property="og:image:alt" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its : Batch operations using multi-process execution., Pa..." />
+<meta name="description" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its : Batch operations using multi-process execution., Parallel model training. For most models p..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Parallel Execution &#8212; LensKit 0.1.0.dev50+g3a6d85e.d20240615 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=a3416100" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="/_/static/css/badge_only.css" />
   
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=623310c1"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="/_/static/javascript/readthedocs-doc-embed.js"></script>
-    <script src="_static/js/theme.js"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+
+    <script src="_static/documentation_options.js?v=39fa19e0"></script>
+    <script src="_static/doctools.js?v=9a2dae69"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script async="async" src="/_/static/javascript/readthedocs-doc-embed.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'parallel';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="References" href="references.html" />
-    <link rel="prev" title="Model Sharing" href="sharing.html" /> 
-
+    <link rel="next" title="Algorithm Interfaces" href="interfaces.html" />
+    <link rel="prev" title="Documenting Experiments" href="documenting.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  
 <!-- RTD Extra Head -->
 
 <link rel="stylesheet" href="/_/static/css/readthedocs-doc-embed.css" type="text/css" />
 
-<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "builder": "sphinx", "canonical_url": null, "docroot": "/docs/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "parallel", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {"lenskit-hpf": "https://lkpy.readthedocs.io/projects/lenskit-hpf/en/stable/", "lenskit-implicit": "https://lkpy.readthedocs.io/projects/lenskit-implicit/en/latest/", "lenskit-tf": "https://lkpy.readthedocs.io/projects/lenskit-tf/en/latest/"}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.14.4"}</script>
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "builder": "sphinx", "canonical_url": null, "docroot": "/docs/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "parallel", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {"lenskit-hpf": "http://lkpy.lenskit.org/projects/lenskit-hpf/en/stable/", "lenskit-implicit": "http://lkpy.lenskit.org/projects/lenskit-implicit/en/latest/", "lenskit-tf": "http://lkpy.lenskit.org/projects/lenskit-tf/en/latest/"}, "theme": "sphinx_book_theme", "user_analytics_code": "", "version": "latest"}</script>
 
 <!--
 Using this variable directly instead of using `JSON.parse` is deprecated.
@@ -44,198 +80,546 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 
 <!-- end RTD <extrahead> -->
 </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
-          
-          
-          <a href="index.html" class="icon icon-home">
-            LensKit
-          </a>
-              <div class="version">
-                0.14.4
-              </div>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
-<ul>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.1.0.dev50+g3a6d85e.d20240615 documentation - Home"/>
+    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.1.0.dev50+g3a6d85e.d20240615 documentation - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="index.html">
+                    LensKit
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Overview</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="install.html">Install LensKit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference external" href="https://github.com/lenskit/lkpy/releases">Release Notes</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="releases/index.html">Release Notes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="releases/2024.html">2024 Releases</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://github.com/lenskit/lkpy/releases">Older Versions</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Running Experiments</span></p>
-<ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Experiments</span></p>
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Loading Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Splitting Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="evaluation/predict-metrics.html">Prediction Accuracy Metrics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluation/topn-metrics.html">Top-<em>N</em> Evaluation</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
-<ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="documenting.html">Documenting Experiments</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Parallel Execution</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithm Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="ranking.html">Ranking Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bias.html">Bias</a></li>
-<li class="toctree-l1"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="addons.html">Add-On Algorithms</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="simple">
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Tips and Tricks</span></p>
-<ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="addons/index.html">Add-On Algorithms</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="addons/implicit.html">Implicit wrappers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="addons/hpf.html">Poisson factorization</a></li>
+<li class="toctree-l2"><a class="reference external" href="https://lkpy.lenskit.org/projects/lenskit-tf/">TensorFlow algorithms</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tips and Tricks</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="performance.html">Performance Tips</a></li>
 <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
 </ul>
-<p class="caption" role="heading"><span class="caption-text">Configuration and Internals</span></p>
-<ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="internals.html">LensKit Internals</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="sharing.html">Model Sharing</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Parallel Execution</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#parallel-model-ops">Parallel Model Ops</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#lenskit.util.parallel.invoker"><code class="docutils literal notranslate"><span class="pre">invoker()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lenskit.util.parallel.proc_count"><code class="docutils literal notranslate"><span class="pre">proc_count()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#lenskit.util.parallel.ModelOpInvoker"><code class="docutils literal notranslate"><span class="pre">ModelOpInvoker</span></code></a></li>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Configuration and Internals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="util.html">Utility Functions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="data.html">Data Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math.html">Math utilities</a></li>
 </ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="#single-process-isolation">Single Process Isolation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#lenskit.util.parallel.run_sp"><code class="docutils literal notranslate"><span class="pre">run_sp()</span></code></a></li>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="internals.html">LensKit Internals</a></li>
 </ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Links</span></p>
-<ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
 </ul>
 
-        </div>
-      </div>
-    </nav>
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">LensKit</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-          <li class="breadcrumb-item"><a href="internals.html">LensKit Internals</a></li>
-      <li class="breadcrumb-item active">Parallel Execution</li>
-      <li class="wy-breadcrumbs-aside">
-              <a href="https://github.com/lenskit/lkpy/blob/0.14.4/docs/parallel.rst" class="fa fa-github"> Edit on GitHub</a>
-      </li>
-  </ul>
-  <hr/>
+  <div id="ethical-ad-placement"
+       class="flat"
+       data-ea-publisher="readthedocs"
+       data-ea-type="readthedocs-sidebar"
+       data-ea-manual="true">
+  </div>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="module-lenskit.util.parallel">
-<span id="parallel-execution"></span><h1>Parallel Execution<a class="headerlink" href="#module-lenskit.util.parallel" title="Link to this heading"></a></h1>
-<p>LensKit uses <a class="reference external" href="https://docs.python.org/3/library/concurrent.futures.html#concurrent.futures.ProcessPoolExecutor" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">concurrent.futures.ProcessPoolExecutor</span></code></a> to paralellize batch
-operations (see <a class="reference internal" href="batch.html#module-lenskit.batch" title="lenskit.batch"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.batch</span></code></a>).</p>
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/lenskit/lkpy" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/lenskit/lkpy/blob/main/docs/parallel.rst?plain=1" target="_blank"
+   class="btn btn-sm btn-source-file-button dropdown-item"
+   title="Show source"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-code"></i>
+  </span>
+<span class="btn__text-container">Show source</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/lenskit/lkpy/issues/new?title=Issue%20on%20page%20%2Fparallel.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Parallel Execution</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-parallelism">Configuring Parallelism</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.initialize"><code class="docutils literal notranslate"><span class="pre">initialize()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ensure_parallel_init"><code class="docutils literal notranslate"><span class="pre">ensure_parallel_init()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parallel-model-ops">Parallel Model Ops</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.invoker"><code class="docutils literal notranslate"><span class="pre">invoker()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ModelOpInvoker"><code class="docutils literal notranslate"><span class="pre">ModelOpInvoker</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ModelOpInvoker.map"><code class="docutils literal notranslate"><span class="pre">ModelOpInvoker.map()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logging-and-progress">Logging and Progress</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.invoke_progress"><code class="docutils literal notranslate"><span class="pre">invoke_progress()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-lenskit.parallel.chunking">Computing Work Chunks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.chunking.WorkChunks"><code class="docutils literal notranslate"><span class="pre">WorkChunks</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.chunking.WorkChunks.total"><code class="docutils literal notranslate"><span class="pre">WorkChunks.total</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.chunking.WorkChunks.chunk_size"><code class="docutils literal notranslate"><span class="pre">WorkChunks.chunk_size</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.chunking.WorkChunks.chunk_count"><code class="docutils literal notranslate"><span class="pre">WorkChunks.chunk_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.chunking.WorkChunks.create"><code class="docutils literal notranslate"><span class="pre">WorkChunks.create()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-lenskit.parallel">
+<span id="parallel-execution"></span><h1>Parallel Execution<a class="headerlink" href="#module-lenskit.parallel" title="Link to this heading">#</a></h1>
+<p>LensKit supports various forms of parallel execution, each with an environment
+variable controlling its :</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="batch.html"><span class="doc">Batch operations</span></a> using <a class="reference internal" href="#parallel-model-ops"><span class="std std-ref">multi-process execution</span></a>.</p></li>
+<li><p>Parallel model training.  For most models provided by LensKit, this is usually
+implemented using PyTorch JIT parallelism (<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.jit.fork.html#torch.jit.fork" title="(in PyTorch v2.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.jit.fork()</span></code></a>).</p></li>
+<li><p>Parallel computation in the various backends (BLAS, MKL, Torch, etc.).</p></li>
+</ul>
+<p>Other models compatible with LensKit may use their own parallel processing logic.</p>
+<section id="configuring-parallelism">
+<h2>Configuring Parallelism<a class="headerlink" href="#configuring-parallelism" title="Link to this heading">#</a></h2>
+<p>LensKit provides 4 knobs for configuring parallelism, each of which has a
+corresponding environment variable and parameter to <a class="reference internal" href="#lenskit.parallel.initialize" title="lenskit.parallel.initialize"><code class="xref py py-func docutils literal notranslate"><span class="pre">initialize()</span></code></a>.  The
+environment variables are:</p>
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-LK_NUM_PROCS">
+<span class="sig-name descname"><span class="pre">LK_NUM_PROCS</span></span><a class="headerlink" href="#envvar-LK_NUM_PROCS" title="Link to this definition">#</a></dt>
+<dd><p>The number of processes to use for batch operations.  Defaults to the number
+of CPUs or 4, whichever is lower.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-LK_NUM_THREADS">
+<span class="sig-name descname"><span class="pre">LK_NUM_THREADS</span></span><a class="headerlink" href="#envvar-LK_NUM_THREADS" title="Link to this definition">#</a></dt>
+<dd><p>The number of threads to use for parallel model building.  Defaults to the
+number of CPUs or 8, whichever is smaller.</p>
+<p>This number is passed to <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.set_num_interop_threads.html#torch.set_num_interop_threads" title="(in PyTorch v2.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_interop_threads()</span></code></a> to set up the
+Torch JIT thread count.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-LK_NUM_BACKEND_THREADS">
+<span class="sig-name descname"><span class="pre">LK_NUM_BACKEND_THREADS</span></span><a class="headerlink" href="#envvar-LK_NUM_BACKEND_THREADS" title="Link to this definition">#</a></dt>
+<dd><p>The number of threads to be used by backend compute engines.  Defaults to up
+to 4 backend threads per training thread, depending on the capacity of the
+machine:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">NCPUS</span> <span class="o">//</span> <span class="n">LK_NUM_THREADS</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is passed to <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.set_num_threads.html#torch.set_num_threads" title="(in PyTorch v2.3)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_threads()</span></code></a> (to control PyTorch internal
+parallelism), and to the underlying BLAS layer (via <a class="reference external" href="https://github.com/joblib/threadpoolctl">threadpoolctl</a>).</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-LK_NUM_CHILD_THREADS">
+<span class="sig-name descname"><span class="pre">LK_NUM_CHILD_THREADS</span></span><a class="headerlink" href="#envvar-LK_NUM_CHILD_THREADS" title="Link to this definition">#</a></dt>
+<dd><p>The number of backend threads to be used in worker processes spawned by
+batch evaluation.  Defaults to 4 per process, capped by the number of CPUs
+available:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">NCPUS</span> <span class="o">//</span> <span class="n">LK_NUM_PROCS</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Workers have both the process and thread counts set to 1.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.parallel.initialize">
+<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.</span></span><span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.initialize" title="Link to this definition">#</a></dt>
+<dd><p>Set up and configure LensKit parallelism.  This only needs to be called if
+you want to control when and how parallelism is set up; components using
+parallelism will call <code class="xref py py-func docutils literal notranslate"><span class="pre">ensure_init()</span></code>, which will call this function
+with its default arguments if it has not been called.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>processes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>) – The number of processes to use for multiprocessing evaluations (see
+<span class="target" id="index-0"></span><a class="reference internal" href="#envvar-LK_NUM_PROCS"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LK_NUM_PROCS</span></code></a>)</p></li>
+<li><p><strong>threads</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>) – The number of threads to use for parallel model training and similar
+operations (see <span class="target" id="index-1"></span><a class="reference internal" href="#envvar-LK_NUM_THREADS"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LK_NUM_THREADS</span></code></a>).</p></li>
+<li><p><strong>backend_threads</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>) – The number of threads underlying computational engines should use
+(see <span class="target" id="index-2"></span><a class="reference internal" href="#envvar-LK_NUM_BACKEND_THREADS"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LK_NUM_BACKEND_THREADS</span></code></a>).</p></li>
+<li><p><strong>child_threads</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>) – The number of threads backends are allowed to use in the worker
+processes in multiprocessing operations (see
+<span class="target" id="index-3"></span><a class="reference internal" href="#envvar-LK_NUM_CHILD_THREADS"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LK_NUM_CHILD_THREADS</span></code></a>).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.parallel.ensure_parallel_init">
+<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.</span></span><span class="sig-name descname"><span class="pre">ensure_parallel_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.ensure_parallel_init" title="Link to this definition">#</a></dt>
+<dd><p>Make sure LensKit parallelism is configured, and configure with defaults if
+it is not.</p>
+<p>Components using parallelism or intensive computations should call this
+function before they begin training.</p>
+</dd></dl>
+
+</section>
+<section id="parallel-model-ops">
+<span id="id1"></span><h2>Parallel Model Ops<a class="headerlink" href="#parallel-model-ops" title="Link to this heading">#</a></h2>
+<p>LensKit uses a custom API wrapping  <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">multiprocessing.pool.Pool</span></code></a> to
+parallelize batch operations (see <a class="reference internal" href="batch.html#module-lenskit.batch" title="lenskit.batch"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.batch</span></code></a>).</p>
 <p>The basic idea of this API is to create an <em>invoker</em> that has a model and a function,
 and then passing lists of argument sets to the function:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">invoker</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
     <span class="n">results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
 </pre></div>
 </div>
-<p>The model is persisted into shared memory to be used by the worker processes.</p>
-<section id="parallel-model-ops">
-<h2>Parallel Model Ops<a class="headerlink" href="#parallel-model-ops" title="Link to this heading"></a></h2>
+<p>The model is persisted into shared memory to be used by the worker processes.
+PyTorch tensors, including those on CUDA devices, are shared.</p>
+<p>LensKit users will generally not need to directly use parallel op invokers, but
+if you are implementing new batch operations with parallelism they are useful.
+They may also be useful for other kinds of analysis.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="lenskit.util.parallel.invoker">
-<span class="sig-prename descclassname"><span class="pre">lenskit.util.parallel.</span></span><span class="sig-name descname"><span class="pre">invoker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">persist_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.parallel.invoker" title="Link to this definition"></a></dt>
-<dd><p>Get an appropriate invoker for performing oeprations on <code class="docutils literal notranslate"><span class="pre">model</span></code>.</p>
+<dt class="sig sig-object py" id="lenskit.parallel.invoker">
+<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.</span></span><span class="sig-name descname"><span class="pre">invoker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.invoker" title="Link to this definition">#</a></dt>
+<dd><p>Get an appropriate invoker for performing operations on <code class="docutils literal notranslate"><span class="pre">model</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> (<em>obj</em>) – The model object on which to perform operations.</p></li>
-<li><p><strong>func</strong> (<em>function</em>) – The function to call.  The function must be pickleable.</p></li>
-<li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> or </em><em>None</em>) – The number of processes to use for parallel operations.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, will
-call <a class="reference internal" href="#lenskit.util.parallel.proc_count" title="lenskit.util.parallel.proc_count"><code class="xref py py-func docutils literal notranslate"><span class="pre">proc_count()</span></code></a> with a maximum default process count of 4.</p></li>
-<li><p><strong>persist_method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> or </em><em>None</em>) – The persistence method to use.  Passed as <code class="docutils literal notranslate"><span class="pre">method</span></code> to
-<a class="reference internal" href="sharing.html#lenskit.sharing.persist" title="lenskit.sharing.persist"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.sharing.persist()</span></code></a>.</p></li>
+<li><p><strong>model</strong> (<em>M</em>) – The model object on which to perform operations.</p></li>
+<li><p><strong>func</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><em>Callable</em></a><em>[</em><em>[</em><em>M</em><em>, </em><em>A</em><em>]</em><em>, </em><em>R</em><em>]</em>) – The function to call.  The function must be pickleable.</p></li>
+<li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>) – The number of processes to use for parallel operations.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, will
+call <code class="xref py py-func docutils literal notranslate"><span class="pre">proc_count()</span></code> with a maximum default process count of 4.</p></li>
+<li><p><strong>progress</strong> (<a class="reference external" href="https://progress-api.readthedocs.io/en/latest/api.html#progress_api.Progress" title="(in Progress API)"><em>Progress</em></a><em> | </em><em>None</em>) – <p>A progress bar to use to report status. It should have the following states:</p>
+<ul>
+<li><p>dispatched</p></li>
+<li><p>in-progress</p></li>
+<li><p>finished</p></li>
+</ul>
+<p>One can be created with <a class="reference internal" href="#lenskit.parallel.invoke_progress" title="lenskit.parallel.invoke_progress"><code class="xref py py-func docutils literal notranslate"><span class="pre">invoke_progress()</span></code></a></p>
+</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>An invoker to perform operations on the model.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#lenskit.util.parallel.ModelOpInvoker" title="lenskit.util.parallel.ModelOpInvoker">ModelOpInvoker</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lenskit.util.parallel.proc_count">
-<span class="sig-prename descclassname"><span class="pre">lenskit.util.parallel.</span></span><span class="sig-name descname"><span class="pre">proc_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">core_div</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.parallel.proc_count" title="Link to this definition"></a></dt>
-<dd><p>Get the number of desired jobs for multiprocessing operations.  This does not
-affect Numba or MKL multithreading.</p>
-<p>This count can come from a number of sources:</p>
-<ul class="simple">
-<li><p>The <code class="docutils literal notranslate"><span class="pre">LK_NUM_PROCS</span></code> environment variable</p></li>
-<li><p>The number of CPUs, divided by <code class="docutils literal notranslate"><span class="pre">core_div</span></code> (default 2)</p></li>
-</ul>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>core_div</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> or </em><em>None</em>) – The divisor to scale down the number of cores; <code class="docutils literal notranslate"><span class="pre">None</span></code> to turn off core-based
-fallback.</p></li>
-<li><p><strong>max_default</strong> – The maximum number of processes to use if the environment variable is not
-configured.</p></li>
-<li><p><strong>level</strong> – The process nesting level.  0 is the outermost level of parallelism; subsequent
-levels control nesting.  Levels deeper than 1 are rare, and it isn’t expected
-that callers actually have an accurate idea of the threading nesting, just that
-they are configuring a child.  If the process count is unconfigured, then level
-1 will use <code class="docutils literal notranslate"><span class="pre">core_div</span></code>, and deeper levels will use 1.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The number of jobs desired.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)">int</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.parallel.ModelOpInvoker" title="lenskit.parallel.ModelOpInvoker">ModelOpInvoker</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="lenskit.util.parallel.ModelOpInvoker">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.util.parallel.</span></span><span class="sig-name descname"><span class="pre">ModelOpInvoker</span></span><a class="headerlink" href="#lenskit.util.parallel.ModelOpInvoker" title="Link to this definition"></a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<dt class="sig sig-object py" id="lenskit.parallel.ModelOpInvoker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.parallel.</span></span><span class="sig-name descname"><span class="pre">ModelOpInvoker</span></span><a class="headerlink" href="#lenskit.parallel.ModelOpInvoker" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">A</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">R</span></code>]</p>
 <p>Interface for invoking operations on a model, possibly in parallel.  The operation
 invoker is configured with a model and a function to apply, and applies that function
 to the arguments supplied in <cite>map</cite>.  Child process invokers also route logging messages
 to the parent process, so logging works even with multiprocessing.</p>
 <p>An invoker is a context manager that calls <code class="xref py py-meth docutils literal notranslate"><span class="pre">shutdown()</span></code> when exited.</p>
 <dl class="py method">
-<dt class="sig sig-object py" id="lenskit.util.parallel.ModelOpInvoker.map">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">iterables</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.parallel.ModelOpInvoker.map" title="Link to this definition"></a></dt>
-<dd><p>Apply the configured function to the model and iterables.  This is like <a class="reference internal" href="#lenskit.util.parallel.ModelOpInvoker.map" title="lenskit.util.parallel.ModelOpInvoker.map"><code class="xref py py-func docutils literal notranslate"><span class="pre">map()</span></code></a>,
-except it supplies the invoker’s model as the first object to <code class="docutils literal notranslate"><span class="pre">func</span></code>.</p>
+<dt class="sig sig-object py" id="lenskit.parallel.ModelOpInvoker.map">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tasks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.ModelOpInvoker.map" title="Link to this definition">#</a></dt>
+<dd><p>Apply the configured function to the model and iterables.  This is like
+<a class="reference internal" href="#lenskit.parallel.ModelOpInvoker.map" title="lenskit.parallel.ModelOpInvoker.map"><code class="xref py py-func docutils literal notranslate"><span class="pre">map()</span></code></a>, except it supplies the invoker’s model as the first object
+to <code class="docutils literal notranslate"><span class="pre">func</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>iterables</strong> – Iterables of arguments to provide to the function.</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>iterables</strong> – Iterables of arguments to provide to the function.</p></li>
+<li><p><strong>tasks</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterable" title="(in Python v3.12)"><em>Iterable</em></a><em>[</em><em>A</em><em>]</em>)</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>An iterable of the results.</p>
@@ -249,145 +633,204 @@ except it supplies the invoker’s model as the first object to <code class="doc
 </dd></dl>
 
 </section>
-<section id="single-process-isolation">
-<h2>Single Process Isolation<a class="headerlink" href="#single-process-isolation" title="Link to this heading"></a></h2>
-<p>We also have a single-process isolation function that runs a function in a subprocess.</p>
+<section id="logging-and-progress">
+<h2>Logging and Progress<a class="headerlink" href="#logging-and-progress" title="Link to this heading">#</a></h2>
+<p>Multi-process op invokers automatically set up logging and progress reporting to
+work across processes using the <code class="xref py py-mod docutils literal notranslate"><span class="pre">manylog</span></code> package.  Op invokers can also
+report the progress of queued jobs to a <a class="reference external" href="https://progress-api.readthedocs.io/en/latest/api.html#progress_api.Progress" title="(in Progress API)"><code class="xref py py-class docutils literal notranslate"><span class="pre">progress_api.Progress</span></code></a>.</p>
 <dl class="py function">
-<dt class="sig sig-object py" id="lenskit.util.parallel.run_sp">
-<span class="sig-prename descclassname"><span class="pre">lenskit.util.parallel.</span></span><span class="sig-name descname"><span class="pre">run_sp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.parallel.run_sp" title="Link to this definition"></a></dt>
-<dd><p>Run a function in a subprocess and return its value.  This is for achieving subprocess
-isolation, not parallelism.  The subprocess is configured so things like logging work
-correctly, and is initialized with a derived random seed.</p>
+<dt class="sig sig-object py" id="lenskit.parallel.invoke_progress">
+<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.</span></span><span class="sig-name descname"><span class="pre">invoke_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.invoke_progress" title="Link to this definition">#</a></dt>
+<dd><p>Create a progress bar for parallel tasks.  It is populated with the
+correct state of tasks for <a class="reference internal" href="#lenskit.parallel.invoker" title="lenskit.parallel.invoker"><code class="xref py py-func docutils literal notranslate"><span class="pre">invoker()</span></code></a>.</p>
+<p>See <code class="xref py py-func docutils literal notranslate"><span class="pre">make_progress()</span></code> for details on parameter meanings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Logger" title="(in Python v3.12)"><em>Logger</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>total</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>unit</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://progress-api.readthedocs.io/en/latest/api.html#progress_api.Progress" title="(in Progress API)"><em>Progress</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-lenskit.parallel.chunking">
+<span id="computing-work-chunks"></span><h2>Computing Work Chunks<a class="headerlink" href="#module-lenskit.parallel.chunking" title="Link to this heading">#</a></h2>
+<p>The <a class="reference internal" href="#lenskit.parallel.chunking.WorkChunks" title="lenskit.parallel.chunking.WorkChunks"><code class="xref py py-class docutils literal notranslate"><span class="pre">WorkChunks</span></code></a> class provides support for dividing work into chunks for
+parallel processing, particularly for model training.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.parallel.chunking.WorkChunks">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.parallel.chunking.</span></span><span class="sig-name descname"><span class="pre">WorkChunks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">total</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">chunk_count</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.chunking.WorkChunks" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.NamedTuple" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NamedTuple</span></code></a></p>
+<p>The chunking configuration for parallel work.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>total</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>)</p></li>
+<li><p><strong>chunk_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>)</p></li>
+<li><p><strong>chunk_count</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.parallel.chunking.WorkChunks.total">
+<span class="sig-name descname"><span class="pre">total</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#lenskit.parallel.chunking.WorkChunks.total" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.parallel.chunking.WorkChunks.chunk_size">
+<span class="sig-name descname"><span class="pre">chunk_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#lenskit.parallel.chunking.WorkChunks.chunk_size" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.parallel.chunking.WorkChunks.chunk_count">
+<span class="sig-name descname"><span class="pre">chunk_count</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#lenskit.parallel.chunking.WorkChunks.chunk_count" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.parallel.chunking.WorkChunks.create">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">njobs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.chunking.WorkChunks.create" title="Link to this definition">#</a></dt>
+<dd><p>Compute the chunk size for parallel model training.</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
 </section>
 
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="sharing.html" class="btn btn-neutral float-left" title="Model Sharing" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="references.html" class="btn btn-neutral float-right" title="References" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+                </article>
+              
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2018–2019 Boise State University.
-      <span class="commit">Revision <code>4dfa4107</code>.
-      </span></p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-  
-<p>This material is based upon work supported by the National Science Foundation under
-Grant No. <a href="https://md.ekstrandom.net/research/career">IIS 17-51278</a>. Any
-opinions, findings, and conclusions or recommendations expressed in this material
-are those of the author(s) and do not necessarily reflect the views of the
-National Science Foundation.  This page has not been approved by
-Boise State University and does not reflect official university positions.</p>
-<script data-goatcounter="https://lenskit.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
-
-
-</footer>
-        </div>
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="documenting.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Documenting Experiments</p>
       </div>
-    </section>
+    </a>
+    <a class="right-next"
+       href="interfaces.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Algorithm Interfaces</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-parallelism">Configuring Parallelism</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.initialize"><code class="docutils literal notranslate"><span class="pre">initialize()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ensure_parallel_init"><code class="docutils literal notranslate"><span class="pre">ensure_parallel_init()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parallel-model-ops">Parallel Model Ops</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.invoker"><code class="docutils literal notranslate"><span class="pre">invoker()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ModelOpInvoker"><code class="docutils literal notranslate"><span class="pre">ModelOpInvoker</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ModelOpInvoker.map"><code class="docutils literal notranslate"><span class="pre">ModelOpInvoker.map()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logging-and-progress">Logging and Progress</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.invoke_progress"><code class="docutils literal notranslate"><span class="pre">invoke_progress()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-lenskit.parallel.chunking">Computing Work Chunks</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.chunking.WorkChunks"><code class="docutils literal notranslate"><span class="pre">WorkChunks</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.chunking.WorkChunks.total"><code class="docutils literal notranslate"><span class="pre">WorkChunks.total</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.chunking.WorkChunks.chunk_size"><code class="docutils literal notranslate"><span class="pre">WorkChunks.chunk_size</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.chunking.WorkChunks.chunk_count"><code class="docutils literal notranslate"><span class="pre">WorkChunks.chunk_count</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.chunking.WorkChunks.create"><code class="docutils literal notranslate"><span class="pre">WorkChunks.create()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Michael D. Ekstrand
+</p>
+
   </div>
   
+  <div class="footer-item">
+    
 
-  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="Versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      <span class="fa fa-book"> Read the Docs</span>
-      v: 0.14.4
-      <span class="fa fa-caret-down"></span>
-    </span>
-    <div class="rst-other-versions">
-      <dl>
-        <dt>Versions</dt>
+  <p class="copyright">
+    
+      © Copyright 2018–2024 Drexel University, Boise State University, and collaborators.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
         
-          <dd><a href="/en/latest/">latest</a></dd>
-        
-          <dd><a href="/en/stable/">stable</a></dd>
-        
-          <dd><a href="/en/0.14.4/">0.14.4</a></dd>
-        
-          <dd><a href="/en/0.14.3/">0.14.3</a></dd>
-        
-          <dd><a href="/en/0.14.2/">0.14.2</a></dd>
-        
-          <dd><a href="/en/0.14.1/">0.14.1</a></dd>
-        
-          <dd><a href="/en/0.14.0/">0.14.0</a></dd>
-        
-          <dd><a href="/en/0.13.1/">0.13.1</a></dd>
-        
-          <dd><a href="/en/0.13.0/">0.13.0</a></dd>
-        
-          <dd><a href="/en/0.12.3/">0.12.3</a></dd>
-        
-          <dd><a href="/en/0.12.2/">0.12.2</a></dd>
-        
-          <dd><a href="/en/0.12.1/">0.12.1</a></dd>
-        
-          <dd><a href="/en/0.12.0/">0.12.0</a></dd>
-        
-          <dd><a href="/en/0.11.1/">0.11.1</a></dd>
-        
-          <dd><a href="/en/0.11.0/">0.11.0</a></dd>
-        
-          <dd><a href="/en/0.10.1/">0.10.1</a></dd>
-        
-          <dd><a href="/en/0.10.0/">0.10.0</a></dd>
-        
-          <dd><a href="/en/0.9.0/">0.9.0</a></dd>
-        
-          <dd><a href="/en/0.8.4/">0.8.4</a></dd>
-        
-          <dd><a href="/en/0.8.1/">0.8.1</a></dd>
-        
-          <dd><a href="/en/0.8.0/">0.8.0</a></dd>
-        
-          <dd><a href="/en/0.7.0/">0.7.0</a></dd>
-        
-          <dd><a href="/en/0.6.1/">0.6.1</a></dd>
-        
-          <dd><a href="/en/0.6.0/">0.6.0</a></dd>
-        
-          <dd><a href="/en/0.5.0/">0.5.0</a></dd>
-        
-          <dd><a href="/en/0.3.0/">0.3.0</a></dd>
-        
-          <dd><a href="/en/0.2.0/">0.2.0</a></dd>
-        
-          <dd><a href="/en/0.1.0/">0.1.0</a></dd>
-        
-      </dl>
-      <dl>
-        <dt>Downloads</dt>
-        
-      </dl>
-      <dl>
-        
-        <dt>On Read the Docs</dt>
-          <dd>
-            <a href="//readthedocs.org/projects/lkpy/?fromdocs=lkpy">Project Home</a>
-          </dd>
-          <dd>
-            <a href="//readthedocs.org/builds/lkpy/?fromdocs=lkpy">Builds</a>
-          </dd>
-      </dl>
+
+      </main>
     </div>
   </div>
-<script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
 
-</body>
+  <footer class="bd-footer">
+  </footer>
+  </body>
 </html>
