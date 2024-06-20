@@ -1,47 +1,26 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Prediction Accuracy Metrics &mdash; LensKit 0.13.1 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
+  <title>Prediction Accuracy Metrics &mdash; LensKit 0.14.0 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
     <link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/evaluation/predict-metrics.html" />
-
-  
   <!--[if lt IE 9]>
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
         <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
         <script src="../_static/jquery.js"></script>
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
         <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
+    <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Top-N Evaluation" href="topn-metrics.html" />
@@ -51,7 +30,7 @@
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
-<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2021-06-22T17:08:14Z", "builder": "sphinx", "canonical_url": null, "commit": "0678cd1d", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "evaluation/predict-metrics", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.13.1"}</script>
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2022-02-19T19:12:10Z", "builder": "sphinx", "canonical_url": null, "commit": "9e471a65", "docroot": "/docs/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "evaluation/predict-metrics", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {"lenskit-hpf": "https://lkpy.readthedocs.io/projects/lenskit-hpf/en/latest/", "lenskit-implicit": "https://lkpy.readthedocs.io/projects/lenskit-implicit/en/latest/", "lenskit-tf": "https://lkpy.readthedocs.io/projects/lenskit-tf/en/latest/"}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.14.0"}</script>
 
 <!--
 Using this variable directly instead of using `JSON.parse` is deprecated.
@@ -66,34 +45,16 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 <!-- end RTD <extrahead> -->
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
-
-          
             <a href="../index.html" class="icon icon-home"> LensKit
-          
-
-          
           </a>
-
-          
-            
-            
-            
               <div class="version">
-                0.13.1
+                0.14.0
               </div>
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -101,26 +62,15 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <p class="caption"><span class="caption-text">Overview</span></p>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Overview</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Install LensKit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/lenskit/lkpy/releases">Release Notes</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Running Experiments</span></p>
+<p class="caption" role="heading"><span class="caption-text">Running Experiments</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../datasets.html">Loading Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../crossfold.html">Splitting Data</a></li>
@@ -137,7 +87,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Algorithms</span></p>
+<p class="caption" role="heading"><span class="caption-text">Algorithms</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../algorithms.html">Algorithm Summary</a></li>
@@ -146,91 +96,49 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 <li class="toctree-l1"><a class="reference internal" href="../bias.html">Bias</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../mf.html">Classic Matrix Factorization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../tf.html">TensorFlow Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../hpf.html">Hierarchical Poisson Factorization</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../implicit.html">Implicit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../addons.html">Add-On Algorithms</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Tips and Tricks</span></p>
+<p class="caption" role="heading"><span class="caption-text">Tips and Tricks</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../performance.html">Performance Tips</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../diagnostics.html">Errors and Diagnostics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../impl-tips.html">Algorithm Implementation Tips</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Configuration and Internals</span></p>
+<p class="caption" role="heading"><span class="caption-text">Configuration and Internals</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../util.html">Utility Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../internals.html">LensKit Internals</a></li>
 </ul>
+<p class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../references.html">References</a></li>
+</ul>
 
-            
-          
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../index.html">LensKit</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
-        
           <li><a href="index.html">Evaluating Recommender Output</a> &raquo;</li>
-        
       <li>Prediction Accuracy Metrics</li>
-    
-    
       <li class="wy-breadcrumbs-aside">
-        
-          
-            
-              <a href="https://github.com/lenskit/lkpy/blob/0.13.1/doc/evaluation/predict-metrics.rst" class="fa fa-github"> Edit on GitHub</a>
-            
-          
-        
+              <a href="https://github.com/lenskit/lkpy/blob/0.14.0/docs/evaluation/predict-metrics.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   
 <style>
 /* CSS overrides for sphinx_rtd_theme */
@@ -255,8 +163,8 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
     text-align: unset;
 }
 </style>
-<div class="section" id="module-lenskit.metrics.predict">
-<span id="prediction-accuracy-metrics"></span><h1>Prediction Accuracy Metrics<a class="headerlink" href="#module-lenskit.metrics.predict" title="Permalink to this headline">¶</a></h1>
+<section id="module-lenskit.metrics.predict">
+<span id="prediction-accuracy-metrics"></span><h1>Prediction Accuracy Metrics<a class="headerlink" href="#module-lenskit.metrics.predict" title="Permalink to this headline"></a></h1>
 <p>The <a class="reference internal" href="#module-lenskit.metrics.predict" title="lenskit.metrics.predict"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.metrics.predict</span></code></a> module contains prediction accuracy metrics.
 These are intended to be used as a part of a Pandas split-apply-combine operation
 on a data frame that contains both predictions and ratings; for convenience, the
@@ -276,19 +184,26 @@ following to compute per-user RMSE over some predictions:</p>
 <span class="n">user_metric</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="n">rmse</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="section" id="metric-functions">
-<h2>Metric Functions<a class="headerlink" href="#metric-functions" title="Permalink to this headline">¶</a></h2>
+<section id="metric-functions">
+<h2>Metric Functions<a class="headerlink" href="#metric-functions" title="Permalink to this headline"></a></h2>
 <p>Prediction metric functions take two series, <cite>predictions</cite> and <cite>truth</cite>, and compute
 a prediction accuracy metric for them.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.metrics.predict.rmse">
-<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.predict.</span></span><span class="sig-name descname"><span class="pre">rmse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.predict.rmse" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute RMSE (root mean squared error).</p>
+<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.predict.</span></span><span class="sig-name descname"><span class="pre">rmse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.predict.rmse" title="Permalink to this definition"></a></dt>
+<dd><p>Compute RMSE (root mean squared error).  This is computed as:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{r_{ui} \in R} \left(r_{ui} - s(i|u)\right)^2\]</div>
+<p>When used with <a class="reference internal" href="#lenskit.metrics.predict.user_metric" title="lenskit.metrics.predict.user_metric"><code class="xref py py-func docutils literal notranslate"><span class="pre">user_metric()</span></code></a>, or on series grouped by user, it computes
+a per-user RMSE; when applied to an entire prediction frame, it computes global
+RMSE.  It does not do any fallbacks; if you want to compute RMSE with fallback
+predictions (e.g. usign a bias model when a collaborative filter cannot predict),
+generate predictions with <a class="reference internal" href="../basic.html#lenskit.algorithms.basic.Fallback" title="lenskit.algorithms.basic.Fallback"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.basic.Fallback</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>predictions</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.2.5)"><em>pandas.Series</em></a>) – the predictions</p></li>
-<li><p><strong>truth</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.2.5)"><em>pandas.Series</em></a>) – the ground truth ratings from data</p></li>
+<li><p><strong>predictions</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.1)"><em>pandas.Series</em></a>) – the predictions</p></li>
+<li><p><strong>truth</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.1)"><em>pandas.Series</em></a>) – the ground truth ratings from data</p></li>
 <li><p><strong>missing</strong> (<em>string</em>) – how to handle predictions without truth. Can be one of
 <code class="docutils literal notranslate"><span class="pre">'error'</span></code> or <code class="docutils literal notranslate"><span class="pre">'ignore'</span></code>.</p></li>
 </ul>
@@ -304,13 +219,20 @@ a prediction accuracy metric for them.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.metrics.predict.mae">
-<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.predict.</span></span><span class="sig-name descname"><span class="pre">mae</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.predict.mae" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute MAE (mean absolute error).</p>
+<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.predict.</span></span><span class="sig-name descname"><span class="pre">mae</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">truth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.predict.mae" title="Permalink to this definition"></a></dt>
+<dd><p>Compute MAE (mean absolute error).  This is computed as:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{r_{ui} \in R} \left|r_{ui} - s(i|u)\right|\]</div>
+<p>When used with <a class="reference internal" href="#lenskit.metrics.predict.user_metric" title="lenskit.metrics.predict.user_metric"><code class="xref py py-func docutils literal notranslate"><span class="pre">user_metric()</span></code></a>, or on series grouped by user, it computes
+a per-user MAE; when applied to an entire prediction frame, it computes global
+MAE.  It does not do any fallbacks; if you want to compute MAE with fallback
+predictions (e.g. usign a bias model when a collaborative filter cannot predict),
+generate predictions with <a class="reference internal" href="../basic.html#lenskit.algorithms.basic.Fallback" title="lenskit.algorithms.basic.Fallback"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.basic.Fallback</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>predictions</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.2.5)"><em>pandas.Series</em></a>) – the predictions</p></li>
-<li><p><strong>truth</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.2.5)"><em>pandas.Series</em></a>) – the ground truth ratings from data</p></li>
+<li><p><strong>predictions</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.1)"><em>pandas.Series</em></a>) – the predictions</p></li>
+<li><p><strong>truth</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.4.1)"><em>pandas.Series</em></a>) – the ground truth ratings from data</p></li>
 <li><p><strong>missing</strong> (<em>string</em>) – how to handle predictions without truth. Can be one of
 <code class="docutils literal notranslate"><span class="pre">'error'</span></code> or <code class="docutils literal notranslate"><span class="pre">'ignore'</span></code>.</p></li>
 </ul>
@@ -324,21 +246,21 @@ a prediction accuracy metric for them.</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="convenience-functions">
-<h2>Convenience Functions<a class="headerlink" href="#convenience-functions" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="convenience-functions">
+<h2>Convenience Functions<a class="headerlink" href="#convenience-functions" title="Permalink to this headline"></a></h2>
 <p>These functions make it easier to compute global and per-user prediction metrics.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.metrics.predict.user_metric">
-<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.predict.</span></span><span class="sig-name descname"><span class="pre">user_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">predictions</span></em>, <em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">score_column='prediction'</span></em>, <em class="sig-param"><span class="pre">metric=&lt;function</span> <span class="pre">rmse&gt;</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.predict.user_metric" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.predict.</span></span><span class="sig-name descname"><span class="pre">user_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_column='prediction'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric=&lt;function</span> <span class="pre">rmse&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.predict.user_metric" title="Permalink to this definition"></a></dt>
 <dd><p>Compute a mean per-user prediction accuracy metric for a set of predictions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>predictions</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.5)"><em>pandas.DataFrame</em></a>) – Data frame containing the predictions.  Must have a column <code class="docutils literal notranslate"><span class="pre">rating</span></code>
+<li><p><strong>predictions</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.4.1)"><em>pandas.DataFrame</em></a>) – Data frame containing the predictions.  Must have a column <code class="docutils literal notranslate"><span class="pre">rating</span></code>
 containing ground truth and a score column with rating predictions,
 along with a <code class="docutils literal notranslate"><span class="pre">'user'</span></code> column with user IDs.</p></li>
-<li><p><strong>score_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The name of the score column (defaults to <code class="docutils literal notranslate"><span class="pre">'prediction'</span></code>).</p></li>
+<li><p><strong>score_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the score column (defaults to <code class="docutils literal notranslate"><span class="pre">'prediction'</span></code>).</p></li>
 <li><p><strong>metric</strong> (<em>function</em>) – A metric function of two parameters (prediction and truth).  Defaults
 to <a class="reference internal" href="#lenskit.metrics.predict.rmse" title="lenskit.metrics.predict.rmse"><code class="xref py py-func docutils literal notranslate"><span class="pre">rmse()</span></code></a>.</p></li>
 </ul>
@@ -347,21 +269,21 @@ to <a class="reference internal" href="#lenskit.metrics.predict.rmse" title="len
 <dd class="field-even"><p>The mean of the per-user value of the metric.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.metrics.predict.global_metric">
-<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.predict.</span></span><span class="sig-name descname"><span class="pre">global_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">predictions</span></em>, <em class="sig-param"><span class="pre">*</span></em>, <em class="sig-param"><span class="pre">score_column='prediction'</span></em>, <em class="sig-param"><span class="pre">metric=&lt;function</span> <span class="pre">rmse&gt;</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.predict.global_metric" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.metrics.predict.</span></span><span class="sig-name descname"><span class="pre">global_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_column='prediction'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metric=&lt;function</span> <span class="pre">rmse&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">**kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.predict.global_metric" title="Permalink to this definition"></a></dt>
 <dd><p>Compute a global prediction accuracy metric for a set of predictions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>predictions</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.5)"><em>pandas.DataFrame</em></a>) – Data frame containing the predictions.  Must have a column <code class="docutils literal notranslate"><span class="pre">rating</span></code>
+<li><p><strong>predictions</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.4.1)"><em>pandas.DataFrame</em></a>) – Data frame containing the predictions.  Must have a column <code class="docutils literal notranslate"><span class="pre">rating</span></code>
 containing ground truth and a score column with rating predictions.</p></li>
-<li><p><strong>score_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – The name of the score column (defaults to <code class="docutils literal notranslate"><span class="pre">'prediction'</span></code>).</p></li>
+<li><p><strong>score_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.10)"><em>str</em></a>) – The name of the score column (defaults to <code class="docutils literal notranslate"><span class="pre">'prediction'</span></code>).</p></li>
 <li><p><strong>metric</strong> (<em>function</em>) – A metric function of two parameters (prediction and truth).  Defaults
 to <a class="reference internal" href="#lenskit.metrics.predict.rmse" title="lenskit.metrics.predict.rmse"><code class="xref py py-func docutils literal notranslate"><span class="pre">rmse()</span></code></a>.</p></li>
 </ul>
@@ -370,19 +292,19 @@ to <a class="reference internal" href="#lenskit.metrics.predict.rmse" title="len
 <dd class="field-even"><p>The global metric value.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)">float</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.10)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="working-with-missing-data">
-<h2>Working with Missing Data<a class="headerlink" href="#working-with-missing-data" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="working-with-missing-data">
+<h2>Working with Missing Data<a class="headerlink" href="#working-with-missing-data" title="Permalink to this headline"></a></h2>
 <p>LensKit rating predictors do not report predictions when their core model is unable
 to predict.  For example, a nearest-neighbor recommender will not score an item if
 it cannot find any suitable neighbors.  Following the Pandas convention, these items
 are given a score of NaN (when Pandas implements better missing data handling, it will
-use that, so use <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.isna.html#pandas.Series.isna" title="(in pandas v1.2.5)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.isna()</span></code></a>/<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.notna.html#pandas.Series.notna" title="(in pandas v1.2.5)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.notna()</span></code></a>, not the
+use that, so use <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.isna.html#pandas.Series.isna" title="(in pandas v1.4.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.isna()</span></code></a>/<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.notna.html#pandas.Series.notna" title="(in pandas v1.4.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.notna()</span></code></a>, not the
 <code class="docutils literal notranslate"><span class="pre">isnan</span></code> versions.</p>
 <p>However, this causes problems when computing predictive accuracy: recommenders are not
 being tested on the same set of items. If a recommender only scores the easy items, for
@@ -398,39 +320,29 @@ the first one that generates a score.</p>
 <span class="n">algo</span> <span class="o">=</span> <span class="n">Fallback</span><span class="p">(</span><span class="n">cf</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="topn-metrics.html" class="btn btn-neutral float-right" title="Top-N Evaluation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="index.html" class="btn btn-neutral float-left" title="Evaluating Recommender Output" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="topn-metrics.html" class="btn btn-neutral float-right" title="Top-N Evaluation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2018–2019 Boise State University.
-      <span class="commit">
-        
-        Revision <code>0678cd1d</code>.
-      </span>
-
-    </p>
+    <p>&#169; Copyright 2018–2019 Boise State University.
+      <span class="commit">Revision <code>9e471a65</code>.
+      </span></p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  
 <p>This material is based upon work supported by the National Science Foundation under
 Grant No. <a href="https://md.ekstrandom.net/research/career">IIS 17-51278</a>. Any
 opinions, findings, and conclusions or recommendations expressed in this material
@@ -444,16 +356,14 @@ Boise State University and does not reflect official university positions.</p>
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
   
 
-  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="Versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.13.1
+      v: 0.14.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -463,6 +373,8 @@ Boise State University and does not reflect official university positions.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.14.0/">0.14.0</a></dd>
         
           <dd><a href="/en/0.13.1/">0.13.1</a></dd>
         
@@ -523,16 +435,11 @@ Boise State University and does not reflect official university positions.</p>
       </dl>
     </div>
   </div>
-
-
-  <script type="text/javascript">
+<script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-   
+  </script> 
 
 </body>
 </html>
