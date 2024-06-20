@@ -2,21 +2,13 @@ import * as fs from "node:fs";
 import * as git from "isomorphic-git";
 
 import * as ai from "@hongminhee/aitertools";
+import { ensureDir } from "@std/fs";
 
 let branches = await git.listBranches({ fs, dir: "." });
 branches = branches.filter((b) => b != "main");
 console.info("found %d versions: %o", branches.length, branches);
 
-try {
-  await Deno.mkdir("versions");
-} catch (e) {
-  if (e instanceof Deno.errors.AlreadyExists) {
-    /* already exists, do nothing */
-  } else {
-    console.error("error creating versions directory: %o", e);
-    Deno.exit(2);
-  }
-}
+await ensureDir("versions");
 
 let dirs = await ai.toArray(
   ai.map(
