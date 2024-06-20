@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Release Notes &mdash; LensKit 0.6.0 documentation</title>
+  <title>Release Notes &mdash; LensKit 0.6.1 documentation</title>
   
 
   
@@ -85,7 +85,7 @@ READTHEDOCS_DATA['source_suffix'] = '.md'
             
             
               <div class="version">
-                0.6.0
+                0.6.1
               </div>
             
           
@@ -120,14 +120,15 @@ READTHEDOCS_DATA['source_suffix'] = '.md'
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">0.6.0</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">0.6.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">0.6.0</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#internal-changes">Internal Changes</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">0.5.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">0.3.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">0.2.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id5">0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id6">0.1.0</a></li>
 </ul>
 </li>
 </ul>
@@ -182,7 +183,7 @@ READTHEDOCS_DATA['source_suffix'] = '.md'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.6.0/doc/releases.md" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.6.1/doc/releases.md" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -223,55 +224,64 @@ READTHEDOCS_DATA['source_suffix'] = '.md'
 <div class="section" id="release-notes">
 <h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2>0.6.0<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>0.6.1<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference external" href="https://github.com/lenskit/lkpy/milestone/4">GitHub milestone</a> for full change list.</p>
+<ul class="simple">
+<li><p>Fix inconsistency in both code and docs for recommend list sizes for top-<em>N</em> evaluation.</p></li>
+<li><p>Fix user-user to correctly use <code class="docutils literal notranslate"><span class="pre">sum</span></code> aggregate.</p></li>
+<li><p>Improve performance and documentation</p></li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>0.6.0<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>See the <a class="reference external" href="https://github.com/lenskit/lkpy/milestone/1">GitHub milestone</a> for a summary of what’s happening!</p>
 <ul class="simple">
-<li>The <code class="docutils literal notranslate"><span class="pre">save</span></code> and <code class="docutils literal notranslate"><span class="pre">load</span></code> methods on algorithms have been removed.  Just pickle fitted models to save
-their data.  This is what SciKit does, we see no need to deviate.</li>
-<li>The APIs and model structures for top-<em>N</em> recommendation is reworked to enable algorithms to
+<li><p>The <code class="docutils literal notranslate"><span class="pre">save</span></code> and <code class="docutils literal notranslate"><span class="pre">load</span></code> methods on algorithms have been removed.  Just pickle fitted models to save
+their data.  This is what SciKit does, we see no need to deviate.</p></li>
+<li><p>The APIs and model structures for top-<em>N</em> recommendation is reworked to enable algorithms to
 produce recommendations more automatically.  The <code class="docutils literal notranslate"><span class="pre">Recommender</span></code> interfaces now take a <code class="docutils literal notranslate"><span class="pre">CandidateSelector</span></code>
 to determine default candidates, so client code does not need to compute candidates on their own.
 One effect of this is that the <code class="docutils literal notranslate"><span class="pre">batch.recommend</span></code> function no longer requires a candidate selector,
-and there can be problems if you call <code class="docutils literal notranslate"><span class="pre">Recommender.adapt</span></code> before fitting a model.</li>
-<li>Top-<em>N</em> evaluation has been completely revamped to make it easier to correctly implement and run
+and there can be problems if you call <code class="docutils literal notranslate"><span class="pre">Recommender.adapt</span></code> before fitting a model.</p></li>
+<li><p>Top-<em>N</em> evaluation has been completely revamped to make it easier to correctly implement and run
 evaluation metrics.  Batch recommend no longer attaches ratings to recommendations.  See
-<a class="reference external" href="evaluation/topn-metrics.html">Top-N evaluation</a> for details.</li>
-<li>Batch recommend &amp; predict functions now take <code class="docutils literal notranslate"><span class="pre">nprocs</span></code> as a keyword-only argument.</li>
-<li>Several bug fixes and testing improvements.</li>
+<a class="reference external" href="evaluation/topn-metrics.html">Top-N evaluation</a> for details.</p></li>
+<li><p>Batch recommend &amp; predict functions now take <code class="docutils literal notranslate"><span class="pre">nprocs</span></code> as a keyword-only argument.</p></li>
+<li><p>Several bug fixes and testing improvements.</p></li>
 </ul>
 <div class="section" id="internal-changes">
 <h3>Internal Changes<a class="headerlink" href="#internal-changes" title="Permalink to this headline">¶</a></h3>
 <p>These changes should not affect you if you are only consuming LensKit’s algorithm and evaluation capabilities.</p>
 <ul class="simple">
-<li>Rewrite the <code class="docutils literal notranslate"><span class="pre">CSR</span></code> class to be more ergonomic from Python, at the expense of making the NumPy jitclass
-indirect. It is available in the <code class="docutils literal notranslate"><span class="pre">.N</span></code> attribute.  Big improvement: it is now picklable.</li>
+<li><p>Rewrite the <code class="docutils literal notranslate"><span class="pre">CSR</span></code> class to be more ergonomic from Python, at the expense of making the NumPy jitclass
+indirect. It is available in the <code class="docutils literal notranslate"><span class="pre">.N</span></code> attribute.  Big improvement: it is now picklable.</p></li>
 </ul>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>0.5.0<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>0.5.0<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>LensKit 0.5.0 modifies the algorithm APIs to follow the SciKit design patterns instead of
 our previous custom patterns.  Highlights of this change:</p>
 <ul class="simple">
-<li>Algorithms are trained in-place — we no longer have distinct model objects.</li>
-<li>Model data is stored as attributes on the algorithm object that end in <code class="docutils literal notranslate"><span class="pre">_</span></code>.</li>
-<li>Instead of writing <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">algo.train_model(ratings)</span></code>, call <code class="docutils literal notranslate"><span class="pre">algo.fit(ratings)</span></code>.</li>
+<li><p>Algorithms are trained in-place — we no longer have distinct model objects.</p></li>
+<li><p>Model data is stored as attributes on the algorithm object that end in <code class="docutils literal notranslate"><span class="pre">_</span></code>.</p></li>
+<li><p>Instead of writing <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">algo.train_model(ratings)</span></code>, call <code class="docutils literal notranslate"><span class="pre">algo.fit(ratings)</span></code>.</p></li>
 </ul>
 <p>We also have some new capabilities:</p>
 <ul class="simple">
-<li>Ben Frederickson’s Implicit library</li>
+<li><p>Ben Frederickson’s Implicit library</p></li>
 </ul>
 </div>
-<div class="section" id="id3">
-<h2>0.3.0<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>0.3.0<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>A number of improvements, including replacing Cython/OpenMP with Numba and adding ALS.</p>
 </div>
-<div class="section" id="id4">
-<h2>0.2.0<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>0.2.0<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>A lot of fixes to get ready for RecSys.</p>
 </div>
-<div class="section" id="id5">
-<h2>0.1.0<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>0.1.0<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>Hello, world!</p>
 </div>
 </div>
@@ -297,7 +307,7 @@ our previous custom patterns.  Highlights of this change:</p>
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>1634aa85</code>.
+          Revision <code>d5b1b86b</code>.
         </span>
       
 
@@ -318,7 +328,7 @@ our previous custom patterns.  Highlights of this change:</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.6.0
+      v: 0.6.1
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -328,6 +338,8 @@ our previous custom patterns.  Highlights of this change:</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.6.1/">0.6.1</a></dd>
         
           <dd><a href="/en/0.6.0/">0.6.0</a></dd>
         

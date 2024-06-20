@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Prediction Accuracy Metrics &mdash; LensKit 0.6.0 documentation</title>
+  <title>Prediction Accuracy Metrics &mdash; LensKit 0.6.1 documentation</title>
   
 
   
@@ -86,7 +86,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.6.0
+                0.6.1
               </div>
             
           
@@ -184,7 +184,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.6.0/doc/evaluation/predict-metrics.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.6.1/doc/evaluation/predict-metrics.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -230,7 +230,7 @@ on a data frame that contains both predictions and ratings; for convenience, the
 <a class="reference internal" href="../batch.html#lenskit.batch.predict" title="lenskit.batch.predict"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.batch.predict()</span></code></a> function will include ratings in the prediction
 frame when its input user-item pairs contains ratings.  So you can perform the
 following to compute per-user RMSE over some predictions:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">preds</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">pairs</span><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">preds</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">pairs</span><span class="p">)</span>
 <span class="n">user_rmse</span> <span class="o">=</span> <span class="n">preds</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">df</span><span class="p">:</span> <span class="n">rmse</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">prediction</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">rating</span><span class="p">))</span>
 </pre></div>
 </div>
@@ -241,52 +241,44 @@ following to compute per-user RMSE over some predictions:</p>
 <dt id="lenskit.metrics.predict.rmse">
 <code class="descclassname">lenskit.metrics.predict.</code><code class="descname">rmse</code><span class="sig-paren">(</span><em>predictions</em>, <em>truth</em>, <em>missing='error'</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.predict.rmse" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute RMSE (root mean squared error).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>predictions</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.1)"><em>pandas.Series</em></a>) – the predictions</li>
-<li><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.1)"><em>pandas.Series</em></a>) – the ground truth ratings from data</li>
-<li><strong>missing</strong> (<em>string</em>) – how to handle predictions without truth. Can be one of
-<code class="docutils literal notranslate"><span class="pre">'error'</span></code> or <code class="docutils literal notranslate"><span class="pre">'ignore'</span></code>.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>predictions</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)"><em>pandas.Series</em></a>) – the predictions</p></li>
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)"><em>pandas.Series</em></a>) – the ground truth ratings from data</p></li>
+<li><p><strong>missing</strong> (<em>string</em>) – how to handle predictions without truth. Can be one of
+<code class="docutils literal notranslate"><span class="pre">'error'</span></code> or <code class="docutils literal notranslate"><span class="pre">'ignore'</span></code>.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the root mean squared approximation error</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">double</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the root mean squared approximation error</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>double</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="lenskit.metrics.predict.mae">
 <code class="descclassname">lenskit.metrics.predict.</code><code class="descname">mae</code><span class="sig-paren">(</span><em>predictions</em>, <em>truth</em>, <em>missing='error'</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.predict.mae" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute MAE (mean absolute error).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>predictions</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.1)"><em>pandas.Series</em></a>) – the predictions</li>
-<li><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.1)"><em>pandas.Series</em></a>) – the ground truth ratings from data</li>
-<li><strong>missing</strong> (<em>string</em>) – how to handle predictions without truth. Can be one of
-<code class="docutils literal notranslate"><span class="pre">'error'</span></code> or <code class="docutils literal notranslate"><span class="pre">'ignore'</span></code>.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>predictions</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)"><em>pandas.Series</em></a>) – the predictions</p></li>
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)"><em>pandas.Series</em></a>) – the ground truth ratings from data</p></li>
+<li><p><strong>missing</strong> (<em>string</em>) – how to handle predictions without truth. Can be one of
+<code class="docutils literal notranslate"><span class="pre">'error'</span></code> or <code class="docutils literal notranslate"><span class="pre">'ignore'</span></code>.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the mean absolute approximation error</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">double</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the mean absolute approximation error</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>double</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -296,7 +288,7 @@ following to compute per-user RMSE over some predictions:</p>
 to predict.  For example, a nearest-neighbor recommender will not score an item if
 it cannot find any suitable neighbors.  Following the Pandas convention, these items
 are given a score of NaN (when Pandas implements better missing data handling, it will
-use that, so use <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.isna.html#pandas.Series.isna" title="(in pandas v0.24.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.isna()</span></code></a>/<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.notna.html#pandas.Series.notna" title="(in pandas v0.24.1)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.notna()</span></code></a>, not the
+use that, so use <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.isna.html#pandas.Series.isna" title="(in pandas v0.24.2)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.isna()</span></code></a>/<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.notna.html#pandas.Series.notna" title="(in pandas v0.24.2)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.Series.notna()</span></code></a>, not the
 <code class="docutils literal notranslate"><span class="pre">isnan</span></code> versions.</p>
 <p>However, this causes problems when computing predictive accuracy: recommenders are not
 being tested on the same set of items. If a recommender only scores the easy items, for
@@ -307,7 +299,7 @@ prediction.  In LensKit, <a class="reference internal" href="../basic.html#lensk
 this functionality; it wraps a sequence of recommenders, and for each item, uses
 the first one that generates a score.</p>
 <p>You set it up like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cf</span> <span class="o">=</span> <span class="n">ItemItem</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">cf</span> <span class="o">=</span> <span class="n">ItemItem</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
 <span class="n">base</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">(</span><span class="n">damping</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="n">algo</span> <span class="o">=</span> <span class="n">Fallback</span><span class="p">(</span><span class="n">cf</span><span class="p">,</span> <span class="n">base</span><span class="p">)</span>
 </pre></div>
@@ -338,7 +330,7 @@ the first one that generates a score.</p>
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>1634aa85</code>.
+          Revision <code>d5b1b86b</code>.
         </span>
       
 
@@ -359,7 +351,7 @@ the first one that generates a score.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.6.0
+      v: 0.6.1
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -369,6 +361,8 @@ the first one that generates a score.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.6.1/">0.6.1</a></dd>
         
           <dd><a href="/en/0.6.0/">0.6.0</a></dd>
         

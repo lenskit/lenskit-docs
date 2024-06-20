@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Basic and Utility Algorithms &mdash; LensKit 0.6.0 documentation</title>
+  <title>Basic and Utility Algorithms &mdash; LensKit 0.6.1 documentation</title>
   
 
   
@@ -86,7 +86,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.6.0
+                0.6.1
               </div>
             
           
@@ -187,7 +187,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.6.0/doc/basic.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.6.1/doc/basic.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -252,80 +252,66 @@ b_u &amp; = \frac{\sum_{r_{ui} \in R_u} (r_{ui} - \mu - b_i)}{|R_u| + \beta_{\ma
 <p>The damping values can be interpreted as the number of default (mean) ratings to assume
 <em>a priori</em> for each user or item, damping low-information users and items towards a mean instead
 of permitting them to take on extreme values based on few ratings.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>items</strong> – whether to compute item biases</li>
-<li><strong>users</strong> – whether to compute user biases</li>
-<li><strong>damping</strong> (<em>number</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a>) – Bayesian damping to apply to computed biases.  Either a number, to
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>items</strong> – whether to compute item biases</p></li>
+<li><p><strong>users</strong> – whether to compute user biases</p></li>
+<li><p><strong>damping</strong> (<em>number</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a>) – Bayesian damping to apply to computed biases.  Either a number, to
 damp both user and item biases the same amount, or a (user,item) tuple
-providing separate damping values.</li>
+providing separate damping values.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="attribute">
 <dt id="lenskit.algorithms.basic.Bias.mean_">
 <code class="descname">mean_</code><a class="headerlink" href="#lenskit.algorithms.basic.Bias.mean_" title="Permalink to this definition">¶</a></dt>
 <dd><p>The global mean rating.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">double</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>double</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="lenskit.algorithms.basic.Bias.item_offsets_">
 <code class="descname">item_offsets_</code><a class="headerlink" href="#lenskit.algorithms.basic.Bias.item_offsets_" title="Permalink to this definition">¶</a></dt>
 <dd><p>The item offsets (<span class="math notranslate nohighlight">\(b_i\)</span> values)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.1)">pandas.Series</a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)">pandas.Series</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="lenskit.algorithms.basic.Bias.user_offsets_">
 <code class="descname">user_offsets_</code><a class="headerlink" href="#lenskit.algorithms.basic.Bias.user_offsets_" title="Permalink to this definition">¶</a></dt>
 <dd><p>The item offsets (<span class="math notranslate nohighlight">\(b_u\)</span> values)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.1)">pandas.Series</a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)">pandas.Series</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lenskit.algorithms.basic.Bias.fit">
 <code class="descname">fit</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Bias.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train the bias model on some rating data.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>DataFrame</em>) – a data frame of ratings. Must have at least <cite>user</cite>,
-<cite>item</cite>, and <cite>rating</cite> columns.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the fit bias object.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#lenskit.algorithms.basic.Bias" title="lenskit.algorithms.basic.Bias">Bias</a></td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> (<em>DataFrame</em>) – a data frame of ratings. Must have at least <cite>user</cite>,
+<cite>item</cite>, and <cite>rating</cite> columns.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the fit bias object.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.algorithms.basic.Bias" title="lenskit.algorithms.basic.Bias">Bias</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -333,27 +319,23 @@ providing separate damping values.</li>
 <code class="descname">predict_for_user</code><span class="sig-paren">(</span><em>user</em>, <em>items</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Bias.predict_for_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute predictions for a user and items.  Unknown users and items
 are assumed to have zero bias.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>user</strong> – the user ID</li>
-<li><strong>items</strong> (<em>array-like</em>) – the items to predict</li>
-<li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.1)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – the user ID</p></li>
+<li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if
 provided, will be used to recompute the user’s
-bias at prediction time.</li>
+bias at prediction time.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">scores for the items, indexed by item id.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.1)">pandas.Series</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>scores for the items, indexed by item id.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)">pandas.Series</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -374,48 +356,40 @@ missing values, and so forth.</p>
 <dt id="lenskit.algorithms.basic.Fallback.fit">
 <code class="descname">fit</code><span class="sig-paren">(</span><em>ratings</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Fallback.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train a model using the specified ratings (or similar) data.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.1)"><em>pandas.DataFrame</em></a>) – The ratings data.</li>
-<li><strong>args</strong> – Additional training data the algorithm may require.</li>
-<li><strong>kwargs</strong> – Additional training data the algorithm may require.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – The ratings data.</p></li>
+<li><p><strong>args</strong> – Additional training data the algorithm may require.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The algorithm object.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The algorithm object.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lenskit.algorithms.basic.Fallback.predict_for_user">
 <code class="descname">predict_for_user</code><span class="sig-paren">(</span><em>user</em>, <em>items</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Fallback.predict_for_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute predictions for a user and items.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>user</strong> – the user ID</li>
-<li><strong>items</strong> (<em>array-like</em>) – the items to predict</li>
-<li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.1)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
-override or augment the model’s notion of a user’s preferences.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – the user ID</p></li>
+<li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">scores for the items, indexed by item id.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.1)">pandas.Series</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>scores for the items, indexed by item id.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)">pandas.Series</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -434,48 +408,40 @@ rating predictions and returns them.</p>
 <dt id="lenskit.algorithms.basic.Memorized.fit">
 <code class="descname">fit</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Memorized.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train a model using the specified ratings (or similar) data.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.1)"><em>pandas.DataFrame</em></a>) – The ratings data.</li>
-<li><strong>args</strong> – Additional training data the algorithm may require.</li>
-<li><strong>kwargs</strong> – Additional training data the algorithm may require.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – The ratings data.</p></li>
+<li><p><strong>args</strong> – Additional training data the algorithm may require.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The algorithm object.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The algorithm object.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lenskit.algorithms.basic.Memorized.predict_for_user">
 <code class="descname">predict_for_user</code><span class="sig-paren">(</span><em>user</em>, <em>items</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Memorized.predict_for_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute predictions for a user and items.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>user</strong> – the user ID</li>
-<li><strong>items</strong> (<em>array-like</em>) – the items to predict</li>
-<li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.1)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
-override or augment the model’s notion of a user’s preferences.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – the user ID</p></li>
+<li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">scores for the items, indexed by item id.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.1)">pandas.Series</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>scores for the items, indexed by item id.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)">pandas.Series</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -506,7 +472,7 @@ override or augment the model’s notion of a user’s preferences.</li>
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>1634aa85</code>.
+          Revision <code>d5b1b86b</code>.
         </span>
       
 
@@ -527,7 +493,7 @@ override or augment the model’s notion of a user’s preferences.</li>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.6.0
+      v: 0.6.1
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -537,6 +503,8 @@ override or augment the model’s notion of a user’s preferences.</li>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.6.1/">0.6.1</a></dd>
         
           <dd><a href="/en/0.6.0/">0.6.0</a></dd>
         

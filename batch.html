@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Batch-Running Recommenders &mdash; LensKit 0.6.0 documentation</title>
+  <title>Batch-Running Recommenders &mdash; LensKit 0.6.1 documentation</title>
   
 
   
@@ -86,7 +86,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.6.0
+                0.6.1
               </div>
             
           
@@ -118,7 +118,10 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Batch-Running Recommenders</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#recommendation">Recommendation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#rating-prediction">Rating Prediction</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#scripting-evaluation">Scripting Evaluation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scripting-evaluation">Scripting Evaluation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#multi-eval-class-reference">Multi-Eval Class Reference</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
@@ -178,7 +181,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.6.0/doc/batch.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.6.1/doc/batch.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -216,9 +219,9 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
     text-align: unset;
 }
 </style>
-<div class="section" id="module-lenskit.batch">
-<span id="batch-running-recommenders"></span><h1>Batch-Running Recommenders<a class="headerlink" href="#module-lenskit.batch" title="Permalink to this headline">¶</a></h1>
-<p>The functions in <a class="reference internal" href="#module-lenskit.batch" title="lenskit.batch"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.batch</span></code></a> enable you to generate many recommendations or
+<div class="section" id="batch-running-recommenders">
+<h1>Batch-Running Recommenders<a class="headerlink" href="#batch-running-recommenders" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-lenskit.batch"></span><p>The functions in <a class="reference internal" href="#module-lenskit.batch" title="lenskit.batch"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.batch</span></code></a> enable you to generate many recommendations or
 predictions at the same time, useful for evaluations and experiments.</p>
 <div class="section" id="recommendation">
 <h2>Recommendation<a class="headerlink" href="#recommendation" title="Permalink to this headline">¶</a></h2>
@@ -227,28 +230,24 @@ predictions at the same time, useful for evaluations and experiments.</p>
 <code class="descclassname">lenskit.batch.</code><code class="descname">recommend</code><span class="sig-paren">(</span><em>algo</em>, <em>users</em>, <em>n</em>, <em>candidates=None</em>, <em>*</em>, <em>nprocs=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.recommend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch-recommend for multiple users.  The provided algorithm should be a
 <code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.Recommender</span></code>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>algo</strong> – the algorithm</li>
-<li><strong>users</strong> (<em>array-like</em>) – the users to recommend for</li>
-<li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of recommendations to generate (None for unlimited)</li>
-<li><strong>candidates</strong> – the users’ candidate sets. This can be a function, in which case it will
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>algo</strong> – the algorithm</p></li>
+<li><p><strong>users</strong> (<em>array-like</em>) – the users to recommend for</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of recommendations to generate (None for unlimited)</p></li>
+<li><p><strong>candidates</strong> – the users’ candidate sets. This can be a function, in which case it will
 be passed each user ID; it can also be a dictionary, in which case user
 IDs will be looked up in it.  Pass <code class="docutils literal notranslate"><span class="pre">None</span></code> to use the recommender’s
-built-in candidate selector (usually recommended).</li>
-<li><strong>nprocs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The number of processes to use for parallel recommendations.</li>
+built-in candidate selector (usually recommended).</p></li>
+<li><p><strong>nprocs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The number of processes to use for parallel recommendations.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">A frame with at least the columns <code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">rank</span></code>, and <code class="docutils literal notranslate"><span class="pre">item</span></code>; possibly also
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A frame with at least the columns <code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">rank</span></code>, and <code class="docutils literal notranslate"><span class="pre">item</span></code>; possibly also
 <code class="docutils literal notranslate"><span class="pre">score</span></code>, and any other columns returned by the recommender.</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -259,11 +258,11 @@ built-in candidate selector (usually recommended).</li>
 <code class="descclassname">lenskit.batch.</code><code class="descname">predict</code><span class="sig-paren">(</span><em>algo</em>, <em>pairs</em>, <em>*</em>, <em>nprocs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate predictions for user-item pairs.  The provided algorithm should be a
 <code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.Predictor</span></code> or a function of two arguments: the user ID and
-a list of item IDs. It should return a dictionary or a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>
+a list of item IDs. It should return a dictionary or a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>
 mapping item IDs to predictions.</p>
 <p>To use this function, provide a pre-fit algorithm:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.algorithms.basic</span> <span class="k">import</span> <span class="n">Bias</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.metrics.predict</span> <span class="k">import</span> <span class="n">rmse</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.algorithms.basic</span> <span class="kn">import</span> <span class="n">Bias</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.metrics.predict</span> <span class="kn">import</span> <span class="n">rmse</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ratings</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">load_ml_ratings</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bias</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bias</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ratings</span><span class="p">[:</span><span class="o">-</span><span class="mi">1000</span><span class="p">])</span>
@@ -280,103 +279,410 @@ mapping item IDs to predictions.</p>
 <span class="go">0.8326992222...</span>
 </pre></div>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>algo</strong> (<a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><em>lenskit.algorithms.Predictor</em></a>) – A rating predictor function or algorithm.</li>
-<li><strong>pairs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.1)"><em>pandas.DataFrame</em></a>) – A data frame of (<code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">item</span></code>) pairs to predict for. If this frame also
-contains a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, it will be included in the result.</li>
-<li><strong>nprocs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The number of processes to use for parallel batch prediction.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>algo</strong> (<a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><em>lenskit.algorithms.Predictor</em></a>) – A rating predictor function or algorithm.</p></li>
+<li><p><strong>pairs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – A data frame of (<code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">item</span></code>) pairs to predict for. If this frame also
+contains a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, it will be included in the result.</p></li>
+<li><p><strong>nprocs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The number of processes to use for parallel batch prediction.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a frame with columns <code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">item</span></code>, and <code class="docutils literal notranslate"><span class="pre">prediction</span></code> containing
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a frame with columns <code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">item</span></code>, and <code class="docutils literal notranslate"><span class="pre">prediction</span></code> containing
 the prediction results. If <code class="docutils literal notranslate"><span class="pre">pairs</span></code> contains a <cite>rating</cite> column, this
 result will also contain a <cite>rating</cite> column.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.1)">pandas.DataFrame</a></p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)">pandas.DataFrame</a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
 <div class="section" id="scripting-evaluation">
 <h2>Scripting Evaluation<a class="headerlink" href="#scripting-evaluation" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#lenskit.batch.MultiEval" title="lenskit.batch.MultiEval"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiEval</span></code></a> class is useful to build scripts that evaluate multiple algorithms
+or algorithm variants, simultaneously, across multiple data sets. It can extract parameters
+from algorithms and include them in the output, useful for hyperparameter search.</p>
+<p>For example:</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lenskit.batch</span> <span class="k">import</span> <span class="n">MultiEval</span>
+<span class="kn">from</span> <span class="nn">lenskit.crossfold</span> <span class="k">import</span> <span class="n">partition_users</span><span class="p">,</span> <span class="n">SampleN</span>
+<span class="kn">from</span> <span class="nn">lenskit.algorithms</span> <span class="k">import</span> <span class="n">basic</span><span class="p">,</span> <span class="n">als</span>
+<span class="kn">from</span> <span class="nn">lenskit.util</span> <span class="k">import</span> <span class="n">load_ml_ratings</span>
+<span class="kn">from</span> <span class="nn">lenskit</span> <span class="k">import</span> <span class="n">topn</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+<p>Generate the train-test pairs:</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pairs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">partition_users</span><span class="p">(</span><span class="n">load_ml_ratings</span><span class="p">(),</span> <span class="mi">5</span><span class="p">,</span> <span class="n">SampleN</span><span class="p">(</span><span class="mi">5</span><span class="p">)))</span>
+</pre></div>
+</div>
+<p>Set up and run the <code class="docutils literal notranslate"><span class="pre">MultiEval</span></code> experiment:</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">eval</span> <span class="o">=</span> <span class="n">MultiEval</span><span class="p">(</span><span class="s1">&#39;my-eval&#39;</span><span class="p">,</span> <span class="n">recommend</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="nb">eval</span><span class="o">.</span><span class="n">add_datasets</span><span class="p">(</span><span class="n">pairs</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ML-Small&#39;</span><span class="p">)</span>
+<span class="nb">eval</span><span class="o">.</span><span class="n">add_algorithms</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">Popular</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Pop&#39;</span><span class="p">)</span>
+<span class="nb">eval</span><span class="o">.</span><span class="n">add_algorithms</span><span class="p">([</span><span class="n">als</span><span class="o">.</span><span class="n">BiasedMF</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">]],</span>
+                    <span class="n">attrs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ALS&#39;</span><span class="p">)</span>
+<span class="nb">eval</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Now that the experiment is run, we can read its outputs.</p>
+<p>First the run metadata:</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">runs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;my-eval/runs.csv&#39;</span><span class="p">)</span>
+<span class="n">runs</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;RunId&#39;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">runs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AlgoClass</th>
+      <th>AlgoStr</th>
+      <th>DataSet</th>
+      <th>Partition</th>
+      <th>PredTime</th>
+      <th>RecTime</th>
+      <th>TrainTime</th>
+      <th>features</th>
+      <th>name</th>
+    </tr>
+    <tr>
+      <th>RunId</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>Popular</td>
+      <td>Popular</td>
+      <td>ML-Small</td>
+      <td>1</td>
+      <td>NaN</td>
+      <td>0.578916</td>
+      <td>0.278333</td>
+      <td>NaN</td>
+      <td>Pop</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>BiasedMF</td>
+      <td>als.BiasedMF(features=20, regularization=0.1)</td>
+      <td>ML-Small</td>
+      <td>1</td>
+      <td>0.377277</td>
+      <td>1.324478</td>
+      <td>5.426510</td>
+      <td>20.0</td>
+      <td>ALS</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>BiasedMF</td>
+      <td>als.BiasedMF(features=30, regularization=0.1)</td>
+      <td>ML-Small</td>
+      <td>1</td>
+      <td>0.326613</td>
+      <td>1.566073</td>
+      <td>1.300490</td>
+      <td>30.0</td>
+      <td>ALS</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>BiasedMF</td>
+      <td>als.BiasedMF(features=40, regularization=0.1)</td>
+      <td>ML-Small</td>
+      <td>1</td>
+      <td>0.408973</td>
+      <td>1.570634</td>
+      <td>1.904973</td>
+      <td>40.0</td>
+      <td>ALS</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>BiasedMF</td>
+      <td>als.BiasedMF(features=50, regularization=0.1)</td>
+      <td>ML-Small</td>
+      <td>1</td>
+      <td>0.357133</td>
+      <td>1.700047</td>
+      <td>2.390314</td>
+      <td>50.0</td>
+      <td>ALS</td>
+    </tr>
+  </tbody>
+</table>
+</div><p>Then the recommendations:</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">recs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s1">&#39;my-eval/recommendations.parquet&#39;</span><span class="p">)</span>
+<span class="n">recs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<pre class="literal-block">D:Anaconda3libsite-packagespyarrowpandas_compat.py:698: FutureWarning: .labels was deprecated in version 0.24.0. Use .codes instead.
+  labels = getattr(columns, 'labels', None) or [
+D:Anaconda3libsite-packagespyarrowpandas_compat.py:725: FutureWarning: the 'labels' keyword is deprecated, use 'codes' instead
+  return pd.MultiIndex(levels=new_levels, labels=labels, names=columns.names)
+D:Anaconda3libsite-packagespyarrowpandas_compat.py:742: FutureWarning: .labels was deprecated in version 0.24.0. Use .codes instead.
+  labels, = index.labels</pre>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>item</th>
+      <th>score</th>
+      <th>user</th>
+      <th>rank</th>
+      <th>RunId</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>356</td>
+      <td>335</td>
+      <td>6</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>296</td>
+      <td>323</td>
+      <td>6</td>
+      <td>2</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>318</td>
+      <td>305</td>
+      <td>6</td>
+      <td>3</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>593</td>
+      <td>302</td>
+      <td>6</td>
+      <td>4</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>260</td>
+      <td>284</td>
+      <td>6</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+  </tbody>
+</table>
+</div><p>In order to evaluate the recommendation list, we need to build a
+combined set of truth data. Since this is a disjoint partition of users
+over a single data set, we can just concatenate the individual test
+frames:</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">truth</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">p</span><span class="o">.</span><span class="n">test</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">pairs</span><span class="p">),</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Now we can set up an analysis and compute the results.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rla</span> <span class="o">=</span> <span class="n">topn</span><span class="o">.</span><span class="n">RecListAnalysis</span><span class="p">()</span>
+<span class="n">rla</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">topn</span><span class="o">.</span><span class="n">ndcg</span><span class="p">)</span>
+<span class="n">ndcg</span> <span class="o">=</span> <span class="n">rla</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">recs</span><span class="p">,</span> <span class="n">truth</span><span class="p">)</span>
+<span class="n">ndcg</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Next, we need to combine this with our run data, so that we know what
+algorithms and configurations we are evaluating:</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ndcg</span> <span class="o">=</span> <span class="n">ndcg</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">runs</span><span class="p">[[</span><span class="s1">&#39;AlgoClass&#39;</span><span class="p">,</span> <span class="s1">&#39;features&#39;</span><span class="p">]],</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;RunId&#39;</span><span class="p">)</span>
+<span class="n">ndcg</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>ndcg</th>
+      <th>AlgoClass</th>
+      <th>features</th>
+    </tr>
+    <tr>
+      <th>user</th>
+      <th>RunId</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">1</th>
+      <th>11</th>
+      <td>0.0</td>
+      <td>Popular</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>0.0</td>
+      <td>BiasedMF</td>
+      <td>20.0</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>0.0</td>
+      <td>BiasedMF</td>
+      <td>30.0</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>0.0</td>
+      <td>BiasedMF</td>
+      <td>40.0</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>0.0</td>
+      <td>BiasedMF</td>
+      <td>50.0</td>
+    </tr>
+  </tbody>
+</table>
+</div><p>The Popular algorithm has NaN feature count, which <code class="docutils literal notranslate"><span class="pre">groupby</span></code> doesn’t
+like; let’s fill those in.</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ndcg</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">ndcg</span><span class="p">[</span><span class="s1">&#39;AlgoClass&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Popular&#39;</span><span class="p">,</span> <span class="s1">&#39;features&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>And finally, we can compute the overall average performance for each
+algorithm configuration:</p>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ndcg</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;AlgoClass&#39;</span><span class="p">,</span> <span class="s1">&#39;features&#39;</span><span class="p">])[</span><span class="s1">&#39;ndcg&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">AlgoClass</span>  <span class="n">features</span>
+<span class="n">BiasedMF</span>   <span class="mf">20.0</span>        <span class="mf">0.015960</span>
+           <span class="mf">30.0</span>        <span class="mf">0.022558</span>
+           <span class="mf">40.0</span>        <span class="mf">0.025901</span>
+           <span class="mf">50.0</span>        <span class="mf">0.028949</span>
+<span class="n">Popular</span>    <span class="mf">0.0</span>         <span class="mf">0.091814</span>
+<span class="n">Name</span><span class="p">:</span> <span class="n">ndcg</span><span class="p">,</span> <span class="n">dtype</span><span class="p">:</span> <span class="n">float64</span>
+</pre></div>
+</div>
+<div class="section" id="multi-eval-class-reference">
+<h3>Multi-Eval Class Reference<a class="headerlink" href="#multi-eval-class-reference" title="Permalink to this headline">¶</a></h3>
 <dl class="class">
 <dt id="lenskit.batch.MultiEval">
 <em class="property">class </em><code class="descclassname">lenskit.batch.</code><code class="descname">MultiEval</code><span class="sig-paren">(</span><em>path</em>, <em>predict=True</em>, <em>recommend=100</em>, <em>candidates=&lt;class 'lenskit.topn.UnratedCandidates'&gt;</em>, <em>nprocs=None</em>, <em>combine=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval" title="Permalink to this definition">¶</a></dt>
 <dd><p>A runner for carrying out multiple evaluations, such as parameter sweeps.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>path</strong> (str or <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a>) – the working directory for this evaluation.
-It will be created if it does not exist.</li>
-<li><strong>predict</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – whether to generate rating predictions.</li>
-<li><strong>recommend</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of recommendations to generate per user (None to disable top-N).</li>
-<li><strong>candidates</strong> (<em>function</em>) – the default candidate set generator for recommendations.  It should take the
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (str or <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pathlib.Path</span></code></a>) – the working directory for this evaluation.
+It will be created if it does not exist.</p></li>
+<li><p><strong>predict</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – whether to generate rating predictions.</p></li>
+<li><p><strong>recommend</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of recommendations to generate per user. Any false-y value (<code class="docutils literal notranslate"><span class="pre">None</span></code>,
+<code class="docutils literal notranslate"><span class="pre">False</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code>) will disable top-n. The literal value <code class="docutils literal notranslate"><span class="pre">True</span></code> will generate
+recommendation lists of unlimited size.</p></li>
+<li><p><strong>candidates</strong> (<em>function</em>) – the default candidate set generator for recommendations.  It should take the
 training data and return a candidate generator, itself a function mapping user
-IDs to candidate sets.</li>
-<li><strong>combine</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – whether to combine output; if <code class="docutils literal notranslate"><span class="pre">False</span></code>, output will be left in separate files, if
-<code class="docutils literal notranslate"><span class="pre">True</span></code>, it will be in a single set of files (runs, recommendations, and preditions).</li>
+IDs to candidate sets.</p></li>
+<li><p><strong>combine</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – whether to combine output; if <code class="docutils literal notranslate"><span class="pre">False</span></code>, output will be left in separate files, if
+<code class="docutils literal notranslate"><span class="pre">True</span></code>, it will be in a single set of files (runs, recommendations, and predictions).</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 <dl class="method">
 <dt id="lenskit.batch.MultiEval.add_algorithms">
 <code class="descname">add_algorithms</code><span class="sig-paren">(</span><em>algos</em>, <em>parallel=False</em>, <em>attrs=[]</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.add_algorithms" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add one or more algorithms to the run.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>algos</strong> (<em>algorithm</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – the algorithm(s) to add.</li>
-<li><strong>parallel</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – if <code class="docutils literal notranslate"><span class="pre">True</span></code>, allow this algorithm to be trained in parallel with others.</li>
-<li><strong>attrs</strong> (<em>list of str</em>) – a list of attributes to extract from the algorithm objects and include in
-the run descriptions.</li>
-<li><strong>kwargs</strong> – additional attributes to include in the run descriptions.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>algos</strong> (<em>algorithm</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.7)"><em>list</em></a>) – the algorithm(s) to add.</p></li>
+<li><p><strong>parallel</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – if <code class="docutils literal notranslate"><span class="pre">True</span></code>, allow this algorithm to be trained in parallel with others.</p></li>
+<li><p><strong>attrs</strong> (<em>list of str</em>) – a list of attributes to extract from the algorithm objects and include in
+the run descriptions.</p></li>
+<li><p><strong>kwargs</strong> – additional attributes to include in the run descriptions.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="lenskit.batch.MultiEval.add_datasets">
 <code class="descname">add_datasets</code><span class="sig-paren">(</span><em>data</em>, <em>name=None</em>, <em>candidates=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.add_datasets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add one or more datasets to the run.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>data</strong> – <p>The input data set(s) to run. Can be one of the following:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – <p>The input data set(s) to run. Can be one of the following:</p>
 <ul>
-<li>A tuple of (train, test) data.</li>
-<li>An iterable of (train, test) pairs, in which case the iterable
-is not consumed until it is needed.</li>
-<li>A function yielding either of the above, to defer data load
-until it is needed.</li>
+<li><p>A tuple of (train, test) data.</p></li>
+<li><p>An iterable of (train, test) pairs, in which case the iterable
+is not consumed until it is needed.</p></li>
+<li><p>A function yielding either of the above, to defer data load
+until it is needed.</p></li>
 </ul>
 <p>Data can be either data frames or paths; paths are loaded after
 detection using <code class="xref py py-func docutils literal notranslate"><span class="pre">util.read_df_detect()</span></code>.</p>
-</li>
-<li><strong>kwargs</strong> – additional attributes pertaining to these data sets.</li>
+</p></li>
+<li><p><strong>kwargs</strong> – additional attributes pertaining to these data sets.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -394,18 +700,18 @@ Once this has been called, the sweep can be pickled.</p>
 
 <dl class="method">
 <dt id="lenskit.batch.MultiEval.run">
-<code class="descname">run</code><span class="sig-paren">(</span><em>runs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.run" title="Permalink to this definition">¶</a></dt>
+<code class="descname">run</code><span class="sig-paren">(</span><em>runs=None</em>, <em>*</em>, <em>progress=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run the evaluation.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>runs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> or </em><em>set-like</em>) – If provided, a specific set of runs to run.  Useful for splitting
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>runs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> or </em><em>set-like</em>) – If provided, a specific set of runs to run.  Useful for splitting
 an experiment into individual runs.  This is a set of 1-based run
-IDs, not 0-based indexes.</td>
-</tr>
-</tbody>
-</table>
+IDs, not 0-based indexes.</p></li>
+<li><p><strong>progress</strong> – A <code class="xref py py-func docutils literal notranslate"><span class="pre">tqdm.tqdm()</span></code>-compatible progress function.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -416,6 +722,7 @@ IDs, not 0-based indexes.</td>
 
 </dd></dl>
 
+</div>
 </div>
 </div>
 
@@ -442,7 +749,7 @@ IDs, not 0-based indexes.</td>
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>1634aa85</code>.
+          Revision <code>d5b1b86b</code>.
         </span>
       
 
@@ -463,7 +770,7 @@ IDs, not 0-based indexes.</td>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.6.0
+      v: 0.6.1
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -473,6 +780,8 @@ IDs, not 0-based indexes.</td>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.6.1/">0.6.1</a></dd>
         
           <dd><a href="/en/0.6.0/">0.6.0</a></dd>
         

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Crossfold preparation &mdash; LensKit 0.6.0 documentation</title>
+  <title>Crossfold preparation &mdash; LensKit 0.6.1 documentation</title>
   
 
   
@@ -86,7 +86,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.6.0
+                0.6.1
               </div>
             
           
@@ -181,7 +181,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.6.0/doc/crossfold.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.6.1/doc/crossfold.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -233,7 +233,7 @@ represents a single data point for the purpose of splitting and sampling.</p>
 <p>Experiment code should generally use these functions to prepare train-test files
 for training and evaluating algorithms.  For example, the following will perform
 a user-based 5-fold cross-validation as was the default in the old LensKit:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">lenskit.crossfold</span> <span class="k">as</span> <span class="nn">xf</span>
 <span class="n">ratings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;ml-20m/ratings.csv&#39;</span><span class="p">)</span>
 <span class="n">ratings</span> <span class="o">=</span> <span class="n">ratings</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;userId&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;movieId&#39;</span><span class="p">:</span> <span class="s1">&#39;item&#39;</span><span class="p">})</span>
@@ -255,24 +255,20 @@ training.</p>
 <code class="descclassname">lenskit.crossfold.</code><code class="descname">partition_rows</code><span class="sig-paren">(</span><em>data</em>, <em>partitions</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.partition_rows" title="Permalink to this definition">¶</a></dt>
 <dd><p>Partition a frame of ratings or other datainto train-test partitions.  This function does not
 care what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFrame (or equivalent).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or equivalent) – a data frame containing ratings or other data you wish to partition.</li>
-<li><strong>partitions</strong> (<em>integer</em>) – the number of partitions to produce</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or equivalent) – a data frame containing ratings or other data you wish to partition.</p></li>
+<li><p><strong>partitions</strong> (<em>integer</em>) – the number of partitions to produce</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">iterator</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">an iterator of train-test pairs</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>iterator</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>an iterator of train-test pairs</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -281,7 +277,7 @@ care what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFr
 <dd><p>Sample train-test a frame of ratings into train-test partitions.  This function does not care
 what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFrame (or equivalent).</p>
 <p>We can loop over a sequence of train-test pairs:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ratings</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">load_ml_ratings</span><span class="p">()</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ratings</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">load_ml_ratings</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">sample_rows</span><span class="p">(</span><span class="n">ratings</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="p">))</span>
 <span class="go">1000</span>
@@ -292,34 +288,30 @@ what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFrame (
 </pre></div>
 </div>
 <p>Sometimes for testing, it is useful to just get a single pair:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">sample_rows</span><span class="p">(</span><span class="n">ratings</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="o">=</span> <span class="n">sample_rows</span><span class="p">(</span><span class="n">ratings</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
 <span class="go">1000</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">train</span><span class="p">)</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">ratings</span><span class="p">)</span>
 <span class="go">0</span>
 </pre></div>
 </div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.1)"><em>pandas.DataFrame</em></a>) – Data frame containing ratings or other data to partition.</li>
-<li><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – The number of partitions to produce.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, produce a _single_ train-test
-pair instead of an iterator or list.</li>
-<li><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The size of each sample.</li>
-<li><strong>disjoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, force samples to be disjoint.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – Data frame containing ratings or other data to partition.</p></li>
+<li><p><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.7)"><em>None</em></a>) – The number of partitions to produce.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, produce a _single_ train-test
+pair instead of an iterator or list.</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The size of each sample.</p></li>
+<li><p><strong>disjoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, force samples to be disjoint.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An iterator of train-test pairs.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">iterator</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An iterator of train-test pairs.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterator</p>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -331,11 +323,11 @@ e.g. by making sure each user is tested with the same number of ratings.  These 
 require that the input data frame have a <cite>user</cite> column with the user names or identifiers.</p>
 <p>The algorithm used by each is as follows:</p>
 <ol class="arabic simple">
-<li>Sample or partition the set of user IDs into <em>n</em> sets of test users.</li>
-<li>For each set of test users, select a set of that user’s rows to be test rows.</li>
-<li><dl class="first docutils">
-<dt>Create a training set for each test set consisting of the non-selected rows from each</dt>
-<dd>of that set’s test users, along with all rows from each non-test user.</dd>
+<li><p>Sample or partition the set of user IDs into <em>n</em> sets of test users.</p></li>
+<li><p>For each set of test users, select a set of that user’s rows to be test rows.</p></li>
+<li><dl class="simple">
+<dt>Create a training set for each test set consisting of the non-selected rows from each</dt><dd><p>of that set’s test users, along with all rows from each non-test user.</p>
+</dd>
 </dl>
 </li>
 </ol>
@@ -345,25 +337,21 @@ require that the input data frame have a <cite>user</cite> column with the user 
 <dd><p>Partition a frame of ratings or other data into train-test partitions user-by-user.
 This function does not care what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFrame
 (or equivalent) and has a <cite>user</cite> column.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or equivalent) – a data frame containing ratings or other data you wish to partition.</li>
-<li><strong>partitions</strong> (<em>integer</em>) – the number of partitions to produce</li>
-<li><strong>method</strong> – The method for selecting test rows for each user.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or equivalent) – a data frame containing ratings or other data you wish to partition.</p></li>
+<li><p><strong>partitions</strong> (<em>integer</em>) – the number of partitions to produce</p></li>
+<li><p><strong>method</strong> – The method for selecting test rows for each user.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><p class="first">iterator</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">an iterator of train-test pairs</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>iterator</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>an iterator of train-test pairs</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -372,26 +360,22 @@ This function does not care what kind of data is in <cite>data</cite>, so long a
 <dd><p>Create train-test partitions by sampling users.
 This function does not care what kind of data is in <cite>data</cite>, so long as it is
 a Pandas DataFrame (or equivalent) and has a <cite>user</cite> column.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.1)"><em>pandas.DataFrame</em></a>) – Data frame containing ratings or other data you wish to partition.</li>
-<li><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The number of partitions.</li>
-<li><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The sample size.</li>
-<li><strong>method</strong> (<a class="reference internal" href="#lenskit.crossfold.PartitionMethod" title="lenskit.crossfold.PartitionMethod"><em>PartitionMethod</em></a>) – The method for obtaining user test ratings.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.2)"><em>pandas.DataFrame</em></a>) – Data frame containing ratings or other data you wish to partition.</p></li>
+<li><p><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The number of partitions.</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The sample size.</p></li>
+<li><p><strong>method</strong> (<a class="reference internal" href="#lenskit.crossfold.PartitionMethod" title="lenskit.crossfold.PartitionMethod"><em>PartitionMethod</em></a>) – The method for obtaining user test ratings.</p></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">An iterator of train-test pairs (as <a class="reference internal" href="#lenskit.crossfold.TTPair" title="lenskit.crossfold.TTPair"><code class="xref py py-class docutils literal notranslate"><span class="pre">TTPair</span></code></a> objects).</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">iterator</p>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An iterator of train-test pairs (as <a class="reference internal" href="#lenskit.crossfold.TTPair" title="lenskit.crossfold.TTPair"><code class="xref py py-class docutils literal notranslate"><span class="pre">TTPair</span></code></a> objects).</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>iterator</p>
+</dd>
+</dl>
 </dd></dl>
 
 <div class="section" id="selecting-user-test-rows">
@@ -405,28 +389,22 @@ happens by default with common means of implementing samples).</p>
 <dt id="lenskit.crossfold.SampleN">
 <code class="descclassname">lenskit.crossfold.</code><code class="descname">SampleN</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.SampleN" title="Permalink to this definition">¶</a></dt>
 <dd><p>Randomly select a fixed number of test rows per user/item.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> – The number of test items to select.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n</strong> – The number of test items to select.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="lenskit.crossfold.SampleFrac">
 <code class="descclassname">lenskit.crossfold.</code><code class="descname">SampleFrac</code><span class="sig-paren">(</span><em>frac</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.SampleFrac" title="Permalink to this definition">¶</a></dt>
 <dd><p>Randomly select a fraction of test rows per user/item.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>frac</strong> – the fraction of items to select for testing.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>frac</strong> – the fraction of items to select for testing.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -434,36 +412,28 @@ happens by default with common means of implementing samples).</p>
 <code class="descclassname">lenskit.crossfold.</code><code class="descname">LastN</code><span class="sig-paren">(</span><em>n</em>, <em>col='timestamp'</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.LastN" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select a fixed number of test rows per user/item, based on ordering by a
 column.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>n</strong> – The number of test items to select.</li>
-<li><strong>col</strong> – The column to sort by.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – The number of test items to select.</p></li>
+<li><p><strong>col</strong> – The column to sort by.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
 <dt id="lenskit.crossfold.LastFrac">
 <code class="descclassname">lenskit.crossfold.</code><code class="descname">LastFrac</code><span class="sig-paren">(</span><em>frac</em>, <em>col='timestamp'</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.LastFrac" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select a fraction of test rows per user/item.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>frac</strong> – the fraction of items to select for testing.</li>
-<li><strong>col</strong> – The column to sort by.</li>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frac</strong> – the fraction of items to select for testing.</p></li>
+<li><p><strong>col</strong> – The column to sort by.</p></li>
 </ul>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -479,16 +449,14 @@ are callable; when called with a data frame, they return the test rows.</p>
 <dt id="lenskit.crossfold.PartitionMethod.__call__">
 <code class="descname">__call__</code><span class="sig-paren">(</span><em>udf</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.PartitionMethod.__call__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Subset a data frame.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>udf</strong> – The input data frame of rows for a user or item.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The data frame of test rows, a subset of <cite>udf</cite>.</td>
-</tr>
-</tbody>
-</table>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>udf</strong> – The input data frame of rows for a user or item.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The data frame of test rows, a subset of <cite>udf</cite>.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -537,7 +505,7 @@ are callable; when called with a data frame, they return the test rows.</p>
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>1634aa85</code>.
+          Revision <code>d5b1b86b</code>.
         </span>
       
 
@@ -558,7 +526,7 @@ are callable; when called with a data frame, they return the test rows.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.6.0
+      v: 0.6.1
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -568,6 +536,8 @@ are callable; when called with a data frame, they return the test rows.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.6.1/">0.6.1</a></dd>
         
           <dd><a href="/en/0.6.0/">0.6.0</a></dd>
         
