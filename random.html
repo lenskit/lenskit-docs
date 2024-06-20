@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Random Number Generation &mdash; LensKit 0.10.1 documentation</title>
+  <title>Random Number Generation &mdash; LensKit 0.11.0 documentation</title>
   
 
   
@@ -30,10 +30,10 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
-        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -53,12 +53,14 @@ http://docs.readthedocs.org/en/latest/canonical.html
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
-<script type="text/javascript" src="_static/readthedocs-data.js"></script>
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2020-11-13T19:13:34Z", "builder": "sphinx", "canonical_url": "https://lkpy.readthedocs.io/en/stable/", "commit": "81186a12", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "random", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.11.0"}</script>
 
-<!-- Add page-specific data, which must exist in the page js, not global -->
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
 <script type="text/javascript">
-READTHEDOCS_DATA['page'] = "random"
-READTHEDOCS_DATA['source_suffix'] = ".rst"
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
 </script>
 
 <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js" async="async"></script>
@@ -88,7 +90,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
             
             
               <div class="version">
-                0.10.1
+                0.11.0
               </div>
             
           
@@ -132,6 +134,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
 <li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithm Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bias.html">Bias</a></li>
 <li class="toctree-l1"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tf.html">TensorFlow Algorithms</a></li>
@@ -206,7 +209,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.10.1/doc/random.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.11.0/doc/random.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -254,8 +257,8 @@ themselves and for debugging.</p>
 random seed and the conclusions compared.</p>
 <p>LensKit is built to support this experimental design, making consistent use of
 configurable random number generators throughout its algorithm implementations.
-When run against NumPy 1.17 or later, it uses the new <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code></a>
-and <a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.SeedSequence</span></code></a> facilities to provide consistent random
+When run against NumPy 1.17 or later, it uses the new <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.19)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code></a>
+and <a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v1.19)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.SeedSequence</span></code></a> facilities to provide consistent random
 number generation and initialization.  LensKit is compatible with older versions
 of NumPy, but the RNG reproducibility logic will not fully function, and some
 functions will not work.</p>
@@ -290,13 +293,13 @@ called very early in the setup.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> or </em><a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v1.18)"><em>numpy.random.SeedSequence</em></a>) – The random seed to initialize with.</p></li>
+<li><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em> or </em><a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v1.19)"><em>numpy.random.SeedSequence</em></a>) – The random seed to initialize with.</p></li>
 <li><p><strong>keys</strong> – Additional keys, to use as a <code class="docutils literal notranslate"><span class="pre">spawn_key</span></code> on NumPy 1.17.  Passed to
 <a class="reference internal" href="#lenskit.util.random.derive_seed" title="lenskit.util.random.derive_seed"><code class="xref py py-func docutils literal notranslate"><span class="pre">derive_seed()</span></code></a>.</p></li>
-<li><p><strong>propagate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – <p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, initialize other RNG infrastructure. This currently initializes:</p>
+<li><p><strong>propagate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – <p>If <code class="docutils literal notranslate"><span class="pre">True</span></code>, initialize other RNG infrastructure. This currently initializes:</p>
 <ul>
 <li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">np.random.seed()</span></code></p></li>
-<li><p><a class="reference external" href="https://docs.python.org/3/library/random.html#random.seed" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">random.seed()</span></code></a></p></li>
+<li><p><a class="reference external" href="https://docs.python.org/3/library/random.html#random.seed" title="(in Python v3.9)"><code class="xref py py-func docutils literal notranslate"><span class="pre">random.seed()</span></code></a></p></li>
 </ul>
 <p>If <code class="docutils literal notranslate"><span class="pre">propagate=False</span></code>, LensKit is still fully seeded — no component included
 with LensKit uses any of the global RNGs, they all use RNGs seeded with the
@@ -317,11 +320,11 @@ specified seed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>keys</strong> (<em>list of int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – Additional components to add to the spawn key for reproducible derivation.
+<li><p><strong>keys</strong> (<em>list of int</em><em> or </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – Additional components to add to the spawn key for reproducible derivation.
 If unspecified, the seed’s internal counter is incremented (by calling
-<a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.spawn.html#numpy.random.SeedSequence.spawn" title="(in NumPy v1.18)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">numpy.random.SeedSequence.spawn()</span></code></a>).</p></li>
-<li><p><strong>base</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v1.18)"><em>numpy.random.SeedSequence</em></a>) – The base seed to use.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses the root seed.</p></li>
-<li><p><strong>none_on_old_numpy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, return <code class="docutils literal notranslate"><span class="pre">None</span></code> instead of raising <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a>
+<a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.spawn.html#numpy.random.SeedSequence.spawn" title="(in NumPy v1.19)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">numpy.random.SeedSequence.spawn()</span></code></a>).</p></li>
+<li><p><strong>base</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v1.19)"><em>numpy.random.SeedSequence</em></a>) – The base seed to use.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses the root seed.</p></li>
+<li><p><strong>none_on_old_numpy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, return <code class="docutils literal notranslate"><span class="pre">None</span></code> instead of raising <a class="reference external" href="https://docs.python.org/3/library/exceptions.html#NotImplementedError" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">NotImplementedError</span></code></a>
 if running on an old version of NumPy.</p></li>
 </ul>
 </dd>
@@ -337,7 +340,7 @@ if running on an old version of NumPy.</p></li>
 <dd class="field-odd"><p>The LensKit root seed.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v1.18)">numpy.random.SeedSequence</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v1.19)">numpy.random.SeedSequence</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -346,7 +349,7 @@ if running on an old version of NumPy.</p></li>
 <div class="section" id="random-number-generators">
 <h2>Random Number Generators<a class="headerlink" href="#random-number-generators" title="Permalink to this headline">¶</a></h2>
 <p>These functions create actual RNGs from the LensKit global seed or a user-provided
-seed. They can produce both new-style <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code></a> RNGs and
+seed. They can produce both new-style <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.19)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code></a> RNGs and
 legacy <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.mtrand.RandomState</span></code>; the latter is needed because
 some libraries, such as Pandas and scikit-learn, do not yet know what to do with
 a new-style RNG.</p>
@@ -354,7 +357,7 @@ a new-style RNG.</p>
 <dt id="lenskit.util.random.rng">
 <code class="sig-prename descclassname">lenskit.util.random.</code><code class="sig-name descname">rng</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">spec</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">legacy</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.random.rng" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a random number generator.  This is similar to <code class="xref py py-func docutils literal notranslate"><span class="pre">sklearn.utils.check_random_seed()</span></code>, but
-it usually returns a <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code></a> instead.</p>
+it usually returns a <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.19)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code></a> instead.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -362,20 +365,20 @@ it usually returns a <a class="reference external" href="https://numpy.org/doc/s
 <ul>
 <li><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></li>
-<li><p><a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.SeedSequence</span></code></a></p></li>
+<li><p><a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v1.19)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.SeedSequence</span></code></a></p></li>
 <li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.mtrand.RandomState</span></code></p></li>
-<li><p><a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code></a></p></li>
+<li><p><a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.19)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code></a></p></li>
 </ul>
 </p></li>
-<li><p><strong>legacy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, return <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.mtrand.RandomState</span></code> instead of a new-style
-<a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code></a>.</p></li>
+<li><p><strong>legacy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, return <code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.mtrand.RandomState</span></code> instead of a new-style
+<a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.19)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.random.Generator</span></code></a>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>A random number generator.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.18)">numpy.random.Generator</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v1.19)">numpy.random.Generator</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -434,7 +437,7 @@ the <code class="docutils literal notranslate"><span class="pre">legacy</span></
         &copy; Copyright 2018–2019 Boise State University
       <span class="commit">
         
-        Revision <code>c7b4a9e0</code>.
+        Revision <code>81186a12</code>.
       </span>
 
     </p>
@@ -470,7 +473,7 @@ Boise State University and does not reflect official university positions.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.10.1
+      v: 0.11.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -480,6 +483,8 @@ Boise State University and does not reflect official university positions.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.11.0/">0.11.0</a></dd>
         
           <dd><a href="/en/0.10.1/">0.10.1</a></dd>
         

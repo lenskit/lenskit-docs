@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Matrix Utilities &mdash; LensKit 0.10.1 documentation</title>
+  <title>Matrix Utilities &mdash; LensKit 0.11.0 documentation</title>
   
 
   
@@ -30,10 +30,10 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
-        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -53,12 +53,14 @@ http://docs.readthedocs.org/en/latest/canonical.html
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
-<script type="text/javascript" src="_static/readthedocs-data.js"></script>
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2020-11-13T19:13:34Z", "builder": "sphinx", "canonical_url": "https://lkpy.readthedocs.io/en/stable/", "commit": "81186a12", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "matrix", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.11.0"}</script>
 
-<!-- Add page-specific data, which must exist in the page js, not global -->
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
 <script type="text/javascript">
-READTHEDOCS_DATA['page'] = "matrix"
-READTHEDOCS_DATA['source_suffix'] = ".rst"
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
 </script>
 
 <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js" async="async"></script>
@@ -88,7 +90,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
             
             
               <div class="version">
-                0.10.1
+                0.11.0
               </div>
             
           
@@ -132,6 +134,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
 <li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithm Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bias.html">Bias</a></li>
 <li class="toctree-l1"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tf.html">TensorFlow Algorithms</a></li>
@@ -213,7 +216,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.10.1/doc/matrix.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.11.0/doc/matrix.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -264,10 +267,10 @@ algorithms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.5)"><em>pandas.DataFrame</em></a>) – a data table of (user, item, rating) triples.</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.1.4)"><em>pandas.DataFrame</em></a>) – a data table of (user, item, rating) triples.</p></li>
 <li><p><strong>scipy</strong> – if <code class="docutils literal notranslate"><span class="pre">True</span></code>, return a SciPy matrix instead of <a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR"><code class="xref py py-class docutils literal notranslate"><span class="pre">CSR</span></code></a>.</p></li>
-<li><p><strong>users</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.5)"><em>pandas.Index</em></a>) – an index of user IDs.</p></li>
-<li><p><strong>items</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.5)"><em>pandas.Index</em></a>) – an index of items IDs.</p></li>
+<li><p><strong>users</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.1.4)"><em>pandas.Index</em></a>) – an index of user IDs.</p></li>
+<li><p><strong>items</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.1.4)"><em>pandas.Index</em></a>) – an index of items IDs.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -282,7 +285,7 @@ algorithms.</p>
 <dl class="py class">
 <dt id="lenskit.matrix.RatingMatrix">
 <em class="property">class </em><code class="sig-prename descclassname">lenskit.matrix.</code><code class="sig-name descname">RatingMatrix</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matrix</span></em>, <em class="sig-param"><span class="n">users</span></em>, <em class="sig-param"><span class="n">items</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.RatingMatrix" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
 <p>A rating matrix with associated indices.</p>
 <dl class="py attribute">
 <dt id="lenskit.matrix.RatingMatrix.matrix">
@@ -290,7 +293,7 @@ algorithms.</p>
 <dd><p>The rating matrix, with users on rows and items on columns.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR">CSR</a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.5.0)">scipy.sparse.csr_matrix</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR">CSR</a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.5.4)">scipy.sparse.csr_matrix</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -301,7 +304,7 @@ algorithms.</p>
 <dd><p>mapping from user IDs to row numbers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.5)">pandas.Index</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.1.4)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -312,7 +315,7 @@ algorithms.</p>
 <dd><p>mapping from item IDs to column numbers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.5)">pandas.Index</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.1.4)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -346,8 +349,8 @@ be used from accelerated algorithm implementations.</p>
 <dl class="py class">
 <dt id="lenskit.matrix.CSR">
 <em class="property">class </em><code class="sig-prename descclassname">lenskit.matrix.</code><code class="sig-name descname">CSR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nrows</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ncols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">nnz</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ptrs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">inds</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">vals</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">N</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Simple compressed sparse row matrix.  This is like <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>, with
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Simple compressed sparse row matrix.  This is like <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.5.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>, with
 a couple of useful differences:</p>
 <ul class="simple">
 <li><p>It is backed by a Numba jitclass, so it can be directly used from Numba-optimized functions.</p></li>
@@ -380,7 +383,7 @@ jitclass but which are useful from interpreted code.</p>
 <dd><p>the number of rows.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -391,7 +394,7 @@ jitclass but which are useful from interpreted code.</p>
 <dd><p>the number of columns.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -402,7 +405,7 @@ jitclass but which are useful from interpreted code.</p>
 <dd><p>the number of entries.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -413,7 +416,7 @@ jitclass but which are useful from interpreted code.</p>
 <dd><p>the row pointers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -424,7 +427,7 @@ jitclass but which are useful from interpreted code.</p>
 <dd><p>the column indices.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -435,7 +438,7 @@ jitclass but which are useful from interpreted code.</p>
 <dd><p>the values</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -447,7 +450,7 @@ jitclass but which are useful from interpreted code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – the array shape (rows,cols)</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – the array shape (rows,cols)</p></li>
 <li><p><strong>row_nnzs</strong> (<em>array-like</em>) – the number of nonzero entries for each row</p></li>
 </ul>
 </dd>
@@ -464,7 +467,7 @@ jitclass but which are useful from interpreted code.</p>
 <li><p><strong>rows</strong> (<em>array-like</em>) – the row indices.</p></li>
 <li><p><strong>cols</strong> (<em>array-like</em>) – the column indices.</p></li>
 <li><p><strong>vals</strong> (<em>array-like</em>) – the data values; can be <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
-<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – the array shape, or <code class="docutils literal notranslate"><span class="pre">None</span></code> to infer from row &amp; column indices.</p></li>
+<li><p><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><em>tuple</em></a>) – the array shape, or <code class="docutils literal notranslate"><span class="pre">None</span></code> to infer from row &amp; column indices.</p></li>
 </ul>
 </dd>
 </dl>
@@ -477,8 +480,8 @@ jitclass but which are useful from interpreted code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>mat</strong> (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.spmatrix.html#scipy.sparse.spmatrix" title="(in SciPy v1.5.0)"><em>scipy.sparse.spmatrix</em></a>) – a SciPy sparse matrix.</p></li>
-<li><p><strong>copy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – if <code class="docutils literal notranslate"><span class="pre">False</span></code>, reuse the SciPy storage if possible.</p></li>
+<li><p><strong>mat</strong> (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.spmatrix.html#scipy.sparse.spmatrix" title="(in SciPy v1.5.4)"><em>scipy.sparse.spmatrix</em></a>) – a SciPy sparse matrix.</p></li>
+<li><p><strong>copy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – if <code class="docutils literal notranslate"><span class="pre">False</span></code>, reuse the SciPy storage if possible.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -493,7 +496,7 @@ jitclass but which are useful from interpreted code.</p>
 <dl class="py method">
 <dt id="lenskit.matrix.CSR.to_scipy">
 <code class="sig-name descname">to_scipy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.to_scipy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a CSR matrix to a SciPy <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.5.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>.  Avoids copying
+<dd><p>Convert a CSR matrix to a SciPy <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.5.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>.  Avoids copying
 if possible.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -503,7 +506,7 @@ if possible.</p>
 <dd class="field-even"><p>A SciPy sparse matrix with the same data.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.5.0)">scipy.sparse.csr_matrix</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.5.4)">scipy.sparse.csr_matrix</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -522,7 +525,7 @@ if possible.</p>
 
 <dl class="py method">
 <dt id="lenskit.matrix.CSR.rowinds">
-<code class="sig-name descname">rowinds</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a><a class="headerlink" href="#lenskit.matrix.CSR.rowinds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">rowinds</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a><a class="headerlink" href="#lenskit.matrix.CSR.rowinds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the row indices from this array.  Combined with <a class="reference internal" href="#lenskit.matrix.CSR.colinds" title="lenskit.matrix.CSR.colinds"><code class="xref py py-attr docutils literal notranslate"><span class="pre">colinds</span></code></a> and
 <a class="reference internal" href="#lenskit.matrix.CSR.values" title="lenskit.matrix.CSR.values"><code class="xref py py-attr docutils literal notranslate"><span class="pre">values</span></code></a>, this can form a COO-format sparse matrix.</p>
 </dd></dl>
@@ -533,13 +536,13 @@ if possible.</p>
 <dd><p>Return a row of this matrix as a dense ndarray.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>row</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the row index.</p>
+<dd class="field-odd"><p><strong>row</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the row index.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the row, with 0s in the place of missing values.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -550,14 +553,14 @@ if possible.</p>
 <dd><p>Get the extent of a row in the underlying column index and value arrays.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>row</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the row index.</p>
+<dd class="field-odd"><p><strong>row</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the row index.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">(s,</span> <span class="pre">e)</span></code>, where the row occupies positions <span class="math notranslate nohighlight">\([s, e)\)</span> in the
 CSR data.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)">tuple</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)">tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -587,7 +590,7 @@ CSR data.</p>
 <dd class="field-odd"><p>the number of nonzero entries in each row.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -607,7 +610,7 @@ them as 0.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>normalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – <p>The normalization to perform. Can be one of:</p>
+<dd class="field-odd"><p><strong>normalization</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a>) – <p>The normalization to perform. Can be one of:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">'center'</span></code> - center rows about the mean</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">'unit'</span></code> - convert rows to a unit vector</p></li>
@@ -618,7 +621,7 @@ them as 0.</p>
 <dd class="field-even"><p>The normalization values for each row.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -633,7 +636,7 @@ them as 0.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>values</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – whether to include the values in the transpose.</p>
+<dd class="field-odd"><p><strong>values</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – whether to include the values in the transpose.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>the transpose of this matrix (or, equivalently, this matrix in CSC format).</p>
@@ -666,7 +669,7 @@ them as 0.</p>
 <dl class="py class">
 <dt id="lenskit.matrix._CSR">
 <em class="property">class </em><code class="sig-prename descclassname">lenskit.matrix.</code><code class="sig-name descname">_CSR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nrows</span></em>, <em class="sig-param"><span class="n">ncols</span></em>, <em class="sig-param"><span class="n">nnz</span></em>, <em class="sig-param"><span class="n">ptrs</span></em>, <em class="sig-param"><span class="n">inds</span></em>, <em class="sig-param"><span class="n">vals</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix._CSR" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Internal implementation class for <a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR"><code class="xref py py-class docutils literal notranslate"><span class="pre">CSR</span></code></a>. If you work with CSRs from Numba,
 you will use a <code class="xref py py-func docutils literal notranslate"><span class="pre">numba.jitclass()</span></code>-ed version of this.</p>
 <p>Note that the <code class="docutils literal notranslate"><span class="pre">values</span></code> array is always present (unlike the Python shim), but is
@@ -700,7 +703,7 @@ zero-length if no values are present.  This eases Numba type-checking.</p>
         &copy; Copyright 2018–2019 Boise State University
       <span class="commit">
         
-        Revision <code>c7b4a9e0</code>.
+        Revision <code>81186a12</code>.
       </span>
 
     </p>
@@ -736,7 +739,7 @@ Boise State University and does not reflect official university positions.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.10.1
+      v: 0.11.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -746,6 +749,8 @@ Boise State University and does not reflect official university positions.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.11.0/">0.11.0</a></dd>
         
           <dd><a href="/en/0.10.1/">0.10.1</a></dd>
         

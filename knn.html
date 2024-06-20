@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>k-NN Collaborative Filtering &mdash; LensKit 0.10.1 documentation</title>
+  <title>k-NN Collaborative Filtering &mdash; LensKit 0.11.0 documentation</title>
   
 
   
@@ -30,10 +30,10 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
-        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -41,7 +41,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Classic Matrix Factorization" href="mf.html" />
-    <link rel="prev" title="Basic and Utility Algorithms" href="basic.html" /> 
+    <link rel="prev" title="Bias" href="bias.html" /> 
 
 <!-- RTD Extra Head -->
 
@@ -53,12 +53,14 @@ http://docs.readthedocs.org/en/latest/canonical.html
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
-<script type="text/javascript" src="_static/readthedocs-data.js"></script>
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2020-11-13T19:13:34Z", "builder": "sphinx", "canonical_url": "https://lkpy.readthedocs.io/en/stable/", "commit": "81186a12", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "knn", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.11.0"}</script>
 
-<!-- Add page-specific data, which must exist in the page js, not global -->
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
 <script type="text/javascript">
-READTHEDOCS_DATA['page'] = "knn"
-READTHEDOCS_DATA['source_suffix'] = ".rst"
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
 </script>
 
 <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js" async="async"></script>
@@ -88,7 +90,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
             
             
               <div class="version">
-                0.10.1
+                0.11.0
               </div>
             
           
@@ -132,6 +134,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
 <li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithm Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bias.html">Bias</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">k-NN Collaborative Filtering</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-lenskit.algorithms.item_knn">Item-based k-NN</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#module-lenskit.algorithms.user_knn">User-based k-NN</a></li>
@@ -206,7 +209,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.10.1/doc/knn.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.11.0/doc/knn.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -257,19 +260,19 @@ a good upgrade path and enable basic experiments out of the box.</p>
 <dl class="py class">
 <dt id="lenskit.algorithms.item_knn.ItemItem">
 <em class="property">class </em><code class="sig-prename descclassname">lenskit.algorithms.item_knn.</code><code class="sig-name descname">ItemItem</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nnbrs</span></em>, <em class="sig-param"><span class="n">min_nbrs</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">min_sim</span><span class="o">=</span><span class="default_value">1e-06</span></em>, <em class="sig-param"><span class="n">save_nbrs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">center</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">aggregate</span><span class="o">=</span><span class="default_value">'weighted-average'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Predictor</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.Predictor" title="lenskit.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.Predictor</span></code></a></p>
 <p>Item-item nearest-neighbor collaborative filtering with ratings. This item-item implementation
 is not terribly configurable; it hard-codes design decisions found to work well in the previous
 Java-based LensKit code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>nnbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the maximum number of neighbors for scoring each item (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
-<li><p><strong>min_nbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the minimum number of neighbors for scoring each item</p></li>
+<li><p><strong>nnbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the maximum number of neighbors for scoring each item (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
+<li><p><strong>min_nbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the minimum number of neighbors for scoring each item</p></li>
 <li><p><strong>min_sim</strong> (<em>double</em>) – minimum similarity threshold for considering a neighbor</p></li>
 <li><p><strong>save_nbrs</strong> (<em>double</em>) – the number of neighbors to save per item in the trained model
 (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
-<li><p><strong>center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – whether to normalize (mean-center) rating vectors.  Turn this off when working
+<li><p><strong>center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – whether to normalize (mean-center) rating vectors.  Turn this off when working
 with unary data and other data types that don’t respond well to centering.</p></li>
 <li><p><strong>aggregate</strong> – the type of aggregation to do. Can be <code class="docutils literal notranslate"><span class="pre">weighted-average</span></code> or <code class="docutils literal notranslate"><span class="pre">sum</span></code>.</p></li>
 </ul>
@@ -281,7 +284,7 @@ with unary data and other data types that don’t respond well to centering.</p>
 <dd><p>the index of item IDs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.5)">pandas.Index</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.1.4)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -292,7 +295,7 @@ with unary data and other data types that don’t respond well to centering.</p>
 <dd><p>the mean rating for each known item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -303,7 +306,7 @@ with unary data and other data types that don’t respond well to centering.</p>
 <dd><p>the number of saved neighbors for each item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -325,7 +328,7 @@ with unary data and other data types that don’t respond well to centering.</p>
 <dd><p>the index of known user IDs for the rating matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.5)">pandas.Index</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.1.4)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -349,7 +352,7 @@ with unary data and other data types that don’t respond well to centering.</p>
 algorithm parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.5)"><em>pandas.DataFrame</em></a>) – (user,item,rating) data for computing item similarities.</p>
+<dd class="field-odd"><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.1.4)"><em>pandas.DataFrame</em></a>) – (user,item,rating) data for computing item similarities.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -363,7 +366,7 @@ algorithm parameters.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>user</strong> – the user ID</p></li>
 <li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
-<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.5)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.1.4)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
 override or augment the model’s notion of a user’s preferences.</p></li>
 </ul>
 </dd>
@@ -371,7 +374,7 @@ override or augment the model’s notion of a user’s preferences.</p></li>
 <dd class="field-even"><p>scores for the items, indexed by item id.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.5)">pandas.Series</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.1.4)">pandas.Series</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -384,17 +387,17 @@ override or augment the model’s notion of a user’s preferences.</p></li>
 <dl class="py class">
 <dt id="lenskit.algorithms.user_knn.UserUser">
 <em class="property">class </em><code class="sig-prename descclassname">lenskit.algorithms.user_knn.</code><code class="sig-name descname">UserUser</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nnbrs</span></em>, <em class="sig-param"><span class="n">min_nbrs</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">min_sim</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">center</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">aggregate</span><span class="o">=</span><span class="default_value">'weighted-average'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Predictor</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.Predictor" title="lenskit.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.Predictor</span></code></a></p>
 <p>User-user nearest-neighbor collaborative filtering with ratings. This user-user implementation
 is not terribly configurable; it hard-codes design decisions found to work well in the previous
 Java-based LensKit code.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>nnbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the maximum number of neighbors for scoring each item (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
-<li><p><strong>min_nbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the minimum number of neighbors for scoring each item</p></li>
+<li><p><strong>nnbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the maximum number of neighbors for scoring each item (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
+<li><p><strong>min_nbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the minimum number of neighbors for scoring each item</p></li>
 <li><p><strong>min_sim</strong> (<em>double</em>) – minimum similarity threshold for considering a neighbor</p></li>
-<li><p><strong>center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – whether to normalize (mean-center) rating vectors.  Turn this off when working
+<li><p><strong>center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – whether to normalize (mean-center) rating vectors.  Turn this off when working
 with unary data and other data types that don’t respond well to centering.</p></li>
 <li><p><strong>aggregate</strong> – the type of aggregation to do. Can be <code class="docutils literal notranslate"><span class="pre">weighted-average</span></code> or <code class="docutils literal notranslate"><span class="pre">sum</span></code>.</p></li>
 </ul>
@@ -406,7 +409,7 @@ with unary data and other data types that don’t respond well to centering.</p>
 <dd><p>User index.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.5)">pandas.Index</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.1.4)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -417,7 +420,7 @@ with unary data and other data types that don’t respond well to centering.</p>
 <dd><p>Item index.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.5)">pandas.Index</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.1.4)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -428,7 +431,7 @@ with unary data and other data types that don’t respond well to centering.</p>
 <dd><p>User mean ratings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.19)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -462,7 +465,7 @@ with unary data and other data types that don’t respond well to centering.</p>
 for future computations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.5)"><em>pandas.DataFrame</em></a>) – (user, item, rating) data for collaborative filtering.</p>
+<dd class="field-odd"><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.1.4)"><em>pandas.DataFrame</em></a>) – (user, item, rating) data for collaborative filtering.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>a memorized model for efficient user-based CF computation.</p>
@@ -482,7 +485,7 @@ for future computations.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>user</strong> – the user ID</p></li>
 <li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
-<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.5)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, will be used to
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.1.4)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, will be used to
 recompute the user’s bias at prediction time.</p></li>
 </ul>
 </dd>
@@ -490,7 +493,7 @@ recompute the user’s bias at prediction time.</p></li>
 <dd class="field-even"><p>scores for the items, indexed by item id.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.5)">pandas.Series</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.1.4)">pandas.Series</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -511,7 +514,7 @@ recompute the user’s bias at prediction time.</p></li>
         <a href="mf.html" class="btn btn-neutral float-right" title="Classic Matrix Factorization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="basic.html" class="btn btn-neutral float-left" title="Basic and Utility Algorithms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="bias.html" class="btn btn-neutral float-left" title="Bias" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -524,7 +527,7 @@ recompute the user’s bias at prediction time.</p></li>
         &copy; Copyright 2018–2019 Boise State University
       <span class="commit">
         
-        Revision <code>c7b4a9e0</code>.
+        Revision <code>81186a12</code>.
       </span>
 
     </p>
@@ -560,7 +563,7 @@ Boise State University and does not reflect official university positions.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.10.1
+      v: 0.11.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -570,6 +573,8 @@ Boise State University and does not reflect official university positions.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.11.0/">0.11.0</a></dd>
         
           <dd><a href="/en/0.10.1/">0.10.1</a></dd>
         

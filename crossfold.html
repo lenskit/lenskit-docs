@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Splitting Data &mdash; LensKit 0.10.1 documentation</title>
+  <title>Splitting Data &mdash; LensKit 0.11.0 documentation</title>
   
 
   
@@ -30,10 +30,10 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/language_data.js"></script>
-        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -53,12 +53,14 @@ http://docs.readthedocs.org/en/latest/canonical.html
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
-<script type="text/javascript" src="_static/readthedocs-data.js"></script>
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2020-11-13T19:13:33Z", "builder": "sphinx", "canonical_url": "https://lkpy.readthedocs.io/en/stable/", "commit": "81186a12", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "crossfold", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.11.0"}</script>
 
-<!-- Add page-specific data, which must exist in the page js, not global -->
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
 <script type="text/javascript">
-READTHEDOCS_DATA['page'] = "crossfold"
-READTHEDOCS_DATA['source_suffix'] = ".rst"
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
 </script>
 
 <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js" async="async"></script>
@@ -88,7 +90,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
             
             
               <div class="version">
-                0.10.1
+                0.11.0
               </div>
             
           
@@ -140,6 +142,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
 <li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithm Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bias.html">Bias</a></li>
 <li class="toctree-l1"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tf.html">TensorFlow Algorithms</a></li>
@@ -210,7 +213,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.10.1/doc/crossfold.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.11.0/doc/crossfold.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -287,8 +290,8 @@ care what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFr
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.5)"><em>pandas.DataFrame</em></a>) – Ratings or other data you wish to partition.</p></li>
-<li><p><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of partitions to produce.</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.1.4)"><em>pandas.DataFrame</em></a>) – Ratings or other data you wish to partition.</p></li>
+<li><p><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The number of partitions to produce.</p></li>
 <li><p><strong>rng_spec</strong> – The random number generator or seed (see <a class="reference internal" href="util.html#lenskit.util.rng" title="lenskit.util.rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.rng()</span></code></a>).</p></li>
 </ul>
 </dd>
@@ -329,11 +332,11 @@ what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFrame (
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.5)"><em>pandas.DataFrame</em></a>) – Data frame containing ratings or other data to partition.</p></li>
-<li><p><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a>) – The number of partitions to produce.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, produce a _single_ train-test
+<li><p><strong>data</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.1.4)"><em>pandas.DataFrame</em></a>) – Data frame containing ratings or other data to partition.</p></li>
+<li><p><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><em>None</em></a>) – The number of partitions to produce.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, produce a _single_ train-test
 pair instead of an iterator or list.</p></li>
-<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The size of each sample.</p></li>
-<li><p><strong>disjoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, force samples to be disjoint.</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The size of each sample.</p></li>
+<li><p><strong>disjoint</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, force samples to be disjoint.</p></li>
 <li><p><strong>rng_spec</strong> – The random number generator or seed (see <a class="reference internal" href="util.html#lenskit.util.rng" title="lenskit.util.rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.rng()</span></code></a>).</p></li>
 </ul>
 </dd>
@@ -365,15 +368,15 @@ require that the input data frame have a <cite>user</cite> column with the user 
 </ol>
 <dl class="py function">
 <dt id="lenskit.crossfold.partition_users">
-<code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">partition_users</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">partitions</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></span></em>, <em class="sig-param"><span class="n">method</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#lenskit.crossfold.PartitionMethod" title="lenskit.crossfold.PartitionMethod">lenskit.crossfold.PartitionMethod</a></span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">rng_spec</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.partition_users" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">partition_users</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">partitions</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></span></em>, <em class="sig-param"><span class="n">method</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#lenskit.crossfold.PartitionMethod" title="lenskit.crossfold.PartitionMethod">lenskit.crossfold.PartitionMethod</a></span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">rng_spec</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.partition_users" title="Permalink to this definition">¶</a></dt>
 <dd><p>Partition a frame of ratings or other data into train-test partitions user-by-user.
 This function does not care what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFrame
 (or equivalent) and has a <cite>user</cite> column.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.5)"><em>pandas.DataFrame</em></a>) – a data frame containing ratings or other data you wish to partition.</p></li>
-<li><p><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the number of partitions to produce</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.1.4)"><em>pandas.DataFrame</em></a>) – a data frame containing ratings or other data you wish to partition.</p></li>
+<li><p><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the number of partitions to produce</p></li>
 <li><p><strong>method</strong> (<a class="reference internal" href="#lenskit.crossfold.PartitionMethod" title="lenskit.crossfold.PartitionMethod"><em>PartitionMethod</em></a>) – The method for selecting test rows for each user.</p></li>
 <li><p><strong>rng_spec</strong> – The random number generator or seed (see <a class="reference internal" href="util.html#lenskit.util.rng" title="lenskit.util.rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.rng()</span></code></a>).</p></li>
 </ul>
@@ -387,16 +390,16 @@ This function does not care what kind of data is in <cite>data</cite>, so long a
 
 <dl class="py function">
 <dt id="lenskit.crossfold.sample_users">
-<code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">sample_users</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">partitions</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></span></em>, <em class="sig-param"><span class="n">size</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></span></em>, <em class="sig-param"><span class="n">method</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#lenskit.crossfold.PartitionMethod" title="lenskit.crossfold.PartitionMethod">lenskit.crossfold.PartitionMethod</a></span></em>, <em class="sig-param"><span class="n">disjoint</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">rng_spec</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.sample_users" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">sample_users</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">partitions</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></span></em>, <em class="sig-param"><span class="n">size</span><span class="p">:</span> <span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)">int</a></span></em>, <em class="sig-param"><span class="n">method</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#lenskit.crossfold.PartitionMethod" title="lenskit.crossfold.PartitionMethod">lenskit.crossfold.PartitionMethod</a></span></em>, <em class="sig-param"><span class="n">disjoint</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">rng_spec</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.sample_users" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create train-test partitions by sampling users.
 This function does not care what kind of data is in <cite>data</cite>, so long as it is
 a Pandas DataFrame (or equivalent) and has a <cite>user</cite> column.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.5)"><em>pandas.DataFrame</em></a>) – Data frame containing ratings or other data you wish to partition.</p></li>
-<li><p><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of partitions.</p></li>
-<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The sample size.</p></li>
+<li><p><strong>data</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.1.4)"><em>pandas.DataFrame</em></a>) – Data frame containing ratings or other data you wish to partition.</p></li>
+<li><p><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The number of partitions.</p></li>
+<li><p><strong>size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The sample size.</p></li>
 <li><p><strong>method</strong> (<a class="reference internal" href="#lenskit.crossfold.PartitionMethod" title="lenskit.crossfold.PartitionMethod"><em>PartitionMethod</em></a>) – The method for obtaining user test ratings.</p></li>
 <li><p><strong>rng_spec</strong> – The random number generator or seed (see <a class="reference internal" href="util.html#lenskit.util.rng" title="lenskit.util.rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.rng()</span></code></a>).</p></li>
 </ul>
@@ -424,7 +427,7 @@ happens by default with common means of implementing samples).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the number of test items to select</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – the number of test items to select</p></li>
 <li><p><strong>rng</strong> – the random number generator or seed</p></li>
 </ul>
 </dd>
@@ -437,7 +440,7 @@ happens by default with common means of implementing samples).</p>
 <dd><p>Randomly select a fraction of test rows per user/item.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>frac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.8)"><em>float</em></a>) – the fraction items to select for testing.</p>
+<dd class="field-odd"><p><strong>frac</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.9)"><em>float</em></a>) – the fraction items to select for testing.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -449,7 +452,7 @@ happens by default with common means of implementing samples).</p>
 column.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – The number of test items to select.</p>
+<dd class="field-odd"><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The number of test items to select.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -472,7 +475,7 @@ column.</p>
 <dl class="py class">
 <dt id="lenskit.crossfold.PartitionMethod">
 <em class="property">class </em><code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">PartitionMethod</code><a class="headerlink" href="#lenskit.crossfold.PartitionMethod" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
 <p>Partition methods select test rows for a user or item.  Partition methods
 are callable; when called with a data frame, they return the test rows.</p>
 <dl class="py method">
@@ -481,13 +484,13 @@ are callable; when called with a data frame, they return the test rows.</p>
 <dd><p>Subset a data frame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>udf</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.5)"><em>pandas.DataFrame</em></a>) – The input data frame of rows for a user or item.</p>
+<dd class="field-odd"><p><strong>udf</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.1.4)"><em>pandas.DataFrame</em></a>) – The input data frame of rows for a user or item.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>The data frame of test rows, a subset of <code class="docutils literal notranslate"><span class="pre">udf</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.5)">pandas.DataFrame</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.1.4)">pandas.DataFrame</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -503,7 +506,7 @@ are callable; when called with a data frame, they return the test rows.</p>
 <dl class="py class">
 <dt id="lenskit.crossfold.TTPair">
 <em class="property">class </em><code class="sig-prename descclassname">lenskit.crossfold.</code><code class="sig-name descname">TTPair</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">train</span></em>, <em class="sig-param"><span class="n">test</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.TTPair" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></a></p>
 <p>Train-test pair (named tuple).</p>
 <dl class="py method">
 <dt id="lenskit.crossfold.TTPair.test">
@@ -546,7 +549,7 @@ are callable; when called with a data frame, they return the test rows.</p>
         &copy; Copyright 2018–2019 Boise State University
       <span class="commit">
         
-        Revision <code>c7b4a9e0</code>.
+        Revision <code>81186a12</code>.
       </span>
 
     </p>
@@ -582,7 +585,7 @@ Boise State University and does not reflect official university positions.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.10.1
+      v: 0.11.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -592,6 +595,8 @@ Boise State University and does not reflect official university positions.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.11.0/">0.11.0</a></dd>
         
           <dd><a href="/en/0.10.1/">0.10.1</a></dd>
         
