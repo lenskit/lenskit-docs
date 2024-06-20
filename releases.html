@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; LensKit 0.5.0 documentation</title>
+  <title>Release Notes &mdash; LensKit 0.5.0 documentation</title>
   
 
   
@@ -27,7 +27,8 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="#" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Math utilities" href="math.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -39,7 +40,7 @@
 Always link to the latest version, as canonical.
 http://docs.readthedocs.org/en/latest/canonical.html
 -->
-<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/search.html" />
+<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/releases.html" />
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
@@ -47,7 +48,8 @@ http://docs.readthedocs.org/en/latest/canonical.html
 
 <!-- Add page-specific data, which must exist in the page js, not global -->
 <script type="text/javascript">
-READTHEDOCS_DATA['page'] = 'search'
+READTHEDOCS_DATA['page'] = 'releases'
+READTHEDOCS_DATA['source_suffix'] = '.md'
 </script>
 
 <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
@@ -85,7 +87,7 @@ READTHEDOCS_DATA['page'] = 'search'
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -103,14 +105,20 @@ READTHEDOCS_DATA['page'] = 'search'
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#id1">0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">0.1.0</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -156,14 +164,14 @@ READTHEDOCS_DATA['page'] = 'search'
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Search</li>
+      <li>Release Notes</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.5.0/doc/search.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.5.0/doc/releases.md" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -177,24 +185,72 @@ READTHEDOCS_DATA['page'] = 'search'
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
 
-  
-  <div id="search-results">
-  
-  </div>
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="release-notes">
+<h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>0.5.0<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>LensKit 0.5.0 modifies the algorithm APIs to follow the SciKit design patterns instead of
+our previous custom patterns.  Highlights of this change:</p>
+<ul class="simple">
+<li>Algorithms are trained in-place — we no longer have distinct model objects.</li>
+<li>Model data is stored as attributes on the algorithm object that end in <code class="docutils literal notranslate"><span class="pre">_</span></code>.</li>
+<li>Instead of writing <code class="docutils literal notranslate"><span class="pre">model</span> <span class="pre">=</span> <span class="pre">algo.train_model(ratings)</span></code>, call <code class="docutils literal notranslate"><span class="pre">algo.fit(ratings)</span></code>.</li>
+</ul>
+<p>We also have some new capabilities:</p>
+<ul class="simple">
+<li>Ben Frederickson’s Implicit library</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>0.3.0<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>A number of improvements, including replacing Cython/OpenMP with Numba and adding ALS.</p>
+</div>
+<div class="section" id="id3">
+<h2>0.2.0<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>A lot of fixes to get ready for RecSys.</p>
+</div>
+<div class="section" id="id4">
+<h2>0.1.0<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>Hello, world!</p>
+</div>
+</div>
+
 
            </div>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="math.html" class="btn btn-neutral" title="Math utilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -278,7 +334,6 @@ READTHEDOCS_DATA['page'] = 'search'
         <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-        <script type="text/javascript" src="_static/searchtools.js"></script>
     
 
   
@@ -289,14 +344,7 @@ READTHEDOCS_DATA['page'] = 'search'
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
-   
-
+  </script> 
 
 </body>
 </html>

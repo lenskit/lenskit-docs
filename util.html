@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Utility Functions &mdash; LensKit 0.3.0 documentation</title>
+  <title>Utility Functions &mdash; LensKit 0.5.0 documentation</title>
   
 
   
@@ -28,7 +28,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Hierarchical Poisson Factorization" href="hpf.html" /> 
+    <link rel="next" title="Matrix Utilities" href="matrix.html" />
+    <link rel="prev" title="Implicit" href="implicit.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -80,7 +81,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.3.0
+                0.5.0
               </div>
             
           
@@ -108,17 +109,16 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommendations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Utility Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#module-lenskit.matrix">Matrix Utilities</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#building-ratings-matrices">Building Ratings Matrices</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#compressed-sparse-row-matrices">Compressed Sparse Row Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix.html">Matrix Utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math.html">Math utilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-lenskit.util">Miscellaneous</a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
 </ul>
 
             
@@ -171,7 +171,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.3.0/doc/util.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.5.0/doc/util.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -209,106 +209,75 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
     text-align: unset;
 }
 </style>
-<div class="section" id="module-lenskit.util">
-<span id="utility-functions"></span><h1>Utility Functions<a class="headerlink" href="#module-lenskit.util" title="Permalink to this headline">¶</a></h1>
-<p>Miscellaneous utility functions.</p>
-<div class="section" id="module-lenskit.matrix">
-<span id="matrix-utilities"></span><h2>Matrix Utilities<a class="headerlink" href="#module-lenskit.matrix" title="Permalink to this headline">¶</a></h2>
-<p>We have some matrix-related utilities, since matrices are used so heavily in recommendation
-algorithms.</p>
-<div class="section" id="building-ratings-matrices">
-<h3>Building Ratings Matrices<a class="headerlink" href="#building-ratings-matrices" title="Permalink to this headline">¶</a></h3>
-<dl class="function">
-<dt id="lenskit.matrix.sparse_ratings">
-<code class="descclassname">lenskit.matrix.</code><code class="descname">sparse_ratings</code><span class="sig-paren">(</span><em>ratings</em>, <em>scipy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.sparse_ratings" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a rating table to a sparse matrix of ratings.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – a data table of (user, item, rating) triples.</li>
-<li><strong>scipy</strong> – if <code class="docutils literal notranslate"><span class="pre">True</span></code>, return a SciPy matrix instead of <a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR"><code class="xref py py-class docutils literal notranslate"><span class="pre">CSR</span></code></a>.</li>
+<div class="section" id="utility-functions">
+<h1>Utility Functions<a class="headerlink" href="#utility-functions" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix Utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="matrix.html#building-ratings-matrices">Building Ratings Matrices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matrix.html#compressed-sparse-row-matrices">Compressed Sparse Row Matrices</a></li>
 </ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a named tuple containing the sparse matrix, user index, and item index.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#lenskit.matrix.RatingMatrix" title="lenskit.matrix.RatingMatrix">RatingMatrix</a></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="class">
-<dt id="lenskit.matrix.RatingMatrix">
-<em class="property">class </em><code class="descclassname">lenskit.matrix.</code><code class="descname">RatingMatrix</code><a class="headerlink" href="#lenskit.matrix.RatingMatrix" title="Permalink to this definition">¶</a></dt>
-<dd><p>A rating matrix with associated indices.</p>
-<dl class="attribute">
-<dt id="lenskit.matrix.RatingMatrix.matrix">
-<code class="descname">matrix</code><a class="headerlink" href="#lenskit.matrix.RatingMatrix.matrix" title="Permalink to this definition">¶</a></dt>
-<dd><p>The rating matrix, with users on rows and items on columns.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR">CSR</a> or <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.2.0)">scipy.sparse.csr_matrix</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.matrix.RatingMatrix.users">
-<code class="descname">users</code><a class="headerlink" href="#lenskit.matrix.RatingMatrix.users" title="Permalink to this definition">¶</a></dt>
-<dd><p>mapping from user IDs to row numbers.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Index.html#pandas.Index" title="(in pandas v0.23.4)">pandas.Index</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.matrix.RatingMatrix.items">
-<code class="descname">items</code><a class="headerlink" href="#lenskit.matrix.RatingMatrix.items" title="Permalink to this definition">¶</a></dt>
-<dd><p>mapping from item IDs to column numbers.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Index.html#pandas.Index" title="(in pandas v0.23.4)">pandas.Index</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
+</li>
+<li class="toctree-l1"><a class="reference internal" href="math.html">Math utilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="math.html#module-lenskit.math.solve">Solvers</a></li>
+</ul>
+</li>
+</ul>
 </div>
-<div class="section" id="compressed-sparse-row-matrices">
-<h3>Compressed Sparse Row Matrices<a class="headerlink" href="#compressed-sparse-row-matrices" title="Permalink to this headline">¶</a></h3>
-<p>We use CSR-format sparse matrices in quite a few places. Since SciPy’s sparse matrices are not
-directly usable from Numba, we have implemented a Numba-compiled CSR representation that can
-be used from accelerated algorithm implementations.</p>
+<div class="section" id="module-lenskit.util">
+<span id="miscellaneous"></span><h2>Miscellaneous<a class="headerlink" href="#module-lenskit.util" title="Permalink to this headline">¶</a></h2>
+<p>Miscellaneous utility functions.</p>
 <dl class="function">
-<dt id="lenskit.matrix.csr_from_coo">
-<code class="descclassname">lenskit.matrix.</code><code class="descname">csr_from_coo</code><span class="sig-paren">(</span><em>rows</em>, <em>cols</em>, <em>vals</em>, <em>shape=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.csr_from_coo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a CSR matrix from data in COO format.</p>
+<dt id="lenskit.util.clone">
+<code class="descclassname">lenskit.util.</code><code class="descname">clone</code><span class="sig-paren">(</span><em>algo</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.clone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clone an algorithm, but not its fitted data.  This is like
+<code class="xref py py-func docutils literal notranslate"><span class="pre">scikit.base.clone()</span></code>, but may not work on arbitrary SciKit estimators.
+LensKit algorithms are compatible with SciKit clone, however, so feel free
+to use that if you need more general capabilities.</p>
+<p>This function is somewhat derived from the SciKit one.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.algorithms.basic</span> <span class="k">import</span> <span class="n">Bias</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">orig</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">copy</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">orig</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">copy</span> <span class="ow">is</span> <span class="n">orig</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">copy</span><span class="o">.</span><span class="n">damping</span> <span class="o">==</span> <span class="n">orig</span><span class="o">.</span><span class="n">damping</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="lenskit.util.fspath">
+<code class="descclassname">lenskit.util.</code><code class="descname">fspath</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.fspath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Backport of <a class="reference external" href="https://docs.python.org/3/library/os.html#os.fspath" title="(in Python v3.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.fspath()</span></code></a> function for Python 3.5.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="lenskit.util.read_df_detect">
+<code class="descclassname">lenskit.util.</code><code class="descname">read_df_detect</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.read_df_detect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a Pandas data frame, auto-detecting the file format based on filename suffix.
+The following file types are supported:</p>
+<dl class="docutils">
+<dt>CSV</dt>
+<dd>File has suffix <code class="docutils literal notranslate"><span class="pre">.csv</span></code>, read with <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html#pandas.read_csv" title="(in pandas v0.23.4)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pandas.read_csv()</span></code></a>.</dd>
+<dt>Parquet</dt>
+<dd>File has suffix <code class="docutils literal notranslate"><span class="pre">.parquet</span></code>, <code class="docutils literal notranslate"><span class="pre">.parq</span></code>, or <code class="docutils literal notranslate"><span class="pre">.pq</span></code>, read with
+<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_parquet.html#pandas.read_parquet" title="(in pandas v0.23.4)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pandas.read_parquet()</span></code></a>.</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="lenskit.util.write_parquet">
+<code class="descclassname">lenskit.util.</code><code class="descname">write_parquet</code><span class="sig-paren">(</span><em>path</em>, <em>frame</em>, <em>append=False</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.write_parquet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write a Parquet file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>rows</strong> (<em>array-like</em>) – the row indices.</li>
-<li><strong>cols</strong> (<em>array-like</em>) – the column indices.</li>
-<li><strong>vals</strong> (<em>array-like</em>) – the data values; can be <code class="docutils literal notranslate"><span class="pre">None</span></code>.</li>
-<li><strong>shape</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.7)"><em>tuple</em></a>) – the array shape, or <code class="docutils literal notranslate"><span class="pre">None</span></code> to infer from row &amp; column indices.</li>
+<li><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.7)"><em>pathlib.Path</em></a>) – The path of the Parquet file to write.</li>
+<li><strong>frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – The data to write.</li>
+<li><strong>append</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Whether to append to the file or overwrite it.</li>
 </ul>
 </td>
 </tr>
@@ -316,225 +285,6 @@ be used from accelerated algorithm implementations.</p>
 </table>
 </dd></dl>
 
-<dl class="function">
-<dt id="lenskit.matrix.csr_from_scipy">
-<code class="descclassname">lenskit.matrix.</code><code class="descname">csr_from_scipy</code><span class="sig-paren">(</span><em>mat</em>, <em>copy=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.csr_from_scipy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a scipy sparse matrix to an internal CSR.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>mat</strong> (<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.spmatrix.html#scipy.sparse.spmatrix" title="(in SciPy v1.2.0)"><em>scipy.sparse.spmatrix</em></a>) – a SciPy sparse matrix.</li>
-<li><strong>copy</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – if <code class="docutils literal notranslate"><span class="pre">False</span></code>, reuse the SciPy storage if possible.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a CSR matrix.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR">CSR</a></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="lenskit.matrix.csr_to_scipy">
-<code class="descclassname">lenskit.matrix.</code><code class="descname">csr_to_scipy</code><span class="sig-paren">(</span><em>mat</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.csr_to_scipy" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a CSR matrix to a SciPy <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>mat</strong> (<a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR"><em>CSR</em></a>) – A CSR matrix.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">A SciPy sparse matrix with the same data.  It shares
-storage with <code class="docutils literal notranslate"><span class="pre">matrix</span></code>.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.2.0)">scipy.sparse.csr_matrix</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="lenskit.matrix.csr_rowinds">
-<code class="descclassname">lenskit.matrix.</code><code class="descname">csr_rowinds</code><span class="sig-paren">(</span><em>csr</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.csr_rowinds" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the row indices for a CSR matrix.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>csr</strong> (<a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR"><em>CSR</em></a>) – a CSR matrix.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the row index array for the CSR matrix.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">np.ndarray</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="lenskit.matrix.csr_save">
-<code class="descclassname">lenskit.matrix.</code><code class="descname">csr_save</code><span class="sig-paren">(</span><em>csr: numba.jitclass.base.CSR</em>, <em>prefix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.csr_save" title="Permalink to this definition">¶</a></dt>
-<dd><p>Extract data needed to save a CSR matrix.  This is intended to be used with, for
-example, <a href="#id1"><span class="problematic" id="id2">:py:fun:`numpy.savez`</span></a> to save a matrix:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">savez_compressed</span><span class="p">(</span><span class="s1">&#39;file.npz&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">csr_save</span><span class="p">(</span><span class="n">csr</span><span class="p">))</span>
-</pre></div>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">prefix</span></code> allows multiple matrices to be saved in a single file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">csr_save</span><span class="p">(</span><span class="n">m1</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;m1&#39;</span><span class="p">))</span>
-<span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">csr_save</span><span class="p">(</span><span class="n">m2</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;m2&#39;</span><span class="p">))</span>
-<span class="n">np</span><span class="o">.</span><span class="n">savez_compressed</span><span class="p">(</span><span class="s1">&#39;file.npz&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">data</span><span class="p">)</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>csr</strong> (<a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR"><em>CSR</em></a>) – the matrix to save.</li>
-<li><strong>prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the prefix for the data keys.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">a dictionary of data to save the matrix.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="lenskit.matrix.csr_load">
-<code class="descclassname">lenskit.matrix.</code><code class="descname">csr_load</code><span class="sig-paren">(</span><em>data</em>, <em>prefix=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.csr_load" title="Permalink to this definition">¶</a></dt>
-<dd><p>Rematerialize a CSR matrix from loaded data.  The inverse of <a href="#id3"><span class="problematic" id="id4">:py:fun:`csr_save`</span></a>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>data</strong> (<em>dict-like</em>) – the input data.</li>
-<li><strong>prefix</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the prefix for the data keys.</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the matrix described by <code class="docutils literal notranslate"><span class="pre">data</span></code>.</p>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR">CSR</a></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="class">
-<dt id="lenskit.matrix.CSR">
-<em class="property">class </em><code class="descclassname">lenskit.matrix.</code><code class="descname">CSR</code><span class="sig-paren">(</span><em>nrows</em>, <em>ncols</em>, <em>nnz</em>, <em>ptrs</em>, <em>inds</em>, <em>vals</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR" title="Permalink to this definition">¶</a></dt>
-<dd><p>Simple compressed sparse row matrix.  This is like <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>, with
-a couple of useful differences:</p>
-<ul class="simple">
-<li>It is a Numba jitclass, so it can be directly used from Numba-optimized functions.</li>
-<li>The value array is optional, for cases in which only the matrix structure is required.</li>
-<li>The value array, if present, is always double-precision.</li>
-</ul>
-<p>You generally don’t want to create this class yourself.  Instead, use one of the related
-utility functions.</p>
-<dl class="attribute">
-<dt id="lenskit.matrix.CSR.nrows">
-<code class="descname">nrows</code><a class="headerlink" href="#lenskit.matrix.CSR.nrows" title="Permalink to this definition">¶</a></dt>
-<dd><p>the number of rows.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.matrix.CSR.ncols">
-<code class="descname">ncols</code><a class="headerlink" href="#lenskit.matrix.CSR.ncols" title="Permalink to this definition">¶</a></dt>
-<dd><p>the number of columns.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.matrix.CSR.nnz">
-<code class="descname">nnz</code><a class="headerlink" href="#lenskit.matrix.CSR.nnz" title="Permalink to this definition">¶</a></dt>
-<dd><p>the number of entries.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)">int</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.matrix.CSR.rowptrs">
-<code class="descname">rowptrs</code><a class="headerlink" href="#lenskit.matrix.CSR.rowptrs" title="Permalink to this definition">¶</a></dt>
-<dd><p>the row pointers.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.matrix.CSR.colinds">
-<code class="descname">colinds</code><a class="headerlink" href="#lenskit.matrix.CSR.colinds" title="Permalink to this definition">¶</a></dt>
-<dd><p>the column indices.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.matrix.CSR.values">
-<code class="descname">values</code><a class="headerlink" href="#lenskit.matrix.CSR.values" title="Permalink to this definition">¶</a></dt>
-<dd><p>the values</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-</div>
 </div>
 </div>
 
@@ -546,8 +296,10 @@ utility functions.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="matrix.html" class="btn btn-neutral float-right" title="Matrix Utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="hpf.html" class="btn btn-neutral" title="Hierarchical Poisson Factorization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="implicit.html" class="btn btn-neutral" title="Implicit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -559,7 +311,7 @@ utility functions.</p>
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>25c3df65</code>.
+          Revision <code>b38006b8</code>.
         </span>
       
 
@@ -580,7 +332,7 @@ utility functions.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.3.0
+      v: 0.5.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -591,6 +343,8 @@ utility functions.</p>
         
           <dd><a href="/en/stable/">stable</a></dd>
         
+          <dd><a href="/en/0.5.0/">0.5.0</a></dd>
+        
           <dd><a href="/en/0.3.0/">0.3.0</a></dd>
         
           <dd><a href="/en/0.2.0/">0.2.0</a></dd>
@@ -600,12 +354,6 @@ utility functions.</p>
       </dl>
       <dl>
         <dt>Downloads</dt>
-        
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.3.0/">pdf</a></dd>
-        
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.3.0/">htmlzip</a></dd>
-        
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.3.0/">epub</a></dd>
         
       </dl>
       <dl>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting Started &mdash; LensKit 0.3.0 documentation</title>
+  <title>Math utilities &mdash; LensKit 0.5.0 documentation</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Release Notes" href="releases.html" />
+    <link rel="prev" title="Matrix Utilities" href="matrix.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -39,7 +41,7 @@
 Always link to the latest version, as canonical.
 http://docs.readthedocs.org/en/latest/canonical.html
 -->
-<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/quickstart.html" />
+<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/math.html" />
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
@@ -47,7 +49,7 @@ http://docs.readthedocs.org/en/latest/canonical.html
 
 <!-- Add page-specific data, which must exist in the page js, not global -->
 <script type="text/javascript">
-READTHEDOCS_DATA['page'] = 'quickstart'
+READTHEDOCS_DATA['page'] = 'math'
 READTHEDOCS_DATA['source_suffix'] = '.rst'
 </script>
 
@@ -79,7 +81,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.3.0
+                0.5.0
               </div>
             
           
@@ -104,13 +106,22 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommendations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
-<li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="util.html">Utility Functions</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="matrix.html">Matrix Utilities</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Math utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-lenskit.math.solve">Solvers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="util.html#module-lenskit.util">Miscellaneous</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
 </ul>
 
             
@@ -156,14 +167,16 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Getting Started</li>
+          <li><a href="util.html">Utility Functions</a> &raquo;</li>
+        
+      <li>Math utilities</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.3.0/doc/quickstart.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.5.0/doc/math.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -201,41 +214,10 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
     text-align: unset;
 }
 </style>
-<div class="section" id="getting-started">
-<h1>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this headline">¶</a></h1>
-<p>We’re working on documentation!</p>
-<p>For now, this example computes nDCG for an item-based k-NN collaborative filter:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">lenskit</span> <span class="k">import</span> <span class="n">batch</span><span class="p">,</span> <span class="n">topn</span>
-<span class="kn">from</span> <span class="nn">lenskit</span> <span class="k">import</span> <span class="n">crossfold</span> <span class="k">as</span> <span class="n">xf</span>
-<span class="kn">from</span> <span class="nn">lenskit.algorithms</span> <span class="k">import</span> <span class="n">item_knn</span> <span class="k">as</span> <span class="n">knn</span>
-
-<span class="n">ratings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;ml-100k/u.data&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span>
-        <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">,</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">])</span>
-
-<span class="n">algo</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">ItemItem</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">):</span>
-    <span class="n">model</span> <span class="o">=</span> <span class="n">algo</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
-    <span class="n">users</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-    <span class="n">recs</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">recommend</span><span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">users</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span>
-            <span class="n">topn</span><span class="o">.</span><span class="n">UnratedCandidates</span><span class="p">(</span><span class="n">train</span><span class="p">))</span>
-    <span class="c1"># combine with test ratings for relevance data</span>
-    <span class="n">res</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">recs</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span>
-                <span class="n">on</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">))</span>
-    <span class="c1"># fill in missing 0s</span>
-    <span class="n">res</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">res</span><span class="o">.</span><span class="n">rating</span><span class="o">.</span><span class="n">isna</span><span class="p">(),</span> <span class="s1">&#39;rating&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">return</span> <span class="n">res</span>
-
-<span class="c1"># compute evaluation</span>
-<span class="n">splits</span> <span class="o">=</span> <span class="n">xf</span><span class="o">.</span><span class="n">partition_users</span><span class="p">(</span><span class="n">ratings</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span>
-        <span class="n">xf</span><span class="o">.</span><span class="n">SampleFrac</span><span class="p">(</span><span class="mf">0.2</span><span class="p">))</span>
-<span class="n">recs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="nb">eval</span><span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span>
-                <span class="k">for</span> <span class="p">(</span><span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span> <span class="ow">in</span> <span class="n">splits</span><span class="p">))</span>
-
-<span class="c1"># compile results</span>
-<span class="n">ndcg</span> <span class="o">=</span> <span class="n">recs</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">rating</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">topn</span><span class="o">.</span><span class="n">ndcg</span><span class="p">)</span>
-</pre></div>
+<div class="section" id="math-utilities">
+<h1>Math utilities<a class="headerlink" href="#math-utilities" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-lenskit.math.solve">
+<span id="solvers"></span><h2>Solvers<a class="headerlink" href="#module-lenskit.math.solve" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -245,6 +227,15 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
           </div>
           <footer>
   
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="releases.html" class="btn btn-neutral float-right" title="Release Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="matrix.html" class="btn btn-neutral" title="Matrix Utilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
 
   <hr/>
 
@@ -253,7 +244,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>25c3df65</code>.
+          Revision <code>b38006b8</code>.
         </span>
       
 
@@ -274,7 +265,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.3.0
+      v: 0.5.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -285,6 +276,8 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
           <dd><a href="/en/stable/">stable</a></dd>
         
+          <dd><a href="/en/0.5.0/">0.5.0</a></dd>
+        
           <dd><a href="/en/0.3.0/">0.3.0</a></dd>
         
           <dd><a href="/en/0.2.0/">0.2.0</a></dd>
@@ -294,12 +287,6 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
       </dl>
       <dl>
         <dt>Downloads</dt>
-        
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.3.0/">pdf</a></dd>
-        
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.3.0/">htmlzip</a></dd>
-        
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.3.0/">epub</a></dd>
         
       </dl>
       <dl>

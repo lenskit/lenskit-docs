@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>k-NN Collaborative Filtering &mdash; LensKit 0.3.0 documentation</title>
+  <title>k-NN Collaborative Filtering &mdash; LensKit 0.5.0 documentation</title>
   
 
   
@@ -81,7 +81,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.3.0
+                0.5.0
               </div>
             
           
@@ -109,7 +109,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommendations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="algorithms.html">Algorithms</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
@@ -121,9 +121,11 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 </li>
 <li class="toctree-l2"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hpf.html">Hierarchical Poisson Factorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implicit.html">Implicit</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
 </ul>
 
             
@@ -178,7 +180,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.3.0/doc/knn.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.5.0/doc/knn.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -222,42 +224,141 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 implementations.  These lightly-configurable implementations are intended
 to capture the behavior of the Java-based LensKit implementations to provide
 a good upgrade path and enable basic experiments out of the box.</p>
+<div class="toctree-wrapper compound">
+</div>
 <div class="section" id="module-lenskit.algorithms.item_knn">
 <span id="item-based-k-nn"></span><h2>Item-based k-NN<a class="headerlink" href="#module-lenskit.algorithms.item_knn" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="lenskit.algorithms.item_knn.ItemItem">
 <em class="property">class </em><code class="descclassname">lenskit.algorithms.item_knn.</code><code class="descname">ItemItem</code><span class="sig-paren">(</span><em>nnbrs</em>, <em>min_nbrs=1</em>, <em>min_sim=1e-06</em>, <em>save_nbrs=None</em>, <em>center=True</em>, <em>aggregate='weighted-average'</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.algorithms.Trainable" title="lenskit.algorithms.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Trainable</span></code></a>, <a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Predictor</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Predictor</span></code></a></p>
 <p>Item-item nearest-neighbor collaborative filtering with ratings. This item-item implementation
 is not terribly configurable; it hard-codes design decisions found to work well in the previous
 Java-based LensKit code.</p>
-<dl class="method">
-<dt id="lenskit.algorithms.item_knn.ItemItem.load_model">
-<code class="descname">load_model</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.load_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save a trained model to a file.</p>
+<dl class="attribute">
+<dt id="lenskit.algorithms.item_knn.ItemItem.item_index_">
+<code class="descname">item_index_</code><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.item_index_" title="Permalink to this definition">¶</a></dt>
+<dd><p>the index of item IDs.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the path to file from which to load the model.</td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Index.html#pandas.Index" title="(in pandas v0.23.4)">pandas.Index</a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the re-loaded model (of an implementation-defined type).</td>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lenskit.algorithms.item_knn.ItemItem.item_means_">
+<code class="descname">item_means_</code><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.item_means_" title="Permalink to this definition">¶</a></dt>
+<dd><p>the mean rating for each known item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lenskit.algorithms.item_knn.ItemItem.item_counts_">
+<code class="descname">item_counts_</code><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.item_counts_" title="Permalink to this definition">¶</a></dt>
+<dd><p>the number of saved neighbors for each item.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lenskit.algorithms.item_knn.ItemItem.sim_matrix_">
+<code class="descname">sim_matrix_</code><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.sim_matrix_" title="Permalink to this definition">¶</a></dt>
+<dd><p>the similarity matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="matrix.html#lenskit.matrix.CSR" title="lenskit.matrix.CSR">matrix.CSR</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lenskit.algorithms.item_knn.ItemItem.user_index_">
+<code class="descname">user_index_</code><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.user_index_" title="Permalink to this definition">¶</a></dt>
+<dd><p>the index of known user IDs for the rating matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Index.html#pandas.Index" title="(in pandas v0.23.4)">pandas.Index</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lenskit.algorithms.item_knn.ItemItem.rating_matrix_">
+<code class="descname">rating_matrix_</code><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.rating_matrix_" title="Permalink to this definition">¶</a></dt>
+<dd><p>the user-item rating matrix for looking up users’ ratings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="matrix.html#lenskit.matrix.CSR" title="lenskit.matrix.CSR">matrix.CSR</a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="lenskit.algorithms.item_knn.ItemItem.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>model</em>, <em>user</em>, <em>items</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.predict" title="Permalink to this definition">¶</a></dt>
+<dt id="lenskit.algorithms.item_knn.ItemItem.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>ratings</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a model.</p>
+<p>The model-training process depends on <code class="docutils literal notranslate"><span class="pre">save_nbrs</span></code> and <code class="docutils literal notranslate"><span class="pre">min_sim</span></code>, but <em>not</em> on other
+algorithm parameters.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – (user,item,rating) data for computing item similarities.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.item_knn.ItemItem.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a fit algorithm from a file.  The default implementation unpickles the object
+and transplants its parameters and model into this object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<em>path-like</em>) – the file to load.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.item_knn.ItemItem.predict_for_user">
+<code class="descname">predict_for_user</code><span class="sig-paren">(</span><em>user</em>, <em>items</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.predict_for_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute predictions for a user and items.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>model</strong> – the trained model to use.  Either <code class="docutils literal notranslate"><span class="pre">None</span></code> or the ratings matrix if the
-algorithm has no concept of training.</li>
 <li><strong>user</strong> – the user ID</li>
 <li><strong>items</strong> (<em>array-like</em>) – the items to predict</li>
 <li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
@@ -276,130 +377,14 @@ override or augment the model’s notion of a user’s preferences.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="lenskit.algorithms.item_knn.ItemItem.save_model">
-<code class="descname">save_model</code><span class="sig-paren">(</span><em>model</em>, <em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.save_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save a trained model to a file or directory.  The default implementation pickles
-the model.</p>
-<p>Algorithms are allowed to use any format for saving their models, including
-directories.</p>
+<dt id="lenskit.algorithms.item_knn.ItemItem.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a fit algorithm to a file.  The default implementation pickles the object.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>model</strong> – the trained model.</li>
-<li><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the path at which to save the model.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="lenskit.algorithms.item_knn.ItemItem.train">
-<code class="descname">train</code><span class="sig-paren">(</span><em>ratings</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.item_knn.ItemItem.train" title="Permalink to this definition">¶</a></dt>
-<dd><p>Train a model.</p>
-<p>The model-training process depends on <code class="docutils literal notranslate"><span class="pre">save_nbrs</span></code> and <code class="docutils literal notranslate"><span class="pre">min_sim</span></code>, but <em>not</em> on other
-algorithm parameters.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – (user,item,rating) data for computing item similarities.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a trained item-item CF model.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="lenskit.algorithms.item_knn.IIModel">
-<em class="property">class </em><code class="descclassname">lenskit.algorithms.item_knn.</code><code class="descname">IIModel</code><a class="headerlink" href="#lenskit.algorithms.item_knn.IIModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Item-item recommendation model.  This stores the necessary data to run the item-based k-NN
-recommender.</p>
-<dl class="attribute">
-<dt id="lenskit.algorithms.item_knn.IIModel.items">
-<code class="descname">items</code><a class="headerlink" href="#lenskit.algorithms.item_knn.IIModel.items" title="Permalink to this definition">¶</a></dt>
-<dd><p>the index of item IDs.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Index.html#pandas.Index" title="(in pandas v0.23.4)">pandas.Index</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.algorithms.item_knn.IIModel.means">
-<code class="descname">means</code><a class="headerlink" href="#lenskit.algorithms.item_knn.IIModel.means" title="Permalink to this definition">¶</a></dt>
-<dd><p>the mean rating for each known item.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.algorithms.item_knn.IIModel.counts">
-<code class="descname">counts</code><a class="headerlink" href="#lenskit.algorithms.item_knn.IIModel.counts" title="Permalink to this definition">¶</a></dt>
-<dd><p>the number of saved neighbors for each item.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.algorithms.item_knn.IIModel.sim_matrix">
-<code class="descname">sim_matrix</code><a class="headerlink" href="#lenskit.algorithms.item_knn.IIModel.sim_matrix" title="Permalink to this definition">¶</a></dt>
-<dd><p>the similarity matrix.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="util.html#lenskit.matrix.CSR" title="lenskit.matrix.CSR">matrix.CSR</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.algorithms.item_knn.IIModel.users">
-<code class="descname">users</code><a class="headerlink" href="#lenskit.algorithms.item_knn.IIModel.users" title="Permalink to this definition">¶</a></dt>
-<dd><p>the index of known user IDs for the rating matrix.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Index.html#pandas.Index" title="(in pandas v0.23.4)">pandas.Index</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.algorithms.item_knn.IIModel.rating_matrix">
-<code class="descname">rating_matrix</code><a class="headerlink" href="#lenskit.algorithms.item_knn.IIModel.rating_matrix" title="Permalink to this definition">¶</a></dt>
-<dd><p>the user-item rating matrix for looking up users’ ratings.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="util.html#lenskit.matrix.CSR" title="lenskit.matrix.CSR">matrix.CSR</a></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<em>path-like</em>) – the file to save.</td>
 </tr>
 </tbody>
 </table>
@@ -413,36 +398,123 @@ recommender.</p>
 <dl class="class">
 <dt id="lenskit.algorithms.user_knn.UserUser">
 <em class="property">class </em><code class="descclassname">lenskit.algorithms.user_knn.</code><code class="descname">UserUser</code><span class="sig-paren">(</span><em>nnbrs</em>, <em>min_nbrs=1</em>, <em>min_sim=0</em>, <em>center=True</em>, <em>aggregate='weighted-average'</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.algorithms.Trainable" title="lenskit.algorithms.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Trainable</span></code></a>, <a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Predictor</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.Predictor</span></code></a></p>
 <p>User-user nearest-neighbor collaborative filtering with ratings. This user-user implementation
 is not terribly configurable; it hard-codes design decisions found to work well in the previous
 Java-based LensKit code.</p>
-<dl class="method">
-<dt id="lenskit.algorithms.user_knn.UserUser.load_model">
-<code class="descname">load_model</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.load_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save a trained model to a file.</p>
+<dl class="attribute">
+<dt id="lenskit.algorithms.user_knn.UserUser.user_index_">
+<code class="descname">user_index_</code><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.user_index_" title="Permalink to this definition">¶</a></dt>
+<dd><p>User index.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the path to file from which to load the model.</td>
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Index.html#pandas.Index" title="(in pandas v0.23.4)">pandas.Index</a></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the re-loaded model (of an implementation-defined type).</td>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lenskit.algorithms.user_knn.UserUser.item_index_">
+<code class="descname">item_index_</code><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.item_index_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Item index.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Index.html#pandas.Index" title="(in pandas v0.23.4)">pandas.Index</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lenskit.algorithms.user_knn.UserUser.user_means_">
+<code class="descname">user_means_</code><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.user_means_" title="Permalink to this definition">¶</a></dt>
+<dd><p>User mean ratings.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lenskit.algorithms.user_knn.UserUser.rating_matrix_">
+<code class="descname">rating_matrix_</code><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.rating_matrix_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalized user-item rating matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="matrix.html#lenskit.matrix.CSR" title="lenskit.matrix.CSR">matrix.CSR</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="lenskit.algorithms.user_knn.UserUser.transpose_matrix_">
+<code class="descname">transpose_matrix_</code><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.transpose_matrix_" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transposed un-normalized rating matrix.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="matrix.html#lenskit.matrix.CSR" title="lenskit.matrix.CSR">matrix.CSR</a></td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
-<dt id="lenskit.algorithms.user_knn.UserUser.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>model</em>, <em>user</em>, <em>items</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.predict" title="Permalink to this definition">¶</a></dt>
+<dt id="lenskit.algorithms.user_knn.UserUser.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>ratings</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>“Train” a user-user CF model.  This memorizes the rating data in a format that is usable
+for future computations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – (user, item, rating) data for collaborative filtering.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a memorized model for efficient user-based CF computation.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">UUModel</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.user_knn.UserUser.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a fit algorithm from a file.  The default implementation unpickles the object
+and transplants its parameters and model into this object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<em>path-like</em>) – the file to load.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.user_knn.UserUser.predict_for_user">
+<code class="descname">predict_for_user</code><span class="sig-paren">(</span><em>user</em>, <em>items</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.predict_for_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute predictions for a user and items.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>model</strong> (<a class="reference internal" href="#lenskit.algorithms.user_knn.UUModel" title="lenskit.algorithms.user_knn.UUModel"><em>UUModel</em></a>) – the memorized data to use.</li>
 <li><strong>user</strong> – the user ID</li>
 <li><strong>items</strong> (<em>array-like</em>) – the items to predict</li>
 <li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, will be used to
@@ -461,116 +533,14 @@ recompute the user’s bias at prediction time.</li>
 </dd></dl>
 
 <dl class="method">
-<dt id="lenskit.algorithms.user_knn.UserUser.save_model">
-<code class="descname">save_model</code><span class="sig-paren">(</span><em>model</em>, <em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.save_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save a trained model to a file or directory.  The default implementation pickles
-the model.</p>
-<p>Algorithms are allowed to use any format for saving their models, including
-directories.</p>
+<dt id="lenskit.algorithms.user_knn.UserUser.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a fit algorithm to a file.  The default implementation pickles the object.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>model</strong> – the trained model.</li>
-<li><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the path at which to save the model.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="lenskit.algorithms.user_knn.UserUser.train">
-<code class="descname">train</code><span class="sig-paren">(</span><em>ratings</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.user_knn.UserUser.train" title="Permalink to this definition">¶</a></dt>
-<dd><p>“Train” a user-user CF model.  This memorizes the rating data in a format that is usable
-for future computations.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – (user, item, rating) data for collaborative filtering.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a memorized model for efficient user-based CF computation.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#lenskit.algorithms.user_knn.UUModel" title="lenskit.algorithms.user_knn.UUModel">UUModel</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="lenskit.algorithms.user_knn.UUModel">
-<em class="property">class </em><code class="descclassname">lenskit.algorithms.user_knn.</code><code class="descname">UUModel</code><a class="headerlink" href="#lenskit.algorithms.user_knn.UUModel" title="Permalink to this definition">¶</a></dt>
-<dd><p>Memorized data for user-user collaborative filtering.</p>
-<dl class="attribute">
-<dt id="lenskit.algorithms.user_knn.UUModel.matrix">
-<code class="descname">matrix</code><a class="headerlink" href="#lenskit.algorithms.user_knn.UUModel.matrix" title="Permalink to this definition">¶</a></dt>
-<dd><p>normalized user-item rating matrix.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="util.html#lenskit.matrix.CSR" title="lenskit.matrix.CSR">matrix.CSR</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.algorithms.user_knn.UUModel.users">
-<code class="descname">users</code><a class="headerlink" href="#lenskit.algorithms.user_knn.UUModel.users" title="Permalink to this definition">¶</a></dt>
-<dd><p>index of user IDs.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Index.html#pandas.Index" title="(in pandas v0.23.4)">pandas.Index</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.algorithms.user_knn.UUModel.user_means">
-<code class="descname">user_means</code><a class="headerlink" href="#lenskit.algorithms.user_knn.UUModel.user_means" title="Permalink to this definition">¶</a></dt>
-<dd><p>user mean ratings.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)">numpy.ndarray</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.algorithms.user_knn.UUModel.items">
-<code class="descname">items</code><a class="headerlink" href="#lenskit.algorithms.user_knn.UUModel.items" title="Permalink to this definition">¶</a></dt>
-<dd><p>index of item IDs.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Index.html#pandas.Index" title="(in pandas v0.23.4)">pandas.Index</a></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="attribute">
-<dt id="lenskit.algorithms.user_knn.UUModel.transpose">
-<code class="descname">transpose</code><a class="headerlink" href="#lenskit.algorithms.user_knn.UUModel.transpose" title="Permalink to this definition">¶</a></dt>
-<dd><p>the transposed rating matrix (with data transformations but without L2 normalization).</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body"><a class="reference internal" href="util.html#lenskit.matrix.CSR" title="lenskit.matrix.CSR">matrix.CSR</a></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<em>path-like</em>) – the file to save.</td>
 </tr>
 </tbody>
 </table>
@@ -604,7 +574,7 @@ for future computations.</p>
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>25c3df65</code>.
+          Revision <code>b38006b8</code>.
         </span>
       
 
@@ -625,7 +595,7 @@ for future computations.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.3.0
+      v: 0.5.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -636,6 +606,8 @@ for future computations.</p>
         
           <dd><a href="/en/stable/">stable</a></dd>
         
+          <dd><a href="/en/0.5.0/">0.5.0</a></dd>
+        
           <dd><a href="/en/0.3.0/">0.3.0</a></dd>
         
           <dd><a href="/en/0.2.0/">0.2.0</a></dd>
@@ -645,12 +617,6 @@ for future computations.</p>
       </dl>
       <dl>
         <dt>Downloads</dt>
-        
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.3.0/">pdf</a></dd>
-        
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.3.0/">htmlzip</a></dd>
-        
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.3.0/">epub</a></dd>
         
       </dl>
       <dl>

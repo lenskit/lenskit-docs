@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Search &mdash; LensKit 0.5.0 documentation</title>
+  <title>Implicit &mdash; LensKit 0.5.0 documentation</title>
   
 
   
@@ -27,7 +27,9 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="#" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Utility Functions" href="util.html" />
+    <link rel="prev" title="Hierarchical Poisson Factorization" href="hpf.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -39,7 +41,7 @@
 Always link to the latest version, as canonical.
 http://docs.readthedocs.org/en/latest/canonical.html
 -->
-<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/search.html" />
+<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/implicit.html" />
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
@@ -47,7 +49,8 @@ http://docs.readthedocs.org/en/latest/canonical.html
 
 <!-- Add page-specific data, which must exist in the page js, not global -->
 <script type="text/javascript">
-READTHEDOCS_DATA['page'] = 'search'
+READTHEDOCS_DATA['page'] = 'implicit'
+READTHEDOCS_DATA['source_suffix'] = '.rst'
 </script>
 
 <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
@@ -85,7 +88,7 @@ READTHEDOCS_DATA['page'] = 'search'
 
           
 <div role="search">
-  <form id="rtd-search-form" class="wy-form" action="#" method="get">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
@@ -103,12 +106,20 @@ READTHEDOCS_DATA['page'] = 'search'
             
             
               <p class="caption"><span class="caption-text">Contents:</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
-<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="algorithms.html">Algorithms</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hpf.html">Hierarchical Poisson Factorization</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Implicit</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
 </ul>
@@ -156,14 +167,16 @@ READTHEDOCS_DATA['page'] = 'search'
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Search</li>
+          <li><a href="algorithms.html">Algorithms</a> &raquo;</li>
+        
+      <li>Implicit</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.5.0/doc/search.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.5.0/doc/implicit.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -177,24 +190,62 @@ READTHEDOCS_DATA['page'] = 'search'
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <noscript>
-  <div id="fallback" class="admonition warning">
-    <p class="last">
-      Please activate JavaScript to enable the search
-      functionality.
-    </p>
-  </div>
-  </noscript>
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
 
-  
-  <div id="search-results">
-  
-  </div>
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-lenskit.algorithms.implicit">
+<span id="implicit"></span><h1>Implicit<a class="headerlink" href="#module-lenskit.algorithms.implicit" title="Permalink to this headline">¶</a></h1>
+<p>This module provides a LensKit bridge to the <a class="reference external" href="https://implicit.readthedocs.io/en/latest/">implicit</a> library implementing
+several implicit-feedback recommenders.</p>
+<dl class="class">
+<dt id="lenskit.algorithms.implicit.ALS">
+<em class="property">class </em><code class="descclassname">lenskit.algorithms.implicit.</code><code class="descname">ALS</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.implicit.ALS" title="Permalink to this definition">¶</a></dt>
+<dd><p>LensKit interface to <code class="xref py py-mod docutils literal notranslate"><span class="pre">implicit.als</span></code>.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="lenskit.algorithms.implicit.BPR">
+<em class="property">class </em><code class="descclassname">lenskit.algorithms.implicit.</code><code class="descname">BPR</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.implicit.BPR" title="Permalink to this definition">¶</a></dt>
+<dd><p>LensKit interface to <code class="xref py py-mod docutils literal notranslate"><span class="pre">implicit.bpr</span></code>.</p>
+</dd></dl>
+
+</div>
+
 
            </div>
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="util.html" class="btn btn-neutral float-right" title="Utility Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="hpf.html" class="btn btn-neutral" title="Hierarchical Poisson Factorization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>
@@ -278,7 +329,6 @@ READTHEDOCS_DATA['page'] = 'search'
         <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
         <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-        <script type="text/javascript" src="_static/searchtools.js"></script>
     
 
   
@@ -289,14 +339,7 @@ READTHEDOCS_DATA['page'] = 'search'
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-  <script type="text/javascript">
-    jQuery(function() { Search.loadIndex("searchindex.js"); });
-  </script>
-  
-  <script type="text/javascript" id="searchindexloader"></script>
-   
-
+  </script> 
 
 </body>
 </html>

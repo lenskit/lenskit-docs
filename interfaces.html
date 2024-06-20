@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Algorithm Interfaces &mdash; LensKit 0.3.0 documentation</title>
+  <title>Algorithm Interfaces &mdash; LensKit 0.5.0 documentation</title>
   
 
   
@@ -81,7 +81,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.3.0
+                0.5.0
               </div>
             
           
@@ -109,22 +109,24 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommendations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="algorithms.html">Algorithms</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Algorithm Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#base-algorithm">Base Algorithm</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#recommendation">Recommendation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#rating-prediction">Rating Prediction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#model-training">Model Training</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
 <li class="toctree-l2"><a class="reference internal" href="hpf.html">Hierarchical Poisson Factorization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="implicit.html">Implicit</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
 </ul>
 
             
@@ -179,7 +181,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.3.0/doc/interfaces.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.5.0/doc/interfaces.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -224,50 +226,118 @@ to implement consistent interfaces.  This page describes those interfaces.</p>
 <p>The interfaces are realized as abstract base classes with the Python <a class="reference external" href="https://docs.python.org/3/library/abc.html#module-abc" title="(in Python v3.7)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abc</span></code></a> module.
 Implementations must be registered with their interfaces, either by subclassing the interface
 or by calling <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABCMeta.register" title="(in Python v3.7)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">abc.ABCMeta.register()</span></code></a>.</p>
-<div class="section" id="recommendation">
-<h2>Recommendation<a class="headerlink" href="#recommendation" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference internal" href="#lenskit.algorithms.Recommender" title="lenskit.algorithms.Recommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recommender</span></code></a> interface provides an interface to generating recommendations.  Not
-all algorithms implement it; call <a class="reference internal" href="#lenskit.algorithms.Recommender.adapt" title="lenskit.algorithms.Recommender.adapt"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Recommender.adapt()</span></code></a> on an algorithm to get a recommender
-for any algorithm that at least implements <a class="reference internal" href="#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>.  For example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pred</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">(</span><span class="n">damping</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<span class="n">rec</span> <span class="o">=</span> <span class="n">Recommender</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
-</pre></div>
-</div>
+<div class="section" id="base-algorithm">
+<h2>Base Algorithm<a class="headerlink" href="#base-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>Algorithms follow the SciKit fit-predict paradigm for estimators, except they know natively
+how to work with Pandas objects.</p>
+<p>The <a class="reference internal" href="#lenskit.algorithms.Algorithm" title="lenskit.algorithms.Algorithm"><code class="xref py py-class docutils literal notranslate"><span class="pre">Algorithm</span></code></a> interface defines common methods.</p>
 <dl class="class">
-<dt id="lenskit.algorithms.Recommender">
-<em class="property">class </em><code class="descclassname">lenskit.algorithms.</code><code class="descname">Recommender</code><a class="headerlink" href="#lenskit.algorithms.Recommender" title="Permalink to this definition">¶</a></dt>
-<dd><p>Recommends items for a user.</p>
-<dl class="classmethod">
-<dt id="lenskit.algorithms.Recommender.adapt">
-<em class="property">classmethod </em><code class="descname">adapt</code><span class="sig-paren">(</span><em>algo</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Recommender.adapt" title="Permalink to this definition">¶</a></dt>
-<dd><p>Adapt an algorithm to be a recommender.</p>
+<dt id="lenskit.algorithms.Algorithm">
+<em class="property">class </em><code class="descclassname">lenskit.algorithms.</code><code class="descname">Algorithm</code><a class="headerlink" href="#lenskit.algorithms.Algorithm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for LensKit algorithms.  These algorithms follow the SciKit design pattern
+for estimators.</p>
+<dl class="method">
+<dt id="lenskit.algorithms.Algorithm.fit">
+<code class="descname">fit</code><span class="sig-paren">(</span><em>ratings</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Algorithm.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Train a model using the specified ratings (or similar) data.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>algo</strong> – the algorithm to adapt.  If the algorithm implements <a class="reference internal" href="#lenskit.algorithms.Recommender" title="lenskit.algorithms.Recommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recommender</span></code></a>,
-it is returned as-is; if it implements <a class="reference internal" href="#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>, then a top-N
-recommender using the predictor’s scores is returned.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – The ratings data.</li>
+<li><strong>args</strong> – Additional training data the algorithm may require.</li>
+<li><strong>kwargs</strong> – Additional training data the algorithm may require.</li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">a recommendation interface to <code class="docutils literal notranslate"><span class="pre">algo</span></code>.</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference internal" href="#lenskit.algorithms.Recommender" title="lenskit.algorithms.Recommender">Recommender</a></td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">The algorithm object.</p>
+</td>
 </tr>
 </tbody>
 </table>
 </dd></dl>
 
 <dl class="method">
+<dt id="lenskit.algorithms.Algorithm.get_params">
+<code class="descname">get_params</code><span class="sig-paren">(</span><em>deep=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Algorithm.get_params" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the parameters for this algorithm (as in scikit-learn).  Algorithm parameters
+should match constructor argument names.</p>
+<p>The default implementation returns all attributes that match a constructor parameter
+name.  It should be compatible with <code class="xref py py-meth docutils literal notranslate"><span class="pre">scikit.base.BaseEstimator.get_params()</span></code>
+method so that LensKit alogrithms can be cloned with <code class="xref py py-func docutils literal notranslate"><span class="pre">scikit.base.clone()</span></code>
+as well as <a class="reference internal" href="util.html#lenskit.util.clone" title="lenskit.util.clone"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.clone()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">the algorithm parameters.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.7)">dict</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.Algorithm.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Algorithm.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a fit algorithm from a file.  The default implementation unpickles the object
+and transplants its parameters and model into this object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<em>path-like</em>) – the file to load.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.Algorithm.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>file</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Algorithm.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a fit algorithm to a file.  The default implementation pickles the object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> (<em>path-like</em>) – the file to save.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="recommendation">
+<h2>Recommendation<a class="headerlink" href="#recommendation" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#lenskit.algorithms.Recommender" title="lenskit.algorithms.Recommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recommender</span></code></a> interface provides an interface to generating recommendations.  Not
+all algorithms implement it; call <code class="xref py py-meth docutils literal notranslate"><span class="pre">Recommender.adapt()</span></code> on an algorithm to get a recommender
+for any algorithm that at least implements <a class="reference internal" href="#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a>.  For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pred</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">(</span><span class="n">damping</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">rec</span> <span class="o">=</span> <span class="n">Recommender</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">We are rethinking the ergonomics of this interface, and it may change in LensKit 0.6. We expect
+keep compatibility in the <a class="reference internal" href="batch.html#lenskit.batch.recommend" title="lenskit.batch.recommend"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.batch.recommend()</span></code></a> API, though.</p>
+</div>
+<dl class="class">
+<dt id="lenskit.algorithms.Recommender">
+<em class="property">class </em><code class="descclassname">lenskit.algorithms.</code><code class="descname">Recommender</code><a class="headerlink" href="#lenskit.algorithms.Recommender" title="Permalink to this definition">¶</a></dt>
+<dd><p>Recommends lists of items for users.</p>
+<dl class="method">
 <dt id="lenskit.algorithms.Recommender.recommend">
-<code class="descname">recommend</code><span class="sig-paren">(</span><em>model</em>, <em>user</em>, <em>n=None</em>, <em>candidates=None</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Recommender.recommend" title="Permalink to this definition">¶</a></dt>
+<code class="descname">recommend</code><span class="sig-paren">(</span><em>user</em>, <em>n=None</em>, <em>candidates=None</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Recommender.recommend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute recommendations for a user.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>model</strong> – the trained model to use.  Either <code class="docutils literal notranslate"><span class="pre">None</span></code> or the ratings matrix if the
-algorithm has no concept of training.</li>
 <li><strong>user</strong> – the user ID</li>
 <li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of recommendations to produce (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</li>
 <li><strong>candidates</strong> (<em>array-like</em>) – the set of valid candidate items.</li>
@@ -300,15 +370,38 @@ dislike, and the <code class="docutils literal notranslate"><span class="pre">Pr
 granularity.</p>
 <dl class="method">
 <dt id="lenskit.algorithms.Predictor.predict">
-<code class="descname">predict</code><span class="sig-paren">(</span><em>model</em>, <em>user</em>, <em>items</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Predictor.predict" title="Permalink to this definition">¶</a></dt>
+<code class="descname">predict</code><span class="sig-paren">(</span><em>pairs</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Predictor.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute predictions for user-item pairs.  This method is designed to be compatible with the
+general SciKit paradigm; applications typically want to use <a class="reference internal" href="#lenskit.algorithms.Predictor.predict_for_user" title="lenskit.algorithms.Predictor.predict_for_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_user()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pairs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – The user-item pairs, as <code class="docutils literal notranslate"><span class="pre">user</span></code> and <code class="docutils literal notranslate"><span class="pre">item</span></code> columns.</li>
+<li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – user-item rating data to replace memorized data.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">The predicted scores for each user-item pair.</p>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)">pandas.Series</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="lenskit.algorithms.Predictor.predict_for_user">
+<code class="descname">predict_for_user</code><span class="sig-paren">(</span><em>user</em>, <em>items</em>, <em>ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Predictor.predict_for_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute predictions for a user and items.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>model</strong> – the trained model to use.  Either <code class="docutils literal notranslate"><span class="pre">None</span></code> or the ratings matrix if the
-algorithm has no concept of training.</li>
 <li><strong>user</strong> – the user ID</li>
 <li><strong>items</strong> (<em>array-like</em>) – the items to predict</li>
 <li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
@@ -321,72 +414,6 @@ override or augment the model’s notion of a user’s preferences.</li>
 </tr>
 <tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)">pandas.Series</a></p>
 </td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</dd></dl>
-
-</div>
-<div class="section" id="model-training">
-<h2>Model Training<a class="headerlink" href="#model-training" title="Permalink to this headline">¶</a></h2>
-<p>Most algorithms have some concept of a trained model.  The <code class="docutils literal notranslate"><span class="pre">Trainable</span></code> interface captures the
-ability of a model to be trained and saved to disk.</p>
-<dl class="class">
-<dt id="lenskit.algorithms.Trainable">
-<em class="property">class </em><code class="descclassname">lenskit.algorithms.</code><code class="descname">Trainable</code><a class="headerlink" href="#lenskit.algorithms.Trainable" title="Permalink to this definition">¶</a></dt>
-<dd><p>Models that can be trained and have their models saved.</p>
-<dl class="method">
-<dt id="lenskit.algorithms.Trainable.train">
-<code class="descname">train</code><span class="sig-paren">(</span><em>ratings</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Trainable.train" title="Permalink to this definition">¶</a></dt>
-<dd><p>Train the model on rating/consumption data.  Training methods that require additional
-data may accept it as additional parameters or via class members.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – rating data, as a matrix with columns ‘user’, ‘item’, and ‘rating’. The
-user and item identifiers may be of any type.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the trained model (of an implementation-defined type).</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="lenskit.algorithms.Trainable.save_model">
-<code class="descname">save_model</code><span class="sig-paren">(</span><em>model</em>, <em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Trainable.save_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save a trained model to a file or directory.  The default implementation pickles
-the model.</p>
-<p>Algorithms are allowed to use any format for saving their models, including
-directories.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>model</strong> – the trained model.</li>
-<li><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the path at which to save the model.</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="lenskit.algorithms.Trainable.load_model">
-<code class="descname">load_model</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.Trainable.load_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save a trained model to a file.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.7)"><em>str</em></a>) – the path to file from which to load the model.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the re-loaded model (of an implementation-defined type).</td>
 </tr>
 </tbody>
 </table>
@@ -420,7 +447,7 @@ directories.</p>
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>25c3df65</code>.
+          Revision <code>b38006b8</code>.
         </span>
       
 
@@ -441,7 +468,7 @@ directories.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.3.0
+      v: 0.5.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -452,6 +479,8 @@ directories.</p>
         
           <dd><a href="/en/stable/">stable</a></dd>
         
+          <dd><a href="/en/0.5.0/">0.5.0</a></dd>
+        
           <dd><a href="/en/0.3.0/">0.3.0</a></dd>
         
           <dd><a href="/en/0.2.0/">0.2.0</a></dd>
@@ -461,12 +490,6 @@ directories.</p>
       </dl>
       <dl>
         <dt>Downloads</dt>
-        
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/pdf/0.3.0/">pdf</a></dd>
-        
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/htmlzip/0.3.0/">htmlzip</a></dd>
-        
-          <dd><a href="//readthedocs.org/projects/lkpy/downloads/epub/0.3.0/">epub</a></dd>
         
       </dl>
       <dl>
