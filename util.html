@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Utility Functions &mdash; LensKit 0.5.0 documentation</title>
+  <title>Utility Functions &mdash; LensKit 0.6.0 documentation</title>
   
 
   
@@ -17,23 +17,29 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Matrix Utilities" href="matrix.html" />
     <link rel="prev" title="Implicit" href="implicit.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 
 <!-- RTD Extra Head -->
 
@@ -62,11 +68,10 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -81,7 +86,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.5.0
+                0.6.0
               </div>
             
           
@@ -108,9 +113,11 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Utility Functions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="matrix.html">Matrix Utilities</a></li>
@@ -171,7 +178,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.5.0/doc/util.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.6.0/doc/util.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -219,7 +226,10 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="math.html">Math utilities</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="math.html#module-lenskit.math.solve">Solvers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="math.html#module-lenskit.math.solve">Solvers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="math.html#numba-accessible-internals">Numba-accessible internals</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -253,16 +263,43 @@ to use that if you need more general capabilities.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="lenskit.util.load_ml_ratings">
+<code class="descclassname">lenskit.util.</code><code class="descname">load_ml_ratings</code><span class="sig-paren">(</span><em>path='ml-latest-small'</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.load_ml_ratings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the ratings from a modern MovieLens data set (ML-20M or one of the ‘latest’ data sets).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">load_ml_ratings</span><span class="p">()</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="go">    user item rating  timestamp</span>
+<span class="go">0   1      31    2.5 1260759144</span>
+<span class="go">1   1    1029    3.0 1260759179</span>
+<span class="go">2   1    1061    3.0 1260759182</span>
+<span class="go">3   1    1129    2.0 1260759185</span>
+<span class="go">4   1    1172    4.0 1260759205</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>path</strong> – The path where the MovieLens data is unpacked.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The rating data, with user and item columns named properly for LensKit.</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.1)">pandas.DataFrame</a></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="lenskit.util.read_df_detect">
 <code class="descclassname">lenskit.util.</code><code class="descname">read_df_detect</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.read_df_detect" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a Pandas data frame, auto-detecting the file format based on filename suffix.
 The following file types are supported:</p>
 <dl class="docutils">
 <dt>CSV</dt>
-<dd>File has suffix <code class="docutils literal notranslate"><span class="pre">.csv</span></code>, read with <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html#pandas.read_csv" title="(in pandas v0.23.4)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pandas.read_csv()</span></code></a>.</dd>
+<dd>File has suffix <code class="docutils literal notranslate"><span class="pre">.csv</span></code>, read with <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html#pandas.read_csv" title="(in pandas v0.24.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pandas.read_csv()</span></code></a>.</dd>
 <dt>Parquet</dt>
 <dd>File has suffix <code class="docutils literal notranslate"><span class="pre">.parquet</span></code>, <code class="docutils literal notranslate"><span class="pre">.parq</span></code>, or <code class="docutils literal notranslate"><span class="pre">.pq</span></code>, read with
-<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_parquet.html#pandas.read_parquet" title="(in pandas v0.23.4)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pandas.read_parquet()</span></code></a>.</dd>
+<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_parquet.html#pandas.read_parquet" title="(in pandas v0.24.1)"><code class="xref py py-func docutils literal notranslate"><span class="pre">pandas.read_parquet()</span></code></a>.</dd>
 </dl>
 </dd></dl>
 
@@ -276,7 +313,7 @@ The following file types are supported:</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.7)"><em>pathlib.Path</em></a>) – The path of the Parquet file to write.</li>
-<li><strong>frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – The data to write.</li>
+<li><strong>frame</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.1)"><em>pandas.DataFrame</em></a>) – The data to write.</li>
 <li><strong>append</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.7)"><em>bool</em></a>) – Whether to append to the file or overwrite it.</li>
 </ul>
 </td>
@@ -299,7 +336,7 @@ The following file types are supported:</p>
         <a href="matrix.html" class="btn btn-neutral float-right" title="Matrix Utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="implicit.html" class="btn btn-neutral" title="Implicit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="implicit.html" class="btn btn-neutral float-left" title="Implicit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -311,7 +348,7 @@ The following file types are supported:</p>
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>b38006b8</code>.
+          Revision <code>1634aa85</code>.
         </span>
       
 
@@ -332,7 +369,7 @@ The following file types are supported:</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.5.0
+      v: 0.6.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -342,6 +379,8 @@ The following file types are supported:</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.6.0/">0.6.0</a></dd>
         
           <dd><a href="/en/0.5.0/">0.5.0</a></dd>
         
@@ -373,29 +412,14 @@ The following file types are supported:</p>
 
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+   
 
 </body>
 </html>

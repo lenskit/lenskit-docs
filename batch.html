@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Batch-Running Recommenders &mdash; LensKit 0.5.0 documentation</title>
+  <title>Batch-Running Recommenders &mdash; LensKit 0.6.0 documentation</title>
   
 
   
@@ -17,23 +17,29 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Evaluating Recommender Output" href="evaluation/index.html" />
     <link rel="prev" title="Crossfold preparation" href="crossfold.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 
 <!-- RTD Extra Head -->
 
@@ -62,11 +68,10 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -81,7 +86,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
             
             
               <div class="version">
-                0.5.0
+                0.6.0
               </div>
             
           
@@ -108,6 +113,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Batch-Running Recommenders</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#recommendation">Recommendation</a></li>
@@ -116,6 +122,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
@@ -171,7 +178,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.5.0/doc/batch.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.6.0/doc/batch.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -217,24 +224,22 @@ predictions at the same time, useful for evaluations and experiments.</p>
 <h2>Recommendation<a class="headerlink" href="#recommendation" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lenskit.batch.recommend">
-<code class="descclassname">lenskit.batch.</code><code class="descname">recommend</code><span class="sig-paren">(</span><em>algo</em>, <em>users</em>, <em>n</em>, <em>candidates</em>, <em>ratings=None</em>, <em>nprocs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.recommend" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lenskit.batch.</code><code class="descname">recommend</code><span class="sig-paren">(</span><em>algo</em>, <em>users</em>, <em>n</em>, <em>candidates=None</em>, <em>*</em>, <em>nprocs=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.recommend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch-recommend for multiple users.  The provided algorithm should be a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.Recommender</span></code> or <code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.Predictor</span></code> (which
-will be converted to a top-N recommender).</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.Recommender</span></code>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>algo</strong> – the algorithm</li>
-<li><strong>model</strong> – The algorithm model</li>
 <li><strong>users</strong> (<em>array-like</em>) – the users to recommend for</li>
 <li><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – the number of recommendations to generate (None for unlimited)</li>
 <li><strong>candidates</strong> – the users’ candidate sets. This can be a function, in which case it will
 be passed each user ID; it can also be a dictionary, in which case user
-IDs will be looked up in it.</li>
-<li><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – if not <code class="docutils literal notranslate"><span class="pre">None</span></code>, a data frame of ratings to attach to recommendations when
-available.</li>
+IDs will be looked up in it.  Pass <code class="docutils literal notranslate"><span class="pre">None</span></code> to use the recommender’s
+built-in candidate selector (usually recommended).</li>
+<li><strong>nprocs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The number of processes to use for parallel recommendations.</li>
 </ul>
 </td>
 </tr>
@@ -251,18 +256,37 @@ available.</li>
 <h2>Rating Prediction<a class="headerlink" href="#rating-prediction" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="lenskit.batch.predict">
-<code class="descclassname">lenskit.batch.</code><code class="descname">predict</code><span class="sig-paren">(</span><em>algo</em>, <em>pairs</em>, <em>nprocs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.predict" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">lenskit.batch.</code><code class="descname">predict</code><span class="sig-paren">(</span><em>algo</em>, <em>pairs</em>, <em>*</em>, <em>nprocs=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate predictions for user-item pairs.  The provided algorithm should be a
 <code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.Predictor</span></code> or a function of two arguments: the user ID and
-a list of item IDs. It should return a dictionary or a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.Series.html#pandas.Series" title="(in pandas v0.23.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>
+a list of item IDs. It should return a dictionary or a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.24.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>
 mapping item IDs to predictions.</p>
+<p>To use this function, provide a pre-fit algorithm:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.algorithms.basic</span> <span class="k">import</span> <span class="n">Bias</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.metrics.predict</span> <span class="k">import</span> <span class="n">rmse</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ratings</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">load_ml_ratings</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bias</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bias</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ratings</span><span class="p">[:</span><span class="o">-</span><span class="mi">1000</span><span class="p">])</span>
+<span class="go">&lt;lenskit.algorithms.basic.Bias object at ...&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">preds</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">bias</span><span class="p">,</span> <span class="n">ratings</span><span class="p">[</span><span class="o">-</span><span class="mi">1000</span><span class="p">:])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">preds</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="go">       user  item  rating   timestamp  prediction</span>
+<span class="go">99004   664  8361     3.0  1393891425    3.288286</span>
+<span class="go">99005   664  8528     3.5  1393891047    3.559119</span>
+<span class="go">99006   664  8529     4.0  1393891173    3.573008</span>
+<span class="go">99007   664  8636     4.0  1393891175    3.846268</span>
+<span class="go">99008   664  8641     4.5  1393890852    3.710635</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rmse</span><span class="p">(</span><span class="n">preds</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">],</span> <span class="n">preds</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">])</span>
+<span class="go">0.8326992222...</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>algo</strong> (<a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><em>lenskit.algorithms.Predictor</em></a>) – A rating predictor function or algorithm.</li>
-<li><strong>pairs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><em>pandas.DataFrame</em></a>) – A data frame of (<code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">item</span></code>) pairs to predict for. If this frame also
+<li><strong>pairs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.1)"><em>pandas.DataFrame</em></a>) – A data frame of (<code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">item</span></code>) pairs to predict for. If this frame also
 contains a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, it will be included in the result.</li>
 <li><strong>nprocs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.7)"><em>int</em></a>) – The number of processes to use for parallel batch prediction.</li>
 </ul>
@@ -273,7 +297,7 @@ the prediction results. If <code class="docutils literal notranslate"><span clas
 result will also contain a <cite>rating</cite> column.</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)">pandas.DataFrame</a></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.1)">pandas.DataFrame</a></p>
 </td>
 </tr>
 </tbody>
@@ -406,7 +430,7 @@ IDs, not 0-based indexes.</td>
         <a href="evaluation/index.html" class="btn btn-neutral float-right" title="Evaluating Recommender Output" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="crossfold.html" class="btn btn-neutral" title="Crossfold preparation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="crossfold.html" class="btn btn-neutral float-left" title="Crossfold preparation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -418,7 +442,7 @@ IDs, not 0-based indexes.</td>
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>b38006b8</code>.
+          Revision <code>1634aa85</code>.
         </span>
       
 
@@ -439,7 +463,7 @@ IDs, not 0-based indexes.</td>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.5.0
+      v: 0.6.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -449,6 +473,8 @@ IDs, not 0-based indexes.</td>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.6.0/">0.6.0</a></dd>
         
           <dd><a href="/en/0.5.0/">0.5.0</a></dd>
         
@@ -480,29 +506,14 @@ IDs, not 0-based indexes.</td>
 
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+   
 
 </body>
 </html>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Getting Started &mdash; LensKit 0.5.0 documentation</title>
+  <title>Getting Started &mdash; LensKit 0.6.0 documentation</title>
   
 
   
@@ -17,23 +17,29 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Crossfold preparation" href="crossfold.html" />
+    <link rel="next" title="Algorithm Interfaces" href="interfaces.html" />
     <link rel="prev" title="LensKit" href="index.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 
 <!-- RTD Extra Head -->
 
@@ -62,11 +68,10 @@ READTHEDOCS_DATA['source_suffix'] = '.ipynb'
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -81,7 +86,7 @@ READTHEDOCS_DATA['source_suffix'] = '.ipynb'
             
             
               <div class="version">
-                0.5.0
+                0.6.0
               </div>
             
           
@@ -114,9 +119,11 @@ READTHEDOCS_DATA['source_suffix'] = '.ipynb'
 <li class="toctree-l2"><a class="reference internal" href="#Running-the-Evaluation">Running the Evaluation</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
@@ -172,7 +179,7 @@ READTHEDOCS_DATA['source_suffix'] = '.ipynb'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.5.0/doc/GettingStarted.ipynb" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.6.0/doc/GettingStarted.ipynb" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -421,8 +428,8 @@ div.rendered_html tbody tr:hover {
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span>from lenskit import batch, topn, util
 from lenskit import crossfold as xf
-from lenskit.algorithms import als, item_knn as knn
-from lenskit.metrics import topn as tnmetrics
+from lenskit.algorithms import Recommender, als, item_knn as knn
+from lenskit import topn
 </pre></div>
 </div>
 </div>
@@ -554,6 +561,7 @@ algo_als = als.BiasedMF(50)
 <p>If memory is a concern, we can measure while generating, but we will not do that for now.</p>
 <p>We will first define a function to generate recommendations from one algorithm over a single partition of the data set. It will take an algorithm, a train set, and a test set, and return the recommendations.</p>
 <p><strong>Note:</strong> before fitting the algorithm, we clone it. Some algorithms misbehave when fit multiple times.</p>
+<p><strong>Note 2:</strong> our algorithms do not necessarily implement the <code class="docutils literal notranslate"><span class="pre">Recommend</span></code> interface, so we adapt them. This fills in a default candidate selector.</p>
 <p>The code function looks like this:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -562,12 +570,12 @@ algo_als = als.BiasedMF(50)
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
 <span></span>def eval(aname, algo, train, test):
     fittable = util.clone(algo)
-    algo.fit(train)
+    fittable = Recommender.adapt(fittable)
+    fittable.fit(train)
     users = test.user.unique()
-    # the recommend function can merge rating values
-    recs = batch.recommend(algo, users, 100,
-            topn.UnratedCandidates(train), test)
-    # add the algorithm
+    # now we run the recommender
+    recs = batch.recommend(fittable, users, 100)
+    # add the algorithm name for analyzability
     recs[&#39;Algorithm&#39;] = aname
     return recs
 </pre></div>
@@ -626,60 +634,55 @@ all_recs.head()
       <th>score</th>
       <th>user</th>
       <th>rank</th>
-      <th>rating</th>
       <th>Algorithm</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>603</td>
-      <td>4.742555</td>
-      <td>6</td>
+      <td>285</td>
+      <td>4.543364</td>
+      <td>5</td>
       <td>1</td>
-      <td>0.0</td>
       <td>ItemItem</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>357</td>
-      <td>4.556866</td>
-      <td>6</td>
+      <td>1449</td>
+      <td>4.532999</td>
+      <td>5</td>
       <td>2</td>
-      <td>4.0</td>
       <td>ItemItem</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>1398</td>
-      <td>4.493086</td>
-      <td>6</td>
+      <td>1251</td>
+      <td>4.494639</td>
+      <td>5</td>
       <td>3</td>
-      <td>0.0</td>
       <td>ItemItem</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>611</td>
-      <td>4.477099</td>
-      <td>6</td>
+      <td>114</td>
+      <td>4.479512</td>
+      <td>5</td>
       <td>4</td>
-      <td>0.0</td>
       <td>ItemItem</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>1449</td>
-      <td>4.454879</td>
-      <td>6</td>
+      <td>166</td>
+      <td>4.399639</td>
       <td>5</td>
-      <td>0.0</td>
+      <td>5</td>
       <td>ItemItem</td>
     </tr>
   </tbody>
 </table>
 </div></div>
 </div>
+<p>To compute our analysis, we also need to concatenate the test data into a single frame:</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -689,25 +692,28 @@ all_recs.head()
 </pre></div>
 </div>
 </div>
-<p>nDCG is a per-user metric. Let’s compute it for each user.</p>
-<p>However, there is a little nuance: the recommendation list does not contain the information needed to normalize the DCG. Specifically, the nDCG depends on <em>all</em> the user’s test items.</p>
-<p>So we need to do three things:</p>
-<ol class="arabic simple">
-<li>Compute DCG of the recommendation lists.</li>
-<li>Compute ideal DCGs for each test user</li>
-<li>Combine and compute normalized versions</li>
-</ol>
+<p>We analyze our recommendation lists with a <code class="docutils literal notranslate"><span class="pre">RecListAnalysis</span></code>. It takes care of the hard work of making sure that the truth data (our test data) and the recoommendations line up properly.</p>
 <p>We do assume here that each user only appears once per algorithm. Since our crossfold method partitions users, this is fine.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>user_dcg = all_recs.groupby([&#39;Algorithm&#39;, &#39;user&#39;]).rating.apply(tnmetrics.dcg)
-user_dcg = user_dcg.reset_index(name=&#39;DCG&#39;)
-user_dcg.head()
+<span></span>rla = topn.RecListAnalysis()
+rla.add_metric(topn.ndcg)
+results = rla.compute(all_recs, test_data)
+results.head()
 </pre></div>
 </div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/home/MICHAELEKSTRAND/anaconda3/envs/lkpy-dev/lib/python3.7/site-packages/pandas/core/indexing.py:1494: PerformanceWarning: indexing past lexsort depth may impact performance.
+  return self._getitem_tuple(key)
+</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
@@ -732,194 +738,38 @@ user_dcg.head()
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Algorithm</th>
-      <th>user</th>
-      <th>DCG</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>ALS</td>
-      <td>1</td>
-      <td>11.556574</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>ALS</td>
-      <td>2</td>
-      <td>7.383188</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>ALS</td>
-      <td>3</td>
-      <td>1.223253</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>ALS</td>
-      <td>4</td>
-      <td>0.000000</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>ALS</td>
-      <td>5</td>
-      <td>4.857249</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>ideal_dcg = tnmetrics.compute_ideal_dcgs(test)
-ideal_dcg.head()
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
       <th></th>
+      <th>ndcg</th>
+    </tr>
+    <tr>
       <th>user</th>
-      <th>ideal_dcg</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>4</td>
-      <td>16.946678</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>14</td>
-      <td>34.937142</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>15</td>
-      <td>25.770188</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>22</td>
-      <td>34.698538</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>23</td>
-      <td>41.289861</td>
-    </tr>
-  </tbody>
-</table>
-</div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>user_ndcg = pd.merge(user_dcg, ideal_dcg)
-user_ndcg[&#39;nDCG&#39;] = user_ndcg.DCG / user_ndcg.ideal_dcg
-user_ndcg.head()
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
-</div>
-<div class="output_area rendered_html docutils container">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
       <th>Algorithm</th>
-      <th>user</th>
-      <th>DCG</th>
-      <th>ideal_dcg</th>
-      <th>nDCG</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>ALS</td>
-      <td>4</td>
-      <td>0.000000</td>
-      <td>16.946678</td>
-      <td>0.000000</td>
+      <th rowspan="2" valign="top">1</th>
+      <th>ALS</th>
+      <td>0.265268</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>ItemItem</td>
-      <td>4</td>
-      <td>0.000000</td>
-      <td>16.946678</td>
-      <td>0.000000</td>
+      <th>ItemItem</th>
+      <td>0.259708</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>ALS</td>
-      <td>14</td>
-      <td>7.060065</td>
-      <td>34.937142</td>
-      <td>0.202079</td>
+      <th rowspan="2" valign="top">2</th>
+      <th>ALS</th>
+      <td>0.148335</td>
+    </tr>
+    <tr>
+      <th>ItemItem</th>
+      <td>0.081890</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>ItemItem</td>
-      <td>14</td>
-      <td>7.218123</td>
-      <td>34.937142</td>
-      <td>0.206603</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>ALS</td>
-      <td>15</td>
-      <td>1.773982</td>
-      <td>25.770188</td>
-      <td>0.068839</td>
+      <th>ALS</th>
+      <td>0.026615</td>
     </tr>
   </tbody>
 </table>
@@ -927,41 +777,41 @@ user_ndcg.head()
 </div>
 <p>Now we have nDCG values!</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>user_ndcg.groupby(&#39;Algorithm&#39;).nDCG.mean()
+<span></span>results.groupby(&#39;Algorithm&#39;).ndcg.mean()
 </pre></div>
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
 <span></span>Algorithm
-ALS         0.133029
-ItemItem    0.104659
-Name: nDCG, dtype: float64
+ALS         0.139689
+ItemItem    0.102075
+Name: ndcg, dtype: float64
 </pre></div>
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
-<span></span>user_ndcg.groupby(&#39;Algorithm&#39;).nDCG.mean().plot.bar()
+<span></span>results.groupby(&#39;Algorithm&#39;).ndcg.mean().plot.bar()
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="output_area highlight-none notranslate"><div class="highlight"><pre>
-<span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x2643b7a0cf8&gt;
+<span></span>&lt;matplotlib.axes._subplots.AxesSubplot at 0x7f03842f8860&gt;
 </pre></div>
 </div>
 </div>
@@ -969,7 +819,7 @@ Name: nDCG, dtype: float64
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="_images/GettingStarted_23_1.png" src="_images/GettingStarted_23_1.png" />
+<img alt="_images/GettingStarted_22_1.png" src="_images/GettingStarted_22_1.png" />
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -992,10 +842,10 @@ Name: nDCG, dtype: float64
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="crossfold.html" class="btn btn-neutral float-right" title="Crossfold preparation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="interfaces.html" class="btn btn-neutral float-right" title="Algorithm Interfaces" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="index.html" class="btn btn-neutral" title="LensKit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="index.html" class="btn btn-neutral float-left" title="LensKit" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -1007,7 +857,7 @@ Name: nDCG, dtype: float64
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>b38006b8</code>.
+          Revision <code>1634aa85</code>.
         </span>
       
 
@@ -1028,7 +878,7 @@ Name: nDCG, dtype: float64
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.5.0
+      v: 0.6.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -1038,6 +888,8 @@ Name: nDCG, dtype: float64
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.6.0/">0.6.0</a></dd>
         
           <dd><a href="/en/0.5.0/">0.5.0</a></dd>
         
@@ -1069,29 +921,14 @@ Name: nDCG, dtype: float64
 
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+   
 
 </body>
 </html>

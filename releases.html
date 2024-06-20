@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Release Notes &mdash; LensKit 0.5.0 documentation</title>
+  <title>Release Notes &mdash; LensKit 0.6.0 documentation</title>
   
 
   
@@ -17,22 +17,28 @@
   
 
   
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
 
-  
-  
     
 
   
-
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="prev" title="Math utilities" href="math.html" /> 
-
-  
-  <script src="_static/js/modernizr.min.js"></script>
-
 
 <!-- RTD Extra Head -->
 
@@ -61,11 +67,10 @@ READTHEDOCS_DATA['source_suffix'] = '.md'
 
    
   <div class="wy-grid-for-nav">
-
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search">
+        <div class="wy-side-nav-search" >
           
 
           
@@ -80,7 +85,7 @@ READTHEDOCS_DATA['source_suffix'] = '.md'
             
             
               <div class="version">
-                0.5.0
+                0.6.0
               </div>
             
           
@@ -107,16 +112,22 @@ READTHEDOCS_DATA['source_suffix'] = '.md'
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Release Notes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#id1">0.5.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">0.3.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">0.2.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id4">0.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">0.6.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#internal-changes">Internal Changes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">0.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">0.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5">0.1.0</a></li>
 </ul>
 </li>
 </ul>
@@ -171,7 +182,7 @@ READTHEDOCS_DATA['source_suffix'] = '.md'
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.5.0/doc/releases.md" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.6.0/doc/releases.md" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -212,7 +223,33 @@ READTHEDOCS_DATA['source_suffix'] = '.md'
 <div class="section" id="release-notes">
 <h1>Release Notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2>0.5.0<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2>0.6.0<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>See the <a class="reference external" href="https://github.com/lenskit/lkpy/milestone/1">GitHub milestone</a> for a summary of what’s happening!</p>
+<ul class="simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">save</span></code> and <code class="docutils literal notranslate"><span class="pre">load</span></code> methods on algorithms have been removed.  Just pickle fitted models to save
+their data.  This is what SciKit does, we see no need to deviate.</li>
+<li>The APIs and model structures for top-<em>N</em> recommendation is reworked to enable algorithms to
+produce recommendations more automatically.  The <code class="docutils literal notranslate"><span class="pre">Recommender</span></code> interfaces now take a <code class="docutils literal notranslate"><span class="pre">CandidateSelector</span></code>
+to determine default candidates, so client code does not need to compute candidates on their own.
+One effect of this is that the <code class="docutils literal notranslate"><span class="pre">batch.recommend</span></code> function no longer requires a candidate selector,
+and there can be problems if you call <code class="docutils literal notranslate"><span class="pre">Recommender.adapt</span></code> before fitting a model.</li>
+<li>Top-<em>N</em> evaluation has been completely revamped to make it easier to correctly implement and run
+evaluation metrics.  Batch recommend no longer attaches ratings to recommendations.  See
+<a class="reference external" href="evaluation/topn-metrics.html">Top-N evaluation</a> for details.</li>
+<li>Batch recommend &amp; predict functions now take <code class="docutils literal notranslate"><span class="pre">nprocs</span></code> as a keyword-only argument.</li>
+<li>Several bug fixes and testing improvements.</li>
+</ul>
+<div class="section" id="internal-changes">
+<h3>Internal Changes<a class="headerlink" href="#internal-changes" title="Permalink to this headline">¶</a></h3>
+<p>These changes should not affect you if you are only consuming LensKit’s algorithm and evaluation capabilities.</p>
+<ul class="simple">
+<li>Rewrite the <code class="docutils literal notranslate"><span class="pre">CSR</span></code> class to be more ergonomic from Python, at the expense of making the NumPy jitclass
+indirect. It is available in the <code class="docutils literal notranslate"><span class="pre">.N</span></code> attribute.  Big improvement: it is now picklable.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id2">
+<h2>0.5.0<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>LensKit 0.5.0 modifies the algorithm APIs to follow the SciKit design patterns instead of
 our previous custom patterns.  Highlights of this change:</p>
 <ul class="simple">
@@ -225,16 +262,16 @@ our previous custom patterns.  Highlights of this change:</p>
 <li>Ben Frederickson’s Implicit library</li>
 </ul>
 </div>
-<div class="section" id="id2">
-<h2>0.3.0<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h2>0.3.0<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>A number of improvements, including replacing Cython/OpenMP with Numba and adding ALS.</p>
 </div>
-<div class="section" id="id3">
-<h2>0.2.0<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2>0.2.0<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>A lot of fixes to get ready for RecSys.</p>
 </div>
-<div class="section" id="id4">
-<h2>0.1.0<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2>0.1.0<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>Hello, world!</p>
 </div>
 </div>
@@ -248,7 +285,7 @@ our previous custom patterns.  Highlights of this change:</p>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="math.html" class="btn btn-neutral" title="Math utilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="math.html" class="btn btn-neutral float-left" title="Math utilities" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -260,7 +297,7 @@ our previous custom patterns.  Highlights of this change:</p>
         &copy; Copyright 2018 Boise State University
       
         <span class="commit">
-          Revision <code>b38006b8</code>.
+          Revision <code>1634aa85</code>.
         </span>
       
 
@@ -281,7 +318,7 @@ our previous custom patterns.  Highlights of this change:</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.5.0
+      v: 0.6.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -291,6 +328,8 @@ our previous custom patterns.  Highlights of this change:</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.6.0/">0.6.0</a></dd>
         
           <dd><a href="/en/0.5.0/">0.5.0</a></dd>
         
@@ -322,29 +361,14 @@ our previous custom patterns.  Highlights of this change:</p>
 
 
 
-  
-
-    
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-    
-
-  
-
-  <script type="text/javascript" src="_static/js/theme.js"></script>
-
   <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+   
 
 </body>
 </html>
