@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Algorithm Implementation Tips &mdash; LensKit 0.8.4 documentation</title>
+  <title>Algorithm Implementation Tips &mdash; LensKit 0.9.0 documentation</title>
   
 
   
@@ -21,13 +21,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
@@ -39,7 +39,7 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Release Notes" href="releases.html" />
+    <link rel="next" title="LensKit Internals" href="internals.html" />
     <link rel="prev" title="Errors and Diagnostics" href="diagnostics.html" /> 
 
 <!-- RTD Extra Head -->
@@ -60,7 +60,7 @@ READTHEDOCS_DATA['page'] = "impl-tips"
 READTHEDOCS_DATA['source_suffix'] = ".rst"
 </script>
 
-<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js" async="async"></script>
 
 <!-- end RTD <extrahead> -->
 </head>
@@ -87,7 +87,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
             
             
               <div class="version">
-                0.8.4
+                0.9.0
               </div>
             
           
@@ -120,14 +120,17 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Data Set Utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="random.html">Random Number Generation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Algorithm Implementation Tips</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#performance">Performance</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#pickling-and-sharing">Pickling and Sharing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#random-number-generation">Random Number Generation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#memory-map-friendliness">Memory Map Friendliness</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="internals.html">LensKit Internals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
 </ul>
 
@@ -181,7 +184,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.8.4/doc/impl-tips.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.9.0/doc/impl-tips.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -244,7 +247,7 @@ We re-expose simplified interfaces that are also usable with Numba.</p>
 </div>
 <div class="section" id="pickling-and-sharing">
 <h2>Pickling and Sharing<a class="headerlink" href="#pickling-and-sharing" title="Permalink to this headline">¶</a></h2>
-<p>LensKit uses Python pickling (or JobLib’s modified pickling in <code class="xref py py-func docutils literal notranslate"><span class="pre">joblib.dump()</span></code>) quite
+<p>LensKit uses Python pickling (or JobLib’s modified pickling in <a class="reference external" href="https://joblib.readthedocs.io/en/latest/generated/joblib.dump.html#joblib.dump" title="(in joblib v0.14.1.dev0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">joblib.dump()</span></code></a>) quite
 a bit to save and reload models and to share model data between concurrent processes.  This
 generally just works, and you don’t need to implement any particular save/load logic in order
 to have your algorithm be savable and sharable.</p>
@@ -254,20 +257,41 @@ this would be caching predictions or recommendations to save time in subsequent 
 model parameters and estimated parameters should be pickled.  If you have caches or other
 ephemeral structures, override <code class="docutils literal notranslate"><span class="pre">__getstate__</span></code> and <code class="docutils literal notranslate"><span class="pre">__setstate__</span></code> to exclude them from the
 saved data and to initialize caches to empty values on unpickling.</p>
+<p><strong>If your model excludes secondary data structures from pickling</strong>, such as a reverse index of
+user-item interactions, then you should only exclude them when pickling for serialization. When
+pickling for model sharing (see <a class="reference internal" href="sharing.html#lenskit.sharing.in_share_context" title="lenskit.sharing.in_share_context"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.sharing.in_share_context()</span></code></a>), you should include
+the derived structures so they can also be shared.</p>
+<p><strong>If your algorithm uses subsidiary models as a part of the training process</strong>, but does not need them
+for prediction or recommendation (for example, <code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.als.BiasMF</span></code>’s use of
+<a class="reference internal" href="basic.html#lenskit.algorithms.basic.Bias" title="lenskit.algorithms.basic.Bias"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.basic.Bias</span></code></a> in <code class="docutils literal notranslate"><span class="pre">fit</span></code>, during which it copies the bias model’s
+internal state to its own fields), then consider overriding <code class="docutils literal notranslate"><span class="pre">__getstate__</span></code> to remove the underlying
+model or replace it with a cloned copy (with <a class="reference internal" href="util.html#lenskit.util.clone" title="lenskit.util.clone"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.clone()</span></code></a>) to reduce serialized
+disk space (and deserialized memory use).</p>
+</div>
+<div class="section" id="random-number-generation">
+<h2>Random Number Generation<a class="headerlink" href="#random-number-generation" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="random.html#module-lenskit.util.random" title="lenskit.util.random"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.util.random</span></code></a> for documentation on how to use random number generation.</p>
+<p>In general, algorithms using randomization should have an <code class="docutils literal notranslate"><span class="pre">rng</span></code> parameter that takes a seed
+or RNG, and pass this to <a class="reference internal" href="random.html#lenskit.util.random.rng" title="lenskit.util.random.rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.random.rng()</span></code></a> to get a random number generator.
+Algorithms that use randomness at predict or recommendation time, not just training time, should
+support the value <code class="docutils literal notranslate"><span class="pre">'user'</span></code> for the <code class="docutils literal notranslate"><span class="pre">rng</span></code> parameter, and if it is passed, derive a new seed
+for each user using <a class="reference internal" href="random.html#lenskit.util.random.derive_seed" title="lenskit.util.random.derive_seed"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.random.derive_seed()</span></code></a> to allow reproducibility in
+the face of parallelism for common experimental designs.  <a class="reference internal" href="random.html#lenskit.util.random.derivable_rng" title="lenskit.util.random.derivable_rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.random.derivable_rng()</span></code></a>
+automates this logic.</p>
 </div>
 <div class="section" id="memory-map-friendliness">
 <h2>Memory Map Friendliness<a class="headerlink" href="#memory-map-friendliness" title="Permalink to this headline">¶</a></h2>
-<p>LensKit uses <a href="#id1"><span class="problematic" id="id2">:py:cls:`joblib.Parallel`</span></a> to parallelize internal operations (when it isn’t using Numba).
+<p>LensKit uses <a class="reference external" href="https://joblib.readthedocs.io/en/latest/generated/joblib.Parallel.html#joblib.Parallel" title="(in joblib v0.14.1.dev0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">joblib.Parallel</span></code></a> to parallelize internal operations (when it isn’t using Numba).
 Joblib is pretty good about using shared memory to minimize memory overhead in parallel computations,
 and LensKit has some tricks to maximize this use. However, it does require a bit of attention in
 your algorithm implementation.</p>
 <p>The easiest way to make this fail is to use many small NumPy or Pandas data structures.  If you have
-a dictionary of <a href="#id3"><span class="problematic" id="id4">:py:cls:`np.ndarray`</span></a> objects, for instance, it will cause a problem.  This is because
+a dictionary of <code class="xref py py-class docutils literal notranslate"><span class="pre">np.ndarray</span></code> objects, for instance, it will cause a problem.  This is because
 each array will be memory-mapped, and each map will <em>reopen</em> the file.  Having too many active
 open files will cause your process to run out of file descriptors on many systems.  Keep your
-object count to a small, ideally fixed number; in <a href="#id5"><span class="problematic" id="id6">:py:cls:`lenskit.algorithms.basic.UnratedItemSelector`</span></a>,
-we do this by storing user and item indexes along with a <a href="#id7"><span class="problematic" id="id8">:py:cls:`matrix.CSR`</span></a> containing the items
-rated by each user.  The old implementation had a dictionary mapping user IDs to <a href="#id9"><span class="problematic" id="id10">``</span></a>ndarray``s with
+object count to a small, ideally fixed number; in <code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.basic.UnratedItemSelector</span></code>,
+we do this by storing user and item indexes along with a <code class="xref py py-class docutils literal notranslate"><span class="pre">matrix.CSR</span></code> containing the items
+rated by each user.  The old implementation had a dictionary mapping user IDs to <a href="#id1"><span class="problematic" id="id2">``</span></a>ndarray``s with
 each user’s rated items.  This is a change from <span class="math notranslate nohighlight">\(|U|+1\)</span> arrays to 5 arrays.</p>
 </div>
 </div>
@@ -280,7 +304,7 @@ each user’s rated items.  This is a change from <span class="math notranslate 
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="releases.html" class="btn btn-neutral float-right" title="Release Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="internals.html" class="btn btn-neutral float-right" title="LensKit Internals" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="diagnostics.html" class="btn btn-neutral float-left" title="Errors and Diagnostics" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -295,13 +319,22 @@ each user’s rated items.  This is a change from <span class="math notranslate 
         &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>fafdbd14</code>.
+          Revision <code>77006928</code>.
         </span>
       
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+<p>This material is based upon work supported by the National Science Foundation under
+Grant No. <a href="https://md.ekstrandom.net/research/career">IIS 17-51278</a>. Any
+opinions, findings, and conclusions or recommendations expressed in this material
+are those of the author(s) and do not necessarily reflect the views of the
+National Science Foundation.  This page has not been approved by
+Boise State University and does not reflect official university positions.</p>
+<script data-goatcounter="https://lenskit.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
 
 </footer>
 
@@ -316,7 +349,7 @@ each user’s rated items.  This is a change from <span class="math notranslate 
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.8.4
+      v: 0.9.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -326,6 +359,8 @@ each user’s rated items.  This is a change from <span class="math notranslate 
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.9.0/">0.9.0</a></dd>
         
           <dd><a href="/en/0.8.4/">0.8.4</a></dd>
         

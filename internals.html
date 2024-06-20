@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Utility Functions &mdash; LensKit 0.9.0 documentation</title>
+  <title>LensKit Internals &mdash; LensKit 0.9.0 documentation</title>
   
 
   
@@ -39,8 +39,8 @@
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Matrix Utilities" href="matrix.html" />
-    <link rel="prev" title="Random Number Generation" href="random.html" /> 
+    <link rel="next" title="Model Sharing" href="sharing.html" />
+    <link rel="prev" title="Algorithm Implementation Tips" href="impl-tips.html" /> 
 
 <!-- RTD Extra Head -->
 
@@ -48,7 +48,7 @@
 Always link to the latest version, as canonical.
 http://docs.readthedocs.org/en/latest/canonical.html
 -->
-<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/util.html" />
+<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/internals.html" />
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
@@ -56,7 +56,7 @@ http://docs.readthedocs.org/en/latest/canonical.html
 
 <!-- Add page-specific data, which must exist in the page js, not global -->
 <script type="text/javascript">
-READTHEDOCS_DATA['page'] = "util"
+READTHEDOCS_DATA['page'] = "internals"
 READTHEDOCS_DATA['source_suffix'] = ".rst"
 </script>
 
@@ -121,15 +121,13 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Data Set Utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="random.html">Random Number Generation</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Utility Functions</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="matrix.html">Matrix Utilities</a></li>
-<li class="toctree-l2"><a class="reference internal" href="math.html">Math utilities</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#module-lenskit.util">Miscellaneous</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
-<li class="toctree-l1"><a class="reference internal" href="internals.html">LensKit Internals</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">LensKit Internals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sharing.html">Model Sharing</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
 </ul>
 
@@ -176,14 +174,14 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>Utility Functions</li>
+      <li>LensKit Internals</li>
     
     
       <li class="wy-breadcrumbs-aside">
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.9.0/doc/util.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.9.0/doc/internals.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -221,81 +219,24 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
     text-align: unset;
 }
 </style>
-<div class="section" id="utility-functions">
-<h1>Utility Functions<a class="headerlink" href="#utility-functions" title="Permalink to this headline">¶</a></h1>
-<p>These utility functions are useful for data processing.</p>
+<div class="section" id="lenskit-internals">
+<h1>LensKit Internals<a class="headerlink" href="#lenskit-internals" title="Permalink to this headline">¶</a></h1>
+<p>These modules are primarily for internal infrastructural support in Lenskit.
+Neither LensKit users nor algorithm developers are likely to need to use this
+code directly.</p>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="matrix.html">Matrix Utilities</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="matrix.html#building-ratings-matrices">Building Ratings Matrices</a></li>
-<li class="toctree-l2"><a class="reference internal" href="matrix.html#compressed-sparse-row-matrices">Compressed Sparse Row Matrices</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="math.html">Math utilities</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="math.html#module-lenskit.math.solve">Solvers</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="math.html#numba-accessible-internals">Numba-accessible internals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sharing.html">Model Sharing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sharing.html#sharing-mode">Sharing Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sharing.html#model-store-api">Model Store API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sharing.html#model-store-implementations">Model Store Implementations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sharing.html#module-lenskit.sharing.file">Memory Mapping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sharing.html#module-lenskit.sharing.sharedmem">Shared Memory</a></li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-</div>
-<div class="section" id="module-lenskit.util">
-<span id="miscellaneous"></span><h2>Miscellaneous<a class="headerlink" href="#module-lenskit.util" title="Permalink to this headline">¶</a></h2>
-<p>Miscellaneous utility functions.</p>
-<dl class="py function">
-<dt id="lenskit.util.clone">
-<code class="sig-prename descclassname">lenskit.util.</code><code class="sig-name descname">clone</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">algo</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.clone" title="Permalink to this definition">¶</a></dt>
-<dd><p>Clone an algorithm, but not its fitted data.  This is like
-<code class="xref py py-func docutils literal notranslate"><span class="pre">scikit.base.clone()</span></code>, but may not work on arbitrary SciKit estimators.
-LensKit algorithms are compatible with SciKit clone, however, so feel free
-to use that if you need more general capabilities.</p>
-<p>This function is somewhat derived from the SciKit one.</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.algorithms.basic</span> <span class="kn">import</span> <span class="n">Bias</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">orig</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">copy</span> <span class="o">=</span> <span class="n">clone</span><span class="p">(</span><span class="n">orig</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">copy</span> <span class="ow">is</span> <span class="n">orig</span>
-<span class="go">False</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">copy</span><span class="o">.</span><span class="n">damping</span> <span class="o">==</span> <span class="n">orig</span><span class="o">.</span><span class="n">damping</span>
-<span class="go">True</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="py function">
-<dt id="lenskit.util.cur_memory">
-<code class="sig-prename descclassname">lenskit.util.</code><code class="sig-name descname">cur_memory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.cur_memory" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the current memory use for this process</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="lenskit.util.max_memory">
-<code class="sig-prename descclassname">lenskit.util.</code><code class="sig-name descname">max_memory</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.max_memory" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the maximum memory use for this process</p>
-</dd></dl>
-
-<dl class="py function">
-<dt id="lenskit.util.proc_count">
-<code class="sig-prename descclassname">lenskit.util.</code><code class="sig-name descname">proc_count</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">core_div</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.proc_count" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get the number of desired jobs for multiprocessing operations.  This does not
-affect Numba or MKL multithreading.</p>
-<p>This count can come from a number of sources:
-* The <code class="docutils literal notranslate"><span class="pre">LK_NUM_PROCS</span></code> environment variable
-* The number of CPUs, divided by <code class="docutils literal notranslate"><span class="pre">core_div</span></code> (default 2)</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>core_div</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.8)"><em>None</em></a>) – The divisor to scale down the number of cores; <code class="docutils literal notranslate"><span class="pre">None</span></code> to turn off core-based
-fallback.</p>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The number of jobs desired.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)">int</a></p>
-</dd>
-</dl>
-</dd></dl>
-
 </div>
 </div>
 
@@ -307,10 +248,10 @@ fallback.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="matrix.html" class="btn btn-neutral float-right" title="Matrix Utilities" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="sharing.html" class="btn btn-neutral float-right" title="Model Sharing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="random.html" class="btn btn-neutral float-left" title="Random Number Generation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="impl-tips.html" class="btn btn-neutral float-left" title="Algorithm Implementation Tips" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Top-N Evaluation &mdash; LensKit 0.8.4 documentation</title>
+  <title>Top-N Evaluation &mdash; LensKit 0.9.0 documentation</title>
   
 
   
@@ -21,13 +21,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
@@ -60,7 +60,7 @@ READTHEDOCS_DATA['page'] = "evaluation/topn-metrics"
 READTHEDOCS_DATA['source_suffix'] = ".rst"
 </script>
 
-<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js" async="async"></script>
 
 <!-- end RTD <extrahead> -->
 </head>
@@ -87,7 +87,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
             
             
               <div class="version">
-                0.8.4
+                0.9.0
               </div>
             
           
@@ -134,9 +134,11 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../datasets.html">Data Set Utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../random.html">Random Number Generation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../util.html">Utility Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../diagnostics.html">Errors and Diagnostics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../impl-tips.html">Algorithm Implementation Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../internals.html">LensKit Internals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../releases.html">Release Notes</a></li>
 </ul>
 
@@ -192,7 +194,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.8.4/doc/evaluation/topn-metrics.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.9.0/doc/evaluation/topn-metrics.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -273,9 +275,9 @@ It can contain other items that custom metrics may find useful as well.</p>
 <p>The analysis will use this truth as the relevant item data for measuring the accuracy of the
 roecommendation lists.  Recommendations will be matched to test ratings by data set, user,
 and item, using <a class="reference internal" href="#lenskit.topn.RecListAnalysis" title="lenskit.topn.RecListAnalysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecListAnalysis</span></code></a> defaults.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="lenskit.topn.RecListAnalysis">
-<em class="property">class </em><code class="sig-prename descclassname">lenskit.topn.</code><code class="sig-name descname">RecListAnalysis</code><span class="sig-paren">(</span><em class="sig-param">group_cols=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.topn.RecListAnalysis" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.topn.</code><code class="sig-name descname">RecListAnalysis</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">group_cols</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.topn.RecListAnalysis" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute one or more top-N metrics over recommendation lists.</p>
 <p>This method groups the recommendations by the specified columns,
 and computes the metric over each group.  The default set of grouping
@@ -301,9 +303,9 @@ this problem.</p>
 <dd class="field-odd"><p><strong>group_cols</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.8)"><em>list</em></a>) – The columns to group by, or <code class="docutils literal notranslate"><span class="pre">None</span></code> to use the default.</p>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.topn.RecListAnalysis.add_metric">
-<code class="sig-name descname">add_metric</code><span class="sig-paren">(</span><em class="sig-param">metric</em>, <em class="sig-param">*</em>, <em class="sig-param">name=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.topn.RecListAnalysis.add_metric" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">add_metric</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">metric</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">name</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.topn.RecListAnalysis.add_metric" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add a metric to the analysis.</p>
 <p>A metric is a function of two arguments: the a single group of the recommendation
 frame, and the corresponding truth frame.  The truth frame will be indexed by
@@ -320,15 +322,15 @@ re-exported from <a class="reference internal" href="#module-lenskit.topn" title
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.topn.RecListAnalysis.compute">
-<code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param">recs</em>, <em class="sig-param">truth</em>, <em class="sig-param">*</em>, <em class="sig-param">include_missing=False</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.topn.RecListAnalysis.compute" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">compute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recs</span></em>, <em class="sig-param"><span class="n">truth</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">include_missing</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.topn.RecListAnalysis.compute" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run the analysis.  Neither data frame should be meaningfully indexed.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>recs</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.3)"><em>pandas.DataFrame</em></a>) – A data frame of recommendations.</p></li>
-<li><p><strong>truth</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.3)"><em>pandas.DataFrame</em></a>) – A data frame of ground truth (test) data.</p></li>
+<li><p><strong>recs</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.3)"><em>pandas.DataFrame</em></a>) – A data frame of recommendations.</p></li>
+<li><p><strong>truth</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.3)"><em>pandas.DataFrame</em></a>) – A data frame of ground truth (test) data.</p></li>
 <li><p><strong>include_missing</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> to include users from truth missing from recs.
 Matches are done via group columns that appear in both
 <code class="docutils literal notranslate"><span class="pre">recs</span></code> and <code class="docutils literal notranslate"><span class="pre">truth</span></code>.</p></li>
@@ -338,7 +340,7 @@ Matches are done via group columns that appear in both
 <dd class="field-even"><p>The results of the analysis.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.3)">pandas.DataFrame</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.3)">pandas.DataFrame</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -353,15 +355,15 @@ recommendation lists.</p>
 <div class="section" id="classification-metrics">
 <h3>Classification Metrics<a class="headerlink" href="#classification-metrics" title="Permalink to this headline">¶</a></h3>
 <p>These metrics treat the recommendation list as a classification of relevant items.</p>
-<dl class="function">
+<dl class="py function">
 <dt id="lenskit.metrics.topn.precision">
-<code class="sig-prename descclassname">lenskit.metrics.topn.</code><code class="sig-name descname">precision</code><span class="sig-paren">(</span><em class="sig-param">recs</em>, <em class="sig-param">truth</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.precision" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.metrics.topn.</code><code class="sig-name descname">precision</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recs</span></em>, <em class="sig-param"><span class="n">truth</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.precision" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute recommendation precision.</p>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="lenskit.metrics.topn.recall">
-<code class="sig-prename descclassname">lenskit.metrics.topn.</code><code class="sig-name descname">recall</code><span class="sig-paren">(</span><em class="sig-param">recs</em>, <em class="sig-param">truth</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.recall" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.metrics.topn.</code><code class="sig-name descname">recall</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recs</span></em>, <em class="sig-param"><span class="n">truth</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.recall" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute recommendation recall.</p>
 </dd></dl>
 
@@ -370,9 +372,9 @@ recommendation lists.</p>
 <h3>Ranked List Metrics<a class="headerlink" href="#ranked-list-metrics" title="Permalink to this headline">¶</a></h3>
 <p>These metrics treat the recommendation list as a ranked list of items that may or may not
 be relevant.</p>
-<dl class="function">
+<dl class="py function">
 <dt id="lenskit.metrics.topn.recip_rank">
-<code class="sig-prename descclassname">lenskit.metrics.topn.</code><code class="sig-name descname">recip_rank</code><span class="sig-paren">(</span><em class="sig-param">recs</em>, <em class="sig-param">truth</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.recip_rank" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.metrics.topn.</code><code class="sig-name descname">recip_rank</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">recs</span></em>, <em class="sig-param"><span class="n">truth</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.recip_rank" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the reciprocal rank of the first relevant item in a list of recommendations.</p>
 <p>If no elements are relevant, the reciprocal rank is 0.</p>
 </dd></dl>
@@ -381,7 +383,7 @@ be relevant.</p>
 <div class="section" id="utility-metrics">
 <h3>Utility Metrics<a class="headerlink" href="#utility-metrics" title="Permalink to this headline">¶</a></h3>
 <p>The NDCG function estimates a utility score for a ranked list of recommendations.</p>
-<dl class="function">
+<dl class="py function">
 <dt id="lenskit.metrics.topn.ndcg">
 <code class="sig-prename descclassname">lenskit.metrics.topn.</code><code class="sig-name descname">ndcg</code><span class="sig-paren">(</span><em class="sig-param">recs</em>, <em class="sig-param">truth</em>, <em class="sig-param">discount=&lt;ufunc 'log2'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn.ndcg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the normalized discounted cumulative gain.</p>
@@ -408,7 +410,7 @@ if the discount is greater than 1.</p></li>
 </dd></dl>
 
 <p>We also expose the internal DCG computation directly.</p>
-<dl class="function">
+<dl class="py function">
 <dt id="lenskit.metrics.topn._dcg">
 <code class="sig-prename descclassname">lenskit.metrics.topn.</code><code class="sig-name descname">_dcg</code><span class="sig-paren">(</span><em class="sig-param">scores</em>, <em class="sig-param">discount=&lt;ufunc 'log2'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.topn._dcg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the Discounted Cumulative Gain of a series of recommended items with rating scores.
@@ -458,13 +460,22 @@ if the discount is greater than 1.</p></li>
         &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>fafdbd14</code>.
+          Revision <code>77006928</code>.
         </span>
       
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+<p>This material is based upon work supported by the National Science Foundation under
+Grant No. <a href="https://md.ekstrandom.net/research/career">IIS 17-51278</a>. Any
+opinions, findings, and conclusions or recommendations expressed in this material
+are those of the author(s) and do not necessarily reflect the views of the
+National Science Foundation.  This page has not been approved by
+Boise State University and does not reflect official university positions.</p>
+<script data-goatcounter="https://lenskit.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
 
 </footer>
 
@@ -479,7 +490,7 @@ if the discount is greater than 1.</p></li>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.8.4
+      v: 0.9.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -489,6 +500,8 @@ if the discount is greater than 1.</p></li>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.9.0/">0.9.0</a></dd>
         
           <dd><a href="/en/0.8.4/">0.8.4</a></dd>
         

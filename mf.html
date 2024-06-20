@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Classic Matrix Factorization &mdash; LensKit 0.8.4 documentation</title>
+  <title>Classic Matrix Factorization &mdash; LensKit 0.9.0 documentation</title>
   
 
   
@@ -21,13 +21,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
@@ -60,7 +60,7 @@ READTHEDOCS_DATA['page'] = "mf"
 READTHEDOCS_DATA['source_suffix'] = ".rst"
 </script>
 
-<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js" async="async"></script>
 
 <!-- end RTD <extrahead> -->
 </head>
@@ -87,7 +87,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
             
             
               <div class="version">
-                0.8.4
+                0.9.0
               </div>
             
           
@@ -136,9 +136,11 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
 <li class="toctree-l2"><a class="reference internal" href="algorithms.html#references">References</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="random.html">Random Number Generation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals.html">LensKit Internals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
 </ul>
 
@@ -194,7 +196,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.8.4/doc/mf.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.9.0/doc/mf.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -237,68 +239,68 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
 <p>LKPY provides classical matrix factorization implementations.</p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><p><a class="reference internal" href="#module-lenskit.algorithms.mf_common" id="id14">Common Support</a></p></li>
-<li><p><a class="reference internal" href="#module-lenskit.algorithms.als" id="id15">Alternating Least Squares</a></p></li>
-<li><p><a class="reference internal" href="#funksvd" id="id16">FunkSVD</a></p></li>
+<li><p><a class="reference internal" href="#module-lenskit.algorithms.mf_common" id="id12">Common Support</a></p></li>
+<li><p><a class="reference internal" href="#module-lenskit.algorithms.als" id="id13">Alternating Least Squares</a></p></li>
+<li><p><a class="reference internal" href="#funksvd" id="id14">FunkSVD</a></p></li>
 </ul>
 </div>
 <div class="section" id="module-lenskit.algorithms.mf_common">
-<span id="common-support"></span><h2><a class="toc-backref" href="#id14">Common Support</a><a class="headerlink" href="#module-lenskit.algorithms.mf_common" title="Permalink to this headline">¶</a></h2>
+<span id="common-support"></span><h2><a class="toc-backref" href="#id12">Common Support</a><a class="headerlink" href="#module-lenskit.algorithms.mf_common" title="Permalink to this headline">¶</a></h2>
 <p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">mf_common</span></code> module contains common support code for matrix factorization
 algorithms.  These classes, <a class="reference internal" href="#lenskit.algorithms.mf_common.MFPredictor" title="lenskit.algorithms.mf_common.MFPredictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MFPredictor</span></code></a> and <a class="reference internal" href="#lenskit.algorithms.mf_common.BiasMFPredictor" title="lenskit.algorithms.mf_common.BiasMFPredictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiasMFPredictor</span></code></a>,
 define the parameters that are estimated during the <a class="reference internal" href="interfaces.html#lenskit.algorithms.Algorithm.fit" title="lenskit.algorithms.Algorithm.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Algorithm.fit()</span></code></a>
 process on common matrix factorization algorithms.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="lenskit.algorithms.mf_common.MFPredictor">
 <em class="property">class </em><code class="sig-prename descclassname">lenskit.algorithms.mf_common.</code><code class="sig-name descname">MFPredictor</code><a class="headerlink" href="#lenskit.algorithms.mf_common.MFPredictor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Common predictor for matrix factorization.</p>
-<dl class="attribute">
-<dt id="lenskit.algorithms.mf_common.MFPredictor.user_index_">
-<code class="sig-name descname">user_index_</code><a class="headerlink" href="#lenskit.algorithms.mf_common.MFPredictor.user_index_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">user_index\_</code></dt>
 <dd><p>Users in the model (length=:math:<cite>m</cite>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v0.25.3)">pandas.Index</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.3)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="lenskit.algorithms.mf_common.MFPredictor.item_index_">
-<code class="sig-name descname">item_index_</code><a class="headerlink" href="#lenskit.algorithms.mf_common.MFPredictor.item_index_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">item_index\_</code></dt>
 <dd><p>Items in the model (length=:math:<cite>n</cite>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v0.25.3)">pandas.Index</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.3)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="lenskit.algorithms.mf_common.MFPredictor.user_features_">
-<code class="sig-name descname">user_features_</code><a class="headerlink" href="#lenskit.algorithms.mf_common.MFPredictor.user_features_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">user_features\_</code></dt>
 <dd><p>The <span class="math notranslate nohighlight">\(m \times k\)</span> user-feature matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="lenskit.algorithms.mf_common.MFPredictor.item_features_">
-<code class="sig-name descname">item_features_</code><a class="headerlink" href="#lenskit.algorithms.mf_common.MFPredictor.item_features_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">item_features\_</code></dt>
 <dd><p>The <span class="math notranslate nohighlight">\(n \times k\)</span> item-feature matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.algorithms.mf_common.MFPredictor.lookup_items">
-<code class="sig-name descname">lookup_items</code><span class="sig-paren">(</span><em class="sig-param">items</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.mf_common.MFPredictor.lookup_items" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lookup_items</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">items</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.mf_common.MFPredictor.lookup_items" title="Permalink to this definition">¶</a></dt>
 <dd><p>Look up the indices for a set of items.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -308,14 +310,14 @@ process on common matrix factorization algorithms.</p>
 <dd class="field-even"><p>the item indices. Unknown items will have negative indices.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.algorithms.mf_common.MFPredictor.lookup_user">
-<code class="sig-name descname">lookup_user</code><span class="sig-paren">(</span><em class="sig-param">user</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.mf_common.MFPredictor.lookup_user" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">lookup_user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.mf_common.MFPredictor.lookup_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Look up the index for a user.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -330,27 +332,27 @@ process on common matrix factorization algorithms.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.algorithms.mf_common.MFPredictor.n_features">
 <em class="property">property </em><code class="sig-name descname">n_features</code><a class="headerlink" href="#lenskit.algorithms.mf_common.MFPredictor.n_features" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of features.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.algorithms.mf_common.MFPredictor.n_items">
 <em class="property">property </em><code class="sig-name descname">n_items</code><a class="headerlink" href="#lenskit.algorithms.mf_common.MFPredictor.n_items" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of items.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.algorithms.mf_common.MFPredictor.n_users">
 <em class="property">property </em><code class="sig-name descname">n_users</code><a class="headerlink" href="#lenskit.algorithms.mf_common.MFPredictor.n_users" title="Permalink to this definition">¶</a></dt>
 <dd><p>The number of users.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.algorithms.mf_common.MFPredictor.score">
-<code class="sig-name descname">score</code><span class="sig-paren">(</span><em class="sig-param">user</em>, <em class="sig-param">items</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.mf_common.MFPredictor.score" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">score</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">items</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.mf_common.MFPredictor.score" title="Permalink to this definition">¶</a></dt>
 <dd><p>Score a set of items for a user. User and item parameters must be indices
 into the matrices.</p>
 <dl class="field-list simple">
@@ -365,42 +367,42 @@ into the matrices.</p>
 <dd class="field-even"><p>the scores for the items.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="lenskit.algorithms.mf_common.BiasMFPredictor">
 <em class="property">class </em><code class="sig-prename descclassname">lenskit.algorithms.mf_common.</code><code class="sig-name descname">BiasMFPredictor</code><a class="headerlink" href="#lenskit.algorithms.mf_common.BiasMFPredictor" title="Permalink to this definition">¶</a></dt>
 <dd><p>Common model for biased matrix factorization.</p>
-<dl class="attribute">
-<dt id="lenskit.algorithms.mf_common.BiasMFPredictor.user_index_">
-<code class="sig-name descname">user_index_</code><a class="headerlink" href="#lenskit.algorithms.mf_common.BiasMFPredictor.user_index_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">user_index\_</code></dt>
 <dd><p>Users in the model (length=:math:<cite>m</cite>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v0.25.3)">pandas.Index</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.3)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="lenskit.algorithms.mf_common.BiasMFPredictor.item_index_">
-<code class="sig-name descname">item_index_</code><a class="headerlink" href="#lenskit.algorithms.mf_common.BiasMFPredictor.item_index_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">item_index\_</code></dt>
 <dd><p>Items in the model (length=:math:<cite>n</cite>).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v0.25.3)">pandas.Index</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.3)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="lenskit.algorithms.mf_common.BiasMFPredictor.global_bias_">
-<code class="sig-name descname">global_bias_</code><a class="headerlink" href="#lenskit.algorithms.mf_common.BiasMFPredictor.global_bias_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">global_bias\_</code></dt>
 <dd><p>The global bias term.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
@@ -409,53 +411,53 @@ into the matrices.</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="lenskit.algorithms.mf_common.BiasMFPredictor.user_bias_">
-<code class="sig-name descname">user_bias_</code><a class="headerlink" href="#lenskit.algorithms.mf_common.BiasMFPredictor.user_bias_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">user_bias\_</code></dt>
 <dd><p>The user bias terms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="lenskit.algorithms.mf_common.BiasMFPredictor.item_bias_">
-<code class="sig-name descname">item_bias_</code><a class="headerlink" href="#lenskit.algorithms.mf_common.BiasMFPredictor.item_bias_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">item_bias\_</code></dt>
 <dd><p>The item bias terms.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="lenskit.algorithms.mf_common.BiasMFPredictor.user_features_">
-<code class="sig-name descname">user_features_</code><a class="headerlink" href="#lenskit.algorithms.mf_common.BiasMFPredictor.user_features_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">user_features\_</code></dt>
 <dd><p>The <span class="math notranslate nohighlight">\(m \times k\)</span> user-feature matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="lenskit.algorithms.mf_common.BiasMFPredictor.item_features_">
-<code class="sig-name descname">item_features_</code><a class="headerlink" href="#lenskit.algorithms.mf_common.BiasMFPredictor.item_features_" title="Permalink to this definition">¶</a></dt>
+<dl class="py attribute">
+<dt>
+<code class="sig-name descname">item_features\_</code></dt>
 <dd><p>The <span class="math notranslate nohighlight">\(n \times k\)</span> item-feature matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.algorithms.mf_common.BiasMFPredictor.score">
-<code class="sig-name descname">score</code><span class="sig-paren">(</span><em class="sig-param">user</em>, <em class="sig-param">items</em>, <em class="sig-param">raw=False</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.mf_common.BiasMFPredictor.score" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">score</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">items</span></em>, <em class="sig-param"><span class="n">raw</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.mf_common.BiasMFPredictor.score" title="Permalink to this definition">¶</a></dt>
 <dd><p>Score a set of items for a user. User and item parameters must be indices
 into the matrices.</p>
 <dl class="field-list simple">
@@ -470,7 +472,7 @@ into the matrices.</p>
 <dd class="field-even"><p>the scores for the items.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -479,19 +481,19 @@ into the matrices.</p>
 
 </div>
 <div class="section" id="module-lenskit.algorithms.als">
-<span id="alternating-least-squares"></span><h2><a class="toc-backref" href="#id15">Alternating Least Squares</a><a class="headerlink" href="#module-lenskit.algorithms.als" title="Permalink to this headline">¶</a></h2>
+<span id="alternating-least-squares"></span><h2><a class="toc-backref" href="#id13">Alternating Least Squares</a><a class="headerlink" href="#module-lenskit.algorithms.als" title="Permalink to this headline">¶</a></h2>
 <p>LensKit provides alternating least squares implementations of matrix factorization suitable
 for explicit feedback data.  These implementations are parallelized with Numba, and perform
 best with the MKL from Conda.</p>
-<span class="target" id="module-lenskit.algorithms.als"></span><dl class="class">
+<span class="target" id="module-0"></span><dl class="py class">
 <dt id="lenskit.algorithms.als.BiasedMF">
-<em class="property">class </em><code class="sig-prename descclassname">lenskit.algorithms.als.</code><code class="sig-name descname">BiasedMF</code><span class="sig-paren">(</span><em class="sig-param">features</em>, <em class="sig-param">*</em>, <em class="sig-param">iterations=20</em>, <em class="sig-param">reg=0.1</em>, <em class="sig-param">damping=5</em>, <em class="sig-param">bias=True</em>, <em class="sig-param">method='cd'</em>, <em class="sig-param">rand=&lt;built-in method randn of numpy.random.mtrand.RandomState object&gt;</em>, <em class="sig-param">progress=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.als.BiasedMF" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.algorithms.als.</code><code class="sig-name descname">BiasedMF</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">features</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">reg</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">damping</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">bias</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'cd'</span></em>, <em class="sig-param"><span class="n">rng_spec</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">progress</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.als.BiasedMF" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#lenskit.algorithms.mf_common.BiasMFPredictor" title="lenskit.algorithms.mf_common.BiasMFPredictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.mf_common.BiasMFPredictor</span></code></a></p>
 <p>Biased matrix factorization trained with alternating least squares <a class="reference internal" href="#zwsp2008" id="id1"><span>[ZWSP2008]</span></a>.  This is a
 prediction-oriented algorithm suitable for explicit feedback data.</p>
 <p>It provides two solvers for the optimization step (the <cite>method</cite> parameter):</p>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">'cd'</span></code> (the default)</dt><dd><p>Coordinate descent <a class="reference internal" href="#id11" id="id2"><span>[TPT2011]</span></a>, adapted for a separately-trained bias model and to use
+<dt><code class="docutils literal notranslate"><span class="pre">'cd'</span></code> (the default)</dt><dd><p>Coordinate descent <a class="reference internal" href="#id9" id="id2"><span>[TPT2011]</span></a>, adapted for a separately-trained bias model and to use
 weighted regularization as in the original ALS paper <a class="reference internal" href="#zwsp2008" id="id3"><span>[ZWSP2008]</span></a>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">'lu'</span></code></dt><dd><p>A direct implementation of the original ALS concept <a class="reference internal" href="#zwsp2008" id="id4"><span>[ZWSP2008]</span></a> using LU-decomposition
@@ -504,7 +506,7 @@ the estimated parameters you can extract from a trained model.</p>
 <dt class="label" id="zwsp2008"><span class="brackets">ZWSP2008</span><span class="fn-backref">(<a href="#id1">1</a>,<a href="#id3">2</a>,<a href="#id4">3</a>)</span></dt>
 <dd><p>Yunhong Zhou, Dennis Wilkinson, Robert Schreiber, and Rong Pan. 2008.
 Large-Scale Parallel Collaborative Filtering for the Netflix Prize.
-In +Algorithmic Aspects in Information and <a href="#id17"><span class="problematic" id="id18">Management_</span></a>, LNCS 5034, 337–348.
+In +Algorithmic Aspects in Information and <a href="#id15"><span class="problematic" id="id16">Management_</span></a>, LNCS 5034, 337–348.
 DOI <a class="reference external" href="http://dx.doi.org/10.1007/978-3-540-68880-8_32">10.1007/978-3-540-68880-8_32</a>.</p>
 </dd>
 <dt class="label" id="tpt2011"><span class="brackets">TPT2011</span></dt>
@@ -523,14 +525,14 @@ specify separate user and item regularization terms.</p></li>
 <li><p><strong>bias</strong> (bool or <code class="xref py py-class docutils literal notranslate"><span class="pre">Bias</span></code>) – the bias model.  If <code class="docutils literal notranslate"><span class="pre">True</span></code>, fits a <code class="xref py py-class docutils literal notranslate"><span class="pre">Bias</span></code> with
 damping <code class="docutils literal notranslate"><span class="pre">damping</span></code>.</p></li>
 <li><p><strong>method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a>) – the solver to use (see above).</p></li>
-<li><p><strong>rng</strong> (<em>function</em>) – RNG function compatible with <a href="#id6"><span class="problematic" id="id7">:fun:`numpy.random.randn`</span></a> for initializing matrices.</p></li>
+<li><p><strong>rng_spec</strong> – Random number generator or state (see <a class="reference internal" href="random.html#lenskit.util.random.rng" title="lenskit.util.random.rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.random.rng()</span></code></a>).</p></li>
 <li><p><strong>progress</strong> – a <code class="xref py py-func docutils literal notranslate"><span class="pre">tqdm.tqdm()</span></code>-compatible progress bar function</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.algorithms.als.BiasedMF.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">ratings</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.als.BiasedMF.fit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ratings</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.als.BiasedMF.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run ALS to train a model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -542,16 +544,30 @@ damping <code class="docutils literal notranslate"><span class="pre">damping</sp
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
+<dt id="lenskit.algorithms.als.BiasedMF.fit_iters">
+<code class="sig-name descname">fit_iters</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ratings</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.als.BiasedMF.fit_iters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run ALS to train a model, returning each iteration as a generator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>ratings</strong> – the ratings data frame.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The algorithm (for chaining).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="lenskit.algorithms.als.BiasedMF.predict_for_user">
-<code class="sig-name descname">predict_for_user</code><span class="sig-paren">(</span><em class="sig-param">user</em>, <em class="sig-param">items</em>, <em class="sig-param">ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.als.BiasedMF.predict_for_user" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">predict_for_user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">items</span></em>, <em class="sig-param"><span class="n">ratings</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.als.BiasedMF.predict_for_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute predictions for a user and items.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>user</strong> – the user ID</p></li>
 <li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
-<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.25.3)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.3)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
 override or augment the model’s notion of a user’s preferences.</p></li>
 </ul>
 </dd>
@@ -559,38 +575,38 @@ override or augment the model’s notion of a user’s preferences.</p></li>
 <dd class="field-even"><p>scores for the items, indexed by item id.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.25.3)">pandas.Series</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.3)">pandas.Series</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="lenskit.algorithms.als.ImplicitMF">
-<em class="property">class </em><code class="sig-prename descclassname">lenskit.algorithms.als.</code><code class="sig-name descname">ImplicitMF</code><span class="sig-paren">(</span><em class="sig-param">features</em>, <em class="sig-param">*</em>, <em class="sig-param">iterations=20</em>, <em class="sig-param">reg=0.1</em>, <em class="sig-param">weight=40</em>, <em class="sig-param">method='cg'</em>, <em class="sig-param">rand=&lt;built-in method randn of numpy.random.mtrand.RandomState object&gt;</em>, <em class="sig-param">progress=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.als.ImplicitMF" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.algorithms.als.</code><code class="sig-name descname">ImplicitMF</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">features</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">20</span></em>, <em class="sig-param"><span class="n">reg</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">weight</span><span class="o">=</span><span class="default_value">40</span></em>, <em class="sig-param"><span class="n">method</span><span class="o">=</span><span class="default_value">'cg'</span></em>, <em class="sig-param"><span class="n">rng_spec</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">progress</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.als.ImplicitMF" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#lenskit.algorithms.mf_common.MFPredictor" title="lenskit.algorithms.mf_common.MFPredictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.mf_common.MFPredictor</span></code></a></p>
-<p>Implicit matrix factorization trained with alternating least squares <a class="reference internal" href="#hkv2008" id="id8"><span>[HKV2008]</span></a>.  This
+<p>Implicit matrix factorization trained with alternating least squares <a class="reference internal" href="#hkv2008" id="id6"><span>[HKV2008]</span></a>.  This
 algorithm outputs ‘predictions’, but they are not on a meaningful scale.  If its input
 data contains <code class="docutils literal notranslate"><span class="pre">rating</span></code> values, these will be used as the ‘confidence’ values; otherwise,
 confidence will be 1 for every rated item.</p>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">'cd'</span></code> (the default)</dt><dd><p>Conjugate gradient method <a class="reference internal" href="#id11" id="id9"><span>[TPT2011]</span></a>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">'cd'</span></code> (the default)</dt><dd><p>Conjugate gradient method <a class="reference internal" href="#id9" id="id7"><span>[TPT2011]</span></a>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">'lu'</span></code></dt><dd><p>A direct implementation of the original implicit-feedback ALS concept <a class="reference internal" href="#hkv2008" id="id10"><span>[HKV2008]</span></a> using
+<dt><code class="docutils literal notranslate"><span class="pre">'lu'</span></code></dt><dd><p>A direct implementation of the original implicit-feedback ALS concept <a class="reference internal" href="#hkv2008" id="id8"><span>[HKV2008]</span></a> using
 LU-decomposition to solve for the optimized matrices.</p>
 </dd>
 </dl>
 <p>See the base class <a class="reference internal" href="#lenskit.algorithms.mf_common.MFPredictor" title="lenskit.algorithms.mf_common.MFPredictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">MFPredictor</span></code></a> for documentation on the estimated parameters
 you can extract from a trained model.</p>
 <dl class="citation">
-<dt class="label" id="hkv2008"><span class="brackets">HKV2008</span><span class="fn-backref">(<a href="#id8">1</a>,<a href="#id10">2</a>,<a href="#id12">3</a>)</span></dt>
+<dt class="label" id="hkv2008"><span class="brackets">HKV2008</span><span class="fn-backref">(<a href="#id6">1</a>,<a href="#id8">2</a>,<a href="#id10">3</a>)</span></dt>
 <dd><p>Y. Hu, Y. Koren, and C. Volinsky. 2008.
 Collaborative Filtering for Implicit Feedback Datasets.
-In _Proceedings of the 2008 Eighth IEEE International Conference on Data <a href="#id19"><span class="problematic" id="id20">Mining_</span></a>, 263–272.
+In _Proceedings of the 2008 Eighth IEEE International Conference on Data <a href="#id17"><span class="problematic" id="id18">Mining_</span></a>, 263–272.
 DOI <a class="reference external" href="http://dx.doi.org/10.1109/ICDM.2008.22">10.1109/ICDM.2008.22</a></p>
 </dd>
-<dt class="label" id="id11"><span class="brackets">TPT2011</span></dt>
+<dt class="label" id="id9"><span class="brackets">TPT2011</span></dt>
 <dd><p>Gábor Takács, István Pilászy, and Domonkos Tikk. 2011. Applications of the
 Conjugate Gradient Method for Implicit Feedback Collaborative Filtering.</p>
 </dd>
@@ -601,19 +617,20 @@ Conjugate Gradient Method for Implicit Feedback Collaborative Filtering.</p>
 <li><p><strong>features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the number of features to train</p></li>
 <li><p><strong>iterations</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><em>int</em></a>) – the number of iterations to train</p></li>
 <li><p><strong>reg</strong> (<em>double</em>) – the regularization factor</p></li>
-<li><p><strong>weight</strong> (<em>double</em>) – the scaling weight for positive samples (<span class="math notranslate nohighlight">\(\alpha\)</span> in <a class="reference internal" href="#hkv2008" id="id12"><span>[HKV2008]</span></a>).</p></li>
+<li><p><strong>weight</strong> (<em>double</em>) – the scaling weight for positive samples (<span class="math notranslate nohighlight">\(\alpha\)</span> in <a class="reference internal" href="#hkv2008" id="id10"><span>[HKV2008]</span></a>).</p></li>
+<li><p><strong>rng_spec</strong> – Random number generator or state (see <a class="reference internal" href="random.html#lenskit.util.random.rng" title="lenskit.util.random.rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.random.rng()</span></code></a>).</p></li>
 <li><p><strong>progress</strong> – a <code class="xref py py-func docutils literal notranslate"><span class="pre">tqdm.tqdm()</span></code>-compatible progress bar function</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.algorithms.als.ImplicitMF.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">ratings</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.als.ImplicitMF.fit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ratings</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.als.ImplicitMF.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train a model using the specified ratings (or similar) data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.3)"><em>pandas.DataFrame</em></a>) – The ratings data.</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.3)"><em>pandas.DataFrame</em></a>) – The ratings data.</p></li>
 <li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms should
 avoid using the same keyword arguments for different purposes, so that
 they can be more easily hybridized.</p></li>
@@ -625,16 +642,16 @@ they can be more easily hybridized.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.algorithms.als.ImplicitMF.predict_for_user">
-<code class="sig-name descname">predict_for_user</code><span class="sig-paren">(</span><em class="sig-param">user</em>, <em class="sig-param">items</em>, <em class="sig-param">ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.als.ImplicitMF.predict_for_user" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">predict_for_user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">items</span></em>, <em class="sig-param"><span class="n">ratings</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.als.ImplicitMF.predict_for_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute predictions for a user and items.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>user</strong> – the user ID</p></li>
 <li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
-<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.25.3)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.3)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
 override or augment the model’s notion of a user’s preferences.</p></li>
 </ul>
 </dd>
@@ -642,7 +659,7 @@ override or augment the model’s notion of a user’s preferences.</p></li>
 <dd class="field-even"><p>scores for the items, indexed by item id.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.25.3)">pandas.Series</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.3)">pandas.Series</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -651,13 +668,13 @@ override or augment the model’s notion of a user’s preferences.</p></li>
 
 </div>
 <div class="section" id="funksvd">
-<h2><a class="toc-backref" href="#id16">FunkSVD</a><a class="headerlink" href="#funksvd" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id14">FunkSVD</a><a class="headerlink" href="#funksvd" title="Permalink to this headline">¶</a></h2>
 <span class="target" id="module-lenskit.algorithms.funksvd"></span><p><a class="reference external" href="http://sifter.org/~simon/journal/20061211.html">FunkSVD</a> is an SVD-like matrix factorization that uses stochastic gradient descent,
 configured much like coordinate descent, to train the user-feature and item-feature
 matrices.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="lenskit.algorithms.funksvd.FunkSVD">
-<em class="property">class </em><code class="sig-prename descclassname">lenskit.algorithms.funksvd.</code><code class="sig-name descname">FunkSVD</code><span class="sig-paren">(</span><em class="sig-param">features</em>, <em class="sig-param">iterations=100</em>, <em class="sig-param">*</em>, <em class="sig-param">lrate=0.001</em>, <em class="sig-param">reg=0.015</em>, <em class="sig-param">damping=5</em>, <em class="sig-param">range=None</em>, <em class="sig-param">bias=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.funksvd.FunkSVD" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.algorithms.funksvd.</code><code class="sig-name descname">FunkSVD</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">features</span></em>, <em class="sig-param"><span class="n">iterations</span><span class="o">=</span><span class="default_value">100</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">lrate</span><span class="o">=</span><span class="default_value">0.001</span></em>, <em class="sig-param"><span class="n">reg</span><span class="o">=</span><span class="default_value">0.015</span></em>, <em class="sig-param"><span class="n">damping</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">range</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">bias</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">random_state</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.funksvd.FunkSVD" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#lenskit.algorithms.mf_common.BiasMFPredictor" title="lenskit.algorithms.mf_common.BiasMFPredictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.mf_common.BiasMFPredictor</span></code></a></p>
 <p>Algorithm class implementing FunkSVD matrix factorization.  FunkSVD is a regularized
 biased matrix factorization technique trained with featurewise stochastic gradient
@@ -676,12 +693,13 @@ you can extract from a trained model.</p>
 <a class="reference internal" href="basic.html#lenskit.algorithms.basic.Bias" title="lenskit.algorithms.basic.Bias"><code class="xref py py-class docutils literal notranslate"><span class="pre">basic.Bias</span></code></a> model is fit with <code class="docutils literal notranslate"><span class="pre">damping</span></code>.</p></li>
 <li><p><strong>range</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.8)"><em>tuple</em></a>) – the <code class="docutils literal notranslate"><span class="pre">(min,</span> <span class="pre">max)</span></code> rating values to clamp ratings, or <code class="docutils literal notranslate"><span class="pre">None</span></code> to leave
 predictions unclamped.</p></li>
+<li><p><strong>random_state</strong> – The random state for shuffling the data prior to training.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.algorithms.funksvd.FunkSVD.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">ratings</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.funksvd.FunkSVD.fit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ratings</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.funksvd.FunkSVD.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train a FunkSVD model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -690,16 +708,16 @@ predictions unclamped.</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.algorithms.funksvd.FunkSVD.predict_for_user">
-<code class="sig-name descname">predict_for_user</code><span class="sig-paren">(</span><em class="sig-param">user</em>, <em class="sig-param">items</em>, <em class="sig-param">ratings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.funksvd.FunkSVD.predict_for_user" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">predict_for_user</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">user</span></em>, <em class="sig-param"><span class="n">items</span></em>, <em class="sig-param"><span class="n">ratings</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.funksvd.FunkSVD.predict_for_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute predictions for a user and items.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>user</strong> – the user ID</p></li>
 <li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
-<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.25.3)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.3)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
 override or augment the model’s notion of a user’s preferences.</p></li>
 </ul>
 </dd>
@@ -707,7 +725,7 @@ override or augment the model’s notion of a user’s preferences.</p></li>
 <dd class="field-even"><p>scores for the items, indexed by item id.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v0.25.3)">pandas.Series</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.0.3)">pandas.Series</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -740,13 +758,22 @@ override or augment the model’s notion of a user’s preferences.</p></li>
         &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>fafdbd14</code>.
+          Revision <code>77006928</code>.
         </span>
       
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+<p>This material is based upon work supported by the National Science Foundation under
+Grant No. <a href="https://md.ekstrandom.net/research/career">IIS 17-51278</a>. Any
+opinions, findings, and conclusions or recommendations expressed in this material
+are those of the author(s) and do not necessarily reflect the views of the
+National Science Foundation.  This page has not been approved by
+Boise State University and does not reflect official university positions.</p>
+<script data-goatcounter="https://lenskit.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
 
 </footer>
 
@@ -761,7 +788,7 @@ override or augment the model’s notion of a user’s preferences.</p></li>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.8.4
+      v: 0.9.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -771,6 +798,8 @@ override or augment the model’s notion of a user’s preferences.</p></li>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.9.0/">0.9.0</a></dd>
         
           <dd><a href="/en/0.8.4/">0.8.4</a></dd>
         

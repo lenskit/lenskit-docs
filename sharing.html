@@ -1,0 +1,625 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Model Sharing &mdash; LensKit 0.9.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Release Notes" href="releases.html" />
+    <link rel="prev" title="LensKit Internals" href="internals.html" /> 
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/sharing.html" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = "sharing"
+READTHEDOCS_DATA['source_suffix'] = ".rst"
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js" async="async"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> LensKit
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.9.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
+<li class="toctree-l1"><a class="reference internal" href="crossfold.html">Crossfold preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets.html">Data Set Utilities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="random.html">Random Number Generation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="internals.html">LensKit Internals</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Model Sharing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sharing-mode">Sharing Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-store-api">Model Store API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#model-store-implementations">Model Store Implementations</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-lenskit.sharing.file">Memory Mapping</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-lenskit.sharing.sharedmem">Shared Memory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">LensKit</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="internals.html">LensKit Internals</a> &raquo;</li>
+        
+      <li>Model Sharing</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/lenskit/lkpy/blob/0.9.0/doc/sharing.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="module-lenskit.sharing">
+<span id="model-sharing"></span><h1>Model Sharing<a class="headerlink" href="#module-lenskit.sharing" title="Permalink to this headline">¶</a></h1>
+<p>The <a class="reference internal" href="#module-lenskit.sharing" title="lenskit.sharing"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.sharing</span></code></a> module provides utilities for managing models and sharing them
+between processes, particularly for the  multiprocessing in <a class="reference internal" href="batch.html#module-lenskit.batch" title="lenskit.batch"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.batch</span></code></a>.</p>
+<div class="section" id="sharing-mode">
+<h2>Sharing Mode<a class="headerlink" href="#sharing-mode" title="Permalink to this headline">¶</a></h2>
+<p>The only piece <strong>algorithm developers</strong> usually need to directly handle is the concept of
+‘sharing mode’ when implementing custom pickling logic.  To save space, it is reasonable to
+exclude intermediate data structures, such as caches or inverse indexes, from the pickled
+representation of an algorithm, and reconstruct them when the model is loaded.</p>
+<p>However, LensKit’s multi-process sharing <em>also</em> uses pickling to capture the object state
+while using shared memory for <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a> objects.  In these cases, the structures
+should be pickled, so they can be shared between model instances.</p>
+<p>To support this, we have the concept of <em>sharing mode</em>.  Code that excludes objects when
+pickling should call <a class="reference internal" href="#lenskit.sharing.in_share_context" title="lenskit.sharing.in_share_context"><code class="xref py py-func docutils literal notranslate"><span class="pre">in_share_context()</span></code></a> to determine if that exclusion should
+actually happen.</p>
+<dl class="py function">
+<dt id="lenskit.sharing.in_share_context">
+<code class="sig-prename descclassname">lenskit.sharing.</code><code class="sig-name descname">in_share_context</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.in_share_context" title="Permalink to this definition">¶</a></dt>
+<dd><p>Query whether sharing mode is active.  If <code class="docutils literal notranslate"><span class="pre">True</span></code>, we are currently in a
+<a class="reference internal" href="#lenskit.sharing.sharing_mode" title="lenskit.sharing.sharing_mode"><code class="xref py py-func docutils literal notranslate"><span class="pre">sharing_mode()</span></code></a> context, which means model pickling will be used for
+cross-process sharing.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="lenskit.sharing.sharing_mode">
+<code class="sig-prename descclassname">lenskit.sharing.</code><code class="sig-name descname">sharing_mode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.sharing_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Context manager to tell models that pickling will be used for cross-process
+sharing, not model persistence.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="model-store-api">
+<h2>Model Store API<a class="headerlink" href="#model-store-api" title="Permalink to this headline">¶</a></h2>
+<p>Model stores handle persisting models into shared memory, cleaning up shared memory, and
+making objects available to other classes.</p>
+<p>LensKit users and algorithm implementers will generally not need to use this code themselves,
+unlessthey are implementing their own batch processing logic.</p>
+<dl class="py function">
+<dt id="lenskit.sharing.get_store">
+<code class="sig-prename descclassname">lenskit.sharing.</code><code class="sig-name descname">get_store</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">reuse</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">in_process</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.get_store" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a model store, using the best available on the current platform.  The
+resulting store should be used as a context manager, as in:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">get_store</span><span class="p">()</span> <span class="k">as</span> <span class="n">store</span><span class="p">:</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>This function uses the following priority list for locating a suitable store:</p>
+<ol class="arabic simple">
+<li><p>The currently-active store, if <code class="docutils literal notranslate"><span class="pre">reuse=True</span></code></p></li>
+<li><p>A no-op store, if <code class="docutils literal notranslate"><span class="pre">in_process=True</span></code></p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">SHMModelStore</span></code>, if on Python 3.8</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">JoblibModelStore</span></code></p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>reuse</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If a store is active (with a <code class="docutils literal notranslate"><span class="pre">with</span></code> block), use that store instead
+of creating a new one.</p></li>
+<li><p><strong>in_process</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.8)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then create a no-op store for use without multiprocessing.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the model store.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.sharing.BaseModelStore" title="lenskit.sharing.BaseModelStore">BaseModelStore</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="lenskit.sharing.BaseModelStore">
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.sharing.</code><code class="sig-name descname">BaseModelStore</code><a class="headerlink" href="#lenskit.sharing.BaseModelStore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.sharing.BaseModelClient" title="lenskit.sharing.BaseModelClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.sharing.BaseModelClient</span></code></a></p>
+<p>Base class for storing models for access across processes.</p>
+<p>Stores are also context managers that initalize themselves and clean themselves
+up.  As context managers, they are also re-entrant, and register themselves so
+that <code class="xref py py-func docutils literal notranslate"><span class="pre">create_store()</span></code> can re-use existing managers.</p>
+<dl class="py method">
+<dt id="lenskit.sharing.BaseModelStore.client">
+<em class="property">abstract </em><code class="sig-name descname">client</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.BaseModelStore.client" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a client for the model store.  Clients are cheap to pass to
+child processes for multiprocessing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the model client.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#lenskit.sharing.BaseModelClient" title="lenskit.sharing.BaseModelClient">BaseModelClient</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lenskit.sharing.BaseModelStore.init">
+<code class="sig-name descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.BaseModelStore.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize the store.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lenskit.sharing.BaseModelStore.put_model">
+<em class="property">abstract </em><code class="sig-name descname">put_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.BaseModelStore.put_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store a model in the model store.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>model</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><em>object</em></a>) – the model to store.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>a key to retrieve the model with <a class="reference internal" href="#lenskit.sharing.BaseModelClient.get_model" title="lenskit.sharing.BaseModelClient.get_model"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BaseModelClient.get_model()</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lenskit.sharing.BaseModelStore.put_serialized">
+<code class="sig-name descname">put_serialized</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">path</span></em>, <em class="sig-param"><span class="n">binpickle</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.BaseModelStore.put_serialized" title="Permalink to this definition">¶</a></dt>
+<dd><p>Deserialize a model and load it into the store.</p>
+<p>The base class method unpickles <code class="docutils literal notranslate"><span class="pre">path</span></code> and calls <a class="reference internal" href="#lenskit.sharing.BaseModelStore.put_model" title="lenskit.sharing.BaseModelStore.put_model"><code class="xref py py-meth docutils literal notranslate"><span class="pre">put_model()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.8)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.8)"><em>pathlib.Path</em></a>) – the path to deserialize</p></li>
+<li><p><strong>binpickle</strong> – if <code class="docutils literal notranslate"><span class="pre">True</span></code>, deserialize with <a class="reference external" href="https://binpickle.lenskit.org/en/stable/read.html#binpickle.load" title="(in BinPickle)"><code class="xref py py-func docutils literal notranslate"><span class="pre">binpickle.load()</span></code></a> instead of pickle.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lenskit.sharing.BaseModelStore.shutdown">
+<code class="sig-name descname">shutdown</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.BaseModelStore.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Shut down the store</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="lenskit.sharing.BaseModelClient">
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.sharing.</code><code class="sig-name descname">BaseModelClient</code><a class="headerlink" href="#lenskit.sharing.BaseModelClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Model store client to get models given keys.  Clients must be able to be cheaply
+pickled and de-pickled to enable worker processes to access them.</p>
+<dl class="py method">
+<dt id="lenskit.sharing.BaseModelClient.get_model">
+<em class="property">abstract </em><code class="sig-name descname">get_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">key</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.BaseModelClient.get_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a model from the  model store.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>key</strong> – the model key to retrieve.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The model, previously stored with <a class="reference internal" href="#lenskit.sharing.BaseModelStore.put_model" title="lenskit.sharing.BaseModelStore.put_model"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BaseModelStore.put_model()</span></code></a>,
+wrapped in a <a class="reference internal" href="#lenskit.sharing.SharedObject" title="lenskit.sharing.SharedObject"><code class="xref py py-class docutils literal notranslate"><span class="pre">SharedObject</span></code></a> to manage underlying resources.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.sharing.SharedObject" title="lenskit.sharing.SharedObject">SharedObject</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="lenskit.sharing.SharedObject">
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.sharing.</code><code class="sig-name descname">SharedObject</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.SharedObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.sharing.SharedObject.object" title="lenskit.sharing.SharedObject.object"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Wrapper for a shared object that can release it when the object is no longer needed.</p>
+<p>Objects of this type are context managers, that return the <em>shared object</em> (not
+themselves) when entered.</p>
+<p>Any other refernces to <code class="docutils literal notranslate"><span class="pre">object</span></code>, or its contents, <strong>must</strong> be released before
+calling <a class="reference internal" href="#lenskit.sharing.SharedObject.release" title="lenskit.sharing.SharedObject.release"><code class="xref py py-meth docutils literal notranslate"><span class="pre">release()</span></code></a> or exiting the context manager.  Among other things, that
+means that you will need to delete its variable:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">client</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">as</span> <span class="n">model</span><span class="p">:</span>
+    <span class="c1"># model here is the actual model object wrapped by the SharedObject</span>
+    <span class="c1"># returned by get_model</span>
+    <span class="k">pass</span>       <span class="c1"># actually do the things you want to do</span>
+    <span class="k">del</span> <span class="n">model</span>  <span class="c1"># release model, so the shared object can be closed</span>
+</pre></div>
+</div>
+<p>Be careful of stray references to the model object!  Some things we have seen
+causing stray references include:</p>
+<ul class="simple">
+<li><p>passing the algorithm to a logger (call <code class="xref py py-func docutils literal notranslate"><span class="pre">str()</span></code> on it explicitly), at least
+in the test harness</p></li>
+</ul>
+<p>The default implementation uses <a class="reference external" href="https://docs.python.org/3/library/sys.html#sys.getrefcount" title="(in Python v3.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.getrefcount()</span></code></a> to provide debugging
+support to help catch stray references.</p>
+<dl class="py attribute">
+<dt id="lenskit.sharing.SharedObject.object">
+<code class="sig-name descname">object</code><a class="headerlink" href="#lenskit.sharing.SharedObject.object" title="Permalink to this definition">¶</a></dt>
+<dd><p>the underlying shared object.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="lenskit.sharing.SharedObject.release">
+<code class="sig-name descname">release</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.SharedObject.release" title="Permalink to this definition">¶</a></dt>
+<dd><p>Release the shared object.  Automatically called by <code class="xref py py-meth docutils literal notranslate"><span class="pre">__exit__()</span></code>, so in
+normal use of a shared object with a <code class="docutils literal notranslate"><span class="pre">with</span></code> statement, this method is not
+needed.</p>
+<p>The base class implementation simply deletes the object reference.  Subclasses
+should override this method to handle their own release logic.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="model-store-implementations">
+<h2>Model Store Implementations<a class="headerlink" href="#model-store-implementations" title="Permalink to this headline">¶</a></h2>
+<p>We provide several model store implementations.</p>
+<div class="section" id="module-lenskit.sharing.file">
+<span id="memory-mapping"></span><h3>Memory Mapping<a class="headerlink" href="#module-lenskit.sharing.file" title="Permalink to this headline">¶</a></h3>
+<p>The memory-mapped-file store works on any supported platform and Python version.  It uses
+Joblib’s memory-mapped Pickle extension to store models on disk and use their storage
+to back memory-mapped views of major data structures.</p>
+<dl class="py class">
+<dt id="lenskit.sharing.file.FileModelStore">
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.sharing.file.</code><code class="sig-name descname">FileModelStore</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">path</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">reserialize</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.file.FileModelStore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.sharing.BaseModelStore" title="lenskit.sharing.BaseModelStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.sharing.BaseModelStore</span></code></a>, <a class="reference internal" href="#lenskit.sharing.file.FileClient" title="lenskit.sharing.file.FileClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.sharing.file.FileClient</span></code></a></p>
+<p>Model store using BinPickle’s memory-mapping pickle support.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – the path to use; otherwise uses a new temp directory under
+<code class="xref py py-func docutils literal notranslate"><span class="pre">util.scratch_dir()</span></code>.</p></li>
+<li><p><strong>reserialize</strong> – if <code class="docutils literal notranslate"><span class="pre">True</span></code> (the default), models passed to <code class="xref py py-meth docutils literal notranslate"><span class="pre">put_serialized()</span></code> are
+re-serialized in the BinPickle storage, even if they are binpickle files.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="lenskit.sharing.file.FileClient">
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.sharing.file.</code><code class="sig-name descname">FileClient</code><a class="headerlink" href="#lenskit.sharing.file.FileClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.sharing.BaseModelClient" title="lenskit.sharing.BaseModelClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.sharing.BaseModelClient</span></code></a></p>
+<p>Client using BinPickle’s memory-mapping pickle support.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-lenskit.sharing.sharedmem">
+<span id="shared-memory"></span><h3>Shared Memory<a class="headerlink" href="#module-lenskit.sharing.sharedmem" title="Permalink to this headline">¶</a></h3>
+<p>This store uses Python 3.8’s <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.shared_memory.html#module-multiprocessing.shared_memory" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.shared_memory</span></code></a> module, along with out-of-band
+buffer support in Pickle Protcol 5, to pass model data through shared memory.</p>
+<dl class="py class">
+<dt id="lenskit.sharing.sharedmem.SHMModelStore">
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.sharing.sharedmem.</code><code class="sig-name descname">SHMModelStore</code><a class="headerlink" href="#lenskit.sharing.sharedmem.SHMModelStore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.sharing.BaseModelStore" title="lenskit.sharing.BaseModelStore"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.sharing.BaseModelStore</span></code></a>, <a class="reference internal" href="#lenskit.sharing.sharedmem.SHMClient" title="lenskit.sharing.sharedmem.SHMClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.sharing.sharedmem.SHMClient</span></code></a></p>
+<p>Model store using shared memory and Pickle Protocol 5.</p>
+<p>This model store only works in Python 3.8 and later, as it requires both the new
+<a class="reference external" href="https://docs.python.org/3/library/multiprocessing.shared_memory.html#module-multiprocessing.shared_memory" title="(in Python v3.8)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.shared_memory</span></code></a> module and Pickle Protocol 5.  It also
+depends on a Numpy version new enough to support Protocol 5 pickles.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>path</strong> – the path to use; otherwise uses a new temp directory under
+<code class="xref py py-func docutils literal notranslate"><span class="pre">util.scratch_dir()</span></code>.</p></li>
+<li><p><strong>reserialize</strong> – if <code class="docutils literal notranslate"><span class="pre">True</span></code> (the default), models passed to <code class="xref py py-meth docutils literal notranslate"><span class="pre">put_serialized()</span></code> are
+re-serialized in the SHM storage.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt id="lenskit.sharing.sharedmem.SHMClient">
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.sharing.sharedmem.</code><code class="sig-name descname">SHMClient</code><a class="headerlink" href="#lenskit.sharing.sharedmem.SHMClient" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.sharing.BaseModelClient" title="lenskit.sharing.BaseModelClient"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.sharing.BaseModelClient</span></code></a></p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="releases.html" class="btn btn-neutral float-right" title="Release Notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="internals.html" class="btn btn-neutral float-left" title="LensKit Internals" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018–2019 Boise State University
+      
+        <span class="commit">
+          Revision <code>77006928</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+<p>This material is based upon work supported by the National Science Foundation under
+Grant No. <a href="https://md.ekstrandom.net/research/career">IIS 17-51278</a>. Any
+opinions, findings, and conclusions or recommendations expressed in this material
+are those of the author(s) and do not necessarily reflect the views of the
+National Science Foundation.  This page has not been approved by
+Boise State University and does not reflect official university positions.</p>
+<script data-goatcounter="https://lenskit.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.9.0
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.9.0/">0.9.0</a></dd>
+        
+          <dd><a href="/en/0.8.4/">0.8.4</a></dd>
+        
+          <dd><a href="/en/0.8.1/">0.8.1</a></dd>
+        
+          <dd><a href="/en/0.8.0/">0.8.0</a></dd>
+        
+          <dd><a href="/en/0.7.0/">0.7.0</a></dd>
+        
+          <dd><a href="/en/0.6.1/">0.6.1</a></dd>
+        
+          <dd><a href="/en/0.6.0/">0.6.0</a></dd>
+        
+          <dd><a href="/en/0.5.0/">0.5.0</a></dd>
+        
+          <dd><a href="/en/0.3.0/">0.3.0</a></dd>
+        
+          <dd><a href="/en/0.2.0/">0.2.0</a></dd>
+        
+          <dd><a href="/en/0.1.0/">0.1.0</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/lkpy/?fromdocs=lkpy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/lkpy/?fromdocs=lkpy">Builds</a>
+          </dd>
+      </dl>
+      <hr/>
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+   
+
+</body>
+</html>

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Matrix Utilities &mdash; LensKit 0.8.4 documentation</title>
+  <title>Matrix Utilities &mdash; LensKit 0.9.0 documentation</title>
   
 
   
@@ -21,13 +21,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script type="text/javascript" src="_static/jquery.js"></script>
-        <script type="text/javascript" src="_static/underscore.js"></script>
-        <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="_static/language_data.js"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
-        <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
@@ -60,7 +60,7 @@ READTHEDOCS_DATA['page'] = "matrix"
 READTHEDOCS_DATA['source_suffix'] = ".rst"
 </script>
 
-<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js" async="async"></script>
 
 <!-- end RTD <extrahead> -->
 </head>
@@ -87,7 +87,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
             
             
               <div class="version">
-                0.8.4
+                0.9.0
               </div>
             
           
@@ -120,6 +120,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
 <li class="toctree-l1"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a></li>
 <li class="toctree-l1"><a class="reference internal" href="datasets.html">Data Set Utilities</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="random.html">Random Number Generation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="util.html">Utility Functions</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Matrix Utilities</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#building-ratings-matrices">Building Ratings Matrices</a></li>
@@ -132,6 +133,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
 </li>
 <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Errors and Diagnostics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="internals.html">LensKit Internals</a></li>
 <li class="toctree-l1"><a class="reference internal" href="releases.html">Release Notes</a></li>
 </ul>
 
@@ -187,7 +189,7 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
         
             
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.8.4/doc/matrix.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.9.0/doc/matrix.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -231,15 +233,17 @@ READTHEDOCS_DATA['source_suffix'] = ".rst"
 algorithms.</p>
 <div class="section" id="building-ratings-matrices">
 <h2>Building Ratings Matrices<a class="headerlink" href="#building-ratings-matrices" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="lenskit.matrix.sparse_ratings">
-<code class="sig-prename descclassname">lenskit.matrix.</code><code class="sig-name descname">sparse_ratings</code><span class="sig-paren">(</span><em class="sig-param">ratings</em>, <em class="sig-param">scipy=False</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.sparse_ratings" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">lenskit.matrix.</code><code class="sig-name descname">sparse_ratings</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ratings</span></em>, <em class="sig-param"><span class="n">scipy</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">*</span></em>, <em class="sig-param"><span class="n">users</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">items</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.sparse_ratings" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a rating table to a sparse matrix of ratings.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.3)"><em>pandas.DataFrame</em></a>) – a data table of (user, item, rating) triples.</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.0.3)"><em>pandas.DataFrame</em></a>) – a data table of (user, item, rating) triples.</p></li>
 <li><p><strong>scipy</strong> – if <code class="docutils literal notranslate"><span class="pre">True</span></code>, return a SciPy matrix instead of <a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR"><code class="xref py py-class docutils literal notranslate"><span class="pre">CSR</span></code></a>.</p></li>
+<li><p><strong>users</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.3)"><em>pandas.Index</em></a>) – an index of user IDs.</p></li>
+<li><p><strong>items</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.3)"><em>pandas.Index</em></a>) – an index of items IDs.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -251,11 +255,11 @@ algorithms.</p>
 </dl>
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="lenskit.matrix.RatingMatrix">
 <em class="property">class </em><code class="sig-prename descclassname">lenskit.matrix.</code><code class="sig-name descname">RatingMatrix</code><a class="headerlink" href="#lenskit.matrix.RatingMatrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>A rating matrix with associated indices.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="lenskit.matrix.RatingMatrix.matrix">
 <code class="sig-name descname">matrix</code><a class="headerlink" href="#lenskit.matrix.RatingMatrix.matrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>The rating matrix, with users on rows and items on columns.</p>
@@ -266,24 +270,24 @@ algorithms.</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="lenskit.matrix.RatingMatrix.users">
 <code class="sig-name descname">users</code><a class="headerlink" href="#lenskit.matrix.RatingMatrix.users" title="Permalink to this definition">¶</a></dt>
 <dd><p>mapping from user IDs to row numbers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v0.25.3)">pandas.Index</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.3)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="lenskit.matrix.RatingMatrix.items">
 <code class="sig-name descname">items</code><a class="headerlink" href="#lenskit.matrix.RatingMatrix.items" title="Permalink to this definition">¶</a></dt>
 <dd><p>mapping from item IDs to column numbers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v0.25.3)">pandas.Index</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v1.0.3)">pandas.Index</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -296,9 +300,9 @@ algorithms.</p>
 <p>We use CSR-format sparse matrices in quite a few places. Since SciPy’s sparse matrices are not
 directly usable from Numba, we have implemented a Numba-compiled CSR representation that can
 be used from accelerated algorithm implementations.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="lenskit.matrix.CSR">
-<em class="property">class </em><code class="sig-prename descclassname">lenskit.matrix.</code><code class="sig-name descname">CSR</code><span class="sig-paren">(</span><em class="sig-param">nrows=None</em>, <em class="sig-param">ncols=None</em>, <em class="sig-param">nnz=None</em>, <em class="sig-param">ptrs=None</em>, <em class="sig-param">inds=None</em>, <em class="sig-param">vals=None</em>, <em class="sig-param">N=None</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.matrix.</code><code class="sig-name descname">CSR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nrows</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ncols</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">nnz</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ptrs</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">inds</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">vals</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">N</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Simple compressed sparse row matrix.  This is like <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>, with
 a couple of useful differences:</p>
 <ul class="simple">
@@ -315,7 +319,7 @@ of its class methods.</p>
 <p>We use the indirection between this and the Numba jitclass so that the main CSR implementation
 can be pickled, and so that we can have class and instance methods that are not compatible with
 jitclass but which are useful from interpreted code.</p>
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="lenskit.matrix.CSR.N">
 <code class="sig-name descname">N</code><a class="headerlink" href="#lenskit.matrix.CSR.N" title="Permalink to this definition">¶</a></dt>
 <dd><p>the Numba jitclass backing (has the same attributes and most methods).</p>
@@ -326,7 +330,7 @@ jitclass but which are useful from interpreted code.</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="lenskit.matrix.CSR.nrows">
 <code class="sig-name descname">nrows</code><a class="headerlink" href="#lenskit.matrix.CSR.nrows" title="Permalink to this definition">¶</a></dt>
 <dd><p>the number of rows.</p>
@@ -337,7 +341,7 @@ jitclass but which are useful from interpreted code.</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="lenskit.matrix.CSR.ncols">
 <code class="sig-name descname">ncols</code><a class="headerlink" href="#lenskit.matrix.CSR.ncols" title="Permalink to this definition">¶</a></dt>
 <dd><p>the number of columns.</p>
@@ -348,7 +352,7 @@ jitclass but which are useful from interpreted code.</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="lenskit.matrix.CSR.nnz">
 <code class="sig-name descname">nnz</code><a class="headerlink" href="#lenskit.matrix.CSR.nnz" title="Permalink to this definition">¶</a></dt>
 <dd><p>the number of entries.</p>
@@ -359,40 +363,40 @@ jitclass but which are useful from interpreted code.</p>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="lenskit.matrix.CSR.rowptrs">
 <code class="sig-name descname">rowptrs</code><a class="headerlink" href="#lenskit.matrix.CSR.rowptrs" title="Permalink to this definition">¶</a></dt>
 <dd><p>the row pointers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="lenskit.matrix.CSR.colinds">
 <code class="sig-name descname">colinds</code><a class="headerlink" href="#lenskit.matrix.CSR.colinds" title="Permalink to this definition">¶</a></dt>
 <dd><p>the column indices.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="attribute">
+<dl class="py attribute">
 <dt id="lenskit.matrix.CSR.values">
 <code class="sig-name descname">values</code><a class="headerlink" href="#lenskit.matrix.CSR.values" title="Permalink to this definition">¶</a></dt>
 <dd><p>the values</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.matrix.CSR.empty">
 <em class="property">classmethod </em><code class="sig-name descname">empty</code><span class="sig-paren">(</span><em class="sig-param">shape</em>, <em class="sig-param">row_nnzs</em>, <em class="sig-param">*</em>, <em class="sig-param">rpdtype=&lt;class 'numpy.int32'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.empty" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create an empty CSR matrix.</p>
@@ -406,9 +410,9 @@ jitclass but which are useful from interpreted code.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.matrix.CSR.filter_nnzs">
-<code class="sig-name descname">filter_nnzs</code><span class="sig-paren">(</span><em class="sig-param">filt</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.filter_nnzs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">filter_nnzs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filt</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.filter_nnzs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Filter the values along the full NNZ axis.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -423,7 +427,7 @@ jitclass but which are useful from interpreted code.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.matrix.CSR.from_coo">
 <em class="property">classmethod </em><code class="sig-name descname">from_coo</code><span class="sig-paren">(</span><em class="sig-param">rows</em>, <em class="sig-param">cols</em>, <em class="sig-param">vals</em>, <em class="sig-param">shape=None</em>, <em class="sig-param">rpdtype=&lt;class 'numpy.int32'&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.from_coo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a CSR matrix from data in COO format.</p>
@@ -439,9 +443,9 @@ jitclass but which are useful from interpreted code.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.matrix.CSR.from_scipy">
-<em class="property">classmethod </em><code class="sig-name descname">from_scipy</code><span class="sig-paren">(</span><em class="sig-param">mat</em>, <em class="sig-param">copy=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.from_scipy" title="Permalink to this definition">¶</a></dt>
+<em class="property">classmethod </em><code class="sig-name descname">from_scipy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">mat</span></em>, <em class="sig-param"><span class="n">copy</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.from_scipy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a scipy sparse matrix to an internal CSR.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -459,9 +463,9 @@ jitclass but which are useful from interpreted code.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.matrix.CSR.normalize_rows">
-<code class="sig-name descname">normalize_rows</code><span class="sig-paren">(</span><em class="sig-param">normalization</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.normalize_rows" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">normalize_rows</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">normalization</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.normalize_rows" title="Permalink to this definition">¶</a></dt>
 <dd><p>Normalize the rows of the matrix.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -485,14 +489,14 @@ them as 0.</p>
 <dd class="field-even"><p>The normalization values for each row.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.matrix.CSR.row">
-<code class="sig-name descname">row</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.row" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">row</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">row</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.row" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a row of this matrix as a dense ndarray.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -502,20 +506,20 @@ them as 0.</p>
 <dd class="field-even"><p>the row, with 0s in the place of missing values.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.matrix.CSR.row_cs">
-<code class="sig-name descname">row_cs</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.row_cs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">row_cs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">row</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.row_cs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the column indcies for the stored values of a row.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.matrix.CSR.row_extent">
-<code class="sig-name descname">row_extent</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.row_extent" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">row_extent</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">row</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.row_extent" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the extent of a row in the underlying column index and value arrays.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -531,7 +535,7 @@ CSR data.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.matrix.CSR.row_nnzs">
 <code class="sig-name descname">row_nnzs</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.row_nnzs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a vector of the number of nonzero entries in each row.</p>
@@ -544,20 +548,20 @@ CSR data.</p>
 <dd class="field-odd"><p>the number of nonzero entries in each row.</p>
 </dd>
 <dt class="field-even">Return type</dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)">numpy.ndarray</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a></p>
 </dd>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.matrix.CSR.row_vs">
-<code class="sig-name descname">row_vs</code><span class="sig-paren">(</span><em class="sig-param">row</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.row_vs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">row_vs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">row</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.row_vs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the stored values of a row.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.matrix.CSR.rowinds">
-<code class="sig-name descname">rowinds</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; numpy.ndarray<a class="headerlink" href="#lenskit.matrix.CSR.rowinds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">rowinds</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)">numpy.ndarray</a><a class="headerlink" href="#lenskit.matrix.CSR.rowinds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the row indices from this array.  Combined with <a class="reference internal" href="#lenskit.matrix.CSR.colinds" title="lenskit.matrix.CSR.colinds"><code class="xref py py-attr docutils literal notranslate"><span class="pre">colinds</span></code></a> and
 <a class="reference internal" href="#lenskit.matrix.CSR.values" title="lenskit.matrix.CSR.values"><code class="xref py py-attr docutils literal notranslate"><span class="pre">values</span></code></a>, this can form a COO-format sparse matrix.</p>
 <div class="admonition note">
@@ -566,13 +570,13 @@ CSR data.</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.matrix.CSR.subset_rows">
-<code class="sig-name descname">subset_rows</code><span class="sig-paren">(</span><em class="sig-param">begin</em>, <em class="sig-param">end</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.subset_rows" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">subset_rows</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">begin</span></em>, <em class="sig-param"><span class="n">end</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.subset_rows" title="Permalink to this definition">¶</a></dt>
 <dd><p>Subset the rows in this matrix.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.matrix.CSR.to_scipy">
 <code class="sig-name descname">to_scipy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.to_scipy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a CSR matrix to a SciPy <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_matrix.html#scipy.sparse.csr_matrix" title="(in SciPy v1.4.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_matrix</span></code></a>.  Avoids copying
@@ -590,9 +594,9 @@ if possible.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="lenskit.matrix.CSR.transpose">
-<code class="sig-name descname">transpose</code><span class="sig-paren">(</span><em class="sig-param">values=True</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.transpose" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">transpose</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">values</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix.CSR.transpose" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transpose a CSR matrix.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -613,9 +617,9 @@ if possible.</p>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="lenskit.matrix._CSR">
-<em class="property">class </em><code class="sig-prename descclassname">lenskit.matrix.</code><code class="sig-name descname">_CSR</code><span class="sig-paren">(</span><em class="sig-param">nrows</em>, <em class="sig-param">ncols</em>, <em class="sig-param">nnz</em>, <em class="sig-param">ptrs</em>, <em class="sig-param">inds</em>, <em class="sig-param">vals</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix._CSR" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">lenskit.matrix.</code><code class="sig-name descname">_CSR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">nrows</span></em>, <em class="sig-param"><span class="n">ncols</span></em>, <em class="sig-param"><span class="n">nnz</span></em>, <em class="sig-param"><span class="n">ptrs</span></em>, <em class="sig-param"><span class="n">inds</span></em>, <em class="sig-param"><span class="n">vals</span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.matrix._CSR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Internal implementation class for <a class="reference internal" href="#lenskit.matrix.CSR" title="lenskit.matrix.CSR"><code class="xref py py-class docutils literal notranslate"><span class="pre">CSR</span></code></a>. If you work with CSRs from Numba,
 you will use this.</p>
 <p>Note that the <code class="docutils literal notranslate"><span class="pre">values</span></code> array is always present (unlike the Python shim), but is
@@ -648,13 +652,22 @@ zero-length if no values are present.  This eases Numba type-checking.</p>
         &copy; Copyright 2018–2019 Boise State University
       
         <span class="commit">
-          Revision <code>fafdbd14</code>.
+          Revision <code>77006928</code>.
         </span>
       
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+<p>This material is based upon work supported by the National Science Foundation under
+Grant No. <a href="https://md.ekstrandom.net/research/career">IIS 17-51278</a>. Any
+opinions, findings, and conclusions or recommendations expressed in this material
+are those of the author(s) and do not necessarily reflect the views of the
+National Science Foundation.  This page has not been approved by
+Boise State University and does not reflect official university positions.</p>
+<script data-goatcounter="https://lenskit.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
 
 </footer>
 
@@ -669,7 +682,7 @@ zero-length if no values are present.  This eases Numba type-checking.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.8.4
+      v: 0.9.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -679,6 +692,8 @@ zero-length if no values are present.  This eases Numba type-checking.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.9.0/">0.9.0</a></dd>
         
           <dd><a href="/en/0.8.4/">0.8.4</a></dd>
         
