@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Parallel Execution &mdash; LensKit 0.12.3 documentation</title>
+  <title>Parallel Execution &mdash; LensKit 0.13.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -47,7 +50,7 @@
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
-<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2021-03-06T22:46:59Z", "builder": "sphinx", "canonical_url": null, "commit": "bfa1ad24", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "parallel", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.12.3"}</script>
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2021-06-18T17:00:49Z", "builder": "sphinx", "canonical_url": null, "commit": "f1c046d4", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "parallel", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.13.0"}</script>
 
 <!--
 Using this variable directly instead of using `JSON.parse` is deprecated.
@@ -84,7 +87,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
             
             
               <div class="version">
-                0.12.3
+                0.13.0
               </div>
             
           
@@ -128,6 +131,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 <li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithm Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ranking.html">Ranking Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bias.html">Bias</a></li>
 <li class="toctree-l1"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
@@ -144,7 +148,6 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 <p class="caption"><span class="caption-text">Configuration and Internals</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="random.html">Random Number Generation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="internals.html">LensKit Internals</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="sharing.html">Model Sharing</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Parallel Execution</a><ul>
@@ -211,7 +214,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
         
           
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.12.3/doc/parallel.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.13.0/doc/parallel.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -263,8 +266,8 @@ and then passing lists of argument sets to the function:</p>
 <div class="section" id="parallel-model-ops">
 <h2>Parallel Model Ops<a class="headerlink" href="#parallel-model-ops" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="lenskit.util.parallel.invoker">
-<code class="sig-prename descclassname"><span class="pre">lenskit.util.parallel.</span></code><code class="sig-name descname"><span class="pre">invoker</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">persist_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.parallel.invoker" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.util.parallel.invoker">
+<span class="sig-prename descclassname"><span class="pre">lenskit.util.parallel.</span></span><span class="sig-name descname"><span class="pre">invoker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">persist_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.parallel.invoker" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get an appropriate invoker for performing oeprations on <code class="docutils literal notranslate"><span class="pre">model</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -287,8 +290,8 @@ call <a class="reference internal" href="#lenskit.util.parallel.proc_count" titl
 </dd></dl>
 
 <dl class="py function">
-<dt id="lenskit.util.parallel.proc_count">
-<code class="sig-prename descclassname"><span class="pre">lenskit.util.parallel.</span></code><code class="sig-name descname"><span class="pre">proc_count</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">core_div</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.parallel.proc_count" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.util.parallel.proc_count">
+<span class="sig-prename descclassname"><span class="pre">lenskit.util.parallel.</span></span><span class="sig-name descname"><span class="pre">proc_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">core_div</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.parallel.proc_count" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the number of desired jobs for multiprocessing operations.  This does not
 affect Numba or MKL multithreading.</p>
 <p>This count can come from a number of sources:</p>
@@ -320,8 +323,8 @@ they are configuring a child.  If the process count is unconfigured, then level
 </dd></dl>
 
 <dl class="py class">
-<dt id="lenskit.util.parallel.ModelOpInvoker">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lenskit.util.parallel.</span></code><code class="sig-name descname"><span class="pre">ModelOpInvoker</span></code><a class="headerlink" href="#lenskit.util.parallel.ModelOpInvoker" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.util.parallel.ModelOpInvoker">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lenskit.util.parallel.</span></span><span class="sig-name descname"><span class="pre">ModelOpInvoker</span></span><a class="headerlink" href="#lenskit.util.parallel.ModelOpInvoker" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
 <p>Interface for invoking operations on a model, possibly in parallel.  The operation
 invoker is configured with a model and a function to apply, and applies that function
@@ -329,8 +332,8 @@ to the arguments supplied in <cite>map</cite>.  Child process invokers also rout
 to the parent process, so logging works even with multiprocessing.</p>
 <p>An invoker is a context manager that calls <code class="xref py py-meth docutils literal notranslate"><span class="pre">shutdown()</span></code> when exited.</p>
 <dl class="py method">
-<dt id="lenskit.util.parallel.ModelOpInvoker.map">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">map</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">iterables</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.parallel.ModelOpInvoker.map" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.util.parallel.ModelOpInvoker.map">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">iterables</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.parallel.ModelOpInvoker.map" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply the configured function to the model and iterables.  This is like <a class="reference internal" href="#lenskit.util.parallel.ModelOpInvoker.map" title="lenskit.util.parallel.ModelOpInvoker.map"><code class="xref py py-func docutils literal notranslate"><span class="pre">map()</span></code></a>,
 except it supplies the invoker’s model as the first object to <code class="docutils literal notranslate"><span class="pre">func</span></code>.</p>
 <dl class="field-list simple">
@@ -353,8 +356,8 @@ except it supplies the invoker’s model as the first object to <code class="doc
 <h2>Single Process Isolation<a class="headerlink" href="#single-process-isolation" title="Permalink to this headline">¶</a></h2>
 <p>We also have a single-process isolation function that runs a function in a subprocess.</p>
 <dl class="py function">
-<dt id="lenskit.util.parallel.run_sp">
-<code class="sig-prename descclassname"><span class="pre">lenskit.util.parallel.</span></code><code class="sig-name descname"><span class="pre">run_sp</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.parallel.run_sp" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.util.parallel.run_sp">
+<span class="sig-prename descclassname"><span class="pre">lenskit.util.parallel.</span></span><span class="sig-name descname"><span class="pre">run_sp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.parallel.run_sp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run a function in a subprocess and return its value.  This is for achieving subprocess
 isolation, not parallelism.  The subprocess is configured so things like logging work
 correctly, and is initialized with a derived random seed.</p>
@@ -379,7 +382,7 @@ correctly, and is initialized with a derived random seed.</p>
         &#169; Copyright 2018–2019 Boise State University.
       <span class="commit">
         
-        Revision <code>bfa1ad24</code>.
+        Revision <code>f1c046d4</code>.
       </span>
 
     </p>
@@ -414,7 +417,7 @@ Boise State University and does not reflect official university positions.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.12.3
+      v: 0.13.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -424,6 +427,8 @@ Boise State University and does not reflect official university positions.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.13.0/">0.13.0</a></dd>
         
           <dd><a href="/en/0.12.3/">0.12.3</a></dd>
         

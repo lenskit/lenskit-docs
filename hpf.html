@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Hierarchical Poisson Factorization &mdash; LensKit 0.12.3 documentation</title>
+  <title>Hierarchical Poisson Factorization &mdash; LensKit 0.13.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -48,7 +51,7 @@
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
-<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2021-03-06T22:46:58Z", "builder": "sphinx", "canonical_url": null, "commit": "bfa1ad24", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "hpf", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.12.3"}</script>
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2021-06-18T17:00:48Z", "builder": "sphinx", "canonical_url": null, "commit": "f1c046d4", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "hpf", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.13.0"}</script>
 
 <!--
 Using this variable directly instead of using `JSON.parse` is deprecated.
@@ -85,7 +88,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
             
             
               <div class="version">
-                0.12.3
+                0.13.0
               </div>
             
           
@@ -129,6 +132,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 <li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithm Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ranking.html">Ranking Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bias.html">Bias</a></li>
 <li class="toctree-l1"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
@@ -145,7 +149,6 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 <p class="caption"><span class="caption-text">Configuration and Internals</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="random.html">Random Number Generation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="internals.html">LensKit Internals</a></li>
 </ul>
 
@@ -202,7 +205,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
         
           
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.12.3/doc/hpf.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.13.0/doc/hpf.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -253,8 +256,8 @@ from <a class="reference external" href="http://arxiv.org/abs/1311.1704">http://
 </dd>
 </dl>
 <dl class="py class">
-<dt id="lenskit.algorithms.hpf.HPF">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lenskit.algorithms.hpf.</span></code><code class="sig-name descname"><span class="pre">HPF</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.algorithms.hpf.HPF">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.hpf.</span></span><span class="sig-name descname"><span class="pre">HPF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="mf.html#lenskit.algorithms.mf_common.MFPredictor" title="lenskit.algorithms.mf_common.MFPredictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.algorithms.mf_common.MFPredictor</span></code></a></p>
 <p>Hierarchical Poisson factorization, provided by
 <a class="reference external" href="https://hpfrec.readthedocs.io/en/latest/">hpfrec</a>.</p>
@@ -267,13 +270,13 @@ from <a class="reference external" href="http://arxiv.org/abs/1311.1704">http://
 </dd>
 </dl>
 <dl class="py method">
-<dt id="lenskit.algorithms.hpf.HPF.fit">
-<code class="sig-name descname"><span class="pre">fit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ratings</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF.fit" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.algorithms.hpf.HPF.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ratings</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train a model using the specified ratings (or similar) data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.3)"><em>pandas.DataFrame</em></a>) – The ratings data.</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.4)"><em>pandas.DataFrame</em></a>) – The ratings data.</p></li>
 <li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms should
 avoid using the same keyword arguments for different purposes, so that
 they can be more easily hybridized.</p></li>
@@ -286,15 +289,15 @@ they can be more easily hybridized.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lenskit.algorithms.hpf.HPF.predict_for_user">
-<code class="sig-name descname"><span class="pre">predict_for_user</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF.predict_for_user" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.algorithms.hpf.HPF.predict_for_user">
+<span class="sig-name descname"><span class="pre">predict_for_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.hpf.HPF.predict_for_user" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute predictions for a user and items.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>user</strong> – the user ID</p></li>
 <li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
-<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.2.3)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.2.4)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
 override or augment the model’s notion of a user’s preferences.</p></li>
 </ul>
 </dd>
@@ -302,7 +305,7 @@ override or augment the model’s notion of a user’s preferences.</p></li>
 <dd class="field-even"><p>scores for the items, indexed by item id.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.2.3)">pandas.Series</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.2.4)">pandas.Series</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -328,7 +331,7 @@ override or augment the model’s notion of a user’s preferences.</p></li>
         &#169; Copyright 2018–2019 Boise State University.
       <span class="commit">
         
-        Revision <code>bfa1ad24</code>.
+        Revision <code>f1c046d4</code>.
       </span>
 
     </p>
@@ -363,7 +366,7 @@ Boise State University and does not reflect official university positions.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.12.3
+      v: 0.13.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -373,6 +376,8 @@ Boise State University and does not reflect official university positions.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.13.0/">0.13.0</a></dd>
         
           <dd><a href="/en/0.12.3/">0.12.3</a></dd>
         

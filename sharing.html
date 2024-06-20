@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Model Sharing &mdash; LensKit 0.12.3 documentation</title>
+  <title>Model Sharing &mdash; LensKit 0.13.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -48,7 +51,7 @@
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
-<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2021-03-06T22:46:59Z", "builder": "sphinx", "canonical_url": null, "commit": "bfa1ad24", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "sharing", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.12.3"}</script>
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2021-06-18T17:00:49Z", "builder": "sphinx", "canonical_url": null, "commit": "f1c046d4", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "sharing", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.13.0"}</script>
 
 <!--
 Using this variable directly instead of using `JSON.parse` is deprecated.
@@ -85,7 +88,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
             
             
               <div class="version">
-                0.12.3
+                0.13.0
               </div>
             
           
@@ -129,6 +132,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 <li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithm Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ranking.html">Ranking Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bias.html">Bias</a></li>
 <li class="toctree-l1"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
@@ -145,7 +149,6 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 <p class="caption"><span class="caption-text">Configuration and Internals</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="random.html">Random Number Generation</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="internals.html">LensKit Internals</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Model Sharing</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#sharing-mode">Sharing Mode</a></li>
@@ -212,7 +215,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
         
           
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.12.3/doc/sharing.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.13.0/doc/sharing.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -267,16 +270,16 @@ should be pickled, so they can be shared between model instances.</p>
 pickling should call <a class="reference internal" href="#lenskit.sharing.in_share_context" title="lenskit.sharing.in_share_context"><code class="xref py py-func docutils literal notranslate"><span class="pre">in_share_context()</span></code></a> to determine if that exclusion should
 actually happen.</p>
 <dl class="py function">
-<dt id="lenskit.sharing.in_share_context">
-<code class="sig-prename descclassname"><span class="pre">lenskit.sharing.</span></code><code class="sig-name descname"><span class="pre">in_share_context</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.in_share_context" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.sharing.in_share_context">
+<span class="sig-prename descclassname"><span class="pre">lenskit.sharing.</span></span><span class="sig-name descname"><span class="pre">in_share_context</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.in_share_context" title="Permalink to this definition">¶</a></dt>
 <dd><p>Query whether sharing mode is active.  If <code class="docutils literal notranslate"><span class="pre">True</span></code>, we are currently in a
 <a class="reference internal" href="#lenskit.sharing.sharing_mode" title="lenskit.sharing.sharing_mode"><code class="xref py py-func docutils literal notranslate"><span class="pre">sharing_mode()</span></code></a> context, which means model pickling will be used for
 cross-process sharing.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="lenskit.sharing.sharing_mode">
-<code class="sig-prename descclassname"><span class="pre">lenskit.sharing.</span></code><code class="sig-name descname"><span class="pre">sharing_mode</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.sharing_mode" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.sharing.sharing_mode">
+<span class="sig-prename descclassname"><span class="pre">lenskit.sharing.</span></span><span class="sig-name descname"><span class="pre">sharing_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.sharing_mode" title="Permalink to this definition">¶</a></dt>
 <dd><p>Context manager to tell models that pickling will be used for cross-process
 sharing, not model persistence.</p>
 </dd></dl>
@@ -287,8 +290,8 @@ sharing, not model persistence.</p>
 <p>These functions are used for internal LensKit infrastructure code to persist models into
 shared memory for parallel processing.</p>
 <dl class="py function">
-<dt id="lenskit.sharing.persist">
-<code class="sig-prename descclassname"><span class="pre">lenskit.sharing.</span></code><code class="sig-name descname"><span class="pre">persist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.persist" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.sharing.persist">
+<span class="sig-prename descclassname"><span class="pre">lenskit.sharing.</span></span><span class="sig-name descname"><span class="pre">persist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.persist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Persist a model for cross-process sharing.</p>
 <p>This will return a persiste dmodel that can be used to reconstruct the model
 in a worker process (using <code class="xref py py-func docutils literal notranslate"><span class="pre">reconstruct()</span></code>).</p>
@@ -319,8 +322,8 @@ into the system temporary directory.</p></li>
 </dd></dl>
 
 <dl class="py class">
-<dt id="lenskit.sharing.PersistedModel">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lenskit.sharing.</span></code><code class="sig-name descname"><span class="pre">PersistedModel</span></code><a class="headerlink" href="#lenskit.sharing.PersistedModel" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.sharing.PersistedModel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lenskit.sharing.</span></span><span class="sig-name descname"><span class="pre">PersistedModel</span></span><a class="headerlink" href="#lenskit.sharing.PersistedModel" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></a></p>
 <p>A persisted model for inter-process model sharing.</p>
 <p>These objects can be pickled for transmission to a worker process.</p>
@@ -330,21 +333,21 @@ into the system temporary directory.</p></li>
 proper pickling implementation.</p>
 </div>
 <dl class="py method">
-<dt id="lenskit.sharing.PersistedModel.get">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">get</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.PersistedModel.get" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.sharing.PersistedModel.get">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.PersistedModel.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the persisted model, reconstructing it if necessary.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lenskit.sharing.PersistedModel.close">
-<em class="property"><span class="pre">abstract</span> </em><code class="sig-name descname"><span class="pre">close</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.PersistedModel.close" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.sharing.PersistedModel.close">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.PersistedModel.close" title="Permalink to this definition">¶</a></dt>
 <dd><p>Release the persisted model resources.  Should only be called in the
 parent process (will do nothing in a child process).</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lenskit.sharing.PersistedModel.transfer">
-<code class="sig-name descname"><span class="pre">transfer</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.PersistedModel.transfer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.sharing.PersistedModel.transfer">
+<span class="sig-name descname"><span class="pre">transfer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sharing.PersistedModel.transfer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Mark an object for ownership transfer.  This object, when pickled, will
 unpickle into an owning model that frees resources when closed. Used to
 transfer ownership of shared memory resources from child processes to
@@ -379,7 +382,7 @@ parent processes.  Such an object should only be unpickled once.</p>
         &#169; Copyright 2018–2019 Boise State University.
       <span class="commit">
         
-        Revision <code>bfa1ad24</code>.
+        Revision <code>f1c046d4</code>.
       </span>
 
     </p>
@@ -414,7 +417,7 @@ Boise State University and does not reflect official university positions.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.12.3
+      v: 0.13.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -424,6 +427,8 @@ Boise State University and does not reflect official university positions.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.13.0/">0.13.0</a></dd>
         
           <dd><a href="/en/0.12.3/">0.12.3</a></dd>
         

@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Batch-Running Recommenders &mdash; LensKit 0.12.3 documentation</title>
+  <title>Batch-Running Recommenders &mdash; LensKit 0.13.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -30,6 +32,7 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
@@ -48,7 +51,7 @@
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
-<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2021-03-06T22:46:58Z", "builder": "sphinx", "canonical_url": null, "commit": "bfa1ad24", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "batch", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.12.3"}</script>
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2021-06-18T17:00:48Z", "builder": "sphinx", "canonical_url": null, "commit": "f1c046d4", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "batch", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.13.0"}</script>
 
 <!--
 Using this variable directly instead of using `JSON.parse` is deprecated.
@@ -85,7 +88,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
             
             
               <div class="version">
-                0.12.3
+                0.13.0
               </div>
             
           
@@ -135,6 +138,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 <li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithm Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ranking.html">Ranking Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bias.html">Bias</a></li>
 <li class="toctree-l1"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
@@ -151,7 +155,6 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 <p class="caption"><span class="caption-text">Configuration and Internals</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="random.html">Random Number Generation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="internals.html">LensKit Internals</a></li>
 </ul>
 
@@ -208,7 +211,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
         
           
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.12.3/doc/batch.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.13.0/doc/batch.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -271,8 +274,8 @@ Jupyter programs are appropriately protected.</p>
 <div class="section" id="recommendation">
 <h2>Recommendation<a class="headerlink" href="#recommendation" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="lenskit.batch.recommend">
-<code class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></code><code class="sig-name descname"><span class="pre">recommend</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">users</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.recommend" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.batch.recommend">
+<span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">recommend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">users</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.recommend" title="Permalink to this definition">¶</a></dt>
 <dd><p>Batch-recommend for multiple users.  The provided algorithm should be a
 <code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.Recommender</span></code>.</p>
 <dl class="field-list simple">
@@ -300,11 +303,11 @@ built-in candidate selector (usually recommended).</p></li>
 <div class="section" id="rating-prediction">
 <h2>Rating Prediction<a class="headerlink" href="#rating-prediction" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="lenskit.batch.predict">
-<code class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></code><code class="sig-name descname"><span class="pre">predict</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pairs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.predict" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.batch.predict">
+<span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pairs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate predictions for user-item pairs.  The provided algorithm should be a
 <code class="xref py py-class docutils literal notranslate"><span class="pre">algorithms.Predictor</span></code> or a function of two arguments: the user ID and
-a list of item IDs. It should return a dictionary or a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.2.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>
+a list of item IDs. It should return a dictionary or a <a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v1.2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>
 mapping item IDs to predictions.</p>
 <p>To use this function, provide a pre-fit algorithm:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.algorithms.bias</span> <span class="kn">import</span> <span class="n">Bias</span>
@@ -330,7 +333,7 @@ mapping item IDs to predictions.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>algo</strong> (<em>lenskit.algorithms.Predictor</em>) – A rating predictor function or algorithm.</p></li>
-<li><p><strong>pairs</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.3)"><em>pandas.DataFrame</em></a>) – A data frame of (<code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">item</span></code>) pairs to predict for. If this frame also
+<li><p><strong>pairs</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.4)"><em>pandas.DataFrame</em></a>) – A data frame of (<code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">item</span></code>) pairs to predict for. If this frame also
 contains a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, it will be included in the result.</p></li>
 <li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.9)"><em>int</em></a>) – The number of processes to use for parallel batch prediction.  Passed to
 <a class="reference internal" href="parallel.html#lenskit.util.parallel.invoker" title="lenskit.util.parallel.invoker"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.parallel.invoker()</span></code></a>.</p></li>
@@ -342,7 +345,7 @@ the prediction results. If <code class="docutils literal notranslate"><span clas
 result will also contain a <cite>rating</cite> column.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.3)">pandas.DataFrame</a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.4)">pandas.DataFrame</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -364,8 +367,8 @@ to reduce the total memory consumption.</p>
 </pre></div>
 </div>
 <dl class="py function">
-<dt id="lenskit.batch.train_isolated">
-<code class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></code><code class="sig-name descname"><span class="pre">train_isolated</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.train_isolated" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.batch.train_isolated">
+<span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">train_isolated</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algo</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.train_isolated" title="Permalink to this definition">¶</a></dt>
 <dd><p>Train an algorithm in a subprocess to isolate the training process.  This
 function spawns a subprocess (in the same way that LensKit’s multiprocessing
 support does), calls <code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.algorithms.Algorithm.fit()</span></code> on it, and
@@ -383,7 +386,7 @@ the original model.  Training in a subprocess solves this problem elegantly.</p>
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>algo</strong> (<em>lenskit.algorithms.Algorithm</em>) – The algorithm to train.</p></li>
-<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.3)"><em>pandas.DataFrame</em></a>) – The rating data.</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v1.2.4)"><em>pandas.DataFrame</em></a>) – The rating data.</p></li>
 <li><p><strong>file</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><em>str</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path" title="(in Python v3.9)"><em>pathlib.Path</em></a><em> or </em><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><em>None</em></a>) – The file in which to save the trained model.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses a
 default file path or shared memory.</p></li>
 <li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.9)"><em>dict</em></a>) – Additional named parameters to <code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.algorithms.Algorithm.fit()</span></code>.</p></li>
@@ -402,35 +405,16 @@ when finished to free resources.</p>
 </div>
 <div class="section" id="scripting-evaluation">
 <h2>Scripting Evaluation<a class="headerlink" href="#scripting-evaluation" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference internal" href="#lenskit.batch.MultiEval" title="lenskit.batch.MultiEval"><code class="xref py py-class docutils literal notranslate"><span class="pre">MultiEval</span></code></a> class is useful to build scripts that evaluate multiple algorithms
-or algorithm variants, simultaneously, across multiple data sets. It can extract parameters
-from algorithms and include them in the output, useful for hyperparameter search.</p>
-<p>For example:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lenskit.batch</span> <span class="kn">import</span> <span class="n">MultiEval</span>
-<span class="kn">from</span> <span class="nn">lenskit.crossfold</span> <span class="kn">import</span> <span class="n">partition_users</span><span class="p">,</span> <span class="n">SampleN</span>
-<span class="kn">from</span> <span class="nn">lenskit.algorithms</span> <span class="kn">import</span> <span class="n">basic</span><span class="p">,</span> <span class="n">als</span>
-<span class="kn">from</span> <span class="nn">lenskit.datasets</span> <span class="kn">import</span> <span class="n">MovieLens</span>
-<span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">topn</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-
-<span class="n">ml</span> <span class="o">=</span> <span class="n">MovieLens</span><span class="p">(</span><span class="s1">&#39;ml-latest-small&#39;</span><span class="p">)</span>
-
-<span class="nb">eval</span> <span class="o">=</span> <span class="n">MultiEval</span><span class="p">(</span><span class="s1">&#39;my-eval&#39;</span><span class="p">,</span> <span class="n">recommend</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-<span class="nb">eval</span><span class="o">.</span><span class="n">add_datasets</span><span class="p">(</span><span class="n">partition_users</span><span class="p">(</span><span class="n">ml</span><span class="o">.</span><span class="n">ratings</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">SampleN</span><span class="p">(</span><span class="mi">5</span><span class="p">)),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ML-Small&#39;</span><span class="p">)</span>
-<span class="nb">eval</span><span class="o">.</span><span class="n">add_algorithms</span><span class="p">(</span><span class="n">basic</span><span class="o">.</span><span class="n">Popular</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;Pop&#39;</span><span class="p">)</span>
-<span class="nb">eval</span><span class="o">.</span><span class="n">add_algorithms</span><span class="p">([</span><span class="n">als</span><span class="o">.</span><span class="n">BiasedMF</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">]],</span>
-                    <span class="n">attrs</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;features&#39;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;ALS&#39;</span><span class="p">)</span>
-<span class="nb">eval</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
-</pre></div>
-</div>
-<p>The <code class="docutils literal notranslate"><span class="pre">my-eval/runs.csv</span></code> file will then contain the results of running these
-algorithms on this data set.  A more complete example is available in the
-<a class="reference external" href="https://nbviewer.jupyter.org/github/lenskit/lkpy/blob/master/examples/MultiEval.ipynb">MultiEval notebook</a>.</p>
 <dl class="py class">
-<dt id="lenskit.batch.MultiEval">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></code><code class="sig-name descname"><span class="pre">MultiEval</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recommend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_models</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">combine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.batch.MultiEval">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">MultiEval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recommend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_models</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eval_n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">combine</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>A runner for carrying out multiple evaluations, such as parameter sweeps.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>This class is deprecated. We recommend that you write Python loops or other scripts
+to run multiple algorithms directly, in a way that matches your particular needs.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -455,8 +439,8 @@ files.</p></li>
 </dd>
 </dl>
 <dl class="py method">
-<dt id="lenskit.batch.MultiEval.add_algorithms">
-<code class="sig-name descname"><span class="pre">add_algorithms</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.add_algorithms" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.batch.MultiEval.add_algorithms">
+<span class="sig-name descname"><span class="pre">add_algorithms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.add_algorithms" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add one or more algorithms to the run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -471,8 +455,8 @@ the run descriptions.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lenskit.batch.MultiEval.add_datasets">
-<code class="sig-name descname"><span class="pre">add_datasets</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.add_datasets" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.batch.MultiEval.add_datasets">
+<span class="sig-name descname"><span class="pre">add_datasets</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.add_datasets" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add one or more datasets to the run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -495,21 +479,21 @@ detection using <code class="xref py py-func docutils literal notranslate"><span
 </dd></dl>
 
 <dl class="py method">
-<dt id="lenskit.batch.MultiEval.persist_data">
-<code class="sig-name descname"><span class="pre">persist_data</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.persist_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.batch.MultiEval.persist_data">
+<span class="sig-name descname"><span class="pre">persist_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.persist_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Persist the data for an experiment, replacing in-memory data sets with file names.
 Once this has been called, the sweep can be pickled.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lenskit.batch.MultiEval.run_count">
-<code class="sig-name descname"><span class="pre">run_count</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.run_count" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.batch.MultiEval.run_count">
+<span class="sig-name descname"><span class="pre">run_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.run_count" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get the number of runs in this evaluation.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lenskit.batch.MultiEval.run">
-<code class="sig-name descname"><span class="pre">run</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.run" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.batch.MultiEval.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">progress</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.run" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run the evaluation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -524,8 +508,8 @@ IDs, not 0-based indexes.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt id="lenskit.batch.MultiEval.collect_results">
-<code class="sig-name descname"><span class="pre">collect_results</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.collect_results" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="lenskit.batch.MultiEval.collect_results">
+<span class="sig-name descname"><span class="pre">collect_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.MultiEval.collect_results" title="Permalink to this definition">¶</a></dt>
 <dd><p>Collect the results from non-combined runs into combined output files.</p>
 </dd></dl>
 
@@ -551,7 +535,7 @@ IDs, not 0-based indexes.</p></li>
         &#169; Copyright 2018–2019 Boise State University.
       <span class="commit">
         
-        Revision <code>bfa1ad24</code>.
+        Revision <code>f1c046d4</code>.
       </span>
 
     </p>
@@ -586,7 +570,7 @@ Boise State University and does not reflect official university positions.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.12.3
+      v: 0.13.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -596,6 +580,8 @@ Boise State University and does not reflect official university positions.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.13.0/">0.13.0</a></dd>
         
           <dd><a href="/en/0.12.3/">0.12.3</a></dd>
         

@@ -7,12 +7,14 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Algorithm Implementation Tips &mdash; LensKit 0.12.3 documentation</title>
+  <title>Algorithm Implementation Tips &mdash; LensKit 0.13.0 documentation</title>
   
 
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
 
   
   
@@ -30,12 +32,13 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
-        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "document", "processHtmlClass": "math|output_area"}}</script>
         <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
@@ -50,7 +53,7 @@
 
 <link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
 
-<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2021-03-06T22:46:58Z", "builder": "sphinx", "canonical_url": null, "commit": "bfa1ad24", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "impl-tips", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.12.3"}</script>
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2021-06-18T17:00:48Z", "builder": "sphinx", "canonical_url": null, "commit": "f1c046d4", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "impl-tips", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.13.0"}</script>
 
 <!--
 Using this variable directly instead of using `JSON.parse` is deprecated.
@@ -87,7 +90,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
             
             
               <div class="version">
-                0.12.3
+                0.13.0
               </div>
             
           
@@ -131,6 +134,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 <li class="toctree-l1"><a class="reference internal" href="interfaces.html">Algorithm Interfaces</a></li>
 <li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithm Summary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="basic.html">Basic and Utility Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ranking.html">Ranking Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bias.html">Bias</a></li>
 <li class="toctree-l1"><a class="reference internal" href="knn.html">k-NN Collaborative Filtering</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mf.html">Classic Matrix Factorization</a></li>
@@ -153,7 +157,6 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 <p class="caption"><span class="caption-text">Configuration and Internals</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="util.html">Utility Functions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="random.html">Random Number Generation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="internals.html">LensKit Internals</a></li>
 </ul>
 
@@ -210,7 +213,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
         
           
             
-              <a href="https://github.com/lenskit/lkpy/blob/0.12.3/doc/impl-tips.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/lenskit/lkpy/blob/0.13.0/doc/impl-tips.rst" class="fa fa-github"> Edit on GitHub</a>
             
           
         
@@ -294,14 +297,13 @@ disk space (and deserialized memory use).</p>
 </div>
 <div class="section" id="random-number-generation">
 <h2>Random Number Generation<a class="headerlink" href="#random-number-generation" title="Permalink to this headline">¶</a></h2>
-<p>See <a class="reference internal" href="random.html#module-lenskit.util.random" title="lenskit.util.random"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.util.random</span></code></a> for documentation on how to use random number generation.</p>
-<p>In general, algorithms using randomization should have an <code class="docutils literal notranslate"><span class="pre">rng</span></code> parameter that takes a seed
-or RNG, and pass this to <a class="reference internal" href="random.html#lenskit.util.random.rng" title="lenskit.util.random.rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.random.rng()</span></code></a> to get a random number generator.
-Algorithms that use randomness at predict or recommendation time, not just training time, should
-support the value <code class="docutils literal notranslate"><span class="pre">'user'</span></code> for the <code class="docutils literal notranslate"><span class="pre">rng</span></code> parameter, and if it is passed, derive a new seed
-for each user using <a class="reference internal" href="random.html#lenskit.util.random.derive_seed" title="lenskit.util.random.derive_seed"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.random.derive_seed()</span></code></a> to allow reproducibility in
-the face of parallelism for common experimental designs.  <a class="reference internal" href="random.html#lenskit.util.random.derivable_rng" title="lenskit.util.random.derivable_rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.random.derivable_rng()</span></code></a>
-automates this logic.</p>
+<p>LensKit uses <a class="reference external" href="https://seedbank.lenskit.org/en/latest/api.html#module-seedbank" title="(in SeedBank)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">seedbank</span></code></a> for managing RNG seeds and constructing random number generation.</p>
+<p>In general, algorithms using randomization should have an <code class="docutils literal notranslate"><span class="pre">rng_spec</span></code> parameter that takes a seed
+or RNG, and pass this to <a class="reference external" href="https://seedbank.lenskit.org/en/latest/api.html#seedbank.numpy_rng" title="(in SeedBank)"><code class="xref py py-func docutils literal notranslate"><span class="pre">seedbank.numpy_rng()</span></code></a> to get a random number generator. Algorithms
+that use randomness at predict or recommendation time, not just training time, should support the
+value <code class="docutils literal notranslate"><span class="pre">'user'</span></code> for the <code class="docutils literal notranslate"><span class="pre">rng</span></code> parameter, and if it is passed, derive a new seed for each user
+using <a class="reference external" href="https://seedbank.lenskit.org/en/latest/api.html#seedbank.derive_seed" title="(in SeedBank)"><code class="xref py py-func docutils literal notranslate"><span class="pre">seedbank.derive_seed()</span></code></a> to allow reproducibility in the face of parallelism for common
+experimental designs.  <a class="reference internal" href="util.html#lenskit.util.derivable_rng" title="lenskit.util.derivable_rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.derivable_rng()</span></code></a> automates this logic.</p>
 </div>
 <div class="section" id="memory-map-friendliness">
 <h2>Memory Map Friendliness<a class="headerlink" href="#memory-map-friendliness" title="Permalink to this headline">¶</a></h2>
@@ -337,7 +339,7 @@ each user’s rated items.  This is a change from <span class="math notranslate 
         &#169; Copyright 2018–2019 Boise State University.
       <span class="commit">
         
-        Revision <code>bfa1ad24</code>.
+        Revision <code>f1c046d4</code>.
       </span>
 
     </p>
@@ -372,7 +374,7 @@ Boise State University and does not reflect official university positions.</p>
   <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       <span class="fa fa-book"> Read the Docs</span>
-      v: 0.12.3
+      v: 0.13.0
       <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
@@ -382,6 +384,8 @@ Boise State University and does not reflect official university positions.</p>
           <dd><a href="/en/latest/">latest</a></dd>
         
           <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/0.13.0/">0.13.0</a></dd>
         
           <dd><a href="/en/0.12.3/">0.12.3</a></dd>
         
