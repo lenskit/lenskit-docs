@@ -19,3 +19,7 @@ versions: init
 # remove the built site
 clean:
     rm -rf {{SITE}}
+
+# deploy to Netlify
+deploy:
+    netlify deploy --prod -d site
