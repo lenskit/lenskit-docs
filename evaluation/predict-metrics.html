@@ -1,29 +1,26 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" />
+<html class="writer-html5" lang="en"><head>
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Prediction Accuracy Metrics &mdash; LensKit 0.13.0 documentation</title>
+  <title>Prediction Accuracy Metrics — LensKit 0.13.0 documentation</title>
   
 
   
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-
-  
-  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css">
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css">
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css">
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css">
 
   
   
 
   
-    <link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/evaluation/predict-metrics.html" />
+  
+
+  
+    <link rel="canonical" href="https://lkpy.lenskit.org/stable/evaluation/predict-metrics.html">
 
   
   <!--[if lt IE 9]>
@@ -37,19 +34,19 @@
         <script src="../_static/underscore.js"></script>
         <script src="../_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+        
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Top-N Evaluation" href="topn-metrics.html" />
-    <link rel="prev" title="Evaluating Recommender Output" href="index.html" /> 
+    <link rel="index" title="Index" href="../genindex.html">
+    <link rel="search" title="Search" href="../search.html">
+    <link rel="next" title="Top-N Evaluation" href="topn-metrics.html">
+    <link rel="prev" title="Evaluating Recommender Output" href="index.html"> 
 
 <!-- RTD Extra Head -->
 
-<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
 
 <script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2021-06-18T17:00:48Z", "builder": "sphinx", "canonical_url": null, "commit": "f1c046d4", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "evaluation/predict-metrics", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.13.0"}</script>
 
@@ -73,7 +70,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -96,9 +93,9 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
+    <input type="text" name="q" placeholder="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
   </form>
 </div>
 
@@ -206,9 +203,9 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> »</li>
         
-          <li><a href="index.html">Evaluating Recommender Output</a> &raquo;</li>
+          <li><a href="index.html">Evaluating Recommender Output</a> »</li>
         
       <li>Prediction Accuracy Metrics</li>
     
@@ -226,7 +223,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
   </ul>
 
   
-  <hr/>
+  <hr>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
@@ -267,7 +264,7 @@ following to compute per-user RMSE over some predictions:</p>
 <span class="kn">from</span> <span class="nn">lenskit.algorithms.bias</span> <span class="kn">import</span> <span class="n">Bias</span>
 <span class="kn">from</span> <span class="nn">lenskit.batch</span> <span class="kn">import</span> <span class="n">predict</span>
 <span class="kn">from</span> <span class="nn">lenskit.metrics.predict</span> <span class="kn">import</span> <span class="n">user_metric</span><span class="p">,</span> <span class="n">rmse</span>
-<span class="n">ratings</span> <span class="o">=</span> <span class="n">MovieLens</span><span class="p">(</span><span class="s1">&#39;ml-small&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ratings</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="n">ratings</span> <span class="o">=</span> <span class="n">MovieLens</span><span class="p">(</span><span class="s1">'ml-small'</span><span class="p">)</span><span class="o">.</span><span class="n">ratings</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="n">test</span> <span class="o">=</span> <span class="n">ratings</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
 <span class="n">train</span> <span class="o">=</span> <span class="n">ratings</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1000</span><span class="p">:]</span>
 <span class="n">algo</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">()</span>
@@ -411,11 +408,11 @@ the first one that generates a score.</p>
         <a href="index.html" class="btn btn-neutral float-left" title="Evaluating Recommender Output" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
-  <hr/>
+  <hr>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2018–2019 Boise State University.
+        © Copyright 2018–2019 Boise State University.
       <span class="commit">
         
         Revision <code>f1c046d4</code>.
@@ -437,8 +434,7 @@ opinions, findings, and conclusions or recommendations expressed in this materia
 are those of the author(s) and do not necessarily reflect the views of the
 National Science Foundation.  This page has not been approved by
 Boise State University and does not reflect official university positions.</p>
-<script data-goatcounter="https://lenskit.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://lenskit.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
 
 
 </footer>
@@ -509,16 +505,7 @@ Boise State University and does not reflect official university positions.</p>
         <dt>Downloads</dt>
         
       </dl>
-      <dl>
-        
-        <dt>On Read the Docs</dt>
-          <dd>
-            <a href="//readthedocs.org/projects/lkpy/?fromdocs=lkpy">Project Home</a>
-          </dd>
-          <dd>
-            <a href="//readthedocs.org/builds/lkpy/?fromdocs=lkpy">Builds</a>
-          </dd>
-      </dl>
+      
     </div>
   </div>
 
@@ -532,5 +519,5 @@ Boise State University and does not reflect official university positions.</p>
   
    
 
-</body>
-</html>
+
+</body></html>
