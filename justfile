@@ -8,6 +8,7 @@ init:
 
 copy: init
     cp redirects "{{SITE}}/_redirects"
+    cp headers "{{SITE}}/_headers"
 
 content: init
     deno run -A build-site.ts
