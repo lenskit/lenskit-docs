@@ -1,14 +1,10 @@
-
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
-<head>
+<html class="no-js" lang="en"><!--<![endif]--><head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Crossfold preparation &mdash; LensKit 0.3.0 documentation</title>
+  <title>Crossfold preparation — LensKit 0.3.0 documentation</title>
   
 
   
@@ -24,12 +20,12 @@
 
   
 
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Batch-Running Recommendations" href="batch.html" />
-    <link rel="prev" title="Getting Started" href="GettingStarted.html" /> 
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css">
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css">
+    <link rel="index" title="Index" href="genindex.html">
+    <link rel="search" title="Search" href="search.html">
+    <link rel="next" title="Batch-Running Recommendations" href="batch.html">
+    <link rel="prev" title="Getting Started" href="GettingStarted.html"> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -41,9 +37,9 @@
 Always link to the latest version, as canonical.
 http://docs.readthedocs.org/en/latest/canonical.html
 -->
-<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/crossfold.html" />
+<link rel="canonical" href="https://lkpy.lenskit.org/stable/crossfold.html">
 
-<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
 
 <script type="text/javascript" src="_static/readthedocs-data.js"></script>
 
@@ -53,7 +49,7 @@ READTHEDOCS_DATA['page'] = 'crossfold'
 READTHEDOCS_DATA['source_suffix'] = '.rst'
 </script>
 
-<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+
 
 <!-- end RTD <extrahead> -->
 </head>
@@ -89,9 +85,9 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
+    <input type="text" name="q" placeholder="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
   </form>
 </div>
 
@@ -164,7 +160,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html">Docs</a> »</li>
         
       <li>Crossfold preparation</li>
     
@@ -182,7 +178,7 @@ READTHEDOCS_DATA['source_suffix'] = '.rst'
   </ul>
 
   
-  <hr/>
+  <hr>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
@@ -227,13 +223,13 @@ for training and evaluating algorithms.  For example, the following will perform
 a user-based 5-fold cross-validation as was the default in the old LensKit:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">lenskit.crossfold</span> <span class="k">as</span> <span class="nn">xf</span>
-<span class="n">ratings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;ml-20m/ratings.csv&#39;</span><span class="p">)</span>
-<span class="n">ratings</span> <span class="o">=</span> <span class="n">ratings</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;userId&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;movieId&#39;</span><span class="p">:</span> <span class="s1">&#39;item&#39;</span><span class="p">})</span>
+<span class="n">ratings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'ml-20m/ratings.csv'</span><span class="p">)</span>
+<span class="n">ratings</span> <span class="o">=</span> <span class="n">ratings</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">'userId'</span><span class="p">:</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s1">'movieId'</span><span class="p">:</span> <span class="s1">'item'</span><span class="p">})</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">xf</span><span class="o">.</span><span class="n">partition_users</span><span class="p">(</span><span class="n">ratings</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">xf</span><span class="o">.</span><span class="n">SampleN</span><span class="p">(</span><span class="mi">5</span><span class="p">))):</span>
-    <span class="n">tp</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;ml-20m.exp/train-</span><span class="si">%d</span><span class="s1">.csv&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,))</span>
-    <span class="n">tp</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">&#39;ml-20m.exp/train-</span><span class="si">%d</span><span class="s1">.parquet % (i,))</span>
-    <span class="n">tp</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;ml-20m.exp/test-</span><span class="si">%d</span><span class="s1">.csv&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,))</span>
-    <span class="n">tp</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">&#39;ml-20m.exp/test-</span><span class="si">%d</span><span class="s1">.parquet % (i,))</span>
+    <span class="n">tp</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'ml-20m.exp/train-</span><span class="si">%d</span><span class="s1">.csv'</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,))</span>
+    <span class="n">tp</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">'ml-20m.exp/train-</span><span class="si">%d</span><span class="s1">.parquet % (i,))</span>
+    <span class="n">tp</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'ml-20m.exp/test-</span><span class="si">%d</span><span class="s1">.csv'</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,))</span>
+    <span class="n">tp</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">'ml-20m.exp/test-</span><span class="si">%d</span><span class="s1">.parquet % (i,))</span>
 </pre></div>
 </div>
 <div class="section" id="row-based-splitting">
@@ -248,9 +244,9 @@ training.</p>
 <dd><p>Partition a frame of ratings or other datainto train-test partitions.  This function does not
 care what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFrame (or equivalent).</p>
 <table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
+<colgroup><col class="field-name">
+<col class="field-body">
+</colgroup><tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or equivalent) – a data frame containing ratings or other data you wish to partition.</li>
 <li><strong>partitions</strong> (<em>integer</em>) – the number of partitions to produce</li>
@@ -273,9 +269,9 @@ care what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFr
 <dd><p>Sample train-test a frame of ratings into train-test partitions.  This function does not care
 what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFrame (or equivalent).</p>
 <table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
+<colgroup><col class="field-name">
+<col class="field-body">
+</colgroup><tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or equivalent) – a data frame containing ratings or other data you wish to partition.</li>
 <li><strong>partitions</strong> (<em>integer</em>) – the number of partitions to produce</li>
@@ -316,9 +312,9 @@ require that the input data frame have a <cite>user</cite> column with the user 
 This function does not care what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFrame
 (or equivalent) and has a <cite>user</cite> column.</p>
 <table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
+<colgroup><col class="field-name">
+<col class="field-body">
+</colgroup><tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or equivalent) – a data frame containing ratings or other data you wish to partition.</li>
 <li><strong>partitions</strong> (<em>integer</em>) – the number of partitions to produce</li>
@@ -343,9 +339,9 @@ This function does not care what kind of data is in <cite>data</cite>, so long a
 This function does not care what kind of data is in <cite>data</cite>, so long as it is
 a Pandas DataFrame (or equivalent) and has a <cite>user</cite> column.</p>
 <table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
+<colgroup><col class="field-name">
+<col class="field-body">
+</colgroup><tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>data</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.23.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or equivalent) – a data frame containing ratings or other data you wish to partition.</li>
 <li><strong>partitions</strong> – the number of partitions to produce</li>
@@ -377,9 +373,9 @@ happens by default with common means of implementing samples).</p>
 <code class="descclassname">lenskit.crossfold.</code><code class="descname">SampleN</code><span class="sig-paren">(</span><em>n</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.SampleN" title="Permalink to this definition">¶</a></dt>
 <dd><p>Randomly select a fixed number of test rows per user/item.</p>
 <table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
+<colgroup><col class="field-name">
+<col class="field-body">
+</colgroup><tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>n</strong> – The number of test items to select.</td>
 </tr>
 </tbody>
@@ -391,9 +387,9 @@ happens by default with common means of implementing samples).</p>
 <code class="descclassname">lenskit.crossfold.</code><code class="descname">SampleFrac</code><span class="sig-paren">(</span><em>frac</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.SampleFrac" title="Permalink to this definition">¶</a></dt>
 <dd><p>Randomly select a fraction of test rows per user/item.</p>
 <table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
+<colgroup><col class="field-name">
+<col class="field-body">
+</colgroup><tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>frac</strong> – the fraction of items to select for testing.</td>
 </tr>
 </tbody>
@@ -406,9 +402,9 @@ happens by default with common means of implementing samples).</p>
 <dd><p>Select a fixed number of test rows per user/item, based on ordering by a
 column.</p>
 <table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
+<colgroup><col class="field-name">
+<col class="field-body">
+</colgroup><tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>n</strong> – The number of test items to select.</li>
 <li><strong>col</strong> – The column to sort by.</li>
@@ -424,9 +420,9 @@ column.</p>
 <code class="descclassname">lenskit.crossfold.</code><code class="descname">LastFrac</code><span class="sig-paren">(</span><em>frac</em>, <em>col='timestamp'</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.LastFrac" title="Permalink to this definition">¶</a></dt>
 <dd><p>Select a fraction of test rows per user/item.</p>
 <table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
+<colgroup><col class="field-name">
+<col class="field-body">
+</colgroup><tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>frac</strong> – the fraction of items to select for testing.</li>
 <li><strong>col</strong> – The column to sort by.</li>
@@ -451,9 +447,9 @@ are callable; when called with a data frame, they return the test rows.</p>
 <code class="descname">__call__</code><span class="sig-paren">(</span><em>udf</em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.crossfold.PartitionMethod.__call__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Subset a data frame.</p>
 <table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
+<colgroup><col class="field-name">
+<col class="field-body">
+</colgroup><tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>udf</strong> – The input data frame of rows for a user or item.</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">The data frame of test rows, a subset of <cite>udf</cite>.</td>
@@ -501,11 +497,11 @@ are callable; when called with a data frame, they return the test rows.</p>
     </div>
   
 
-  <hr/>
+  <hr>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018 Boise State University
+        © Copyright 2018 Boise State University
       
         <span class="commit">
           Revision <code>25c3df65</code>.
@@ -566,7 +562,7 @@ are callable; when called with a data frame, they return the test rows.</p>
             <a href="//readthedocs.org/builds/lkpy/?fromdocs=lkpy">Builds</a>
           </dd>
       </dl>
-      <hr/>
+      <hr>
       Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
 
     </div>
@@ -598,5 +594,5 @@ are callable; when called with a data frame, they return the test rows.</p>
       });
   </script> 
 
-</body>
-</html>
+
+</body></html>
