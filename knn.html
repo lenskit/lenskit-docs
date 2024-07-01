@@ -1,12 +1,11 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" data-content_root="./">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<html class="writer-html5" lang="en" data-content_root="./"><head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>k-NN Collaborative Filtering &mdash; LensKit 0.14.3 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>k-NN Collaborative Filtering — LensKit 0.14.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50">
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094">
 
   
   <!--[if lt IE 9]>
@@ -21,14 +20,14 @@
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="/_/static/javascript/readthedocs-doc-embed.js"></script>
     <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Classic Matrix Factorization" href="mf.html" />
-    <link rel="prev" title="Bias" href="bias.html" /> 
+    <link rel="index" title="Index" href="genindex.html">
+    <link rel="search" title="Search" href="search.html">
+    <link rel="next" title="Classic Matrix Factorization" href="mf.html">
+    <link rel="prev" title="Bias" href="bias.html"> 
 
 <!-- RTD Extra Head -->
 
-<link rel="stylesheet" href="/_/static/css/readthedocs-doc-embed.css" type="text/css" />
+<link rel="stylesheet" href="/_/static/css/readthedocs-doc-embed.css" type="text/css">
 
 <script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "builder": "sphinx", "canonical_url": null, "docroot": "/docs/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "knn", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {"lenskit-hpf": "https://lkpy.readthedocs.io/projects/lenskit-hpf/en/stable/", "lenskit-implicit": "https://lkpy.readthedocs.io/projects/lenskit-implicit/en/latest/", "lenskit-tf": "https://lkpy.readthedocs.io/projects/lenskit-tf/en/latest/"}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.14.3"}</script>
 
@@ -49,7 +48,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
 
           
           
@@ -61,9 +60,9 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
@@ -145,7 +144,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu">
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">LensKit</a>
       </nav>
@@ -160,7 +159,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
               <a href="https://github.com/lenskit/lkpy/blob/0.14.3/docs/knn.rst" class="fa fa-github"> Edit on GitHub</a>
       </li>
   </ul>
-  <hr/>
+  <hr>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
@@ -179,7 +178,7 @@ mean-centering normalization.  This is the default mode, and can be selected exp
 rating values of 1 for positive items), the usual design is sum aggregation and no centering. This
 can be selected with <code class="docutils literal notranslate"><span class="pre">feedback='implicit'</span></code>, which also configures the algorithm to ignore rating
 values (when present) and treat every rating as 1:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">implicit_knn</span> <span class="o">=</span> <span class="n">ItemItem</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">feedback</span><span class="o">=</span><span class="s1">&#39;implicit&#39;</span><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">implicit_knn</span> <span class="o">=</span> <span class="n">ItemItem</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="n">feedback</span><span class="o">=</span><span class="s1">'implicit'</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Attempting to center data on the same scale (all 1, for example) will typically produce invalid
@@ -220,7 +219,7 @@ regardless of the rating the user gave the items.</p>
 <li><p><strong>min_sim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – minimum similarity threshold for considering a neighbor</p></li>
 <li><p><strong>save_nbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – the number of neighbors to save per item in the trained model
 (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
-<li><p><strong>feedback</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Control how feedback should be interpreted.  Specifies defaults for the other
+<li><p><strong>feedback</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – </p><p>Control how feedback should be interpreted.  Specifies defaults for the other
 settings, which can be overridden individually; can be one of the following values:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">explicit</span></code></dt><dd><p>Configure for explicit-feedback mode: use rating values, center ratings, and
@@ -231,7 +230,7 @@ default setting.</p>
 and use the <code class="docutils literal notranslate"><span class="pre">sum</span></code> aggregate method for prediction.</p>
 </dd>
 </dl>
-</p></li>
+<p></p></li>
 <li><p><strong>center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – whether to normalize (mean-center) rating vectors prior to computing similarities
 and aggregating user rating values.  Defaults to <code class="docutils literal notranslate"><span class="pre">True</span></code>; turn this off when working
 with unary data and other data types that don’t respond well to centering.</p></li>
@@ -373,7 +372,7 @@ Java-based LensKit code.</p>
 <li><p><strong>nnbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – the maximum number of neighbors for scoring each item (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
 <li><p><strong>min_nbrs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – the minimum number of neighbors for scoring each item</p></li>
 <li><p><strong>min_sim</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.12)"><em>float</em></a>) – minimum similarity threshold for considering a neighbor</p></li>
-<li><p><strong>feedback</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>Control how feedback should be interpreted.  Specifies defaults for the other
+<li><p><strong>feedback</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – </p><p>Control how feedback should be interpreted.  Specifies defaults for the other
 settings, which can be overridden individually; can be one of the following values:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">explicit</span></code></dt><dd><p>Configure for explicit-feedback mode: use rating values, center ratings, and
@@ -384,7 +383,7 @@ default setting.</p>
 and use the <code class="docutils literal notranslate"><span class="pre">sum</span></code> aggregate method for prediction.</p>
 </dd>
 </dl>
-</p></li>
+<p></p></li>
 <li><p><strong>center</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – whether to normalize (mean-center) rating vectors.  Turn this off when working
 with unary data and other data types that don’t respond well to centering.</p></li>
 <li><p><strong>aggregate</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – the type of aggregation to do. Can be <code class="docutils literal notranslate"><span class="pre">weighted-average</span></code> or <code class="docutils literal notranslate"><span class="pre">sum</span></code>.</p></li>
@@ -508,10 +507,10 @@ recompute the user’s bias at prediction time.</p></li>
         <a href="mf.html" class="btn btn-neutral float-right" title="Classic Matrix Factorization" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
-  <hr/>
+  <hr>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2018–2019 Boise State University.
+    <p>© Copyright 2018–2019 Boise State University.
       <span class="commit">Revision <code>f34809ae</code>.
       </span></p>
   </div>
@@ -526,8 +525,7 @@ opinions, findings, and conclusions or recommendations expressed in this materia
 are those of the author(s) and do not necessarily reflect the views of the
 National Science Foundation.  This page has not been approved by
 Boise State University and does not reflect official university positions.</p>
-<script data-goatcounter="https://lenskit.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://lenskit.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
 
 
 </footer>
@@ -606,16 +604,7 @@ Boise State University and does not reflect official university positions.</p>
         <dt>Downloads</dt>
         
       </dl>
-      <dl>
-        
-        <dt>On Read the Docs</dt>
-          <dd>
-            <a href="//readthedocs.org/projects/lkpy/?fromdocs=lkpy">Project Home</a>
-          </dd>
-          <dd>
-            <a href="//readthedocs.org/builds/lkpy/?fromdocs=lkpy">Builds</a>
-          </dd>
-      </dl>
+      
     </div>
   </div>
 <script>
@@ -624,5 +613,5 @@ Boise State University and does not reflect official university positions.</p>
       });
   </script> 
 
-</body>
-</html>
+
+</body></html>
