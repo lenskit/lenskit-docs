@@ -33,7 +33,7 @@ local versions = [
   {
     name: version,
     version: version,
-    url: 'https://lkpy.lenskit.org/' + version,
+    url: 'https://lkpy.lenskit.org/' + version + '/',
   }
   for version in versions[1:]
 ]
