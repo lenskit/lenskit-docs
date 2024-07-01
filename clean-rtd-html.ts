@@ -36,21 +36,27 @@ for (let dir of dirs) {
     let text = await Deno.readTextFile(file.path);
     let dom = parser.parseFromString(text, "text/html");
     let sel;
-    remove RTD embeds
-    let sel = dom.querySelector(
+    // fix RTD embeds
+    sel = dom.querySelector(
       'link[href^="https://assets.readthedocs.org/static/"]',
     );
     if (sel) {
-      let attr = sel.getAttribute('href')!;
-      sel.setAttribute('href', attr.replace('https://assets.readthedocs.org/static/', '/_/static/'))
+      let attr = sel.getAttribute("href")!;
+      sel.setAttribute(
+        "href",
+        attr.replace("https://assets.readthedocs.org/static/", "/_/static/"),
+      );
       sel.remove();
     }
     sel = dom.querySelector(
       'script[src^="https://assets.readthedocs.org/static/"]',
     );
     if (sel) {
-      let attr = sel.getAttribute('src')!;
-      sel.setAttribute('src', attr.replace('https://assets.readthedocs.org/static/', '/_/static/'))
+      let attr = sel.getAttribute("src")!;
+      sel.setAttribute(
+        "src",
+        attr.replace("https://assets.readthedocs.org/static/", "/_/static/"),
+      );
       sel.remove();
     }
 
@@ -64,6 +70,18 @@ for (let dir of dirs) {
       }
       url.pathname = url.pathname.replace(/^\/en\//, "");
       sel.setAttribute("href", url.toString());
+    }
+
+    // fix up menu
+    sel = dom.querySelector(".rst-versions");
+    if (sel) {
+      let s2 = sel.querySelector("dl:last-child");
+      if (s2) {
+        let kid = s2.querySelector("dt");
+        if (kid?.textContent.trim() == "On Read the Docs") {
+          s2.remove();
+        }
+      }
     }
 
     await Deno.writeTextFile(
