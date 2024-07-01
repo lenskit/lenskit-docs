@@ -1,4 +1,4 @@
-local latest = '2024.1dev';
+local latest = '2024.0dev';
 local versions = [
   '0.14.4',
   '0.14.3',
