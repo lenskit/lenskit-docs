@@ -1,29 +1,26 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" />
+<html class="writer-html5" lang="en"><head>
+  <meta charset="utf-8">
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Splitting Data &mdash; LensKit 0.13.1 documentation</title>
+  <title>Splitting Data — LensKit 0.13.1 documentation</title>
   
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-
-  
-  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css">
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css">
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css">
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css">
 
   
   
 
   
-    <link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/crossfold.html" />
+  
+
+  
+    <link rel="canonical" href="https://lkpy.lenskit.org/stable/crossfold.html">
 
   
   <!--[if lt IE 9]>
@@ -37,19 +34,19 @@
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+        
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Batch-Running Recommenders" href="batch.html" />
-    <link rel="prev" title="Loading Data" href="datasets.html" /> 
+    <link rel="index" title="Index" href="genindex.html">
+    <link rel="search" title="Search" href="search.html">
+    <link rel="next" title="Batch-Running Recommenders" href="batch.html">
+    <link rel="prev" title="Loading Data" href="datasets.html"> 
 
 <!-- RTD Extra Head -->
 
-<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
 
 <script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2021-06-22T17:08:14Z", "builder": "sphinx", "canonical_url": null, "commit": "0678cd1d", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "crossfold", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.13.1"}</script>
 
@@ -73,7 +70,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -96,9 +93,9 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
+    <input type="text" name="q" placeholder="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
   </form>
 </div>
 
@@ -204,7 +201,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> »</li>
         
       <li>Splitting Data</li>
     
@@ -222,7 +219,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
   </ul>
 
   
-  <hr/>
+  <hr>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
@@ -267,13 +264,13 @@ for training and evaluating algorithms.  For example, the following will perform
 a user-based 5-fold cross-validation as was the default in the old LensKit:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">lenskit.crossfold</span> <span class="k">as</span> <span class="nn">xf</span>
-<span class="n">ratings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;ml-20m/ratings.csv&#39;</span><span class="p">)</span>
-<span class="n">ratings</span> <span class="o">=</span> <span class="n">ratings</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;userId&#39;</span><span class="p">:</span> <span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;movieId&#39;</span><span class="p">:</span> <span class="s1">&#39;item&#39;</span><span class="p">})</span>
+<span class="n">ratings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'ml-20m/ratings.csv'</span><span class="p">)</span>
+<span class="n">ratings</span> <span class="o">=</span> <span class="n">ratings</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">'userId'</span><span class="p">:</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s1">'movieId'</span><span class="p">:</span> <span class="s1">'item'</span><span class="p">})</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">xf</span><span class="o">.</span><span class="n">partition_users</span><span class="p">(</span><span class="n">ratings</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">xf</span><span class="o">.</span><span class="n">SampleN</span><span class="p">(</span><span class="mi">5</span><span class="p">))):</span>
-    <span class="n">tp</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;ml-20m.exp/train-</span><span class="si">%d</span><span class="s1">.csv&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,))</span>
-    <span class="n">tp</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">&#39;ml-20m.exp/train-</span><span class="si">%d</span><span class="s1">.parquet % (i,))</span>
-    <span class="n">tp</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;ml-20m.exp/test-</span><span class="si">%d</span><span class="s1">.csv&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,))</span>
-    <span class="n">tp</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">&#39;ml-20m.exp/test-</span><span class="si">%d</span><span class="s1">.parquet % (i,))</span>
+    <span class="n">tp</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'ml-20m.exp/train-</span><span class="si">%d</span><span class="s1">.csv'</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,))</span>
+    <span class="n">tp</span><span class="o">.</span><span class="n">train</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">'ml-20m.exp/train-</span><span class="si">%d</span><span class="s1">.parquet % (i,))</span>
+    <span class="n">tp</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'ml-20m.exp/test-</span><span class="si">%d</span><span class="s1">.csv'</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,))</span>
+    <span class="n">tp</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s1">'ml-20m.exp/test-</span><span class="si">%d</span><span class="s1">.parquet % (i,))</span>
 </pre></div>
 </div>
 <div class="section" id="row-based-splitting">
@@ -311,7 +308,7 @@ care what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFr
 what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFrame (or equivalent).</p>
 <p>We can loop over a sequence of train-test pairs:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">datasets</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ratings</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">MovieLens</span><span class="p">(</span><span class="s1">&#39;data/ml-latest-small&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ratings</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ratings</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">MovieLens</span><span class="p">(</span><span class="s1">'data/ml-latest-small'</span><span class="p">)</span><span class="o">.</span><span class="n">ratings</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">sample_rows</span><span class="p">(</span><span class="n">ratings</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="p">))</span>
 <span class="go">1000</span>
@@ -535,11 +532,11 @@ are callable; when called with a data frame, they return the test rows.</p>
         <a href="datasets.html" class="btn btn-neutral float-left" title="Loading Data" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
-  <hr/>
+  <hr>
 
   <div role="contentinfo">
     <p>
-        &#169; Copyright 2018–2019 Boise State University.
+        © Copyright 2018–2019 Boise State University.
       <span class="commit">
         
         Revision <code>0678cd1d</code>.
@@ -561,8 +558,7 @@ opinions, findings, and conclusions or recommendations expressed in this materia
 are those of the author(s) and do not necessarily reflect the views of the
 National Science Foundation.  This page has not been approved by
 Boise State University and does not reflect official university positions.</p>
-<script data-goatcounter="https://lenskit.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://lenskit.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
 
 
 </footer>
@@ -635,16 +631,7 @@ Boise State University and does not reflect official university positions.</p>
         <dt>Downloads</dt>
         
       </dl>
-      <dl>
-        
-        <dt>On Read the Docs</dt>
-          <dd>
-            <a href="//readthedocs.org/projects/lkpy/?fromdocs=lkpy">Project Home</a>
-          </dd>
-          <dd>
-            <a href="//readthedocs.org/builds/lkpy/?fromdocs=lkpy">Builds</a>
-          </dd>
-      </dl>
+      
     </div>
   </div>
 
@@ -658,5 +645,5 @@ Boise State University and does not reflect official university positions.</p>
   
    
 
-</body>
-</html>
+
+</body></html>
