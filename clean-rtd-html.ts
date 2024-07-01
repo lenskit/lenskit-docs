@@ -27,9 +27,39 @@ if (diropt.length) {
 }
 console.info("will work on %d version dirs: %o", dirs.length, dirs);
 
+const parser = new DOMParser();
 for (let dir of dirs) {
   console.info("cleaning %s", dir);
   for await (let file of walk(dir, { exts: [".html"] })) {
     console.debug("cleaning file %s", file.path);
+
+    let text = await Deno.readTextFile(file.path);
+    let dom = parser.parseFromString(text, "text/html");
+
+    // remove RTD embeds
+    let sel = dom.querySelector(
+      'link[href^="https://assets.readthedocs.org/static/"]',
+    );
+    if (sel) {
+      sel.remove();
+    }
+    sel = dom.querySelector(
+      'script[src^="https://assets.readthedocs.org/static/"]',
+    );
+    if (sel) {
+      sel.remove();
+    }
+
+    // update canonical
+    sel = dom.querySelector('link[rel="canonical"]');
+    if (sel) {
+      let attr = sel.getAttribute("href");
+      let url = new URL(attr!);
+      if (url.hostname != "lkpy.lenskit.org") {
+        url.hostname = "lkpy.lenskit.org";
+      }
+      url.pathname = url.pathname.replace(/^\/en\//, "");
+      sel.setAttribute("href", url.toString());
+    }
   }
 }
