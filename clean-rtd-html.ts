@@ -35,18 +35,22 @@ for (let dir of dirs) {
 
     let text = await Deno.readTextFile(file.path);
     let dom = parser.parseFromString(text, "text/html");
-
-    // remove RTD embeds
+    let sel;
+    remove RTD embeds
     let sel = dom.querySelector(
       'link[href^="https://assets.readthedocs.org/static/"]',
     );
     if (sel) {
+      let attr = sel.getAttribute('href')!;
+      sel.setAttribute('href', attr.replace('https://assets.readthedocs.org/static/', '/_/static/'))
       sel.remove();
     }
     sel = dom.querySelector(
       'script[src^="https://assets.readthedocs.org/static/"]',
     );
     if (sel) {
+      let attr = sel.getAttribute('src')!;
+      sel.setAttribute('src', attr.replace('https://assets.readthedocs.org/static/', '/_/static/'))
       sel.remove();
     }
 
@@ -61,5 +65,10 @@ for (let dir of dirs) {
       url.pathname = url.pathname.replace(/^\/en\//, "");
       sel.setAttribute("href", url.toString());
     }
+
+    await Deno.writeTextFile(
+      file.path,
+      `<!DOCTYPE html>\n${dom.documentElement?.outerHTML}`,
+    );
   }
 }
