@@ -1,18 +1,15 @@
-
-
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
+<html class="writer-html5" lang="en"><head>
   <meta charset="utf-8">
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Evaluating Recommender Output &mdash; LensKit 0.11.0 documentation</title>
+  <title>Evaluating Recommender Output — LensKit 0.11.0 documentation</title>
   
 
   
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css">
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css">
 
   
   
@@ -33,15 +30,15 @@
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
-        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+        
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-    <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Prediction Accuracy Metrics" href="predict-metrics.html" />
-    <link rel="prev" title="Batch-Running Recommenders" href="../batch.html" /> 
+    <link rel="index" title="Index" href="../genindex.html">
+    <link rel="search" title="Search" href="../search.html">
+    <link rel="next" title="Prediction Accuracy Metrics" href="predict-metrics.html">
+    <link rel="prev" title="Batch-Running Recommenders" href="../batch.html"> 
 
 <!-- RTD Extra Head -->
 
@@ -49,9 +46,9 @@
 Always link to the latest version, as canonical.
 http://docs.readthedocs.org/en/latest/canonical.html
 -->
-<link rel="canonical" href="https://lkpy.readthedocs.io/en/stable/evaluation/" />
+<link rel="canonical" href="https://lkpy.lenskit.org/stable/evaluation/">
 
-<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
 
 <script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2020-11-13T19:13:34Z", "builder": "sphinx", "canonical_url": "https://lkpy.readthedocs.io/en/stable/", "commit": "81186a12", "docroot": "/doc/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "evaluation/index", "programming_language": "py", "project": "lkpy", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "0.11.0"}</script>
 
@@ -75,7 +72,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
+        <div class="wy-side-nav-search">
           
 
           
@@ -98,9 +95,9 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
           
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
+    <input type="text" name="q" placeholder="Search docs">
+    <input type="hidden" name="check_keywords" value="yes">
+    <input type="hidden" name="area" value="default">
   </form>
 </div>
 
@@ -201,7 +198,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> »</li>
         
       <li>Evaluating Recommender Output</li>
     
@@ -219,7 +216,7 @@ READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerH
   </ul>
 
   
-  <hr/>
+  <hr>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
@@ -294,17 +291,17 @@ data set, you can do:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">lenskit.metrics</span> <span class="kn">import</span> <span class="n">topn</span> <span class="k">as</span> <span class="n">lm</span>
 
-<span class="n">runs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s1">&#39;eval-dir/runs.parquet&#39;</span><span class="p">)</span>
-<span class="n">recs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s1">&#39;eval-dir/recs.parquet&#39;</span><span class="p">)</span>
-<span class="n">meta</span> <span class="o">=</span> <span class="n">runs</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">&#39;RunId&#39;</span><span class="p">,</span> <span class="s1">&#39;max_neighbors&#39;</span><span class="p">]]</span>
+<span class="n">runs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s1">'eval-dir/runs.parquet'</span><span class="p">)</span>
+<span class="n">recs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_parquet</span><span class="p">(</span><span class="s1">'eval-dir/recs.parquet'</span><span class="p">)</span>
+<span class="n">meta</span> <span class="o">=</span> <span class="n">runs</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="s1">'RunId'</span><span class="p">,</span> <span class="s1">'max_neighbors'</span><span class="p">]]</span>
 
-<span class="c1"># compute each user&#39;s nDCG</span>
-<span class="n">user_ndcg</span> <span class="o">=</span> <span class="n">recs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;RunId&#39;</span><span class="p">,</span> <span class="s1">&#39;user&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">rating</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">ndcg</span><span class="p">)</span>
-<span class="n">user_ndcg</span> <span class="o">=</span> <span class="n">user_ndcg</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;nDCG&#39;</span><span class="p">)</span>
+<span class="c1"># compute each user's nDCG</span>
+<span class="n">user_ndcg</span> <span class="o">=</span> <span class="n">recs</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">'RunId'</span><span class="p">,</span> <span class="s1">'user'</span><span class="p">])</span><span class="o">.</span><span class="n">rating</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">lm</span><span class="o">.</span><span class="n">ndcg</span><span class="p">)</span>
+<span class="n">user_ndcg</span> <span class="o">=</span> <span class="n">user_ndcg</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'nDCG'</span><span class="p">)</span>
 <span class="c1"># combine with metadata for feature count</span>
 <span class="n">user_ndcg</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">user_ndcg</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span>
 <span class="c1"># group and aggregate</span>
-<span class="n">nbr_ndcg</span> <span class="o">=</span> <span class="n">user_ndcg</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;max_neighbors&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">nDCG</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">nbr_ndcg</span> <span class="o">=</span> <span class="n">user_ndcg</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">'max_neighbors'</span><span class="p">)</span><span class="o">.</span><span class="n">nDCG</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 <span class="n">nbr_ndcg</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -327,12 +324,12 @@ data set, you can do:</p>
     </div>
   
 
-  <hr/>
+  <hr>
 
   <div role="contentinfo">
     <p>
         
-        &copy; Copyright 2018–2019 Boise State University
+        © Copyright 2018–2019 Boise State University
       <span class="commit">
         
         Revision <code>81186a12</code>.
@@ -354,8 +351,7 @@ opinions, findings, and conclusions or recommendations expressed in this materia
 are those of the author(s) and do not necessarily reflect the views of the
 National Science Foundation.  This page has not been approved by
 Boise State University and does not reflect official university positions.</p>
-<script data-goatcounter="https://lenskit.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://lenskit.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
 
 
 </footer>
@@ -415,16 +411,7 @@ Boise State University and does not reflect official university positions.</p>
         <dt>Downloads</dt>
         
       </dl>
-      <dl>
-        
-        <dt>On Read the Docs</dt>
-          <dd>
-            <a href="//readthedocs.org/projects/lkpy/?fromdocs=lkpy">Project Home</a>
-          </dd>
-          <dd>
-            <a href="//readthedocs.org/builds/lkpy/?fromdocs=lkpy">Builds</a>
-          </dd>
-      </dl>
+      
     </div>
   </div>
 
@@ -438,5 +425,5 @@ Boise State University and does not reflect official university positions.</p>
   
    
 
-</body>
-</html>
+
+</body></html>
