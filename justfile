@@ -7,8 +7,6 @@ init:
     mkdir -p "{{SITE}}/en"
 
 copy: init
-    cp redirects "{{SITE}}/_redirects"
-    cp headers "{{SITE}}/_headers"
     cp index.html "{{SITE}}"
 
 content: init
