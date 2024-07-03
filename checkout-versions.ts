@@ -1,12 +1,10 @@
-import * as fs from "node:fs";
-import * as git from "isomorphic-git";
-
-import * as ai from "@hongminhee/aitertools";
 import { ensureDir } from "@std/fs";
 
-let branches = await git.listBranches({ fs, dir: "." });
-branches = branches.filter((b) => b != "main");
-console.info("found %d versions: %o", branches.length, branches);
+import * as ai from "@hongminhee/aitertools";
+
+import { getVersionList } from "./lib/versions.ts";
+
+let versions = await getVersionList();
 
 await ensureDir("versions");
 
@@ -18,13 +16,15 @@ let dirs = await ai.toArray(
 );
 console.info("found %d version dirs: %o", dirs.length, dirs);
 
-for (let branch of branches) {
-  if (dirs.includes(branch)) {
-    console.info("version %s already checked out", branch);
+let seen: Set<string> = new Set();
+for (let v of versions) {
+  seen.add(v.label);
+  if (dirs.includes(v.label)) {
+    console.info("version %s already checked out", v.label);
     continue;
   }
   let cmd = new Deno.Command("git", {
-    args: ["worktree", "add", `versions/${branch}`, branch],
+    args: ["worktree", "add", `versions/${v}`, v.branch],
   });
   let proc = cmd.spawn();
   let res = await proc.output();
@@ -35,7 +35,7 @@ for (let branch of branches) {
 }
 
 for (let dir of dirs) {
-  if (branches.includes(dir)) {
+  if (seen.has(dir)) {
     continue;
   }
   console.info("removing unused tree %s", dir);
