@@ -4,7 +4,7 @@ SITE := "site"
 build: copy content versions
 
 init:
-    mkdir -p "{{SITE}}/en"
+    mkdir -p "{{SITE}}"
 
 copy: init
     cp index.html "{{SITE}}"
