@@ -11,10 +11,10 @@ copy: init
     cp headers "{{SITE}}/_headers"
 
 content: init
-    deno run -A build-site.ts
+    deno run -A copy-docs.ts
 
 versions: init
-    jsonnet -o "{{SITE}}/versions.json" versions.jsonnet
+    deno run -A versions.ts -o "{{SITE}}/versions.json"
 
 # remove the built site
 clean:
