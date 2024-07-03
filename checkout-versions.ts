@@ -24,7 +24,7 @@ for (let v of versions) {
     continue;
   }
   let cmd = new Deno.Command("git", {
-    args: ["worktree", "add", `versions/${v}`, v.branch],
+    args: ["worktree", "add", `versions/${v.label}`, v.branch],
   });
   let proc = cmd.spawn();
   let res = await proc.output();
