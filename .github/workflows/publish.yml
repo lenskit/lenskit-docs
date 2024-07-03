@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: Prepare site content
+    name: Build and Publish Site
     runs-on: ubuntu-latest
     environment: publish
 
@@ -17,6 +17,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: 🔎 Inspect Git branches
+        run: git branch -a
+
       - name: ☕️ Install Deno
         uses: denoland/setup-deno@v1
         with:
@@ -24,6 +27,9 @@ jobs:
 
       - name: 🏃🏻‍➡️ Install just runner
         uses: extractions/setup-just@v2
+
+      - name: 🗂️ Preload Deno dependencies
+        run: deno cache *.ts
 
       - name: 🛠️ Render site content
         run: just build
