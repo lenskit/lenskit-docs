@@ -9,6 +9,7 @@ init:
 copy: init
     cp redirects "{{SITE}}/_redirects"
     cp headers "{{SITE}}/_headers"
+    cp index.html "{{SITE}}"
 
 content: init
     deno run -A copy-docs.ts
