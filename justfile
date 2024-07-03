@@ -4,7 +4,7 @@ SITE := "site"
 build: copy content versions
 
 init:
-    mkdir -p "{{SITE}}"
+    mkdir -p "{{SITE}}/en"
 
 copy: init
     cp redirects "{{SITE}}/_redirects"

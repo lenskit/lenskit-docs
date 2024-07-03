@@ -14,7 +14,7 @@ for (let version of versions) {
     stdout: "piped",
   });
   let untar = new Deno.Command("tar", {
-    args: ["xf", "-", "-C", `site/${version.label}`],
+    args: ["xf", "-", "-C", `site/en/${version.label}`],
     stdin: "piped",
   });
   let ar_proc = archive.spawn();

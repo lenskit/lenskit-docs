@@ -3,13 +3,13 @@ import { parseArgs } from "@std/cli";
 
 import { getVersionList } from "./lib/versions.ts";
 
-const URL_BASE = "https://lkpy.lenskit.org";
+const URL_BASE = "https://lkpy.lenskit.org/en";
 
 const args = parseArgs(Deno.args, {
-    string: ["output"],
-    alias: {
-        "o": "output",
-    },
+  string: ["output"],
+  alias: {
+    "o": "output",
+  },
 });
 
 let versions = await getVersionList();
@@ -20,27 +20,27 @@ let stable = named[0];
 console.info("latest version: %o", stable);
 
 let manifest = [
-    {
-        name: "Latest",
-        version: "main",
-        url: `${URL_BASE}/latest/`,
-    },
-    {
-        name: named[0].label + " (stable)",
-        version: named[0].label,
-        url: `${URL_BASE}/stable/`,
-    },
+  {
+    name: "Latest",
+    version: "main",
+    url: `${URL_BASE}/latest/`,
+  },
+  {
+    name: named[0].label + " (stable)",
+    version: named[0].label,
+    url: `${URL_BASE}/stable/`,
+  },
 ];
 
 for (let v of named.slice(1)) {
-    manifest.push({
-        name: v.label,
-        version: v.label,
-        url: `${URL_BASE}/${v.label}/`,
-    });
+  manifest.push({
+    name: v.label,
+    version: v.label,
+    url: `${URL_BASE}/${v.label}/`,
+  });
 }
 
 if (args.output) {
-    console.info("saving versions to %s", args.output);
-    await Deno.writeTextFile(args.output, JSON.stringify(manifest, null, 2));
+  console.info("saving versions to %s", args.output);
+  await Deno.writeTextFile(args.output, JSON.stringify(manifest, null, 2));
 }
