@@ -19,7 +19,7 @@
 <meta name="description" content="The functions in lenskit.batch enable you to generate many recommendations or predictions at the same time, useful for evaluations and experiments. The batch functions can parallelize over users wi..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Batch-Running Recommenders &#8212; LensKit 0.15.0.dev830+g47c0aff5 documentation</title>
+    <title>Batch-Running Recommenders &#8212; LensKit 0.15.0.dev885+g47023617 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=c4408b76"></script>
+    <script src="_static/documentation_options.js?v=3fa0b2a9"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev830+g47c0aff5 documentation - Home"/>
-    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev830+g47c0aff5 documentation - Home"/>`);</script>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev885+g47023617 documentation - Home"/>
+    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev885+g47023617 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -413,12 +413,13 @@ built-in candidate selector (usually recommended).</p></li>
 a list of item IDs. It should return a dictionary or a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>
 mapping item IDs to predictions.</p>
 <p>To use this function, provide a pre-fit algorithm:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.algorithms.bias</span> <span class="kn">import</span> <span class="n">Bias</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.algorithms.bias</span> <span class="kn">import</span> <span class="n">Bias</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.metrics.predict</span> <span class="kn">import</span> <span class="n">rmse</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.data</span> <span class="kn">import</span> <span class="n">from_interactions_df</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ratings</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">MovieLens</span><span class="p">(</span><span class="s1">&#39;data/ml-latest-small&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ratings</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bias</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">bias</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">ratings</span><span class="p">[:</span><span class="o">-</span><span class="mi">1000</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">bias</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">from_interactions_df</span><span class="p">(</span><span class="n">ratings</span><span class="p">[:</span><span class="o">-</span><span class="mi">1000</span><span class="p">]))</span>
 <span class="go">&lt;lenskit.algorithms.bias.Bias object at ...&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">preds</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">bias</span><span class="p">,</span> <span class="n">ratings</span><span class="p">[</span><span class="o">-</span><span class="mi">1000</span><span class="p">:])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">preds</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
@@ -429,7 +430,7 @@ mapping item IDs to predictions.</p>
 <span class="go">99007   664  8636     4.0  1393891175    3.846268</span>
 <span class="go">99008   664  8641     4.5  1393890852    3.710635</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">rmse</span><span class="p">(</span><span class="n">preds</span><span class="p">[</span><span class="s1">&#39;prediction&#39;</span><span class="p">],</span> <span class="n">preds</span><span class="p">[</span><span class="s1">&#39;rating&#39;</span><span class="p">])</span>
-<span class="go">0.8326992222...</span>
+<span class="go">0.832699...</span>
 </pre></div>
 </div>
 <dl class="field-list simple">

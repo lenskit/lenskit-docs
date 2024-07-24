@@ -19,7 +19,7 @@
 <meta name="description" content="The lenskit.algorithms.ranking module contains various ranking methods: algorithms that can use scores to produce ranks. This includes primary rankers, like TopN, and some re-rankers as well. Top-N..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Ranking Methods &#8212; LensKit 0.15.0.dev830+g47c0aff5 documentation</title>
+    <title>Ranking Methods &#8212; LensKit 0.15.0.dev885+g47023617 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=c4408b76"></script>
+    <script src="_static/documentation_options.js?v=3fa0b2a9"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev830+g47c0aff5 documentation - Home"/>
-    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev830+g47c0aff5 documentation - Home"/>`);</script>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev885+g47023617 documentation - Home"/>
+    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev885+g47023617 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -405,15 +405,16 @@ contexts:</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.algorithms.ranking.TopN.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ratings</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.ranking.TopN.fit" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.ranking.TopN.fit" title="Link to this definition">#</a></dt>
 <dd><p>Fit the recommender.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>pandas.DataFrame</em></a>) – The rating or interaction data.  Passed changed to the predictor and
+<li><p><strong>ratings</strong> – The rating or interaction data.  Passed changed to the predictor and
 candidate selector.</p></li>
 <li><p><strong>args</strong> – Additional arguments for the predictor to use in its training process.</p></li>
 <li><p><strong>kwargs</strong> – Additional arguments for the predictor to use in its training process.</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="data.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -515,15 +516,15 @@ to efficiently simulate from a Plackett-Luce distribution.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.algorithms.ranking.PlackettLuce.fit">
-<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ratings</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.ranking.PlackettLuce.fit" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.ranking.PlackettLuce.fit" title="Link to this definition">#</a></dt>
 <dd><p>Train a model using the specified ratings (or similar) data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>pandas.DataFrame</em></a>) – The ratings data.</p></li>
-<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms should
-avoid using the same keyword arguments for different purposes, so that
-they can be more easily hybridized.</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="data.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>) – The training data.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms
+should avoid using the same keyword arguments for different
+purposes, so that they can be more easily hybridized.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
