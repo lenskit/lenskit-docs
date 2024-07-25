@@ -19,7 +19,7 @@
 <meta name="description" content="The functions in lenskit.batch enable you to generate many recommendations or predictions at the same time, useful for evaluations and experiments. The batch functions can parallelize over users wi..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Batch-Running Recommenders &#8212; LensKit 0.15.0.dev911+g40df7b11 documentation</title>
+    <title>Batch-Running Recommenders &#8212; LensKit 0.15.0.dev951+g46053981 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=dd8412f9"></script>
+    <script src="_static/documentation_options.js?v=4b41acf8"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev911+g40df7b11 documentation - Home"/>
-    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev911+g40df7b11 documentation - Home"/>`);</script>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev951+g46053981 documentation - Home"/>
+    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev951+g46053981 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -195,7 +195,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Experiments</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="data.html">Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Loading Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Splitting Data</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Batch-Running Recommenders</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -415,9 +414,9 @@ mapping item IDs to predictions.</p>
 <p>To use this function, provide a pre-fit algorithm:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.algorithms.bias</span> <span class="kn">import</span> <span class="n">Bias</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.metrics.predict</span> <span class="kn">import</span> <span class="n">rmse</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">datasets</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.data</span> <span class="kn">import</span> <span class="n">from_interactions_df</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ratings</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">MovieLens</span><span class="p">(</span><span class="s1">&#39;data/ml-latest-small&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ratings</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.data.movielens</span> <span class="kn">import</span> <span class="n">load_movielens_df</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ratings</span> <span class="o">=</span> <span class="n">load_movielens_df</span><span class="p">(</span><span class="s1">&#39;data/ml-latest-small&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bias</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">bias</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">from_interactions_df</span><span class="p">(</span><span class="n">ratings</span><span class="p">[:</span><span class="o">-</span><span class="mi">1000</span><span class="p">]))</span>
 <span class="go">&lt;lenskit.algorithms.bias.Bias object at ...&gt;</span>

@@ -19,7 +19,7 @@
 <meta name="description" content="This notebook gets you started with a brief nDCG evaluation with LensKit for Python. This notebook is also available on Google Collaboratory and nbviewer. Setup: We first import the LensKit compone..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Getting Started &#8212; LensKit 0.15.0.dev911+g40df7b11 documentation</title>
+    <title>Getting Started &#8212; LensKit 0.15.0.dev951+g46053981 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=dd8412f9"></script>
+    <script src="_static/documentation_options.js?v=4b41acf8"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev911+g40df7b11 documentation - Home"/>
-    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev911+g40df7b11 documentation - Home"/>`);</script>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev951+g46053981 documentation - Home"/>
+    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev951+g46053981 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -195,7 +195,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Experiments</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="data.html">Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Loading Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Splitting Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -357,8 +356,8 @@ document.write(`
 <p>We first import the LensKit components we need:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lenskit.datasets</span> <span class="kn">import</span> <span class="n">ML100K</span>
-<span class="kn">from</span> <span class="nn">lenskit.data</span> <span class="kn">import</span> <span class="n">from_interactions_df</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lenskit.data</span> <span class="kn">import</span> <span class="n">from_interactions_df</span>
+<span class="kn">from</span> <span class="nn">lenskit.data.movielens</span> <span class="kn">import</span> <span class="n">load_movielens_df</span>
 <span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">batch</span><span class="p">,</span> <span class="n">topn</span><span class="p">,</span> <span class="n">util</span>
 <span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">crossfold</span> <span class="k">as</span> <span class="n">xf</span>
 <span class="kn">from</span> <span class="nn">lenskit.algorithms</span> <span class="kn">import</span> <span class="n">Recommender</span><span class="p">,</span> <span class="n">als</span><span class="p">,</span> <span class="n">knn</span>
@@ -389,9 +388,8 @@ document.write(`
 <p>We’re going to use the ML-100K data set:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ml100k</span> <span class="o">=</span> <span class="n">ML100K</span><span class="p">(</span><span class="n">here</span><span class="p">(</span><span class="s1">&#39;data/ml-100k&#39;</span><span class="p">))</span>
-<span class="n">ratings</span> <span class="o">=</span> <span class="n">ml100k</span><span class="o">.</span><span class="n">ratings</span>
-<span class="n">ratings</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ml100k</span> <span class="o">=</span> <span class="n">load_movielens_df</span><span class="p">(</span><span class="n">here</span><span class="p">(</span><span class="s1">&#39;data/ml-100k.zip&#39;</span><span class="p">))</span>
+<span class="n">ml100k</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -506,7 +504,7 @@ document.write(`
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_recs</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">test_data</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">xf</span><span class="o">.</span><span class="n">partition_users</span><span class="p">(</span><span class="n">ratings</span><span class="p">[[</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">]],</span> <span class="mi">5</span><span class="p">,</span> <span class="n">xf</span><span class="o">.</span><span class="n">SampleFrac</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)):</span>
+<span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">xf</span><span class="o">.</span><span class="n">partition_users</span><span class="p">(</span><span class="n">ml100k</span><span class="p">[[</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">]],</span> <span class="mi">5</span><span class="p">,</span> <span class="n">xf</span><span class="o">.</span><span class="n">SampleFrac</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)):</span>
     <span class="n">test_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
     <span class="n">all_recs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;ItemItem&#39;</span><span class="p">,</span> <span class="n">algo_ii</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">))</span>
     <span class="n">all_recs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;ALS&#39;</span><span class="p">,</span> <span class="n">algo_als</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">))</span>
@@ -514,8 +512,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/mde48/LensKit/lkpy/lenskit/lenskit/data/matrix.py:152: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /Users/runner/miniforge3/conda-bld/libtorch_1716578890680/work/aten/src/ATen/SparseCsrTensorImpl.cpp:55.)
-  matrix = matrix.to_sparse_csr()
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/mde48/LensKit/lkpy/lenskit/lenskit/data/dataset.py:628: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /Users/runner/miniforge3/conda-bld/libtorch_1719361060788/work/aten/src/ATen/SparseCsrTensorImpl.cpp:55.)
+  return torch.sparse_csr_tensor(
 </pre></div>
 </div>
 </div>
@@ -557,32 +555,32 @@ document.write(`
   <tbody>
     <tr>
       <th>0</th>
-      <td>1125</td>
-      <td>5.014371</td>
+      <td>1449</td>
+      <td>4.994975</td>
       <td>2</td>
       <td>1</td>
       <td>ItemItem</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>1449</td>
-      <td>4.967544</td>
+      <td>1398</td>
+      <td>4.866851</td>
       <td>2</td>
       <td>2</td>
       <td>ItemItem</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>427</td>
-      <td>4.863028</td>
+      <td>511</td>
+      <td>4.845399</td>
       <td>2</td>
       <td>3</td>
       <td>ItemItem</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>483</td>
-      <td>4.855851</td>
+      <td>1512</td>
+      <td>4.805413</td>
       <td>2</td>
       <td>4</td>
       <td>ItemItem</td>
@@ -590,7 +588,7 @@ document.write(`
     <tr>
       <th>4</th>
       <td>1594</td>
-      <td>4.846334</td>
+      <td>4.788468</td>
       <td>2</td>
       <td>5</td>
       <td>ItemItem</td>
@@ -653,27 +651,27 @@ document.write(`
       <th rowspan="5" valign="top">ItemItem</th>
       <th>2</th>
       <td>100</td>
-      <td>0.085382</td>
+      <td>0.081186</td>
     </tr>
     <tr>
-      <th>7</th>
+      <th>6</th>
       <td>100</td>
-      <td>0.223133</td>
+      <td>0.288946</td>
     </tr>
     <tr>
       <th>8</th>
       <td>100</td>
-      <td>0.097582</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>100</td>
-      <td>0.063818</td>
+      <td>0.082112</td>
     </tr>
     <tr>
       <th>10</th>
       <td>100</td>
-      <td>0.211332</td>
+      <td>0.364167</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>100</td>
+      <td>0.182636</td>
     </tr>
   </tbody>
 </table>
@@ -688,8 +686,8 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Algorithm
-ALS         0.140061
-ItemItem    0.099664
+ALS         0.132649
+ItemItem    0.096963
 Name: ndcg, dtype: float64
 </pre></div>
 </div>
@@ -705,7 +703,7 @@ Name: ndcg, dtype: float64
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Algorithm&#39;&gt;
 </pre></div>
 </div>
-<img alt="_images/091dea6cacb7e32379cf2d8493bf3bfbfba3c2684b6780305978fe59e15c8fa9.png" src="_images/091dea6cacb7e32379cf2d8493bf3bfbfba3c2684b6780305978fe59e15c8fa9.png" />
+<img alt="_images/ef54dadc4bc80920366662b4d4f3b81a5fbc12082ca357369fb811de171438cc.png" src="_images/ef54dadc4bc80920366662b4d4f3b81a5fbc12082ca357369fb811de171438cc.png" />
 </div>
 </div>
 </section>

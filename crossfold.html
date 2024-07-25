@@ -19,7 +19,7 @@
 <meta name="description" content="The LKPY crossfold module provides support for preparing data sets for cross-validation. Crossfold methods are implemented as functions that operate on data frames and return generators of(train, t..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Splitting Data &#8212; LensKit 0.15.0.dev911+g40df7b11 documentation</title>
+    <title>Splitting Data &#8212; LensKit 0.15.0.dev951+g46053981 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=dd8412f9"></script>
+    <script src="_static/documentation_options.js?v=4b41acf8"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -63,7 +63,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Batch-Running Recommenders" href="batch.html" />
-    <link rel="prev" title="Loading Data" href="datasets.html" />
+    <link rel="prev" title="Data Management" href="data.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev911+g40df7b11 documentation - Home"/>
-    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev911+g40df7b11 documentation - Home"/>`);</script>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev951+g46053981 documentation - Home"/>
+    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev951+g46053981 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -195,7 +195,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Experiments</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="data.html">Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Loading Data</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Splitting Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -433,8 +432,8 @@ care what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFr
 <dd><p>Sample train-test a frame of ratings into train-test partitions.  This function does not care
 what kind of data is in <cite>data</cite>, so long as it is a Pandas DataFrame (or equivalent).</p>
 <p>We can loop over a sequence of train-test pairs:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">datasets</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ratings</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">MovieLens</span><span class="p">(</span><span class="s1">&#39;data/ml-latest-small&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ratings</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">lenskit.data.movielens</span> <span class="kn">import</span> <span class="n">load_movielens_df</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ratings</span> <span class="o">=</span> <span class="n">load_movielens_df</span><span class="p">(</span><span class="s1">&#39;data/ml-latest-small&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">sample_rows</span><span class="p">(</span><span class="n">ratings</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">1000</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">test</span><span class="p">))</span>
 <span class="go">1000</span>
@@ -660,12 +659,12 @@ are callable; when called with a data frame, they return the test rows.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="datasets.html"
+       href="data.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Loading Data</p>
+        <p class="prev-next-title">Data Management</p>
       </div>
     </a>
     <a class="right-next"

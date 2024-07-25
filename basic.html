@@ -19,7 +19,7 @@
 <meta name="description" content="The lenskit.algorithms.basic module contains baseline and utility algorithms for nonpersonalized recommendation and testing. Most Popular Item Recommendation: The PopScore algorithm scores items by..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Basic and Utility Algorithms &#8212; LensKit 0.15.0.dev911+g40df7b11 documentation</title>
+    <title>Basic and Utility Algorithms &#8212; LensKit 0.15.0.dev951+g46053981 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=dd8412f9"></script>
+    <script src="_static/documentation_options.js?v=4b41acf8"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev911+g40df7b11 documentation - Home"/>
-    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev911+g40df7b11 documentation - Home"/>`);</script>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev951+g46053981 documentation - Home"/>
+    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev951+g46053981 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -195,7 +195,6 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Experiments</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="data.html">Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="datasets.html">Loading Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="crossfold.html">Splitting Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -635,10 +634,17 @@ and uses the first one to return a result to predict the rating for each item.</
 <p>A common case is to fill in with <code class="xref py py-class docutils literal notranslate"><span class="pre">Bias</span></code> when a primary predictor cannot score an item.</p>
 <dl class="py class" id="module-2">
 <dt class="sig sig-object py" id="lenskit.algorithms.basic.Fallback">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.basic.</span></span><span class="sig-name descname"><span class="pre">Fallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Fallback" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.basic.</span></span><span class="sig-name descname"><span class="pre">Fallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><span class="pre">Predictor</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Fallback" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.basic.</span></span><span class="sig-name descname"><span class="pre">Fallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><span class="pre">Predictor</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><span class="pre">Predictor</span></a></span></em><span class="sig-paren">)</span></dt>
 <dd><p>Bases: <a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a></p>
 <p>The Fallback algorithm predicts with its first component, uses the second to fill in
 missing values, and so forth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em>[</em><a class="reference internal" href="interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><em>Predictor</em></a><em>]</em>)</p>
+</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.algorithms.basic.Fallback.fit">
 <span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Fallback.fit" title="Link to this definition">#</a></dt>
