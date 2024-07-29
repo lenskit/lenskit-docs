@@ -29,6 +29,7 @@ let manifest = [
     name: named[0].label + " (stable)",
     version: named[0].label,
     url: `${URL_BASE}/stable/`,
+    preferred: true,
   },
 ];
 
