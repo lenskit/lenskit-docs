@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit provides a unified data model for recommender systems data along with classes and utility functions for working with it, described in this section of the manual. Data Model and Key Concepts..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Data Management &#8212; LensKit 0.15.0.dev963+g6214fb2d documentation</title>
+    <title>Data Management &#8212; LensKit 0.15.0.dev980+gb79fe00c documentation</title>
   
   
   
@@ -48,7 +48,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=bcc5684b"></script>
+    <script src="_static/documentation_options.js?v=2b1c20bf"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev963+g6214fb2d documentation - Home"/>
-    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev963+g6214fb2d documentation - Home"/>`);</script>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev980+gb79fe00c documentation - Home"/>
+    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev980+gb79fe00c documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -348,36 +348,48 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.rating_count"><code class="docutils literal notranslate"><span class="pre">Dataset.rating_count</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.interaction_log"><code class="docutils literal notranslate"><span class="pre">Dataset.interaction_log()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.interaction_matrix"><code class="docutils literal notranslate"><span class="pre">Dataset.interaction_matrix()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.user_row"><code class="docutils literal notranslate"><span class="pre">Dataset.user_row()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.item_stats"><code class="docutils literal notranslate"><span class="pre">Dataset.item_stats()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.user_stats"><code class="docutils literal notranslate"><span class="pre">Dataset.user_stats()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-datasets">Creating Datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-datasets">Creating Datasets</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.from_interactions_df"><code class="docutils literal notranslate"><span class="pre">from_interactions_df()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-common-datasets">Loading Common Datasets</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.load_movielens"><code class="docutils literal notranslate"><span class="pre">load_movielens()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vocabularies">Vocabularies</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary"><code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.name"><code class="docutils literal notranslate"><span class="pre">Vocabulary.name</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.index"><code class="docutils literal notranslate"><span class="pre">Vocabulary.index</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.size"><code class="docutils literal notranslate"><span class="pre">Vocabulary.size</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.number"><code class="docutils literal notranslate"><span class="pre">Vocabulary.number()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.numbers"><code class="docutils literal notranslate"><span class="pre">Vocabulary.numbers()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.term"><code class="docutils literal notranslate"><span class="pre">Vocabulary.term()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.terms"><code class="docutils literal notranslate"><span class="pre">Vocabulary.terms()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.id"><code class="docutils literal notranslate"><span class="pre">Vocabulary.id()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.ids"><code class="docutils literal notranslate"><span class="pre">Vocabulary.ids()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.copy"><code class="docutils literal notranslate"><span class="pre">Vocabulary.copy()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary"><code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.name"><code class="docutils literal notranslate"><span class="pre">Vocabulary.name</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.index"><code class="docutils literal notranslate"><span class="pre">Vocabulary.index</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.size"><code class="docutils literal notranslate"><span class="pre">Vocabulary.size</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.number"><code class="docutils literal notranslate"><span class="pre">Vocabulary.number()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.numbers"><code class="docutils literal notranslate"><span class="pre">Vocabulary.numbers()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.term"><code class="docutils literal notranslate"><span class="pre">Vocabulary.term()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.terms"><code class="docutils literal notranslate"><span class="pre">Vocabulary.terms()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.id"><code class="docutils literal notranslate"><span class="pre">Vocabulary.id()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.ids"><code class="docutils literal notranslate"><span class="pre">Vocabulary.ids()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.copy"><code class="docutils literal notranslate"><span class="pre">Vocabulary.copy()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-implementations">Dataset implementations</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-dataset">Matrix Dataset</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lazy-dataset">Lazy Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#item-lists">Item Lists</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList"><code class="docutils literal notranslate"><span class="pre">ItemList</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.ordered"><code class="docutils literal notranslate"><span class="pre">ItemList.ordered</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.clone"><code class="docutils literal notranslate"><span class="pre">ItemList.clone()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.ids"><code class="docutils literal notranslate"><span class="pre">ItemList.ids()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.numbers"><code class="docutils literal notranslate"><span class="pre">ItemList.numbers()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.scores"><code class="docutils literal notranslate"><span class="pre">ItemList.scores()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.ranks"><code class="docutils literal notranslate"><span class="pre">ItemList.ranks()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.to_df"><code class="docutils literal notranslate"><span class="pre">ItemList.to_df()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-lenskit.data.tables">User-Item Data Tables</a><ul class="nav section-nav flex-column">
@@ -393,6 +405,26 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.tables.TorchUserItemTable.item_nums"><code class="docutils literal notranslate"><span class="pre">TorchUserItemTable.item_nums</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.tables.TorchUserItemTable.ratings"><code class="docutils literal notranslate"><span class="pre">TorchUserItemTable.ratings</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.tables.TorchUserItemTable.timestamps"><code class="docutils literal notranslate"><span class="pre">TorchUserItemTable.timestamps</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-lenskit.data.dataset">Dataset Implementations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-dataset">Matrix Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.MatrixDataset"><code class="docutils literal notranslate"><span class="pre">MatrixDataset</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lazy-dataset">Lazy Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset"><code class="docutils literal notranslate"><span class="pre">LazyDataset</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset.delegate"><code class="docutils literal notranslate"><span class="pre">LazyDataset.delegate()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset.items"><code class="docutils literal notranslate"><span class="pre">LazyDataset.items</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset.users"><code class="docutils literal notranslate"><span class="pre">LazyDataset.users</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset.count"><code class="docutils literal notranslate"><span class="pre">LazyDataset.count()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset.interaction_matrix"><code class="docutils literal notranslate"><span class="pre">LazyDataset.interaction_matrix()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset.interaction_log"><code class="docutils literal notranslate"><span class="pre">LazyDataset.interaction_log()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset.user_row"><code class="docutils literal notranslate"><span class="pre">LazyDataset.user_row()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -450,7 +482,7 @@ sorted identifiers that do not yet have numbers.</p>
 </ul>
 <p>Identifiers and numbers can be mapped to each other with the user and item
 <em>vocabularies</em> (<a class="reference internal" href="#lenskit.data.Dataset.users" title="lenskit.data.Dataset.users"><code class="xref py py-attr docutils literal notranslate"><span class="pre">users</span></code></a> and <a class="reference internal" href="#lenskit.data.Dataset.items" title="lenskit.data.Dataset.items"><code class="xref py py-attr docutils literal notranslate"><span class="pre">items</span></code></a>, see the
-<a class="reference internal" href="#lenskit.data.vocab.Vocabulary" title="lenskit.data.vocab.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a> class).</p>
+<a class="reference internal" href="#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a> class).</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="lenskit.data.vocab.EntityId">
 <span class="sig-prename descclassname"><span class="pre">lenskit.data.vocab.</span></span><span class="sig-name descname"><span class="pre">EntityId</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypeAlias" title="(in Python v3.12)"><span class="pre">TypeAlias</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">int</span> <span class="pre">|</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">bytes</span></em><a class="headerlink" href="#lenskit.data.vocab.EntityId" title="Link to this definition">#</a></dt>
@@ -491,13 +523,13 @@ modify returned data in-place.</p>
 </div>
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.data.Dataset.items">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#lenskit.data.vocab.Vocabulary" title="lenskit.data.vocab.Vocabulary"><span class="pre">Vocabulary</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.12)"><span class="pre">bytes</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.data.Dataset.items" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><span class="pre">Vocabulary</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.12)"><span class="pre">bytes</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.data.Dataset.items" title="Link to this definition">#</a></dt>
 <dd><p>The items known by this dataset.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.data.Dataset.users">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">users</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#lenskit.data.vocab.Vocabulary" title="lenskit.data.vocab.Vocabulary"><span class="pre">Vocabulary</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.12)"><span class="pre">bytes</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.data.Dataset.users" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">users</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><span class="pre">Vocabulary</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.12)"><span class="pre">bytes</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.data.Dataset.users" title="Link to this definition">#</a></dt>
 <dd><p>The users known by this dataset.</p>
 </dd></dl>
 
@@ -666,6 +698,26 @@ sparse array.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.Dataset.user_row">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.Dataset.user_row" title="Link to this definition">#</a></dt>
+<dd><p>Get a user’s row from the interaction matrix.  Available fields are
+returned as fields. If the dataset has ratings, these are provided as a
+<code class="docutils literal notranslate"><span class="pre">rating</span></code> field, <strong>not</strong> as the item scores.  The item list is unordered,
+but items are returned in order by item number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.12)"><em>bytes</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>user_num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="lenskit.data.Dataset.item_stats">
 <span class="sig-name descname"><span class="pre">item_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.Dataset.item_stats" title="Link to this definition">#</a></dt>
 <dd><p>Get item statistics.</p>
@@ -726,7 +778,35 @@ dataset has timestamps.</p></li>
 </section>
 <section id="creating-datasets">
 <h2>Creating Datasets<a class="headerlink" href="#creating-datasets" title="Link to this heading">#</a></h2>
-<p>Several functions create :class:<a href="#id4"><span class="problematic" id="id5">`</span></a>Dataset`s from different input data sources.</p>
+<p>Several functions can create a <a class="reference internal" href="#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> from different input data sources.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.data.from_interactions_df">
+<span class="sig-prename descclassname"><span class="pre">lenskit.data.</span></span><span class="sig-name descname"><span class="pre">from_interactions_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rating_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timestamp_col</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.from_interactions_df" title="Link to this definition">#</a></dt>
+<dd><p>Create a dataset from a data frame of ratings or other user-item
+interactions.</p>
+<div class="admonition-todo admonition" id="id4">
+<p class="admonition-title">Todo</p>
+<p>Repeated interactions are not yet supported.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The user-item interactions (e.g. ratings).  The dataset code takes
+ownership of this data frame and may modify it.</p></li>
+<li><p><strong>user_col</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>None</em>) – The name of the user ID column.  By default, looks for columns named
+<code class="docutils literal notranslate"><span class="pre">user</span></code>, <code class="docutils literal notranslate"><span class="pre">user_id</span></code>, or <code class="docutils literal notranslate"><span class="pre">userId</span></code>, with several case variants.</p></li>
+<li><p><strong>item_col</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>None</em>) – The name of the item ID column.  By default, looks for columns named
+<code class="docutils literal notranslate"><span class="pre">item</span></code>, <code class="docutils literal notranslate"><span class="pre">item_id</span></code>, or <code class="docutils literal notranslate"><span class="pre">itemId</span></code>, with several case variants.</p></li>
+<li><p><strong>rating_col</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>None</em>) – The name of the rating column.</p></li>
+<li><p><strong>timestamp_col</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>None</em>) – The name of the timestamp column.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="loading-common-datasets">
 <h2>Loading Common Datasets<a class="headerlink" href="#loading-common-datasets" title="Link to this heading">#</a></h2>
@@ -755,9 +835,9 @@ file.</p>
 <p>LensKit uses <em>vocabularies</em> to record user/item IDs, tags, terms, etc. in a way
 that facilitates easy mapping to 0-based contiguous indexes for use in matrix
 and tensor data structures.</p>
-<dl class="py class" id="module-lenskit.data.vocab">
-<dt class="sig sig-object py" id="lenskit.data.vocab.Vocabulary">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.data.vocab.</span></span><span class="sig-name descname"><span class="pre">Vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.vocab.Vocabulary" title="Link to this definition">#</a></dt>
+<dl class="py class" id="module-0">
+<dt class="sig sig-object py" id="lenskit.data.Vocabulary">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.data.</span></span><span class="sig-name descname"><span class="pre">Vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keys</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.Vocabulary" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">VT</span></code>]</p>
 <p>Vocabularies of terms, tags, entity IDs, etc. for the LensKit data model.</p>
 <p>This class supports bidirectional mappings between key-like data and
@@ -777,34 +857,34 @@ identifiers.</p>
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="lenskit.data.vocab.Vocabulary.name">
-<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#lenskit.data.vocab.Vocabulary.name" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="lenskit.data.Vocabulary.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><a class="headerlink" href="#lenskit.data.Vocabulary.name" title="Link to this definition">#</a></dt>
 <dd><p>The name of the vocabulary (e.g. “user”, “item”).</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="lenskit.data.vocab.Vocabulary.index">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v2.2.2)"><span class="pre">Index</span></a></em><a class="headerlink" href="#lenskit.data.vocab.Vocabulary.index" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="lenskit.data.Vocabulary.index">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">index</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v2.2.2)"><span class="pre">Index</span></a></em><a class="headerlink" href="#lenskit.data.Vocabulary.index" title="Link to this definition">#</a></dt>
 <dd><p>The property as a Pandas index.</p>
 </dd></dl>
 
 <dl class="py property">
-<dt class="sig sig-object py" id="lenskit.data.vocab.Vocabulary.size">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#lenskit.data.vocab.Vocabulary.size" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="lenskit.data.Vocabulary.size">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></em><a class="headerlink" href="#lenskit.data.Vocabulary.size" title="Link to this definition">#</a></dt>
 <dd><p>Current vocabulary size.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lenskit.data.vocab.Vocabulary.number">
-<span class="sig-name descname"><span class="pre">number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">VT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'error'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#lenskit.data.vocab.Vocabulary.number" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="lenskit.data.Vocabulary.number">
+<span class="sig-name descname"><span class="pre">number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">VT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'error'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a></span></span><a class="headerlink" href="#lenskit.data.Vocabulary.number" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
 <span class="sig-name descname"><span class="pre">number</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">term</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">VT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.12)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'none'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></span></span></dt>
 <dd><p>Look up the number for a vocabulary term.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lenskit.data.vocab.Vocabulary.numbers">
-<span class="sig-name descname"><span class="pre">numbers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">terms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.vocab.Vocabulary.numbers" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="lenskit.data.Vocabulary.numbers">
+<span class="sig-name descname"><span class="pre">numbers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">terms</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.Vocabulary.numbers" title="Link to this definition">#</a></dt>
 <dd><p>Look up the numbers for an array of terms or IDs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -820,8 +900,8 @@ identifiers.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lenskit.data.vocab.Vocabulary.term">
-<span class="sig-name descname"><span class="pre">term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.vocab.Vocabulary.term" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="lenskit.data.Vocabulary.term">
+<span class="sig-name descname"><span class="pre">term</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.Vocabulary.term" title="Link to this definition">#</a></dt>
 <dd><p>Look up the term with a particular number.  Negative indexing is <strong>not</strong> supported.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -834,8 +914,8 @@ identifiers.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lenskit.data.vocab.Vocabulary.terms">
-<span class="sig-name descname"><span class="pre">terms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.vocab.Vocabulary.terms" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="lenskit.data.Vocabulary.terms">
+<span class="sig-name descname"><span class="pre">terms</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.Vocabulary.terms" title="Link to this definition">#</a></dt>
 <dd><p>Get a list of terms, optionally for an array of term numbers.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -847,15 +927,15 @@ returns all terms.</p>
 of terms (in order) if <code class="docutils literal notranslate"><span class="pre">nums=None</span></code>.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><em>ndarray</em></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><em>ndarray</em></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><em>Any</em></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.0)"><em>dtype</em></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.0)"><em>integer</em></a> | <a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.0)"><em>str_</em></a> | <a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.0)"><em>bytes_</em></a>]]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lenskit.data.vocab.Vocabulary.id">
-<span class="sig-name descname"><span class="pre">id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.vocab.Vocabulary.id" title="Link to this definition">#</a></dt>
-<dd><p>Alias for <a class="reference internal" href="#lenskit.data.vocab.Vocabulary.term" title="lenskit.data.vocab.Vocabulary.term"><code class="xref py py-meth docutils literal notranslate"><span class="pre">term()</span></code></a>  for greater readability for entity ID vocabularies.</p>
+<dt class="sig sig-object py" id="lenskit.data.Vocabulary.id">
+<span class="sig-name descname"><span class="pre">id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.Vocabulary.id" title="Link to this definition">#</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#lenskit.data.Vocabulary.term" title="lenskit.data.Vocabulary.term"><code class="xref py py-meth docutils literal notranslate"><span class="pre">term()</span></code></a>  for greater readability for entity ID vocabularies.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>num</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>)</p>
@@ -867,22 +947,22 @@ of terms (in order) if <code class="docutils literal notranslate"><span class="p
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lenskit.data.vocab.Vocabulary.ids">
-<span class="sig-name descname"><span class="pre">ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.vocab.Vocabulary.ids" title="Link to this definition">#</a></dt>
-<dd><p>Alias for <a class="reference internal" href="#lenskit.data.vocab.Vocabulary.terms" title="lenskit.data.vocab.Vocabulary.terms"><code class="xref py py-meth docutils literal notranslate"><span class="pre">terms()</span></code></a> for greater readability for entity ID vocabularies.</p>
+<dt class="sig sig-object py" id="lenskit.data.Vocabulary.ids">
+<span class="sig-name descname"><span class="pre">ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.Vocabulary.ids" title="Link to this definition">#</a></dt>
+<dd><p>Alias for <a class="reference internal" href="#lenskit.data.Vocabulary.terms" title="lenskit.data.Vocabulary.terms"><code class="xref py py-meth docutils literal notranslate"><span class="pre">terms()</span></code></a> for greater readability for entity ID vocabularies.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>nums</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><em>ndarray</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><em>Any</em></a><em>, </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.0)"><em>dtype</em></a><em>[</em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.0)"><em>integer</em></a><em>]</em><em>] </em><em>| </em><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)"><em>Series</em></a><em> | </em><em>None</em>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><em>ndarray</em></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><em>ndarray</em></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><em>Any</em></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.0)"><em>dtype</em></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.0)"><em>integer</em></a> | <a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.0)"><em>str_</em></a> | <a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.0)"><em>bytes_</em></a>]]</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lenskit.data.vocab.Vocabulary.copy">
-<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.vocab.Vocabulary.copy" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="lenskit.data.Vocabulary.copy">
+<span class="sig-name descname"><span class="pre">copy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.Vocabulary.copy" title="Link to this definition">#</a></dt>
 <dd><p>Return a (cheap) copy of this vocabulary.  It retains the same mapping,
 but will not be updated if the original vocabulary has new terms added.
 However, since new terms are always added to the end, it will be
@@ -891,7 +971,7 @@ time of the copy.</p>
 <p>This method is useful for saving known vocabularies in model training.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#lenskit.data.vocab.Vocabulary" title="lenskit.data.vocab.Vocabulary"><em>Vocabulary</em></a>[<em>VT</em>]</p>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><em>Vocabulary</em></a>[<em>VT</em>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -899,18 +979,176 @@ time of the copy.</p>
 </dd></dl>
 
 </section>
-<section id="dataset-implementations">
-<h2>Dataset implementations<a class="headerlink" href="#dataset-implementations" title="Link to this heading">#</a></h2>
-<section id="matrix-dataset">
-<h3>Matrix Dataset<a class="headerlink" href="#matrix-dataset" title="Link to this heading">#</a></h3>
-<p>The <code class="xref py py-class docutils literal notranslate"><span class="pre">MatrixDataset</span></code> provides an in-memory dataset implementation backed
-by a ratings matrix or implicit-feedback matrix.</p>
-</section>
-<section id="lazy-dataset">
-<h3>Lazy Dataset<a class="headerlink" href="#lazy-dataset" title="Link to this heading">#</a></h3>
-<p>The lazy data set takes a function that loads a data set (of any type), and
-lazily uses that function to load an underlying data set when needed.</p>
-</section>
+<section id="item-lists">
+<h2>Item Lists<a class="headerlink" href="#item-lists" title="Link to this heading">#</a></h2>
+<p>LensKit uses <em>item lists</em> to represent collections of items that may be scored,
+ranked, etc.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.data.ItemList">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.data.</span></span><span class="sig-name descname"><span class="pre">ItemList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">item_nums</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocabulary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ordered</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fields</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Representation of a (usually ordered) list of items, possibly with scores
+and other associated data; many components take and return item lists.  Item
+lists are to be treated as <strong>immutable</strong> — create a new list with modified
+data, do not do in-place modifications of the list itself or the arrays or
+data frame it returns.</p>
+<p>An item list logically a list of rows, each of which is an item, like a
+<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> but supporting multiple array backends.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Naming for fields and accessor methods is tricky, because the usual
+convention for a data frame is to use singular column names (e.g.
+“item_id”, “score”) instead of plural (“item_ids”, “scores”) — the data
+frame, like a database table, is a list of instances, and the column
+names are best interpreted as naming attributes of individual instances.</p>
+<p>However, when working with a list of e.g. item IDs, it is more natural —
+at least to this author — to use plural names: <code class="docutils literal notranslate"><span class="pre">item_ids</span></code>.  Since this
+class is doing somewhat double-duty, representing a list of items along
+with associated data, as well as a data frame of columns representing
+items, the appropriate naming is not entirely clear.  The naming
+convention in this class is therefore as follows:</p>
+<ul class="simple">
+<li><p>Field names are singular (<code class="docutils literal notranslate"><span class="pre">item_id</span></code>, <code class="docutils literal notranslate"><span class="pre">score</span></code>).</p></li>
+<li><p>Named accessor methods are plural (<code class="xref py py-meth docutils literal notranslate"><span class="pre">item_ids()</span></code>, <a class="reference internal" href="#lenskit.data.ItemList.scores" title="lenskit.data.ItemList.scores"><code class="xref py py-meth docutils literal notranslate"><span class="pre">scores()</span></code></a>).</p></li>
+<li><p>Both singular and plural forms are accepted for item IDs numbers, and
+scores in the keyword arguments.  Other field names should be
+singular.</p></li>
+</ul>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>item_ids</strong> (<em>NDArray</em><em>[</em><em>NPEntityId</em><em>] </em><em>| </em><em>pd.Series</em><em>[</em><em>EntityId</em><em>] </em><em>| </em><em>Sequence</em><em>[</em><em>EntityId</em><em>] </em><em>| </em><em>None</em>) – A list or array of item identifiers. <code class="docutils literal notranslate"><span class="pre">item_id</span></code> is accepted as an
+alternate name.</p></li>
+<li><p><strong>item_nums</strong> (<em>NDArray</em><em>[</em><em>np.int32</em><em>] </em><em>| </em><em>pd.Series</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>] </em><em>| </em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em>] </em><em>| </em><em>ArrayLike</em><em> | </em><em>None</em>) – A list or array of item numbers. <code class="docutils literal notranslate"><span class="pre">item_num</span></code> is accepted as an
+alternate name.</p></li>
+<li><p><strong>vocabulary</strong> (<a class="reference internal" href="#lenskit.data.Vocabulary" title="lenskit.data.Vocabulary"><em>Vocabulary</em></a><em>[</em><em>EID</em><em>] </em><em>| </em><em>None</em>) – A vocabulary to translate between item IDs and numbers.</p></li>
+<li><p><strong>ordered</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Whether the list has a meaningful order.</p></li>
+<li><p><strong>scores</strong> (<em>NDArray</em><em>[</em><em>np.generic</em><em>] </em><em>| </em><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.4)"><em>torch.Tensor</em></a><em> | </em><em>ArrayLike</em><em> | </em><em>None</em>) – An array of scores for the items.</p></li>
+<li><p><strong>fields</strong> (<em>NDArray</em><em>[</em><em>np.generic</em><em>] </em><em>| </em><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.4)"><em>torch.Tensor</em></a><em> | </em><em>ArrayLike</em>) – Additional fields, such as <code class="docutils literal notranslate"><span class="pre">score</span></code> or <code class="docutils literal notranslate"><span class="pre">rating</span></code>.  Field names
+should generally be singular; the named keyword arguments and
+accessor methods are plural for readability (“get the list of item
+IDs”)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.data.ItemList.ordered">
+<span class="sig-name descname"><span class="pre">ordered</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#lenskit.data.ItemList.ordered" title="Link to this definition">#</a></dt>
+<dd><p>Whether this list has a meaningful order.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemList.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.clone" title="Link to this definition">#</a></dt>
+<dd><p>Make a shallow copy of the item list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemList.ids">
+<span class="sig-name descname"><span class="pre">ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.ids" title="Link to this definition">#</a></dt>
+<dd><p>Get the item IDs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An array of item identifiers.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.12)"><strong>RuntimeError</strong></a> – if the item list was not created with IDs or a <a class="reference internal" href="#lenskit.data.Vocabulary" title="lenskit.data.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a>.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><em>ndarray</em></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><em>Any</em></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.0)"><em>dtype</em></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.0)"><em>integer</em></a> | <a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.0)"><em>str_</em></a> | <a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.0)"><em>bytes_</em></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemList.numbers">
+<span class="sig-name descname"><span class="pre">numbers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'numpy'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocabulary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.numbers" title="Link to this definition">#</a></dt>
+<dd><p>Get the item numbers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>format</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.LiteralString" title="(in Python v3.12)"><em>LiteralString</em></a>) – The array format to use.</p></li>
+<li><p><strong>vocabulary</strong> (<a class="reference internal" href="#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><em>Vocabulary</em></a><em>[</em><em>EID</em><em>] </em><em>| </em><em>None</em>) – A alternate vocabulary for mapping IDs to numbers.  If provided,
+then the item list must have IDs (either stored, or through a
+vocabulary).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An array of item numbers.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.12)"><strong>RuntimeError</strong></a> – if the item list was not created with numbers or a</p></li>
+<li><p><a class="reference internal" href="#lenskit.data.Vocabulary" title="lenskit.data.Vocabulary"><strong>Vocabulary</strong></a> – </p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ArrayLike</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemList.scores">
+<span class="sig-name descname"><span class="pre">scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'numpy'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.scores" title="Link to this definition">#</a></dt>
+<dd><p>Get the item scores (if available).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>format</strong> (<em>LiteralString</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>ArrayLike | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemList.ranks">
+<span class="sig-name descname"><span class="pre">ranks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'numpy'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.ranks" title="Link to this definition">#</a></dt>
+<dd><p>Get an array of ranks for the items in this list, if it is ordered.
+Unordered lists have no ranks.  The ranks are based on the order in the
+list, <strong>not</strong> on the score.</p>
+<p>Item ranks start with <strong>1</strong>, for compatibility with common practice in
+mathematically defining information retrieval metrics and operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>An array of item ranks, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the list is unordered.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>format</strong> (<em>LiteralString</em>)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>ArrayLike | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemList.to_df">
+<span class="sig-name descname"><span class="pre">to_df</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.to_df" title="Link to this definition">#</a></dt>
+<dd><p>Convert this item list to a Pandas data frame.  It has the following columns:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">item_id</span></code> — the item IDs (if available)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">item_id</span></code> — the item numbers (if available)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">score</span></code> — the item scores</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rank</span></code> — the item ranks (if the list is ordered)</p></li>
+<li><p>all other defined fields, using their field names</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-lenskit.data.tables">
 <span id="user-item-data-tables"></span><h2>User-Item Data Tables<a class="headerlink" href="#module-lenskit.data.tables" title="Link to this heading">#</a></h2>
@@ -997,6 +1235,236 @@ lazily uses that function to load an underlying data set when needed.</p>
 </dd></dl>
 
 </section>
+<section id="module-lenskit.data.dataset">
+<span id="dataset-implementations"></span><h2>Dataset Implementations<a class="headerlink" href="#module-lenskit.data.dataset" title="Link to this heading">#</a></h2>
+<section id="matrix-dataset">
+<h3>Matrix Dataset<a class="headerlink" href="#matrix-dataset" title="Link to this heading">#</a></h3>
+<p>The <a class="reference internal" href="#lenskit.data.dataset.MatrixDataset" title="lenskit.data.dataset.MatrixDataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatrixDataset</span></code></a> provides an in-memory dataset implementation backed
+by a ratings matrix or implicit-feedback matrix.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.data.dataset.MatrixDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.data.dataset.</span></span><span class="sig-name descname"><span class="pre">MatrixDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">users</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interact_df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.dataset.MatrixDataset" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a></p>
+<p>Dataset implementation using an in-memory rating or implicit-feedback
+matrix.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Client code generally should not construct this class directly.  Instead
+use the various <code class="docutils literal notranslate"><span class="pre">from_</span></code> and <code class="docutils literal notranslate"><span class="pre">load_</span></code> functions in
+<a class="reference internal" href="#module-0" title="lenskit.data"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.data</span></code></a>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>users</strong> (<a class="reference internal" href="#lenskit.data.Vocabulary" title="lenskit.data.Vocabulary"><em>Vocabulary</em></a>)</p></li>
+<li><p><strong>items</strong> (<a class="reference internal" href="#lenskit.data.Vocabulary" title="lenskit.data.Vocabulary"><em>Vocabulary</em></a>)</p></li>
+<li><p><strong>interact_df</strong> (<em>pd.DataFrame</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="lazy-dataset">
+<h3>Lazy Dataset<a class="headerlink" href="#lazy-dataset" title="Link to this heading">#</a></h3>
+<p>The lazy data set takes a function that loads a data set (of any type), and
+lazily uses that function to load an underlying data set when needed.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.data.dataset.LazyDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.data.dataset.</span></span><span class="sig-name descname"><span class="pre">LazyDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">loader</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.dataset.LazyDataset" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a></p>
+<p>A data set with an underlying load function, that doesn’t call the function
+until data is actually needed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>loader</strong> (<em>Callable</em><em>[</em><em>[</em><em>]</em><em>, </em><a class="reference internal" href="#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a><em>]</em>) – The function that will load the dataset when needed.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.dataset.LazyDataset.delegate">
+<span class="sig-name descname"><span class="pre">delegate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.dataset.LazyDataset.delegate" title="Link to this definition">#</a></dt>
+<dd><p>Get the delegate data set, loading it if necessary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.data.dataset.LazyDataset.items">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><span class="pre">Vocabulary</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.12)"><span class="pre">bytes</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.data.dataset.LazyDataset.items" title="Link to this definition">#</a></dt>
+<dd><p>The items known by this dataset.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.data.dataset.LazyDataset.users">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">users</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><span class="pre">Vocabulary</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.12)"><span class="pre">bytes</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.data.dataset.LazyDataset.users" title="Link to this definition">#</a></dt>
+<dd><p>The users known by this dataset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.dataset.LazyDataset.count">
+<span class="sig-name descname"><span class="pre">count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">what</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.dataset.LazyDataset.count" title="Link to this definition">#</a></dt>
+<dd><p>Count entities in the dataset.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The precise counts are subtle in the presence of repeated or
+superseded interactions. See <code class="xref py py-meth docutils literal notranslate"><span class="pre">interaction_count()</span></code> and
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">rating_count()</span></code> for details on the <code class="docutils literal notranslate"><span class="pre">&quot;interactions&quot;</span></code> and
+<code class="docutils literal notranslate"><span class="pre">&quot;ratings&quot;</span></code> counts.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>what</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>The type of entity to count.  Commonly-supported ones include:</p>
+<ul class="simple">
+<li><p>users</p></li>
+<li><p>items</p></li>
+<li><p>interactions</p></li>
+<li><p>ratings</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.dataset.LazyDataset.interaction_matrix">
+<span class="sig-name descname"><span class="pre">interaction_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.dataset.LazyDataset.interaction_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Get the user-item interactions as “ratings” matrix.  Interactions are
+not repeated.  The matrix may be in “coordinate” format, in which case
+it is comparable to <a class="reference internal" href="#lenskit.data.dataset.LazyDataset.interaction_log" title="lenskit.data.dataset.LazyDataset.interaction_log"><code class="xref py py-meth docutils literal notranslate"><span class="pre">interaction_log()</span></code></a> but without repeated
+interactions, or it may be in a compressed sparse format.</p>
+<div class="admonition-todo admonition" id="id5">
+<p class="admonition-title">Todo</p>
+<p>Aggregate is currently ignored because repeated interactions are not
+yet supported.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Client code <strong>must not</strong> perform in-place modifications on the matrix
+returned from this method.  Whenever possible, it will be a shallow
+view on top of the underlying storage, and modifications may corrupt
+data for other code.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>format</strong> – <p>The desired data format.  Currently-supported formats are:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;pandas&quot;</span></code> — returns a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;torch&quot;</span></code> — returns a sparse <a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a> (see
+<a class="reference external" href="https://pytorch.org/docs/stable/sparse.html#module-torch.sparse" title="(in PyTorch v2.4)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">torch.sparse</span></code></a>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;scipy&quot;</span></code> — returns a sparse array from <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/sparse.html#module-scipy.sparse" title="(in SciPy v1.14.0)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scipy.sparse</span></code></a>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;structure&quot;</span></code> — returns a <code class="xref py py-class docutils literal notranslate"><span class="pre">CSRStructure</span></code>
+containing only the user and item numbers in compressed sparse
+row format.</p></li>
+</ul>
+</p></li>
+<li><p><strong>field</strong> – <p>Which field to return in the matrix.  Common fields include
+<code class="docutils literal notranslate"><span class="pre">&quot;rating&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;timestamp&quot;</span></code>.</p>
+<p>If unspecified (<code class="docutils literal notranslate"><span class="pre">None</span></code>), this will yield an implicit-feedback
+indicator matrix, with 1s for observed items; the <code class="docutils literal notranslate"><span class="pre">&quot;pandas&quot;</span></code>
+format will only include user and item columns.</p>
+<p>If the <code class="docutils literal notranslate"><span class="pre">rating</span></code> field is requested but is not defined in the
+underlying data, then this is equivalent to <code class="docutils literal notranslate"><span class="pre">&quot;indicator&quot;</span></code>,
+except that the <code class="docutils literal notranslate"><span class="pre">&quot;pandas&quot;</span></code> format will include a <code class="docutils literal notranslate"><span class="pre">&quot;rating&quot;</span></code>
+column of all 1s.</p>
+</p></li>
+<li><p><strong>combine</strong> – <p>How to combine multiple observations for a single user-item
+pair. Available methods are:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;count&quot;</span></code> — count the user-item interactions. Only valid
+when <code class="docutils literal notranslate"><span class="pre">field=None</span></code>; if the underlying data defines a
+<code class="docutils literal notranslate"><span class="pre">count</span></code> field, then this is equivalent to <code class="docutils literal notranslate"><span class="pre">&quot;sum&quot;</span></code> on that
+field.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;sum&quot;</span></code> — sum the field values.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;first&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;last&quot;</span></code> — take the first or last value seen
+(in timestamp order, if timestamps are defined).</p></li>
+</ul>
+</p></li>
+<li><p><strong>layout</strong> – The layout for a sparse matrix.  Can be either <code class="docutils literal notranslate"><span class="pre">csr</span></code> or
+<code class="docutils literal notranslate"><span class="pre">coo</span></code>, or <code class="docutils literal notranslate"><span class="pre">None</span></code> to use the default for the specified
+format.  CSR is only supported by Torch and SciPy backends.</p></li>
+<li><p><strong>legacy</strong> – <code class="docutils literal notranslate"><span class="pre">True</span></code> to return a legacy SciPy sparse matrix instead of
+sparse array.</p></li>
+<li><p><strong>original_ids</strong> – <code class="docutils literal notranslate"><span class="pre">True</span></code> to return user and item IDs instead of numbers in
+<code class="docutils literal notranslate"><span class="pre">pandas</span></code>-format matrix.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><em>Any</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.dataset.LazyDataset.interaction_log">
+<span class="sig-name descname"><span class="pre">interaction_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.dataset.LazyDataset.interaction_log" title="Link to this definition">#</a></dt>
+<dd><p>Get the user-item interactions as a table in the requested format. The
+table is not in a specified order.  Interactions may be repeated (e.g.
+the same user may listen to a song multiple times).  For a non-repeated
+“ratings matrix” view of the data, see <a class="reference internal" href="#lenskit.data.dataset.LazyDataset.interaction_matrix" title="lenskit.data.dataset.LazyDataset.interaction_matrix"><code class="xref py py-meth docutils literal notranslate"><span class="pre">interaction_matrix()</span></code></a>.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Client code <strong>must not</strong> perform in-place modifications on the table
+returned from this method.  Whenever possible, it will be a shallow
+view on top of the underlying storage, and modifications may corrupt
+data for other code.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>format</strong> – <p>The desired data format.  Currently-supported formats are:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;pandas&quot;</span></code> — returns a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>.  The index
+is not meaningful.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;numpy&quot;</span></code> — returns a <code class="xref py py-class docutils literal notranslate"><span class="pre">NumpyUserItemTable</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">&quot;torch&quot;</span></code> — returns a <code class="xref py py-class docutils literal notranslate"><span class="pre">TorchUserItemTable</span></code>.</p></li>
+</ul>
+</p></li>
+<li><p><strong>fields</strong> – Which fields to include.  If set to <code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code>, will include all
+available fields in the resulting table; <code class="docutils literal notranslate"><span class="pre">None</span></code> includes no
+fields besides the user and item.  Commonly-available fields
+include <code class="docutils literal notranslate"><span class="pre">&quot;rating&quot;</span></code> and <code class="docutils literal notranslate"><span class="pre">&quot;timestamp&quot;</span></code>.  Missing fields will
+be omitted in the result.</p></li>
+<li><p><strong>original_ids</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, return user and item IDs as represented in the
+original source data in columns named <code class="docutils literal notranslate"><span class="pre">user_id</span></code> and
+<code class="docutils literal notranslate"><span class="pre">item_id</span></code>, instead of the user and item numbers typically
+returned.  Only applicable to the <code class="docutils literal notranslate"><span class="pre">pandas</span></code> format. See
+<a class="reference internal" href="#data-identifiers"><span class="std std-ref">Identifiers</span></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The user-item interaction log in the specified format.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><em>Any</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.dataset.LazyDataset.user_row">
+<span class="sig-name descname"><span class="pre">user_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.dataset.LazyDataset.user_row" title="Link to this definition">#</a></dt>
+<dd><p>Get a user’s row from the interaction matrix.  Available fields are
+returned as fields. If the dataset has ratings, these are provided as a
+<code class="docutils literal notranslate"><span class="pre">rating</span></code> field, <strong>not</strong> as the item scores.  The item list is unordered,
+but items are returned in order by item number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
 </section>
 
 
@@ -1060,36 +1528,48 @@ lazily uses that function to load an underlying data set when needed.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.rating_count"><code class="docutils literal notranslate"><span class="pre">Dataset.rating_count</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.interaction_log"><code class="docutils literal notranslate"><span class="pre">Dataset.interaction_log()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.interaction_matrix"><code class="docutils literal notranslate"><span class="pre">Dataset.interaction_matrix()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.user_row"><code class="docutils literal notranslate"><span class="pre">Dataset.user_row()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.item_stats"><code class="docutils literal notranslate"><span class="pre">Dataset.item_stats()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.user_stats"><code class="docutils literal notranslate"><span class="pre">Dataset.user_stats()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-datasets">Creating Datasets</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-datasets">Creating Datasets</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.from_interactions_df"><code class="docutils literal notranslate"><span class="pre">from_interactions_df()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-common-datasets">Loading Common Datasets</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.load_movielens"><code class="docutils literal notranslate"><span class="pre">load_movielens()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vocabularies">Vocabularies</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary"><code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.name"><code class="docutils literal notranslate"><span class="pre">Vocabulary.name</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.index"><code class="docutils literal notranslate"><span class="pre">Vocabulary.index</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.size"><code class="docutils literal notranslate"><span class="pre">Vocabulary.size</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.number"><code class="docutils literal notranslate"><span class="pre">Vocabulary.number()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.numbers"><code class="docutils literal notranslate"><span class="pre">Vocabulary.numbers()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.term"><code class="docutils literal notranslate"><span class="pre">Vocabulary.term()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.terms"><code class="docutils literal notranslate"><span class="pre">Vocabulary.terms()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.id"><code class="docutils literal notranslate"><span class="pre">Vocabulary.id()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.ids"><code class="docutils literal notranslate"><span class="pre">Vocabulary.ids()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.vocab.Vocabulary.copy"><code class="docutils literal notranslate"><span class="pre">Vocabulary.copy()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary"><code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.name"><code class="docutils literal notranslate"><span class="pre">Vocabulary.name</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.index"><code class="docutils literal notranslate"><span class="pre">Vocabulary.index</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.size"><code class="docutils literal notranslate"><span class="pre">Vocabulary.size</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.number"><code class="docutils literal notranslate"><span class="pre">Vocabulary.number()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.numbers"><code class="docutils literal notranslate"><span class="pre">Vocabulary.numbers()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.term"><code class="docutils literal notranslate"><span class="pre">Vocabulary.term()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.terms"><code class="docutils literal notranslate"><span class="pre">Vocabulary.terms()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.id"><code class="docutils literal notranslate"><span class="pre">Vocabulary.id()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.ids"><code class="docutils literal notranslate"><span class="pre">Vocabulary.ids()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Vocabulary.copy"><code class="docutils literal notranslate"><span class="pre">Vocabulary.copy()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-implementations">Dataset implementations</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-dataset">Matrix Dataset</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lazy-dataset">Lazy Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#item-lists">Item Lists</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList"><code class="docutils literal notranslate"><span class="pre">ItemList</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.ordered"><code class="docutils literal notranslate"><span class="pre">ItemList.ordered</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.clone"><code class="docutils literal notranslate"><span class="pre">ItemList.clone()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.ids"><code class="docutils literal notranslate"><span class="pre">ItemList.ids()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.numbers"><code class="docutils literal notranslate"><span class="pre">ItemList.numbers()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.scores"><code class="docutils literal notranslate"><span class="pre">ItemList.scores()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.ranks"><code class="docutils literal notranslate"><span class="pre">ItemList.ranks()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.to_df"><code class="docutils literal notranslate"><span class="pre">ItemList.to_df()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-lenskit.data.tables">User-Item Data Tables</a><ul class="nav section-nav flex-column">
@@ -1105,6 +1585,26 @@ lazily uses that function to load an underlying data set when needed.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.tables.TorchUserItemTable.item_nums"><code class="docutils literal notranslate"><span class="pre">TorchUserItemTable.item_nums</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.tables.TorchUserItemTable.ratings"><code class="docutils literal notranslate"><span class="pre">TorchUserItemTable.ratings</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.tables.TorchUserItemTable.timestamps"><code class="docutils literal notranslate"><span class="pre">TorchUserItemTable.timestamps</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-lenskit.data.dataset">Dataset Implementations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-dataset">Matrix Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.MatrixDataset"><code class="docutils literal notranslate"><span class="pre">MatrixDataset</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lazy-dataset">Lazy Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset"><code class="docutils literal notranslate"><span class="pre">LazyDataset</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset.delegate"><code class="docutils literal notranslate"><span class="pre">LazyDataset.delegate()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset.items"><code class="docutils literal notranslate"><span class="pre">LazyDataset.items</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset.users"><code class="docutils literal notranslate"><span class="pre">LazyDataset.users</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset.count"><code class="docutils literal notranslate"><span class="pre">LazyDataset.count()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset.interaction_matrix"><code class="docutils literal notranslate"><span class="pre">LazyDataset.interaction_matrix()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset.interaction_log"><code class="docutils literal notranslate"><span class="pre">LazyDataset.interaction_log()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.dataset.LazyDataset.user_row"><code class="docutils literal notranslate"><span class="pre">LazyDataset.user_row()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
