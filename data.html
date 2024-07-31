@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit provides a unified data model for recommender systems data along with classes and utility functions for working with it, described in this section of the manual. Data Model and Key Concepts..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Data Management &#8212; LensKit 0.15.0.dev980+gb79fe00c documentation</title>
+    <title>Data Management &#8212; LensKit 0.15.0.dev983+gdb1a463b documentation</title>
   
   
   
@@ -48,7 +48,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=2b1c20bf"></script>
+    <script src="_static/documentation_options.js?v=50aace8f"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev980+gb79fe00c documentation - Home"/>
-    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev980+gb79fe00c documentation - Home"/>`);</script>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev983+gdb1a463b documentation - Home"/>
+    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev983+gdb1a463b documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -994,6 +994,14 @@ data, do not do in-place modifications of the list itself or the arrays or
 data frame it returns.</p>
 <p>An item list logically a list of rows, each of which is an item, like a
 <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> but supporting multiple array backends.</p>
+<p>When an item list is pickled, it is pickled compactly but only for CPUs: the
+vocabulary is dropped (after ensuring both IDs and numbers are computed),
+and all arrays are pickled as NumPy arrays.  This makes item lists compact
+to serialize and transmit, but does mean that that serializing an item list
+whose scores are still on the GPU will deserialize on the CPU in the
+receiving process.  This is usually not a problem, because item lists are
+typically used for small lists of items, not large data structures that need
+to remain in shared memory.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Naming for fields and accessor methods is tricky, because the usual
