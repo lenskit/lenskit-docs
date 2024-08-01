@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit provides a unified data model for recommender systems data along with classes and utility functions for working with it, described in this section of the manual. Data Model and Key Concepts..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Data Management &#8212; LensKit 0.15.0.dev983+gdb1a463b documentation</title>
+    <title>Data Management &#8212; LensKit 0.15.0.dev1006+g1db4c204 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=50aace8f"></script>
+    <script src="_static/documentation_options.js?v=71d7f2d5"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -62,7 +62,7 @@
     <link rel="canonical" href="https://lkpy.lenskit.org/en/latest/data.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Splitting Data" href="crossfold.html" />
+    <link rel="next" title="Splitting Data" href="splitting.html" />
     <link rel="prev" title="2024 Releases" href="releases/2024.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev983+gdb1a463b documentation - Home"/>
-    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev983+gdb1a463b documentation - Home"/>`);</script>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1006+g1db4c204 documentation - Home"/>
+    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1006+g1db4c204 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -195,7 +195,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Experiments</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="crossfold.html">Splitting Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="splitting.html">Splitting Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="evaluation/predict-metrics.html">Prediction Accuracy Metrics</a></li>
@@ -382,6 +382,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#item-lists">Item Lists</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList"><code class="docutils literal notranslate"><span class="pre">ItemList</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.ordered"><code class="docutils literal notranslate"><span class="pre">ItemList.ordered</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.from_df"><code class="docutils literal notranslate"><span class="pre">ItemList.from_df()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.clone"><code class="docutils literal notranslate"><span class="pre">ItemList.clone()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.ids"><code class="docutils literal notranslate"><span class="pre">ItemList.ids()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.numbers"><code class="docutils literal notranslate"><span class="pre">ItemList.numbers()</span></code></a></li>
@@ -550,6 +551,7 @@ superseded interactions. See <a class="reference internal" href="#lenskit.data.D
 <ul class="simple">
 <li><p>users</p></li>
 <li><p>items</p></li>
+<li><p>pairs (observed user-item pairs)</p></li>
 <li><p>interactions</p></li>
 <li><p>ratings</p></li>
 </ul>
@@ -669,6 +671,10 @@ format will only include user and item columns.</p>
 underlying data, then this is equivalent to <code class="docutils literal notranslate"><span class="pre">&quot;indicator&quot;</span></code>,
 except that the <code class="docutils literal notranslate"><span class="pre">&quot;pandas&quot;</span></code> format will include a <code class="docutils literal notranslate"><span class="pre">&quot;rating&quot;</span></code>
 column of all 1s.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;pandas&quot;</span></code> format also supports the special field name
+<code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code> to return a data frame with all available fields. When
+<code class="docutils literal notranslate"><span class="pre">field=&quot;all&quot;</span></code>, a field named <code class="docutils literal notranslate"><span class="pre">count</span></code> (if defined) is
+combined with the <code class="docutils literal notranslate"><span class="pre">sum</span></code> method, and other fields use <code class="docutils literal notranslate"><span class="pre">last</span></code>.</p>
 </p></li>
 <li><p><strong>combine</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>None</em>) – <p>How to combine multiple observations for a single user-item
 pair. Available methods are:</p>
@@ -679,7 +685,8 @@ when <code class="docutils literal notranslate"><span class="pre">field=None</sp
 field.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;sum&quot;</span></code> — sum the field values.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;first&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;last&quot;</span></code> — take the first or last value seen
-(in timestamp order, if timestamps are defined).</p></li>
+(in timestamp order, if timestamps are defined; otherwise,
+their order in the original input).</p></li>
 </ul>
 </p></li>
 <li><p><strong>layout</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><em>None</em>) – The layout for a sparse matrix.  Can be either <code class="docutils literal notranslate"><span class="pre">csr</span></code> or
@@ -994,6 +1001,9 @@ data, do not do in-place modifications of the list itself or the arrays or
 data frame it returns.</p>
 <p>An item list logically a list of rows, each of which is an item, like a
 <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> but supporting multiple array backends.</p>
+<p>Item lists can be subset as an array (e.g. <code class="docutils literal notranslate"><span class="pre">items[selector]</span></code>), where
+integer indices (or arrays thereof), boolean arrays, and slices are allowed
+as selectors.</p>
 <p>When an item list is pickled, it is pickled compactly but only for CPUs: the
 vocabulary is dropped (after ensuring both IDs and numbers are computed),
 and all arrays are pickled as NumPy arrays.  This makes item lists compact
@@ -1023,6 +1033,13 @@ scores in the keyword arguments.  Other field names should be
 singular.</p></li>
 </ul>
 </div>
+<div class="admonition-todo admonition" id="id5">
+<p class="admonition-title">Todo</p>
+<p>Right now, selection / subsetting only happens on the CPU, and will move
+data to the CPU for the subsetting operation.  There is no reason, in
+principle, why we cannot subset on GPU.  Future revisions may add
+support for this.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -1044,6 +1061,28 @@ IDs”)</p></li>
 <dt class="sig sig-object py" id="lenskit.data.ItemList.ordered">
 <span class="sig-name descname"><span class="pre">ordered</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><span class="pre">bool</span></a></em><a class="headerlink" href="#lenskit.data.ItemList.ordered" title="Link to this definition">#</a></dt>
 <dd><p>Whether this list has a meaningful order.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemList.from_df">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocabulary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">lenskit.data.vocab.Vocabulary[int</span> <span class="pre">|</span> <span class="pre">str</span> <span class="pre">|</span> <span class="pre">bytes]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keep_user</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.from_df" title="Link to this definition">#</a></dt>
+<dd><p>Create a item list from a Pandas data frame.  The frame should have
+<code class="docutils literal notranslate"><span class="pre">item_num</span></code> and/or <code class="docutils literal notranslate"><span class="pre">item_id</span></code> columns to identify the items; other
+columns (e.g. <code class="docutils literal notranslate"><span class="pre">score</span></code> or <code class="docutils literal notranslate"><span class="pre">rating</span></code>) are added as fields. If the data
+frame has user columns (<code class="docutils literal notranslate"><span class="pre">user_id</span></code> or <code class="docutils literal notranslate"><span class="pre">user_num</span></code>), those are dropped
+by default.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The data frame to turn into an item list.</p></li>
+<li><p><strong>vocabulary</strong> – The item vocabulary.</p></li>
+<li><p><strong>keep_user</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, keeps user ID/number columns instead of dropping them.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -1139,18 +1178,24 @@ mathematically defining information retrieval metrics and operations.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.data.ItemList.to_df">
-<span class="sig-name descname"><span class="pre">to_df</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.to_df" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.to_df" title="Link to this definition">#</a></dt>
 <dd><p>Convert this item list to a Pandas data frame.  It has the following columns:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">item_id</span></code> — the item IDs (if available)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">item_id</span></code> — the item numbers (if available)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">item_id</span></code> — the item IDs (if available and <code class="docutils literal notranslate"><span class="pre">ids=True</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">item_num</span></code> — the item numbers (if available and <code class="docutils literal notranslate"><span class="pre">numbers=True</span></code>)</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">score</span></code> — the item scores</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">rank</span></code> — the item ranks (if the list is ordered)</p></li>
 <li><p>all other defined fields, using their field names</p></li>
 </ul>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a></p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>)</p></li>
+<li><p><strong>numbers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1253,8 +1298,8 @@ by a ratings matrix or implicit-feedback matrix.</p>
 <dt class="sig sig-object py" id="lenskit.data.dataset.MatrixDataset">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.data.dataset.</span></span><span class="sig-name descname"><span class="pre">MatrixDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">users</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interact_df</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.dataset.MatrixDataset" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a></p>
-<p>Dataset implementation using an in-memory rating or implicit-feedback
-matrix.</p>
+<p>Dataset implementation using an in-memory rating or implicit-feedback matrix
+(with no duplicate interactions).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Client code generally should not construct this class directly.  Instead
@@ -1328,6 +1373,7 @@ superseded interactions. See <code class="xref py py-meth docutils literal notra
 <ul class="simple">
 <li><p>users</p></li>
 <li><p>items</p></li>
+<li><p>pairs (observed user-item pairs)</p></li>
 <li><p>interactions</p></li>
 <li><p>ratings</p></li>
 </ul>
@@ -1346,7 +1392,7 @@ superseded interactions. See <code class="xref py py-meth docutils literal notra
 not repeated.  The matrix may be in “coordinate” format, in which case
 it is comparable to <a class="reference internal" href="#lenskit.data.dataset.LazyDataset.interaction_log" title="lenskit.data.dataset.LazyDataset.interaction_log"><code class="xref py py-meth docutils literal notranslate"><span class="pre">interaction_log()</span></code></a> but without repeated
 interactions, or it may be in a compressed sparse format.</p>
-<div class="admonition-todo admonition" id="id5">
+<div class="admonition-todo admonition" id="id6">
 <p class="admonition-title">Todo</p>
 <p>Aggregate is currently ignored because repeated interactions are not
 yet supported.</p>
@@ -1381,6 +1427,10 @@ format will only include user and item columns.</p>
 underlying data, then this is equivalent to <code class="docutils literal notranslate"><span class="pre">&quot;indicator&quot;</span></code>,
 except that the <code class="docutils literal notranslate"><span class="pre">&quot;pandas&quot;</span></code> format will include a <code class="docutils literal notranslate"><span class="pre">&quot;rating&quot;</span></code>
 column of all 1s.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">&quot;pandas&quot;</span></code> format also supports the special field name
+<code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code> to return a data frame with all available fields. When
+<code class="docutils literal notranslate"><span class="pre">field=&quot;all&quot;</span></code>, a field named <code class="docutils literal notranslate"><span class="pre">count</span></code> (if defined) is
+combined with the <code class="docutils literal notranslate"><span class="pre">sum</span></code> method, and other fields use <code class="docutils literal notranslate"><span class="pre">last</span></code>.</p>
 </p></li>
 <li><p><strong>combine</strong> – <p>How to combine multiple observations for a single user-item
 pair. Available methods are:</p>
@@ -1391,7 +1441,8 @@ when <code class="docutils literal notranslate"><span class="pre">field=None</sp
 field.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;sum&quot;</span></code> — sum the field values.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">&quot;first&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;last&quot;</span></code> — take the first or last value seen
-(in timestamp order, if timestamps are defined).</p></li>
+(in timestamp order, if timestamps are defined; otherwise,
+their order in the original input).</p></li>
 </ul>
 </p></li>
 <li><p><strong>layout</strong> – The layout for a sparse matrix.  Can be either <code class="docutils literal notranslate"><span class="pre">csr</span></code> or
@@ -1496,7 +1547,7 @@ but items are returned in order by item number.</p>
       </div>
     </a>
     <a class="right-next"
-       href="crossfold.html"
+       href="splitting.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
@@ -1570,6 +1621,7 @@ but items are returned in order by item number.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#item-lists">Item Lists</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList"><code class="docutils literal notranslate"><span class="pre">ItemList</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.ordered"><code class="docutils literal notranslate"><span class="pre">ItemList.ordered</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.from_df"><code class="docutils literal notranslate"><span class="pre">ItemList.from_df()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.clone"><code class="docutils literal notranslate"><span class="pre">ItemList.clone()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.ids"><code class="docutils literal notranslate"><span class="pre">ItemList.ids()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.numbers"><code class="docutils literal notranslate"><span class="pre">ItemList.numbers()</span></code></a></li>

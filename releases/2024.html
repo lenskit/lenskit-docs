@@ -19,7 +19,7 @@
 <meta name="description" content="The 2024 release series is currently in development. No specific release date is set yet. 2024 will bring breaking changes to several LensKit APIs to improve ergonomics, correctness-by-default, and..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>2024 Releases &#8212; LensKit 0.15.0.dev983+gdb1a463b documentation</title>
+    <title>2024 Releases &#8212; LensKit 0.15.0.dev1006+g1db4c204 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=50aace8f"></script>
+    <script src="../_static/documentation_options.js?v=71d7f2d5"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -156,8 +156,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev983+gdb1a463b documentation - Home"/>
-    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev983+gdb1a463b documentation - Home"/>`);</script>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1006+g1db4c204 documentation - Home"/>
+    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1006+g1db4c204 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -196,7 +196,7 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Running Experiments</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../data.html">Data Management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../crossfold.html">Splitting Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../splitting.html">Splitting Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../evaluation/index.html">Evaluating Recommender Output</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../evaluation/predict-metrics.html">Prediction Accuracy Metrics</a></li>
@@ -384,6 +384,15 @@ efficient data transfer between components that do not use Pandas (e.g. data
 passed between components using PyTorch can leave the data in tensors
 without round-tripping through Pandas and NumPy, and keep this transparent
 to client code).</p></li>
+<li><p>Data splitting for offline evaluation has been moved into
+<a class="reference internal" href="../splitting.html#module-lenskit.splitting" title="lenskit.splitting"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.splitting</span></code></a>, updated to work with data sets and item lists
+instead of raw data frames, and splitting functions have been renamed (e.g.
+<code class="docutils literal notranslate"><span class="pre">rows</span></code> to <code class="docutils literal notranslate"><span class="pre">records</span></code>) and had parameters updated for clarity and
+consistency.</p></li>
+<li><p>Where Pandas data frames are still used, the standard user and item columns
+have been renamed to <code class="docutils literal notranslate"><span class="pre">user_id</span></code> and <code class="docutils literal notranslate"><span class="pre">item_id</span></code> respectively, with
+<code class="docutils literal notranslate"><span class="pre">user_num</span></code> and <code class="docutils literal notranslate"><span class="pre">item_num</span></code> for 0-based user and item numbers.  This is to
+remove ambiguity about how users and items are being referenced.</p></li>
 <li><p><strong>PyTorch</strong>. LensKit now uses PyTorch to implement most of its algorithms,
 instead of Numba-accelerated NumPy code.  Algorithms using PyTorch are:</p>
 <ul>
