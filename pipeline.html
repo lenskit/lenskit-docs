@@ -19,7 +19,7 @@
 <meta name="description" content="Since version 2024.1 (in progress), LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Recommendation Pipelines &#8212; LensKit 0.15.0.dev1049+gb1578541 documentation</title>
+    <title>Recommendation Pipelines &#8212; LensKit 0.15.0.dev1055+g23c8f079 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=455ccbaf"></script>
+    <script src="_static/documentation_options.js?v=2a700f1d"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1049+gb1578541 documentation - Home"/>
-    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1049+gb1578541 documentation - Home"/>`);</script>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1055+g23c8f079 documentation - Home"/>
+    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1055+g23c8f079 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -356,6 +356,8 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.replace_component"><code class="docutils literal notranslate"><span class="pre">Pipeline.replace_component()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.use_first_of"><code class="docutils literal notranslate"><span class="pre">Pipeline.use_first_of()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.connect"><code class="docutils literal notranslate"><span class="pre">Pipeline.connect()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.component_configs"><code class="docutils literal notranslate"><span class="pre">Pipeline.component_configs()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.clone"><code class="docutils literal notranslate"><span class="pre">Pipeline.clone()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.train"><code class="docutils literal notranslate"><span class="pre">Pipeline.train()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.run"><code class="docutils literal notranslate"><span class="pre">Pipeline.run()</span></code></a></li>
 </ul>
@@ -726,7 +728,7 @@ be provided when they are run.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.LiteralString" title="(in Python v3.12)"><em>LiteralString</em></a>) – The name of the input.  The name must be unique in the pipeline
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the input.  The name must be unique in the pipeline
 (among both components and inputs).</p></li>
 <li><p><strong>types</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.12)"><em>type</em></a><em>[</em><em>T</em><em>] </em><em>| </em><em>None</em>) – The allowable types of the input; input data can be of any
 specified type.  If <code class="docutils literal notranslate"><span class="pre">None</span></code> is among the allowed types, the
@@ -916,6 +918,37 @@ argument of the component when the pipeline is run.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="lenskit.pipeline.Pipeline.component_configs">
+<span class="sig-name descname"><span class="pre">component_configs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Pipeline.component_configs" title="Link to this definition">#</a></dt>
+<dd><p>Get the configurations for the components.  This is the configurations
+only, it does not include pipeline inputs or wiring.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><em>Any</em></a>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.pipeline.Pipeline.clone">
+<span class="sig-name descname"><span class="pre">clone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Pipeline.clone" title="Link to this definition">#</a></dt>
+<dd><p>Clone the pipeline, optionally including trained parameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>params</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – Pass <code class="docutils literal notranslate"><span class="pre">True</span></code> to clone parameters as well as the configuration
+and wiring.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new pipeline with the same components and wiring, but fresh
+instances created by round-tripping the configuration.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><em>Pipeline</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="lenskit.pipeline.Pipeline.train">
 <span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Pipeline.train" title="Link to this definition">#</a></dt>
 <dd><p>Trains the pipeline’s trainable components (those implementing the
@@ -1033,7 +1066,7 @@ better to write a single <code class="docutils literal notranslate"><span class=
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.pipeline.ConfigurableComponent">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.pipeline.</span></span><span class="sig-name descname"><span class="pre">ConfigurableComponent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.ConfigurableComponent" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">COut</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
 <p>Interface for configurable pipeline components (those that have
 hyperparameters).  A configurable component supports two additional
 operations:</p>
@@ -1043,7 +1076,10 @@ operations:</p>
 <a class="reference internal" href="#lenskit.pipeline.ConfigurableComponent.from_config" title="lenskit.pipeline.ConfigurableComponent.from_config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_config()</span></code></a>.</p></li>
 </ul>
 <p>A component must implement both of these methods to be considered
-configurable.</p>
+configurable.  For most common cases, extending the <code class="xref py py-class docutils literal notranslate"><span class="pre">AutoConfig</span></code>
+class is sufficient to provide working implementations of these methods.</p>
+<p>If a component is <em>not</em> configurable, then it should either be a function or
+a class that can be constructed with no arguments.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Configuration data should be JSON-compatible (strings, numbers, etc.).</p>
@@ -1061,7 +1097,7 @@ configurable.</p>
 <dd class="field-odd"><p><strong>cfg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><em>Any</em></a><em>]</em>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)">object</a>]</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Self" title="(in Python v3.12)"><em>Self</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1219,6 +1255,8 @@ optimizations.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.replace_component"><code class="docutils literal notranslate"><span class="pre">Pipeline.replace_component()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.use_first_of"><code class="docutils literal notranslate"><span class="pre">Pipeline.use_first_of()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.connect"><code class="docutils literal notranslate"><span class="pre">Pipeline.connect()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.component_configs"><code class="docutils literal notranslate"><span class="pre">Pipeline.component_configs()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.clone"><code class="docutils literal notranslate"><span class="pre">Pipeline.clone()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.train"><code class="docutils literal notranslate"><span class="pre">Pipeline.train()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.run"><code class="docutils literal notranslate"><span class="pre">Pipeline.run()</span></code></a></li>
 </ul>
