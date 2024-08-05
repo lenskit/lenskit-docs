@@ -19,7 +19,7 @@
 <meta name="description" content="Since version 2024.1 (in progress), LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Recommendation Pipelines &#8212; LensKit 0.15.0.dev1056+g20dc02da documentation</title>
+    <title>Recommendation Pipelines &#8212; LensKit 0.15.0.dev1061+g14435e71 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=b04294a3"></script>
+    <script src="_static/documentation_options.js?v=a0c3049f"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1056+g20dc02da documentation - Home"/>
-    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1056+g20dc02da documentation - Home"/>`);</script>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1061+g14435e71 documentation - Home"/>
+    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1061+g14435e71 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -858,24 +858,22 @@ run. This method is used for things like filling in optional pipeline
 inputs.  For example, if you want the pipeline to take candidate items
 through an <code class="docutils literal notranslate"><span class="pre">items</span></code> input, but look them up from the user’s history and
 the training data if <code class="docutils literal notranslate"><span class="pre">items</span></code> is not supplied, you would do:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
-<span class="c1"># allow candidate items to be optionally specified</span>
-<span class="n">items</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">&#39;items&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">EntityId</span><span class="p">],</span> <span class="kc">None</span><span class="p">)</span>
-<span class="c1"># find candidates from the training data (optional)</span>
-<span class="n">lookup_candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span>
-    <span class="s1">&#39;select-candidates&#39;</span><span class="p">,</span>
-    <span class="n">UnratedTrainingItemsCandidateSelector</span><span class="p">(),</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span> <span class="c1"># allow candidate items to be optionally specified</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">&#39;items&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">EntityId</span><span class="p">],</span> <span class="kc">None</span><span class="p">)</span> <span class="c1"># find</span>
+<span class="n">candidates</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">training</span> <span class="n">data</span> <span class="p">(</span><span class="n">optional</span><span class="p">)</span> <span class="n">lookup_candidates</span> <span class="o">=</span>
+<span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span>
+    <span class="s1">&#39;select-candidates&#39;</span><span class="p">,</span> <span class="n">UnratedTrainingItemsCandidateSelector</span><span class="p">(),</span>
     <span class="n">user</span><span class="o">=</span><span class="n">history</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="c1"># if the client provided items as a pipeline input, use those; otherwise</span>
-<span class="c1"># use the candidate selector we just configured.</span>
-<span class="n">candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">use_first_of</span><span class="p">(</span><span class="s1">&#39;candidates&#39;</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">lookup_candidates</span><span class="p">)</span>
+<span class="p">)</span> <span class="c1"># if the client provided items as a pipeline input, use those;</span>
+<span class="n">otherwise</span> <span class="c1"># use the candidate selector we just configured.</span>
+<span class="n">candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">use_first_of</span><span class="p">(</span><span class="s1">&#39;candidates&#39;</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span>
+<span class="n">lookup_candidates</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This method does not distinguish between an input being unspecified and
-explicitly specified as <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>This method does not distinguish between an input being unspecified
+and explicitly specified as <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -885,6 +883,14 @@ to use component A as a fallback for B if B returns <code class="docutils litera
 will not use B to fill in missing scores for individual items that A
 did not score.  A specific itemwise fallback component is needed for
 such an operation.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If one of the fallback elements is a component <code class="docutils literal notranslate"><span class="pre">A</span></code> that depends on
+another component or input <code class="docutils literal notranslate"><span class="pre">B</span></code>, and <code class="docutils literal notranslate"><span class="pre">B</span></code> is missing or returns
+<code class="docutils literal notranslate"><span class="pre">None</span></code> such that <code class="docutils literal notranslate"><span class="pre">A</span></code> would usually fail, then <code class="docutils literal notranslate"><span class="pre">A</span></code> will be
+skipped and the fallback will move on to the next node. This works
+with arbitrarily-deep transitive chains.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
