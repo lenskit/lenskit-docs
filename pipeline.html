@@ -19,7 +19,7 @@
 <meta name="description" content="Since version 2024.1 (in progress), LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Recommendation Pipelines &#8212; LensKit 0.15.0.dev1062+g19ce50bb documentation</title>
+    <title>Recommendation Pipelines &#8212; LensKit 0.15.0.dev1072+g967655db documentation</title>
   
   
   
@@ -48,7 +48,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=46a4de27"></script>
+    <script src="_static/documentation_options.js?v=6b14fc36"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1062+g19ce50bb documentation - Home"/>
-    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1062+g19ce50bb documentation - Home"/>`);</script>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1072+g967655db documentation - Home"/>
+    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1072+g967655db documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -383,6 +383,13 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.TrainableComponent.train"><code class="docutils literal notranslate"><span class="pre">TrainableComponent.train()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.TrainableComponent.get_params"><code class="docutils literal notranslate"><span class="pre">TrainableComponent.get_params()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.TrainableComponent.load_params"><code class="docutils literal notranslate"><span class="pre">TrainableComponent.load_params()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.AutoConfig"><code class="docutils literal notranslate"><span class="pre">AutoConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.AutoConfig.EXTRA_CONFIG_FIELDS"><code class="docutils literal notranslate"><span class="pre">AutoConfig.EXTRA_CONFIG_FIELDS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.AutoConfig.IGNORED_CONFIG_FIELDS"><code class="docutils literal notranslate"><span class="pre">AutoConfig.IGNORED_CONFIG_FIELDS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.AutoConfig.get_config"><code class="docutils literal notranslate"><span class="pre">AutoConfig.get_config()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.AutoConfig.from_config"><code class="docutils literal notranslate"><span class="pre">AutoConfig.from_config()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1082,7 +1089,7 @@ operations:</p>
 <a class="reference internal" href="#lenskit.pipeline.ConfigurableComponent.from_config" title="lenskit.pipeline.ConfigurableComponent.from_config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_config()</span></code></a>.</p></li>
 </ul>
 <p>A component must implement both of these methods to be considered
-configurable.  For most common cases, extending the <code class="xref py py-class docutils literal notranslate"><span class="pre">AutoConfig</span></code>
+configurable.  For most common cases, extending the <a class="reference internal" href="#lenskit.pipeline.AutoConfig" title="lenskit.pipeline.AutoConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">AutoConfig</span></code></a>
 class is sufficient to provide working implementations of these methods.</p>
 <p>If a component is <em>not</em> configurable, then it should either be a function or
 a class that can be constructed with no arguments.</p>
@@ -1190,6 +1197,79 @@ optimizations.</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.pipeline.AutoConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.pipeline.</span></span><span class="sig-name descname"><span class="pre">AutoConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.AutoConfig" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.pipeline.ConfigurableComponent" title="lenskit.pipeline.components.ConfigurableComponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigurableComponent</span></code></a></p>
+<p>Mixin class providing automatic configuration support based on constructor
+arguments.</p>
+<p>This method provides implementations of <a class="reference internal" href="#lenskit.pipeline.AutoConfig.get_config" title="lenskit.pipeline.AutoConfig.get_config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_config()</span></code></a> and
+<a class="reference internal" href="#lenskit.pipeline.AutoConfig.from_config" title="lenskit.pipeline.AutoConfig.from_config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_config()</span></code></a> that inspect the constructor arguments and instance
+variables to automatically provide configuration support.  By default, all
+constructor parameters will be considered configuration parameters, and
+their values will be read from instance variables of the same name.
+Subclasses can also define <a class="reference internal" href="#lenskit.pipeline.AutoConfig.EXTRA_CONFIG_FIELDS" title="lenskit.pipeline.AutoConfig.EXTRA_CONFIG_FIELDS"><code class="xref py py-data docutils literal notranslate"><span class="pre">EXTRA_CONFIG_FIELDS</span></code></a> and
+<a class="reference internal" href="#lenskit.pipeline.AutoConfig.IGNORED_CONFIG_FIELDS" title="lenskit.pipeline.AutoConfig.IGNORED_CONFIG_FIELDS"><code class="xref py py-data docutils literal notranslate"><span class="pre">IGNORED_CONFIG_FIELDS</span></code></a> class variables to modify this behavior.
+Missing attributes are silently ignored.</p>
+<p>In the simple case, you can write a class like this and get config for free:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyComponent</span><span class="p">(</span><span class="n">AutoConfig</span><span class="p">):</span>
+    <span class="n">some_param</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">some_param</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">some_param</span> <span class="o">=</span> <span class="n">some_param</span>
+</pre></div>
+</div>
+<p>For compatibility with pipeline serialization, all configuration data should
+be JSON-compatible.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.pipeline.AutoConfig.EXTRA_CONFIG_FIELDS">
+<span class="sig-name descname"><span class="pre">EXTRA_CONFIG_FIELDS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.ClassVar" title="(in Python v3.12)"><span class="pre">ClassVar</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#lenskit.pipeline.AutoConfig.EXTRA_CONFIG_FIELDS" title="Link to this definition">#</a></dt>
+<dd><p>Names of instance variables that should be included in the configuration
+dictionary even though they do not correspond to named constructor
+arguments.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is rarely needed, and usually needs to be coupled with <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>
+in the constructor to make the resulting objects constructible.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.pipeline.AutoConfig.IGNORED_CONFIG_FIELDS">
+<span class="sig-name descname"><span class="pre">IGNORED_CONFIG_FIELDS</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.ClassVar" title="(in Python v3.12)"><span class="pre">ClassVar</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#lenskit.pipeline.AutoConfig.IGNORED_CONFIG_FIELDS" title="Link to this definition">#</a></dt>
+<dd><p>Names of constructor parameters that should be excluded from the
+configuration dictionary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.pipeline.AutoConfig.get_config">
+<span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.AutoConfig.get_config" title="Link to this definition">#</a></dt>
+<dd><p>Get the configuration by inspecting the constructor and instance
+variables.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)">object</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.pipeline.AutoConfig.from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.AutoConfig.from_config" title="Link to this definition">#</a></dt>
+<dd><p>Create a class from the specified construction.  Configuration elements
+are passed to the constructor as keywrod arguments.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cfg</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.12)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><em>Any</em></a><em>]</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Self" title="(in Python v3.12)"><em>Self</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 
@@ -1288,6 +1368,13 @@ optimizations.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.TrainableComponent.train"><code class="docutils literal notranslate"><span class="pre">TrainableComponent.train()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.TrainableComponent.get_params"><code class="docutils literal notranslate"><span class="pre">TrainableComponent.get_params()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.TrainableComponent.load_params"><code class="docutils literal notranslate"><span class="pre">TrainableComponent.load_params()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.AutoConfig"><code class="docutils literal notranslate"><span class="pre">AutoConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.AutoConfig.EXTRA_CONFIG_FIELDS"><code class="docutils literal notranslate"><span class="pre">AutoConfig.EXTRA_CONFIG_FIELDS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.AutoConfig.IGNORED_CONFIG_FIELDS"><code class="docutils literal notranslate"><span class="pre">AutoConfig.IGNORED_CONFIG_FIELDS</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.AutoConfig.get_config"><code class="docutils literal notranslate"><span class="pre">AutoConfig.get_config()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.AutoConfig.from_config"><code class="docutils literal notranslate"><span class="pre">AutoConfig.from_config()</span></code></a></li>
 </ul>
 </li>
 </ul>
