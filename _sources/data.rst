@@ -97,6 +97,11 @@ User and Item Data
 The :mod:`lenskit.data` package also provides various classes for representing
 user and item data.
 
+User Profiles
+-------------
+
+.. autoclass:: UserProfile
+
 Item Lists
 ----------
 
@@ -104,6 +109,8 @@ LensKit uses *item lists* to represent collections of items that may be scored,
 ranked, etc.
 
 .. autoclass:: ItemList
+
+.. autoclass:: HasItemList
 
 User-Item Data Tables
 ~~~~~~~~~~~~~~~~~~~~~

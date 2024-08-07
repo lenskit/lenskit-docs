@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit provides a unified data model for recommender systems data along with classes and utility functions for working with it, described in this section of the manual. Data Model and Key Concepts..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Data Management &#8212; LensKit 0.15.0.dev1072+g967655db documentation</title>
+    <title>Data Management &#8212; LensKit 0.15.0.dev1084+g5b23d2d8 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=6b14fc36"></script>
+    <script src="_static/documentation_options.js?v=ee7607f5"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1072+g967655db documentation - Home"/>
-    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1072+g967655db documentation - Home"/>`);</script>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1084+g5b23d2d8 documentation - Home"/>
+    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1084+g5b23d2d8 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -349,7 +349,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.rating_count"><code class="docutils literal notranslate"><span class="pre">Dataset.rating_count</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.interaction_log"><code class="docutils literal notranslate"><span class="pre">Dataset.interaction_log()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.interaction_matrix"><code class="docutils literal notranslate"><span class="pre">Dataset.interaction_matrix()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.user_row"><code class="docutils literal notranslate"><span class="pre">Dataset.user_row()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.user_profile"><code class="docutils literal notranslate"><span class="pre">Dataset.user_profile()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.item_stats"><code class="docutils literal notranslate"><span class="pre">Dataset.item_stats()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.user_stats"><code class="docutils literal notranslate"><span class="pre">Dataset.user_stats()</span></code></a></li>
 </ul>
@@ -381,6 +381,15 @@ document.write(`
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-and-item-data">User and Item Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-profiles">User Profiles</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.UserProfile"><code class="docutils literal notranslate"><span class="pre">UserProfile</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.UserProfile.id"><code class="docutils literal notranslate"><span class="pre">UserProfile.id</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.UserProfile.past_items"><code class="docutils literal notranslate"><span class="pre">UserProfile.past_items</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.UserProfile.item_list"><code class="docutils literal notranslate"><span class="pre">UserProfile.item_list()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#item-lists">Item Lists</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList"><code class="docutils literal notranslate"><span class="pre">ItemList</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.ordered"><code class="docutils literal notranslate"><span class="pre">ItemList.ordered</span></code></a></li>
@@ -391,6 +400,11 @@ document.write(`
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.scores"><code class="docutils literal notranslate"><span class="pre">ItemList.scores()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.ranks"><code class="docutils literal notranslate"><span class="pre">ItemList.ranks()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.to_df"><code class="docutils literal notranslate"><span class="pre">ItemList.to_df()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.item_list"><code class="docutils literal notranslate"><span class="pre">ItemList.item_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.HasItemList"><code class="docutils literal notranslate"><span class="pre">HasItemList</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.HasItemList.item_list"><code class="docutils literal notranslate"><span class="pre">HasItemList.item_list()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -704,8 +718,8 @@ sparse array.</p></li>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lenskit.data.Dataset.user_row">
-<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.Dataset.user_row" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="lenskit.data.Dataset.user_profile">
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">user_profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.Dataset.user_profile" title="Link to this definition">#</a></dt>
 <dd><p>Get a user’s row from the interaction matrix.  Available fields are
 returned as fields. If the dataset has ratings, these are provided as a
 <code class="docutils literal notranslate"><span class="pre">rating</span></code> field, <strong>not</strong> as the item scores.  The item list is unordered,
@@ -718,7 +732,7 @@ but items are returned in order by item number.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a> | None</p>
+<dd class="field-even"><p><a class="reference internal" href="#lenskit.data.UserProfile" title="lenskit.data.user.UserProfile"><em>UserProfile</em></a> | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -989,6 +1003,60 @@ time of the copy.</p>
 <h2>User and Item Data<a class="headerlink" href="#user-and-item-data" title="Link to this heading">#</a></h2>
 <p>The <a class="reference internal" href="#module-lenskit.data" title="lenskit.data"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.data</span></code></a> package also provides various classes for representing
 user and item data.</p>
+<section id="user-profiles">
+<h3>User Profiles<a class="headerlink" href="#user-profiles" title="Link to this heading">#</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.data.UserProfile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.data.</span></span><span class="sig-name descname"><span class="pre">UserProfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">past_items</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.UserProfile" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.data.HasItemList" title="lenskit.data.items.HasItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">HasItemList</span></code></a></p>
+<p>Class representing a user’s “profile” — their ID, history, and any other
+data known about them.  Data sources are encouraged to add additional fields
+to user profile objects based on specific data needs so that aware
+components can make use of them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.12)"><em>bytes</em></a><em> | </em><em>None</em>) – The ID of the user profile to create.  Can also be a
+<code class="docutils literal notranslate"><span class="pre">UserProfile</span></code>, in which case the new profile is initialized as a
+shallow copy of the provided profile.  Other constructor arguments
+override the source profile in this case (so you can e.g. create a
+copy of a user with a different history).</p></li>
+<li><p><strong>past_items</strong> (<a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a><em> | </em><em>None</em>) – The user’s item history, without duplicates.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.data.UserProfile.id">
+<span class="sig-name descname"><span class="pre">id</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.12)"><span class="pre">bytes</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lenskit.data.UserProfile.id" title="Link to this definition">#</a></dt>
+<dd><p>The user’s identifier.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This can be <code class="docutils literal notranslate"><span class="pre">None</span></code> to facilitate passing anonymous users and recommend
+based only on their history.</p>
+</div>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.data.UserProfile.past_items">
+<span class="sig-name descname"><span class="pre">past_items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><span class="pre">ItemList</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.12)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lenskit.data.UserProfile.past_items" title="Link to this definition">#</a></dt>
+<dd><p>The items the user has interacted with in the past.  Each item appears once,
+as in <a class="reference internal" href="#lenskit.data.Dataset.interaction_matrix" title="lenskit.data.Dataset.interaction_matrix"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.data.Dataset.interaction_matrix()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.UserProfile.item_list">
+<span class="sig-name descname"><span class="pre">item_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.UserProfile.item_list" title="Link to this definition">#</a></dt>
+<dd><p>Return the item list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="item-lists">
 <h3>Item Lists<a class="headerlink" href="#item-lists" title="Link to this heading">#</a></h3>
 <p>LensKit uses <em>item lists</em> to represent collections of items that may be scored,
@@ -1199,6 +1267,39 @@ mathematically defining information retrieval metrics and operations.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemList.item_list">
+<span class="sig-name descname"><span class="pre">item_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.item_list" title="Link to this definition">#</a></dt>
+<dd><p>Implement the <a class="reference internal" href="#lenskit.data.HasItemList" title="lenskit.data.HasItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">HasItemList</span></code></a> protocol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Self" title="(in Python v3.12)"><em>Self</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.data.HasItemList">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.data.</span></span><span class="sig-name descname"><span class="pre">HasItemList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.HasItemList" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
+<p>Protocol for types that expose an <a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a> (including the
+<code class="docutils literal notranslate"><span class="pre">ItemList</span></code> class itself).</p>
+<p>The primary use of this class is to annotate component inputs, so that e.g.
+a component that works on a user’s history can take either a user history or
+a raw <code class="docutils literal notranslate"><span class="pre">ItemList</span></code>.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.HasItemList.item_list">
+<span class="sig-name descname"><span class="pre">item_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.HasItemList.item_list" title="Link to this definition">#</a></dt>
+<dd><p>Return the item list from this item, if available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a> | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1415,7 +1516,7 @@ until data is actually needed.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.rating_count"><code class="docutils literal notranslate"><span class="pre">Dataset.rating_count</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.interaction_log"><code class="docutils literal notranslate"><span class="pre">Dataset.interaction_log()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.interaction_matrix"><code class="docutils literal notranslate"><span class="pre">Dataset.interaction_matrix()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.user_row"><code class="docutils literal notranslate"><span class="pre">Dataset.user_row()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.user_profile"><code class="docutils literal notranslate"><span class="pre">Dataset.user_profile()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.item_stats"><code class="docutils literal notranslate"><span class="pre">Dataset.item_stats()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.user_stats"><code class="docutils literal notranslate"><span class="pre">Dataset.user_stats()</span></code></a></li>
 </ul>
@@ -1447,6 +1548,15 @@ until data is actually needed.</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-and-item-data">User and Item Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#user-profiles">User Profiles</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.UserProfile"><code class="docutils literal notranslate"><span class="pre">UserProfile</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.UserProfile.id"><code class="docutils literal notranslate"><span class="pre">UserProfile.id</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.UserProfile.past_items"><code class="docutils literal notranslate"><span class="pre">UserProfile.past_items</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.UserProfile.item_list"><code class="docutils literal notranslate"><span class="pre">UserProfile.item_list()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#item-lists">Item Lists</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList"><code class="docutils literal notranslate"><span class="pre">ItemList</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.ordered"><code class="docutils literal notranslate"><span class="pre">ItemList.ordered</span></code></a></li>
@@ -1457,6 +1567,11 @@ until data is actually needed.</p>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.scores"><code class="docutils literal notranslate"><span class="pre">ItemList.scores()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.ranks"><code class="docutils literal notranslate"><span class="pre">ItemList.ranks()</span></code></a></li>
 <li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.to_df"><code class="docutils literal notranslate"><span class="pre">ItemList.to_df()</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.item_list"><code class="docutils literal notranslate"><span class="pre">ItemList.item_list()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.HasItemList"><code class="docutils literal notranslate"><span class="pre">HasItemList</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.HasItemList.item_list"><code class="docutils literal notranslate"><span class="pre">HasItemList.item_list()</span></code></a></li>
 </ul>
 </li>
 </ul>
