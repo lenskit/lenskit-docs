@@ -19,7 +19,7 @@
 <meta name="description" content="Since version 2024.1 (in progress), LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Recommendation Pipelines &#8212; LensKit 0.15.0.dev1072+g967655db documentation</title>
+    <title>Recommendation Pipelines &#8212; LensKit 0.15.0.dev1075+g24f70326 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="_static/documentation_options.js?v=6b14fc36"></script>
+    <script src="_static/documentation_options.js?v=d15648a4"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
@@ -155,8 +155,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1072+g967655db documentation - Home"/>
-    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1072+g967655db documentation - Home"/>`);</script>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1075+g24f70326 documentation - Home"/>
+    <script>document.write(`<img src="_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1075+g24f70326 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -360,6 +360,7 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.clone"><code class="docutils literal notranslate"><span class="pre">Pipeline.clone()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.train"><code class="docutils literal notranslate"><span class="pre">Pipeline.train()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.run"><code class="docutils literal notranslate"><span class="pre">Pipeline.run()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.run_all"><code class="docutils literal notranslate"><span class="pre">Pipeline.run_all()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -599,34 +600,36 @@ more components are specified, their values are returned in a tuple.</p></li>
 <span id="pipeline-names"></span><h3>Component Names<a class="headerlink" href="#component-names" title="Link to this heading">#</a></h3>
 <p>As noted above, each component (and pipeline input) has a <em>name</em> that is unique
 across the pipeline.  For consistency and clarity, we recommend naming
-components with a verb or kebab-case verb phrase that captures the action that component performs, such as:</p>
+components with a noun or kebab-case noun phrase that describes the component
+itself, e.g.:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">recommend</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">rerank</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">score</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">lookup-user-history</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">embed-items</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">recommender</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reranker</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scorer</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user-history-resolver</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">item-embedder</span></code></p></li>
 </ul>
 <p>Component nodes can also have <em>aliases</em>, allowing them to be accessed by more
 than one name. Use <a class="reference internal" href="#lenskit.pipeline.Pipeline.alias" title="lenskit.pipeline.Pipeline.alias"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.alias()</span></code></a> to define these aliases.</p>
 <p>Various LensKit facilities recognize several standard component names that we
 recommend you use when applicable:</p>
 <ul class="simple">
-<li><p><code class="docutils literal notranslate"><span class="pre">score</span></code> — compute (usually personalized) scores for items for a given user.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">rank</span></code> — compute a (ranked) list of recommendations for a user.  If you are
-configuring a pipeline with rerankers whose outputs are also rankings, this
-name should usually be used for the last such ranker, and downstream
+<li><p><code class="docutils literal notranslate"><span class="pre">scorer</span></code> — compute (usually personalized) scores for items for a given user.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ranker</span></code> — compute a (ranked) list of recommendations for a user.  If you
+are configuring a pipeline with rerankers whose outputs are also rankings,
+this name should usually be used for the last such ranker, and downstream
 components (if any) transform that ranking into another layout; that way the
 evaluation tools will operate on the last such ranking.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">recommend</span></code> — compute recommendations for a user.  This will often be an
-alias for <code class="docutils literal notranslate"><span class="pre">rank</span></code>, as in a top-<em>N</em> recommender, but may return other formats
-such as grids or unordered slates.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">predict-ratings</span></code> — predict a user’s ratings for the specified items.  When
-present, this is usually an alias for <code class="docutils literal notranslate"><span class="pre">score</span></code>, but in some pipelines it will
-be a different component that transforms the scores into rating predictions.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">recommender</span></code> — compute recommendations for a user.  This will often be an
+alias for <code class="docutils literal notranslate"><span class="pre">ranker</span></code>, as in a top-<em>N</em> recommender, but may return other
+formats such as grids or unordered slates.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rating-predictor</span></code> — predict a user’s ratings for the specified items.  When
+present, this is usually an alias for <code class="docutils literal notranslate"><span class="pre">scorer</span></code>, but in some pipelines it
+will be a different component that transforms the scores into rating
+predictions.</p></li>
 </ul>
 <p>These component names replace the task-specific interfaces in pre-2024 LensKit;
-a <code class="docutils literal notranslate"><span class="pre">Recommender</span></code> is now just a pipeline with <code class="docutils literal notranslate"><span class="pre">recommend</span></code> and/or <code class="docutils literal notranslate"><span class="pre">rank</span></code>
+a <code class="docutils literal notranslate"><span class="pre">Recommender</span></code> is now just a pipeline with <code class="docutils literal notranslate"><span class="pre">recommender</span></code> and/or <code class="docutils literal notranslate"><span class="pre">ranker</span></code>
 components.</p>
 </section>
 <section id="pipeline-serialization">
@@ -1011,6 +1014,41 @@ are returned in a tuple.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.pipeline.Pipeline.run_all">
+<span class="sig-name descname"><span class="pre">run_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Pipeline.run_all" title="Link to this definition">#</a></dt>
+<dd><p>Run all nodes in the pipeline, or all nodes required to fulfill the
+requested node, and return a mapping with the full pipeline state (the
+data attached to each node). This is useful in cases where client code
+needs to be able to inspect the data at arbitrary steps of the pipeline.
+It differs from <a class="reference internal" href="#lenskit.pipeline.Pipeline.run" title="lenskit.pipeline.Pipeline.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a> in two ways:</p>
+<ol class="arabic simple">
+<li><p>It returns the data from all nodes as a mapping (dictionary-like
+object), not just the specified nodes as a tuple.</p></li>
+<li><p>If no nodes are specified, it runs <em>all</em> nodes instead of only the
+last node.  This has the consequence of running nodes that are not
+required to fulfill the last node (such scenarios typically result
+from using <a class="reference internal" href="#lenskit.pipeline.Pipeline.use_first_of" title="lenskit.pipeline.Pipeline.use_first_of"><code class="xref py py-meth docutils literal notranslate"><span class="pre">use_first_of()</span></code></a>).</p></li>
+</ol>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nodes</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><a class="reference internal" href="#lenskit.pipeline.Node" title="lenskit.pipeline.nodes.Node"><em>Node</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><em>Any</em></a><em>]</em>) – The nodes to run, as positional arguments (if no nodes are
+specified, this method runs all nodes).</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><em>object</em></a>) – The inputs.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The full pipeline state, with <code class="xref py py-attr docutils literal notranslate"><span class="pre">default</span></code> set to
+the last node specified (either the last node in <cite>nodes</cite>, or the
+last node added to the pipeline).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>PipelineState</em></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -1345,6 +1383,7 @@ are passed to the constructor as keywrod arguments.</p>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.clone"><code class="docutils literal notranslate"><span class="pre">Pipeline.clone()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.train"><code class="docutils literal notranslate"><span class="pre">Pipeline.train()</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.run"><code class="docutils literal notranslate"><span class="pre">Pipeline.run()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.run_all"><code class="docutils literal notranslate"><span class="pre">Pipeline.run_all()</span></code></a></li>
 </ul>
 </li>
 </ul>
