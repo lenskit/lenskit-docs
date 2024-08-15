@@ -1,0 +1,911 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Recommendation Pipelines" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="guide/pipeline.html" />
+<meta property="og:site_name" content="LensKit" />
+<meta property="og:description" content="Since version 2024.1 (in progress), LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produ..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary_guide_pipeline_f2cedfd7.png" />
+<meta property="og:image:alt" content="Since version 2024.1 (in progress), LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, persona..." />
+<meta name="description" content="Since version 2024.1 (in progress), LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produ..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Recommendation Pipelines &#8212; LensKit 0.15.0.dev1185+ge588d65f documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=69ebba33"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'guide/pipeline';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lkpy.lenskit.org/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
+        </script>
+    <link rel="canonical" href="https://lkpy.lenskit.org/en/latest/guide/pipeline.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Splitting Data" href="splitting.html" />
+    <link rel="prev" title="Data Management" href="data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1185+ge588d65f documentation - Home"/>
+    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1185+ge588d65f documentation - Home"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-2"
+      type="button"
+      class="version-switcher__button btn btn-sm dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-2"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-2"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-2">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-3"
+      type="button"
+      class="version-switcher__button btn btn-sm dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-3"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-3"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-3">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminaries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing LensKit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data Management</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Recommendation Pipelines</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="splitting.html">Splitting Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documenting.html">Documenting Experiments</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tips and Help</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Recommendati...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="recommendation-pipelines">
+<h1>Recommendation Pipelines<a class="headerlink" href="#recommendation-pipelines" title="Link to this heading">#</a></h1>
+<p>Since version <a class="reference internal" href="../releases/2024.html#id1"><span class="std std-ref">2024.1 (in progress)</span></a>, LensKit uses a flexible “pipeline” abstraction to
+wire together different components such as candidate selectors, personalized
+item scorers, and rankers to produce predictions, recommendations, or other
+recommender system outputs.  This is a significant change from the LensKit 0.x
+design of monolithic and composable components based on the Scikit-Learn API,
+allowing new recommendation designs to be composed without writing new classes
+just for the composition.  It also makes recommender definition code more
+explicit by laying out the pipeline instead of burying composition logic in the
+definitions of different composition classes.  The pipeline lives in the
+<a class="reference internal" href="../api/pipeline.html#module-lenskit.pipeline" title="lenskit.pipeline"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.pipeline</span></code></a> module, and the primary entry point is the
+<a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pipeline</span></code></a> class.</p>
+<p>If all you want to do is build a standard top-N recommendation pipeline from an
+item scorer, see <a class="reference internal" href="../api/lenskit.pipeline.topn_pipeline.html#lenskit.pipeline.topn_pipeline" title="lenskit.pipeline.topn_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">topn_pipeline()</span></code></a>; this is the equivalent to
+<code class="docutils literal notranslate"><span class="pre">Recommender.adapt</span></code> in the old LensKit API.  If you want more flexibility, you
+can write out the pipeline configuration yourself; the equivalent to
+<code class="docutils literal notranslate"><span class="pre">topn_pipeline(scorer)</span></code> is:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+<span class="c1"># define an input parameter for the user ID</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="n">EntityId</span><span class="p">)</span>
+<span class="c1"># allow candidate items to be optionally specified</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">&#39;items&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">EntityId</span><span class="p">],</span> <span class="kc">None</span><span class="p">)</span>
+<span class="c1"># look up a user&#39;s history in the training data</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;lookup-user&#39;</span><span class="p">,</span> <span class="n">LookupTrainingHistory</span><span class="p">(),</span> <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+<span class="c1"># find candidates from the training data</span>
+<span class="n">lookup_candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span>
+    <span class="s1">&#39;select-candidates&#39;</span><span class="p">,</span>
+    <span class="n">UnratedTrainingItemsCandidateSelector</span><span class="p">(),</span>
+    <span class="n">user</span><span class="o">=</span><span class="n">history</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="c1"># if the client provided items as a pipeline input, use those; otherwise</span>
+<span class="c1"># use the candidate selector we just configured.</span>
+<span class="n">candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">use_first_of</span><span class="p">(</span><span class="s1">&#39;candidates&#39;</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">lookup_candidates</span><span class="p">)</span>
+<span class="c1"># score the candidate items using the specified scorer</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">scorer</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">candidates</span><span class="p">)</span>
+<span class="c1"># rank the items by score</span>
+<span class="n">recommend</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;recommend&#39;</span><span class="p">,</span> <span class="n">TopNRanker</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">items</span><span class="o">=</span><span class="n">score</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can then run this pipeline to produce recommendations with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">user_recs</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">recommend</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition-todo admonition" id="id1">
+<p class="admonition-title">Todo</p>
+<p>Redo some of those types with user &amp; item data, etc.</p>
+</div>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Provide utility functions to make more common wiring operations easy so there
+is middle ground between “give me a standard pipeline” and “make me do everything
+myself”.</p>
+</div>
+<div class="admonition-todo admonition" id="id3">
+<p class="admonition-title">Todo</p>
+<p>Rethink the “keyword inputs only” constraint in view of the limitation it
+places on fallback or other compositional components — it’s hard to specify
+a component that implements fallback logic for an arbitrary number of
+inputs.</p>
+</div>
+<p>Pipeline components are not limited to looking things up from training data —
+they can query databases, load files, and any other operations.  A runtime
+pipeline can use some components (especially the scorer) trained from training
+data, and other components that query a database or REST services for things
+like user history and candidate set lookup.</p>
+<p>The LensKit pipeline design is heavily inspired by <a class="reference external" href="https://docs.haystack.deepset.ai/docs/pipelines">Haystack</a> and by the pipeline
+abstraction Karl Higley created for <a class="reference external" href="https://ccri-poprox.github.io/poprox-researcher-manual/reference/recommender/poprox_recommender.pipeline.html">POPROX</a>.</p>
+<section id="pipeline-model">
+<span id="id4"></span><h2>Pipeline Model<a class="headerlink" href="#pipeline-model" title="Link to this heading">#</a></h2>
+<p>A pipeline has a couple key concepts:</p>
+<ul class="simple">
+<li><p>An <strong>input</strong> is data that needs to be provided to the pipeline when it is run,
+such as the user to generate recommendations for.  Inputs have specified data
+types, and it is an error to provide an input value of an unexpected type.</p></li>
+<li><p>A <strong>component</strong> processes input data and produces an output.  It can be either
+a Python function or object (anything that implements the <code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code>
+protocol) that takes inputs as keyword arguments and returns an output.</p></li>
+</ul>
+<p>These are arranged in a directed acyclic graph, consisting of:</p>
+<ul class="simple">
+<li><p><strong>Nodes</strong> (represented by <a class="reference internal" href="../api/lenskit.pipeline.Node.html#lenskit.pipeline.Node" title="lenskit.pipeline.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>), which correspond to either <em>inputs</em>
+or <em>components</em>.</p></li>
+<li><p><strong>Connections</strong> from one node’s input to another node’s data (or to a fixed
+data value).  This is how the pipeline knows which components depend on other
+components and how to provide each component with the inputs it requires; see
+<a class="reference internal" href="#pipeline-connections"><span class="std std-ref">Connections</span></a> for details.</p></li>
+</ul>
+<p>Each node has a name that can be used to look up the node with
+<a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.node" title="lenskit.pipeline.Pipeline.node"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.node()</span></code></a> and appears in serialization and logging situations. Names
+must be unique within a pipeline.</p>
+<section id="connections">
+<span id="pipeline-connections"></span><h3>Connections<a class="headerlink" href="#connections" title="Link to this heading">#</a></h3>
+<p>Components declare their inputs as keyword arguments on their call signatures
+(either the function call signature, if it is a bare function, or the
+<code class="docutils literal notranslate"><span class="pre">__call__</span></code> method if it is implemented by a class).  In a pipeline, these
+inputs can be connected to a source, which the pipeline will use to obtain a
+value for that parameter when running the pipeline.  Inputs can be connected to
+the following types:</p>
+<ul class="simple">
+<li><p>A <a class="reference internal" href="../api/lenskit.pipeline.Node.html#lenskit.pipeline.Node" title="lenskit.pipeline.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>, in which case the input will be provided from the
+corresponding pipeline input or component return value.  Nodes are
+returned by <code class="xref py py-meth docutils literal notranslate"><span class="pre">create_input()</span></code> or <code class="xref py py-meth docutils literal notranslate"><span class="pre">add_component()</span></code>, and can be
+looked up after creation with <code class="xref py py-meth docutils literal notranslate"><span class="pre">node()</span></code>.</p></li>
+<li><p>A Python object, in which case that value will be provided directly to
+the component input argument.</p></li>
+</ul>
+<p>These input connections are specified via keyword arguments to the
+<a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.add_component" title="lenskit.pipeline.Pipeline.add_component"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.add_component()</span></code></a> or <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.connect" title="lenskit.pipeline.Pipeline.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.connect()</span></code></a> methods — specify the
+component’s input name(s) and the node or data to which each input should be
+wired.</p>
+<p>You can also use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.add_default()</span></code> to specify default connections. For example,
+you can specify a default for <code class="docutils literal notranslate"><span class="pre">user</span></code>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span><span class="o">.</span><span class="n">add_default</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="n">user_history</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>With this default in place, if a component has an input named <code class="docutils literal notranslate"><span class="pre">user</span></code> and that
+input is not explicitly connected to a node, then the <code class="docutils literal notranslate"><span class="pre">user_history</span></code> node will
+be used to supply its value.  Judicious use of defaults can reduce the amount of
+code overhead needed to wire common pipelines.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You cannot directly wire an input another component using only that
+component’s name; if you only have a name, pass it to <code class="xref py py-meth docutils literal notranslate"><span class="pre">node()</span></code>
+to obtain the node.  This is because it would be impossible to
+distinguish between a string component name and a string data value.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You do not usually need to call this method directly; when possible,
+provide the wirings when calling <code class="xref py py-meth docutils literal notranslate"><span class="pre">add_component()</span></code>.</p>
+</div>
+</section>
+<section id="execution">
+<span id="pipeline-execution"></span><h3>Execution<a class="headerlink" href="#execution" title="Link to this heading">#</a></h3>
+<p>Once configured, a pipeline can be run with <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.run" title="lenskit.pipeline.Pipeline.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.run()</span></code></a>.  This
+method takes two types of inputs:</p>
+<ul>
+<li><p>Positional arguments specifying the node(s) to run and whose results should
+be returned.  This is to allow partial runs of pipelines (e.g. to only score
+items without ranking them), and to allow multiple return values to be
+obtained (e.g. initial item scores and final rankings, which may have
+altered scores).</p>
+<p>If no components are specified, it is the same as specifying the last
+component that was added to the pipeline.</p>
+</li>
+<li><p>Keyword arguments specifying the values for the pipeline’s inputs, as defined by
+calls to <code class="xref py py-meth docutils literal notranslate"><span class="pre">create_input()</span></code>.</p></li>
+</ul>
+<p>Pipeline execution logically proceeds in the following steps:</p>
+<ol class="arabic simple">
+<li><p>Determine the full list of pipeline components that need to be run
+in order to run the specified components.</p></li>
+<li><p>Run those components in order, taking their inputs from pipeline
+inputs or previous components as specified by the pipeline
+connections and defaults.</p></li>
+<li><p>Return the values of the specified components.  If a single
+component is specified, its value is returned directly; if two or
+more components are specified, their values are returned in a tuple.</p></li>
+</ol>
+</section>
+<section id="component-names">
+<span id="pipeline-names"></span><h3>Component Names<a class="headerlink" href="#component-names" title="Link to this heading">#</a></h3>
+<p>As noted above, each component (and pipeline input) has a <em>name</em> that is unique
+across the pipeline.  For consistency and clarity, we recommend naming
+components with a noun or kebab-case noun phrase that describes the component
+itself, e.g.:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">recommender</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">reranker</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">scorer</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">user-history-resolver</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">item-embedder</span></code></p></li>
+</ul>
+<p>Component nodes can also have <em>aliases</em>, allowing them to be accessed by more
+than one name. Use <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.alias" title="lenskit.pipeline.Pipeline.alias"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.alias()</span></code></a> to define these aliases.</p>
+<p>Various LensKit facilities recognize several standard component names that we
+recommend you use when applicable:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">scorer</span></code> — compute (usually personalized) scores for items for a given user.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ranker</span></code> — compute a (ranked) list of recommendations for a user.  If you
+are configuring a pipeline with rerankers whose outputs are also rankings,
+this name should usually be used for the last such ranker, and downstream
+components (if any) transform that ranking into another layout; that way the
+evaluation tools will operate on the last such ranking.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">recommender</span></code> — compute recommendations for a user.  This will often be an
+alias for <code class="docutils literal notranslate"><span class="pre">ranker</span></code>, as in a top-<em>N</em> recommender, but may return other
+formats such as grids or unordered slates.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rating-predictor</span></code> — predict a user’s ratings for the specified items.  When
+present, this is usually an alias for <code class="docutils literal notranslate"><span class="pre">scorer</span></code>, but in some pipelines it
+will be a different component that transforms the scores into rating
+predictions.</p></li>
+</ul>
+<p>These component names replace the task-specific interfaces in pre-2024 LensKit;
+a <code class="docutils literal notranslate"><span class="pre">Recommender</span></code> is now just a pipeline with <code class="docutils literal notranslate"><span class="pre">recommender</span></code> and/or <code class="docutils literal notranslate"><span class="pre">ranker</span></code>
+components.</p>
+</section>
+<section id="pipeline-serialization">
+<span id="id5"></span><h3>Pipeline Serialization<a class="headerlink" href="#pipeline-serialization" title="Link to this heading">#</a></h3>
+<p>Pipelines are defined by the following:</p>
+<ul class="simple">
+<li><p>The components and inputs (nodes)</p></li>
+<li><p>The component input connections (edges)</p></li>
+<li><p>The component configurations (see <a class="reference internal" href="../api/lenskit.pipeline.ConfigurableComponent.html#lenskit.pipeline.ConfigurableComponent" title="lenskit.pipeline.ConfigurableComponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigurableComponent</span></code></a>)</p></li>
+<li><p>The components’ learned parameters (see <a class="reference internal" href="../api/lenskit.pipeline.TrainableComponent.html#lenskit.pipeline.TrainableComponent" title="lenskit.pipeline.TrainableComponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainableComponent</span></code></a>)</p></li>
+</ul>
+<div class="admonition-todo admonition" id="id6">
+<p class="admonition-title">Todo</p>
+<p>Serialization support other than <code class="docutils literal notranslate"><span class="pre">pickle</span></code> is not yet implemented.</p>
+</div>
+<p>LensKit supports serializing both pipeline descriptions (components,
+connections, and configurations) and pipeline parameters.  There are
+three ways to save a pipeline or part thereof:</p>
+<ol class="arabic simple">
+<li><p>Pickle the entire pipeline.  This is easy, and saves everything pipeline; it
+has the usual downsides of pickling (arbitrary code execution, etc.).
+LensKit uses pickling to share pipelines with worker processes for parallel
+batch operations.</p></li>
+<li><p>Save the pipeline configuration with <code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.save_config()</span></code>.  This saves
+the components, their configurations, and their connections, but <strong>not</strong> any
+learned parameter data.  A new pipeline can be constructed from such a
+configuration can be reloaded with <code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.from_config()</span></code>.</p></li>
+<li><p>Save the pipeline parameters with <code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.save_params()</span></code>.  This saves
+the learned parameters but <strong>not</strong> the configuration or connections.  The
+parameters can be reloaded into a compatible pipeline with
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.load_params()</span></code>; a compatible pipeline can be created by
+running the pipeline setup code or using a saved pipeline configuration.</p></li>
+</ol>
+<p>These can be mixed and matched; if you pickle an untrained pipeline, you can
+unpickle it and use <code class="xref py py-meth docutils literal notranslate"><span class="pre">load_params()</span></code> to infuse it with parameters.</p>
+<p>Component implementations need to support the configuration and/or parameter
+values, as needed, in addition to functioning correctly with pickle (no specific
+logic is usually needed for this).</p>
+<p>LensKit knows how to safely save the following object types from
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Component.get_params()</span></code>:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a> (dense, CSR, and COO tensors).</p></li>
+<li><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p></li>
+<li><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_array.html#scipy.sparse.csr_array" title="(in SciPy v1.14.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_array</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.~coo_array</span></code>,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.~csc_array</span></code>, and the corresponding <code class="docutils literal notranslate"><span class="pre">*_matrix</span></code>
+versions.</p></li>
+</ul>
+<p>Other objects (including Pandas dataframes) are serialized by pickling, and the
+pipeline will emit a warning (or fail, if <code class="docutils literal notranslate"><span class="pre">allow_pickle=False</span></code> is passed to
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">save_params()</span></code>).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The load/save parameter operations are modeled after PyTorch’s
+<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module.state_dict" title="(in PyTorch v2.4)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">state_dict()</span></code></a> and the needs of <code class="docutils literal notranslate"><span class="pre">safetensors</span></code>.</p>
+</div>
+</section>
+</section>
+<section id="component-interface">
+<h2>Component Interface<a class="headerlink" href="#component-interface" title="Link to this heading">#</a></h2>
+<p>Pipeline components are callable objects that can optionally provide training
+and serialization capabilities.  In the simplest case, a component that requires
+no training or configuration can simply be a Python function; more sophisticated
+components can implement the <a class="reference internal" href="../api/lenskit.pipeline.TrainableComponent.html#lenskit.pipeline.TrainableComponent" title="lenskit.pipeline.TrainableComponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainableComponent</span></code></a> and/or
+<a class="reference internal" href="../api/lenskit.pipeline.ConfigurableComponent.html#lenskit.pipeline.ConfigurableComponent" title="lenskit.pipeline.ConfigurableComponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigurableComponent</span></code></a> protocols to support flexible model training and
+pipeline serialization.</p>
+<p>Components also need to be pickleable, as LensKit uses pickling for shared
+memory parallelism in its batch-inference code.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The component interfaces are simply protocol definitions (defined using
+<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Protocol</span></code></a> with <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.runtime_checkable" title="(in Python v3.12)"><code class="xref py py-func docutils literal notranslate"><span class="pre">runtime_checkable()</span></code></a>), so
+implementations can directly implement the specified methods and do not need
+to explicitly inherit from the protocol classes, although they are free to
+do so.</p>
+</div>
+<div class="admonition-todo admonition" id="id7">
+<p class="admonition-title">Todo</p>
+<p>Is it clear to write these capabilities as separate protocols, or would it be
+better to write a single <code class="docutils literal notranslate"><span class="pre">Component</span></code> <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.12)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a>?</p>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="data.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Data Management</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="splitting.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Splitting Data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-model">Pipeline Model</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#connections">Connections</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#execution">Execution</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#component-names">Component Names</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-serialization">Pipeline Serialization</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-interface">Component Interface</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/guide/pipeline.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2018–2024 Drexel University, Boise State University, and collaborators.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.0.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

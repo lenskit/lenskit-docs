@@ -1,0 +1,990 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Getting Started" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="guide/GettingStarted.html" />
+<meta property="og:site_name" content="LensKit" />
+<meta property="og:description" content="This notebook gets you started with a brief nDCG evaluation with LensKit for Python. This notebook is also available on Google Collaboratory and nbviewer. Setup: We first import the LensKit compone..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary_guide_GettingStarted_9d4701a5.png" />
+<meta property="og:image:alt" content="This notebook gets you started with a brief nDCG evaluation with LensKit for Python. This notebook is also available on Google Collaboratory and nbviewer. Se..." />
+<meta name="description" content="This notebook gets you started with a brief nDCG evaluation with LensKit for Python. This notebook is also available on Google Collaboratory and nbviewer. Setup: We first import the LensKit compone..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Getting Started &#8212; LensKit 0.15.0.dev1185+ge588d65f documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=69ebba33"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'guide/GettingStarted';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lkpy.lenskit.org/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
+        </script>
+    <link rel="canonical" href="https://lkpy.lenskit.org/en/latest/guide/GettingStarted.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Examples" href="examples.html" />
+    <link rel="prev" title="Installing LensKit" href="install.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1185+ge588d65f documentation - Home"/>
+    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1185+ge588d65f documentation - Home"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-2"
+      type="button"
+      class="version-switcher__button btn btn-sm dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-2"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-2"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-2">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-3"
+      type="button"
+      class="version-switcher__button btn btn-sm dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-3"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-3"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-3">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminaries</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing LensKit</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline.html">Recommendation Pipelines</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="splitting.html">Splitting Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Recommenders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="documenting.html">Documenting Experiments</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tips and Help</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Getting Started</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading">#</a></h1>
+<p>This notebook gets you started with a brief nDCG evaluation with LensKit for Python.</p>
+<p>This notebook is also available on <a class="reference external" href="https://colab.research.google.com/drive/1ym040cKkQf85epu80VtIkMXy3LpfYQky?usp=sharing">Google Collaboratory</a> and <a class="reference external" href="https://nbviewer.jupyter.org/github/lenskit/lkpy/blob/master/doc/GettingStarted.ipynb">nbviewer</a>.</p>
+<section id="setup">
+<h2>Setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h2>
+<p>We first import the LensKit components we need:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">batch</span><span class="p">,</span> <span class="n">topn</span><span class="p">,</span> <span class="n">util</span>
+<span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">crossfold</span> <span class="k">as</span> <span class="n">xf</span>
+<span class="kn">from</span> <span class="nn">lenskit.algorithms</span> <span class="kn">import</span> <span class="n">Recommender</span><span class="p">,</span> <span class="n">als</span><span class="p">,</span> <span class="n">knn</span>
+<span class="kn">from</span> <span class="nn">lenskit.data</span> <span class="kn">import</span> <span class="n">from_interactions_df</span>
+<span class="kn">from</span> <span class="nn">lenskit.data.movielens</span> <span class="kn">import</span> <span class="n">load_movielens_df</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>And Pandas is very useful:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">pyprojroot</span></code> package makes it easy to find input data:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pyprojroot.here</span> <span class="kn">import</span> <span class="n">here</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="loading-data">
+<h2>Loading Data<a class="headerlink" href="#loading-data" title="Link to this heading">#</a></h2>
+<p>We’re going to use the ML-100K data set:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ml100k</span> <span class="o">=</span> <span class="n">load_movielens_df</span><span class="p">(</span><span class="n">here</span><span class="p">(</span><span class="s1">&#39;data/ml-100k.zip&#39;</span><span class="p">))</span>
+<span class="n">ml100k</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>user</th>
+      <th>item</th>
+      <th>rating</th>
+      <th>timestamp</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>196</td>
+      <td>242</td>
+      <td>3.0</td>
+      <td>881250949</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>186</td>
+      <td>302</td>
+      <td>3.0</td>
+      <td>891717742</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>22</td>
+      <td>377</td>
+      <td>1.0</td>
+      <td>878887116</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>244</td>
+      <td>51</td>
+      <td>2.0</td>
+      <td>880606923</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>166</td>
+      <td>346</td>
+      <td>1.0</td>
+      <td>886397596</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+<section id="defining-algorithms">
+<h2>Defining Algorithms<a class="headerlink" href="#defining-algorithms" title="Link to this heading">#</a></h2>
+<p>Let’s set up two algorithms:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">algo_ii</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">ItemItem</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">algo_als</span> <span class="o">=</span> <span class="n">als</span><span class="o">.</span><span class="n">BiasedMF</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="running-the-evaluation">
+<h2>Running the Evaluation<a class="headerlink" href="#running-the-evaluation" title="Link to this heading">#</a></h2>
+<p>In LensKit, our evaluation proceeds in 2 steps:</p>
+<ol class="arabic simple">
+<li><p>Generate recommendations</p></li>
+<li><p>Measure them</p></li>
+</ol>
+<p>If memory is a concern, we can measure while generating, but we will not do that for now.</p>
+<p>We will first define a function to generate recommendations from one algorithm over a single partition of the data set.  It will take an algorithm, a train set, and a test set, and return the recommendations.</p>
+<p><strong>Note:</strong> before fitting the algorithm, we clone it.  Some algorithms misbehave when fit multiple times.</p>
+<p><strong>Note 2:</strong> our algorithms do not necessarily implement the <code class="docutils literal notranslate"><span class="pre">Recommender</span></code> interface, so we adapt them. This fills in a default candidate selector.</p>
+<p>The code function looks like this:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="n">aname</span><span class="p">,</span> <span class="n">algo</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">):</span>
+    <span class="n">fittable</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">algo</span><span class="p">)</span>
+    <span class="n">fittable</span> <span class="o">=</span> <span class="n">Recommender</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">fittable</span><span class="p">)</span>
+    <span class="n">fittable</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">from_interactions_df</span><span class="p">(</span><span class="n">train</span><span class="p">))</span>
+    <span class="n">users</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+    <span class="c1"># now we run the recommender</span>
+    <span class="n">recs</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">recommend</span><span class="p">(</span><span class="n">fittable</span><span class="p">,</span> <span class="n">users</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="c1"># add the algorithm name for analyzability</span>
+    <span class="n">recs</span><span class="p">[</span><span class="s1">&#39;Algorithm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">aname</span>
+    <span class="k">return</span> <span class="n">recs</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now, we will loop over the data and the algorithms, and generate recommendations:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_recs</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">test_data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">xf</span><span class="o">.</span><span class="n">partition_users</span><span class="p">(</span><span class="n">ml100k</span><span class="p">[[</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">]],</span> <span class="mi">5</span><span class="p">,</span> <span class="n">xf</span><span class="o">.</span><span class="n">SampleFrac</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)):</span>
+    <span class="n">test_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
+    <span class="n">all_recs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;ItemItem&#39;</span><span class="p">,</span> <span class="n">algo_ii</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">))</span>
+    <span class="n">all_recs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;ALS&#39;</span><span class="p">,</span> <span class="n">algo_als</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/mde48/LensKit/lkpy/lenskit/lenskit/data/dataset.py:628: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /Users/runner/miniforge3/conda-bld/libtorch_1719361060788/work/aten/src/ATen/SparseCsrTensorImpl.cpp:55.)
+  return torch.sparse_csr_tensor(
+</pre></div>
+</div>
+</div>
+</div>
+<p>With the results in place, we can concatenate them into a single data frame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_recs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">all_recs</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">all_recs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>item</th>
+      <th>score</th>
+      <th>user</th>
+      <th>rank</th>
+      <th>Algorithm</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1449</td>
+      <td>4.994975</td>
+      <td>2</td>
+      <td>1</td>
+      <td>ItemItem</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1398</td>
+      <td>4.866851</td>
+      <td>2</td>
+      <td>2</td>
+      <td>ItemItem</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>511</td>
+      <td>4.845399</td>
+      <td>2</td>
+      <td>3</td>
+      <td>ItemItem</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1512</td>
+      <td>4.805413</td>
+      <td>2</td>
+      <td>4</td>
+      <td>ItemItem</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1594</td>
+      <td>4.788468</td>
+      <td>2</td>
+      <td>5</td>
+      <td>ItemItem</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>To compute our analysis, we also need to concatenate the test data into a single frame:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>We analyze our recommendation lists with a <code class="docutils literal notranslate"><span class="pre">RecListAnalysis</span></code>.  It takes care of the hard work of making sure that the truth data (our test data) and the recoommendations line up properly.</p>
+<p>We do assume here that each user only appears once per algorithm. Since our crossfold method partitions users, this is fine.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rla</span> <span class="o">=</span> <span class="n">topn</span><span class="o">.</span><span class="n">RecListAnalysis</span><span class="p">()</span>
+<span class="n">rla</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">topn</span><span class="o">.</span><span class="n">ndcg</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">rla</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">all_recs</span><span class="p">,</span> <span class="n">test_data</span><span class="p">)</span>
+<span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>nrecs</th>
+      <th>ndcg</th>
+    </tr>
+    <tr>
+      <th>Algorithm</th>
+      <th>user</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="5" valign="top">ItemItem</th>
+      <th>2</th>
+      <td>100</td>
+      <td>0.081186</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>100</td>
+      <td>0.288946</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>100</td>
+      <td>0.082112</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>100</td>
+      <td>0.364167</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>100</td>
+      <td>0.182636</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>Now we have nDCG values!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Algorithm&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ndcg</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Algorithm
+ALS         0.132649
+ItemItem    0.096963
+Name: ndcg, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Algorithm&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ndcg</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Algorithm&#39;&gt;
+</pre></div>
+</div>
+<img alt="../_images/ef54dadc4bc80920366662b4d4f3b81a5fbc12082ca357369fb811de171438cc.png" src="../_images/ef54dadc4bc80920366662b4d4f3b81a5fbc12082ca357369fb811de171438cc.png" />
+</div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="install.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Installing LensKit</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="examples.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Examples</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-data">Loading Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-algorithms">Defining Algorithms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-evaluation">Running the Evaluation</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/guide/GettingStarted.ipynb.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2018–2024 Drexel University, Boise State University, and collaborators.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.0.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

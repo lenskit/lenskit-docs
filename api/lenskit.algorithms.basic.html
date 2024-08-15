@@ -1,0 +1,1260 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="lenskit.algorithms.basic" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="api/lenskit.algorithms.basic.html" />
+<meta property="og:site_name" content="LensKit" />
+<meta property="og:description" content="Basic utility algorithms and combiners. Classes" />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary_api_lenskit.algorithms.basic_bf9879ac.png" />
+<meta property="og:image:alt" content="Basic utility algorithms and combiners. Classes" />
+<meta name="description" content="Basic utility algorithms and combiners. Classes" />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>lenskit.algorithms.basic &#8212; LensKit 0.15.0.dev1185+ge588d65f documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="../_static/documentation_options.js?v=69ebba33"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/lenskit.algorithms.basic';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lkpy.lenskit.org/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
+        </script>
+    <link rel="canonical" href="https://lkpy.lenskit.org/en/latest/api/lenskit.algorithms.basic.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="lenskit.algorithms.bias" href="lenskit.algorithms.bias.html" />
+    <link rel="prev" title="lenskit.algorithms.als.implicit" href="lenskit.algorithms.als.implicit.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1185+ge588d65f documentation - Home"/>
+    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1185+ge588d65f documentation - Home"/>`);</script>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-2"
+      type="button"
+      class="version-switcher__button btn btn-sm dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-2"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-2"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-2">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+      
+        <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <div class="version-switcher__container dropdown">
+    <button id="pst-version-switcher-button-3"
+      type="button"
+      class="version-switcher__button btn btn-sm dropdown-toggle"
+      data-bs-toggle="dropdown"
+      aria-haspopup="listbox"
+      aria-controls="pst-version-switcher-list-3"
+      aria-label="Version switcher list"
+    >
+      Choose version  <!-- this text may get changed later by javascript -->
+      <span class="caret"></span>
+    </button>
+    <div id="pst-version-switcher-list-3"
+      class="version-switcher__menu dropdown-menu list-group-flush py-0"
+      role="listbox" aria-labelledby="pst-version-switcher-button-3">
+      <!-- dropdown will be populated by javascript on page load -->
+    </div>
+  </div>
+`);
+</script></div>
+        
+          <div class="navbar-item">
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Core</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="data.html">Data Abstractions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.data.Dataset.html">lenskit.data.Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.data.from_interactions_df.html">lenskit.data.from_interactions_df</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_movielens.html">lenskit.data.load_movielens</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_movielens_df.html">lenskit.data.load_movielens_df</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.data.ItemList.html">lenskit.data.ItemList</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.data.UserProfile.html">lenskit.data.UserProfile</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.data.Vocabulary.html">lenskit.data.Vocabulary</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="pipeline.html">Pipeline API</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Pipeline.html">lenskit.pipeline.Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Node.html">lenskit.pipeline.Node</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.ConfigurableComponent.html">lenskit.pipeline.ConfigurableComponent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.TrainableComponent.html">lenskit.pipeline.TrainableComponent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.AutoConfig.html">lenskit.pipeline.AutoConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.topn_pipeline.html">lenskit.pipeline.topn_pipeline</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Diagnostic APIs</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="lenskit.algorithms.html">lenskit.algorithms</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="lenskit.algorithms.als.html">lenskit.algorithms.als</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="lenskit.algorithms.als.common.html">lenskit.algorithms.als.common</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lenskit.algorithms.als.explicit.html">lenskit.algorithms.als.explicit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lenskit.algorithms.als.implicit.html">lenskit.algorithms.als.implicit</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">lenskit.algorithms.basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.algorithms.bias.html">lenskit.algorithms.bias</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="lenskit.algorithms.knn.html">lenskit.algorithms.knn</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="lenskit.algorithms.knn.item.html">lenskit.algorithms.knn.item</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lenskit.algorithms.knn.user.html">lenskit.algorithms.knn.user</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.algorithms.mf_common.html">lenskit.algorithms.mf_common</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.algorithms.ranking.html">lenskit.algorithms.ranking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.algorithms.svd.html">lenskit.algorithms.svd</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="lenskit.funksvd.html">lenskit.funksvd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lenskit.implicit.html">lenskit.implicit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="lenskit.hpf.html">lenskit.hpf</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Evaluation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lenskit.batch.html">lenskit.batch</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="lenskit.metrics.html">lenskit.metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.predict.html">lenskit.metrics.predict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.topn.html">lenskit.metrics.topn</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="lenskit.topn.html">lenskit.topn</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="lenskit.splitting.html">lenskit.splitting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.holdout.html">lenskit.splitting.holdout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.records.html">lenskit.splitting.records</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.split.html">lenskit.splitting.split</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.users.html">lenskit.splitting.users</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Implementation Helpers</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="lenskit.math.html">lenskit.math</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.math.solve.html">lenskit.math.solve</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="lenskit.parallel.html">lenskit.parallel</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.chunking.html">lenskit.parallel.chunking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.config.html">lenskit.parallel.config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.invoker.html">lenskit.parallel.invoker</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.pool.html">lenskit.parallel.pool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.sequential.html">lenskit.parallel.sequential</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.serialize.html">lenskit.parallel.serialize</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.worker.html">lenskit.parallel.worker</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="lenskit.util.html">lenskit.util</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.util.envcheck.html">lenskit.util.envcheck</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.util.logging.html">lenskit.util.logging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.util.random.html">lenskit.util.random</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.util.timing.html">lenskit.util.timing</a></li>
+</ul>
+</details></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">API Reference</a></li>
+    
+    
+    <li class="breadcrumb-item"><a href="lenskit.algorithms.html" class="nav-link">lenskit.algorithms</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">lenskit.algo...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-lenskit.algorithms.basic">
+<span id="lenskit-algorithms-basic"></span><h1>lenskit.algorithms.basic<a class="headerlink" href="#module-lenskit.algorithms.basic" title="Link to this heading">#</a></h1>
+<p>Basic utility algorithms and combiners.</p>
+<p class="rubric">Classes</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.algorithms.basic.AllItemsCandidateSelector" title="lenskit.algorithms.basic.AllItemsCandidateSelector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">AllItemsCandidateSelector</span></code></a>()</p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">CandidateSelector</span></code> that selects all items, regardless of whether the user has rated them, as candidates.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.algorithms.basic.EmptyCandidateSelector" title="lenskit.algorithms.basic.EmptyCandidateSelector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EmptyCandidateSelector</span></code></a>()</p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">CandidateSelector</span></code> that never returns any candidates.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../old/basic.html#lenskit.algorithms.basic.Fallback" title="lenskit.algorithms.basic.Fallback"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Fallback</span></code></a>()</p></td>
+<td><p>The Fallback algorithm predicts with its first component, uses the second to fill in missing values, and so forth.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.algorithms.basic.KnownRating" title="lenskit.algorithms.basic.KnownRating"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KnownRating</span></code></a>()</p></td>
+<td><p>The known rating algorithm memorizes ratings provided in the fit method.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../old/basic.html#lenskit.algorithms.basic.Memorized" title="lenskit.algorithms.basic.Memorized"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Memorized</span></code></a>(scores)</p></td>
+<td><p>The memorized algorithm memorizes socres provided at construction time (<em>not</em> training time).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../old/basic.html#lenskit.algorithms.basic.PopScore" title="lenskit.algorithms.basic.PopScore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PopScore</span></code></a>([score_method])</p></td>
+<td><p>Score items by their popularity.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="../old/basic.html#lenskit.algorithms.basic.Random" title="lenskit.algorithms.basic.Random"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Random</span></code></a>([selector, rng_spec])</p></td>
+<td><p>A random-item recommender.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../old/basic.html#lenskit.algorithms.basic.UnratedItemCandidateSelector" title="lenskit.algorithms.basic.UnratedItemCandidateSelector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnratedItemCandidateSelector</span></code></a>()</p></td>
+<td><p><code class="xref py py-class docutils literal notranslate"><span class="pre">CandidateSelector</span></code> that selects items a user has not rated as candidates.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.PopScore">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.basic.</span></span><span class="sig-name descname"><span class="pre">PopScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">score_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'quantile'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.PopScore" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a></p>
+<p>Score items by their popularity.  Use with <code class="xref py py-class docutils literal notranslate"><span class="pre">TopN</span></code> to get a
+most-popular-items recommender.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>score_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – <p>The method for computing popularity scores.  Can be one of the following:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">'quantile'</span></code> (the default)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'rank'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'count'</span></code></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.PopScore.item_pop_">
+<span class="sig-name descname"><span class="pre">item_pop_</span></span><a class="headerlink" href="#lenskit.algorithms.basic.PopScore.item_pop_" title="Link to this definition">#</a></dt>
+<dd><p>Item popularity scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)">pandas.Series</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.PopScore.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.PopScore.fit" title="Link to this definition">#</a></dt>
+<dd><p>Train a model using the specified ratings (or similar) data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>) – The training data.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms
+should avoid using the same keyword arguments for different
+purposes, so that they can be more easily hybridized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The algorithm object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.PopScore.predict_for_user">
+<span class="sig-name descname"><span class="pre">predict_for_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.PopScore.predict_for_user" title="Link to this definition">#</a></dt>
+<dd><p>Compute predictions for a user and items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – the user ID</p></li>
+<li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>scores for the items, indexed by item id.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)">pandas.Series</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.Memorized">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.basic.</span></span><span class="sig-name descname"><span class="pre">Memorized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scores</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Memorized" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a></p>
+<p>The memorized algorithm memorizes socres provided at construction time
+(<em>not</em> training time).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>scores</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.Memorized.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Memorized.fit" title="Link to this definition">#</a></dt>
+<dd><p>Train a model using the specified ratings (or similar) data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – The training data.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms
+should avoid using the same keyword arguments for different
+purposes, so that they can be more easily hybridized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The algorithm object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.Memorized.predict_for_user">
+<span class="sig-name descname"><span class="pre">predict_for_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Memorized.predict_for_user" title="Link to this definition">#</a></dt>
+<dd><p>Compute predictions for a user and items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – the user ID</p></li>
+<li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>scores for the items, indexed by item id.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)">pandas.Series</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.Fallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.basic.</span></span><span class="sig-name descname"><span class="pre">Fallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.12)"><span class="pre">Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><span class="pre">Predictor</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Fallback" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.basic.</span></span><span class="sig-name descname"><span class="pre">Fallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">algorithms</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><span class="pre">Predictor</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">others</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><span class="pre">Predictor</span></a></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Bases: <a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a></p>
+<p>The Fallback algorithm predicts with its first component, uses the second to fill in
+missing values, and so forth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>algorithms</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.12)"><em>list</em></a><em>[</em><a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><em>Predictor</em></a><em>]</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.Fallback.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Fallback.fit" title="Link to this definition">#</a></dt>
+<dd><p>Train a model using the specified ratings (or similar) data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>) – The training data.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms
+should avoid using the same keyword arguments for different
+purposes, so that they can be more easily hybridized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The algorithm object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.Fallback.predict_for_user">
+<span class="sig-name descname"><span class="pre">predict_for_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Fallback.predict_for_user" title="Link to this definition">#</a></dt>
+<dd><p>Compute predictions for a user and items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – the user ID</p></li>
+<li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>scores for the items, indexed by item id.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)">pandas.Series</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.EmptyCandidateSelector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.basic.</span></span><span class="sig-name descname"><span class="pre">EmptyCandidateSelector</span></span><a class="headerlink" href="#lenskit.algorithms.basic.EmptyCandidateSelector" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.CandidateSelector" title="lenskit.algorithms.CandidateSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">CandidateSelector</span></code></a></p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">CandidateSelector</span></code> that never returns any candidates.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.EmptyCandidateSelector.dtype_">
+<span class="sig-name descname"><span class="pre">dtype_</span></span><a class="headerlink" href="#lenskit.algorithms.basic.EmptyCandidateSelector.dtype_" title="Link to this definition">#</a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">int64</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.EmptyCandidateSelector.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwarsg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.EmptyCandidateSelector.fit" title="Link to this definition">#</a></dt>
+<dd><p>Train a model using the specified ratings (or similar) data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>) – The training data.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms
+should avoid using the same keyword arguments for different
+purposes, so that they can be more easily hybridized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The algorithm object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.EmptyCandidateSelector.candidates">
+<span class="sig-name descname"><span class="pre">candidates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.EmptyCandidateSelector.candidates" title="Link to this definition">#</a></dt>
+<dd><p>Select candidates for the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – The user key or ID.</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)"><em>pandas.Series</em></a><em> or </em><em>array-like</em>) – Ratings or items to use instead of whatever ratings were memorized
+for this user.  If a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>, the series index
+is used; if it is another array-like it is assumed to be an array
+of items.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.UnratedItemCandidateSelector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.basic.</span></span><span class="sig-name descname"><span class="pre">UnratedItemCandidateSelector</span></span><a class="headerlink" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.CandidateSelector" title="lenskit.algorithms.CandidateSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">CandidateSelector</span></code></a></p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">CandidateSelector</span></code> that selects items a user has not rated as
+candidates.  When this selector is fit, it memorizes the rated items.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.UnratedItemCandidateSelector.items_">
+<span class="sig-name descname"><span class="pre">items_</span></span><a class="headerlink" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector.items_" title="Link to this definition">#</a></dt>
+<dd><p>All known items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="lenskit.data.Vocabulary.html#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary">lenskit.data.vocab.Vocabulary</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.UnratedItemCandidateSelector.users_">
+<span class="sig-name descname"><span class="pre">users_</span></span><a class="headerlink" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector.users_" title="Link to this definition">#</a></dt>
+<dd><p>All known users.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="lenskit.data.Vocabulary.html#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary">lenskit.data.vocab.Vocabulary</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.UnratedItemCandidateSelector.user_items_">
+<span class="sig-name descname"><span class="pre">user_items_</span></span><a class="headerlink" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector.user_items_" title="Link to this definition">#</a></dt>
+<dd><p>Items rated by each known user, as positions in the <code class="docutils literal notranslate"><span class="pre">items</span></code> index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>lenskit.data.matrix.CSRStructure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.UnratedItemCandidateSelector.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector.fit" title="Link to this definition">#</a></dt>
+<dd><p>Train a model using the specified ratings (or similar) data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>) – The training data.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms
+should avoid using the same keyword arguments for different
+purposes, so that they can be more easily hybridized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The algorithm object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.UnratedItemCandidateSelector.candidates">
+<span class="sig-name descname"><span class="pre">candidates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector.candidates" title="Link to this definition">#</a></dt>
+<dd><p>Select candidates for the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – The user key or ID.</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)"><em>pandas.Series</em></a><em> or </em><em>array-like</em>) – Ratings or items to use instead of whatever ratings were memorized
+for this user.  If a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>, the series index
+is used; if it is another array-like it is assumed to be an array
+of items.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.AllItemsCandidateSelector">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.basic.</span></span><span class="sig-name descname"><span class="pre">AllItemsCandidateSelector</span></span><a class="headerlink" href="#lenskit.algorithms.basic.AllItemsCandidateSelector" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.CandidateSelector" title="lenskit.algorithms.CandidateSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">CandidateSelector</span></code></a></p>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">CandidateSelector</span></code> that selects all items, regardless of whether
+the user has rated them, as candidates.  When this selector is fit, it memorizes
+the set of items.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.AllItemsCandidateSelector.items_">
+<span class="sig-name descname"><span class="pre">items_</span></span><a class="headerlink" href="#lenskit.algorithms.basic.AllItemsCandidateSelector.items_" title="Link to this definition">#</a></dt>
+<dd><p>All known items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.0)">numpy.ndarray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.AllItemsCandidateSelector.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ratings</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.AllItemsCandidateSelector.fit" title="Link to this definition">#</a></dt>
+<dd><p>Train a model using the specified ratings (or similar) data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – The training data.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms
+should avoid using the same keyword arguments for different
+purposes, so that they can be more easily hybridized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The algorithm object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.AllItemsCandidateSelector.candidates">
+<span class="sig-name descname"><span class="pre">candidates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.AllItemsCandidateSelector.candidates" title="Link to this definition">#</a></dt>
+<dd><p>Select candidates for the user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – The user key or ID.</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)"><em>pandas.Series</em></a><em> or </em><em>array-like</em>) – Ratings or items to use instead of whatever ratings were memorized
+for this user.  If a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.Series</span></code></a>, the series index
+is used; if it is another array-like it is assumed to be an array
+of items.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.Random">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.basic.</span></span><span class="sig-name descname"><span class="pre">Random</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selector</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng_spec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Random" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.Recommender" title="lenskit.algorithms.Recommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recommender</span></code></a></p>
+<p>A random-item recommender.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.Random.selector">
+<span class="sig-name descname"><span class="pre">selector</span></span><a class="headerlink" href="#lenskit.algorithms.basic.Random.selector" title="Link to this definition">#</a></dt>
+<dd><p>Selects candidate items for recommendation.
+Default is <a class="reference internal" href="../old/basic.html#lenskit.algorithms.basic.UnratedItemCandidateSelector" title="lenskit.algorithms.basic.UnratedItemCandidateSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnratedItemCandidateSelector</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.CandidateSelector" title="lenskit.algorithms.CandidateSelector">CandidateSelector</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.Random.rng_spec">
+<span class="sig-name descname"><span class="pre">rng_spec</span></span><a class="headerlink" href="#lenskit.algorithms.basic.Random.rng_spec" title="Link to this definition">#</a></dt>
+<dd><p>Seed or random state for generating recommendations.  Pass
+<code class="docutils literal notranslate"><span class="pre">'user'</span></code> to deterministically derive per-user RNGS from
+the user IDs for reproducibility.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.Random.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Random.fit" title="Link to this definition">#</a></dt>
+<dd><p>Train a model using the specified ratings (or similar) data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>) – The training data.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms
+should avoid using the same keyword arguments for different
+purposes, so that they can be more easily hybridized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The algorithm object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.Random.recommend">
+<span class="sig-name descname"><span class="pre">recommend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidates</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.Random.recommend" title="Link to this definition">#</a></dt>
+<dd><p>Compute recommendations for a user.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – the user ID</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – the number of recommendations to produce (<code class="docutils literal notranslate"><span class="pre">None</span></code> for unlimited)</p></li>
+<li><p><strong>candidates</strong> (<em>array-like</em>) – The set of valid candidate items; if <code class="docutils literal notranslate"><span class="pre">None</span></code>, a default set will be used.
+For many algorithms, this is their <code class="xref py py-class docutils literal notranslate"><span class="pre">CandidateSelector</span></code>.</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a frame with an <code class="docutils literal notranslate"><span class="pre">item</span></code> column; if the recommender also produces scores,
+they will be in a <code class="docutils literal notranslate"><span class="pre">score</span></code> column.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)">pandas.DataFrame</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.KnownRating">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.basic.</span></span><span class="sig-name descname"><span class="pre">KnownRating</span></span><a class="headerlink" href="#lenskit.algorithms.basic.KnownRating" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a></p>
+<p>The known rating algorithm memorizes ratings provided in the fit method.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.KnownRating.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.KnownRating.fit" title="Link to this definition">#</a></dt>
+<dd><p>Train a model using the specified ratings (or similar) data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>) – The training data.</p></li>
+<li><p><strong>kwargs</strong> – Additional training data the algorithm may require.  Algorithms
+should avoid using the same keyword arguments for different
+purposes, so that they can be more easily hybridized.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The algorithm object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.algorithms.basic.KnownRating.predict_for_user">
+<span class="sig-name descname"><span class="pre">predict_for_user</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.basic.KnownRating.predict_for_user" title="Link to this definition">#</a></dt>
+<dd><p>Compute predictions for a user and items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>user</strong> – the user ID</p></li>
+<li><p><strong>items</strong> (<em>array-like</em>) – the items to predict</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)"><em>pandas.Series</em></a>) – the user’s ratings (indexed by item id); if provided, they may be used to
+override or augment the model’s notion of a user’s preferences.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>scores for the items, indexed by item id.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.2)">pandas.Series</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="lenskit.algorithms.als.implicit.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">lenskit.algorithms.als.implicit</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="lenskit.algorithms.bias.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">lenskit.algorithms.bias</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.PopScore"><code class="docutils literal notranslate"><span class="pre">PopScore</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.PopScore.item_pop_"><code class="docutils literal notranslate"><span class="pre">PopScore.item_pop_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.PopScore.fit"><code class="docutils literal notranslate"><span class="pre">PopScore.fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.PopScore.predict_for_user"><code class="docutils literal notranslate"><span class="pre">PopScore.predict_for_user()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.Memorized"><code class="docutils literal notranslate"><span class="pre">Memorized</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.Memorized.fit"><code class="docutils literal notranslate"><span class="pre">Memorized.fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.Memorized.predict_for_user"><code class="docutils literal notranslate"><span class="pre">Memorized.predict_for_user()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.Fallback"><code class="docutils literal notranslate"><span class="pre">Fallback</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.Fallback.fit"><code class="docutils literal notranslate"><span class="pre">Fallback.fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.Fallback.predict_for_user"><code class="docutils literal notranslate"><span class="pre">Fallback.predict_for_user()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.EmptyCandidateSelector"><code class="docutils literal notranslate"><span class="pre">EmptyCandidateSelector</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.EmptyCandidateSelector.dtype_"><code class="docutils literal notranslate"><span class="pre">EmptyCandidateSelector.dtype_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.EmptyCandidateSelector.fit"><code class="docutils literal notranslate"><span class="pre">EmptyCandidateSelector.fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.EmptyCandidateSelector.candidates"><code class="docutils literal notranslate"><span class="pre">EmptyCandidateSelector.candidates()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector"><code class="docutils literal notranslate"><span class="pre">UnratedItemCandidateSelector</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector.items_"><code class="docutils literal notranslate"><span class="pre">UnratedItemCandidateSelector.items_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector.users_"><code class="docutils literal notranslate"><span class="pre">UnratedItemCandidateSelector.users_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector.user_items_"><code class="docutils literal notranslate"><span class="pre">UnratedItemCandidateSelector.user_items_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector.fit"><code class="docutils literal notranslate"><span class="pre">UnratedItemCandidateSelector.fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.UnratedItemCandidateSelector.candidates"><code class="docutils literal notranslate"><span class="pre">UnratedItemCandidateSelector.candidates()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.AllItemsCandidateSelector"><code class="docutils literal notranslate"><span class="pre">AllItemsCandidateSelector</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.AllItemsCandidateSelector.items_"><code class="docutils literal notranslate"><span class="pre">AllItemsCandidateSelector.items_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.AllItemsCandidateSelector.fit"><code class="docutils literal notranslate"><span class="pre">AllItemsCandidateSelector.fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.AllItemsCandidateSelector.candidates"><code class="docutils literal notranslate"><span class="pre">AllItemsCandidateSelector.candidates()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.Random"><code class="docutils literal notranslate"><span class="pre">Random</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.Random.selector"><code class="docutils literal notranslate"><span class="pre">Random.selector</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.Random.rng_spec"><code class="docutils literal notranslate"><span class="pre">Random.rng_spec</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.Random.fit"><code class="docutils literal notranslate"><span class="pre">Random.fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.Random.recommend"><code class="docutils literal notranslate"><span class="pre">Random.recommend()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.KnownRating"><code class="docutils literal notranslate"><span class="pre">KnownRating</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.KnownRating.fit"><code class="docutils literal notranslate"><span class="pre">KnownRating.fit()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.algorithms.basic.KnownRating.predict_for_user"><code class="docutils literal notranslate"><span class="pre">KnownRating.predict_for_user()</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/api/lenskit.algorithms.basic.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2018–2024 Drexel University, Boise State University, and collaborators.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.0.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
