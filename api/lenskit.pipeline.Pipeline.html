@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.pipeline.Pipeline &#8212; LensKit 0.15.0.dev1201+g87f31f10 documentation</title>
+    <title>lenskit.pipeline.Pipeline &#8212; LensKit 0.15.0.dev1211+g3dc84b79 documentation</title>
   
   
   
@@ -45,7 +45,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=2a70d8cb"></script>
+    <script src="../_static/documentation_options.js?v=13b19acd"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/lenskit.pipeline.Pipeline';</script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1201+g87f31f10 documentation - Home"/>
-    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1201+g87f31f10 documentation - Home"/>`);</script>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1211+g3dc84b79 documentation - Home"/>
+    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1211+g3dc84b79 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -442,9 +442,6 @@ document.write(`
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="pipeline.html">Pipeline API</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">lenskit.pipeline.Pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Node.html">lenskit.pipeline.Node</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.ConfigurableComponent.html">lenskit.pipeline.ConfigurableComponent</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.TrainableComponent.html">lenskit.pipeline.TrainableComponent</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.AutoConfig.html">lenskit.pipeline.AutoConfig</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.topn_pipeline.html">lenskit.pipeline.topn_pipeline</a></li>
 </ul>
 </details></li>
@@ -667,7 +664,7 @@ default setup and minimal configuration, see <a class="reference internal" href=
 <td><p>Set the default wiring for a component input.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.Pipeline.train" title="lenskit.pipeline.Pipeline.train"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train</span></code></a>(data)</p></td>
-<td><p>Trains the pipeline's trainable components (those implementing the <a class="reference internal" href="lenskit.pipeline.TrainableComponent.html#lenskit.pipeline.TrainableComponent" title="lenskit.pipeline.TrainableComponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainableComponent</span></code></a> interface) on some training data.</p></td>
+<td><p>Trains the pipeline's trainable components (those implementing the <code class="xref py py-class docutils literal notranslate"><span class="pre">TrainableComponent</span></code> interface) on some training data.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.Pipeline.use_first_of" title="lenskit.pipeline.Pipeline.use_first_of"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_first_of</span></code></a>(name, *nodes)</p></td>
 <td><p>Create a new node whose value is the first defined (not <code class="docutils literal notranslate"><span class="pre">None</span></code>) value of the specified nodes.</p></td>
@@ -850,7 +847,7 @@ from <a class="reference internal" href="#lenskit.pipeline.Pipeline.node" title=
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a>) – The name of the component in the pipeline.  The name must be
 unique in the pipeline (among both components and inputs).</p></li>
-<li><p><strong>obj</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><em>Callable</em></a><em>[</em><em>[</em><em>...</em><em>]</em><em>, </em><em>ND</em><em>]</em>) – The component itself.</p></li>
+<li><p><strong>obj</strong> (<em>Component</em><em>[</em><em>ND</em><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><em>Callable</em></a><em>[</em><em>[</em><em>...</em><em>]</em><em>, </em><em>ND</em><em>]</em>) – The component itself.</p></li>
 <li><p><strong>inputs</strong> (<a class="reference internal" href="lenskit.pipeline.Node.html#lenskit.pipeline.Node" title="lenskit.pipeline.nodes.Node"><em>Node</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><em>object</em></a>) – The component’s input wiring.  See <a class="reference internal" href="../guide/pipeline.html#pipeline-connections"><span class="std std-ref">Connections</span></a>
 for details.</p></li>
 </ul>
@@ -876,7 +873,7 @@ input will use the new component instead.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.12)"><em>str</em></a><em> | </em><a class="reference internal" href="lenskit.pipeline.Node.html#lenskit.pipeline.Node" title="lenskit.pipeline.nodes.Node"><em>Node</em></a><em>[</em><em>ND</em><em>]</em>)</p></li>
-<li><p><strong>obj</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><em>Callable</em></a><em>[</em><em>[</em><em>...</em><em>]</em><em>, </em><em>ND</em><em>]</em>)</p></li>
+<li><p><strong>obj</strong> (<em>Component</em><em>[</em><em>ND</em><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><em>Callable</em></a><em>[</em><em>[</em><em>...</em><em>]</em><em>, </em><em>ND</em><em>]</em>)</p></li>
 <li><p><strong>inputs</strong> (<a class="reference internal" href="lenskit.pipeline.Node.html#lenskit.pipeline.Node" title="lenskit.pipeline.nodes.Node"><em>Node</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.12)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.12)"><em>object</em></a>)</p></li>
 </ul>
 </dd>
@@ -896,22 +893,24 @@ run. This method is used for things like filling in optional pipeline
 inputs.  For example, if you want the pipeline to take candidate items
 through an <code class="docutils literal notranslate"><span class="pre">items</span></code> input, but look them up from the user’s history and
 the training data if <code class="docutils literal notranslate"><span class="pre">items</span></code> is not supplied, you would do:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span> <span class="c1"># allow candidate items to be optionally specified</span>
-<span class="n">items</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">&#39;items&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">EntityId</span><span class="p">],</span> <span class="kc">None</span><span class="p">)</span> <span class="c1"># find</span>
-<span class="n">candidates</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">training</span> <span class="n">data</span> <span class="p">(</span><span class="n">optional</span><span class="p">)</span> <span class="n">lookup_candidates</span> <span class="o">=</span>
-<span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span>
-    <span class="s1">&#39;select-candidates&#39;</span><span class="p">,</span> <span class="n">UnratedTrainingItemsCandidateSelector</span><span class="p">(),</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+<span class="c1"># allow candidate items to be optionally specified</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">&#39;items&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">EntityId</span><span class="p">],</span> <span class="kc">None</span><span class="p">)</span>
+<span class="c1"># find candidates from the training data (optional)</span>
+<span class="n">lookup_candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span>
+    <span class="s1">&#39;select-candidates&#39;</span><span class="p">,</span>
+    <span class="n">UnratedTrainingItemsCandidateSelector</span><span class="p">(),</span>
     <span class="n">user</span><span class="o">=</span><span class="n">history</span><span class="p">,</span>
-<span class="p">)</span> <span class="c1"># if the client provided items as a pipeline input, use those;</span>
-<span class="n">otherwise</span> <span class="c1"># use the candidate selector we just configured.</span>
-<span class="n">candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">use_first_of</span><span class="p">(</span><span class="s1">&#39;candidates&#39;</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span>
-<span class="n">lookup_candidates</span><span class="p">)</span>
+<span class="p">)</span>
+<span class="c1"># if the client provided items as a pipeline input, use those; otherwise</span>
+<span class="c1"># use the candidate selector we just configured.</span>
+<span class="n">candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">use_first_of</span><span class="p">(</span><span class="s1">&#39;candidates&#39;</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">lookup_candidates</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This method does not distinguish between an input being unspecified
-and explicitly specified as <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>This method does not distinguish between an input being unspecified and
+explicitly specified as <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1055,7 +1054,7 @@ returning the hex-encoded SHA256 hash of that configuration.</p>
 <dt class="sig sig-object py" id="lenskit.pipeline.Pipeline.train">
 <span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Pipeline.train" title="Link to this definition">#</a></dt>
 <dd><p>Trains the pipeline’s trainable components (those implementing the
-<a class="reference internal" href="lenskit.pipeline.TrainableComponent.html#lenskit.pipeline.TrainableComponent" title="lenskit.pipeline.TrainableComponent"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainableComponent</span></code></a> interface) on some training data.</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">TrainableComponent</span></code> interface) on some training data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>)</p>
