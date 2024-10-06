@@ -19,7 +19,7 @@
 <meta name="description" content="Top-N evaluation metrics. Functions" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.metrics.topn &#8212; LensKit 0.15.0.dev1211+g3dc84b79 documentation</title>
+    <title>lenskit.metrics.topn &#8212; LensKit 0.15.0.dev1284+g8c7b94a1 documentation</title>
   
   
   
@@ -47,7 +47,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=13b19acd"></script>
+    <script src="../_static/documentation_options.js?v=a66495d9"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1211+g3dc84b79 documentation - Home"/>
-    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1211+g3dc84b79 documentation - Home"/>`);</script>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1284+g8c7b94a1 documentation - Home"/>
+    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1284+g8c7b94a1 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -434,11 +434,13 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Core</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="data.html">Data Abstractions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="data-types.html">Basic Data Types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.Dataset.html">lenskit.data.Dataset</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.from_interactions_df.html">lenskit.data.from_interactions_df</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_movielens.html">lenskit.data.load_movielens</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_movielens_df.html">lenskit.data.load_movielens_df</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.ItemList.html">lenskit.data.ItemList</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.data.RecQuery.html">lenskit.data.RecQuery</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.Vocabulary.html">lenskit.data.Vocabulary</a></li>
 </ul>
 </details></li>
@@ -627,9 +629,9 @@ document.write(`
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
+<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
 with the recommended item IDs; all other columns are ignored.</p></li>
-<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
 it has a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, that is used as the item gains; otherwise,
 each item has gain 1. All other columns are ignored.</p></li>
 <li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>) – The maximum list length to consider.</p></li>
@@ -651,9 +653,9 @@ each item has gain 1. All other columns are ignored.</p></li>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
+<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
 with the recommended item IDs; all other columns are ignored.</p></li>
-<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
 it has a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, that is used as the item gains; otherwise,
 each item has gain 1. All other columns are ignored.</p></li>
 <li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>) – The maximum list length to consider.</p></li>
@@ -676,9 +678,9 @@ lists, this computes the <em>hit rate</em> <span id="id5">[<a class="reference i
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
+<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
 with the recommended item IDs; all other columns are ignored.</p></li>
-<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
 it has a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, that is used as the item gains; otherwise,
 each item has gain 1. All other columns are ignored.</p></li>
 <li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>) – The maximum list length to consider.</p></li>
@@ -704,9 +706,9 @@ reciprocal rank is therefore 0.  <span id="id7">Deshpande and Karypis [<a class=
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
+<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
 with the recommended item IDs; all other columns are ignored.</p></li>
-<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
 it has a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, that is used as the item gains; otherwise,
 each item has gain 1. All other columns are ignored.</p></li>
 <li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>) – The maximum list length to consider.</p></li>
@@ -732,9 +734,9 @@ truth frame, item ratings are assumed to be 1.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
+<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
 with the recommended item IDs; all other columns are ignored.</p></li>
-<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
 it has a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, that is used as the item gains; otherwise,
 each item has gain 1. All other columns are ignored.</p></li>
 <li><p><strong>discount</strong> – The rank discount function.  Each item’s score will be divided the discount of its rank,
@@ -767,9 +769,9 @@ provided in the truth frame, item ratings are assumed to be 1.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
+<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
 with the recommended item IDs; all other columns are ignored.</p></li>
-<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
 it has a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, that is used as the item gains; otherwise,
 each item has gain 1. All other columns are ignored.</p></li>
 <li><p><strong>discount</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.12)"><em>Callable</em></a>) – The rank discount function.  Each item’s score will be divided the
@@ -804,9 +806,9 @@ data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
+<li><p><strong>recs</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a>) – The recommendation list.  This is expected to have a column <code class="docutils literal notranslate"><span class="pre">item</span></code>
 with the recommended item IDs; all other columns are ignored.</p></li>
-<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.2)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
+<li><p><strong>truth</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a>) – The user’s test data. It is expected to be <em>indexed</em> by item ID. If
 it has a <code class="docutils literal notranslate"><span class="pre">rating</span></code> column, that is used as the item gains;
 otherwise, each item has gain 1. All other columns are ignored.</p></li>
 <li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a><em> | </em><em>None</em>) – The maximum recommendation list length.</p></li>

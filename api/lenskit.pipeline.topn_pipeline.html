@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.pipeline.topn_pipeline &#8212; LensKit 0.15.0.dev1248+gbe32e2d2 documentation</title>
+    <title>lenskit.pipeline.topn_pipeline &#8212; LensKit 0.15.0.dev1284+g8c7b94a1 documentation</title>
   
   
   
@@ -45,7 +45,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=97e411ca"></script>
+    <script src="../_static/documentation_options.js?v=a66495d9"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/lenskit.pipeline.topn_pipeline';</script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1248+gbe32e2d2 documentation - Home"/>
-    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1248+gbe32e2d2 documentation - Home"/>`);</script>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1284+g8c7b94a1 documentation - Home"/>
+    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1284+g8c7b94a1 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -431,11 +431,13 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Core</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="data.html">Data Abstractions</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="data-types.html">Basic Data Types</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.Dataset.html">lenskit.data.Dataset</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.from_interactions_df.html">lenskit.data.from_interactions_df</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_movielens.html">lenskit.data.load_movielens</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_movielens_df.html">lenskit.data.load_movielens_df</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.ItemList.html">lenskit.data.ItemList</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.data.RecQuery.html">lenskit.data.RecQuery</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.Vocabulary.html">lenskit.data.Vocabulary</a></li>
 </ul>
 </details></li>
@@ -577,7 +579,7 @@ document.write(`
 <h1>lenskit.pipeline.topn_pipeline<a class="headerlink" href="#lenskit-pipeline-topn-pipeline" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.pipeline.topn_pipeline">
-<span class="sig-prename descclassname"><span class="pre">lenskit.pipeline.</span></span><span class="sig-name descname"><span class="pre">topn_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scorer</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicts_ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.topn_pipeline" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.pipeline.</span></span><span class="sig-name descname"><span class="pre">topn_pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">scorer</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicts_ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.topn_pipeline" title="Link to this definition">#</a></dt>
 <dd><p>Create a pipeline that produces top-N recommendations using the specified
 scorer.  The scorer should have the following call signature:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">scorer</span><span class="p">(</span><span class="n">user</span><span class="p">:</span> <span class="n">UserHistory</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">:</span> <span class="o">...</span>
@@ -590,6 +592,7 @@ scorer.  The scorer should have the following call signature:</p>
 name <code class="docutils literal notranslate"><span class="pre">scorer</span></code>, see <a class="reference internal" href="../guide/pipeline.html#pipeline-names"><span class="std std-ref">Component Names</span></a>).</p></li>
 <li><p><strong>predicts_ratings</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.12)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, make <code class="docutils literal notranslate"><span class="pre">rating-predictor</span></code> an alias for <code class="docutils literal notranslate"><span class="pre">scorer</span></code> so that
 evaluation components know this pipeline can predict ratings.</p></li>
+<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.12)"><em>int</em></a>) – The recommendation list length to configure in the pipeline.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
