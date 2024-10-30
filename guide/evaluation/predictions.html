@@ -19,7 +19,7 @@
 <meta name="description" content="While rating prediction is no longer a widely-studied recommendation task, LensKit provides support for evaluating predictions for completeness and reproducing or comparing against historical resea..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Evaluating Rating Predictions &#8212; LensKit 0.15.0.dev1389+gf50cbdc9 documentation</title>
+    <title>Evaluating Rating Predictions &#8212; LensKit 0.15.0.dev1406+gbf8606e3 documentation</title>
   
   
   
@@ -47,7 +47,7 @@
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../../_static/documentation_options.js?v=1dd52f15"></script>
+    <script src="../../_static/documentation_options.js?v=6d689b38"></script>
     <script src="../../_static/doctools.js?v=9a2dae69"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'guide/evaluation/predictions';</script>
@@ -60,7 +60,7 @@
     <link rel="canonical" href="https://lkpy.lenskit.org/en/latest/guide/evaluation/predictions.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Documenting Experiments" href="../documenting.html" />
+    <link rel="next" title="Evaluating Top-N Rankings" href="rankings.html" />
     <link rel="prev" title="Evaluating Recommender Output" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1389+gf50cbdc9 documentation - Home"/>
-    <script>document.write(`<img src="../../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1389+gf50cbdc9 documentation - Home"/>`);</script>
+    <img src="../../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1406+gbf8606e3 documentation - Home"/>
+    <script>document.write(`<img src="../../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1406+gbf8606e3 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -447,6 +447,7 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="../batch.html">Batch-Running Recommenders</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Evaluating Recommender Output</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Evaluating Rating Predictions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rankings.html">Evaluating Top-N Rankings</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../documenting.html">Documenting Experiments</a></li>
@@ -521,8 +522,8 @@ document.write(`
 LensKit provides support for evaluating predictions for completeness and
 reproducing or comparing against historical research.</p>
 <p>The <a class="reference internal" href="../../api/lenskit.metrics.predict.html#module-lenskit.metrics.predict" title="lenskit.metrics.predict"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.metrics.predict</span></code></a> module contains the prediction accuracy
-metrics, including <a class="reference internal" href="../../api/lenskit.metrics.predict.html#lenskit.metrics.predict.rmse" title="lenskit.metrics.predict.rmse"><code class="xref py py-func docutils literal notranslate"><span class="pre">rmse()</span></code></a> and
-<a class="reference internal" href="../../api/lenskit.metrics.predict.html#lenskit.metrics.predict.mae" title="lenskit.metrics.predict.mae"><code class="xref py py-func docutils literal notranslate"><span class="pre">mae()</span></code></a>.  They support both global
+metrics, including <a class="reference internal" href="../../api/lenskit.metrics.predict.html#lenskit.metrics.predict.RMSE" title="lenskit.metrics.predict.RMSE"><code class="xref py py-func docutils literal notranslate"><span class="pre">RMSE()</span></code></a> and
+<a class="reference internal" href="../../api/lenskit.metrics.predict.html#lenskit.metrics.predict.MAE" title="lenskit.metrics.predict.MAE"><code class="xref py py-func docutils literal notranslate"><span class="pre">MAE()</span></code></a>.  They support both global
 (micro-averaged) and per-user (macro-averaged) computation.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 2024.1: </span>The prediction accuracy metric interface has changed to use item lists.</p>
@@ -533,14 +534,14 @@ metrics, including <a class="reference internal" href="../../api/lenskit.metrics
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lenskit.datasets</span> <span class="kn">import</span> <span class="n">MovieLens</span>
 <span class="kn">from</span> <span class="nn">lenskit.algorithms.bias</span> <span class="kn">import</span> <span class="n">Bias</span>
 <span class="kn">from</span> <span class="nn">lenskit.batch</span> <span class="kn">import</span> <span class="n">predict</span>
-<span class="kn">from</span> <span class="nn">lenskit.metrics.predict</span> <span class="kn">import</span> <span class="n">user_metric</span><span class="p">,</span> <span class="n">rmse</span>
+<span class="kn">from</span> <span class="nn">lenskit.metrics.predict</span> <span class="kn">import</span> <span class="n">user_metric</span><span class="p">,</span> <span class="n">RMSE</span>
 <span class="n">ratings</span> <span class="o">=</span> <span class="n">MovieLens</span><span class="p">(</span><span class="s1">&#39;ml-small&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ratings</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="n">test</span> <span class="o">=</span> <span class="n">ratings</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
 <span class="n">train</span> <span class="o">=</span> <span class="n">ratings</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1000</span><span class="p">:]</span>
 <span class="n">algo</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">()</span>
 <span class="n">algo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
 <span class="n">preds</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span>
-<span class="n">measure_user_predictions</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">rmse</span><span class="p">)</span>
+<span class="n">measure_user_predictions</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">RMSE</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -561,7 +562,7 @@ frame option.</p>
 helps automate this computation.  It takes a data frame (with a <code class="docutils literal notranslate"><span class="pre">user_id</span></code> or
 <code class="docutils literal notranslate"><span class="pre">user</span></code> column, along with the <code class="docutils literal notranslate"><span class="pre">score</span></code> and <code class="docutils literal notranslate"><span class="pre">rating</span></code> columns) and a metric
 and returns a series of per-user scores, indexed by user ID:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">measure_user_predictions</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">rmse</span><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">measure_user_predictions</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">RMSE</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -588,7 +589,7 @@ confidence.</p>
 </div>
 <p>If you want to skip missing predictions, pass <code class="docutils literal notranslate"><span class="pre">missing_scores=&quot;ignore&quot;</span></code> to the
 metric function:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">rmse</span><span class="p">(</span><span class="n">user_preds</span><span class="p">,</span> <span class="n">user_ratings</span><span class="p">,</span> <span class="n">missing_scores</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">RMSE</span><span class="p">(</span><span class="n">user_preds</span><span class="p">,</span> <span class="n">user_ratings</span><span class="p">,</span> <span class="n">missing_scores</span><span class="o">=</span><span class="s2">&quot;ignore&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The corresponding <code class="docutils literal notranslate"><span class="pre">missing_truth=&quot;ignore&quot;</span></code> will cause the metric to ignore
@@ -620,11 +621,11 @@ them through to the underlying metric.</p>
       </div>
     </a>
     <a class="right-next"
-       href="../documenting.html"
+       href="rankings.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Documenting Experiments</p>
+        <p class="prev-next-title">Evaluating Top-N Rankings</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
