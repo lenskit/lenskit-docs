@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit ranking (and list) metrics." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.metrics.ranking &#8212; LensKit 0.15.0.dev1407+g3c45716a documentation</title>
+    <title>lenskit.metrics.ranking &#8212; LensKit 0.15.0.dev1426+g8b885667 documentation</title>
   
   
   
@@ -47,7 +47,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=20d6066a"></script>
+    <script src="../_static/documentation_options.js?v=3a1509f6"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1407+g3c45716a documentation - Home"/>
-    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1407+g3c45716a documentation - Home"/>`);</script>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1426+g8b885667 documentation - Home"/>
+    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1426+g8b885667 documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -491,6 +491,8 @@ document.write(`
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="lenskit.batch.html">lenskit.batch</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="lenskit.metrics.html">lenskit.metrics</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.basic.html">lenskit.metrics.basic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.bulk.html">lenskit.metrics.bulk</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.predict.html">lenskit.metrics.predict</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">lenskit.metrics.ranking</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.topn.html">lenskit.metrics.topn</a></li>
@@ -593,16 +595,9 @@ document.write(`
 <span id="lenskit-metrics-ranking"></span><h1>lenskit.metrics.ranking<a class="headerlink" href="#module-lenskit.metrics.ranking" title="Link to this heading">#</a></h1>
 <p>LensKit ranking (and list) metrics.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="lenskit.metrics.ranking.RankingMetric">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.metrics.ranking.</span></span><span class="sig-name descname"><span class="pre">RankingMetric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.RankingMetric" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
-<p>Protocol implemented by ranking metrics.</p>
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="lenskit.metrics.ranking.RankingMetricBase">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.metrics.ranking.</span></span><span class="sig-name descname"><span class="pre">RankingMetricBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.RankingMetricBase" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a>, <a class="reference internal" href="#lenskit.metrics.ranking.RankingMetric" title="lenskit.metrics.ranking._base.RankingMetric"><code class="xref py py-class docutils literal notranslate"><span class="pre">RankingMetric</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="lenskit.metrics.html#lenskit.metrics.Metric" title="lenskit.metrics._base.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a></p>
 <p>Base class for most ranking metrics, implementing a <code class="docutils literal notranslate"><span class="pre">k</span></code> parameter for
 truncation.</p>
 <dl class="field-list simple">
@@ -644,6 +639,20 @@ computes the <em>hit rate</em> <span id="id1">[<a class="reference internal" hre
 <dd class="field-odd"><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>)</p>
 </dd>
 </dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.metrics.ranking.Hit.label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#lenskit.metrics.ranking.Hit.label" title="Link to this definition">#</a></dt>
+<dd><p>The metric’s default label in output.</p>
+<p>The base implementation returns the class name by default.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.metrics.ranking.Hit.mean_label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean_label</span></span><a class="headerlink" href="#lenskit.metrics.ranking.Hit.mean_label" title="Link to this definition">#</a></dt>
+<dd><p>The label to use when aggregating the metric by taking the mean.</p>
+<p>The base implementation delegates to <a class="reference internal" href="#lenskit.metrics.ranking.Hit.label" title="lenskit.metrics.ranking.Hit.label"><code class="xref py py-attr docutils literal notranslate"><span class="pre">label</span></code></a>.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -660,6 +669,13 @@ computes the <em>hit rate</em> <span id="id1">[<a class="reference internal" hre
 <dd class="field-odd"><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>)</p>
 </dd>
 </dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.metrics.ranking.Precision.label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#lenskit.metrics.ranking.Precision.label" title="Link to this definition">#</a></dt>
+<dd><p>The metric’s default label in output.</p>
+<p>The base implementation returns the class name by default.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -674,6 +690,13 @@ computes the <em>hit rate</em> <span id="id1">[<a class="reference internal" hre
 <dd class="field-odd"><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>)</p>
 </dd>
 </dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.metrics.ranking.Recall.label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#lenskit.metrics.ranking.Recall.label" title="Link to this definition">#</a></dt>
+<dd><p>The metric’s default label in output.</p>
+<p>The base implementation returns the class name by default.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -693,6 +716,20 @@ If no elements are relevant, the reciprocal rank is therefore 0.
 <dd class="field-odd"><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>)</p>
 </dd>
 </dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.metrics.ranking.RecipRank.label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#lenskit.metrics.ranking.RecipRank.label" title="Link to this definition">#</a></dt>
+<dd><p>The metric’s default label in output.</p>
+<p>The base implementation returns the class name by default.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.metrics.ranking.RecipRank.mean_label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean_label</span></span><a class="headerlink" href="#lenskit.metrics.ranking.RecipRank.mean_label" title="Link to this definition">#</a></dt>
+<dd><p>The label to use when aggregating the metric by taking the mean.</p>
+<p>The base implementation delegates to <a class="reference internal" href="#lenskit.metrics.ranking.RecipRank.label" title="lenskit.metrics.ranking.RecipRank.label"><code class="xref py py-attr docutils literal notranslate"><span class="pre">label</span></code></a>.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -726,6 +763,13 @@ cases, items not present in the truth data have a gain of 0.</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.metrics.ranking.NDCG.label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#lenskit.metrics.ranking.NDCG.label" title="Link to this definition">#</a></dt>
+<dd><p>The metric’s default label in output.</p>
+<p>The base implementation returns the class name by default.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -758,6 +802,13 @@ score by the maximum achievable with the test data (as in nDCG).</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.metrics.ranking.RBP.label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#lenskit.metrics.ranking.RBP.label" title="Link to this definition">#</a></dt>
+<dd><p>The metric’s default label in output.</p>
+<p>The base implementation returns the class name by default.</p>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -808,18 +859,37 @@ score by the maximum achievable with the test data (as in nDCG).</p></li>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.RankingMetric"><code class="docutils literal notranslate"><span class="pre">RankingMetric</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.RankingMetricBase"><code class="docutils literal notranslate"><span class="pre">RankingMetricBase</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.RankingMetricBase.k"><code class="docutils literal notranslate"><span class="pre">RankingMetricBase.k</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.RankingMetricBase.truncate"><code class="docutils literal notranslate"><span class="pre">RankingMetricBase.truncate()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.Hit"><code class="docutils literal notranslate"><span class="pre">Hit</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.Precision"><code class="docutils literal notranslate"><span class="pre">Precision</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.Recall"><code class="docutils literal notranslate"><span class="pre">Recall</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.RecipRank"><code class="docutils literal notranslate"><span class="pre">RecipRank</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.NDCG"><code class="docutils literal notranslate"><span class="pre">NDCG</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.RBP"><code class="docutils literal notranslate"><span class="pre">RBP</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.Hit"><code class="docutils literal notranslate"><span class="pre">Hit</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.Hit.label"><code class="docutils literal notranslate"><span class="pre">Hit.label</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.Hit.mean_label"><code class="docutils literal notranslate"><span class="pre">Hit.mean_label</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.Precision"><code class="docutils literal notranslate"><span class="pre">Precision</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.Precision.label"><code class="docutils literal notranslate"><span class="pre">Precision.label</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.Recall"><code class="docutils literal notranslate"><span class="pre">Recall</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.Recall.label"><code class="docutils literal notranslate"><span class="pre">Recall.label</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.RecipRank"><code class="docutils literal notranslate"><span class="pre">RecipRank</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.RecipRank.label"><code class="docutils literal notranslate"><span class="pre">RecipRank.label</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.RecipRank.mean_label"><code class="docutils literal notranslate"><span class="pre">RecipRank.mean_label</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.NDCG"><code class="docutils literal notranslate"><span class="pre">NDCG</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.NDCG.label"><code class="docutils literal notranslate"><span class="pre">NDCG.label</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.RBP"><code class="docutils literal notranslate"><span class="pre">RBP</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.RBP.label"><code class="docutils literal notranslate"><span class="pre">RBP.label</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
