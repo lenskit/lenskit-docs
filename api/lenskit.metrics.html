@@ -19,7 +19,7 @@
 <meta name="description" content="Metrics for evaluating recommender outputs. Functions Modules" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.metrics &#8212; LensKit 0.15.0.dev1426+g8b885667 documentation</title>
+    <title>lenskit.metrics &#8212; LensKit 0.15.0.dev1433+g03efb1bc documentation</title>
   
   
   
@@ -47,7 +47,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
   <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
 
-    <script src="../_static/documentation_options.js?v=3a1509f6"></script>
+    <script src="../_static/documentation_options.js?v=b70dfa4d"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1426+g8b885667 documentation - Home"/>
-    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1426+g8b885667 documentation - Home"/>`);</script>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1433+g03efb1bc documentation - Home"/>
+    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1433+g03efb1bc documentation - Home"/>`);</script>
   
   
 </a></div>
@@ -641,6 +641,101 @@ the missing value is theoretically infinite).</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="lenskit.metrics.RunAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.metrics.</span></span><span class="sig-name descname"><span class="pre">RunAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">metrics</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RunAnalysis" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Compute metrics over a collection of item lists composing a run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference internal" href="lenskit.metrics.bulk.html#lenskit.metrics.bulk.MetricWrapper" title="lenskit.metrics.bulk.MetricWrapper"><em>MetricWrapper</em></a><em>]</em>) – A list of metrics; you can also add them with <a class="reference internal" href="#lenskit.metrics.RunAnalysis.add_metric" title="lenskit.metrics.RunAnalysis.add_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_metric()</span></code></a>,
+which provides more flexibility.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.metrics.RunAnalysis.metrics">
+<span class="sig-name descname"><span class="pre">metrics</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="lenskit.metrics.bulk.html#lenskit.metrics.bulk.MetricWrapper" title="lenskit.metrics.bulk.MetricWrapper"><span class="pre">MetricWrapper</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.metrics.RunAnalysis.metrics" title="Link to this definition">#</a></dt>
+<dd><p>The list of metrics to compute.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.metrics.RunAnalysis.add_metric">
+<span class="sig-name descname"><span class="pre">add_metric</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">metric</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RunAnalysis.add_metric" title="Link to this definition">#</a></dt>
+<dd><p>Add a metric to this metric set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>metric</strong> (<a class="reference internal" href="#lenskit.metrics.Metric" title="lenskit.metrics._base.Metric"><em>Metric</em></a><em> | </em><a class="reference internal" href="#lenskit.metrics.MetricFunction" title="lenskit.metrics._base.MetricFunction"><em>MetricFunction</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#type" title="(in Python v3.13)"><em>type</em></a><em>[</em><a class="reference internal" href="#lenskit.metrics.Metric" title="lenskit.metrics._base.Metric"><em>Metric</em></a><em>]</em>) – The metric to add to the set.</p></li>
+<li><p><strong>label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – The label to use for the metric’s results.  If unset, obtains
+from the metric.</p></li>
+<li><p><strong>mean_label</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – The label to use for the overall aggregate (mean) of the
+metric’s results.  If unset, obtains from the metric.</p></li>
+<li><p><strong>default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em> | </em><em>None</em>) – The default value to use in aggregates when a user does not have
+recommendations. If unset, obtains from the metric’s <code class="docutils literal notranslate"><span class="pre">default</span></code>
+attribute (if specified), or 0.0.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.metrics.RunAnalysisResult">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.metrics.</span></span><span class="sig-name descname"><span class="pre">RunAnalysisResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lscores</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaults</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RunAnalysisResult" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Results of a bulk metric computation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lscores</strong> (<em>pd.DataFrame</em>)</p></li>
+<li><p><strong>defaults</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.metrics.RunAnalysisResult.list_scores">
+<span class="sig-name descname"><span class="pre">list_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fill_missing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RunAnalysisResult.list_scores" title="Link to this definition">#</a></dt>
+<dd><p>Get the per-list scores of the results.  This is a data frame with one
+row per list (with the list / user ID in the index), and one metric per
+column.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>fill_missing</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code> (the default), fills in missing values with each
+metric’s default value when available.  Pass <code class="docutils literal notranslate"><span class="pre">False</span></code> if you
+want to do analyses that need to treat missing values
+differently.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.metrics.RunAnalysisResult.summary">
+<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RunAnalysisResult.summary" title="Link to this definition">#</a></dt>
+<dd><p>Sumamry statistics for the per-list metrics.  Each metric is on its own
+row, with columns reporting the following:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">mean</span></code>:</dt><dd><p>The mean metric value.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">median</span></code>:</dt><dd><p>The median metric value.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">std</span></code>:</dt><dd><p>The (sample) standard deviation of the metric.</p>
+</dd>
+</dl>
+<p>Additional columns are added based on other options.  Missing metric
+values are filled with their defaults before computing statistics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="lenskit.metrics.RMSE">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.metrics.</span></span><span class="sig-name descname"><span class="pre">RMSE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">missing_scores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'error'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">missing_truth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'error'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RMSE" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="lenskit.metrics.predict.html#lenskit.metrics.predict.PredictMetric" title="lenskit.metrics.predict.PredictMetric"><code class="xref py py-class docutils literal notranslate"><span class="pre">PredictMetric</span></code></a></p>
@@ -687,6 +782,162 @@ cannot predict), generate predictions with
 </ul>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.metrics.NDCG">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.metrics.</span></span><span class="sig-name descname"><span class="pre">NDCG</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">discount=&lt;ufunc</span> <span class="pre">'log2'&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gain=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.NDCG" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="lenskit.metrics.ranking.html#lenskit.metrics.ranking.RankingMetricBase" title="lenskit.metrics.ranking._base.RankingMetricBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">RankingMetricBase</span></code></a></p>
+<p>Compute the normalized discounted cumulative gain <span id="id1">[<a class="reference internal" href="../references.html#id47" title="Kalervo Järvelin and Jaana Kekäläinen. Cumulated gain-based evaluation of IR techniques. ACM Transactions on Information Systems, 20(4):422–446, October 2002. doi:10.1145/582415.582418.">JarvelinKekalainen02</a>]</span>.</p>
+<p>Discounted cumultative gain is computed as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{align*}
+\mathrm{DCG}(L,u) &amp; = \sum_{i=1}^{|L|} \frac{r_{ui}}{d(i)}
+\end{align*}\]</div>
+<p>Unrated items are assumed to have a utility of 0; if no rating values are
+provided in the truth frame, item ratings are assumed to be 1.</p>
+<p>This is then normalized as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{align*}
+\mathrm{nDCG}(L, u) &amp; = \frac{\mathrm{DCG}(L,u)}{\mathrm{DCG}(L_{\mathrm{ideal}}, u)}
+\end{align*}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – The maximum recommendation list length to consider (longer lists are
+truncated).</p></li>
+<li><p><strong>discount</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.13)"><em>Callable</em></a><em>[</em><em>[</em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><em>ndarray</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>, </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.1)"><em>dtype</em></a><em>[</em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.number" title="(in NumPy v2.1)"><em>number</em></a><em>]</em><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><em>ndarray</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>, </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.1)"><em>dtype</em></a><em>[</em><em>float64</em><em>]</em><em>]</em><em>]</em>) – The discount function to use.  The default, base-2 logarithm, is the
+original function used by <span id="id2">Järvelin and Kekäläinen [<a class="reference internal" href="../references.html#id47" title="Kalervo Järvelin and Jaana Kekäläinen. Cumulated gain-based evaluation of IR techniques. ACM Transactions on Information Systems, 20(4):422–446, October 2002. doi:10.1145/582415.582418.">JarvelinKekalainen02</a>]</span>.</p></li>
+<li><p><strong>gain</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – The field on the test data to use for gain values.  If <code class="docutils literal notranslate"><span class="pre">None</span></code> (the
+default), all items present in the test data have a gain of 1.  If set
+to a string, it is the name of a field (e.g. <code class="docutils literal notranslate"><span class="pre">'rating'</span></code>).  In all
+cases, items not present in the truth data have a gain of 0.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.metrics.NDCG.label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#lenskit.metrics.NDCG.label" title="Link to this definition">#</a></dt>
+<dd><p>The metric’s default label in output.</p>
+<p>The base implementation returns the class name by default.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.metrics.RBP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.metrics.</span></span><span class="sig-name descname"><span class="pre">RBP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RBP" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="lenskit.metrics.ranking.html#lenskit.metrics.ranking.RankingMetricBase" title="lenskit.metrics.ranking._base.RankingMetricBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">RankingMetricBase</span></code></a></p>
+<p>Evaluate recommendations with rank-biased precision <span id="id3">[<a class="reference internal" href="../references.html#id60" title="Alistair Moffat and Justin Zobel. Rank-Biased Precision for Measurement of Retrieval Effectiveness. Transactions on Information Systems, 27(1):2:1-27, December 2008. doi:10.1145/1416950.1416952.">MZ08</a>]</span> with a
+patience parameter <span class="math notranslate nohighlight">\(\gamma\)</span>.</p>
+<p>If <span class="math notranslate nohighlight">\(r_{ui} \in \{0, 1\}\)</span> is binary implicit ratings, this is
+computed by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{align*}
+\operatorname{RBP}_\gamma(L, u) &amp; =(1 - \gamma) \sum_i r_{ui} p^i
+\end{align*}\]</div>
+<p>The original RBP metric depends on the idea that the rank-biased sum of
+binary relevance scores in an infinitely-long, perfectly-precise list has is
+<span class="math notranslate nohighlight">\(1/(1 - \gamma)\)</span>. However, in recommender evaluation, we usually have
+a small test set, so the maximum achievable RBP is significantly less, and
+is a function of the number of test items.  With <code class="docutils literal notranslate"><span class="pre">normalize=True</span></code>, the RBP
+metric will be normalized by the maximum achievable with the provided test
+data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – The maximum recommendation list length.</p></li>
+<li><p><strong>patience</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The patience parameter <span class="math notranslate nohighlight">\(\gamma\)</span>, the probability that the
+user continues browsing at each point.</p></li>
+<li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to normalize the RBP scores; if <code class="docutils literal notranslate"><span class="pre">True</span></code>, divides the RBP
+score by the maximum achievable with the test data (as in nDCG).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.metrics.RBP.label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#lenskit.metrics.RBP.label" title="Link to this definition">#</a></dt>
+<dd><p>The metric’s default label in output.</p>
+<p>The base implementation returns the class name by default.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.metrics.Precision">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.metrics.</span></span><span class="sig-name descname"><span class="pre">Precision</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.Precision" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="lenskit.metrics.ranking.html#lenskit.metrics.ranking.RankingMetricBase" title="lenskit.metrics.ranking._base.RankingMetricBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">RankingMetricBase</span></code></a></p>
+<p>Compute recommendation precision.  This is computed as:</p>
+<div class="math notranslate nohighlight">
+\[\frac{|L \cap I_u^{\mathrm{test}}|}{|L|}\]</div>
+<p>In the uncommon case that <code class="docutils literal notranslate"><span class="pre">k</span></code> is specified and <code class="docutils literal notranslate"><span class="pre">len(recs)</span> <span class="pre">&lt;</span> <span class="pre">k</span></code>, this metric uses
+<code class="docutils literal notranslate"><span class="pre">len(recs)</span></code> as the denominator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>)</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.metrics.Precision.label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#lenskit.metrics.Precision.label" title="Link to this definition">#</a></dt>
+<dd><p>The metric’s default label in output.</p>
+<p>The base implementation returns the class name by default.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.metrics.Recall">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.metrics.</span></span><span class="sig-name descname"><span class="pre">Recall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.Recall" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="lenskit.metrics.ranking.html#lenskit.metrics.ranking.RankingMetricBase" title="lenskit.metrics.ranking._base.RankingMetricBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">RankingMetricBase</span></code></a></p>
+<p>Compute recommendation recall.  This is computed as:</p>
+<div class="math notranslate nohighlight">
+\[\frac{|L \cap I_u^{\mathrm{test}}|}{\operatorname{min}\{|I_u^{\mathrm{test}}|, k\}}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>)</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.metrics.Recall.label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#lenskit.metrics.Recall.label" title="Link to this definition">#</a></dt>
+<dd><p>The metric’s default label in output.</p>
+<p>The base implementation returns the class name by default.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.metrics.RecipRank">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.metrics.</span></span><span class="sig-name descname"><span class="pre">RecipRank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RecipRank" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="lenskit.metrics.ranking.html#lenskit.metrics.ranking.RankingMetricBase" title="lenskit.metrics.ranking._base.RankingMetricBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">RankingMetricBase</span></code></a></p>
+<p>Compute the reciprocal rank <span id="id4">[<a class="reference internal" href="../references.html#id51" title="Paul B Kantor and Ellen Voorhees. Report on the TREC-5 Confusion Track. In The Fifth Text REtrieval Conference (TREC-5). October 1997.">KV97</a>]</span> of the first relevant
+item in a list of recommendations.  Taking the mean of this metric over the
+recommendation lists in a run yields the MRR (mean reciprocal rank).</p>
+<p>Let <span class="math notranslate nohighlight">\(\kappa\)</span> denote the 1-based rank of the first relevant item in
+<span class="math notranslate nohighlight">\(L\)</span>, with <span class="math notranslate nohighlight">\(\kappa=\infty\)</span> if none of the first <span class="math notranslate nohighlight">\(k\)</span> items
+in <span class="math notranslate nohighlight">\(L\)</span> are relevant; then the reciprocal rank is <span class="math notranslate nohighlight">\(1 / \kappa\)</span>.
+If no elements are relevant, the reciprocal rank is therefore 0.
+<span id="id5">Deshpande and Karypis [<a class="reference internal" href="../references.html#id8" title="Mukund Deshpande and George Karypis. Item-based top-N Recommendation Algorithms. ACM Trans. Inf. Syst., 22(1):143–177, January 2004. doi:10.1145/963770.963776.">DK04</a>]</span> call this the “reciprocal hit rate”.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>)</p>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.metrics.RecipRank.label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label</span></span><a class="headerlink" href="#lenskit.metrics.RecipRank.label" title="Link to this definition">#</a></dt>
+<dd><p>The metric’s default label in output.</p>
+<p>The base implementation returns the class name by default.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.metrics.RecipRank.mean_label">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean_label</span></span><a class="headerlink" href="#lenskit.metrics.RecipRank.mean_label" title="Link to this definition">#</a></dt>
+<dd><p>The label to use when aggregating the metric by taking the mean.</p>
+<p>The base implementation delegates to <a class="reference internal" href="#lenskit.metrics.RecipRank.label" title="lenskit.metrics.RecipRank.label"><code class="xref py py-attr docutils literal notranslate"><span class="pre">label</span></code></a>.</p>
+</dd></dl>
+
 </dd></dl>
 
 <p class="rubric">Modules</p>
@@ -765,11 +1016,42 @@ cannot predict), generate predictions with
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.MetricFunction"><code class="docutils literal notranslate"><span class="pre">MetricFunction</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.RunAnalysis"><code class="docutils literal notranslate"><span class="pre">RunAnalysis</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.RunAnalysis.metrics"><code class="docutils literal notranslate"><span class="pre">RunAnalysis.metrics</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.RunAnalysis.add_metric"><code class="docutils literal notranslate"><span class="pre">RunAnalysis.add_metric()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.RunAnalysisResult"><code class="docutils literal notranslate"><span class="pre">RunAnalysisResult</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.RunAnalysisResult.list_scores"><code class="docutils literal notranslate"><span class="pre">RunAnalysisResult.list_scores()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.RunAnalysisResult.summary"><code class="docutils literal notranslate"><span class="pre">RunAnalysisResult.summary()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.RMSE"><code class="docutils literal notranslate"><span class="pre">RMSE</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.RMSE.mean_label"><code class="docutils literal notranslate"><span class="pre">RMSE.mean_label</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.MAE"><code class="docutils literal notranslate"><span class="pre">MAE</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.NDCG"><code class="docutils literal notranslate"><span class="pre">NDCG</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.NDCG.label"><code class="docutils literal notranslate"><span class="pre">NDCG.label</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.RBP"><code class="docutils literal notranslate"><span class="pre">RBP</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.RBP.label"><code class="docutils literal notranslate"><span class="pre">RBP.label</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.Precision"><code class="docutils literal notranslate"><span class="pre">Precision</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.Precision.label"><code class="docutils literal notranslate"><span class="pre">Precision.label</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.Recall"><code class="docutils literal notranslate"><span class="pre">Recall</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.Recall.label"><code class="docutils literal notranslate"><span class="pre">Recall.label</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.RecipRank"><code class="docutils literal notranslate"><span class="pre">RecipRank</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.RecipRank.label"><code class="docutils literal notranslate"><span class="pre">RecipRank.label</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.RecipRank.mean_label"><code class="docutils literal notranslate"><span class="pre">RecipRank.mean_label</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 
