@@ -1,0 +1,718 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Parallel Processing" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="guide/parallelism.html" />
+<meta property="og:site_name" content="LensKit" />
+<meta property="og:description" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its: Batch operations using multi-process execution., Parallel model training. For most models pr..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary_guide_parallelism_1eb847a3.png" />
+<meta property="og:image:alt" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its: Batch operations using multi-process execution., Par..." />
+<meta name="description" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its: Batch operations using multi-process execution., Parallel model training. For most models pr..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Parallel Processing &#8212; LensKit 0.15.0.dev1455+g3ff2c3ee documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=cd9197a3" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=facbb4e5"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'guide/parallelism';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lkpy.lenskit.org/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
+        </script>
+    <link rel="canonical" href="https://lkpy.lenskit.org/en/latest/guide/parallelism.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Performance Tips" href="performance.html" />
+    <link rel="prev" title="Documenting Experiments" href="documenting.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.15.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1455+g3ff2c3ee documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1455+g3ff2c3ee documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminaries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing LensKit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data Management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline.html">Recommendation Pipelines</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="splitting.html">Splitting Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Pipelines</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="evaluation/predictions.html">Evaluating Rating Predictions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluation/rankings.html">Evaluating Top-N Rankings</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="documenting.html">Documenting Experiments</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Support Code</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Parallel Processing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tips and Help</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Parallel Processing</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="parallel-processing">
+<h1>Parallel Processing<a class="headerlink" href="#parallel-processing" title="Link to this heading">#</a></h1>
+<p>LensKit supports various forms of parallel execution, each with an environment
+variable controlling its:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="batch.html"><span class="doc">Batch operations</span></a> using <a class="reference internal" href="#parallel-model-ops"><span class="std std-ref">multi-process execution</span></a>.</p></li>
+<li><p>Parallel model training.  For most models provided by LensKit, this is usually
+implemented using PyTorch JIT parallelism (<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.jit.fork.html#torch.jit.fork" title="(in PyTorch v2.5)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.jit.fork()</span></code></a>).</p></li>
+<li><p>Parallel computation in the various backends (BLAS, MKL, Torch, etc.).</p></li>
+</ul>
+<section id="configuring-parallelism">
+<span id="parallel-config"></span><h2>Configuring Parallelism<a class="headerlink" href="#configuring-parallelism" title="Link to this heading">#</a></h2>
+<p>LensKit provides 4 knobs for configuring parallelism, each of which has a
+corresponding environment variable and parameter to <a class="reference internal" href="../api/lenskit.parallel.html#lenskit.parallel.initialize" title="lenskit.parallel.initialize"><code class="xref py py-func docutils literal notranslate"><span class="pre">initialize()</span></code></a> (the
+parameters take precedence over environment variables). Component
+implementations and support code that wants to make sure that parallelism is
+properly configured should call <a class="reference internal" href="../api/lenskit.parallel.html#lenskit.parallel.ensure_parallel_init" title="lenskit.parallel.ensure_parallel_init"><code class="xref py py-func docutils literal notranslate"><span class="pre">ensure_parallel_init()</span></code></a> prior to
+performing any parallelizable computation.</p>
+<p>The environment variables and their defaults are:</p>
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-LK_NUM_PROCS">
+<span class="sig-name descname"><span class="pre">LK_NUM_PROCS</span></span><a class="headerlink" href="#envvar-LK_NUM_PROCS" title="Link to this definition">#</a></dt>
+<dd><p>The number of processes to use for batch operations.  Defaults to the number
+of CPUs or 4, whichever is lower.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-LK_NUM_THREADS">
+<span class="sig-name descname"><span class="pre">LK_NUM_THREADS</span></span><a class="headerlink" href="#envvar-LK_NUM_THREADS" title="Link to this definition">#</a></dt>
+<dd><p>The number of threads to use for parallel model building.  Defaults to the
+number of CPUs or 8, whichever is smaller.</p>
+<p>This number is passed to <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.set_num_interop_threads.html#torch.set_num_interop_threads" title="(in PyTorch v2.5)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_interop_threads()</span></code></a> to set up the
+Torch JIT thread count.</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-LK_NUM_BACKEND_THREADS">
+<span class="sig-name descname"><span class="pre">LK_NUM_BACKEND_THREADS</span></span><a class="headerlink" href="#envvar-LK_NUM_BACKEND_THREADS" title="Link to this definition">#</a></dt>
+<dd><p>The number of threads to be used by backend compute engines.  Defaults to up
+to 4 backend threads per training thread, depending on the capacity of the
+machine:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">NCPUS</span> <span class="o">//</span> <span class="n">LK_NUM_THREADS</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is passed to <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.set_num_threads.html#torch.set_num_threads" title="(in PyTorch v2.5)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_threads()</span></code></a> (to control PyTorch internal
+parallelism), and to the underlying BLAS layer (via <a class="reference external" href="https://github.com/joblib/threadpoolctl">threadpoolctl</a>).</p>
+</dd></dl>
+
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-LK_NUM_CHILD_THREADS">
+<span class="sig-name descname"><span class="pre">LK_NUM_CHILD_THREADS</span></span><a class="headerlink" href="#envvar-LK_NUM_CHILD_THREADS" title="Link to this definition">#</a></dt>
+<dd><p>The number of backend threads to be used in worker processes spawned by
+batch evaluation.  Defaults to 4 per process, capped by the number of CPUs
+available:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">NCPUS</span> <span class="o">//</span> <span class="n">LK_NUM_PROCS</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Workers have both the process and thread counts set to 1.</p>
+</dd></dl>
+
+<p>The number of CPUs (<code class="docutils literal notranslate"><span class="pre">NCPUS</span></code>) is determined by the function
+<code class="xref py py-func docutils literal notranslate"><span class="pre">effective_cpu_count()</span></code>.</p>
+</section>
+<section id="protecting-scripts-for-multiprocessing">
+<h2>Protecting Scripts for Multiprocessing<a class="headerlink" href="#protecting-scripts-for-multiprocessing" title="Link to this heading">#</a></h2>
+<p>Any scripts that use LensKit’s process-based parallelism support, even
+indirectly, must be <strong>import-protected</strong>: that is, the script must not directly
+do its work when run, but should define functions and call a <code class="docutils literal notranslate"><span class="pre">main</span></code> function
+when run as a script, with a block like this at the end of the file:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="c1"># do the actual work</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>If you are using the batch functions from a Jupyter notebook, you should be fine
+— the Jupyter programs are appropriately protected.</p>
+</section>
+<section id="parallel-model-ops">
+<span id="id1"></span><h2>Parallel Model Ops<a class="headerlink" href="#parallel-model-ops" title="Link to this heading">#</a></h2>
+<p>LensKit uses a custom API wrapping <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">multiprocessing.pool.Pool</span></code></a> to
+parallelize batch operations (see <a class="reference internal" href="../api/batch.html#module-lenskit.batch" title="lenskit.batch"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.batch</span></code></a>).</p>
+<p>The basic idea of this API is to create an <em>invoker</em> that has a model and a function,
+and then passing lists of argument sets to the function:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">invoker</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">func</span><span class="p">):</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">func</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>The model is persisted into shared memory to be used by the worker processes.
+PyTorch tensors, including those on CUDA devices, are shared.</p>
+<p>LensKit users will generally not need to directly use parallel op invokers, but
+if you are implementing new batch operations with parallelism they are useful.
+They may also be useful for other kinds of analysis.</p>
+</section>
+<section id="logging-and-progress">
+<h2>Logging and Progress<a class="headerlink" href="#logging-and-progress" title="Link to this heading">#</a></h2>
+<p>Multi-process op invokers automatically set up logging and progress reporting to
+work across processes using the <code class="xref py py-mod docutils literal notranslate"><span class="pre">manylog</span></code> package.  Op invokers can also
+report the progress of queued jobs to a <a class="reference external" href="https://progress-api.readthedocs.io/en/latest/api.html#progress_api.Progress" title="(in Progress API)"><code class="xref py py-class docutils literal notranslate"><span class="pre">progress_api.Progress</span></code></a>; use
+the <a class="reference internal" href="../api/lenskit.parallel.html#lenskit.parallel.invoke_progress" title="lenskit.parallel.invoke_progress"><code class="xref py py-func docutils literal notranslate"><span class="pre">invoke_progress()</span></code></a> function to set up such a progress bar.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="documenting.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Documenting Experiments</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="performance.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Performance Tips</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-parallelism">Configuring Parallelism</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#protecting-scripts-for-multiprocessing">Protecting Scripts for Multiprocessing</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parallel-model-ops">Parallel Model Ops</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logging-and-progress">Logging and Progress</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/guide/parallelism.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2018–2024 Drexel University, Boise State University, and collaborators.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.0.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

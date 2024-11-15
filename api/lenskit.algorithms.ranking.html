@@ -19,7 +19,7 @@
 <meta name="description" content="Algorithms to rank items based on scores. Classes" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.algorithms.ranking &#8212; LensKit 0.15.0.dev1435+g828dd042 documentation</title>
+    <title>lenskit.algorithms.ranking &#8212; LensKit 0.15.0.dev1455+g3ff2c3ee documentation</title>
   
   
   
@@ -27,32 +27,43 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=cd9197a3" />
   
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=1e734769"></script>
+    <script src="../_static/documentation_options.js?v=facbb4e5"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/lenskit.algorithms.ranking';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.15.4';
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lkpy.lenskit.org/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
@@ -64,6 +75,7 @@
     <link rel="prev" title="lenskit.algorithms.mf_common" href="lenskit.algorithms.mf_common.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.15.0" />
   </head>
   
   
@@ -79,19 +91,8 @@
     <i class="fa-solid fa-arrow-up"></i>Back to top</button>
 
   
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
+  <dialog id="pst-search-dialog">
+    
 <form class="bd-search d-flex align-items-center"
       action="../search.html"
       method="get">
@@ -99,7 +100,6 @@
   <input type="search"
          class="form-control"
          name="q"
-         id="search-input"
          placeholder="Search the docs ..."
          aria-label="Search the docs ..."
          autocomplete="off"
@@ -107,8 +107,8 @@
          autocapitalize="off"
          spellcheck="false"/>
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
+</form>
+  </dialog>
 
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1435+g828dd042 documentation - Home"/>
-    <script>document.write(`<img src="../_static/LKLogo2.png" class="logo__image only-dark" alt="LensKit 0.15.0.dev1435+g828dd042 documentation - Home"/>`);</script>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1455+g3ff2c3ee documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1455+g3ff2c3ee documentation - Home"/>
   
   
 </a></div>
@@ -195,53 +195,41 @@
         <div class="navbar-item navbar-persistent--container">
           
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
         </div>
       
       
         <div class="navbar-item">
-<script>
-document.write(`
-  <div class="version-switcher__container dropdown">
-    <button id="pst-version-switcher-button-2"
-      type="button"
-      class="version-switcher__button btn btn-sm dropdown-toggle"
-      data-bs-toggle="dropdown"
-      aria-haspopup="listbox"
-      aria-controls="pst-version-switcher-list-2"
-      aria-label="Version switcher list"
-    >
-      Choose version  <!-- this text may get changed later by javascript -->
-      <span class="caret"></span>
-    </button>
-    <div id="pst-version-switcher-list-2"
-      class="version-switcher__menu dropdown-menu list-group-flush py-0"
-      role="listbox" aria-labelledby="pst-version-switcher-button-2">
-      <!-- dropdown will be populated by javascript on page load -->
-    </div>
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
   </div>
-`);
-</script></div>
+</div></div>
       
         <div class="navbar-item">
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script></div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
       
         <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -278,15 +266,11 @@ document.write(`
   
     <div class="navbar-persistent--mobile">
 
- <script>
- document.write(`
-   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <span class="search-button__default-text">Search</span>
-    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
-   </button>
- `);
- </script>
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
     </div>
   
 
@@ -305,7 +289,8 @@ document.write(`
       
       
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -358,40 +343,32 @@ document.write(`
       <div class="sidebar-header-items__end">
         
           <div class="navbar-item">
-<script>
-document.write(`
-  <div class="version-switcher__container dropdown">
-    <button id="pst-version-switcher-button-3"
-      type="button"
-      class="version-switcher__button btn btn-sm dropdown-toggle"
-      data-bs-toggle="dropdown"
-      aria-haspopup="listbox"
-      aria-controls="pst-version-switcher-list-3"
-      aria-label="Version switcher list"
-    >
-      Choose version  <!-- this text may get changed later by javascript -->
-      <span class="caret"></span>
-    </button>
-    <div id="pst-version-switcher-list-3"
-      class="version-switcher__menu dropdown-menu list-group-flush py-0"
-      role="listbox" aria-labelledby="pst-version-switcher-button-3">
-      <!-- dropdown will be populated by javascript on page load -->
-    </div>
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
   </div>
-`);
-</script></div>
+</div></div>
         
           <div class="navbar-item">
 
-<script>
-document.write(`
-  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
-    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
-    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
-  </button>
-`);
-</script></div>
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
         
           <div class="navbar-item"><ul class="navbar-icon-links"
     aria-label="Icon Links">
@@ -488,21 +465,39 @@ document.write(`
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Evaluation</span></p>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="lenskit.batch.html">lenskit.batch</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="lenskit.metrics.html">lenskit.metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.basic.html">lenskit.metrics.basic</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.bulk.html">lenskit.metrics.bulk</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.predict.html">lenskit.metrics.predict</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.ranking.html">lenskit.metrics.ranking</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.topn.html">lenskit.metrics.topn</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="batch.html">Batch Operations</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.batch.BatchPipelineRunner.html">lenskit.batch.BatchPipelineRunner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.batch.BatchResults.html">lenskit.batch.BatchResults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.batch.predict.html">lenskit.batch.predict</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.batch.recommend.html">lenskit.batch.recommend</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.batch.InvocationSpec.html">lenskit.batch.InvocationSpec</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="lenskit.topn.html">lenskit.topn</a></li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="lenskit.splitting.html">lenskit.splitting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.holdout.html">lenskit.splitting.holdout</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.records.html">lenskit.splitting.records</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.split.html">lenskit.splitting.split</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.users.html">lenskit.splitting.users</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="metrics.html">Metrics and Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.Metric.html">lenskit.metrics.Metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.MetricFunction.html">lenskit.metrics.MetricFunction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.RankingMetricBase.html">lenskit.metrics.RankingMetricBase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.RunAnalysis.html">lenskit.metrics.RunAnalysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.RunAnalysisResult.html">lenskit.metrics.RunAnalysisResult</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.NDCG.html">lenskit.metrics.NDCG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.RBP.html">lenskit.metrics.RBP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.Precision.html">lenskit.metrics.Precision</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.Recall.html">lenskit.metrics.Recall</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.RecipRank.html">lenskit.metrics.RecipRank</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.RMSE.html">lenskit.metrics.RMSE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.MAE.html">lenskit.metrics.MAE</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="splitting.html">Data Splitting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.TTSplit.html">lenskit.splitting.TTSplit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.crossfold_users.html">lenskit.splitting.crossfold_users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.sample_users.html">lenskit.splitting.sample_users</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.LastFrac.html">lenskit.splitting.LastFrac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.LastN.html">lenskit.splitting.LastN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.SampleFrac.html">lenskit.splitting.SampleFrac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.SampleN.html">lenskit.splitting.SampleN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.crossfold_records.html">lenskit.splitting.crossfold_records</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.splitting.sample_records.html">lenskit.splitting.sample_records</a></li>
 </ul>
 </details></li>
 </ul>
@@ -557,8 +552,6 @@ document.write(`
       
         <div class="header-article-item">
 
-
-
 <nav aria-label="Breadcrumb" class="d-print-none">
   <ul class="bd-breadcrumbs">
     
@@ -573,7 +566,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="lenskit.algorithms.html" class="nav-link">lenskit.algorithms</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">lenskit.algo...</li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">lenskit.algorithms.ranking</span></li>
   </ul>
 </nav>
 </div>
@@ -596,10 +589,10 @@ document.write(`
 <p class="rubric">Classes</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../old/ranking.html#lenskit.algorithms.ranking.PlackettLuce" title="lenskit.algorithms.ranking.PlackettLuce"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PlackettLuce</span></code></a>(predictor[, selector, rng_spec])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.algorithms.ranking.PlackettLuce" title="lenskit.algorithms.ranking.PlackettLuce"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PlackettLuce</span></code></a>(predictor[, selector, rng_spec])</p></td>
 <td><p>Re-ranking algorithm that uses Plackett-Luce sampling on underlying scores.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../old/ranking.html#lenskit.algorithms.ranking.TopN" title="lenskit.algorithms.ranking.TopN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TopN</span></code></a>(predictor[, selector])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.algorithms.ranking.TopN" title="lenskit.algorithms.ranking.TopN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TopN</span></code></a>(predictor[, selector])</p></td>
 <td><p>Basic recommender that implements top-N recommendation using a predictor.</p></td>
 </tr>
 </tbody>
@@ -608,11 +601,11 @@ document.write(`
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.algorithms.ranking.TopN">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.ranking.</span></span><span class="sig-name descname"><span class="pre">TopN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selector</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.ranking.TopN" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.Recommender" title="lenskit.algorithms.Recommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recommender</span></code></a>, <a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="lenskit.algorithms.html#lenskit.algorithms.Recommender" title="lenskit.algorithms.Recommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recommender</span></code></a>, <a class="reference internal" href="lenskit.algorithms.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Predictor</span></code></a></p>
 <p>Basic recommender that implements top-N recommendation using a predictor.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>This class does not do anything of its own in <a class="reference internal" href="../old/ranking.html#lenskit.algorithms.ranking.TopN.fit" title="lenskit.algorithms.ranking.TopN.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a>.  If its
+<p>This class does not do anything of its own in <a class="reference internal" href="#lenskit.algorithms.ranking.TopN.fit" title="lenskit.algorithms.ranking.TopN.fit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fit()</span></code></a>.  If its
 predictor and candidate selector are both fit separately, the top-N recommender
 does not need to be fit.  This can be useful when reusing a predictor in other
 contexts:</p>
@@ -629,8 +622,8 @@ contexts:</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>predictor</strong> (<a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><em>Predictor</em></a>) – The underlying predictor.</p></li>
-<li><p><strong>selector</strong> (<a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.CandidateSelector" title="lenskit.algorithms.CandidateSelector"><em>CandidateSelector</em></a>) – The candidate selector.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses
+<li><p><strong>predictor</strong> (<a class="reference internal" href="lenskit.algorithms.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><em>Predictor</em></a>) – The underlying predictor.</p></li>
+<li><p><strong>selector</strong> (<a class="reference internal" href="lenskit.algorithms.html#lenskit.algorithms.CandidateSelector" title="lenskit.algorithms.CandidateSelector"><em>CandidateSelector</em></a>) – The candidate selector.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses
 <code class="xref py py-class docutils literal notranslate"><span class="pre">UnratedItemCandidateSelector</span></code>.</p></li>
 </ul>
 </dd>
@@ -681,7 +674,7 @@ they will be in a <code class="docutils literal notranslate"><span class="pre">s
 <dt class="sig sig-object py" id="lenskit.algorithms.ranking.TopN.predict">
 <span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pairs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.ranking.TopN.predict" title="Link to this definition">#</a></dt>
 <dd><p>Compute predictions for user-item pairs.  This method is designed to be compatible with the
-general SciKit paradigm; applications typically want to use <a class="reference internal" href="../old/ranking.html#lenskit.algorithms.ranking.TopN.predict_for_user" title="lenskit.algorithms.ranking.TopN.predict_for_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_user()</span></code></a>.</p>
+general SciKit paradigm; applications typically want to use <a class="reference internal" href="#lenskit.algorithms.ranking.TopN.predict_for_user" title="lenskit.algorithms.ranking.TopN.predict_for_user"><code class="xref py py-meth docutils literal notranslate"><span class="pre">predict_for_user()</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -725,15 +718,15 @@ override or augment the model’s notion of a user’s preferences.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.algorithms.ranking.PlackettLuce">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.algorithms.ranking.</span></span><span class="sig-name descname"><span class="pre">PlackettLuce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selector</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng_spec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.algorithms.ranking.PlackettLuce" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.Recommender" title="lenskit.algorithms.Recommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recommender</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="lenskit.algorithms.html#lenskit.algorithms.Recommender" title="lenskit.algorithms.Recommender"><code class="xref py py-class docutils literal notranslate"><span class="pre">Recommender</span></code></a></p>
 <p>Re-ranking algorithm that uses Plackett-Luce sampling on underlying scores.
 This uses the Gumbel trick <span id="id1">[<a class="reference internal" href="../references.html#id55" title="Aditya Grover, Eric Wang, Aaron Zweig, and Stefano Ermon. Stochastic Optimization of Sorting Networks via Continuous Relaxations. In Proceedings of the Seventh International Conference on Learning Representations. March 2019.">GWZE19</a>]</span>
 to efficiently simulate from a Plackett-Luce distribution.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>predictor</strong> (<a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><em>Predictor</em></a>) – A predictor that can score candidate items.</p></li>
-<li><p><strong>selector</strong> (<a class="reference internal" href="../old/interfaces.html#lenskit.algorithms.CandidateSelector" title="lenskit.algorithms.CandidateSelector"><em>CandidateSelector</em></a>) – The candidate selector. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, defaults to
+<li><p><strong>predictor</strong> (<a class="reference internal" href="lenskit.algorithms.html#lenskit.algorithms.Predictor" title="lenskit.algorithms.Predictor"><em>Predictor</em></a>) – A predictor that can score candidate items.</p></li>
+<li><p><strong>selector</strong> (<a class="reference internal" href="lenskit.algorithms.html#lenskit.algorithms.CandidateSelector" title="lenskit.algorithms.CandidateSelector"><em>CandidateSelector</em></a>) – The candidate selector. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, defaults to
 <code class="xref py py-class docutils literal notranslate"><span class="pre">UnratedItemsCandidateSelector</span></code>.</p></li>
 <li><p><strong>rng_spec</strong> – A random number generator specification; see
 <code class="xref py py-func docutils literal notranslate"><span class="pre">derivable_rng()</span></code>.</p></li>
@@ -823,7 +816,8 @@ they will be in a <code class="docutils literal notranslate"><span class="pre">s
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
 
   <div class="sidebar-secondary-item">
@@ -871,8 +865,8 @@ they will be in a <code class="docutils literal notranslate"><span class="pre">s
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -905,7 +899,7 @@ they will be in a <code class="docutils literal notranslate"><span class="pre">s
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.15.4.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
 </p></div>
       
     </div>
