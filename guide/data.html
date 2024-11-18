@@ -7,19 +7,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Data Management" />
+<meta property="og:title" content="Datasets" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="guide/data.html" />
 <meta property="og:site_name" content="LensKit" />
 <meta property="og:description" content="LensKit provides a unified data model for recommender systems data along with classes and utility functions for working with it, described in this section of the manual. Getting started with the da..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_guide_data_ae8c1d71.png" />
+<meta property="og:image" content="/_images/social_previews/summary_guide_data_1f5d533c.png" />
 <meta property="og:image:alt" content="LensKit provides a unified data model for recommender systems data along with classes and utility functions for working with it, described in this section of..." />
 <meta name="description" content="LensKit provides a unified data model for recommender systems data along with classes and utility functions for working with it, described in this section of the manual. Getting started with the da..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Data Management &#8212; LensKit 0.15.0.dev1473+gf3834a32 documentation</title>
+    <title>Datasets &#8212; LensKit 0.15.0.dev1504+g481141b5 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=4810458e"></script>
+    <script src="../_static/documentation_options.js?v=3e0fdc73"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -71,7 +71,7 @@
     <link rel="canonical" href="https://lkpy.lenskit.org/en/latest/guide/data.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Recommendation Pipelines" href="pipeline.html" />
+    <link rel="next" title="Item Lists and Collections" href="item-lists.html" />
     <link rel="prev" title="Examples" href="examples.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1473+gf3834a32 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1473+gf3834a32 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1504+g481141b5 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1504+g481141b5 documentation - Home"/>
   
   
 </a></div>
@@ -415,7 +415,8 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Management</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-lists.html">Item Lists and Collections</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pipeline.html">Recommendation Pipelines</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
@@ -475,7 +476,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Data Management</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Datasets</span></li>
   </ul>
 </nav>
 </div>
@@ -492,8 +493,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="data-management">
-<h1>Data Management<a class="headerlink" href="#data-management" title="Link to this heading">#</a></h1>
+  <section id="datasets">
+<h1>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">#</a></h1>
 <p>LensKit provides a unified data model for recommender systems data along with
 classes and utility functions for working with it, described in this section of
 the manual.</p>
@@ -552,7 +553,7 @@ item, and interaction data.</p>
 <li><p>The <em>identifier</em> as presented in the original source table(s).  It appears in
 LensKit data frames as <code class="docutils literal notranslate"><span class="pre">user_id</span></code> and <code class="docutils literal notranslate"><span class="pre">item_id</span></code> columns.  Identifiers can
 be integers, strings, or byte arrays, and are represented in LensKit by the
-<code class="xref py py-data docutils literal notranslate"><span class="pre">EntityId</span></code> type.</p></li>
+<code class="xref py py-data docutils literal notranslate"><span class="pre">ID</span></code> type.</p></li>
 <li><p>The <em>number</em> assigned by the dataset handling code.  This is a 0-based
 contiguous user or item number that is suitable for indexing into arrays or
 matrices, a common operation in recommendation models.  In data frames, this
@@ -648,11 +649,11 @@ implementations.</p>
       </div>
     </a>
     <a class="right-next"
-       href="pipeline.html"
+       href="item-lists.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Recommendation Pipelines</p>
+        <p class="prev-next-title">Item Lists and Collections</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
