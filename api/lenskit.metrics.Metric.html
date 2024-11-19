@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.metrics.Metric &#8212; LensKit 0.15.0.dev1504+g481141b5 documentation</title>
+    <title>lenskit.metrics.Metric &#8212; LensKit 0.15.0.dev1516+gb95b6a24 documentation</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=3e0fdc73"></script>
+    <script src="../_static/documentation_options.js?v=0fefaad1"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -69,7 +69,7 @@
     <link rel="canonical" href="https://lkpy.lenskit.org/en/latest/api/lenskit.metrics.Metric.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="lenskit.metrics.MetricFunction" href="lenskit.metrics.MetricFunction.html" />
+    <link rel="next" title="lenskit.metrics.ListMetric" href="lenskit.metrics.ListMetric.html" />
     <link rel="prev" title="Metrics and Analysis" href="metrics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1504+g481141b5 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1504+g481141b5 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1516+gb95b6a24 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1516+gb95b6a24 documentation - Home"/>
   
   
 </a></div>
@@ -466,6 +466,7 @@
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="metrics.html">Metrics and Analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">lenskit.metrics.Metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.ListMetric.html">lenskit.metrics.ListMetric</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.MetricFunction.html">lenskit.metrics.MetricFunction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.RankingMetricBase.html">lenskit.metrics.RankingMetricBase</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.RunAnalysis.html">lenskit.metrics.RunAnalysis</a></li>
@@ -580,7 +581,8 @@
 <dt class="sig sig-object py" id="lenskit.metrics.Metric">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.metrics.</span></span><span class="sig-name descname"><span class="pre">Metric</span></span><a class="headerlink" href="#lenskit.metrics.Metric" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
-<p>Base class for LensKit metrics.</p>
+<p>Base class for LensKit metrics.  Individual metrics need to implement a
+sub-interface, such as <a class="reference internal" href="lenskit.metrics.ListMetric.html#lenskit.metrics.ListMetric" title="lenskit.metrics.ListMetric"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListMetric</span></code></a> and/or <code class="xref py py-class docutils literal notranslate"><span class="pre">GlobalMetric</span></code>.</p>
 <p>For simplicity in the analysis code, you cannot simply implement the
 properties of this class on an arbitrary class in order to implement a
 metric with all available behavior such as labeling and defaults; you must
@@ -602,38 +604,17 @@ actually extend this class.  This requirement may be relaxed in the future.</p>
 <p class="rubric">Attributes</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.metrics.Metric.default" title="lenskit.metrics.Metric.default"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default</span></code></a></p></td>
-<td><p>The default value to infer when computing statistics over missing values.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.metrics.Metric.label" title="lenskit.metrics.Metric.label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">label</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.metrics.Metric.label" title="lenskit.metrics.Metric.label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">label</span></code></a></p></td>
 <td><p>The metric's default label in output.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.metrics.Metric.mean_label" title="lenskit.metrics.Metric.mean_label"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mean_label</span></code></a></p></td>
-<td><p>The label to use when aggregating the metric by taking the mean.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="lenskit.metrics.Metric.default">
-<span class="sig-name descname"><span class="pre">default</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.ClassVar" title="(in Python v3.13)"><span class="pre">ClassVar</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0.0</span></em><a class="headerlink" href="#lenskit.metrics.Metric.default" title="Link to this definition">#</a></dt>
-<dd><p>The default value to infer when computing statistics over missing values.
-If <code class="docutils literal notranslate"><span class="pre">None</span></code>, no inference is done (necessary for metrics like RMSE, where
-the missing value is theoretically infinite).</p>
-</dd></dl>
-
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.metrics.Metric.label">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#lenskit.metrics.Metric.label" title="Link to this definition">#</a></dt>
 <dd><p>The metric’s default label in output.</p>
 <p>The base implementation returns the class name by default.</p>
-</dd></dl>
-
-<dl class="py property">
-<dt class="sig sig-object py" id="lenskit.metrics.Metric.mean_label">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">mean_label</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#lenskit.metrics.Metric.mean_label" title="Link to this definition">#</a></dt>
-<dd><p>The label to use when aggregating the metric by taking the mean.</p>
-<p>The base implementation delegates to <a class="reference internal" href="#lenskit.metrics.Metric.label" title="lenskit.metrics.Metric.label"><code class="xref py py-attr docutils literal notranslate"><span class="pre">label</span></code></a>.</p>
 </dd></dl>
 
 </dd></dl>
@@ -660,11 +641,11 @@ the missing value is theoretically infinite).</p>
       </div>
     </a>
     <a class="right-next"
-       href="lenskit.metrics.MetricFunction.html"
+       href="lenskit.metrics.ListMetric.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">lenskit.metrics.MetricFunction</p>
+        <p class="prev-next-title">lenskit.metrics.ListMetric</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -689,9 +670,7 @@ the missing value is theoretically infinite).</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.Metric"><code class="docutils literal notranslate"><span class="pre">Metric</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.Metric.__init__"><code class="docutils literal notranslate"><span class="pre">Metric.__init__()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.Metric.default"><code class="docutils literal notranslate"><span class="pre">Metric.default</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.Metric.label"><code class="docutils literal notranslate"><span class="pre">Metric.label</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.Metric.mean_label"><code class="docutils literal notranslate"><span class="pre">Metric.mean_label</span></code></a></li>
 </ul>
 </li>
 </ul>
