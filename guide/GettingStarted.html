@@ -19,7 +19,7 @@
 <meta name="description" content="This notebook gets you started with a brief nDCG evaluation with LensKit for Python. This notebook is also available on Google Collaboratory and nbviewer. Setup: We first import the LensKit compone..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Getting Started &#8212; LensKit 0.15.0.dev1547+g769e5946 documentation</title>
+    <title>Getting Started &#8212; LensKit 0.15.0.dev1561+g46813bfd documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=ee016db7"></script>
+    <script src="../_static/documentation_options.js?v=0c26f594"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1547+g769e5946 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1547+g769e5946 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1561+g46813bfd documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1561+g46813bfd documentation - Home"/>
   
   
 </a></div>
@@ -502,19 +502,23 @@
 <p>We first import the LensKit components we need:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">batch</span><span class="p">,</span> <span class="n">topn</span><span class="p">,</span> <span class="n">util</span>
-<span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">crossfold</span> <span class="k">as</span> <span class="n">xf</span>
-<span class="kn">from</span> <span class="nn">lenskit.algorithms</span> <span class="kn">import</span> <span class="n">Recommender</span><span class="p">,</span> <span class="n">als</span><span class="p">,</span> <span class="n">knn</span>
-<span class="kn">from</span> <span class="nn">lenskit.data</span> <span class="kn">import</span> <span class="n">from_interactions_df</span>
-<span class="kn">from</span> <span class="nn">lenskit.data.movielens</span> <span class="kn">import</span> <span class="n">load_movielens_df</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lenskit.als</span> <span class="kn">import</span> <span class="n">BiasedMF</span>
+<span class="kn">from</span> <span class="nn">lenskit.batch</span> <span class="kn">import</span> <span class="n">recommend</span>
+<span class="kn">from</span> <span class="nn">lenskit.data</span> <span class="kn">import</span> <span class="n">ItemListCollection</span><span class="p">,</span> <span class="n">UserIDKey</span><span class="p">,</span> <span class="n">load_movielens</span>
+<span class="kn">from</span> <span class="nn">lenskit.knn</span> <span class="kn">import</span> <span class="n">ItemKNNScorer</span>
+<span class="kn">from</span> <span class="nn">lenskit.metrics</span> <span class="kn">import</span> <span class="n">NDCG</span><span class="p">,</span> <span class="n">RBP</span><span class="p">,</span> <span class="n">RecipRank</span><span class="p">,</span> <span class="n">RunAnalysis</span>
+<span class="kn">from</span> <span class="nn">lenskit.pipeline</span> <span class="kn">import</span> <span class="n">topn_pipeline</span>
+<span class="kn">from</span> <span class="nn">lenskit.splitting</span> <span class="kn">import</span> <span class="n">SampleFrac</span><span class="p">,</span> <span class="n">crossfold_users</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>And Pandas is very useful:</p>
+<p>And Pandas is very useful, as is Seaborn for plotting:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
 </pre></div>
 </div>
 </div>
@@ -533,8 +537,8 @@
 <p>We’re going to use the ML-100K data set:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ml100k</span> <span class="o">=</span> <span class="n">load_movielens_df</span><span class="p">(</span><span class="n">here</span><span class="p">(</span><span class="s1">&#39;data/ml-100k.zip&#39;</span><span class="p">))</span>
-<span class="n">ml100k</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ml100k</span> <span class="o">=</span> <span class="n">load_movielens</span><span class="p">(</span><span class="n">here</span><span class="p">(</span><span class="s2">&quot;data/ml-100k.zip&quot;</span><span class="p">))</span>
+<span class="n">ml100k</span><span class="o">.</span><span class="n">interaction_log</span><span class="p">(</span><span class="s2">&quot;pandas&quot;</span><span class="p">,</span> <span class="n">original_ids</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -557,8 +561,8 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>user</th>
-      <th>item</th>
+      <th>user_id</th>
+      <th>item_id</th>
       <th>rating</th>
       <th>timestamp</th>
     </tr>
@@ -566,51 +570,60 @@
   <tbody>
     <tr>
       <th>0</th>
-      <td>196</td>
-      <td>242</td>
-      <td>3.0</td>
-      <td>881250949</td>
+      <td>1</td>
+      <td>1</td>
+      <td>5.0</td>
+      <td>874965758</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>186</td>
-      <td>302</td>
+      <td>1</td>
+      <td>2</td>
       <td>3.0</td>
-      <td>891717742</td>
+      <td>876893171</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>22</td>
-      <td>377</td>
-      <td>1.0</td>
-      <td>878887116</td>
+      <td>1</td>
+      <td>3</td>
+      <td>4.0</td>
+      <td>878542960</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>244</td>
-      <td>51</td>
-      <td>2.0</td>
-      <td>880606923</td>
+      <td>1</td>
+      <td>4</td>
+      <td>3.0</td>
+      <td>876893119</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>166</td>
-      <td>346</td>
-      <td>1.0</td>
-      <td>886397596</td>
+      <td>1</td>
+      <td>5</td>
+      <td>3.0</td>
+      <td>889751712</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
 </section>
-<section id="defining-algorithms">
-<h2>Defining Algorithms<a class="headerlink" href="#defining-algorithms" title="Link to this heading">#</a></h2>
-<p>Let’s set up two algorithms:</p>
+<section id="defining-recommenders">
+<h2>Defining Recommenders<a class="headerlink" href="#defining-recommenders" title="Link to this heading">#</a></h2>
+<p>Let’s set up two scoring models:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">algo_ii</span> <span class="o">=</span> <span class="n">knn</span><span class="o">.</span><span class="n">ItemItem</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-<span class="n">algo_als</span> <span class="o">=</span> <span class="n">als</span><span class="o">.</span><span class="n">BiasedMF</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">model_ii</span> <span class="o">=</span> <span class="n">ItemKNNScorer</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">model_als</span> <span class="o">=</span> <span class="n">BiasedMF</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For each of these, we also need to make a :ref:<code class="docutils literal notranslate"><span class="pre">pipeline</span> <span class="pre">&lt;pipeline&gt;</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe_ii</span> <span class="o">=</span> <span class="n">topn_pipeline</span><span class="p">(</span><span class="n">model_ii</span><span class="p">)</span>
+<span class="n">pipe_als</span> <span class="o">=</span> <span class="n">topn_pipeline</span><span class="p">(</span><span class="n">model_als</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -624,50 +637,50 @@
 <li><p>Measure them</p></li>
 </ol>
 <p>If memory is a concern, we can measure while generating, but we will not do that for now.</p>
-<p>We will first define a function to generate recommendations from one algorithm over a single partition of the data set.  It will take an algorithm, a train set, and a test set, and return the recommendations.</p>
-<p><strong>Note:</strong> before fitting the algorithm, we clone it.  Some algorithms misbehave when fit multiple times.</p>
-<p><strong>Note 2:</strong> our algorithms do not necessarily implement the <code class="docutils literal notranslate"><span class="pre">Recommender</span></code> interface, so we adapt them. This fills in a default candidate selector.</p>
-<p>The code function looks like this:</p>
+<p>Let’s start by creating and collecting the recommendations; we will collect all of them into a single <code class="docutils literal notranslate"><span class="pre">ItemListCollection</span></code>:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">eval</span><span class="p">(</span><span class="n">aname</span><span class="p">,</span> <span class="n">algo</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">):</span>
-    <span class="n">fittable</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">algo</span><span class="p">)</span>
-    <span class="n">fittable</span> <span class="o">=</span> <span class="n">Recommender</span><span class="o">.</span><span class="n">adapt</span><span class="p">(</span><span class="n">fittable</span><span class="p">)</span>
-    <span class="n">fittable</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">from_interactions_df</span><span class="p">(</span><span class="n">train</span><span class="p">))</span>
-    <span class="n">users</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
-    <span class="c1"># now we run the recommender</span>
-    <span class="n">recs</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">recommend</span><span class="p">(</span><span class="n">fittable</span><span class="p">,</span> <span class="n">users</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-    <span class="c1"># add the algorithm name for analyzability</span>
-    <span class="n">recs</span><span class="p">[</span><span class="s1">&#39;Algorithm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">aname</span>
-    <span class="k">return</span> <span class="n">recs</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now, we will loop over the data and the algorithms, and generate recommendations:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_recs</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="n">test_data</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span> <span class="ow">in</span> <span class="n">xf</span><span class="o">.</span><span class="n">partition_users</span><span class="p">(</span><span class="n">ml100k</span><span class="p">[[</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="s1">&#39;item&#39;</span><span class="p">,</span> <span class="s1">&#39;rating&#39;</span><span class="p">]],</span> <span class="mi">5</span><span class="p">,</span> <span class="n">xf</span><span class="o">.</span><span class="n">SampleFrac</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)):</span>
-    <span class="n">test_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test</span><span class="p">)</span>
-    <span class="n">all_recs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;ItemItem&#39;</span><span class="p">,</span> <span class="n">algo_ii</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">))</span>
-    <span class="n">all_recs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="s1">&#39;ALS&#39;</span><span class="p">,</span> <span class="n">algo_als</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">test</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_test</span> <span class="o">=</span> <span class="n">ItemListCollection</span><span class="p">(</span><span class="n">UserIDKey</span><span class="p">)</span>
+<span class="n">ii_recs</span> <span class="o">=</span> <span class="n">ItemListCollection</span><span class="p">(</span><span class="n">UserIDKey</span><span class="p">)</span>
+<span class="n">als_recs</span> <span class="o">=</span> <span class="n">ItemListCollection</span><span class="p">(</span><span class="n">UserIDKey</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">split</span> <span class="ow">in</span> <span class="n">crossfold_users</span><span class="p">(</span><span class="n">ml100k</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">SampleFrac</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)):</span>
+    <span class="c1"># collect the test data</span>
+    <span class="n">all_test</span><span class="o">.</span><span class="n">add_from</span><span class="p">(</span><span class="n">split</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
+
+    <span class="c1"># train the pipeline, cloning first so a fresh pipeline for each split</span>
+    <span class="n">fit_als</span> <span class="o">=</span> <span class="n">pipe_als</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+    <span class="n">fit_als</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">split</span><span class="o">.</span><span class="n">train</span><span class="p">)</span>
+    <span class="c1"># generate recs</span>
+    <span class="n">als_recs</span><span class="o">.</span><span class="n">add_from</span><span class="p">(</span><span class="n">recommend</span><span class="p">(</span><span class="n">fit_als</span><span class="p">,</span> <span class="n">split</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="mi">100</span><span class="p">))</span>
+
+    <span class="c1"># do the same for item-item</span>
+    <span class="n">fit_ii</span> <span class="o">=</span> <span class="n">pipe_ii</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
+    <span class="n">fit_ii</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">split</span><span class="o">.</span><span class="n">train</span><span class="p">)</span>
+    <span class="n">ii_recs</span><span class="o">.</span><span class="n">add_from</span><span class="p">(</span><span class="n">recommend</span><span class="p">(</span><span class="n">fit_ii</span><span class="p">,</span> <span class="n">split</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="mi">100</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/mde48/LensKit/lkpy/lenskit/lenskit/data/dataset.py:628: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /Users/runner/miniforge3/conda-bld/libtorch_1719361060788/work/aten/src/ATen/SparseCsrTensorImpl.cpp:55.)
-  return torch.sparse_csr_tensor(
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/michael/Documents/LensKit/lkpy/lenskit/lenskit/als/_explicit.py:91: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /Users/runner/miniforge3/conda-bld/libtorch_1728232278409/work/aten/src/ATen/SparseCsrTensorImpl.cpp:55.)
+  rmat = rmat.to_sparse_csr()
 </pre></div>
 </div>
 </div>
 </div>
-<p>With the results in place, we can concatenate them into a single data frame:</p>
+</section>
+<section id="measuring-recommendations">
+<h2>Measuring Recommendations<a class="headerlink" href="#measuring-recommendations" title="Link to this heading">#</a></h2>
+<p>We analyze our recommendation lists with a <code class="docutils literal notranslate"><span class="pre">RunAnalysis</span></code> and some metrics.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_recs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">all_recs</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">all_recs</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ran</span> <span class="o">=</span> <span class="n">RunAnalysis</span><span class="p">()</span>
+<span class="n">ran</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">NDCG</span><span class="p">())</span>
+<span class="n">ran</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RBP</span><span class="p">())</span>
+<span class="n">ran</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RecipRank</span><span class="p">())</span>
+<span class="n">als_results</span> <span class="o">=</span> <span class="n">ran</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">als_recs</span><span class="p">,</span> <span class="n">all_test</span><span class="p">)</span>
+<span class="n">ii_results</span> <span class="o">=</span> <span class="n">ran</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">ii_recs</span><span class="p">,</span> <span class="n">all_test</span><span class="p">)</span>
+<span class="n">ii_results</span><span class="o">.</span><span class="n">list_summary</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -690,74 +703,51 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>item</th>
-      <th>score</th>
-      <th>user</th>
-      <th>rank</th>
-      <th>Algorithm</th>
+      <th>mean</th>
+      <th>median</th>
+      <th>std</th>
+    </tr>
+    <tr>
+      <th>metric</th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>1449</td>
-      <td>4.994975</td>
-      <td>2</td>
-      <td>1</td>
-      <td>ItemItem</td>
+      <th>NDCG</th>
+      <td>0.093833</td>
+      <td>6.766619e-02</td>
+      <td>0.092107</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>1398</td>
-      <td>4.866851</td>
-      <td>2</td>
-      <td>2</td>
-      <td>ItemItem</td>
+      <th>RBP</th>
+      <td>0.034238</td>
+      <td>1.490116e-08</td>
+      <td>0.107265</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>511</td>
-      <td>4.845399</td>
-      <td>2</td>
-      <td>3</td>
-      <td>ItemItem</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>1512</td>
-      <td>4.805413</td>
-      <td>2</td>
-      <td>4</td>
-      <td>ItemItem</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>1594</td>
-      <td>4.788468</td>
-      <td>2</td>
-      <td>5</td>
-      <td>ItemItem</td>
+      <th>RecipRank</th>
+      <td>0.105437</td>
+      <td>3.846154e-02</td>
+      <td>0.186433</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>To compute our analysis, we also need to concatenate the test data into a single frame:</p>
+<p>Now we have nDCG values!  We can combine results together to make combined charts.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">test_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">test_data</span><span class="p">,</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>We analyze our recommendation lists with a <code class="docutils literal notranslate"><span class="pre">RecListAnalysis</span></code>.  It takes care of the hard work of making sure that the truth data (our test data) and the recoommendations line up properly.</p>
-<p>We do assume here that each user only appears once per algorithm. Since our crossfold method partitions users, this is fine.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rla</span> <span class="o">=</span> <span class="n">topn</span><span class="o">.</span><span class="n">RecListAnalysis</span><span class="p">()</span>
-<span class="n">rla</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">topn</span><span class="o">.</span><span class="n">ndcg</span><span class="p">)</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">rla</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">all_recs</span><span class="p">,</span> <span class="n">test_data</span><span class="p">)</span>
-<span class="n">results</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">all_list_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;ALS&quot;</span><span class="p">:</span> <span class="n">als_results</span><span class="o">.</span><span class="n">list_metrics</span><span class="p">(),</span>
+        <span class="s2">&quot;IKNN&quot;</span><span class="p">:</span> <span class="n">ii_results</span><span class="o">.</span><span class="n">list_metrics</span><span class="p">(),</span>
+    <span class="p">},</span>
+    <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Model&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">all_list_metrics</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;Model&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -780,75 +770,43 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th></th>
-      <th>nrecs</th>
-      <th>ndcg</th>
+      <th>NDCG</th>
+      <th>RBP</th>
+      <th>RecipRank</th>
     </tr>
     <tr>
-      <th>Algorithm</th>
-      <th>user</th>
+      <th>Model</th>
+      <th></th>
       <th></th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th rowspan="5" valign="top">ItemItem</th>
-      <th>2</th>
-      <td>100</td>
-      <td>0.081186</td>
+      <th>ALS</th>
+      <td>0.128130</td>
+      <td>0.095389</td>
+      <td>0.204081</td>
     </tr>
     <tr>
-      <th>6</th>
-      <td>100</td>
-      <td>0.288946</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>100</td>
-      <td>0.082112</td>
-    </tr>
-    <tr>
-      <th>10</th>
-      <td>100</td>
-      <td>0.364167</td>
-    </tr>
-    <tr>
-      <th>14</th>
-      <td>100</td>
-      <td>0.182636</td>
+      <th>IKNN</th>
+      <td>0.093833</td>
+      <td>0.034238</td>
+      <td>0.105437</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
-<p>Now we have nDCG values!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Algorithm&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ndcg</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">all_list_metrics</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;Model&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;NDCG&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Algorithm
-ALS         0.132649
-ItemItem    0.096963
-Name: ndcg, dtype: float64
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Algorithm&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ndcg</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">bar</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Axes: xlabel=&#39;Algorithm&#39;&gt;
-</pre></div>
-</div>
-<img alt="../_images/ef54dadc4bc80920366662b4d4f3b81a5fbc12082ca357369fb811de171438cc.png" src="../_images/ef54dadc4bc80920366662b4d4f3b81a5fbc12082ca357369fb811de171438cc.png" />
+<img alt="../_images/dec651bfeedd8073faf06480cc392a7f50f61e489da88dee53afb7a913eb8000.png" src="../_images/dec651bfeedd8073faf06480cc392a7f50f61e489da88dee53afb7a913eb8000.png" />
 </div>
 </div>
 </section>
@@ -903,8 +861,9 @@ Name: ndcg, dtype: float64
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">Setup</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-data">Loading Data</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-algorithms">Defining Algorithms</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#defining-recommenders">Defining Recommenders</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#running-the-evaluation">Running the Evaluation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#measuring-recommendations">Measuring Recommendations</a></li>
 </ul>
   </nav></div>
 
