@@ -1,0 +1,851 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Migrating from LensKit 0.x" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="guide/migrating.html" />
+<meta property="og:site_name" content="LensKit" />
+<meta property="og:description" content="LensKit 2025.1 brings the largest changes to LensKit’s APIs and operation since moving to Python. These changes are a result of years of experience using and teaching the current Python APIs, talki..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary_guide_migrating_5f3e94ed.png" />
+<meta property="og:image:alt" content="LensKit 2025.1 brings the largest changes to LensKit’s APIs and operation since moving to Python. These changes are a result of years of experience using and..." />
+<meta name="description" content="LensKit 2025.1 brings the largest changes to LensKit’s APIs and operation since moving to Python. These changes are a result of years of experience using and teaching the current Python APIs, talki..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Migrating from LensKit 0.x &#8212; LensKit 0.15.0.dev1580+gc08f3330 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c9bc0cee" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=65f0b110"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'guide/migrating';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lkpy.lenskit.org/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
+        </script>
+    <link rel="canonical" href="https://lkpy.lenskit.org/en/latest/guide/migrating.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Performance Tips" href="performance.html" />
+    <link rel="prev" title="Parallel Processing" href="parallelism.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.15.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1580+gc08f3330 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1580+gc08f3330 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminaries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing LensKit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-lists.html">Item Lists and Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="queries.html">Queries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline.html">Recommendation Pipelines</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="splitting.html">Splitting Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Pipelines</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="evaluation/predictions.html">Evaluating Rating Predictions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluation/rankings.html">Evaluating Top-N Rankings</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="documenting.html">Documenting Experiments</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Support Code</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Processing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tips and Help</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Migrating from LensKit 0.x</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Migrating from LensKit 0.x</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="migrating-from-lenskit-0-x">
+<span id="migrating"></span><h1>Migrating from LensKit 0.x<a class="headerlink" href="#migrating-from-lenskit-0-x" title="Link to this heading">#</a></h1>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2025.1: </span>Everything.</p>
+</div>
+<p>LensKit 2025.1 brings the largest changes to LensKit’s APIs and operation since
+moving to Python.  These changes are a result of years of experience using and
+teaching the current Python APIs, talking with users (and non-users), and
+understanding limitations of the previous design in the modern recommendation
+and machine learning landscape, and “pathway limitations” — things that were
+technically possible, but the design did not make it clear how to achieve them.</p>
+<p>The recommendation models and evaluation metrics retain their behavior from
+previous versions of LensKit, but their interfaces and the surrounding
+infrastructure are significantly different.</p>
+<p>The new changes will also enable new functionality that is planned for upcoming
+versions of LensKit, such as first-class content-based and hybrid models, and
+support for additional recommendation tasks such as session- or context-based
+recommendation.</p>
+<section id="change-highlights">
+<h2>Change Highlights<a class="headerlink" href="#change-highlights" title="Link to this heading">#</a></h2>
+<p>The major changes that client or research code will need to adapt to largely
+fall into the following categories:</p>
+<ul class="simple">
+<li><p><strong>Data structures</strong> — LensKit now uses recommender-oriented data abstractions,
+such as <a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> (see <a class="reference internal" href="data.html#datasets"><span class="std std-ref">Datasets</span></a>) and
+<a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>, instead of storing everything directly in
+Pandas data frames.  All data structures support round-tripping with data
+frames (and often other structures); the default user and item column names
+have changed (to <code class="docutils literal notranslate"><span class="pre">user_id</span></code> and <code class="docutils literal notranslate"><span class="pre">item_id</span></code>).</p></li>
+<li><p><strong>Computational infrastructure</strong> — LensKit models now mostly use PyTorch
+instead of Numba-accelerated NumPy code.  This speeds forward compatibility,
+as Numba was often a release bottleneck.  There are no limits on what can be
+used in models, however — TensorFlow and Jax models should work just fine in
+LensKit.</p></li>
+<li><p><strong>Pipelines</strong> — LensKit recommendation is now built around <em>pipelines</em> (see
+<a class="reference internal" href="pipeline.html#pipeline"><span class="std std-ref">Recommendation Pipelines</span></a>) consisting of individual <em>components</em>, such as scoring models
+and rankers.</p></li>
+<li><p><strong>Queries</strong> — requests for recommendations are now encapsulated in a “query”
+(implemented by <a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a>) containing the different
+features to identify and describe a recommendation request, such as a user
+identifier, historical ratings, or session information (see <a class="reference internal" href="queries.html#queries"><span class="std std-ref">Queries</span></a>).</p></li>
+<li><p><strong>Reorganization</strong> — the <code class="docutils literal notranslate"><span class="pre">lenskit.algorithms</span></code> package is gone, and
+recommendation components are directly in packages such as
+<a class="reference internal" href="../api/lenskit.basic.html#module-lenskit.basic" title="lenskit.basic"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.basic</span></code></a> and <a class="reference internal" href="../api/lenskit.als.html#module-lenskit.als" title="lenskit.als"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.als</span></code></a>.</p></li>
+<li><p><strong>Evaluation</strong> — the new <a class="reference internal" href="../api/lenskit.metrics.RunAnalysis.html#lenskit.metrics.RunAnalysis" title="lenskit.metrics.RunAnalysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunAnalysis</span></code></a> class
+provides unified handling of both prediction and recommendation metrics,
+summary statistics, and better defaults and handling for missing data.  It
+also directly supports “global” metrics that are computed over an entire run
+instead of one list at a time.</p></li>
+</ul>
+</section>
+<section id="loading-data">
+<h2>Loading Data<a class="headerlink" href="#loading-data" title="Link to this heading">#</a></h2>
+<p>New code should use <a class="reference internal" href="../api/lenskit.data.from_interactions_df.html#lenskit.data.from_interactions_df" title="lenskit.data.from_interactions_df"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.data.from_interactions_df()</span></code></a> to convert a Pandas
+data frame into a <a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-func docutils literal notranslate"><span class="pre">Dataset()</span></code></a>, or one of the standard loaders
+such as <a class="reference internal" href="../api/lenskit.data.load_movielens.html#lenskit.data.load_movielens" title="lenskit.data.load_movielens"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.data.load_movielens()</span></code></a>.</p>
+<p>Additional dataset construction support and possible implementations (e.g.
+database-backed datasets) are coming, but this is the migration path for the
+typical code patterns used in LensKit 0.14 and earlier.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The <a class="reference internal" href="../api/lenskit.data.load_movielens.html#lenskit.data.load_movielens" title="lenskit.data.load_movielens"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_movielens()</span></code></a> function can now directly load
+MovieLens data from the <code class="docutils literal notranslate"><span class="pre">.zip</span></code> files distributed by GroupLens, without
+needing to extract them first.  It also automatically detects which version
+of the MovieLens data you are loading.</p>
+</div>
+</section>
+<section id="data-structures">
+<h2>Data Structures<a class="headerlink" href="#data-structures" title="Link to this heading">#</a></h2>
+<p>Where older versions of LensKit used Pandas data frames and series as the
+primary data structures for interfacing with components, LensKit 2025 introduces
+new data abstractions specifically for handling recommender data, but that support
+conversion to and from data frames.  The core ones are:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a> represents a list of items, optionally with
+scores or other fields (e.g. ratings).  Item lists can convert between item
+IDs and item numbers, using a vocabulary, and can be converted to and from
+Pandas data frames.  Their fields (including the item numbers) can also be
+retrieved in multiple formats, including NumPy arrays (the default), Pandas
+<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a>, and PyTorch tensors.  Format conversions are
+zero-copy whenever possible.</p></li>
+<li><p><a class="reference internal" href="../api/lenskit.data.Vocabulary.html#lenskit.data.Vocabulary" title="lenskit.data.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a> represents a collection of item or user IDs
+(or other ID-like things, such as tags), and supports bidirectional mapping
+between such IDs and contiguous 0-based indices (numbers) for indexing into
+arrays and matrices.  This was not used as a part of an API in LensKit before,
+but was implemented internally by many components using the Pandas
+<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v2.2.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a> data structure.  Vocabularies centralize that logic
+(and use <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Index.html#pandas.Index" title="(in pandas v2.2.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Index</span></code></a> under the hood), so that we don’t duplicate it
+so much across the codebase and to enable multiple models trained on the same
+data to share the same index.  If you are implementing a model component that
+needs to store vectors or matrices of user or item data, consider using the
+vocabulary to associate those with user and item IDs.</p></li>
+<li><p><a class="reference internal" href="../api/lenskit.data.ItemListCollection.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemListCollection</span></code></a> represents a collection of item
+lists indexed by keys, such as the test items for users a test data split, or
+the recommendation lists for users in an experiment.  It supports conversion
+to and from Pandas data frames.  Future releases will support additional
+formats, such as DuckDB.</p></li>
+</ul>
+<section id="motivation">
+<h3>Motivation<a class="headerlink" href="#motivation" title="Link to this heading">#</a></h3>
+<p>These data structures, and the data set abstraction, are something of a
+departure from one of the design principles originally set out for LensKit for
+Python <span id="id1">[<a class="reference internal" href="../references.html#id48" title="Michael D Ekstrand. LensKit for Python: Next-Generation Software for Recommender System Experiments. In Proceedings of the 29th ACM International Conference on Information and Knowledge Management. 2020. doi:10.1145/3340531.3412778.">Eks20</a>]</span>; specifically, to use standard data structures for
+interchange between components.</p>
+<p>There are three primary reason for this change:</p>
+<ul class="simple">
+<li><p>While Pandas data frames and series are widely used and supported by many
+libraries, they are not self-documenting: a Python method returning a
+<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a> is not enough to know what columns in that data
+frame.  Things are further complicated with Pandas indexes, requiring
+elaborate discussions of exact data frame and series layouts in the
+documentation.  This also sometimes resulted in bugs with incorrect layouts,
+particularly if an index was incorrectly configured.  Dedicated abstractions
+are more self-documenting, particularly in modern Python with type annotations
+and good IDE support.</p></li>
+<li><p>Many libraries work directly with arrays and sparse matrices instead of Pandas
+data structures, requiring data conversion and translation that is often
+repeated in different model components.  First-class support for multiple data
+formats in a single abstraction reduces the work needed to implement a model
+with PyTorch, Scikit-Learn, or any other library.</p></li>
+<li><p>When chaining together multiple components, data always needed to be converted
+to and from Pandas at the component interface boundary.  This meant that two
+components both using PyTorch needed to convert to Pandas (possibly moving
+from GPU to CPU) at the interface, and then convert back to PyTorch.  A
+unified interface with lazy, zero-copy conversion means that two components
+using the same compute support do not need to convert data in order to
+interface, while still supporting composition with arbitrary components using
+different compute layers.</p></li>
+</ul>
+<p>Since the new data structures, particularly <code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code>, are thin
+abstractions on top of arrays, these are hopefully still as easy (or easier) to
+use and integrate, and provide much easier support for implementing new
+components with your choice of support libraries.</p>
+</section>
+</section>
+<section id="configuring-recommenders">
+<h2>Configuring Recommenders<a class="headerlink" href="#configuring-recommenders" title="Link to this heading">#</a></h2>
+<p>In LensKit 0.3 through 0.14, you configured a recommender by instantiating an
+<em>algorithm</em>, and then calling <code class="docutils literal notranslate"><span class="pre">Recommender.adapt</span></code> to make sure it implemented
+the <code class="docutils literal notranslate"><span class="pre">Recommender</span></code> interface.</p>
+<p>LensKit 2025 introduces the <em>pipeline</em> design; you configure the core
+recommendation model in a very similar way (constructor arguments), and pass it
+to <a class="reference internal" href="../api/lenskit.pipeline.topn_pipeline.html#lenskit.pipeline.topn_pipeline" title="lenskit.pipeline.topn_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">topn_pipeline()</span></code></a> instead of <code class="docutils literal notranslate"><span class="pre">Recommender.adapt</span></code>.
+The resulting pipeline object can be directly used by the batch inference
+facilities.</p>
+<p>The model and pipeline training method is now named <code class="docutils literal notranslate"><span class="pre">train</span></code>, so after creating
+the pipeline, you will call <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.train" title="lenskit.pipeline.Pipeline.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="pipeline.html#pipeline"><span class="std std-ref">Recommendation Pipelines</span></a> for more details on pipelines and how you can reconfigure
+them for very different ways of turning scoring models into full recommenders.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Since 2025, we no longer use the term “algorithm” in LensKit, as it is
+ambiguous and promotes confusion about very different things.  Instead we
+have “pipelines” consisting of ”components”, some of which may be ”models”
+(for scoring, ranking, etc.).</p>
+</div>
+</section>
+<section id="obtaining-recommendations">
+<h2>Obtaining Recommendations<a class="headerlink" href="#obtaining-recommendations" title="Link to this heading">#</a></h2>
+<p>In previous LensKit versions, you would get recommendations by calling the
+<cite>recommend</cite> method and providing the user ID, recommendation count, and
+optionally the user’s current historical ratings.</p>
+<p>In LensKit 2025, you invoke the <em>pipeline</em> to obtain recommendations.  In a
+standard recommendation pipeline, the recommendations are produced by a
+component called <code class="docutils literal notranslate"><span class="pre">recommender</span></code>; you can obtain them with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">recs</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;recommender&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This method returns an <a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a> containing the
+recommended items. You can optionally specify candidate items with an <code class="docutils literal notranslate"><span class="pre">items=</span></code>
+parameter to <code class="docutils literal notranslate"><span class="pre">run</span></code> (it takes an <a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>), or a list
+length with <code class="docutils literal notranslate"><span class="pre">n=</span></code> (you can also bake a default list length into the pipeline
+when you call <a class="reference internal" href="../api/lenskit.pipeline.topn_pipeline.html#lenskit.pipeline.topn_pipeline" title="lenskit.pipeline.topn_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">topn_pipeline()</span></code></a>).</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>The input specifying the user identifier is now called a <code class="docutils literal notranslate"><span class="pre">query</span></code>, in order
+to support recommendation tasks beyond simple user-based recommendation such
+as context-based or session-based recommendation.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We are considering adding a more ergonomic interface to obtain
+recommendations from pipelines.</p>
+</div>
+</section>
+<section id="batch-inference">
+<h2>Batch Inference<a class="headerlink" href="#batch-inference" title="Link to this heading">#</a></h2>
+<p>The <a class="reference internal" href="../api/lenskit.batch.recommend.html#lenskit.batch.recommend" title="lenskit.batch.recommend"><code class="xref py py-func docutils literal notranslate"><span class="pre">recommend()</span></code></a> and <a class="reference internal" href="../api/lenskit.batch.predict.html#lenskit.batch.predict" title="lenskit.batch.predict"><code class="xref py py-func docutils literal notranslate"><span class="pre">predict()</span></code></a>
+functions still exist, and now work on pipelines instead of “algorithms”. They
+no longer return data frames; instead, they return an
+<a class="reference internal" href="../api/lenskit.data.ItemListCollection.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemListCollection</span></code></a> containing the item lists produced
+by the recommender or predictor / scorer components.</p>
+<p>You can also use the more flexible
+<a class="reference internal" href="../api/lenskit.batch.BatchPipelineRunner.html#lenskit.batch.BatchPipelineRunner" title="lenskit.batch.BatchPipelineRunner"><code class="xref py py-class docutils literal notranslate"><span class="pre">BatchPipelineRunner</span></code></a> to do things like extract
+multiple component outputs for each test user (e.g. both rating predictions and
+top-<em>N</em> recommendations, or rankings before and after a reranking stage).</p>
+<p>All batch inference interfaces support parallel processing over users, and the
+same parallel configuration (see <a class="reference internal" href="parallelism.html#parallelism"><span class="std std-ref">Parallel Processing</span></a>).  The resulting item list
+collections can be converted to data frames
+(<a class="reference internal" href="../api/lenskit.data.ItemListCollection.html#lenskit.data.ItemListCollection.to_df" title="lenskit.data.ItemListCollection.to_df"><code class="xref py py-meth docutils literal notranslate"><span class="pre">to_df()</span></code></a>) to be saved in any format
+supported by Pandas; future LensKit versions will add support for directly
+storing them in other formats such as DuckDB, and loading them from such
+formats.</p>
+</section>
+<section id="evaluating-recommendations">
+<h2>Evaluating Recommendations<a class="headerlink" href="#evaluating-recommendations" title="Link to this heading">#</a></h2>
+<p>The evaluation logic has seen significant updates and improvements and API
+changes. The <a class="reference internal" href="../api/splitting.html#module-lenskit.splitting" title="lenskit.splitting"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.splitting</span></code></a> module contains various facilities for
+data splitting, including equivalents of the splitting strategies that used to
+live in <code class="docutils literal notranslate"><span class="pre">lenskit.crossfold</span></code>; see <a class="reference internal" href="splitting.html#splitting"><span class="std std-ref">Splitting Data</span></a> for details on data
+splitting.  These functions now operate on data sets and return item list
+collections instead of data frames.</p>
+<p>To measure recommendations, use the various metrics in
+<a class="reference internal" href="../api/metrics.html#module-lenskit.metrics" title="lenskit.metrics"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.metrics</span></code></a>, and the <a class="reference internal" href="../api/lenskit.metrics.RunAnalysis.html#lenskit.metrics.RunAnalysis" title="lenskit.metrics.RunAnalysis"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.metrics.RunAnalysis</span></code></a> class
+provides support for analyzing <em>runs</em> (sequences of recommendation lists
+produced by an algorithm in an experimental condition). It handles both ranking
+and prediction accuracy metrics in a single analysis interface, and also
+supports both listwise and global metrics (e.g. exposure metrics).  We will be
+quickly building out additional metrics that take advantage of this
+functionality.  See <a class="reference internal" href="evaluation/index.html#evaluation"><span class="std std-ref">Evaluating Recommender Output</span></a> for details on metrics and analysis.</p>
+<p><a class="reference internal" href="../api/lenskit.metrics.RunAnalysis.html#lenskit.metrics.RunAnalysis" title="lenskit.metrics.RunAnalysis"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.metrics.RunAnalysis</span></code></a> replaces the old <code class="docutils literal notranslate"><span class="pre">RecListAnalysis</span></code>, and
+provides better defaults (e.g. how users without recommendations are handled).</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="parallelism.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Parallel Processing</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="performance.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Performance Tips</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#change-highlights">Change Highlights</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-data">Loading Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-structures">Data Structures</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">Motivation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-recommenders">Configuring Recommenders</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#obtaining-recommendations">Obtaining Recommendations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-inference">Batch Inference</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-recommendations">Evaluating Recommendations</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/guide/migrating.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2018–2024 Drexel University, Boise State University, and collaborators.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.0.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

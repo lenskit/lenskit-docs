@@ -19,7 +19,7 @@
 <meta name="description" content="The 2025 release series is currently in development. No specific release date is set yet. 2025 will bring breaking changes to several LensKit APIs to improve ergonomics, correctness-by-default, and..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>2025 Releases &#8212; LensKit 0.15.0.dev1561+g46813bfd documentation</title>
+    <title>2025 Releases &#8212; LensKit 0.15.0.dev1580+gc08f3330 documentation</title>
   
   
   
@@ -44,7 +44,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=cd9197a3" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c9bc0cee" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=0c26f594"></script>
+    <script src="../_static/documentation_options.js?v=65f0b110"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1561+g46813bfd documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1561+g46813bfd documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1580+gc08f3330 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1580+gc08f3330 documentation - Home"/>
   
   
 </a></div>
@@ -473,71 +473,45 @@ date is set yet.</p>
 <p>2025 will bring breaking changes to several LensKit APIs to improve ergonomics,
 correctness-by-default, and flexibility.  It also adopts <a class="reference external" href="https://scientific-python.org/specs/spec-0000/">SPEC0</a>, a standard for
 supported versions of scientific Python libraries, and changes the LensKit
-version number scheme to “<a class="reference internal" href="index.html#semcalver"><span class="std std-ref">SemCalVer</span></a>”.</p>
+version number scheme to “<a class="reference internal" href="index.html#semcalver"><span class="std std-ref">SemCalVer</span></a>”.  See <a class="reference internal" href="../guide/migrating.html#migrating"><span class="std std-ref">Migrating from LensKit 0.x</span></a> for
+information on how to upgrade your code.</p>
 <section id="in-progress">
 <span id="id1"></span><h2>2025.1 (in progress)<a class="headerlink" href="#in-progress" title="Link to this heading">#</a></h2>
 <p>The first 2025 release is currently in-progress.</p>
-<p>This document presents the highlights for this release. The full changelog for this release is available in the <a class="reference external" href="https://github.com/lenskit/lkpy/compare/0.14.4...main">Git history</a>
-and <a class="reference external" href="https://github.com/lenskit/lkpy/milestone/14">issue/PR milestone</a>.</p>
-<section id="significant-changes">
-<h3>Significant Changes<a class="headerlink" href="#significant-changes" title="Link to this heading">#</a></h3>
-<p>2025.1 brings substantial changes to LensKit.</p>
+<p>The changes in this release are too numerous and fundamental to fully document
+in traditional release notes.  See the following for release update documentation:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a>.  LensKit now provides an abstraction for
-training data instead of working with Pandas data frames directly, that
-allows components to reduce code duplication and recomputation, access data
-in multiple formats (Pandas, NumPy, and PyTorch), and provided standardized
-structures like mappings of user or item IDs to array indices.  This also
-supersedes the old bespoke dataset loading support, with functions like
-<a class="reference internal" href="../api/lenskit.data.load_movielens.html#lenskit.data.load_movielens" title="lenskit.data.load_movielens"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_movielens()</span></code></a> to load standard datasets.</p></li>
-<li><p>New classes like <a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a> for routing item data
-instead of using Pandas data frames and series.  This makes component return
-types more self-documenting (rather than requiring developers to remember
-what is on the index, what the column names are, etc.), and facilitates more
-efficient data transfer between components that do not use Pandas (e.g. data
-passed between components using PyTorch can leave the data in tensors
-without round-tripping through Pandas and NumPy, and keep this transparent
-to client code).</p></li>
-<li><p>Data splitting for offline evaluation has been moved into
-<a class="reference internal" href="../api/splitting.html#module-lenskit.splitting" title="lenskit.splitting"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.splitting</span></code></a>, updated to work with data sets and item lists
-instead of raw data frames, and splitting functions have been renamed (e.g.
-<code class="docutils literal notranslate"><span class="pre">rows</span></code> to <code class="docutils literal notranslate"><span class="pre">records</span></code>) and had parameters updated for clarity and
-consistency.</p></li>
+<li><p><a class="reference internal" href="../guide/migrating.html#migrating"><span class="std std-ref">Migrating from LensKit 0.x</span></a> for conceptual changes and how to upgrade your code.</p></li>
+<li><p>The notes below for <em>behavior</em> changes (e.g. new defaults, new metric
+capabilities), and small bits not covered in the migration guide.</p></li>
+<li><p>The full changelog in the <a class="reference external" href="https://github.com/lenskit/lkpy/compare/0.14.4...main">Git history</a> and <a class="reference external" href="https://github.com/lenskit/lkpy/milestone/14">issue/PR
+milestone</a>.</p></li>
+</ul>
+<section id="breaking-changes">
+<h3>Breaking Changes<a class="headerlink" href="#breaking-changes" title="Link to this heading">#</a></h3>
+<p>LensKit 2025 has many breaking changes, with the migration guide
+(<a class="reference internal" href="../guide/migrating.html#migrating"><span class="std std-ref">Migrating from LensKit 0.x</span></a>) documenting the major ones.  Below are some smaller ones not
+covered by that document:</p>
+<ul class="simple">
 <li><p>Where Pandas data frames are still used, the standard user and item columns
 have been renamed to <code class="docutils literal notranslate"><span class="pre">user_id</span></code> and <code class="docutils literal notranslate"><span class="pre">item_id</span></code> respectively, with
 <code class="docutils literal notranslate"><span class="pre">user_num</span></code> and <code class="docutils literal notranslate"><span class="pre">item_num</span></code> for 0-based user and item numbers.  This is to
 remove ambiguity about how users and items are being referenced.</p></li>
-<li><p><strong>PyTorch</strong>. LensKit now uses PyTorch to implement most of its algorithms,
-instead of Numba-accelerated NumPy code.  Algorithms using PyTorch are:</p>
-<ul>
-<li><p><a class="reference internal" href="../api/lenskit.algorithms.knn.html#lenskit.algorithms.knn.ItemItem" title="lenskit.algorithms.knn.ItemItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemItem</span></code></a></p></li>
-<li><p><a class="reference internal" href="../api/lenskit.algorithms.als.html#lenskit.algorithms.als.ImplicitMF" title="lenskit.algorithms.als.ImplicitMF"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImplicitMF</span></code></a></p></li>
-<li><p><a class="reference internal" href="../api/lenskit.algorithms.als.html#lenskit.algorithms.als.BiasedMF" title="lenskit.algorithms.als.BiasedMF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiasedMF</span></code></a></p></li>
-</ul>
-</li>
-<li><p>Many LensKit components (batch running, model training, etc.) now report progress with
-<a class="reference external" href="https://progress-api.readthedocs.io/en/latest/api.html#module-progress_api" title="(in Progress API)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">progress_api</span></code></a>, and can be connected to TQDM or Enlighten.</p></li>
-<li><p>Algorithms refactored to more consistent package locations, without the
-<code class="docutils literal notranslate"><span class="pre">algorithms</span></code> subpackage.</p></li>
 <li><p>LensKit no longer has top-level exports (and is now in fact a namespace
 package).  Classes and functions must be imported from appropriate
 subpackages.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">Popular</span></code> recommender has been removed in favor of <code class="xref py py-class docutils literal notranslate"><span class="pre">PopScore</span></code>.</p></li>
+<li><p>The DCG metric has been removed, as it is basically never used and was not
+useful as a part of the NDCG implementation.</p></li>
 </ul>
 </section>
 <section id="new-features-incremental">
 <h3>New Features (incremental)<a class="headerlink" href="#new-features-incremental" title="Link to this heading">#</a></h3>
 <ul class="simple">
+<li><p>Many LensKit components (batch running, model training, etc.) now report progress with
+<a class="reference external" href="https://progress-api.readthedocs.io/en/latest/api.html#module-progress_api" title="(in Progress API)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">progress_api</span></code></a>, and can be connected to TQDM or Enlighten.</p></li>
 <li><p>Added RBP top-N metric (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/334">⛙ 334</a>).</p></li>
 <li><p>Added command-line tool to fetch datasets (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/347">⛙ 347</a>).</p></li>
-</ul>
-</section>
-<section id="evaluation-changes">
-<h3>Evaluation Changes<a class="headerlink" href="#evaluation-changes" title="Link to this heading">#</a></h3>
-<ul class="simple">
-<li><p>The DCG metric has been removed, as it is basically never used and was not
-useful as a part of the NDCG implementation.</p></li>
-<li><p>Train-test split results are no longer tuples.</p></li>
 </ul>
 </section>
 <section id="model-behavior-changes">
@@ -566,14 +540,13 @@ FunkSVD is not commonly used.</p></li>
 <h3>Bug Fixes<a class="headerlink" href="#bug-fixes" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>Fixed bug in NDCG list truncation (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/309">🐞 309</a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/312">⛙ 312</a>).</p></li>
-<li><p><a class="reference internal" href="../api/lenskit.util.html#lenskit.util.clone" title="lenskit.util.clone"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.clone()</span></code></a> now properly clones tuples (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/358">⛙ 358</a>).</p></li>
-<li><p>Corrected documentation errors for <a class="reference internal" href="../evaluation/topn-metrics.html#lenskit.metrics.topn.recall" title="lenskit.metrics.topn.recall"><code class="xref py py-func docutils literal notranslate"><span class="pre">recall()</span></code></a> and <a class="reference internal" href="../evaluation/topn-metrics.html#lenskit.metrics.topn.hit" title="lenskit.metrics.topn.hit"><code class="xref py py-func docutils literal notranslate"><span class="pre">hit()</span></code></a> (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/369">⛙ 369</a> by <a class="extlink-user reference external" href="https://github.com/lukas-wegmeth">&#64;lukas-wegmeth</a>).</p></li>
+<li><p>Corrected documentation errors for <code class="xref py py-func docutils literal notranslate"><span class="pre">recall()</span></code> and <code class="xref py py-func docutils literal notranslate"><span class="pre">hit()</span></code> (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/369">⛙ 369</a> by <a class="extlink-user reference external" href="https://github.com/lukas-wegmeth">&#64;lukas-wegmeth</a>).</p></li>
 </ul>
 </section>
 <section id="dependencies-and-maintenance">
 <h3>Dependencies and Maintenance<a class="headerlink" href="#dependencies-and-maintenance" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Bumped minimum supported dependencies as per <a class="reference external" href="https://scientific-python.org/specs/spec-0000/">SPEC0</a> (Python 3.10, NumPy 1.23, Pandas 1.5, SciPy 1.9).</p></li>
+<li><p>Bumped minimum supported dependencies as per <a class="reference external" href="https://scientific-python.org/specs/spec-0000/">SPEC0</a> (Python 3.11, NumPy 1.24, Pandas 2.0, SciPy 1.10).</p></li>
 <li><p>Added support for Pandas 2 (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/364">⛙ 364</a>) and Python 3.12.</p></li>
 <li><p>Improved Apple testing to include vanilla Python and Apple Silicon (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/366">⛙ 366</a>).</p></li>
 <li><p>Updated build environment, dependency setup, taskrunning, and CI to more consistent and maintainable.</p></li>
@@ -632,9 +605,8 @@ FunkSVD is not commonly used.</p></li>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-progress">2025.1 (in progress)</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#significant-changes">Significant Changes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking Changes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-incremental">New Features (incremental)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluation-changes">Evaluation Changes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-behavior-changes">Model Behavior Changes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug Fixes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies-and-maintenance">Dependencies and Maintenance</a></li>

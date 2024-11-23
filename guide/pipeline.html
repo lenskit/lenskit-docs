@@ -19,7 +19,7 @@
 <meta name="description" content="Since version 2025.1 (in progress), LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Recommendation Pipelines &#8212; LensKit 0.15.0.dev1561+g46813bfd documentation</title>
+    <title>Recommendation Pipelines &#8212; LensKit 0.15.0.dev1580+gc08f3330 documentation</title>
   
   
   
@@ -44,7 +44,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=cd9197a3" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=c9bc0cee" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=0c26f594"></script>
+    <script src="../_static/documentation_options.js?v=65f0b110"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -61,6 +61,43 @@
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+const load = async () => {
+    await mermaid.run();
+    const all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+    if(mermaids_to_add_zoom > 0) {
+        var svgs = d3.selectAll(".mermaid svg");
+        if(all_mermaids.length !== mermaids_processed.length) {
+            // try again in a sec, wait for mermaids to load
+            setTimeout(load, 200);
+            return;
+        } else if(svgs.size() !== mermaids_to_add_zoom) {
+            // try again in a sec, wait for mermaids to load
+            setTimeout(load, 200);
+            return;
+        } else {
+            svgs.each(function() {
+                var svg = d3.select(this);
+                svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                var inner = svg.select("g");
+                var zoom = d3.zoom().on("zoom", function(event) {
+                    inner.attr("transform", event.transform);
+                });
+                svg.call(zoom);
+            });
+        }
+    }
+};
+
+window.addEventListener("load", load);
+</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'guide/pipeline';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
@@ -72,7 +109,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Splitting Data" href="splitting.html" />
-    <link rel="prev" title="Item Lists and Collections" href="item-lists.html" />
+    <link rel="prev" title="Queries" href="queries.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.15.0" />
@@ -141,8 +178,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1561+g46813bfd documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1561+g46813bfd documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1580+gc08f3330 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1580+gc08f3330 documentation - Home"/>
   
   
 </a></div>
@@ -417,6 +454,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="data.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="item-lists.html">Item Lists and Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="queries.html">Queries</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Recommendation Pipelines</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
@@ -436,6 +474,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Tips and Help</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="migrating.html">Migrating from LensKit 0.x</a></li>
 <li class="toctree-l1"><a class="reference internal" href="performance.html">Performance Tips</a></li>
 <li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Algorithm Implementation Tips</a></li>
 </ul>
@@ -507,36 +546,10 @@ definitions of different composition classes.  The pipeline lives in the
 <a class="reference internal" href="../api/pipeline.html#module-lenskit.pipeline" title="lenskit.pipeline"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.pipeline</span></code></a> module, and the primary entry point is the
 <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pipeline</span></code></a> class.</p>
 <p>If all you want to do is build a standard top-N recommendation pipeline from an
-item scorer, see <a class="reference internal" href="../api/lenskit.pipeline.topn_pipeline.html#lenskit.pipeline.topn_pipeline" title="lenskit.pipeline.topn_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">topn_pipeline()</span></code></a>; this is the equivalent to
-<code class="docutils literal notranslate"><span class="pre">Recommender.adapt</span></code> in the old LensKit API.  If you want more flexibility, you
-can write out the pipeline configuration yourself; the equivalent to
-<code class="docutils literal notranslate"><span class="pre">topn_pipeline(scorer)</span></code> is:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
-<span class="c1"># define an input parameter for the user ID</span>
-<span class="n">user</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="n">EntityId</span><span class="p">)</span>
-<span class="c1"># allow candidate items to be optionally specified</span>
-<span class="n">items</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">&#39;items&#39;</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">EntityId</span><span class="p">],</span> <span class="kc">None</span><span class="p">)</span>
-<span class="c1"># look up a user&#39;s history in the training data</span>
-<span class="n">history</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;lookup-user&#39;</span><span class="p">,</span> <span class="n">LookupTrainingHistory</span><span class="p">(),</span> <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
-<span class="c1"># find candidates from the training data</span>
-<span class="n">lookup_candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span>
-    <span class="s1">&#39;select-candidates&#39;</span><span class="p">,</span>
-    <span class="n">UnratedTrainingItemsCandidateSelector</span><span class="p">(),</span>
-    <span class="n">user</span><span class="o">=</span><span class="n">history</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="c1"># if the client provided items as a pipeline input, use those; otherwise</span>
-<span class="c1"># use the candidate selector we just configured.</span>
-<span class="n">candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">use_first_of</span><span class="p">(</span><span class="s1">&#39;candidates&#39;</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">lookup_candidates</span><span class="p">)</span>
-<span class="c1"># score the candidate items using the specified scorer</span>
-<span class="n">score</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;score&#39;</span><span class="p">,</span> <span class="n">scorer</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">candidates</span><span class="p">)</span>
-<span class="c1"># rank the items by score</span>
-<span class="n">recommend</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;recommend&#39;</span><span class="p">,</span> <span class="n">TopNRanker</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">items</span><span class="o">=</span><span class="n">score</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>You can then run this pipeline to produce recommendations with:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">user_recs</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">recommend</span><span class="p">,</span> <span class="n">user</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
-</pre></div>
-</div>
+item scorer, see <a class="reference internal" href="../api/lenskit.pipeline.topn_pipeline.html#lenskit.pipeline.topn_pipeline" title="lenskit.pipeline.topn_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">topn_pipeline()</span></code></a>.  <a class="reference internal" href="../api/lenskit.pipeline.RecPipelineBuilder.html#lenskit.pipeline.RecPipelineBuilder" title="lenskit.pipeline.RecPipelineBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecPipelineBuilder</span></code></a> provides
+some more flexibility in configuring a recommendation pipeline with a standard
+design, and you can always fully configure the pipeline yourself for maximum
+flexibility.</p>
 <div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
 <p>Redo some of those types with user &amp; item data, etc.</p>
@@ -559,13 +572,38 @@ they can query databases, load files, and any other operations.  A runtime
 pipeline can use some components (especially the scorer) trained from training
 data, and other components that query a database or REST services for things
 like user history and candidate set lookup.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Acknowledgements</p>
+<div class="note admonition">
+<p class="admonition-title">Acknowledgements</p>
 <p>The LensKit pipeline design is heavily inspired by the pipeline abstraction
 Karl Higley originally created for <a class="reference external" href="https://ccri-poprox.github.io/poprox-researcher-manual/reference/recommender/poprox_recommender.pipeline.html">POPROX</a> (available in the git history),
 as well as by <a class="reference external" href="https://docs.haystack.deepset.ai/docs/pipelines">Haystack</a>.</p>
 </div>
+<section id="constructing-pipelines">
+<span id="pipeline-construct"></span><h2>Constructing Pipelines<a class="headerlink" href="#constructing-pipelines" title="Link to this heading">#</a></h2>
+<p>The simplest way to make a pipeline is to construct a <code class="docutils literal notranslate"><span class="pre">topn_pipeline</span></code> — the
+following will create a top-<em>N</em> recommendation pipeline using implicit-feedback
+matrix factorization:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">als</span> <span class="o">=</span> <span class="n">ImplicitMF</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">topn_pipeline</span><span class="p">(</span><span class="n">als</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="../api/lenskit.pipeline.RecPipelineBuilder.html#lenskit.pipeline.RecPipelineBuilder" title="lenskit.pipeline.RecPipelineBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecPipelineBuilder</span></code></a> class provides a more flexible mechanism to
+create standard recommendation pipelines; to implement the same pipeline with
+that class, do:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">als</span> <span class="o">=</span> <span class="n">ImplicitMF</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="n">builder</span> <span class="o">=</span> <span class="n">RecPipelineBuilder</span><span class="p">()</span>
+<span class="n">builder</span><span class="o">.</span><span class="n">scorer</span><span class="p">(</span><span class="n">als</span><span class="p">)</span>
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s1">&#39;ALS&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For maximum flexibility, you can directly construct and wire the pipeline
+yourself; this is described in <a class="reference internal" href="#standard-pipelines"><span class="std std-ref">Standard Layouts</span></a>.</p>
+<p>After any of these methods, you can run the pipeline to produce recommendations
+with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">user_recs</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">recommend</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
 <section id="pipeline-model">
 <span id="id4"></span><h2>Pipeline Model<a class="headerlink" href="#pipeline-model" title="Link to this heading">#</a></h2>
 <p>A pipeline has a couple key concepts:</p>
@@ -574,7 +612,7 @@ as well as by <a class="reference external" href="https://docs.haystack.deepset.
 such as the user to generate recommendations for.  Inputs have specified data
 types, and it is an error to provide an input value of an unexpected type.</p></li>
 <li><p>A <strong>component</strong> processes input data and produces an output.  It can be either
-a Python function or object (anything that implements the <code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code>
+a Python function or object (anything that implements the <a class="reference internal" href="../api/lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>
 protocol) that takes inputs as keyword arguments and returns an output.</p></li>
 </ul>
 <p>These are arranged in a directed acyclic graph, consisting of:</p>
@@ -669,13 +707,14 @@ itself, e.g.:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">recommender</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">reranker</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">scorer</span></code></p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">user-history-resolver</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">history-lookup</span></code></p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">item-embedder</span></code></p></li>
 </ul>
 <p>Component nodes can also have <em>aliases</em>, allowing them to be accessed by more
 than one name. Use <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.alias" title="lenskit.pipeline.Pipeline.alias"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.alias()</span></code></a> to define these aliases.</p>
-<p>Various LensKit facilities recognize several standard component names that we
-recommend you use when applicable:</p>
+<p>Various LensKit facilities recognize several standard component names used by
+the standard pipeline builders, and we recommend you use them in your own
+pipelines when applicable:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">scorer</span></code> — compute (usually personalized) scores for items for a given user.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">ranker</span></code> — compute a (ranked) list of recommendations for a user.  If you
@@ -687,11 +726,10 @@ evaluation tools will operate on the last such ranking.</p></li>
 alias for <code class="docutils literal notranslate"><span class="pre">ranker</span></code>, as in a top-<em>N</em> recommender, but may return other
 formats such as grids or unordered slates.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">rating-predictor</span></code> — predict a user’s ratings for the specified items.  When
-present, this is usually an alias for <code class="docutils literal notranslate"><span class="pre">scorer</span></code>, but in some pipelines it
-will be a different component that transforms the scores into rating
-predictions.</p></li>
+present, this may be an alias for <code class="docutils literal notranslate"><span class="pre">scorer</span></code>, or it may be another component
+that fills in missing scores with a baseline prediction.</p></li>
 </ul>
-<p>These component names replace the task-specific interfaces in pre-2024 LensKit;
+<p>These component names replace the task-specific interfaces in pre-2025 LensKit;
 a <code class="docutils literal notranslate"><span class="pre">Recommender</span></code> is now just a pipeline with <code class="docutils literal notranslate"><span class="pre">recommender</span></code> and/or <code class="docutils literal notranslate"><span class="pre">ranker</span></code>
 components.</p>
 </section>
@@ -701,8 +739,8 @@ components.</p>
 <ul class="simple">
 <li><p>The components and inputs (nodes)</p></li>
 <li><p>The component input connections (edges)</p></li>
-<li><p>The component configurations (see <code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigurableComponent</span></code>)</p></li>
-<li><p>The components’ learned parameters (see <code class="xref py py-class docutils literal notranslate"><span class="pre">TrainableComponent</span></code>)</p></li>
+<li><p>The component configurations (see <a class="reference internal" href="../api/lenskit.pipeline.Configurable.html#lenskit.pipeline.Configurable" title="lenskit.pipeline.Configurable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Configurable</span></code></a> and <a class="reference internal" href="../api/lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>)</p></li>
+<li><p>The components’ learned parameters (see <a class="reference internal" href="../api/lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable" title="lenskit.pipeline.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a>)</p></li>
 </ul>
 <div class="admonition-todo admonition" id="id6">
 <p class="admonition-title">Todo</p>
@@ -712,10 +750,10 @@ components.</p>
 connections, and configurations) and pipeline parameters.  There are
 three ways to save a pipeline or part thereof:</p>
 <ol class="arabic simple">
-<li><p>Pickle the entire pipeline.  This is easy, and saves everything pipeline; it
-has the usual downsides of pickling (arbitrary code execution, etc.).
-LensKit uses pickling to share pipelines with worker processes for parallel
-batch operations.</p></li>
+<li><p>Pickle the entire pipeline.  This is easy, and saves everything in the
+pipeline; it has the usual downsides of pickling (arbitrary code execution,
+etc.). LensKit uses pickling to share pipelines with worker processes for
+parallel batch operations.</p></li>
 <li><p>Save the pipeline configuration with <code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.save_config()</span></code>.  This saves
 the components, their configurations, and their connections, but <strong>not</strong> any
 learned parameter data.  A new pipeline can be constructed from such a
@@ -724,20 +762,21 @@ configuration can be reloaded with <code class="xref py py-meth docutils literal
 the learned parameters but <strong>not</strong> the configuration or connections.  The
 parameters can be reloaded into a compatible pipeline with
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.load_params()</span></code>; a compatible pipeline can be created by
-running the pipeline setup code or using a saved pipeline configuration.</p></li>
+running the same pipeline setup code or using a saved pipeline
+configuration.</p></li>
 </ol>
-<p>These can be mixed and matched; if you pickle an untrained pipeline, you can
+<p>These can be mixed and matched: if you pickle an untrained pipeline, you can
 unpickle it and use <code class="xref py py-meth docutils literal notranslate"><span class="pre">load_params()</span></code> to infuse it with parameters.</p>
 <p>Component implementations need to support the configuration and/or parameter
 values, as needed, in addition to functioning correctly with pickle (no specific
 logic is usually needed for this).</p>
 <p>LensKit knows how to safely save the following object types from
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">Component.get_params()</span></code>:</p>
+<a class="reference internal" href="../api/lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable.get_params" title="lenskit.pipeline.Trainable.get_params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Trainable.get_params()</span></code></a>:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a> (dense, CSR, and COO tensors).</p></li>
 <li><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p></li>
-<li><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_array.html#scipy.sparse.csr_array" title="(in SciPy v1.14.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_array</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.~coo_array</span></code>,
-<code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.~csc_array</span></code>, and the corresponding <code class="docutils literal notranslate"><span class="pre">*_matrix</span></code>
+<li><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_array.html#scipy.sparse.csr_array" title="(in SciPy v1.14.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">scipy.sparse.csr_array</span></code></a>, <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.coo_array.html#scipy.sparse.coo_array" title="(in SciPy v1.14.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">coo_array</span></code></a>,
+<a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csc_array.html#scipy.sparse.csc_array" title="(in SciPy v1.14.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">csc_array</span></code></a>, and the corresponding <code class="docutils literal notranslate"><span class="pre">*_matrix</span></code>
 versions.</p></li>
 </ul>
 <p>Other objects (including Pandas dataframes) are serialized by pickling, and the
@@ -746,33 +785,157 @@ pipeline will emit a warning (or fail, if <code class="docutils literal notransl
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>The load/save parameter operations are modeled after PyTorch’s
-<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module.state_dict" title="(in PyTorch v2.5)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">state_dict()</span></code></a> and the needs of <code class="docutils literal notranslate"><span class="pre">safetensors</span></code>.</p>
+<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module.state_dict" title="(in PyTorch v2.5)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">state_dict()</span></code></a> and the needs of <a class="reference external" href="https://huggingface.co/docs/safetensors/">safetensors</a>.</p>
 </div>
 </section>
+</section>
+<section id="standard-layouts">
+<span id="standard-pipelines"></span><h2>Standard Layouts<a class="headerlink" href="#standard-layouts" title="Link to this heading">#</a></h2>
+<p>The standard recommendation pipeline, produced by either of the approaches
+described above in <a class="reference internal" href="#pipeline-construct"><span class="std std-ref">Constructing Pipelines</span></a>, looks like this:</p>
+<figure class="align-default" id="id7">
+<pre  class="mermaid">
+        ---
+config:
+    fontFamily: '&quot;Source Sans 3&quot;, Verdana, Helvetica, Arial, sans-serif'
+---
+flowchart LR
+    subgraph input[&quot;Inputs&quot;]
+    QUERY[/&quot;Query&lt;br&gt;(&lt;tt&gt;query: QueryInput&lt;/tt&gt;)&quot;/]
+    ITEMS[/&quot;Candidate Items&lt;br&gt;(&lt;tt&gt;items: ItemList&lt;/tt&gt;)&quot;/]
+    N[/&quot;List Length&lt;br&gt;(&lt;tt&gt;n: int&lt;/tt&gt;)&quot;/]
+    class ITEMS optional;
+    class N optional;
+    end
+
+    subgraph prep[&quot;Data Preparation&quot;]
+    HLOOK[&quot;History Lookup&quot;]
+    CSEL[&quot;Candidate Selector&quot;]
+    CPICK([&quot;Pick Cand. Source&quot;])
+    end
+
+    subgraph rank[&quot;Scoring and Ranking&quot;]
+    SCORE[&quot;Scorer&quot;]
+    RANK[&quot;`Top-*N* Ranker`&quot;]
+    class SCORE config;
+    end
+
+    RESULT[\&quot;Recommendations&lt;br&gt;(ordered &lt;tt&gt;ItemList&lt;/tt&gt;)&quot;\]
+
+    QUERY --&gt; HLOOK
+    HLOOK -- RecQuery --&gt; CSEL
+    CSEL -.-&gt;|&quot;ItemList&lt;br&gt;(if needed)&quot;| CPICK
+    ITEMS --&gt; CPICK
+
+    HLOOK -- RecQuery --&gt; SCORE
+    CPICK -- ItemList --&gt; SCORE
+    SCORE -- ItemList --&gt; RANK
+    N --&gt; RANK
+
+    RANK --&gt; RESULT
+
+    classDef optional stroke-dasharray: 5 5;
+    classDef config font-weight:bold,stroke-width:4px;
+
+    </pre><figcaption>
+<p><span class="caption-text">Top-N recommendation pipeline.</span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>The convenience methods are equivalent to the following pipeline code:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+<span class="c1"># define an input parameter for the user ID (the &#39;query&#39;)</span>
+<span class="n">query</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">,</span> <span class="n">ID</span><span class="p">)</span>
+<span class="c1"># allow candidate items to be optionally specified</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">&#39;items&#39;</span><span class="p">,</span> <span class="n">ItemList</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="c1"># look up a user&#39;s history in the training data</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;history-lookup&#39;</span><span class="p">,</span> <span class="n">LookupTrainingHistory</span><span class="p">(),</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">)</span>
+<span class="c1"># find candidates from the training data</span>
+<span class="n">default_candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span>
+    <span class="s1">&#39;candidate-selector&#39;</span><span class="p">,</span>
+    <span class="n">UnratedTrainingItemsCandidateSelector</span><span class="p">(),</span>
+    <span class="n">query</span><span class="o">=</span><span class="n">history</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="c1"># if the client provided items as a pipeline input, use those; otherwise</span>
+<span class="c1"># use the candidate selector we just configured.</span>
+<span class="n">candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">use_first_of</span><span class="p">(</span><span class="s1">&#39;candidates&#39;</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">default_candidates</span><span class="p">)</span>
+<span class="c1"># score the candidate items using the specified scorer</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;scorer&#39;</span><span class="p">,</span> <span class="n">scorer</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">candidates</span><span class="p">)</span>
+<span class="c1"># rank the items by score</span>
+<span class="n">recommend</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;ranker&#39;</span><span class="p">,</span> <span class="n">TopNRanker</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">items</span><span class="o">=</span><span class="n">score</span><span class="p">)</span>
+<span class="n">pipe</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;recommender&#39;</span><span class="p">,</span> <span class="n">recommend</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If we want to also emit rating predictions, with fallback to a baseline model to
+predict ratings for items the primary scorer cannot score (e.g. they are not in
+an item neighborhood), we use the following pipeline (created by
+<a class="reference internal" href="../api/lenskit.pipeline.RecPipelineBuilder.html#lenskit.pipeline.RecPipelineBuilder" title="lenskit.pipeline.RecPipelineBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecPipelineBuilder</span></code></a> when rating prediction is enabled):</p>
+<figure class="align-default" id="id8">
+<pre  class="mermaid">
+        ---
+config:
+    fontFamily: '&quot;Source Sans 3&quot;, Verdana, Helvetica, Arial, sans-serif'
+---
+flowchart LR
+    subgraph input[&quot;Inputs&quot;]
+    QUERY[/&quot;Query&lt;br&gt;(&lt;tt&gt;query: QueryInput&lt;/tt&gt;)&quot;/]
+    ITEMS[/&quot;Candidate Items&lt;br&gt;(&lt;tt&gt;items: ItemList&lt;/tt&gt;)&quot;/]
+    N[/&quot;List Length&lt;br&gt;(&lt;tt&gt;n: int&lt;/tt&gt;)&quot;/]
+    class ITEMS optional;
+    class N optional;
+    end
+
+    subgraph prep[&quot;Data Preparation&quot;]
+    HLOOK[&quot;History Lookup&quot;]
+    CSEL[&quot;Candidate Selector&quot;]
+    CPICK([&quot;Pick Cand. Source&quot;])
+    end
+
+    subgraph rank[&quot;Scoring and Ranking&quot;]
+    SCORE[&quot;Scorer&quot;]
+    FALLBACK[&quot;Baseline Scorer&quot;]
+    FILL[&quot;Fallback&quot;]
+    RANK[&quot;`Top-*N* Ranker`&quot;]
+    class SCORE config;
+    end
+
+    RESULT[\&quot;Recommendations&lt;br&gt;(ordered &lt;tt&gt;ItemList&lt;/tt&gt;)&quot;\]
+    PREDS[\&quot;Predictions&lt;br&gt;(&lt;tt&gt;ItemList&lt;/tt&gt;)&quot;\]
+
+    QUERY --&gt; HLOOK
+    HLOOK -- RecQuery --&gt; CSEL
+    ITEMS --&gt; CPICK
+    CSEL -.-&gt;|&quot;ItemList&lt;br&gt;(if needed)&quot;| CPICK
+
+    HLOOK -- RecQuery --&gt; SCORE
+    CPICK -- ItemList --&gt; SCORE
+    HLOOK -- RecQuery --&gt; FALLBACK
+    CPICK -- ItemList --&gt; FALLBACK
+    SCORE -- ItemList --&gt; FILL
+    FALLBACK -- ItemList --&gt; FILL
+    SCORE -- ItemList --&gt; RANK
+    N --&gt; RANK
+
+    RANK --&gt; RESULT
+    FILL --&gt; PREDS
+
+    classDef optional stroke-dasharray: 5 5;
+    classDef config font-weight:bold,stroke-width:4px;
+
+    </pre><figcaption>
+<p><span class="caption-text">Pipeline for top-N recommendation and rating prediction, with predictions falling back to a baseline scorer.</span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
 <section id="component-interface">
 <h2>Component Interface<a class="headerlink" href="#component-interface" title="Link to this heading">#</a></h2>
-<p>Pipeline components are callable objects that can optionally provide training
-and serialization capabilities.  In the simplest case, a component that requires
-no training or configuration can simply be a Python function; more sophisticated
-components can implement the <code class="xref py py-class docutils literal notranslate"><span class="pre">TrainableComponent</span></code> and/or
-<code class="xref py py-class docutils literal notranslate"><span class="pre">ConfigurableComponent</span></code> protocols to support flexible model training and
-pipeline serialization.</p>
-<p>Components also need to be pickleable, as LensKit uses pickling for shared
-memory parallelism in its batch-inference code.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>The component interfaces are simply protocol definitions (defined using
-<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">typing.Protocol</span></code></a> with <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.runtime_checkable" title="(in Python v3.13)"><code class="xref py py-func docutils literal notranslate"><span class="pre">runtime_checkable()</span></code></a>), so
-implementations can directly implement the specified methods and do not need
-to explicitly inherit from the protocol classes, although they are free to
-do so.</p>
-</div>
-<div class="admonition-todo admonition" id="id7">
-<p class="admonition-title">Todo</p>
-<p>Is it clear to write these capabilities as separate protocols, or would it be
-better to write a single <code class="docutils literal notranslate"><span class="pre">Component</span></code> <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a>?</p>
-</div>
+<p>Pipeline components are callable objects that can optionally provide
+configuration, training, and serialization capabilities.  In the simplest case,
+a component that requires no training or configuration can simply be a Python
+function; most components will extend the <a class="reference internal" href="../api/lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a> base class to
+expose configuration capabilities, and implement the <a class="reference internal" href="../api/lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable" title="lenskit.pipeline.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a> protocol
+if they contain a model that needs to be trained.</p>
+<p>Components also must be pickleable, as LensKit uses pickling for shared memory
+parallelism in its batch-inference code.</p>
 </section>
 </section>
 
@@ -787,12 +950,12 @@ better to write a single <code class="docutils literal notranslate"><span class=
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="item-lists.html"
+       href="queries.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Item Lists and Collections</p>
+        <p class="prev-next-title">Queries</p>
       </div>
     </a>
     <a class="right-next"
@@ -823,6 +986,7 @@ better to write a single <code class="docutils literal notranslate"><span class=
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-pipelines">Constructing Pipelines</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-model">Pipeline Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#connections">Connections</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#execution">Execution</a></li>
@@ -830,6 +994,7 @@ better to write a single <code class="docutils literal notranslate"><span class=
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-serialization">Pipeline Serialization</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-layouts">Standard Layouts</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-interface">Component Interface</a></li>
 </ul>
   </nav></div>

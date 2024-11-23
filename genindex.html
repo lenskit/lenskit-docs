@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Index &#8212; LensKit 0.15.0.dev1561+g46813bfd documentation</title>
+    <title>Index &#8212; LensKit 0.15.0.dev1580+gc08f3330 documentation</title>
   
   
   
@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=cd9197a3" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=c9bc0cee" />
   
   <!-- So that users can add custom icons -->
   <script src="_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
@@ -40,7 +40,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="_static/documentation_options.js?v=0c26f594"></script>
+    <script src="_static/documentation_options.js?v=65f0b110"></script>
     <script src="_static/doctools.js?v=9a2dae69"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -49,6 +49,43 @@
     <script src="_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
+const load = async () => {
+    await mermaid.run();
+    const all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+    if(mermaids_to_add_zoom > 0) {
+        var svgs = d3.selectAll(".mermaid svg");
+        if(all_mermaids.length !== mermaids_processed.length) {
+            // try again in a sec, wait for mermaids to load
+            setTimeout(load, 200);
+            return;
+        } else if(svgs.size() !== mermaids_to_add_zoom) {
+            // try again in a sec, wait for mermaids to load
+            setTimeout(load, 200);
+            return;
+        } else {
+            svgs.each(function() {
+                var svg = d3.select(this);
+                svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                var inner = svg.select("g");
+                var zoom = d3.zoom().on("zoom", function(event) {
+                    inner.attr("transform", event.transform);
+                });
+                svg.call(zoom);
+            });
+        }
+    }
+};
+
+window.addEventListener("load", load);
+</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'genindex';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
@@ -127,8 +164,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1561+g46813bfd documentation - Home"/>
-    <img src="_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1561+g46813bfd documentation - Home"/>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1580+gc08f3330 documentation - Home"/>
+    <img src="_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1580+gc08f3330 documentation - Home"/>
   
   
 </a></div>
@@ -499,9 +536,21 @@
 </li>
         <li><a href="api/lenskit.metrics.RunAnalysisResult.html#lenskit.metrics.RunAnalysisResult.__init__">(lenskit.metrics.RunAnalysisResult method)</a>
 </li>
+        <li><a href="api/lenskit.pipeline.Component.html#lenskit.pipeline.Component.__init__">(lenskit.pipeline.Component method)</a>
+</li>
+        <li><a href="api/lenskit.pipeline.Configurable.html#lenskit.pipeline.Configurable.__init__">(lenskit.pipeline.Configurable method)</a>
+</li>
+        <li><a href="api/lenskit.pipeline.Lazy.html#lenskit.pipeline.Lazy.__init__">(lenskit.pipeline.Lazy method)</a>
+</li>
         <li><a href="api/lenskit.pipeline.Node.html#lenskit.pipeline.Node.__init__">(lenskit.pipeline.Node method)</a>
 </li>
         <li><a href="api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.__init__">(lenskit.pipeline.Pipeline method)</a>
+</li>
+        <li><a href="api/lenskit.pipeline.PipelineState.html#lenskit.pipeline.PipelineState.__init__">(lenskit.pipeline.PipelineState method)</a>
+</li>
+        <li><a href="api/lenskit.pipeline.RecPipelineBuilder.html#lenskit.pipeline.RecPipelineBuilder.__init__">(lenskit.pipeline.RecPipelineBuilder method)</a>
+</li>
+        <li><a href="api/lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable.__init__">(lenskit.pipeline.Trainable method)</a>
 </li>
         <li><a href="api/lenskit.splitting.LastFrac.html#lenskit.splitting.LastFrac.__init__">(lenskit.splitting.LastFrac method)</a>
 </li>
@@ -526,7 +575,11 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lenskit.algorithms.html#lenskit.algorithms.Recommender.adapt">adapt() (lenskit.algorithms.Recommender class method)</a>
 </li>
+      <li><a href="api/lenskit.data.ItemListCollection.html#lenskit.data.ItemListCollection.add">add() (lenskit.data.ItemListCollection method)</a>
+</li>
       <li><a href="api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.add_component">add_component() (lenskit.pipeline.Pipeline method)</a>
+</li>
+      <li><a href="api/lenskit.data.ItemListCollection.html#lenskit.data.ItemListCollection.add_from">add_from() (lenskit.data.ItemListCollection method)</a>
 </li>
       <li><a href="api/lenskit.metrics.RunAnalysis.html#lenskit.metrics.RunAnalysis.add_metric">add_metric() (lenskit.metrics.RunAnalysis method)</a>
 
@@ -540,10 +593,16 @@
 </li>
       <li><a href="api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.alias">alias() (lenskit.pipeline.Pipeline method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lenskit.algorithms.basic.html#lenskit.algorithms.basic.AllItemsCandidateSelector">AllItemsCandidateSelector (class in lenskit.algorithms.basic)</a>
 </li>
+      <li><a href="api/lenskit.basic.html#lenskit.basic.AllTrainingItemsCandidateSelector">AllTrainingItemsCandidateSelector (class in lenskit.basic)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.candidates.html#lenskit.basic.candidates.AllTrainingItemsCandidateSelector">(class in lenskit.basic.candidates)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="addons/implicit.html#lenskit.implicit.ALS">ALS (class in lenskit.implicit)</a>, <a href="api/lenskit.implicit.html#lenskit.implicit.ALS">[1]</a>
 </li>
       <li><a href="api/lenskit.algorithms.als.html#lenskit.algorithms.als.BiasedMF.als_half_epoch">als_half_epoch() (lenskit.algorithms.als.BiasedMF method)</a>
@@ -557,9 +616,19 @@
 </li>
         <li><a href="api/lenskit.algorithms.als.html#lenskit.algorithms.als.ImplicitMF.als_half_epoch">(lenskit.algorithms.als.ImplicitMF method)</a>
 </li>
+        <li><a href="api/lenskit.als.html#lenskit.als.ALSBase.als_half_epoch">(lenskit.als.ALSBase method)</a>
+</li>
+        <li><a href="api/lenskit.als.html#lenskit.als.BiasedMF.als_half_epoch">(lenskit.als.BiasedMF method)</a>
+</li>
+        <li><a href="api/lenskit.als.html#lenskit.als.ImplicitMF.als_half_epoch">(lenskit.als.ImplicitMF method)</a>
+</li>
       </ul></li>
       <li><a href="api/lenskit.algorithms.als.common.html#lenskit.algorithms.als.common.ALSBase">ALSBase (class in lenskit.algorithms.als.common)</a>
+
+      <ul>
+        <li><a href="api/lenskit.als.html#lenskit.als.ALSBase">(class in lenskit.als)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -574,17 +643,33 @@
 </li>
       <li><a href="api/lenskit.algorithms.bias.html#lenskit.algorithms.bias.Bias">Bias (class in lenskit.algorithms.bias)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lenskit.algorithms.als.html#lenskit.algorithms.als.BiasedMF">BiasedMF (class in lenskit.algorithms.als)</a>
 
       <ul>
         <li><a href="api/lenskit.algorithms.als.explicit.html#lenskit.algorithms.als.explicit.BiasedMF">(class in lenskit.algorithms.als.explicit)</a>
 </li>
+        <li><a href="api/lenskit.als.html#lenskit.als.BiasedMF">(class in lenskit.als)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/lenskit.basic.html#lenskit.basic.BiasModel">BiasModel (class in lenskit.basic)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.bias.html#lenskit.basic.bias.BiasModel">(class in lenskit.basic.bias)</a>
+</li>
+      </ul></li>
+      <li><a href="api/lenskit.basic.html#lenskit.basic.BiasScorer">BiasScorer (class in lenskit.basic)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.bias.html#lenskit.basic.bias.BiasScorer">(class in lenskit.basic.bias)</a>
+</li>
       </ul></li>
       <li><a href="addons/implicit.html#lenskit.implicit.BPR">BPR (class in lenskit.implicit)</a>, <a href="api/lenskit.implicit.html#lenskit.implicit.BPR">[1]</a>
 </li>
       <li><a href="api/lenskit.parallel.serialize.html#lenskit.parallel.serialize.ModelData.buffers">buffers (lenskit.parallel.serialize.ModelData attribute)</a>
+</li>
+      <li><a href="api/lenskit.pipeline.RecPipelineBuilder.html#lenskit.pipeline.RecPipelineBuilder.build">build() (lenskit.pipeline.RecPipelineBuilder method)</a>
 </li>
       <li><a href="evaluation/topn-metrics.html#lenskit.metrics.topn.bulk_impl">bulk_impl() (in module lenskit.metrics.topn)</a>
 </li>
@@ -594,6 +679,8 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/lenskit.pipeline.RecPipelineBuilder.html#lenskit.pipeline.RecPipelineBuilder.candidate_selector">candidate_selector() (lenskit.pipeline.RecPipelineBuilder method)</a>
+</li>
       <li><a href="api/lenskit.algorithms.basic.html#lenskit.algorithms.basic.AllItemsCandidateSelector.candidates">candidates() (lenskit.algorithms.basic.AllItemsCandidateSelector method)</a>
 
       <ul>
@@ -618,6 +705,8 @@
         <li><a href="api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.clone">(lenskit.pipeline.Pipeline method)</a>
 </li>
       </ul></li>
+      <li><a href="api/lenskit.pipeline.Component.html#lenskit.pipeline.Component">Component (class in lenskit.pipeline)</a>
+</li>
       <li><a href="api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.component_configs">component_configs() (lenskit.pipeline.Pipeline method)</a>
 </li>
       <li><a href="api/lenskit.batch.InvocationSpec.html#lenskit.batch.InvocationSpec.components">components (lenskit.batch.InvocationSpec attribute)</a>
@@ -626,7 +715,15 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="evaluation/topn-metrics.html#lenskit.topn.RecListAnalysis.compute">compute() (lenskit.topn.RecListAnalysis method)</a>
 </li>
+      <li><a href="api/lenskit.basic.bias.html#lenskit.basic.bias.BiasModel.compute_for_items">compute_for_items() (lenskit.basic.bias.BiasModel method)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.BiasModel.compute_for_items">(lenskit.basic.BiasModel method)</a>
+</li>
+      </ul></li>
       <li><a href="api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.config_hash">config_hash() (lenskit.pipeline.Pipeline method)</a>
+</li>
+      <li><a href="api/lenskit.pipeline.Configurable.html#lenskit.pipeline.Configurable">Configurable (class in lenskit.pipeline)</a>
 </li>
       <li><a href="api/diagnostics.html#lenskit.diagnostics.ConfigWarning">ConfigWarning (class in lenskit.diagnostics)</a>
 </li>
@@ -656,16 +753,32 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/lenskit.basic.bias.html#lenskit.basic.bias.BiasModel.damping">damping (lenskit.basic.bias.BiasModel attribute)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.bias.html#lenskit.basic.bias.BiasScorer.damping">(lenskit.basic.bias.BiasScorer attribute)</a>
+</li>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.BiasModel.damping">(lenskit.basic.BiasModel attribute)</a>
+</li>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.BiasScorer.damping">(lenskit.basic.BiasScorer attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api/lenskit.data.Dataset.html#lenskit.data.Dataset">Dataset (class in lenskit.data)</a>
 </li>
       <li><a href="api/diagnostics.html#lenskit.diagnostics.DataWarning">DataWarning (class in lenskit.diagnostics)</a>
 </li>
       <li><a href="evaluation/topn-metrics.html#lenskit.metrics.topn.dcg">dcg() (in module lenskit.metrics.topn)</a>
 </li>
-      <li><a href="api/lenskit.metrics.ListMetric.html#lenskit.metrics.ListMetric.default">default (lenskit.metrics.ListMetric attribute)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/lenskit.metrics.ListMetric.html#lenskit.metrics.ListMetric.default">default (lenskit.metrics.ListMetric attribute)</a>
+
+      <ul>
+        <li><a href="api/lenskit.pipeline.PipelineState.html#lenskit.pipeline.PipelineState.default">(lenskit.pipeline.PipelineState property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/lenskit.pipeline.PipelineState.html#lenskit.pipeline.PipelineState.default_node">default_node (lenskit.pipeline.PipelineState property)</a>
+</li>
       <li><a href="api/lenskit.implicit.html#lenskit.implicit.BaseRec.delegate">delegate (lenskit.implicit.BaseRec attribute)</a>
 </li>
       <li><a href="api/lenskit.util.html#lenskit.util.derivable_rng">derivable_rng() (in module lenskit.util)</a>
@@ -711,6 +824,8 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/lenskit.pipeline.Component.html#lenskit.pipeline.Component.EXTRA_CONFIG_FIELDS">EXTRA_CONFIG_FIELDS (lenskit.pipeline.Component attribute)</a>
+</li>
       <li><a href="api/lenskit.batch.InvocationSpec.html#lenskit.batch.InvocationSpec.extra_inputs">extra_inputs (lenskit.batch.InvocationSpec attribute)</a>
 </li>
       <li><a href="api/lenskit.algorithms.html#lenskit.algorithms.Algorithm.EXTRA_PARAMS">EXTRA_PARAMS (lenskit.algorithms.Algorithm attribute)</a>
@@ -733,12 +848,22 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lenskit.algorithms.basic.html#lenskit.algorithms.basic.Fallback">Fallback (class in lenskit.algorithms.basic)</a>
 </li>
+      <li><a href="api/lenskit.basic.html#lenskit.basic.FallbackScorer">FallbackScorer (class in lenskit.basic)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.composite.html#lenskit.basic.composite.FallbackScorer">(class in lenskit.basic.composite)</a>
+</li>
+      </ul></li>
       <li><a href="api/lenskit.algorithms.als.html#lenskit.algorithms.als.BiasedMF.finalize_scores">finalize_scores() (lenskit.algorithms.als.BiasedMF method)</a>
 
       <ul>
         <li><a href="api/lenskit.algorithms.als.common.html#lenskit.algorithms.als.common.ALSBase.finalize_scores">(lenskit.algorithms.als.common.ALSBase method)</a>
 </li>
         <li><a href="api/lenskit.algorithms.als.explicit.html#lenskit.algorithms.als.explicit.BiasedMF.finalize_scores">(lenskit.algorithms.als.explicit.BiasedMF method)</a>
+</li>
+        <li><a href="api/lenskit.als.html#lenskit.als.ALSBase.finalize_scores">(lenskit.als.ALSBase method)</a>
+</li>
+        <li><a href="api/lenskit.als.html#lenskit.als.BiasedMF.finalize_scores">(lenskit.als.BiasedMF method)</a>
 </li>
       </ul></li>
       <li><a href="api/lenskit.algorithms.html#lenskit.algorithms.Algorithm.fit">fit() (lenskit.algorithms.Algorithm method)</a>
@@ -784,11 +909,21 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lenskit.algorithms.als.common.html#lenskit.algorithms.als.common.ALSBase.fit_iters">fit_iters() (lenskit.algorithms.als.common.ALSBase method)</a>
+
+      <ul>
+        <li><a href="api/lenskit.als.html#lenskit.als.ALSBase.fit_iters">(lenskit.als.ALSBase method)</a>
 </li>
+      </ul></li>
       <li><a href="api/lenskit.algorithms.bias.html#lenskit.algorithms.bias.Bias.fit_transform">fit_transform() (lenskit.algorithms.bias.Bias method)</a>
 </li>
       <li><a href="api/lenskit.util.random.html#lenskit.util.random.FixedRNG">FixedRNG (class in lenskit.util.random)</a>
 </li>
+      <li><a href="api/lenskit.pipeline.Component.html#lenskit.pipeline.Component.from_config">from_config() (lenskit.pipeline.Component class method)</a>
+
+      <ul>
+        <li><a href="api/lenskit.pipeline.Configurable.html#lenskit.pipeline.Configurable.from_config">(lenskit.pipeline.Configurable class method)</a>
+</li>
+      </ul></li>
       <li><a href="api/lenskit.data.ItemList.html#lenskit.data.ItemList.from_df">from_df() (lenskit.data.ItemList class method)</a>
 
       <ul>
@@ -811,9 +946,15 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lenskit.data.GenericKey.html#lenskit.data.GenericKey">GenericKey (in module lenskit.data)</a>
 </li>
+      <li><a href="api/lenskit.pipeline.Lazy.html#lenskit.pipeline.Lazy.get">get() (lenskit.pipeline.Lazy method)</a>
+</li>
       <li><a href="addons/hpf.html#lenskit.hpf.HPF.get_config">get_config() (lenskit.hpf.HPF method)</a>, <a href="api/lenskit.hpf.html#lenskit.hpf.HPF.get_config">[1]</a>
 
       <ul>
+        <li><a href="api/lenskit.pipeline.Component.html#lenskit.pipeline.Component.get_config">(lenskit.pipeline.Component method)</a>
+</li>
+        <li><a href="api/lenskit.pipeline.Configurable.html#lenskit.pipeline.Configurable.get_config">(lenskit.pipeline.Configurable method)</a>
+</li>
         <li><a href="api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.get_config">(lenskit.pipeline.Pipeline method)</a>
 </li>
       </ul></li>
@@ -831,6 +972,14 @@
 
       <ul>
         <li><a href="api/lenskit.implicit.html#lenskit.implicit.BaseRec.get_params">(lenskit.implicit.BaseRec method)</a>
+</li>
+        <li><a href="api/lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable.get_params">(lenskit.pipeline.Trainable method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/lenskit.basic.bias.html#lenskit.basic.bias.BiasModel.global_bias">global_bias (lenskit.basic.bias.BiasModel attribute)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.BiasModel.global_bias">(lenskit.basic.BiasModel attribute)</a>
 </li>
       </ul></li>
       <li><a href="api/lenskit.metrics.RunAnalysisResult.html#lenskit.metrics.RunAnalysisResult.global_metrics">global_metrics() (lenskit.metrics.RunAnalysisResult method)</a>
@@ -861,6 +1010,12 @@
         <li><a href="api/lenskit.data.Vocabulary.html#lenskit.data.Vocabulary.ids">(lenskit.data.Vocabulary method)</a>
 </li>
       </ul></li>
+      <li><a href="api/lenskit.basic.random.html#lenskit.basic.random.RandomSelector.IGNORED_CONFIG_FIELDS">IGNORED_CONFIG_FIELDS (lenskit.basic.random.RandomSelector attribute)</a>
+
+      <ul>
+        <li><a href="api/lenskit.pipeline.Component.html#lenskit.pipeline.Component.IGNORED_CONFIG_FIELDS">(lenskit.pipeline.Component attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api/lenskit.algorithms.html#lenskit.algorithms.Algorithm.IGNORED_PARAMS">IGNORED_PARAMS (lenskit.algorithms.Algorithm attribute)</a>
 
       <ul>
@@ -878,11 +1033,15 @@
       <ul>
         <li><a href="api/lenskit.algorithms.als.implicit.html#lenskit.algorithms.als.implicit.ImplicitMF">(class in lenskit.algorithms.als.implicit)</a>
 </li>
+        <li><a href="api/lenskit.als.html#lenskit.als.ImplicitMF">(class in lenskit.als)</a>
+</li>
       </ul></li>
       <li><a href="api/lenskit.algorithms.knn.user.html#lenskit.algorithms.knn.user.UserRatings.index">index (lenskit.algorithms.knn.user.UserRatings attribute)</a>
 
       <ul>
         <li><a href="api/lenskit.data.Vocabulary.html#lenskit.data.Vocabulary.index">(lenskit.data.Vocabulary property)</a>
+</li>
+        <li><a href="api/lenskit.knn.user.html#lenskit.knn.user.UserRatings.index">(lenskit.knn.user.UserRatings attribute)</a>
 </li>
       </ul></li>
       <li><a href="api/lenskit.algorithms.als.html#lenskit.algorithms.als.BiasedMF.initial_params">initial_params() (lenskit.algorithms.als.BiasedMF method)</a>
@@ -896,6 +1055,12 @@
 </li>
         <li><a href="api/lenskit.algorithms.als.html#lenskit.algorithms.als.ImplicitMF.initial_params">(lenskit.algorithms.als.ImplicitMF method)</a>
 </li>
+        <li><a href="api/lenskit.als.html#lenskit.als.ALSBase.initial_params">(lenskit.als.ALSBase method)</a>
+</li>
+        <li><a href="api/lenskit.als.html#lenskit.als.BiasedMF.initial_params">(lenskit.als.BiasedMF method)</a>
+</li>
+        <li><a href="api/lenskit.als.html#lenskit.als.ImplicitMF.initial_params">(lenskit.als.ImplicitMF method)</a>
+</li>
       </ul></li>
       <li><a href="api/lenskit.parallel.html#lenskit.parallel.initialize">initialize() (in module lenskit.parallel)</a>
 
@@ -904,7 +1069,11 @@
 </li>
       </ul></li>
       <li><a href="api/lenskit.algorithms.als.common.html#lenskit.algorithms.als.common.ALSBase.initialize_params">initialize_params() (lenskit.algorithms.als.common.ALSBase method)</a>
+
+      <ul>
+        <li><a href="api/lenskit.als.html#lenskit.als.ALSBase.initialize_params">(lenskit.als.ALSBase method)</a>
 </li>
+      </ul></li>
       <li><a href="api/lenskit.parallel.sequential.html#lenskit.parallel.sequential.InProcessOpInvoker">InProcessOpInvoker (class in lenskit.parallel.sequential)</a>
 </li>
       <li><a href="api/lenskit.data.Dataset.html#lenskit.data.Dataset.interaction_count">interaction_count (lenskit.data.Dataset property)</a>
@@ -923,22 +1092,56 @@
 </li>
       <li><a href="api/lenskit.parallel.html#lenskit.parallel.invoker">invoker() (in module lenskit.parallel)</a>, <a href="api/lenskit.parallel.invoker.html#lenskit.parallel.invoker">[1]</a>
 </li>
-      <li><a href="api/lenskit.funksvd.html#lenskit.funksvd.FunkSVD.is_trained">is_trained (lenskit.funksvd.FunkSVD property)</a>
+      <li><a href="api/lenskit.als.html#lenskit.als.ALSBase.is_trained">is_trained (lenskit.als.ALSBase property)</a>
 
       <ul>
+        <li><a href="api/lenskit.basic.candidates.html#lenskit.basic.candidates.TrainingCandidateSelectorBase.is_trained">(lenskit.basic.candidates.TrainingCandidateSelectorBase property)</a>
+</li>
+        <li><a href="api/lenskit.basic.history.html#lenskit.basic.history.KnownRatingScorer.is_trained">(lenskit.basic.history.KnownRatingScorer property)</a>
+</li>
+        <li><a href="api/lenskit.basic.history.html#lenskit.basic.history.UserTrainingHistoryLookup.is_trained">(lenskit.basic.history.UserTrainingHistoryLookup property)</a>
+</li>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.PopScorer.is_trained">(lenskit.basic.PopScorer property)</a>
+</li>
+        <li><a href="api/lenskit.basic.popularity.html#lenskit.basic.popularity.PopScorer.is_trained">(lenskit.basic.popularity.PopScorer property)</a>
+</li>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.UserTrainingHistoryLookup.is_trained">(lenskit.basic.UserTrainingHistoryLookup property)</a>
+</li>
+        <li><a href="api/lenskit.funksvd.html#lenskit.funksvd.FunkSVD.is_trained">(lenskit.funksvd.FunkSVD property)</a>
+</li>
         <li><a href="addons/hpf.html#lenskit.hpf.HPF.is_trained">(lenskit.hpf.HPF property)</a>, <a href="api/lenskit.hpf.html#lenskit.hpf.HPF.is_trained">[1]</a>
 </li>
         <li><a href="api/lenskit.implicit.html#lenskit.implicit.BaseRec.is_trained">(lenskit.implicit.BaseRec property)</a>
+</li>
+        <li><a href="api/lenskit.knn.item.html#lenskit.knn.item.ItemKNNScorer.is_trained">(lenskit.knn.item.ItemKNNScorer property)</a>
+</li>
+        <li><a href="api/lenskit.knn.html#lenskit.knn.ItemKNNScorer.is_trained">(lenskit.knn.ItemKNNScorer property)</a>
+</li>
+        <li><a href="api/lenskit.knn.user.html#lenskit.knn.user.UserKNNScorer.is_trained">(lenskit.knn.user.UserKNNScorer property)</a>
+</li>
+        <li><a href="api/lenskit.knn.html#lenskit.knn.UserKNNScorer.is_trained">(lenskit.knn.UserKNNScorer property)</a>
+</li>
+        <li><a href="api/lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable.is_trained">(lenskit.pipeline.Trainable property)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/data-types.html#lenskit.data.types.UITuple.item">item (lenskit.data.types.UITuple attribute)</a>
 </li>
+      <li><a href="api/lenskit.basic.bias.html#lenskit.basic.bias.BiasModel.item_biases">item_biases (lenskit.basic.bias.BiasModel attribute)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.BiasModel.item_biases">(lenskit.basic.BiasModel attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api/lenskit.algorithms.knn.item.html#lenskit.algorithms.knn.item.ItemItem.item_counts_">item_counts_ (lenskit.algorithms.knn.item.ItemItem attribute)</a>
 
       <ul>
         <li><a href="api/lenskit.algorithms.knn.html#lenskit.algorithms.knn.ItemItem.item_counts_">(lenskit.algorithms.knn.ItemItem attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.item.html#lenskit.knn.item.ItemKNNScorer.item_counts_">(lenskit.knn.item.ItemKNNScorer attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.html#lenskit.knn.ItemKNNScorer.item_counts_">(lenskit.knn.ItemKNNScorer attribute)</a>
 </li>
       </ul></li>
       <li><a href="api/lenskit.algorithms.als.common.html#lenskit.algorithms.als.common.ALSBase.item_features_">item_features_ (lenskit.algorithms.als.common.ALSBase attribute)</a>
@@ -954,17 +1157,33 @@
       <ul>
         <li><a href="api/lenskit.algorithms.knn.html#lenskit.algorithms.knn.ItemItem.item_means_">(lenskit.algorithms.knn.ItemItem attribute)</a>
 </li>
+        <li><a href="api/lenskit.knn.item.html#lenskit.knn.item.ItemKNNScorer.item_means_">(lenskit.knn.item.ItemKNNScorer attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.html#lenskit.knn.ItemKNNScorer.item_means_">(lenskit.knn.ItemKNNScorer attribute)</a>
+</li>
       </ul></li>
       <li><a href="api/lenskit.algorithms.bias.html#lenskit.algorithms.bias.Bias.item_offsets_">item_offsets_ (lenskit.algorithms.bias.Bias attribute)</a>
 </li>
       <li><a href="api/lenskit.algorithms.basic.html#lenskit.algorithms.basic.PopScore.item_pop_">item_pop_ (lenskit.algorithms.basic.PopScore attribute)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.PopScorer.item_pop_">(lenskit.basic.PopScorer attribute)</a>
 </li>
+        <li><a href="api/lenskit.basic.popularity.html#lenskit.basic.popularity.PopScorer.item_pop_">(lenskit.basic.popularity.PopScorer attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api/lenskit.data.Dataset.html#lenskit.data.Dataset.item_stats">item_stats() (lenskit.data.Dataset method)</a>
 </li>
       <li><a href="api/lenskit.algorithms.knn.html#lenskit.algorithms.knn.ItemItem">ItemItem (class in lenskit.algorithms.knn)</a>
 
       <ul>
         <li><a href="api/lenskit.algorithms.knn.item.html#lenskit.algorithms.knn.item.ItemItem">(class in lenskit.algorithms.knn.item)</a>
+</li>
+      </ul></li>
+      <li><a href="api/lenskit.knn.html#lenskit.knn.ItemKNNScorer">ItemKNNScorer (class in lenskit.knn)</a>
+
+      <ul>
+        <li><a href="api/lenskit.knn.item.html#lenskit.knn.item.ItemKNNScorer">(class in lenskit.knn.item)</a>
 </li>
       </ul></li>
       <li><a href="api/lenskit.data.ItemList.html#lenskit.data.ItemList">ItemList (class in lenskit.data)</a>
@@ -974,6 +1193,10 @@
       <li><a href="api/lenskit.algorithms.als.common.html#lenskit.algorithms.als.common.TrainingData.items">items (lenskit.algorithms.als.common.TrainingData attribute)</a>
 
       <ul>
+        <li><a href="api/lenskit.basic.bias.html#lenskit.basic.bias.BiasModel.items">(lenskit.basic.bias.BiasModel attribute)</a>
+</li>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.BiasModel.items">(lenskit.basic.BiasModel attribute)</a>
+</li>
         <li><a href="api/lenskit.batch.InvocationSpec.html#lenskit.batch.InvocationSpec.items">(lenskit.batch.InvocationSpec attribute)</a>
 </li>
         <li><a href="api/lenskit.data.Dataset.html#lenskit.data.Dataset.items">(lenskit.data.Dataset property)</a>
@@ -998,6 +1221,14 @@
 </li>
         <li><a href="api/lenskit.implicit.html#lenskit.implicit.BaseRec.items_">(lenskit.implicit.BaseRec attribute)</a>
 </li>
+        <li><a href="api/lenskit.knn.item.html#lenskit.knn.item.ItemKNNScorer.items_">(lenskit.knn.item.ItemKNNScorer attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.html#lenskit.knn.ItemKNNScorer.items_">(lenskit.knn.ItemKNNScorer attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.user.html#lenskit.knn.user.UserKNNScorer.items_">(lenskit.knn.user.UserKNNScorer attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.html#lenskit.knn.UserKNNScorer.items_">(lenskit.knn.UserKNNScorer attribute)</a>
+</li>
       </ul></li>
       <li><a href="api/lenskit.algorithms.als.common.html#lenskit.algorithms.als.common.TrainingData.iu_rates">iu_rates (lenskit.algorithms.als.common.TrainingData attribute)</a>
 </li>
@@ -1011,13 +1242,15 @@
 </li>
       <li><a href="api/lenskit.data.ItemListCollection.html#lenskit.data.ItemListCollection.key_fields">key_fields (lenskit.data.ItemListCollection property)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lenskit.data.ItemListCollection.html#lenskit.data.ItemListCollection.key_type">key_type (lenskit.data.ItemListCollection property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lenskit.data.ItemListCollection.html#lenskit.data.ItemListCollection.keys">keys() (lenskit.data.ItemListCollection method)</a>
 </li>
       <li><a href="api/lenskit.algorithms.basic.html#lenskit.algorithms.basic.KnownRating">KnownRating (class in lenskit.algorithms.basic)</a>
+</li>
+      <li><a href="api/lenskit.basic.history.html#lenskit.basic.history.KnownRatingScorer">KnownRatingScorer (class in lenskit.basic.history)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1045,6 +1278,14 @@
 </li>
       <li><a href="api/lenskit.splitting.LastN.html#lenskit.splitting.LastN">LastN (class in lenskit.splitting)</a>
 </li>
+      <li><a href="api/lenskit.pipeline.Lazy.html#lenskit.pipeline.Lazy">Lazy (class in lenskit.pipeline)</a>
+</li>
+      <li><a href="api/lenskit.basic.bias.html#lenskit.basic.bias.BiasModel.learn">learn() (lenskit.basic.bias.BiasModel class method)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.BiasModel.learn">(lenskit.basic.BiasModel class method)</a>
+</li>
+      </ul></li>
       <li><a href="api/lenskit.algorithms.als.common.html#lenskit.algorithms.als.common.TrainContext.left">left (lenskit.algorithms.als.common.TrainContext attribute)</a>
 </li>
       <li>
@@ -1132,6 +1373,69 @@
 </li>
       </ul></li>
       <li>
+    lenskit.als
+
+      <ul>
+        <li><a href="api/lenskit.als.html#module-lenskit.als">module</a>
+</li>
+      </ul></li>
+      <li>
+    lenskit.basic
+
+      <ul>
+        <li><a href="api/lenskit.basic.html#module-lenskit.basic">module</a>
+</li>
+      </ul></li>
+      <li>
+    lenskit.basic.bias
+
+      <ul>
+        <li><a href="api/lenskit.basic.bias.html#module-lenskit.basic.bias">module</a>
+</li>
+      </ul></li>
+      <li>
+    lenskit.basic.candidates
+
+      <ul>
+        <li><a href="api/lenskit.basic.candidates.html#module-lenskit.basic.candidates">module</a>
+</li>
+      </ul></li>
+      <li>
+    lenskit.basic.composite
+
+      <ul>
+        <li><a href="api/lenskit.basic.composite.html#module-lenskit.basic.composite">module</a>
+</li>
+      </ul></li>
+      <li>
+    lenskit.basic.history
+
+      <ul>
+        <li><a href="api/lenskit.basic.history.html#module-lenskit.basic.history">module</a>
+</li>
+      </ul></li>
+      <li>
+    lenskit.basic.popularity
+
+      <ul>
+        <li><a href="api/lenskit.basic.popularity.html#module-lenskit.basic.popularity">module</a>
+</li>
+      </ul></li>
+      <li>
+    lenskit.basic.random
+
+      <ul>
+        <li><a href="api/lenskit.basic.random.html#module-lenskit.basic.random">module</a>
+</li>
+      </ul></li>
+      <li>
+    lenskit.basic.topn
+
+      <ul>
+        <li><a href="api/lenskit.basic.topn.html#module-lenskit.basic.topn">module</a>
+</li>
+      </ul></li>
+      <li>
     lenskit.batch
 
       <ul>
@@ -1180,6 +1484,29 @@
         <li><a href="addons/implicit.html#module-lenskit.implicit">module</a>, <a href="api/lenskit.implicit.html#module-lenskit.implicit">[1]</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li>
+    lenskit.knn
+
+      <ul>
+        <li><a href="api/lenskit.knn.html#module-lenskit.knn">module</a>
+</li>
+      </ul></li>
+      <li>
+    lenskit.knn.item
+
+      <ul>
+        <li><a href="api/lenskit.knn.item.html#module-lenskit.knn.item">module</a>
+</li>
+      </ul></li>
+      <li>
+    lenskit.knn.user
+
+      <ul>
+        <li><a href="api/lenskit.knn.user.html#module-lenskit.knn.user">module</a>
+</li>
+      </ul></li>
       <li>
     lenskit.math
 
@@ -1201,8 +1528,6 @@
         <li><a href="api/lenskit.math.sparse.html#module-lenskit.math.sparse">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     lenskit.metrics
 
@@ -1344,6 +1669,8 @@
 </li>
       <li><a href="api/lenskit.data.load_movielens_df.html#lenskit.data.load_movielens_df">load_movielens_df() (in module lenskit.data)</a>
 </li>
+      <li><a href="api/lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable.load_params">load_params() (lenskit.pipeline.Trainable method)</a>
+</li>
       <li><a href="api/lenskit.algorithms.als.html#lenskit.algorithms.als.BiasedMF.logger">logger (lenskit.algorithms.als.BiasedMF property)</a>
 
       <ul>
@@ -1354,6 +1681,12 @@
         <li><a href="api/lenskit.algorithms.als.implicit.html#lenskit.algorithms.als.implicit.ImplicitMF.logger">(lenskit.algorithms.als.implicit.ImplicitMF property)</a>
 </li>
         <li><a href="api/lenskit.algorithms.als.html#lenskit.algorithms.als.ImplicitMF.logger">(lenskit.algorithms.als.ImplicitMF property)</a>
+</li>
+        <li><a href="api/lenskit.als.html#lenskit.als.ALSBase.logger">(lenskit.als.ALSBase property)</a>
+</li>
+        <li><a href="api/lenskit.als.html#lenskit.als.BiasedMF.logger">(lenskit.als.BiasedMF property)</a>
+</li>
+        <li><a href="api/lenskit.als.html#lenskit.als.ImplicitMF.logger">(lenskit.als.ImplicitMF property)</a>
 </li>
       </ul></li>
       <li><a href="api/lenskit.data.ItemListCollection.html#lenskit.data.ItemListCollection.lookup">lookup() (lenskit.data.ItemListCollection method)</a>
@@ -1387,7 +1720,11 @@
       <li><a href="api/lenskit.implicit.html#lenskit.implicit.BaseRec.matrix_">matrix_ (lenskit.implicit.BaseRec attribute)</a>
 </li>
       <li><a href="api/lenskit.algorithms.knn.user.html#lenskit.algorithms.knn.user.UserRatings.mean">mean (lenskit.algorithms.knn.user.UserRatings attribute)</a>
+
+      <ul>
+        <li><a href="api/lenskit.knn.user.html#lenskit.knn.user.UserRatings.mean">(lenskit.knn.user.UserRatings attribute)</a>
 </li>
+      </ul></li>
       <li><a href="api/lenskit.algorithms.bias.html#lenskit.algorithms.bias.Bias.mean_">mean_ (lenskit.algorithms.bias.Bias attribute)</a>
 </li>
       <li><a href="api/lenskit.metrics.ListMetric.html#lenskit.metrics.ListMetric.measure_list">measure_list() (lenskit.metrics.ListMetric method)</a>
@@ -1417,6 +1754,8 @@
       <li><a href="api/lenskit.algorithms.basic.html#lenskit.algorithms.basic.Memorized">Memorized (class in lenskit.algorithms.basic)</a>
 </li>
       <li><a href="api/lenskit.metrics.RunAnalysisResult.html#lenskit.metrics.RunAnalysisResult.merge_from">merge_from() (lenskit.metrics.RunAnalysisResult method)</a>
+</li>
+      <li><a href="api/lenskit.pipeline.PipelineState.html#lenskit.pipeline.PipelineState.meta">meta (lenskit.pipeline.PipelineState attribute)</a>
 </li>
       <li><a href="api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.meta">meta() (lenskit.pipeline.Pipeline method)</a>
 </li>
@@ -1466,6 +1805,24 @@
 </li>
         <li><a href="api/lenskit.algorithms.ranking.html#module-lenskit.algorithms.ranking">lenskit.algorithms.ranking</a>
 </li>
+        <li><a href="api/lenskit.als.html#module-lenskit.als">lenskit.als</a>
+</li>
+        <li><a href="api/lenskit.basic.html#module-lenskit.basic">lenskit.basic</a>
+</li>
+        <li><a href="api/lenskit.basic.bias.html#module-lenskit.basic.bias">lenskit.basic.bias</a>
+</li>
+        <li><a href="api/lenskit.basic.candidates.html#module-lenskit.basic.candidates">lenskit.basic.candidates</a>
+</li>
+        <li><a href="api/lenskit.basic.composite.html#module-lenskit.basic.composite">lenskit.basic.composite</a>
+</li>
+        <li><a href="api/lenskit.basic.history.html#module-lenskit.basic.history">lenskit.basic.history</a>
+</li>
+        <li><a href="api/lenskit.basic.popularity.html#module-lenskit.basic.popularity">lenskit.basic.popularity</a>
+</li>
+        <li><a href="api/lenskit.basic.random.html#module-lenskit.basic.random">lenskit.basic.random</a>
+</li>
+        <li><a href="api/lenskit.basic.topn.html#module-lenskit.basic.topn">lenskit.basic.topn</a>
+</li>
         <li><a href="api/batch.html#module-lenskit.batch">lenskit.batch</a>
 </li>
         <li><a href="api/data.html#module-lenskit.data">lenskit.data</a>
@@ -1479,6 +1836,12 @@
         <li><a href="addons/hpf.html#module-lenskit.hpf">lenskit.hpf</a>, <a href="api/lenskit.hpf.html#module-lenskit.hpf">[1]</a>
 </li>
         <li><a href="addons/implicit.html#module-lenskit.implicit">lenskit.implicit</a>, <a href="api/lenskit.implicit.html#module-lenskit.implicit">[1]</a>
+</li>
+        <li><a href="api/lenskit.knn.html#module-lenskit.knn">lenskit.knn</a>
+</li>
+        <li><a href="api/lenskit.knn.item.html#module-lenskit.knn.item">lenskit.knn.item</a>
+</li>
+        <li><a href="api/lenskit.knn.user.html#module-lenskit.knn.user">lenskit.knn.user</a>
 </li>
         <li><a href="api/lenskit.math.html#module-lenskit.math">lenskit.math</a>
 </li>
@@ -1558,6 +1921,12 @@
 </li>
         <li><a href="api/lenskit.algorithms.als.html#lenskit.algorithms.als.ImplicitMF.new_user_embedding">(lenskit.algorithms.als.ImplicitMF method)</a>
 </li>
+        <li><a href="api/lenskit.als.html#lenskit.als.ALSBase.new_user_embedding">(lenskit.als.ALSBase method)</a>
+</li>
+        <li><a href="api/lenskit.als.html#lenskit.als.BiasedMF.new_user_embedding">(lenskit.als.BiasedMF method)</a>
+</li>
+        <li><a href="api/lenskit.als.html#lenskit.als.ImplicitMF.new_user_embedding">(lenskit.als.ImplicitMF method)</a>
+</li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -1605,10 +1974,18 @@
 </li>
       <li><a href="api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline">Pipeline (class in lenskit.pipeline)</a>
 </li>
+      <li><a href="api/lenskit.pipeline.PipelineState.html#lenskit.pipeline.PipelineState">PipelineState (class in lenskit.pipeline)</a>
+</li>
       <li><a href="api/lenskit.algorithms.ranking.html#lenskit.algorithms.ranking.PlackettLuce">PlackettLuce (class in lenskit.algorithms.ranking)</a>
 </li>
       <li><a href="api/lenskit.algorithms.basic.html#lenskit.algorithms.basic.PopScore">PopScore (class in lenskit.algorithms.basic)</a>
 </li>
+      <li><a href="api/lenskit.basic.html#lenskit.basic.PopScorer">PopScorer (class in lenskit.basic)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.popularity.html#lenskit.basic.popularity.PopScorer">(class in lenskit.basic.popularity)</a>
+</li>
+      </ul></li>
       <li><a href="api/lenskit.metrics.Precision.html#lenskit.metrics.Precision">Precision (class in lenskit.metrics)</a>
 </li>
       <li><a href="evaluation/topn-metrics.html#lenskit.metrics.topn.precision">precision() (in module lenskit.metrics.topn)</a>
@@ -1653,6 +2030,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lenskit.algorithms.html#lenskit.algorithms.Predictor">Predictor (class in lenskit.algorithms)</a>
 </li>
+      <li><a href="api/lenskit.pipeline.RecPipelineBuilder.html#lenskit.pipeline.RecPipelineBuilder.predicts_ratings">predicts_ratings() (lenskit.pipeline.RecPipelineBuilder method)</a>
+</li>
       <li><a href="api/lenskit.algorithms.als.html#lenskit.algorithms.als.BiasedMF.prepare_data">prepare_data() (lenskit.algorithms.als.BiasedMF method)</a>
 
       <ul>
@@ -1663,6 +2042,12 @@
         <li><a href="api/lenskit.algorithms.als.implicit.html#lenskit.algorithms.als.implicit.ImplicitMF.prepare_data">(lenskit.algorithms.als.implicit.ImplicitMF method)</a>
 </li>
         <li><a href="api/lenskit.algorithms.als.html#lenskit.algorithms.als.ImplicitMF.prepare_data">(lenskit.algorithms.als.ImplicitMF method)</a>
+</li>
+        <li><a href="api/lenskit.als.html#lenskit.als.ALSBase.prepare_data">(lenskit.als.ALSBase method)</a>
+</li>
+        <li><a href="api/lenskit.als.html#lenskit.als.BiasedMF.prepare_data">(lenskit.als.BiasedMF method)</a>
+</li>
+        <li><a href="api/lenskit.als.html#lenskit.als.ImplicitMF.prepare_data">(lenskit.als.ImplicitMF method)</a>
 </li>
       </ul></li>
       <li><a href="api/lenskit.parallel.pool.html#lenskit.parallel.pool.ProcessPoolOpInvoker">ProcessPoolOpInvoker (class in lenskit.parallel.pool)</a>
@@ -1677,6 +2062,10 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lenskit.algorithms.basic.html#lenskit.algorithms.basic.Random">Random (class in lenskit.algorithms.basic)</a>
 </li>
+      <li><a href="api/lenskit.basic.random.html#lenskit.basic.random.RandomSelector">RandomSelector (class in lenskit.basic.random)</a>
+</li>
+      <li><a href="api/lenskit.pipeline.RecPipelineBuilder.html#lenskit.pipeline.RecPipelineBuilder.ranker">ranker() (lenskit.pipeline.RecPipelineBuilder method)</a>
+</li>
       <li><a href="api/lenskit.metrics.RankingMetricBase.html#lenskit.metrics.RankingMetricBase">RankingMetricBase (class in lenskit.metrics)</a>
 </li>
       <li><a href="api/lenskit.data.ItemList.html#lenskit.data.ItemList.ranks">ranks() (lenskit.data.ItemList method)</a>
@@ -1690,9 +2079,17 @@
       <ul>
         <li><a href="api/lenskit.algorithms.knn.html#lenskit.algorithms.knn.ItemItem.rating_matrix_">(lenskit.algorithms.knn.ItemItem attribute)</a>
 </li>
+        <li><a href="api/lenskit.knn.item.html#lenskit.knn.item.ItemKNNScorer.rating_matrix_">(lenskit.knn.item.ItemKNNScorer attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.html#lenskit.knn.ItemKNNScorer.rating_matrix_">(lenskit.knn.ItemKNNScorer attribute)</a>
+</li>
       </ul></li>
       <li><a href="api/lenskit.algorithms.knn.user.html#lenskit.algorithms.knn.user.UserRatings.ratings">ratings (lenskit.algorithms.knn.user.UserRatings attribute)</a>
+
+      <ul>
+        <li><a href="api/lenskit.knn.user.html#lenskit.knn.user.UserRatings.ratings">(lenskit.knn.user.UserRatings attribute)</a>
 </li>
+      </ul></li>
       <li><a href="api/lenskit.metrics.RBP.html#lenskit.metrics.RBP">RBP (class in lenskit.metrics)</a>
 </li>
       <li><a href="api/lenskit.metrics.Recall.html#lenskit.metrics.Recall">Recall (class in lenskit.metrics)</a>
@@ -1722,6 +2119,8 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lenskit.algorithms.html#lenskit.algorithms.Recommender">Recommender (class in lenskit.algorithms)</a>
+</li>
+      <li><a href="api/lenskit.pipeline.RecPipelineBuilder.html#lenskit.pipeline.RecPipelineBuilder">RecPipelineBuilder (class in lenskit.pipeline)</a>
 </li>
       <li><a href="api/lenskit.data.RecQuery.html#lenskit.data.RecQuery">RecQuery (class in lenskit.data)</a>
 </li>
@@ -1769,6 +2168,8 @@
 </li>
       <li><a href="api/lenskit.algorithms.mf_common.html#lenskit.algorithms.mf_common.MFPredictor.score">score() (lenskit.algorithms.mf_common.MFPredictor method)</a>
 </li>
+      <li><a href="api/lenskit.pipeline.RecPipelineBuilder.html#lenskit.pipeline.RecPipelineBuilder.scorer">scorer() (lenskit.pipeline.RecPipelineBuilder method)</a>
+</li>
       <li><a href="api/lenskit.data.ItemList.html#lenskit.data.ItemList.scores">scores() (lenskit.data.ItemList method)</a>
 </li>
       <li><a href="api/lenskit.parallel.worker.html#lenskit.parallel.worker.WorkerConfig.seed">seed (lenskit.parallel.worker.WorkerConfig attribute)</a>
@@ -1787,6 +2188,10 @@
 
       <ul>
         <li><a href="api/lenskit.algorithms.knn.html#lenskit.algorithms.knn.ItemItem.sim_matrix_">(lenskit.algorithms.knn.ItemItem attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.item.html#lenskit.knn.item.ItemKNNScorer.sim_matrix_">(lenskit.knn.item.ItemKNNScorer attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.html#lenskit.knn.ItemKNNScorer.sim_matrix_">(lenskit.knn.ItemKNNScorer attribute)</a>
 </li>
       </ul></li>
       <li><a href="api/lenskit.data.Vocabulary.html#lenskit.data.Vocabulary.size">size (lenskit.data.Vocabulary property)</a>
@@ -1829,32 +2234,78 @@
 </li>
       <li><a href="api/lenskit.pipeline.topn_pipeline.html#lenskit.pipeline.topn_pipeline">topn_pipeline() (in module lenskit.pipeline)</a>
 </li>
+      <li><a href="api/lenskit.basic.html#lenskit.basic.TopNRanker">TopNRanker (class in lenskit.basic)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.topn.html#lenskit.basic.topn.TopNRanker">(class in lenskit.basic.topn)</a>
+</li>
+      </ul></li>
       <li><a href="api/lenskit.math.sparse.html#lenskit.math.sparse.torch_sparse_from_scipy">torch_sparse_from_scipy() (in module lenskit.math.sparse)</a>
 </li>
       <li><a href="api/lenskit.parallel.chunking.html#lenskit.parallel.chunking.WorkChunks.total">total (lenskit.parallel.chunking.WorkChunks attribute)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lenskit.splitting.TTSplit.html#lenskit.splitting.TTSplit.train">train (lenskit.splitting.TTSplit attribute)</a>
 </li>
-      <li><a href="api/lenskit.funksvd.html#lenskit.funksvd.FunkSVD.train">train() (lenskit.funksvd.FunkSVD method)</a>
+      <li><a href="api/lenskit.als.html#lenskit.als.ALSBase.train">train() (lenskit.als.ALSBase method)</a>
 
       <ul>
+        <li><a href="api/lenskit.als.html#lenskit.als.ImplicitMF.train">(lenskit.als.ImplicitMF method)</a>
+</li>
+        <li><a href="api/lenskit.basic.bias.html#lenskit.basic.bias.BiasScorer.train">(lenskit.basic.bias.BiasScorer method)</a>
+</li>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.BiasScorer.train">(lenskit.basic.BiasScorer method)</a>
+</li>
+        <li><a href="api/lenskit.basic.candidates.html#lenskit.basic.candidates.TrainingCandidateSelectorBase.train">(lenskit.basic.candidates.TrainingCandidateSelectorBase method)</a>
+</li>
+        <li><a href="api/lenskit.basic.history.html#lenskit.basic.history.KnownRatingScorer.train">(lenskit.basic.history.KnownRatingScorer method)</a>
+</li>
+        <li><a href="api/lenskit.basic.history.html#lenskit.basic.history.UserTrainingHistoryLookup.train">(lenskit.basic.history.UserTrainingHistoryLookup method)</a>
+</li>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.PopScorer.train">(lenskit.basic.PopScorer method)</a>
+</li>
+        <li><a href="api/lenskit.basic.popularity.html#lenskit.basic.popularity.PopScorer.train">(lenskit.basic.popularity.PopScorer method)</a>
+</li>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.UserTrainingHistoryLookup.train">(lenskit.basic.UserTrainingHistoryLookup method)</a>
+</li>
+        <li><a href="api/lenskit.funksvd.html#lenskit.funksvd.FunkSVD.train">(lenskit.funksvd.FunkSVD method)</a>
+</li>
         <li><a href="addons/hpf.html#lenskit.hpf.HPF.train">(lenskit.hpf.HPF method)</a>, <a href="api/lenskit.hpf.html#lenskit.hpf.HPF.train">[1]</a>
 </li>
         <li><a href="api/lenskit.implicit.html#lenskit.implicit.BaseRec.train">(lenskit.implicit.BaseRec method)</a>
 </li>
+        <li><a href="api/lenskit.knn.item.html#lenskit.knn.item.ItemKNNScorer.train">(lenskit.knn.item.ItemKNNScorer method)</a>
+</li>
+        <li><a href="api/lenskit.knn.html#lenskit.knn.ItemKNNScorer.train">(lenskit.knn.ItemKNNScorer method)</a>
+</li>
+        <li><a href="api/lenskit.knn.user.html#lenskit.knn.user.UserKNNScorer.train">(lenskit.knn.user.UserKNNScorer method)</a>
+</li>
+        <li><a href="api/lenskit.knn.html#lenskit.knn.UserKNNScorer.train">(lenskit.knn.UserKNNScorer method)</a>
+</li>
         <li><a href="api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.train">(lenskit.pipeline.Pipeline method)</a>
 </li>
+        <li><a href="api/lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable.train">(lenskit.pipeline.Trainable method)</a>
+</li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lenskit.splitting.TTSplit.html#lenskit.splitting.TTSplit.train_df">train_df (lenskit.splitting.TTSplit property)</a>
 </li>
+      <li><a href="api/lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable">Trainable (class in lenskit.pipeline)</a>
+</li>
       <li><a href="api/lenskit.algorithms.als.common.html#lenskit.algorithms.als.common.TrainContext">TrainContext (class in lenskit.algorithms.als.common)</a>
+</li>
+      <li><a href="api/lenskit.basic.candidates.html#lenskit.basic.candidates.TrainingCandidateSelectorBase">TrainingCandidateSelectorBase (class in lenskit.basic.candidates)</a>
 </li>
       <li><a href="api/lenskit.algorithms.als.common.html#lenskit.algorithms.als.common.TrainingData">TrainingData (class in lenskit.algorithms.als.common)</a>
 </li>
       <li><a href="api/lenskit.algorithms.bias.html#lenskit.algorithms.bias.Bias.transform">transform() (lenskit.algorithms.bias.Bias method)</a>
 </li>
+      <li><a href="api/lenskit.basic.bias.html#lenskit.basic.bias.BiasModel.transform_matrix">transform_matrix() (lenskit.basic.bias.BiasModel method)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.BiasModel.transform_matrix">(lenskit.basic.BiasModel method)</a>
+</li>
+      </ul></li>
       <li><a href="api/lenskit.algorithms.bias.html#lenskit.algorithms.bias.Bias.transform_user">transform_user() (lenskit.algorithms.bias.Bias method)</a>
 </li>
       <li><a href="api/lenskit.metrics.RankingMetricBase.html#lenskit.metrics.RankingMetricBase.truncate">truncate() (lenskit.metrics.RankingMetricBase method)</a>
@@ -1875,10 +2326,22 @@
 </li>
       <li><a href="api/lenskit.algorithms.basic.html#lenskit.algorithms.basic.UnratedItemCandidateSelector">UnratedItemCandidateSelector (class in lenskit.algorithms.basic)</a>
 </li>
+      <li><a href="api/lenskit.basic.html#lenskit.basic.UnratedTrainingItemsCandidateSelector">UnratedTrainingItemsCandidateSelector (class in lenskit.basic)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.candidates.html#lenskit.basic.candidates.UnratedTrainingItemsCandidateSelector">(class in lenskit.basic.candidates)</a>
+</li>
+      </ul></li>
       <li><a href="api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.use_first_of">use_first_of() (lenskit.pipeline.Pipeline method)</a>
 </li>
       <li><a href="api/data-types.html#lenskit.data.types.UITuple.user">user (lenskit.data.types.UITuple attribute)</a>
 </li>
+      <li><a href="api/lenskit.basic.bias.html#lenskit.basic.bias.BiasModel.user_biases">user_biases (lenskit.basic.bias.BiasModel attribute)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.BiasModel.user_biases">(lenskit.basic.BiasModel attribute)</a>
+</li>
+      </ul></li>
       <li><a href="api/lenskit.algorithms.als.common.html#lenskit.algorithms.als.common.ALSBase.user_features_">user_features_ (lenskit.algorithms.als.common.ALSBase attribute)</a>
 
       <ul>
@@ -1902,6 +2365,10 @@
       <ul>
         <li><a href="api/lenskit.algorithms.knn.html#lenskit.algorithms.knn.UserUser.user_means_">(lenskit.algorithms.knn.UserUser attribute)</a>
 </li>
+        <li><a href="api/lenskit.knn.user.html#lenskit.knn.user.UserKNNScorer.user_means_">(lenskit.knn.user.UserKNNScorer attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.html#lenskit.knn.UserKNNScorer.user_means_">(lenskit.knn.UserKNNScorer attribute)</a>
+</li>
       </ul></li>
       <li><a href="api/lenskit.algorithms.bias.html#lenskit.algorithms.bias.Bias.user_offsets_">user_offsets_ (lenskit.algorithms.bias.Bias attribute)</a>
 </li>
@@ -1910,9 +2377,11 @@
       <ul>
         <li><a href="api/lenskit.algorithms.knn.html#lenskit.algorithms.knn.UserUser.user_ratings_">(lenskit.algorithms.knn.UserUser attribute)</a>
 </li>
+        <li><a href="api/lenskit.knn.user.html#lenskit.knn.user.UserKNNScorer.user_ratings_">(lenskit.knn.user.UserKNNScorer attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.html#lenskit.knn.UserKNNScorer.user_ratings_">(lenskit.knn.UserKNNScorer attribute)</a>
+</li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lenskit.data.Dataset.html#lenskit.data.Dataset.user_row">user_row() (lenskit.data.Dataset method)</a>
 </li>
       <li><a href="api/lenskit.data.Dataset.html#lenskit.data.Dataset.user_stats">user_stats() (lenskit.data.Dataset method)</a>
@@ -1922,14 +2391,34 @@
       <ul>
         <li><a href="api/lenskit.algorithms.knn.html#lenskit.algorithms.knn.UserUser.user_vectors_">(lenskit.algorithms.knn.UserUser attribute)</a>
 </li>
+        <li><a href="api/lenskit.knn.user.html#lenskit.knn.user.UserKNNScorer.user_vectors_">(lenskit.knn.user.UserKNNScorer attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.html#lenskit.knn.UserKNNScorer.user_vectors_">(lenskit.knn.UserKNNScorer attribute)</a>
+</li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="api/lenskit.data.UserIDKey.html#lenskit.data.UserIDKey">UserIDKey (class in lenskit.data)</a>
 </li>
-      <li><a href="api/lenskit.algorithms.knn.user.html#lenskit.algorithms.knn.user.UserRatings">UserRatings (class in lenskit.algorithms.knn.user)</a>
+      <li><a href="api/lenskit.knn.html#lenskit.knn.UserKNNScorer">UserKNNScorer (class in lenskit.knn)</a>
+
+      <ul>
+        <li><a href="api/lenskit.knn.user.html#lenskit.knn.user.UserKNNScorer">(class in lenskit.knn.user)</a>
 </li>
+      </ul></li>
+      <li><a href="api/lenskit.algorithms.knn.user.html#lenskit.algorithms.knn.user.UserRatings">UserRatings (class in lenskit.algorithms.knn.user)</a>
+
+      <ul>
+        <li><a href="api/lenskit.knn.user.html#lenskit.knn.user.UserRatings">(class in lenskit.knn.user)</a>
+</li>
+      </ul></li>
       <li><a href="api/lenskit.algorithms.als.common.html#lenskit.algorithms.als.common.TrainingData.users">users (lenskit.algorithms.als.common.TrainingData attribute)</a>
 
       <ul>
+        <li><a href="api/lenskit.basic.bias.html#lenskit.basic.bias.BiasModel.users">(lenskit.basic.bias.BiasModel attribute)</a>
+</li>
+        <li><a href="api/lenskit.basic.html#lenskit.basic.BiasModel.users">(lenskit.basic.BiasModel attribute)</a>
+</li>
         <li><a href="api/lenskit.data.Dataset.html#lenskit.data.Dataset.users">(lenskit.data.Dataset property)</a>
 </li>
       </ul></li>
@@ -1949,6 +2438,20 @@
         <li><a href="api/lenskit.algorithms.mf_common.html#lenskit.algorithms.mf_common.MFPredictor.users_">(lenskit.algorithms.mf_common.MFPredictor attribute)</a>
 </li>
         <li><a href="api/lenskit.implicit.html#lenskit.implicit.BaseRec.users_">(lenskit.implicit.BaseRec attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.item.html#lenskit.knn.item.ItemKNNScorer.users_">(lenskit.knn.item.ItemKNNScorer attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.html#lenskit.knn.ItemKNNScorer.users_">(lenskit.knn.ItemKNNScorer attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.user.html#lenskit.knn.user.UserKNNScorer.users_">(lenskit.knn.user.UserKNNScorer attribute)</a>
+</li>
+        <li><a href="api/lenskit.knn.html#lenskit.knn.UserKNNScorer.users_">(lenskit.knn.UserKNNScorer attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/lenskit.basic.html#lenskit.basic.UserTrainingHistoryLookup">UserTrainingHistoryLookup (class in lenskit.basic)</a>
+
+      <ul>
+        <li><a href="api/lenskit.basic.history.html#lenskit.basic.history.UserTrainingHistoryLookup">(class in lenskit.basic.history)</a>
 </li>
       </ul></li>
       <li><a href="api/lenskit.algorithms.knn.html#lenskit.algorithms.knn.UserUser">UserUser (class in lenskit.algorithms.knn)</a>
