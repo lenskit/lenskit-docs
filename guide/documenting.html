@@ -19,7 +19,7 @@
 <meta name="description" content="When publishing results — either formally, through a venue such as ACM Recsys, or informally in your organization, it’s important to clearly and completely specify how the evaluation and algorithms..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Documenting Experiments &#8212; LensKit 0.15.0.dev1581+g873ce597 documentation</title>
+    <title>Documenting Experiments &#8212; LensKit 0.15.0.dev1600+g56c132b1 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=def0db61"></script>
+    <script src="../_static/documentation_options.js?v=69f303ea"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1581+g873ce597 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1581+g873ce597 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1600+g56c132b1 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1600+g56c132b1 documentation - Home"/>
   
   
 </a></div>
@@ -514,14 +514,14 @@ how you should report, and how it maps to the LensKit code you are using.</p>
 <p>This checklist is to help you make sure that your evaluation and results are
 accurately reported.</p>
 <ul class="simple">
-<li><p>Pass <cite>include_missing=True</cite> to <a class="reference internal" href="../evaluation/topn-metrics.html#lenskit.topn.RecListAnalysis.compute" title="lenskit.topn.RecListAnalysis.compute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">compute()</span></code></a>. This
+<li><p>Pass <cite>include_missing=True</cite> to <code class="xref py py-meth docutils literal notranslate"><span class="pre">compute()</span></code>. This
 operation defaults to <cite>False</cite> for compatiability reasons, but the default will
 change in the future.</p></li>
 <li><p>Correctly fill missing values from the evaluation metric results.  They are
 reported as <cite>NaN</cite> (Pandas NA) so you can distinguish between empty lists and
 lists with no relevant items, but should be appropraitely filled before
 computing aggregates.</p></li>
-<li><p>Pass <cite>k</cite> to <a class="reference internal" href="../evaluation/topn-metrics.html#lenskit.topn.RecListAnalysis.add_metric" title="lenskit.topn.RecListAnalysis.add_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_metric()</span></code></a> with the
+<li><p>Pass <cite>k</cite> to <code class="xref py py-meth docutils literal notranslate"><span class="pre">add_metric()</span></code> with the
 target list length for your experiment.  LensKit cannot reliably detect how
 long you intended to make the recommendation lists, so you need to specify the
 intended length to the metrics in order to correctly account for it.</p></li>
@@ -536,7 +536,7 @@ intended length to the metrics in order to correctly account for it.</p></li>
 <p>You need to clearly report the algorithms that you have used along with their
 hyperparameters.</p>
 <p>The algorithm name should be the name of the class that you used (e.g.
-<a class="reference internal" href="../api/lenskit.algorithms.knn.html#lenskit.algorithms.knn.ItemItem" title="lenskit.algorithms.knn.ItemItem"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemItem</span></code></a>). The hyperparameters are the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ItemItem</span></code>). The hyperparameters are the
 options specified to the constructor, except for options that only affect
 algorithn peformance but not behavior.</p>
 <p>For example:</p>
@@ -587,7 +587,7 @@ automated reporting is not practical.</p>
 <section id="reporting-metrics">
 <h2>Reporting Metrics<a class="headerlink" href="#reporting-metrics" title="Link to this heading">#</a></h2>
 <p>Reporting the metrics themelves is relatively straightforward.  The
-<a class="reference internal" href="../evaluation/topn-metrics.html#lenskit.topn.RecListAnalysis.compute" title="lenskit.topn.RecListAnalysis.compute"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.topn.RecListAnalysis.compute()</span></code></a> method will return a data frame
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.topn.RecListAnalysis.compute()</span></code> method will return a data frame
 with a metric score for each list.  Group those by algorithm and report the
 resulting scores (typically with a mean).</p>
 <p>The following code will produce a table of algorithm scores for hit rate, nDCG
