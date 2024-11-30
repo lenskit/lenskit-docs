@@ -19,7 +19,7 @@
 <meta name="description" content="Utilities to manage randomness in LensKit and LensKit experiments. Functions Classes" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.util.random &#8212; LensKit 0.15.0.dev1603+g79c39bec documentation</title>
+    <title>lenskit.util.random &#8212; LensKit 0.15.0.dev1632+gf5df0dc2 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=1ab3d9c0"></script>
+    <script src="../_static/documentation_options.js?v=145cdd66"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1603+g79c39bec documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1603+g79c39bec documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1632+gf5df0dc2 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1632+gf5df0dc2 documentation - Home"/>
   
   
 </a></div>
@@ -472,6 +472,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="metrics.html">Metrics and Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.Metric.html">lenskit.metrics.Metric</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.ListMetric.html">lenskit.metrics.ListMetric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.GlobalMetric.html">lenskit.metrics.GlobalMetric</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.MetricFunction.html">lenskit.metrics.MetricFunction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.RankingMetricBase.html">lenskit.metrics.RankingMetricBase</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.RunAnalysis.html">lenskit.metrics.RunAnalysis</a></li>
@@ -587,7 +588,16 @@
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.util.random.derivable_rng" title="lenskit.util.random.derivable_rng"><code class="xref py py-obj docutils literal notranslate"><span class="pre">derivable_rng</span></code></a>(spec)</p></td>
-<td><p>Get a derivable RNG, for use cases where the code needs to be able to reproducibly derive sub-RNGs for different keys, such as user IDs.</p></td>
+<td><p>RNGs that may be derivable from data in the query.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.util.random.make_seed" title="lenskit.util.random.make_seed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_seed</span></code></a>(*keys)</p></td>
+<td><p>Make an RNG seed from an input key, allowing strings as seed material.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.util.random.random_generator" title="lenskit.util.random.random_generator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random_generator</span></code></a>([seed])</p></td>
+<td><p>Create a a random generator with the given seed, falling back to a global generator if no seed is provided.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.util.random.set_global_rng" title="lenskit.util.random.set_global_rng"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_global_rng</span></code></a>(seed)</p></td>
+<td><p>Set the global default RNG.</p></td>
 </tr>
 </tbody>
 </table>
@@ -607,46 +617,103 @@
 </tbody>
 </table>
 </div>
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.util.random.set_global_rng">
+<span class="sig-prename descclassname"><span class="pre">lenskit.util.random.</span></span><span class="sig-name descname"><span class="pre">set_global_rng</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.random.set_global_rng" title="Link to this definition">#</a></dt>
+<dd><p>Set the global default RNG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.1)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.13)"><em>Sequence</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v2.1)"><em>SeedSequence</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.1)"><em>Generator</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.BitGenerator.html#numpy.random.BitGenerator" title="(in NumPy v2.1)"><em>BitGenerator</em></a><em> | </em><em>None</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.util.random.random_generator">
+<span class="sig-prename descclassname"><span class="pre">lenskit.util.random.</span></span><span class="sig-name descname"><span class="pre">random_generator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.random.random_generator" title="Link to this definition">#</a></dt>
+<dd><p>Create a a random generator with the given seed, falling back to a global
+generator if no seed is provided.  If no global generator has been
+configured with <a class="reference internal" href="#lenskit.util.random.set_global_rng" title="lenskit.util.random.set_global_rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_global_rng()</span></code></a>, it returns a fresh random RNG.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.1)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.13)"><em>Sequence</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v2.1)"><em>SeedSequence</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.1)"><em>Generator</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.BitGenerator.html#numpy.random.BitGenerator" title="(in NumPy v2.1)"><em>BitGenerator</em></a><em> | </em><em>None</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.1)"><em>Generator</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.util.random.make_seed">
+<span class="sig-prename descclassname"><span class="pre">lenskit.util.random.</span></span><span class="sig-name descname"><span class="pre">make_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">keys</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.random.make_seed" title="Link to this definition">#</a></dt>
+<dd><p>Make an RNG seed from an input key, allowing strings as seed material.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>keys</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v2.1)"><em>SeedSequence</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/uuid.html#uuid.UUID" title="(in Python v3.13)"><em>UUID</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.13)"><em>Sequence</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.1)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><em>None</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v2.1)"><em>SeedSequence</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.util.random.RNGFactory">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.util.random.</span></span><span class="sig-name descname"><span class="pre">RNGFactory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.random.RNGFactory" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></p>
 <p>Protocol for RNG factories that can do dynamic (e.g. per-user) seeding.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.util.random.FixedRNG">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.util.random.</span></span><span class="sig-name descname"><span class="pre">FixedRNG</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rng</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.random.FixedRNG" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.util.random.RNGFactory" title="lenskit.util.random.RNGFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">RNGFactory</span></code></a></p>
 <p>RNG provider that always provides the same RNG</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>rng</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.1)"><em>Generator</em></a>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.util.random.DerivingRNG">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.util.random.</span></span><span class="sig-name descname"><span class="pre">DerivingRNG</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.random.DerivingRNG" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.util.random.RNGFactory" title="lenskit.util.random.RNGFactory"><code class="xref py py-class docutils literal notranslate"><span class="pre">RNGFactory</span></code></a></p>
 <p>RNG provider that derives new RNGs from the key</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v2.1)"><em>SeedSequence</em></a>)</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.util.random.derivable_rng">
 <span class="sig-prename descclassname"><span class="pre">lenskit.util.random.</span></span><span class="sig-name descname"><span class="pre">derivable_rng</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">spec</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.util.random.derivable_rng" title="Link to this definition">#</a></dt>
-<dd><p>Get a derivable RNG, for use cases where the code needs to be able to reproducibly derive
-sub-RNGs for different keys, such as user IDs.</p>
+<dd><p>RNGs that may be derivable from data in the query. These are for designs
+that need to be able to reproducibly derive RNGs for different keys, like
+user IDs (to make a “random” recommender produce the same sequence for the
+same user).</p>
+<p>Seed specifications may be any of the following:</p>
+<ul class="simple">
+<li><p>A seed (<code class="xref py py-type docutils literal notranslate"><span class="pre">SeedLike</span></code>).</p></li>
+<li><p>The value <code class="docutils literal notranslate"><span class="pre">'user'</span></code>, which will derive a seed from the query user ID.</p></li>
+<li><p>A tuple of the form <code class="docutils literal notranslate"><span class="pre">(seed,</span> <span class="pre">'user')</span></code>, that will use <code class="docutils literal notranslate"><span class="pre">seed</span></code> as the
+basis and drive from it a new seed based on the user ID.</p></li>
+</ul>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../guide/conventions.html#rng"><span class="std std-ref">Random Seeds</span></a></p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>spec</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v2.1)"><em>SeedSequence</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.1)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.1)"><em>ndarray</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>, </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.1)"><em>dtype</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>]</em><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#memoryview" title="(in Python v3.13)"><em>memoryview</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'user'</em><em>] </em><em>| </em><em>tuple</em><em>[</em><em>~numpy.random.bit_generator.SeedSequence</em><em> | </em><em>int</em><em> | </em><em>~numpy.integer</em><em>[</em><em>~typing.Any</em><em>] </em><em>| </em><em>~numpy.ndarray</em><em>[</em><em>~typing.Any</em><em>, </em><em>~numpy.dtype</em><em>[</em><em>~typing.Any</em><em>]</em><em>] </em><em>| </em><em>bytes</em><em> | </em><em>memoryview</em><em> | </em><em>str</em><em>, </em><em>~typing.Literal</em><em>[</em><em>'user'</em><em>]</em><em>] </em><em>| </em><em>None</em>) – <p>Any value supported by the <cite>seed</cite> parameter of <a class="reference external" href="https://seedbank.lenskit.org/en/latest/api.html#seedbank.numpy_rng" title="(in SeedBank)"><code class="xref py py-func docutils literal notranslate"><span class="pre">seedbank.numpy_rng()</span></code></a>, in addition
-to the following values:</p>
-<ul class="simple">
-<li><p>the string <code class="docutils literal notranslate"><span class="pre">'user'</span></code></p></li>
-<li><p>a tuple of the form (<code class="docutils literal notranslate"><span class="pre">seed</span></code>, <code class="docutils literal notranslate"><span class="pre">'user'</span></code>)</p></li>
-</ul>
-<p>Either of these forms will cause the returned function to re-derive new RNGs.</p>
-</p>
+<dd class="field-odd"><p><strong>spec</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.1)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.13)"><em>Sequence</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v2.1)"><em>SeedSequence</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'user'</em><em>] </em><em>| </em><em>tuple</em><em>[</em><em>int</em><em> | </em><em>~numpy.integer</em><em>[</em><em>~typing.Any</em><em>] </em><em>| </em><em>~typing.Sequence</em><em>[</em><em>int</em><em>] </em><em>| </em><em>~numpy.random.bit_generator.SeedSequence</em><em>, </em><em>~typing.Literal</em><em>[</em><em>'user'</em><em>]</em><em>] </em><em>| </em><em>None</em>) – The seed specification.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>A function taking one (or more) key values, like <code class="xref py py-func docutils literal notranslate"><span class="pre">derive_seed()</span></code>, and
-returning a random number generator.</p>
+<dd class="field-even"><p>A function taking one (or more) key values, like
+<code class="xref py py-func docutils literal notranslate"><span class="pre">derive_seed()</span></code>, and returning a random number generator.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>function</p>
@@ -703,6 +770,9 @@ returning a random number generator.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.util.random.set_global_rng"><code class="docutils literal notranslate"><span class="pre">set_global_rng()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.util.random.random_generator"><code class="docutils literal notranslate"><span class="pre">random_generator()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.util.random.make_seed"><code class="docutils literal notranslate"><span class="pre">make_seed()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.util.random.RNGFactory"><code class="docutils literal notranslate"><span class="pre">RNGFactory</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.util.random.FixedRNG"><code class="docutils literal notranslate"><span class="pre">FixedRNG</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.util.random.DerivingRNG"><code class="docutils literal notranslate"><span class="pre">DerivingRNG</span></code></a></li>

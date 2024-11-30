@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.splitting.crossfold_records &#8212; LensKit 0.15.0.dev1603+g79c39bec documentation</title>
+    <title>lenskit.splitting.crossfold_records &#8212; LensKit 0.15.0.dev1632+gf5df0dc2 documentation</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=1ab3d9c0"></script>
+    <script src="../_static/documentation_options.js?v=145cdd66"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1603+g79c39bec documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1603+g79c39bec documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1632+gf5df0dc2 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1632+gf5df0dc2 documentation - Home"/>
   
   
 </a></div>
@@ -470,6 +470,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="metrics.html">Metrics and Analysis</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.Metric.html">lenskit.metrics.Metric</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.ListMetric.html">lenskit.metrics.ListMetric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.GlobalMetric.html">lenskit.metrics.GlobalMetric</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.MetricFunction.html">lenskit.metrics.MetricFunction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.RankingMetricBase.html">lenskit.metrics.RankingMetricBase</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.metrics.RunAnalysis.html">lenskit.metrics.RunAnalysis</a></li>
@@ -582,7 +583,7 @@
 <h1>lenskit.splitting.crossfold_records<a class="headerlink" href="#lenskit-splitting-crossfold-records" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.splitting.crossfold_records">
-<span class="sig-prename descclassname"><span class="pre">lenskit.splitting.</span></span><span class="sig-name descname"><span class="pre">crossfold_records</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partitions</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng_spec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.splitting.crossfold_records" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.splitting.</span></span><span class="sig-name descname"><span class="pre">crossfold_records</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">partitions</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.splitting.crossfold_records" title="Link to this definition">#</a></dt>
 <dd><p>Partition a dataset by <strong>records</strong> into cross-fold partitions.  This
 partitions the records (ratings, play counts, clicks, etc.) into <em>k</em>
 partitions without regard to users or items.</p>
@@ -592,10 +593,9 @@ dataset’s interaction matrix.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><em>Dataset</em></a>) – Ratings or other data you wish to partition.</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>) – Ratings or other data you wish to partition.</p></li>
 <li><p><strong>partitions</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The number of partitions to produce.</p></li>
-<li><p><strong>rng_spec</strong> (<em>RandomSeed</em><em> | </em><em>None</em>) – The random number generator or seed (see
-<a class="reference external" href="https://seedbank.lenskit.org/en/latest/api.html#seedbank.numpy_rng" title="(in SeedBank)"><code class="xref py py-func docutils literal notranslate"><span class="pre">seedbank.numpy_rng()</span></code></a>).</p></li>
+<li><p><strong>rng</strong> (<em>lenskit.types.RNGInput</em>) – The random number generator or seed (see <a class="reference internal" href="../guide/conventions.html#rng"><span class="std std-ref">Random Seeds</span></a>).</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

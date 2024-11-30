@@ -7,17 +7,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Queries" />
+<meta property="og:title" content="Component Conventions" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="guide/queries.html" />
+<meta property="og:url" content="guide/conventions.html" />
 <meta property="og:site_name" content="LensKit" />
+<meta property="og:description" content="The components shipped with LensKit follow certain conventions to make their configuration and operation consistent and predictable. We encourage you to follow these conventions in your own code as..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_guide_queries_8f1c1ed8.png" />
-<meta property="og:image:alt" content="" />
+<meta property="og:image" content="/_images/social_previews/summary_guide_conventions_f0893beb.png" />
+<meta property="og:image:alt" content="The components shipped with LensKit follow certain conventions to make their configuration and operation consistent and predictable. We encourage you to foll..." />
+<meta name="description" content="The components shipped with LensKit follow certain conventions to make their configuration and operation consistent and predictable. We encourage you to follow these conventions in your own code as..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Queries &#8212; LensKit 0.15.0.dev1632+gf5df0dc2 documentation</title>
+    <title>Component Conventions &#8212; LensKit 0.15.0.dev1632+gf5df0dc2 documentation</title>
   
   
   
@@ -59,18 +61,18 @@
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'guide/queries';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'guide/conventions';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lkpy.lenskit.org/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
         </script>
-    <link rel="canonical" href="https://lkpy.lenskit.org/en/latest/guide/queries.html" />
+    <link rel="canonical" href="https://lkpy.lenskit.org/en/latest/guide/conventions.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Recommendation Pipelines" href="pipeline.html" />
-    <link rel="prev" title="Item Lists and Collections" href="item-lists.html" />
+    <link rel="next" title="Splitting Data" href="splitting.html" />
+    <link rel="prev" title="Recommendation Pipelines" href="pipeline.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.15.0" />
@@ -412,15 +414,15 @@
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="data.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="item-lists.html">Item Lists and Collections</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Queries</a></li>
+<li class="toctree-l1"><a class="reference internal" href="queries.html">Queries</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pipeline.html">Recommendation Pipelines</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="conventions.html">Component Conventions</a></li>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Component Conventions</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
 <ul class="nav bd-sidenav">
@@ -480,7 +482,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Queries</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Component Conventions</span></li>
   </ul>
 </nav>
 </div>
@@ -497,12 +499,74 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="queries">
-<span id="id1"></span><h1>Queries<a class="headerlink" href="#queries" title="Link to this heading">#</a></h1>
-<div class="admonition-todo admonition" id="id2">
-<p class="admonition-title">Todo</p>
-<p>Document queries.</p>
+  <section id="component-conventions">
+<span id="conventions"></span><h1>Component Conventions<a class="headerlink" href="#component-conventions" title="Link to this heading">#</a></h1>
+<p>The components shipped with LensKit follow certain conventions to make their
+configuration and operation consistent and predictable. We encourage you to
+follow these conventions in your own code as well.</p>
+<section id="list-length">
+<h2>List Length<a class="headerlink" href="#list-length" title="Link to this heading">#</a></h2>
+<p>Ranking and selection components typically provide two ways to specify the
+desired list length: a configuration option (constructor parameter) and a
+runtime parameter (input), both named <code class="docutils literal notranslate"><span class="pre">n</span></code> and type <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">|</span> <span class="pre">None</span></code>.  This
+allows list length to be baked into a pipeline configuration, and also allows
+that length to be specified or overridden at runtime.  If both lengths are
+specified, the runtime length takes precedence.</p>
+</section>
+<section id="random-seeds">
+<span id="rng"></span><h2>Random Seeds<a class="headerlink" href="#random-seeds" title="Link to this heading">#</a></h2>
+<p>LensKit components follow <a class="reference external" href="https://scientific-python.org/specs/spec-0007/">SPEC 7</a> for specifying random number seeds.
+Components that use randomization (either at runtime, or to set initial
+conditions for training) have a constructor parameter <cite>rng</cite> that takes either a
+<a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.1)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a> or seed material.  If you want reproducible
+stochastic pipelines, configure the random seeds for your components.</p>
+<p>This convention is also followed for other LensKit code, such as the <a class="reference external" href="./splitting">data
+splitting support</a>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If you specify random seeds, we strongly recommend specifying seeds instead of
+generators, so that the seed can be included in serialized configurations.</p>
 </div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2025.1: </span>Now that <a class="reference external" href="https://scientific-python.org/specs/spec-0007/">SPEC 7</a> has standardized RNG seeding across the scientific Python
+ecosystem, we use that with some lightweight helpers in the
+<a class="reference internal" href="../api/lenskit.util.random.html#module-lenskit.util.random" title="lenskit.util.random"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.util.random</span></code></a> module instead of using SeedBank.</p>
+</div>
+<p>LensKit extends SPEC 7 with a global RNG that components can use as a fallback,
+to make it easier to configure system-wide generation for things like tests.
+This is configured with <a class="reference internal" href="../api/lenskit.util.random.html#lenskit.util.random.set_global_rng" title="lenskit.util.random.set_global_rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_global_rng()</span></code></a>.</p>
+<p>When implementing a component that uses randomness in its training, we recommend
+deferring conversion of the provided RNG into an actual generator until
+model-training time, so that serializing an untrained pipeline or its
+configuration includes the original seed instead of the resulting generator.
+When using the RNG to create initial state for e.g. training a model with
+PyTorch, it can be useful to create that state in NumPy and then convert to a
+tensor, so that components are consistent in their random number generation
+behavior instead of having variation between NumPy and other backends.
+Components can use the <a class="reference internal" href="../api/lenskit.util.html#lenskit.util.random_generator" title="lenskit.util.random_generator"><code class="xref py py-func docutils literal notranslate"><span class="pre">random_generator()</span></code></a> function to
+convert seed material or a generator into a NumPy generator, falling back to the
+global RNG if one is specified.</p>
+<section id="derived-seeds">
+<h3>Derived Seeds<a class="headerlink" href="#derived-seeds" title="Link to this heading">#</a></h3>
+<p>Recommendation provides a particular challenge for deterministic random behavior
+in the face of multiple recommendation requests, particularly when those
+requests are parallelized, resulting in nondeterministic arrival orders.</p>
+<p>To handle this, LensKit components that randomize responses at runtime (such as
+<a class="reference internal" href="../api/lenskit.basic.html#lenskit.basic.RandomSelector" title="lenskit.basic.RandomSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">RandomSelector</span></code></a> and <a class="reference internal" href="../api/lenskit.basic.html#lenskit.basic.SoftmaxRanker" title="lenskit.basic.SoftmaxRanker"><code class="xref py py-class docutils literal notranslate"><span class="pre">SoftmaxRanker</span></code></a>)
+support <em>derivable RNGs</em>.  They are selected by passing the string <code class="docutils literal notranslate"><span class="pre">'user'</span></code> as
+the RNG seed, or a tuple of the form <code class="docutils literal notranslate"><span class="pre">(seed,</span> <span class="pre">'user')</span></code>.  When configured with
+such a seed, the component will deterministically derive a seed for each request
+based on the request’s userID.  This means that, for the same set of items and
+starting seed (and LensKit, NumPy, etc. versions),
+<a class="reference internal" href="../api/lenskit.basic.html#lenskit.basic.RandomSelector" title="lenskit.basic.RandomSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">RandomSelector</span></code></a> will return the <em>same</em> items for a given
+user, and different items for other users, regardless of the order in which
+those users are processed.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../api/lenskit.util.html#lenskit.util.derivable_rng" title="lenskit.util.derivable_rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.util.derivable_rng()</span></code></a></p>
+</div>
+</section>
+</section>
 </section>
 
 
@@ -516,20 +580,20 @@
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="item-lists.html"
+       href="pipeline.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Item Lists and Collections</p>
+        <p class="prev-next-title">Recommendation Pipelines</p>
       </div>
     </a>
     <a class="right-next"
-       href="pipeline.html"
+       href="splitting.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Recommendation Pipelines</p>
+        <p class="prev-next-title">Splitting Data</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -545,9 +609,25 @@
 
 
   <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#list-length">List Length</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#random-seeds">Random Seeds</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#derived-seeds">Derived Seeds</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
 
   <div class="tocsection sourcelink">
-    <a href="../_sources/guide/queries.rst.txt">
+    <a href="../_sources/guide/conventions.rst.txt">
       <i class="fa-solid fa-file-lines"></i> Show Source
     </a>
   </div>

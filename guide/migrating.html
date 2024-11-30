@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit 2025.1 brings the largest changes to LensKit’s APIs and operation since moving to Python. These changes are a result of years of experience using and teaching the current Python APIs, talki..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Migrating from LensKit 0.x &#8212; LensKit 0.15.0.dev1603+g79c39bec documentation</title>
+    <title>Migrating from LensKit 0.x &#8212; LensKit 0.15.0.dev1632+gf5df0dc2 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=1ab3d9c0"></script>
+    <script src="../_static/documentation_options.js?v=145cdd66"></script>
     <script src="../_static/doctools.js?v=9a2dae69"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1603+g79c39bec documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1603+g79c39bec documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 0.15.0.dev1632+gf5df0dc2 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 0.15.0.dev1632+gf5df0dc2 documentation - Home"/>
   
   
 </a></div>
@@ -420,6 +420,10 @@
 <li class="toctree-l1"><a class="reference internal" href="queries.html">Queries</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pipeline.html">Recommendation Pipelines</a></li>
 </ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="conventions.html">Component Conventions</a></li>
+</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="splitting.html">Splitting Data</a></li>
@@ -517,7 +521,7 @@ recommendation.</p>
 <h2>Change Highlights<a class="headerlink" href="#change-highlights" title="Link to this heading">#</a></h2>
 <p>The major changes that client or research code will need to adapt to largely
 fall into the following categories:</p>
-<ul class="simple">
+<ul>
 <li><p><strong>Data structures</strong> — LensKit now uses recommender-oriented data abstractions,
 such as <a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> (see <a class="reference internal" href="data.html#datasets"><span class="std std-ref">Datasets</span></a>) and
 <a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>, instead of storing everything directly in
@@ -528,7 +532,10 @@ have changed (to <code class="docutils literal notranslate"><span class="pre">us
 instead of Numba-accelerated NumPy code.  This speeds forward compatibility,
 as Numba was often a release bottleneck.  There are no limits on what can be
 used in models, however — TensorFlow and Jax models should work just fine in
-LensKit.</p></li>
+LensKit.</p>
+<p>LensKit also uses SPEC 7 instead of SeedBank for configuring random number
+generation support (see <a class="reference internal" href="conventions.html#rng"><span class="std std-ref">Random Seeds</span></a>).</p>
+</li>
 <li><p><strong>Pipelines</strong> — LensKit recommendation is now built around <em>pipelines</em> (see
 <a class="reference internal" href="pipeline.html#pipeline"><span class="std std-ref">Recommendation Pipelines</span></a>) consisting of individual <em>components</em>, such as scoring models
 and rankers.</p></li>
