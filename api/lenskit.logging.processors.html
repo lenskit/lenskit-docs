@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit logging processors. Functions" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.logging.processors &#8212; LensKit 2025.0.0a1.dev28+gbf64152a documentation</title>
+    <title>lenskit.logging.processors &#8212; LensKit 2025.0.0a1.dev33+g2d66234d documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=93c32f11"></script>
+    <script src="../_static/documentation_options.js?v=5953ba35"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev28+gbf64152a documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev28+gbf64152a documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev33+g2d66234d documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev33+g2d66234d documentation - Home"/>
   
   
 </a></div>
@@ -594,10 +594,13 @@
 <p class="rubric">Functions</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.logging.processors.format_timestamp" title="lenskit.logging.processors.format_timestamp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format_timestamp</span></code></a>(logger, method, event_dict)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.logging.processors.add_process_info" title="lenskit.logging.processors.add_process_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_process_info</span></code></a>(logger, method, event_dict)</p></td>
+<td><p>Add process info if it does not exist.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.logging.processors.format_timestamp" title="lenskit.logging.processors.format_timestamp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format_timestamp</span></code></a>(logger, method, event_dict)</p></td>
 <td><p>Reformat UNIX timestamps.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.logging.processors.remove_internal" title="lenskit.logging.processors.remove_internal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_internal</span></code></a>(logger, method, event_dict)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.logging.processors.remove_internal" title="lenskit.logging.processors.remove_internal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_internal</span></code></a>(logger, method, event_dict)</p></td>
 <td><p>Filter out “internal” attrs (beginning with <code class="docutils literal notranslate"><span class="pre">_</span></code>) for console logging.</p></td>
 </tr>
 </tbody>
@@ -625,6 +628,24 @@
 <dt class="sig sig-object py" id="lenskit.logging.processors.format_timestamp">
 <span class="sig-prename descclassname"><span class="pre">lenskit.logging.processors.</span></span><span class="sig-name descname"><span class="pre">format_timestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.processors.format_timestamp" title="Link to this definition">#</a></dt>
 <dd><p>Reformat UNIX timestamps.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+<li><p><strong>method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
+<li><p><strong>event_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.MutableMapping" title="(in Python v3.13)"><em>MutableMapping</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.MutableMapping" title="(in Python v3.13)"><em>MutableMapping</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.logging.processors.add_process_info">
+<span class="sig-prename descclassname"><span class="pre">lenskit.logging.processors.</span></span><span class="sig-name descname"><span class="pre">add_process_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.processors.add_process_info" title="Link to this definition">#</a></dt>
+<dd><p>Add process info if it does not exist.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -690,6 +711,7 @@
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.processors.remove_internal"><code class="docutils literal notranslate"><span class="pre">remove_internal()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.processors.format_timestamp"><code class="docutils literal notranslate"><span class="pre">format_timestamp()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.processors.add_process_info"><code class="docutils literal notranslate"><span class="pre">add_process_info()</span></code></a></li>
 </ul>
   </nav></div>
 
