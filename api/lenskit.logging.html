@@ -19,7 +19,7 @@
 <meta name="description" content="Logging, progress, and resource records. Modules" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.logging &#8212; LensKit 2025.0.0a1.dev7+g11ef9841 documentation</title>
+    <title>lenskit.logging &#8212; LensKit 2025.0.0a1.dev26+gc29c1714 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=8994e12d"></script>
+    <script src="../_static/documentation_options.js?v=974543f5"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev7+g11ef9841 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev7+g11ef9841 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev26+gc29c1714 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev26+gc29c1714 documentation - Home"/>
   
   
 </a></div>
@@ -503,8 +503,10 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">lenskit.logging</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.config.html">lenskit.logging.config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.logging.monitor.html">lenskit.logging.monitor</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.processors.html">lenskit.logging.processors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.progress.html">lenskit.logging.progress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.logging.worker.html">lenskit.logging.worker</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="lenskit.math.html">lenskit.math</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -593,8 +595,8 @@
 <p>Configuration for LensKit logging.</p>
 <p>This class is intended as a convenience for LensKit applications to set up a
 useful logging and progress reporting configuration; if unconfigured,
-LensKit will emit its logging messages directly to <a class="reference external" href="https://www.structlog.org/en/stable/api.html#module-structlog" title="(in structlog v24.4)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">structlog</span></code></a>, which
-you can configure in any way you wish.</p>
+LensKit will emit its logging messages directly to <a class="reference external" href="https://www.structlog.org/en/stable/api.html#module-structlog" title="(in structlog v24.4)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">structlog</span></code></a> and/or
+<a class="reference external" href="https://docs.python.org/3/library/logging.html#module-logging" title="(in Python v3.13)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code></a>, which you can configure in any way you wish.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.logging.LoggingConfig.set_verbose">
 <span class="sig-name descname"><span class="pre">set_verbose</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.LoggingConfig.set_verbose" title="Link to this definition">#</a></dt>
@@ -684,11 +686,17 @@ mapping to <code class="docutils literal notranslate"><span class="pre">None</sp
 <tr class="row-odd"><td><p><a class="reference internal" href="lenskit.logging.config.html#module-lenskit.logging.config" title="lenskit.logging.config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">config</span></code></a></p></td>
 <td><p>Logging pipeline configuration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="lenskit.logging.processors.html#module-lenskit.logging.processors" title="lenskit.logging.processors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">processors</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="lenskit.logging.monitor.html#module-lenskit.logging.monitor" title="lenskit.logging.monitor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">monitor</span></code></a></p></td>
+<td><p>LensKit background monitoring.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="lenskit.logging.processors.html#module-lenskit.logging.processors" title="lenskit.logging.processors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">processors</span></code></a></p></td>
 <td><p>LensKit logging processors.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="lenskit.logging.progress.html#module-lenskit.logging.progress" title="lenskit.logging.progress"><code class="xref py py-obj docutils literal notranslate"><span class="pre">progress</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="lenskit.logging.progress.html#module-lenskit.logging.progress" title="lenskit.logging.progress"><code class="xref py py-obj docutils literal notranslate"><span class="pre">progress</span></code></a></p></td>
 <td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="lenskit.logging.worker.html#module-lenskit.logging.worker" title="lenskit.logging.worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">worker</span></code></a></p></td>
+<td><p>Support for logging from worker processes.</p></td>
 </tr>
 </tbody>
 </table>
