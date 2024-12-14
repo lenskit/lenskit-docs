@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.data.ItemListCollection &#8212; LensKit 2025.0.0a1.dev68+g5c830c64 documentation</title>
+    <title>lenskit.data.ItemListCollection &#8212; LensKit 2025.0.0a1.dev90+g694b3124 documentation</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=df0b2dcc"></script>
+    <script src="../_static/documentation_options.js?v=810ee93b"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev68+g5c830c64 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev68+g5c830c64 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev90+g694b3124 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev90+g694b3124 documentation - Home"/>
   
   
 </a></div>
@@ -663,13 +663,22 @@ key schema.</p></li>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemListCollection.lists" title="lenskit.data.ItemListCollection.lists"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lists</span></code></a>()</p></td>
 <td><p>Iterate over item lists without keys.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemListCollection.lookup" title="lenskit.data.ItemListCollection.lookup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lookup</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemListCollection.load_parquet" title="lenskit.data.ItemListCollection.load_parquet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_parquet</span></code></a>(path)</p></td>
+<td><p>Load this item list from a Parquet file using the native layout.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemListCollection.lookup" title="lenskit.data.ItemListCollection.lookup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lookup</span></code></a>()</p></td>
 <td><p>Look up a list by key.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemListCollection.lookup_projected" title="lenskit.data.ItemListCollection.lookup_projected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lookup_projected</span></code></a>(key)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemListCollection.lookup_projected" title="lenskit.data.ItemListCollection.lookup_projected"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lookup_projected</span></code></a>(key)</p></td>
 <td><p>Look up an item list using a <em>projected</em> key.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemListCollection.to_df" title="lenskit.data.ItemListCollection.to_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_df</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemListCollection.save_parquet" title="lenskit.data.ItemListCollection.save_parquet"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save_parquet</span></code></a>(path, *[, layout, batch_size, ...])</p></td>
+<td><p>Save this item list collection to a Parquet file.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemListCollection.to_arrow" title="lenskit.data.ItemListCollection.to_arrow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_arrow</span></code></a>(*[, batch_size])</p></td>
+<td><p>Convert this item list collection to an Arrow table.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemListCollection.to_df" title="lenskit.data.ItemListCollection.to_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_df</span></code></a>()</p></td>
 <td><p>Convert this item list collection to a data frame.</p></td>
 </tr>
 </tbody>
@@ -729,6 +738,66 @@ lists will be excluded from the output.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemListCollection.to_arrow">
+<span class="sig-name descname"><span class="pre">to_arrow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemListCollection.to_arrow" title="Link to this definition">#</a></dt>
+<dd><p>Convert this item list collection to an Arrow table.</p>
+<p>The resulting table has one row per item list, with the item list
+contents an <code class="docutils literal notranslate"><span class="pre">items</span></code> column of a structured list type.  This preserves
+empty item lists for higher-fidelity data storage.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>batch_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The Arrow record batch size.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>Table</em></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemListCollection.save_parquet">
+<span class="sig-name descname"><span class="pre">save_parquet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'native'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compression</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'zstd'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemListCollection.save_parquet" title="Link to this definition">#</a></dt>
+<dd><p>Save this item list collection to a Parquet file.  This supports two
+types of Parquet files: “native” collections store one row per list,
+with the item list contents in a repeated structure column named
+<code class="docutils literal notranslate"><span class="pre">items</span></code>; this layout fully preserves the item list collection,
+including empty item lists.  The “flat” layout is easier to work with in
+software such as Pandas, but cannot store empty item lists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>layout</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'native'</em><em>, </em><em>'flat'</em><em>]</em>) – The table layout to use.</p></li>
+<li><p><strong>batch_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The Arrow record batch size.</p></li>
+<li><p><strong>compression</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'zstd'</em><em>, </em><em>'gzip'</em><em>, </em><em>'snappy'</em><em>, </em><em>'lz4'</em><em>] </em><em>| </em><em>None</em>) – The compression scheme to use.</p></li>
+<li><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/os.html#os.PathLike" title="(in Python v3.13)"><em>PathLike</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemListCollection.load_parquet">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_parquet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemListCollection.load_parquet" title="Link to this definition">#</a></dt>
+<dd><p>Load this item list from a Parquet file using the native layout.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>To load item list collections in the flat layout, use Pandas and
+<a class="reference internal" href="#lenskit.data.ItemListCollection.from_df" title="lenskit.data.ItemListCollection.from_df"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_df()</span></code></a>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/os.html#os.PathLike" title="(in Python v3.13)"><em>PathLike</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/os.html#os.PathLike" title="(in Python v3.13)"><em>PathLike</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em><em>]</em>) – Path to the Parquet file to load.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#lenskit.data.ItemListCollection" title="lenskit.data.collection.ItemListCollection"><em>ItemListCollection</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -894,6 +963,9 @@ key fields, or <code class="docutils literal notranslate"><span class="pre">None
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.from_dict"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.from_dict()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.from_df"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.from_df()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.to_df"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.to_df()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.to_arrow"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.to_arrow()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.save_parquet"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.save_parquet()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.load_parquet"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.load_parquet()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.key_fields"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.key_fields</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.key_type"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.key_type</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.add"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.add()</span></code></a></li>
