@@ -19,7 +19,7 @@
 <meta name="description" content="While rating prediction is no longer a widely-studied recommendation task, LensKit provides support for evaluating predictions for completeness and reproducing or comparing against historical resea..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Evaluating Rating Predictions &#8212; LensKit 2025.0.0a1.dev90+g694b3124 documentation</title>
+    <title>Evaluating Rating Predictions &#8212; LensKit 2025.0.0a1.dev92+g8af75f6f documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../_static/documentation_options.js?v=810ee93b"></script>
+    <script src="../../_static/documentation_options.js?v=e82f6dee"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev90+g694b3124 documentation - Home"/>
-    <img src="../../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev90+g694b3124 documentation - Home"/>
+    <img src="../../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev92+g8af75f6f documentation - Home"/>
+    <img src="../../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev92+g8af75f6f documentation - Home"/>
   
   
 </a></div>
@@ -520,37 +520,31 @@ metrics, including <a class="reference internal" href="../../api/lenskit.metrics
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lenskit.datasets</span> <span class="kn">import</span> <span class="n">MovieLens</span>
 <span class="kn">from</span> <span class="nn">lenskit.algorithms.bias</span> <span class="kn">import</span> <span class="n">Bias</span>
 <span class="kn">from</span> <span class="nn">lenskit.batch</span> <span class="kn">import</span> <span class="n">predict</span>
-<span class="kn">from</span> <span class="nn">lenskit.metrics.predict</span> <span class="kn">import</span> <span class="n">user_metric</span><span class="p">,</span> <span class="n">RMSE</span>
+<span class="kn">from</span> <span class="nn">lenskit.metrics</span> <span class="kn">import</span> <span class="n">RunAnalysis</span>
+<span class="kn">from</span> <span class="nn">lenskit.metrics.predict</span> <span class="kn">import</span> <span class="n">RMSE</span>
 <span class="n">ratings</span> <span class="o">=</span> <span class="n">MovieLens</span><span class="p">(</span><span class="s1">&#39;ml-small&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ratings</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
 <span class="n">test</span> <span class="o">=</span> <span class="n">ratings</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
 <span class="n">train</span> <span class="o">=</span> <span class="n">ratings</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1000</span><span class="p">:]</span>
 <span class="n">algo</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">()</span>
 <span class="n">algo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
 <span class="n">preds</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span>
-<span class="n">measure_user_predictions</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">RMSE</span><span class="p">)</span>
+<span class="n">pra</span> <span class="o">=</span> <span class="n">RunAnalysis</span><span class="p">()</span>
+<span class="n">pra</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RMSE</span><span class="p">())</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">pra</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
 <section id="calling-metrics">
 <h2>Calling Metrics<a class="headerlink" href="#calling-metrics" title="Link to this heading">#</a></h2>
-<p>There are three ways to call a prediction accuracy metric:</p>
+<p>There are two ways to directly call a prediction accuracy metric:</p>
 <ul class="simple">
 <li><p>Pass two item lists, the first containing predicted ratings (as the list’s
 <code class="xref py py-meth docutils literal notranslate"><span class="pre">scores()</span></code>) and the second containing
 ground-truth ratings as a <code class="docutils literal notranslate"><span class="pre">rating</span></code> field.</p></li>
 <li><p>Pass a single item list with scores and a <code class="docutils literal notranslate"><span class="pre">rating</span></code> field.</p></li>
-<li><p>Pass a single data frame with both <code class="docutils literal notranslate"><span class="pre">score</span></code> and <code class="docutils literal notranslate"><span class="pre">rating</span></code> columns
-(<code class="docutils literal notranslate"><span class="pre">prediction</span></code> is accepted as an alias for <code class="docutils literal notranslate"><span class="pre">score</span></code>).</p></li>
 </ul>
-<p>When computing globally-averaged prediction accuracy, it’s best to use the data
-frame option.</p>
-<p>If you want per-user metrics, the <code class="xref py py-func docutils literal notranslate"><span class="pre">measure_user_predictions()</span></code> function
-helps automate this computation.  It takes a data frame (with a <code class="docutils literal notranslate"><span class="pre">user_id</span></code> or
-<code class="docutils literal notranslate"><span class="pre">user</span></code> column, along with the <code class="docutils literal notranslate"><span class="pre">score</span></code> and <code class="docutils literal notranslate"><span class="pre">rating</span></code> columns) and a metric
-and returns a series of per-user scores, indexed by user ID:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">measure_user_predictions</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">RMSE</span><span class="p">)</span>
-</pre></div>
-</div>
+<p>For evaluation, you will usually want to use <a class="reference internal" href="../../api/lenskit.metrics.RunAnalysis.html#lenskit.metrics.RunAnalysis" title="lenskit.metrics.RunAnalysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunAnalysis</span></code></a>,
+which takes care of calling the prediction metric for you.</p>
 </section>
 <section id="missing-data">
 <h2>Missing Data<a class="headerlink" href="#missing-data" title="Link to this heading">#</a></h2>
@@ -582,8 +576,6 @@ metric function:</p>
 predictions with no corresponding rating (this case is unlikely to produce
 unhelpful eval results, but may indicate a misconfiguration in how you determine
 the items to score).</p>
-<p><code class="xref py py-func docutils literal notranslate"><span class="pre">measure_user_predictions()</span></code> also accepts these options, and passes
-them through to the underlying metric.</p>
 </section>
 </section>
 
