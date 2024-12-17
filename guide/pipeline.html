@@ -19,7 +19,7 @@
 <meta name="description" content="Since version 2025.1 (in progress), LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Recommendation Pipelines &#8212; LensKit 2025.0.0a1.dev109+g2de49dbd documentation</title>
+    <title>Recommendation Pipelines &#8212; LensKit 2025.0.0a1.dev120+g4554a823 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=0cbd1207"></script>
+    <script src="../_static/documentation_options.js?v=cb8c8958"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -178,8 +178,8 @@ window.addEventListener("load", load);
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev109+g2de49dbd documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev109+g2de49dbd documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev120+g4554a823 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev120+g4554a823 documentation - Home"/>
   
   
 </a></div>
@@ -604,7 +604,12 @@ that class, do:</p>
 yourself; this is described in <a class="reference internal" href="#standard-pipelines"><span class="std std-ref">Standard Layouts</span></a>.</p>
 <p>After any of these methods, you can run the pipeline to produce recommendations
 with:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">user_recs</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">recommend</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">user_recs</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;recommender&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This is also exposed with a convenience function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">recommend</span>
+<span class="n">user_recs</span> <span class="o">=</span> <span class="n">recommend</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -746,13 +751,9 @@ components.</p>
 <li><p>The component configurations (see <a class="reference internal" href="../api/lenskit.pipeline.Configurable.html#lenskit.pipeline.Configurable" title="lenskit.pipeline.Configurable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Configurable</span></code></a> and <a class="reference internal" href="../api/lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>)</p></li>
 <li><p>The components’ learned parameters (see <a class="reference internal" href="../api/lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable" title="lenskit.pipeline.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a>)</p></li>
 </ul>
-<div class="admonition-todo admonition" id="id6">
-<p class="admonition-title">Todo</p>
-<p>Serialization support other than <code class="docutils literal notranslate"><span class="pre">pickle</span></code> is not yet implemented.</p>
-</div>
 <p>LensKit supports serializing both pipeline descriptions (components,
 connections, and configurations) and pipeline parameters.  There are
-three ways to save a pipeline or part thereof:</p>
+two ways to save a pipeline or part thereof:</p>
 <ol class="arabic simple">
 <li><p>Pickle the entire pipeline.  This is easy, and saves everything in the
 pipeline; it has the usual downsides of pickling (arbitrary code execution,
@@ -762,6 +763,9 @@ parallel batch operations.</p></li>
 the components, their configurations, and their connections, but <strong>not</strong> any
 learned parameter data.  A new pipeline can be constructed from such a
 configuration can be reloaded with <code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.from_config()</span></code>.</p></li>
+</ol>
+<blockquote>
+<div><ol class="arabic simple" start="3">
 <li><p>Save the pipeline parameters with <code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.save_params()</span></code>.  This saves
 the learned parameters but <strong>not</strong> the configuration or connections.  The
 parameters can be reloaded into a compatible pipeline with
@@ -775,7 +779,7 @@ unpickle it and use <code class="xref py py-meth docutils literal notranslate"><
 values, as needed, in addition to functioning correctly with pickle (no specific
 logic is usually needed for this).</p>
 <p>LensKit knows how to safely save the following object types from
-<a class="reference internal" href="../api/lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable.get_params" title="lenskit.pipeline.Trainable.get_params"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Trainable.get_params()</span></code></a>:</p>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">Trainable.get_params()</span></code>:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.5)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.Tensor</span></code></a> (dense, CSR, and COO tensors).</p></li>
 <li><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a>.</p></li>
@@ -791,13 +795,14 @@ pipeline will emit a warning (or fail, if <code class="docutils literal notransl
 <p>The load/save parameter operations are modeled after PyTorch’s
 <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module.state_dict" title="(in PyTorch v2.5)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">state_dict()</span></code></a> and the needs of <a class="reference external" href="https://huggingface.co/docs/safetensors/">safetensors</a>.</p>
 </div>
+</div></blockquote>
 </section>
 </section>
 <section id="standard-layouts">
 <span id="standard-pipelines"></span><h2>Standard Layouts<a class="headerlink" href="#standard-layouts" title="Link to this heading">#</a></h2>
 <p>The standard recommendation pipeline, produced by either of the approaches
 described above in <a class="reference internal" href="#pipeline-construct"><span class="std std-ref">Constructing Pipelines</span></a>, looks like this:</p>
-<figure class="align-default" id="id7">
+<figure class="align-default" id="id6">
 <pre  class="mermaid">
         ---
 config:
@@ -842,7 +847,7 @@ flowchart LR
     classDef config font-weight:bold,stroke-width:4px;
 
     </pre><figcaption>
-<p><span class="caption-text">Top-N recommendation pipeline.</span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
+<p><span class="caption-text">Top-N recommendation pipeline.</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The convenience methods are equivalent to the following pipeline code:</p>
@@ -873,7 +878,7 @@ flowchart LR
 predict ratings for items the primary scorer cannot score (e.g. they are not in
 an item neighborhood), we use the following pipeline (created by
 <a class="reference internal" href="../api/lenskit.pipeline.RecPipelineBuilder.html#lenskit.pipeline.RecPipelineBuilder" title="lenskit.pipeline.RecPipelineBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecPipelineBuilder</span></code></a> when rating prediction is enabled):</p>
-<figure class="align-default" id="id8">
+<figure class="align-default" id="id7">
 <pre  class="mermaid">
         ---
 config:
@@ -926,7 +931,7 @@ flowchart LR
     classDef config font-weight:bold,stroke-width:4px;
 
     </pre><figcaption>
-<p><span class="caption-text">Pipeline for top-N recommendation and rating prediction, with predictions falling back to a baseline scorer.</span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
+<p><span class="caption-text">Pipeline for top-N recommendation and rating prediction, with predictions falling back to a baseline scorer.</span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
