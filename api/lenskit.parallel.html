@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit parallel computation support. Modules" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.parallel &#8212; LensKit 2025.0.0a1.dev126+g9ebd9c9c documentation</title>
+    <title>lenskit.parallel &#8212; LensKit 2025.0.0a1.dev133+ga2fd1f6c documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=8266542d"></script>
+    <script src="../_static/documentation_options.js?v=a2385796"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev126+g9ebd9c9c documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev126+g9ebd9c9c documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev133+ga2fd1f6c documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev133+ga2fd1f6c documentation - Home"/>
   
   
 </a></div>
@@ -593,7 +593,7 @@
 <p>LensKit parallel computation support.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.parallel.initialize">
-<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.</span></span><span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.initialize" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.</span></span><span class="sig-name descname"><span class="pre">initialize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">child_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.initialize" title="Link to this definition">#</a></dt>
 <dd><p>Set up and configure LensKit parallelism.  This only needs to be called if
 you want to control when and how parallelism is set up; components using
 parallelism will call <code class="xref py py-func docutils literal notranslate"><span class="pre">ensure_init()</span></code>, which will call this function
@@ -614,6 +614,7 @@ operations (see <span class="target" id="index-1"></span><a class="reference int
 <li><p><strong>child_threads</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – The number of threads backends are allowed to use in the worker
 processes in multiprocessing operations (see
 <span class="target" id="index-3"></span><a class="reference internal" href="../guide/parallelism.html#envvar-LK_NUM_CHILD_THREADS"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LK_NUM_CHILD_THREADS</span></code></a>).</p></li>
+<li><p><strong>config</strong> (<a class="reference internal" href="lenskit.parallel.config.html#lenskit.parallel.config.ParallelConfig" title="lenskit.parallel.config.ParallelConfig"><em>ParallelConfig</em></a><em> | </em><em>None</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -641,7 +642,7 @@ function before they begin training.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.parallel.invoker">
-<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.</span></span><span class="sig-name descname"><span class="pre">invoker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.invoker" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.</span></span><span class="sig-name descname"><span class="pre">invoker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">worker_parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.invoker" title="Link to this definition">#</a></dt>
 <dd><p>Get an appropriate invoker for performing operations on <code class="docutils literal notranslate"><span class="pre">model</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -650,14 +651,7 @@ function before they begin training.</p>
 <li><p><strong>func</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.13)"><em>Callable</em></a><em>[</em><em>[</em><em>M</em><em>, </em><em>A</em><em>]</em><em>, </em><em>R</em><em>]</em>) – The function to call.  The function must be pickleable.</p></li>
 <li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – The number of processes to use for parallel operations.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, will
 call <code class="xref py py-func docutils literal notranslate"><span class="pre">proc_count()</span></code> with a maximum default process count of 4.</p></li>
-<li><p><strong>progress</strong> – <p>A progress bar to use to report status. It should have the following states:</p>
-<ul>
-<li><p>dispatched</p></li>
-<li><p>in-progress</p></li>
-<li><p>finished</p></li>
-</ul>
-<p>One can be created with <code class="xref py py-func docutils literal notranslate"><span class="pre">invoke_progress()</span></code></p>
-</p></li>
+<li><p><strong>worker_parallel</strong> (<a class="reference internal" href="lenskit.parallel.config.html#lenskit.parallel.config.ParallelConfig" title="lenskit.parallel.config.ParallelConfig"><em>ParallelConfig</em></a><em> | </em><em>None</em>) – A parallel configuration for subprocess workers.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -702,6 +696,23 @@ to <code class="docutils literal notranslate"><span class="pre">func</span></cod
 
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.parallel.multiprocess_executor">
+<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.</span></span><span class="sig-name descname"><span class="pre">multiprocess_executor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sp_config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.multiprocess_executor" title="Link to this definition">#</a></dt>
+<dd><p>Construct a <code class="xref py py-class docutils literal notranslate"><span class="pre">ProcessPoolExecutor</span></code> configured for LensKit work.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>sp_config</strong> (<a class="reference internal" href="lenskit.parallel.config.html#lenskit.parallel.config.ParallelConfig" title="lenskit.parallel.config.ParallelConfig"><em>ParallelConfig</em></a><em> | </em><em>None</em>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>ProcessPoolExecutor</em></p>
+</dd>
+</dl>
+</dd></dl>
+
 <p class="rubric">Modules</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
@@ -711,7 +722,7 @@ to <code class="docutils literal notranslate"><span class="pre">func</span></cod
 <tr class="row-even"><td><p><a class="reference internal" href="lenskit.parallel.config.html#module-lenskit.parallel.config" title="lenskit.parallel.config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">config</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="lenskit.parallel.invoker.html#lenskit.parallel.invoker" title="lenskit.parallel.invoker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">invoker</span></code></a>(model, func[, n_jobs])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="lenskit.parallel.invoker.html#lenskit.parallel.invoker" title="lenskit.parallel.invoker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">invoker</span></code></a>(model, func[, n_jobs, worker_parallel])</p></td>
 <td><p>Get an appropriate invoker for performing operations on <code class="docutils literal notranslate"><span class="pre">model</span></code>.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="lenskit.parallel.pool.html#module-lenskit.parallel.pool" title="lenskit.parallel.pool"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pool</span></code></a></p></td>
@@ -786,6 +797,7 @@ to <code class="docutils literal notranslate"><span class="pre">func</span></cod
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ModelOpInvoker.map"><code class="docutils literal notranslate"><span class="pre">ModelOpInvoker.map()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.multiprocess_executor"><code class="docutils literal notranslate"><span class="pre">multiprocess_executor()</span></code></a></li>
 </ul>
   </nav></div>
 
