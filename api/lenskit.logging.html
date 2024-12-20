@@ -11,15 +11,15 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="api/lenskit.logging.html" />
 <meta property="og:site_name" content="LensKit" />
-<meta property="og:description" content="Logging, progress, and resource records. Modules" />
+<meta property="og:description" content="Logging, progress, and resource records. Functions Modules" />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_api_lenskit.logging_d28a1f66.png" />
-<meta property="og:image:alt" content="Logging, progress, and resource records. Modules" />
-<meta name="description" content="Logging, progress, and resource records. Modules" />
+<meta property="og:image" content="/_images/social_previews/summary_api_lenskit.logging_859f06b1.png" />
+<meta property="og:image:alt" content="Logging, progress, and resource records. Functions Modules" />
+<meta name="description" content="Logging, progress, and resource records. Functions Modules" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.logging &#8212; LensKit 2025.0.0a1.dev158+gd721a448 documentation</title>
+    <title>lenskit.logging &#8212; LensKit 2025.0.0a1.dev165+gc149d435 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=394bb50a"></script>
+    <script src="../_static/documentation_options.js?v=843b7330"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev158+gd721a448 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev158+gd721a448 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev165+gc149d435 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev165+gc149d435 documentation - Home"/>
   
   
 </a></div>
@@ -509,6 +509,7 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.progress.html">lenskit.logging.progress</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.resource.html">lenskit.logging.resource</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.tasks.html">lenskit.logging.tasks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.logging.tracing.html">lenskit.logging.tracing</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.worker.html">lenskit.logging.worker</a></li>
 </ul>
 </details></li>
@@ -591,6 +592,15 @@
   <section id="module-lenskit.logging">
 <span id="lenskit-logging"></span><h1>lenskit.logging<a class="headerlink" href="#module-lenskit.logging" title="Link to this heading">#</a></h1>
 <p>Logging, progress, and resource records.</p>
+<p class="rubric">Functions</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.logging.trace" title="lenskit.logging.trace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">trace</span></code></a>(logger, *args, **kwargs)</p></td>
+<td><p>Emit a trace-level message, if LensKit tracing is enabled.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.logging.LoggingConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.logging.</span></span><span class="sig-name descname"><span class="pre">LoggingConfig</span></span><a class="headerlink" href="#lenskit.logging.LoggingConfig" title="Link to this definition">#</a></dt>
@@ -613,7 +623,8 @@ apply in the absence of a configuration option.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p>
+<dd class="field-odd"><p><strong>verbose</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The level of verbosity.  Values of <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code> turn on
+<code class="docutils literal notranslate"><span class="pre">DEBUG</span></code>-level logs, and <code class="docutils literal notranslate"><span class="pre">2</span></code> or greater turns on tracing.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -735,7 +746,7 @@ it resets the HWM if there is no parent.</p></li>
 <li><p><strong>cpu_time</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em> | </em><em>None</em>)</p></li>
 <li><p><strong>peak_memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
 <li><p><strong>peak_gpu_memory</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
-<li><p><strong>subtasks</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.13)"><em>Annotated</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference internal" href="lenskit.logging.tasks.html#lenskit.logging.tasks.Task" title="lenskit.logging.tasks.Task"><em>Task</em></a><em>]</em><em>, </em><em>FieldInfo</em><em>(</em><em>annotation=NoneType</em><em>, </em><em>required=False</em><em>, </em><em>default_factory=list</em><em>)</em><em>, </em><a class="reference external" href="https://docs.pydantic.dev/latest/api/functional_validators/#pydantic.functional_validators.BeforeValidator" title="(in Pydantic v0.0.0)"><em>BeforeValidator</em></a><em>(</em><em>func=~lenskit.logging.tasks._dict_extract_values</em><em>, </em><em>json_schema_input_type=PydanticUndefined</em><em>)</em><em>]</em>)</p></li>
+<li><p><strong>subtasks</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.13)"><em>Annotated</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.13)"><em>Annotated</em></a><em>[</em><a class="reference internal" href="lenskit.logging.tasks.html#lenskit.logging.tasks.Task" title="lenskit.logging.tasks.Task"><em>Task</em></a><em>, </em><em>SerializeAsAny</em><em>(</em><em>)</em><em>]</em><em>]</em><em>, </em><a class="reference external" href="https://docs.pydantic.dev/latest/api/functional_validators/#pydantic.functional_validators.BeforeValidator" title="(in Pydantic v0.0.0)"><em>BeforeValidator</em></a><em>(</em><em>func=~lenskit.logging.tasks._dict_extract_values</em><em>, </em><em>json_schema_input_type=PydanticUndefined</em><em>)</em><em>]</em>)</p></li>
 <li><p><strong>data</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
 </ul>
 </dd>
@@ -812,7 +823,7 @@ memory used since the process was started).</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.logging.Task.subtasks">
-<span class="sig-name descname"><span class="pre">subtasks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Annotated</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#lenskit.logging.Task" title="lenskit.logging.Task"><span class="pre">Task</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Field</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">default_factory</span></span><span class="o"><span class="pre">=</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">BeforeValidator</span><span class="p"><span class="pre">(</span></span><span class="pre">_dict_extract_values</span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.logging.Task.subtasks" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">subtasks</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Annotated</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><span class="pre">SerializeAsAny</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#lenskit.logging.Task" title="lenskit.logging.Task"><span class="pre">Task</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">BeforeValidator</span><span class="p"><span class="pre">(</span></span><span class="pre">_dict_extract_values</span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.logging.Task.subtasks" title="Link to this definition">#</a></dt>
 <dd><p>This task’s subtasks.</p>
 </dd></dl>
 
@@ -930,6 +941,49 @@ memory used since the process was started).</p>
 
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.logging.get_logger">
+<span class="sig-prename descclassname"><span class="pre">lenskit.logging.</span></span><span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">initial_values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.get_logger" title="Link to this definition">#</a></dt>
+<dd><p>Only calls <cite>structlog.get_logger</cite>, but has the correct type hints.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Does <strong>not</strong> check whether – or ensure that – you’ve configured
+<em>structlog</em> for standard library <a class="reference external" href="https://docs.python.org/3/library/logging.html#module-logging" title="(in Python v3.13)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code></a>!</p>
+<p>See <span class="xref std std-doc">standard-library</span> for details.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 20.2.0.</span></p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+<li><p><strong>initial_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://www.structlog.org/en/stable/api.html#structlog.stdlib.BoundLogger" title="(in structlog v24.4)"><em>BoundLogger</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.logging.trace">
+<span class="sig-prename descclassname"><span class="pre">lenskit.logging.</span></span><span class="sig-name descname"><span class="pre">trace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.trace" title="Link to this definition">#</a></dt>
+<dd><p>Emit a trace-level message, if LensKit tracing is enabled.  Trace-level
+messages are more fine-grained than debug-level messages, and you usually
+don’t want them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logger</strong> (<a class="reference external" href="https://www.structlog.org/en/stable/api.html#structlog.stdlib.BoundLogger" title="(in structlog v24.4)"><em>BoundLogger</em></a>)</p></li>
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 <p class="rubric">Modules</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
@@ -951,7 +1005,10 @@ memory used since the process was started).</p>
 <tr class="row-even"><td><p><a class="reference internal" href="lenskit.logging.tasks.html#module-lenskit.logging.tasks" title="lenskit.logging.tasks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tasks</span></code></a></p></td>
 <td><p>Abstraction for recording tasks.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="lenskit.logging.worker.html#module-lenskit.logging.worker" title="lenskit.logging.worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">worker</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="lenskit.logging.tracing.html#module-lenskit.logging.tracing" title="lenskit.logging.tracing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tracing</span></code></a></p></td>
+<td><p>Extended logger providing TRACE support.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="lenskit.logging.worker.html#module-lenskit.logging.worker" title="lenskit.logging.worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">worker</span></code></a></p></td>
 <td><p>Support for logging from worker processes.</p></td>
 </tr>
 </tbody>
@@ -1044,6 +1101,8 @@ memory used since the process was started).</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.Task.update_resources"><code class="docutils literal notranslate"><span class="pre">Task.update_resources()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.get_logger"><code class="docutils literal notranslate"><span class="pre">get_logger()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.trace"><code class="docutils literal notranslate"><span class="pre">trace()</span></code></a></li>
 </ul>
   </nav></div>
 
