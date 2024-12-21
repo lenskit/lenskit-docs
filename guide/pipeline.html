@@ -19,7 +19,7 @@
 <meta name="description" content="Since version 2025.1 (in progress), LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Recommendation Pipelines &#8212; LensKit 2025.0.0a1.dev171+g07210940 documentation</title>
+    <title>Recommendation Pipelines &#8212; LensKit 2025.0.0a1.dev181+gb8f13647 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=8b1583f8"></script>
+    <script src="../_static/documentation_options.js?v=d160d9d2"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -178,8 +178,8 @@ window.addEventListener("load", load);
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev171+g07210940 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev171+g07210940 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev181+gb8f13647 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev181+gb8f13647 documentation - Home"/>
   
   
 </a></div>
@@ -588,14 +588,14 @@ as well as by <a class="reference external" href="https://docs.haystack.deepset.
 <p>The simplest way to make a pipeline is to construct a <code class="docutils literal notranslate"><span class="pre">topn_pipeline</span></code> — the
 following will create a top-<em>N</em> recommendation pipeline using implicit-feedback
 matrix factorization:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">als</span> <span class="o">=</span> <span class="n">ImplicitMF</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">als</span> <span class="o">=</span> <span class="n">ImplicitMFScorer</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
 <span class="n">pipe</span> <span class="o">=</span> <span class="n">topn_pipeline</span><span class="p">(</span><span class="n">als</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The <a class="reference internal" href="../api/lenskit.pipeline.RecPipelineBuilder.html#lenskit.pipeline.RecPipelineBuilder" title="lenskit.pipeline.RecPipelineBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecPipelineBuilder</span></code></a> class provides a more flexible mechanism to
 create standard recommendation pipelines; to implement the same pipeline with
 that class, do:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">als</span> <span class="o">=</span> <span class="n">ImplicitMF</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">als</span> <span class="o">=</span> <span class="n">ImplicitMFScorer</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
 <span class="n">builder</span> <span class="o">=</span> <span class="n">RecPipelineBuilder</span><span class="p">()</span>
 <span class="n">builder</span><span class="o">.</span><span class="n">scorer</span><span class="p">(</span><span class="n">als</span><span class="p">)</span>
 <span class="n">pipe</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s1">&#39;ALS&#39;</span><span class="p">)</span>
