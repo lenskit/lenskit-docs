@@ -19,7 +19,7 @@
 <meta name="description" content="Classes" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.basic.popularity &#8212; LensKit 2025.0.0a1.dev181+gb8f13647 documentation</title>
+    <title>lenskit.basic.popularity &#8212; LensKit 2025.0.0a1.dev191+g1dd80e8b documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=d160d9d2"></script>
+    <script src="../_static/documentation_options.js?v=c78e86e8"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev181+gb8f13647 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev181+gb8f13647 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev191+g1dd80e8b documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev191+g1dd80e8b documentation - Home"/>
   
   
 </a></div>
@@ -600,6 +600,9 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.basic.popularity.PopScorer" title="lenskit.basic.popularity.PopScorer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PopScorer</span></code></a>([score_method])</p></td>
 <td><p>Score items by their popularity.</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.basic.popularity.TimeBoundedPopScore" title="lenskit.basic.popularity.TimeBoundedPopScore"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TimeBoundedPopScore</span></code></a>(cutoff[, score_method])</p></td>
+<td><p>Score items by their time-bounded popularity, i.e., the popularity in the most recent <cite>time_window</cite> period.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -638,6 +641,58 @@ most-popular-items recommender.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.basic.popularity.PopScorer.train">
 <span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.popularity.PopScorer.train" title="Link to this definition">#</a></dt>
+<dd><p>Train the pipeline component to learn its parameters from a training
+dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>) – The training dataset.</p></li>
+<li><p><strong>retrain</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, retrain the model even if it has already been
+trained.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.basic.popularity.TimeBoundedPopScore">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.basic.popularity.</span></span><span class="sig-name descname"><span class="pre">TimeBoundedPopScore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cutoff</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">score_method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'quantile'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.popularity.TimeBoundedPopScore" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.basic.popularity.PopScorer" title="lenskit.basic.popularity.PopScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">PopScorer</span></code></a></p>
+<p>Score items by their time-bounded popularity, i.e., the popularity in the
+most recent <cite>time_window</cite> period.  Use with <code class="xref py py-class docutils literal notranslate"><span class="pre">TopN</span></code> to get a
+most-popular-recent-items recommender.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>time_window</strong> (<a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.timedelta" title="(in Python v3.13)"><em>datetime.timedelta</em></a>) – The time window for computing popularity scores.</p></li>
+<li><p><strong>score_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – <p>The method for computing popularity scores.  Can be one of the following:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">'quantile'</span></code> (the default)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'rank'</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'count'</span></code></p></li>
+</ul>
+</p></li>
+<li><p><strong>cutoff</strong> (<a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.13)"><em>datetime</em></a>)</p></li>
+<li><p><strong>score_method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.basic.popularity.TimeBoundedPopScore.item_scores_">
+<span class="sig-name descname"><span class="pre">item_scores_</span></span><a class="headerlink" href="#lenskit.basic.popularity.TimeBoundedPopScore.item_scores_" title="Link to this definition">#</a></dt>
+<dd><p>Time-bounded item popularity scores.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" title="(in pandas v2.2.3)">pandas.Series</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.basic.popularity.TimeBoundedPopScore.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.popularity.TimeBoundedPopScore.train" title="Link to this definition">#</a></dt>
 <dd><p>Train the pipeline component to learn its parameters from a training
 dataset.</p>
 <dl class="field-list simple">
@@ -706,6 +761,11 @@ trained.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.popularity.PopScorer.item_pop_"><code class="docutils literal notranslate"><span class="pre">PopScorer.item_pop_</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.popularity.PopScorer.is_trained"><code class="docutils literal notranslate"><span class="pre">PopScorer.is_trained</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.popularity.PopScorer.train"><code class="docutils literal notranslate"><span class="pre">PopScorer.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.popularity.TimeBoundedPopScore"><code class="docutils literal notranslate"><span class="pre">TimeBoundedPopScore</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.popularity.TimeBoundedPopScore.item_scores_"><code class="docutils literal notranslate"><span class="pre">TimeBoundedPopScore.item_scores_</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.popularity.TimeBoundedPopScore.train"><code class="docutils literal notranslate"><span class="pre">TimeBoundedPopScore.train()</span></code></a></li>
 </ul>
 </li>
 </ul>
