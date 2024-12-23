@@ -7,17 +7,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Queries" />
+<meta property="og:title" content="Queries and Operations" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="guide/queries.html" />
 <meta property="og:site_name" content="LensKit" />
+<meta property="og:description" content="To request recommendations from a LensKit pipeline, you supply the pipeline with a query(and, optionally, a list of candidate items). In the simplest case, for traditional personalized recommendati..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_guide_queries_8f1c1ed8.png" />
-<meta property="og:image:alt" content="" />
+<meta property="og:image" content="/_images/social_previews/summary_guide_queries_d09608b5.png" />
+<meta property="og:image:alt" content="To request recommendations from a LensKit pipeline, you supply the pipeline with a query(and, optionally, a list of candidate items). In the simplest case, f..." />
+<meta name="description" content="To request recommendations from a LensKit pipeline, you supply the pipeline with a query(and, optionally, a list of candidate items). In the simplest case, for traditional personalized recommendati..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Queries &#8212; LensKit 2025.0.0a1.dev191+g1dd80e8b documentation</title>
+    <title>Queries and Operations &#8212; LensKit 2025.0.0a1.dev199+gacd6f5d2 documentation</title>
   
   
   
@@ -50,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=c78e86e8"></script>
+    <script src="../_static/documentation_options.js?v=c4f353f6"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -139,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev191+g1dd80e8b documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev191+g1dd80e8b documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a1.dev199+gacd6f5d2 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a1.dev199+gacd6f5d2 documentation - Home"/>
   
   
 </a></div>
@@ -413,9 +415,10 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
 <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="principles.html">Design Goals and Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Datasets</a></li>
 <li class="toctree-l1"><a class="reference internal" href="item-lists.html">Item Lists and Collections</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Queries</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Queries and Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pipeline.html">Recommendation Pipelines</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
@@ -481,7 +484,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Queries</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Queries and Operations</span></li>
   </ul>
 </nav>
 </div>
@@ -498,12 +501,74 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="queries">
-<span id="id1"></span><h1>Queries<a class="headerlink" href="#queries" title="Link to this heading">#</a></h1>
-<div class="admonition-todo admonition" id="id2">
-<p class="admonition-title">Todo</p>
-<p>Document queries.</p>
+  <section id="queries-and-operations">
+<span id="queries"></span><h1>Queries and Operations<a class="headerlink" href="#queries-and-operations" title="Link to this heading">#</a></h1>
+<p>To request recommendations from a LensKit pipeline, you supply the pipeline with
+a <em>query</em> (and, optionally, a list of candidate items).  In the simplest case,
+for traditional personalized recommendations, the query just consists of a user
+ID.</p>
+<p>Queries are represented by the <a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a> class, and can have any or all
+of the following components:</p>
+<ul class="simple">
+<li><p>A user ID (<a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery.user_id" title="lenskit.data.RecQuery.user_id"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RecQuery.user_id</span></code></a>)</p></li>
+<li><p>A user’s historical items (<a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery.user_items" title="lenskit.data.RecQuery.user_items"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RecQuery.user_items</span></code></a>)</p></li>
+</ul>
+<div class="note admonition">
+<p class="admonition-title">Future Work</p>
+<p>Queries will also be the basis for eventually supporting session-based
+recommendation, etc.</p>
 </div>
+<section id="creating-a-query">
+<h2>Creating a Query<a class="headerlink" href="#creating-a-query" title="Link to this heading">#</a></h2>
+<p>You can create a query in a couple of ways — you can pass named arguments to the
+<a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a> constructor, or you can call <a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery.create" title="lenskit.data.RecQuery.create"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RecQuery.create()</span></code></a> to
+“upgrade” a piece of data into a query using the following rules:</p>
+<ul class="simple">
+<li><p>A query is returned as-is.</p></li>
+<li><p>An identifier is used as the user identifier.</p></li>
+<li><p>An <a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a> is used as a list of the user’s historical items.</p></li>
+</ul>
+<p>These data types are encompased by the <a class="reference internal" href="../api/lenskit.data.QueryInput.html#lenskit.data.QueryInput" title="lenskit.data.QueryInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueryInput</span></code></a> type.</p>
+<p>You can also pass a raw user identifier or item list to the pipeline, as the key
+recommendation operations and most components accept a <a class="reference internal" href="../api/lenskit.data.QueryInput.html#lenskit.data.QueryInput" title="lenskit.data.QueryInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueryInput</span></code></a> and
+pass it to <a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery.create" title="lenskit.data.RecQuery.create"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create()</span></code></a> to upgrade to a query.</p>
+</section>
+<section id="invoking-recommenders">
+<h2>Invoking Recommenders<a class="headerlink" href="#invoking-recommenders" title="Link to this heading">#</a></h2>
+<p>LensKit provides three <em>operation</em> functions to ease calling the recommender for
+common operations, like top-<em>N</em> recommendation and rating prediction:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="../api/operations.html#lenskit.operations.recommend" title="lenskit.operations.recommend"><code class="xref py py-func docutils literal notranslate"><span class="pre">recommend()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/operations.html#lenskit.operations.score" title="lenskit.operations.score"><code class="xref py py-func docutils literal notranslate"><span class="pre">score()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/operations.html#lenskit.operations.predict" title="lenskit.operations.predict"><code class="xref py py-func docutils literal notranslate"><span class="pre">predict()</span></code></a></p></li>
+</ul>
+<p>These functions take a pipeline and a query input and return the results:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rec_list</span> <span class="o">=</span> <span class="n">recommend</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="processing-queries">
+<h2>Processing Queries<a class="headerlink" href="#processing-queries" title="Link to this heading">#</a></h2>
+<p>When writing a component that uses a query but works on user ID and/or user
+history arguments, it should have a <code class="docutils literal notranslate"><span class="pre">query</span></code> parameter of type <code class="docutils literal notranslate"><span class="pre">QueryInput</span></code>,
+and pass it to <a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery.create" title="lenskit.data.RecQuery.create"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RecQuery.create()</span></code></a> to obtain a query.  You can declare the
+query to be of type <code class="docutils literal notranslate"><span class="pre">RecQuery</span></code> so long as you provide query objects to the
+operation functions, or configure a pipeline to upgrade the query before it gets
+to your component.</p>
+<p>When using a query in a component, we recommend using the user history if it is
+available, instead of relying on user IDs.  This makes components more flexible
+for other sources of user history data.</p>
+</section>
+<section id="expanding-queries-in-pipelines">
+<h2>Expanding Queries in Pipelines<a class="headerlink" href="#expanding-queries-in-pipelines" title="Link to this heading">#</a></h2>
+<p>The <a class="reference internal" href="pipeline.html#standard-pipelines"><span class="std std-ref">standard pipelines</span></a> include a
+<a class="reference internal" href="../api/lenskit.basic.html#lenskit.basic.UserTrainingHistoryLookup" title="lenskit.basic.UserTrainingHistoryLookup"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserTrainingHistoryLookup</span></code></a> that resolves a query and, if
+it does not have user history data, looks up the user’s historical clicks from
+the training data.  Therefore, if your components will be used in the standard
+pipeline (or another pipeline configured with this component), you can take a
+<a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a> as input, and expect it to have a user history if the user is
+known in the training data.</p>
+</section>
 </section>
 
 
@@ -544,6 +609,21 @@
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-query">Creating a Query</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#invoking-recommenders">Invoking Recommenders</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#processing-queries">Processing Queries</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expanding-queries-in-pipelines">Expanding Queries in Pipelines</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 
