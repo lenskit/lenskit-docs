@@ -19,7 +19,7 @@
 <meta name="description" content="While rating prediction is no longer a widely-studied recommendation task, LensKit provides support for evaluating predictions for completeness and reproducing or comparing against historical resea..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Evaluating Rating Predictions &#8212; LensKit 2025.0.0a2.dev43+gb193bd1e documentation</title>
+    <title>Evaluating Rating Predictions &#8212; LensKit 2025.0.0a2.dev53+g8afcca0f documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../_static/documentation_options.js?v=d08344e6"></script>
+    <script src="../../_static/documentation_options.js?v=b23631c4"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a2.dev43+gb193bd1e documentation - Home"/>
-    <img src="../../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a2.dev43+gb193bd1e documentation - Home"/>
+    <img src="../../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a2.dev53+g8afcca0f documentation - Home"/>
+    <img src="../../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a2.dev53+g8afcca0f documentation - Home"/>
   
   
 </a></div>
@@ -424,6 +424,9 @@
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../conventions.html">Component Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scorers.html">Scoring Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../rankers.html">Ranking Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other-components.html">Other Components</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
 <ul class="current nav bd-sidenav">
@@ -516,26 +519,6 @@ metrics, including <a class="reference internal" href="../../api/lenskit.metrics
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 2025.1: </span>The prediction accuracy metric interface has changed to use item lists.</p>
 </div>
-<section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
-<p>The following computes RMSE over a small subset of the <code class="docutils literal notranslate"><span class="pre">ml-small</span></code> ratings:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lenskit.datasets</span> <span class="kn">import</span> <span class="n">MovieLens</span>
-<span class="kn">from</span> <span class="nn">lenskit.algorithms.bias</span> <span class="kn">import</span> <span class="n">Bias</span>
-<span class="kn">from</span> <span class="nn">lenskit.batch</span> <span class="kn">import</span> <span class="n">predict</span>
-<span class="kn">from</span> <span class="nn">lenskit.metrics</span> <span class="kn">import</span> <span class="n">RunAnalysis</span>
-<span class="kn">from</span> <span class="nn">lenskit.metrics.predict</span> <span class="kn">import</span> <span class="n">RMSE</span>
-<span class="n">ratings</span> <span class="o">=</span> <span class="n">MovieLens</span><span class="p">(</span><span class="s1">&#39;ml-small&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">ratings</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
-<span class="n">test</span> <span class="o">=</span> <span class="n">ratings</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">1000</span><span class="p">]</span>
-<span class="n">train</span> <span class="o">=</span> <span class="n">ratings</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1000</span><span class="p">:]</span>
-<span class="n">algo</span> <span class="o">=</span> <span class="n">Bias</span><span class="p">()</span>
-<span class="n">algo</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">train</span><span class="p">)</span>
-<span class="n">preds</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">algo</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span>
-<span class="n">pra</span> <span class="o">=</span> <span class="n">RunAnalysis</span><span class="p">()</span>
-<span class="n">pra</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RMSE</span><span class="p">())</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">pra</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span>
-</pre></div>
-</div>
-</section>
 <section id="calling-metrics">
 <h2>Calling Metrics<a class="headerlink" href="#calling-metrics" title="Link to this heading">#</a></h2>
 <p>There are two ways to directly call a prediction accuracy metric:</p>
@@ -628,7 +611,6 @@ the items to score).</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#calling-metrics">Calling Metrics</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#missing-data">Missing Data</a></li>
 </ul>

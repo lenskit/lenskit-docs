@@ -19,7 +19,7 @@
 <meta name="description" content="FunkSVD (biased MF). Functions Classes" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.funksvd &#8212; LensKit 2025.0.0a2.dev36+g88fc3754 documentation</title>
+    <title>lenskit.funksvd &#8212; LensKit 2025.0.0a2.dev53+g8afcca0f documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=85d164d1"></script>
+    <script src="../_static/documentation_options.js?v=b23631c4"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a2.dev36+g88fc3754 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a2.dev36+g88fc3754 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a2.dev53+g8afcca0f documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a2.dev53+g8afcca0f documentation - Home"/>
   
   
 </a></div>
@@ -614,7 +614,7 @@
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.funksvd.FunkSVDScorer" title="lenskit.funksvd.FunkSVDScorer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FunkSVDScorer</span></code></a>([features, iterations, lrate, ...])</p></td>
-<td><p>Algorithm class implementing FunkSVD matrix factorization.</p></td>
+<td><p>FunkSVD explicit-feedback matrix factoriation.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.funksvd.Model" title="lenskit.funksvd.Model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Model</span></code></a>(*args, **kwargs)</p></td>
 <td><p>Internal model class for training SGD MF.</p></td>
@@ -633,11 +633,15 @@
 <dt class="sig sig-object py" id="lenskit.funksvd.FunkSVDScorer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.funksvd.</span></span><span class="sig-name descname"><span class="pre">FunkSVDScorer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lrate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reg</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.015</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.funksvd.FunkSVDScorer" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>, <a class="reference internal" href="lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable" title="lenskit.pipeline.components.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a></p>
-<p>Algorithm class implementing FunkSVD matrix factorization.  FunkSVD is a regularized
-biased matrix factorization technique trained with featurewise stochastic gradient
-descent.</p>
-<p>See the base class <code class="xref py py-class docutils literal notranslate"><span class="pre">MFPredictor</span></code> for documentation on the estimated parameters
-you can extract from a trained model.</p>
+<p>FunkSVD explicit-feedback matrix factoriation.  FunkSVD is a regularized
+biased matrix factorization technique trained with featurewise stochastic
+gradient descent.</p>
+<p>See the base class <code class="xref py py-class docutils literal notranslate"><span class="pre">MFPredictor</span></code> for documentation on the estimated
+parameters you can extract from a trained model.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version LKPY: </span>This scorer is kept around for historical comparability, but ALS
+<code class="xref py py-class docutils literal notranslate"><span class="pre">BiasedMF</span></code> is usually a better option.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -647,9 +651,9 @@ you can extract from a trained model.</p>
 <li><p><strong>reg</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – the regularization factor</p></li>
 <li><p><strong>damping</strong> (<a class="reference internal" href="data-types.html#lenskit.data.types.UITuple" title="lenskit.data.types.UITuple"><em>UITuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>]</em>) – damping factor for the underlying mean</p></li>
 <li><p><strong>bias</strong> – the underlying bias model to fit.  If <code class="docutils literal notranslate"><span class="pre">True</span></code>, then a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">bias.Bias</span></code> model is fit with <code class="docutils literal notranslate"><span class="pre">damping</span></code>.</p></li>
-<li><p><strong>range</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>] </em><em>| </em><em>None</em>) – the <code class="docutils literal notranslate"><span class="pre">(min,</span> <span class="pre">max)</span></code> rating values to clamp ratings, or <code class="docutils literal notranslate"><span class="pre">None</span></code> to leave
-predictions unclamped.</p></li>
+<a class="reference internal" href="lenskit.basic.html#lenskit.basic.BiasModel" title="lenskit.basic.BiasModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.basic.BiasModel</span></code></a> model is fit with <code class="docutils literal notranslate"><span class="pre">damping</span></code>.</p></li>
+<li><p><strong>range</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>] </em><em>| </em><em>None</em>) – the <code class="docutils literal notranslate"><span class="pre">(min,</span> <span class="pre">max)</span></code> rating values to clamp ratings, or <code class="docutils literal notranslate"><span class="pre">None</span></code> to
+leave predictions unclamped.</p></li>
 <li><p><strong>rng</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.13)"><em>Sequence</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v2.2)"><em>SeedSequence</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.2)"><em>Generator</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.BitGenerator.html#numpy.random.BitGenerator" title="(in NumPy v2.2)"><em>BitGenerator</em></a><em> | </em><em>None</em>) – The random seed for shuffling the input data (see <a class="reference internal" href="../guide/conventions.html#rng"><span class="std std-ref">Random Seeds</span></a>).</p></li>
 </ul>
 </dd>
