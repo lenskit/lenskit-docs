@@ -19,7 +19,7 @@
 <meta name="description" content="Bias scoring model. Classes" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.basic.bias &#8212; LensKit 2025.0.0a2.dev53+g8afcca0f documentation</title>
+    <title>lenskit.basic.bias &#8212; LensKit 2025.0.0a2.dev77+g4725505d documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=b23631c4"></script>
+    <script src="../_static/documentation_options.js?v=393b6017"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a2.dev53+g8afcca0f documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a2.dev53+g8afcca0f documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a2.dev77+g4725505d documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a2.dev77+g4725505d documentation - Home"/>
   
   
 </a></div>
@@ -505,6 +505,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Implementation Helpers</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lenskit.stats.html">lenskit.stats</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="lenskit.logging.html">lenskit.logging</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.config.html">lenskit.logging.config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.monitor.html">lenskit.logging.monitor</a></li>
@@ -635,9 +636,11 @@ b_u &amp; = \frac{\sum_{r_{ui} \in R_u} (r_{ui} - b_g - b_i)}{|R_u| + \beta_{\ma
 ratings to assume <em>a priori</em> for each user or item, damping low-information
 users and items towards a mean instead of permitting them to take on extreme
 values based on few ratings.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dl class="field-list">
+<dt class="field-odd">Stability<span class="colon">:</span></dt>
+<dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>damping</strong> (<a class="reference internal" href="data-types.html#lenskit.data.types.UITuple" title="lenskit.data.types.UITuple"><em>UITuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>]</em>)</p></li>
 <li><p><strong>global_bias</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
 <li><p><strong>items</strong> (<a class="reference internal" href="lenskit.data.Vocabulary.html#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><em>Vocabulary</em></a><em> | </em><em>None</em>)</p></li>
@@ -750,7 +753,7 @@ only the composite bias scores are returned.</p>
 <dd><p>Bases: <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a></p>
 <p>A user-item bias rating prediction model.  This component uses
 <a class="reference internal" href="#lenskit.basic.bias.BiasModel" title="lenskit.basic.bias.BiasModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiasModel</span></code></a> to predict ratings for users and items.</p>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to compute item biases.</p></li>
@@ -762,6 +765,8 @@ tuple providing separate damping values.</p></li>
 <li><p><strong>item_damping</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em> | </em><em>None</em>)</p></li>
 </ul>
 </dd>
+<dt class="field-even">Stability<span class="colon">:</span></dt>
+<dd class="field-even">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.basic.bias.BiasScorer.IGNORED_CONFIG_FIELDS">

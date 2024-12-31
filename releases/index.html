@@ -19,7 +19,7 @@
 <meta name="description" content="Since 2025, LensKit uses calendar-based versioning and includes the release notes in the primary documentation. Older release notes are on GitHub. 2025 Releases, Older Versions. SemCalVer: Since 20..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Release Notes &#8212; LensKit 2025.0.0a2.dev53+g8afcca0f documentation</title>
+    <title>Release Notes &#8212; LensKit 2025.0.0a2.dev77+g4725505d documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=b23631c4"></script>
+    <script src="../_static/documentation_options.js?v=393b6017"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a2.dev53+g8afcca0f documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a2.dev53+g8afcca0f documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a2.dev77+g4725505d documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a2.dev77+g4725505d documentation - Home"/>
   
   
 </a></div>
@@ -499,6 +499,53 @@ fixes for the current major version.  This will typically happen early in the
 year (except for important bug fixes that need to be backported to previous
 stable versions).</p>
 </section>
+<section id="stability-levels">
+<span id="id2"></span><h2>Stability Levels<a class="headerlink" href="#stability-levels" title="Link to this heading">#</a></h2>
+<p>SemCalVer guarantees are made in accordance with an API’s <em>stability level</em>, to
+clearly document what users can expect and to give sufficient flexibility to
+evolve experimental or in-progress APIs.</p>
+<p>Stability levels are defined with respect to two different types of interaction
+with an API:</p>
+<ul class="simple">
+<li><p>The <em>caller</em> that calls the function, instantiates the class, etc.</p></li>
+<li><p>An <em>implementer</em> that implements an interface, subclasses a class, etc.;
+this is mostly relevant for classes and sometimes methods, not individual
+functions.</p></li>
+</ul>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Stability guarantees do not take effect until <a class="reference internal" href="2025.html#id1"><span class="std std-ref">2025.1 (in progress)</span></a> is released.</p>
+</div>
+<p>There are four stability levels for LensKit classes, functions, etc.:</p>
+<dl class="simple glossary">
+<dt id="term-Full-stability">Full stability<a class="headerlink" href="#term-Full-stability" title="Link to this term">#</a></dt><dd><p>For code at the full stability level, we will avoid breaking changes for
+both callers and (where applicable) implementers until the next annual major
+version bump.  Any methods added to a full-stability base class in a minor
+version will have implementations that work in terms of the
+previously-defined abstract methods. Full stability does <strong>not</strong> guarantee
+that minor versions will not add new methods that may conflict with methods
+added by implementors, so exercise care when adding public (non-underscore)
+methods to subclasses.</p>
+</dd>
+<dt id="term-Caller-stability">Caller stability<a class="headerlink" href="#term-Caller-stability" title="Link to this term">#</a></dt><dd><p>For code at the caller stability level, we will avoid breaking changes for
+callers until the next major version bump, but may change the code in ways
+that break subclasses or interface re-implementations.</p>
+</dd>
+<dt id="term-Testing-stability">Testing stability<a class="headerlink" href="#term-Testing-stability" title="Link to this term">#</a></dt><dd><p>Testing-level interfaces are generally stable but may have breaking changes
+in minor releases.  Such changes will be clearly documented in the release
+notes.  This stability level is for code we want people to be able to start
+using freely, but may need to change as we gain experience with the interface.</p>
+</dd>
+<dt id="term-Internal-stability">Internal stability<a class="headerlink" href="#term-Internal-stability" title="Link to this term">#</a></dt><dt id="term-Experimental-stability">Experimental stability<a class="headerlink" href="#term-Experimental-stability" title="Link to this term">#</a></dt><dd><p>Internal and experimental interfaces may change at any time, and breaking
+changes will not necessarily be highlighted as such in the release notes.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a class or function does not specify a stability level, assume the
+internal/experimental level.</p>
+</div>
+</section>
 <section id="dependency-versioning">
 <span id="dep-policy"></span><h2>Dependency Versioning<a class="headerlink" href="#dependency-versioning" title="Link to this heading">#</a></h2>
 <p>LensKit uses <a class="reference external" href="https://scientific-python.org/specs/spec-0000/">SPEC0</a>, a new standard adopted by many packages in the scientific
@@ -568,6 +615,7 @@ LensKit currently works with PyTorch 2.1 and newer.</p>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semcalver">SemCalVer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stability-levels">Stability Levels</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dependency-versioning">Dependency Versioning</a></li>
 </ul>
   </nav></div>

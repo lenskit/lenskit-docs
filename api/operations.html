@@ -19,7 +19,7 @@
 <meta name="description" content="The lenskit.operations module defines convenience functions for various recommender operations, simplifying the calls to the underlying pipeline. Each of these functions takes a pipeline, along wit..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Operation Functions &#8212; LensKit 2025.0.0a2.dev53+g8afcca0f documentation</title>
+    <title>Operation Functions &#8212; LensKit 2025.0.0a2.dev77+g4725505d documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=b23631c4"></script>
+    <script src="../_static/documentation_options.js?v=393b6017"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a2.dev53+g8afcca0f documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a2.dev53+g8afcca0f documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a2.dev77+g4725505d documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a2.dev77+g4725505d documentation - Home"/>
   
   
 </a></div>
@@ -504,6 +504,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Implementation Helpers</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lenskit.stats.html">lenskit.stats</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="lenskit.logging.html">lenskit.logging</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.config.html">lenskit.logging.config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.monitor.html">lenskit.logging.monitor</a></li>
@@ -603,6 +604,13 @@ can directly import them:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">lenskit</span> <span class="kn">import</span> <span class="n">recommend</span><span class="p">,</span> <span class="n">score</span>
 </pre></div>
 </div>
+<div class="note admonition">
+<p class="admonition-title">Stability: Full</p>
+<p>
+This API is at the <strong>full</strong> stability level; breaking changes for both callers
+and implementers will be reserved for annual major version bumps. See
+<a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a> for details.</p>
+</div>
 <section id="recommending">
 <h2>Recommending<a class="headerlink" href="#recommending" title="Link to this heading">#</a></h2>
 <p>This function is the primary recommendation function to obtain a list of
@@ -613,19 +621,24 @@ recommended items.</p>
 <dd><p>Generate recommendations for a user or query.  This calls the specified
 pipeline component (the <code class="docutils literal notranslate"><span class="pre">'recommender'</span></code> by default) and returns the
 resulting item list.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dl class="field-list">
+<dt class="field-odd">Stability<span class="colon">:</span></dt>
+<dd class="field-odd">Full (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>pipeline</strong> (<a class="reference internal" href="lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><em>Pipeline</em></a>) – The pipeline to run.</p></li>
-<li><p><strong>query</strong> (<a class="reference internal" href="lenskit.data.RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.query.RecQuery"><em>RecQuery</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.2)"><em>str_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.2)"><em>bytes_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.object_" title="(in NumPy v2.2)"><em>object_</em></a><em> | </em><a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a><em> | </em><em>None</em>) – The user ID or other query data for the recommendation.</p></li>
+<li><p><strong>query</strong> (<em>QueryInput</em>) – The user ID or other query data for the recommendation.</p></li>
 <li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – The number of items to recommend.</p></li>
-<li><p><strong>items</strong> (<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.13)"><em>Sequence</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.2)"><em>str_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.2)"><em>bytes_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.object_" title="(in NumPy v2.2)"><em>object_</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>, </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.2)"><em>dtype</em></a><em>[</em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.2)"><em>str_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.2)"><em>bytes_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.object_" title="(in NumPy v2.2)"><em>object_</em></a><em>]</em><em>] </em><em>| </em><em>pd.Series</em><em>[</em><em>CoreID</em><em>] </em><em>| </em><em>None</em>) – The candidate items, or <code class="docutils literal notranslate"><span class="pre">None</span></code> to use the pipeline’s default
+<li><p><strong>items</strong> (<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><em>ItemList</em></a><em> | </em><em>IDSequence</em><em> | </em><em>None</em>) – The candidate items, or <code class="docutils literal notranslate"><span class="pre">None</span></code> to use the pipeline’s default
 candidate selector.</p></li>
 <li><p><strong>component</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the component implementing the recommender.</p></li>
 </ul>
 </dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The recommended items as an ordered item list.</p>
+</dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a></p>
+<dd class="field-even"><p><a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList">ItemList</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -641,18 +654,23 @@ or history); they differ only in their default component.</p>
 <dd><p>Score items with respect to a user or query.  This calls the specified
 pipeline component (the <code class="docutils literal notranslate"><span class="pre">'scorer'</span></code> by default) and returns the resulting
 item list.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dl class="field-list">
+<dt class="field-odd">Stability<span class="colon">:</span></dt>
+<dd class="field-odd">Full (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>pipeline</strong> (<a class="reference internal" href="lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><em>Pipeline</em></a>) – The pipeline to run.</p></li>
-<li><p><strong>query</strong> (<a class="reference internal" href="lenskit.data.RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.query.RecQuery"><em>RecQuery</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.2)"><em>str_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.2)"><em>bytes_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.object_" title="(in NumPy v2.2)"><em>object_</em></a><em> | </em><a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a><em> | </em><em>None</em>) – The user ID or other query data for the recommendation.</p></li>
-<li><p><strong>items</strong> (<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.13)"><em>Sequence</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.2)"><em>str_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.2)"><em>bytes_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.object_" title="(in NumPy v2.2)"><em>object_</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>, </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.2)"><em>dtype</em></a><em>[</em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.2)"><em>str_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.2)"><em>bytes_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.object_" title="(in NumPy v2.2)"><em>object_</em></a><em>]</em><em>] </em><em>| </em><em>pd.Series</em><em>[</em><em>CoreID</em><em>]</em>) – The candidate items, or <code class="docutils literal notranslate"><span class="pre">None</span></code> to use the pipeline’s default
+<li><p><strong>query</strong> (<em>QueryInput</em>) – The user ID or other query data for the recommendation.</p></li>
+<li><p><strong>items</strong> (<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><em>ItemList</em></a><em> | </em><em>IDSequence</em>) – The candidate items, or <code class="docutils literal notranslate"><span class="pre">None</span></code> to use the pipeline’s default
 candidate selector.</p></li>
 <li><p><strong>component</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the component implementing the scorer.</p></li>
 </ul>
 </dd>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The items with scores in the <code class="docutils literal notranslate"><span class="pre">score</span></code> field.</p>
+</dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a></p>
+<dd class="field-even"><p><a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList">ItemList</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -665,17 +683,19 @@ defaults to the <code class="docutils literal notranslate"><span class="pre">'ra
 the rating predictor may have additional configuration such as fallbacks or
 transformations to ensure every item is scored and the scores are valid
 rating predictions; the scorer typically returns raw scores.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dl class="field-list">
+<dt class="field-odd">Stability<span class="colon">:</span></dt>
+<dd class="field-odd">Full (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>pipeline</strong> (<a class="reference internal" href="lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><em>Pipeline</em></a>)</p></li>
-<li><p><strong>query</strong> (<a class="reference internal" href="lenskit.data.RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.query.RecQuery"><em>RecQuery</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.2)"><em>str_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.2)"><em>bytes_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.object_" title="(in NumPy v2.2)"><em>object_</em></a><em> | </em><a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a><em> | </em><em>None</em>)</p></li>
-<li><p><strong>items</strong> (<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Sequence" title="(in Python v3.13)"><em>Sequence</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.2)"><em>str_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.2)"><em>bytes_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.object_" title="(in NumPy v2.2)"><em>object_</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>, </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.2)"><em>dtype</em></a><em>[</em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.2)"><em>str_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.2)"><em>bytes_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.object_" title="(in NumPy v2.2)"><em>object_</em></a><em>]</em><em>] </em><em>| </em><em>pd.Series</em><em>[</em><em>CoreID</em><em>]</em>)</p></li>
+<li><p><strong>query</strong> (<em>QueryInput</em>)</p></li>
+<li><p><strong>items</strong> (<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><em>ItemList</em></a><em> | </em><em>IDSequence</em>)</p></li>
 <li><p><strong>component</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList">ItemList</a></p>
 </dd>
 </dl>
 </dd></dl>

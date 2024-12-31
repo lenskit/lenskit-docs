@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.pipeline.Pipeline &#8212; LensKit 2025.0.0a2.dev53+g8afcca0f documentation</title>
+    <title>lenskit.pipeline.Pipeline &#8212; LensKit 2025.0.0a2.dev77+g4725505d documentation</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=b23631c4"></script>
+    <script src="../_static/documentation_options.js?v=393b6017"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a2.dev53+g8afcca0f documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a2.dev53+g8afcca0f documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a2.dev77+g4725505d documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a2.dev77+g4725505d documentation - Home"/>
   
   
 </a></div>
@@ -502,6 +502,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Implementation Helpers</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="lenskit.stats.html">lenskit.stats</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="lenskit.logging.html">lenskit.logging</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.config.html">lenskit.logging.config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.monitor.html">lenskit.logging.monitor</a></li>
@@ -605,13 +606,15 @@ way.  It allows you to wire together components in (mostly) abitrary graphs,
 train them on data, and serialize pipelines to disk for use elsewhere.</p>
 <p>If you have a scoring model and just want to generate recommenations with a
 default setup and minimal configuration, see <a class="reference internal" href="lenskit.pipeline.topn_pipeline.html#lenskit.pipeline.topn_pipeline" title="lenskit.pipeline.topn_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">topn_pipeline()</span></code></a>.</p>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – A name for the pipeline.</p></li>
 <li><p><strong>version</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>) – A numeric version for the pipeline.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Stability<span class="colon">:</span></dt>
+<dd class="field-even">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.pipeline.Pipeline.__init__">
@@ -686,7 +689,7 @@ default setup and minimal configuration, see <a class="reference internal" href=
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.Pipeline.train" title="lenskit.pipeline.Pipeline.train"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train</span></code></a>(data, *[, retrain])</p></td>
 <td><p>Trains the pipeline's trainable components (those implementing the <code class="xref py py-class docutils literal notranslate"><span class="pre">TrainableComponent</span></code> interface) on some training data.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.Pipeline.use_first_of" title="lenskit.pipeline.Pipeline.use_first_of"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_first_of</span></code></a>(name, input, fallback)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.Pipeline.use_first_of" title="lenskit.pipeline.Pipeline.use_first_of"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_first_of</span></code></a>(name, primary, fallback)</p></td>
 <td><p>Ergonomic method to create a new node that returns the result of its <code class="docutils literal notranslate"><span class="pre">input</span></code> if it is provided and not <code class="docutils literal notranslate"><span class="pre">None</span></code>, and otherwise returns the result of <code class="docutils literal notranslate"><span class="pre">fallback</span></code>.</p></td>
 </tr>
 </tbody>
@@ -1098,7 +1101,7 @@ last node added to the pipeline).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.pipeline.Pipeline.use_first_of">
-<span class="sig-name descname"><span class="pre">use_first_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fallback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Pipeline.use_first_of" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">use_first_of</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">primary</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fallback</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Pipeline.use_first_of" title="Link to this definition">#</a></dt>
 <dd><p>Ergonomic method to create a new node that returns the result of its
 <code class="docutils literal notranslate"><span class="pre">input</span></code> if it is provided and not <code class="docutils literal notranslate"><span class="pre">None</span></code>, and otherwise returns the
 result of <code class="docutils literal notranslate"><span class="pre">fallback</span></code>.  This method is used for things like filling in
@@ -1142,8 +1145,8 @@ with arbitrarily-deep transitive chains.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>) – The name of the node.</p></li>
-<li><p><strong>input</strong> (<a class="reference internal" href="lenskit.pipeline.Node.html#lenskit.pipeline.Node" title="lenskit.pipeline.nodes.Node"><em>Node</em></a><em>[</em><em>T</em><em> | </em><em>None</em><em>]</em>) – The node to use, if it is available.</p></li>
-<li><p><strong>fallback</strong> (<a class="reference internal" href="lenskit.pipeline.Node.html#lenskit.pipeline.Node" title="lenskit.pipeline.nodes.Node"><em>Node</em></a><em>[</em><em>T</em><em>]</em>) – The node to use if <code class="docutils literal notranslate"><span class="pre">input</span></code> does not provide a value.</p></li>
+<li><p><strong>primary</strong> (<a class="reference internal" href="lenskit.pipeline.Node.html#lenskit.pipeline.Node" title="lenskit.pipeline.nodes.Node"><em>Node</em></a><em>[</em><em>T</em><em> | </em><em>None</em><em>]</em>) – The node to use as the primary input, if it is available.</p></li>
+<li><p><strong>fallback</strong> (<a class="reference internal" href="lenskit.pipeline.Node.html#lenskit.pipeline.Node" title="lenskit.pipeline.nodes.Node"><em>Node</em></a><em>[</em><em>T</em><em>]</em>) – The node to use if the primary input does not provide a value.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
