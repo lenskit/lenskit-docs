@@ -19,7 +19,7 @@
 <meta name="description" content="Logging, progress, and resource records. Functions Modules" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.logging &#8212; LensKit 2025.0.0a2.dev83+g48eb6456 documentation</title>
+    <title>lenskit.logging &#8212; LensKit 2025.0.0a2.dev91+g0b55981b documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=ca482ce9"></script>
+    <script src="../_static/documentation_options.js?v=99235848"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a2.dev83+g48eb6456 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a2.dev83+g48eb6456 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a2.dev91+g0b55981b documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a2.dev91+g0b55981b documentation - Home"/>
   
   
 </a></div>
@@ -966,23 +966,14 @@ memory used since the process was started).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.logging.get_logger">
-<span class="sig-prename descclassname"><span class="pre">lenskit.logging.</span></span><span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">initial_values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.get_logger" title="Link to this definition">#</a></dt>
-<dd><p>Only calls <cite>structlog.get_logger</cite>, but has the correct type hints.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>Does <strong>not</strong> check whether – or ensure that – you’ve configured
-<em>structlog</em> for standard library <a class="reference external" href="https://docs.python.org/3/library/logging.html#module-logging" title="(in Python v3.13)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code></a>!</p>
-<p>See <span class="xref std std-doc">standard-library</span> for details.</p>
-</div>
-<div class="versionadded">
-<p><span class="versionmodified added">Added in version 20.2.0.</span></p>
-</div>
+<span class="sig-prename descclassname"><span class="pre">lenskit.logging.</span></span><span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.get_logger" title="Link to this definition">#</a></dt>
+<dd><p>Get a logger.  This works like <a class="reference external" href="https://www.structlog.org/en/stable/api.html#structlog.stdlib.get_logger" title="(in structlog v24.4)"><code class="xref py py-func docutils literal notranslate"><span class="pre">structlog.stdlib.get_logger()</span></code></a>, except
+the returned proxy logger is quiet (only WARN and higher messages) if
+structlog has not been configured. LensKit code should use this instead of
+obtaining loggers from Structlog directly.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
-<li><p><strong>initial_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
-</ul>
+<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://www.structlog.org/en/stable/api.html#structlog.stdlib.BoundLogger" title="(in structlog v24.4)"><em>BoundLogger</em></a></p>
@@ -996,6 +987,8 @@ memory used since the process was started).</p>
 <dd><p>Emit a trace-level message, if LensKit tracing is enabled.  Trace-level
 messages are more fine-grained than debug-level messages, and you usually
 don’t want them.</p>
+<p>This function does not work on the lazy proxies returned by
+<a class="reference internal" href="#lenskit.logging.get_logger" title="lenskit.logging.get_logger"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_logger()</span></code></a> and similar — it only works on bound loggers.</p>
 <dl class="field-list">
 <dt class="field-odd">Stability<span class="colon">:</span></dt>
 <dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
