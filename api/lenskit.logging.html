@@ -19,7 +19,7 @@
 <meta name="description" content="Logging, progress, and resource records. Modules" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.logging &#8212; LensKit 2025.0.0a4.dev6+g91216fd7 documentation</title>
+    <title>lenskit.logging &#8212; LensKit 2025.0.0a4.dev11+g42a06c82 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=dc48376b"></script>
+    <script src="../_static/documentation_options.js?v=00ccedf9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a4.dev6+g91216fd7 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a4.dev6+g91216fd7 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a4.dev11+g42a06c82 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a4.dev11+g42a06c82 documentation - Home"/>
   
   
 </a></div>
@@ -434,6 +434,7 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Configurable.html">lenskit.pipeline.Configurable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.RecPipelineBuilder.html">lenskit.pipeline.RecPipelineBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.topn_pipeline.html">lenskit.pipeline.topn_pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.PipelineConfig.html">lenskit.pipeline.PipelineConfig</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="operations.html">Operation Functions</a></li>
@@ -969,17 +970,38 @@ memory used since the process was started).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.logging.get_logger">
-<span class="sig-prename descclassname"><span class="pre">lenskit.logging.</span></span><span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.get_logger" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.logging.</span></span><span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">remove_private</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.get_logger" title="Link to this definition">#</a></dt>
 <dd><p>Get a logger.  This works like <a class="reference external" href="https://www.structlog.org/en/stable/api.html#structlog.stdlib.get_logger" title="(in structlog v24.4)"><code class="xref py py-func docutils literal notranslate"><span class="pre">structlog.stdlib.get_logger()</span></code></a>, except
 the returned proxy logger is quiet (only WARN and higher messages) if
 structlog has not been configured. LensKit code should use this instead of
 obtaining loggers from Structlog directly.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
+<p>It also suppresses private module name components of the logger name, so
+e.g. <code class="docutils literal notranslate"><span class="pre">lenskit.pipeline._impl</span></code> becomes <a href="#id1"><span class="problematic" id="id2">``</span></a>lenskit.pipeline`.</p>
+<dl class="simple">
+<dt>Params:</dt><dd><dl class="simple">
+<dt>name:</dt><dd><p>The logger name.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://www.structlog.org/en/stable/api.html#structlog.stdlib.BoundLogger" title="(in structlog v24.4)"><em>BoundLogger</em></a></p>
+<dt>remove_private:</dt><dd><p>Set to <code class="docutils literal notranslate"><span class="pre">False</span></code> to keep private module components of the logger
+name instead of removing them.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A lazy proxy logger.  The returned logger is type-compatible with
+<code class="xref py py-class docutils literal notranslate"><span class="pre">structlib.stdlib.BoundLogger</span></code>, but is actually an instance of an
+internal proxy that provies more sensible defaults and handles LensKit’s
+TRACE-level logging support.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
+<li><p><strong>remove_private</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://www.structlog.org/en/stable/api.html#structlog.stdlib.BoundLogger" title="(in structlog v24.4)"><em>BoundLogger</em></a></p>
 </dd>
 </dl>
 </dd></dl>

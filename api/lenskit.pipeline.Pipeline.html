@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.pipeline.Pipeline &#8212; LensKit 2025.0.0a4.dev6+g91216fd7 documentation</title>
+    <title>lenskit.pipeline.Pipeline &#8212; LensKit 2025.0.0a4.dev11+g42a06c82 documentation</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=dc48376b"></script>
+    <script src="../_static/documentation_options.js?v=00ccedf9"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a4.dev6+g91216fd7 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a4.dev6+g91216fd7 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a4.dev11+g42a06c82 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a4.dev11+g42a06c82 documentation - Home"/>
   
   
 </a></div>
@@ -432,6 +432,7 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Configurable.html">lenskit.pipeline.Configurable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.RecPipelineBuilder.html">lenskit.pipeline.RecPipelineBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.topn_pipeline.html">lenskit.pipeline.topn_pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.PipelineConfig.html">lenskit.pipeline.PipelineConfig</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="operations.html">Operation Functions</a></li>
@@ -656,8 +657,8 @@ default setup and minimal configuration, see <a class="reference internal" href=
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.Pipeline.create_input" title="lenskit.pipeline.Pipeline.create_input"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_input</span></code></a>(name, *types)</p></td>
 <td><p>Create an input node for the pipeline.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_config</span></code>(config)</p></td>
-<td><p></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.Pipeline.from_config" title="lenskit.pipeline.Pipeline.from_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_config</span></code></a>(config)</p></td>
+<td><p>Reconstruct a pipeline from a serialized configuration.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.Pipeline.get_config" title="lenskit.pipeline.Pipeline.get_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_config</span></code></a>(*[, include_hash])</p></td>
 <td><p>Get this pipeline's configuration for serialization.</p></td>
@@ -949,7 +950,7 @@ the clone does <strong>not</strong> have the original’s learned parameters. Th
 is the default clone method.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">&quot;pipeline-config&quot;</span></code></dt><dd><p>Round-trip the entire pipeline through <a class="reference internal" href="#lenskit.pipeline.Pipeline.get_config" title="lenskit.pipeline.Pipeline.get_config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_config()</span></code></a> and
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">from_config()</span></code>.</p>
+<a class="reference internal" href="#lenskit.pipeline.Pipeline.from_config" title="lenskit.pipeline.Pipeline.from_config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_config()</span></code></a>.</p>
 </dd>
 </dl>
 <dl class="field-list simple">
@@ -961,7 +962,7 @@ is the default clone method.</p>
 instances created by round-tripping the configuration.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><em>Pipeline</em></a></p>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.pipeline.Pipeline" title="lenskit.pipeline._impl.Pipeline"><em>Pipeline</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -988,7 +989,7 @@ are present in the pipeline.</p>
 <dd class="field-odd"><p><strong>include_hash</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>PipelineConfig</em></p>
+<dd class="field-even"><p><a class="reference internal" href="lenskit.pipeline.PipelineConfig.html#lenskit.pipeline.PipelineConfig" title="lenskit.pipeline.config.PipelineConfig"><em>PipelineConfig</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1010,6 +1011,32 @@ returning the hex-encoded SHA256 hash of that configuration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.pipeline.Pipeline.from_config">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Pipeline.from_config" title="Link to this definition">#</a></dt>
+<dd><p>Reconstruct a pipeline from a serialized configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><em>object</em></a>) – The configuration object, as loaded from JSON, TOML, YAML, or
+similar. Will be validated into a <a class="reference internal" href="lenskit.pipeline.PipelineConfig.html#lenskit.pipeline.PipelineConfig" title="lenskit.pipeline.PipelineConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">PipelineConfig</span></code></a>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The configured (but not trained) pipeline.</p>
+</dd>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>PipelineError</strong> – If there is a configuration error reconstructing the pipeline.</p>
+</dd>
+<dt class="field-even">Warns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>PipelineWarning</strong> – If the configuration is funny but usable; for example, the
+configuration includes a hash but the constructed pipeline does
+not have a matching hash.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Self" title="(in Python v3.13)"><em>Self</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1223,6 +1250,7 @@ with arbitrarily-deep transitive chains.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.clone"><code class="docutils literal notranslate"><span class="pre">Pipeline.clone()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.get_config"><code class="docutils literal notranslate"><span class="pre">Pipeline.get_config()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.config_hash"><code class="docutils literal notranslate"><span class="pre">Pipeline.config_hash()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.from_config"><code class="docutils literal notranslate"><span class="pre">Pipeline.from_config()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.train"><code class="docutils literal notranslate"><span class="pre">Pipeline.train()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.run"><code class="docutils literal notranslate"><span class="pre">Pipeline.run()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Pipeline.run_all"><code class="docutils literal notranslate"><span class="pre">Pipeline.run_all()</span></code></a></li>
