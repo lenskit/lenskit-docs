@@ -19,7 +19,7 @@
 <meta name="description" content="Since version 2025.1 (in progress), LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Recommendation Pipelines &#8212; LensKit 2025.0.0a5.dev61+g275b43b2 documentation</title>
+    <title>Recommendation Pipelines &#8212; LensKit 2025.0.0a5.dev62+gb287d651 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=1c0ba024"></script>
+    <script src="../_static/documentation_options.js?v=d8678535"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -178,8 +178,8 @@ window.addEventListener("load", load);
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev61+g275b43b2 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev61+g275b43b2 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev62+gb287d651 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev62+gb287d651 documentation - Home"/>
   
   
 </a></div>
@@ -567,7 +567,7 @@ like user history and candidate set lookup.</p>
 <div class="note admonition">
 <p class="admonition-title">Acknowledgements</p>
 <p>The LensKit pipeline design is heavily inspired by the pipeline abstraction
-Karl Higley originally created for <a class="reference external" href="https://ccri-poprox.github.io/poprox-researcher-manual/reference/recommender/poprox_recommender.pipeline.html">POPROX</a> (available in the git history),
+Karl Higley originally created for <a href="#id6"><span class="problematic" id="id7">POPROX_</span></a> (available in the git history),
 as well as by <a class="reference external" href="https://docs.haystack.deepset.ai/docs/pipelines">Haystack</a>.</p>
 </div>
 <section id="constructing-pipelines">
@@ -748,7 +748,7 @@ configuration can be reloaded with <a class="reference internal" href="../api/le
 <span id="standard-pipelines"></span><h2>Standard Layouts<a class="headerlink" href="#standard-layouts" title="Link to this heading">#</a></h2>
 <p>The standard recommendation pipeline, produced by either of the approaches
 described above in <a class="reference internal" href="#pipeline-construct"><span class="std std-ref">Constructing Pipelines</span></a>, looks like this:</p>
-<figure class="align-default" id="id3">
+<figure class="align-default" id="id4">
 <pre  class="mermaid">
         ---
 config:
@@ -793,7 +793,7 @@ flowchart LR
     classDef config font-weight:bold,stroke-width:4px;
 
     </pre><figcaption>
-<p><span class="caption-text">Top-N recommendation pipeline.</span><a class="headerlink" href="#id3" title="Link to this image">#</a></p>
+<p><span class="caption-text">Top-N recommendation pipeline.</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The convenience methods are equivalent to the following pipeline code:</p>
@@ -824,7 +824,7 @@ flowchart LR
 predict ratings for items the primary scorer cannot score (e.g. they are not in
 an item neighborhood), we use the following pipeline (created by
 <a class="reference internal" href="../api/lenskit.pipeline.RecPipelineBuilder.html#lenskit.pipeline.RecPipelineBuilder" title="lenskit.pipeline.RecPipelineBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecPipelineBuilder</span></code></a> when rating prediction is enabled):</p>
-<figure class="align-default" id="id4">
+<figure class="align-default" id="id5">
 <pre  class="mermaid">
         ---
 config:
@@ -877,7 +877,7 @@ flowchart LR
     classDef config font-weight:bold,stroke-width:4px;
 
     </pre><figcaption>
-<p><span class="caption-text">Pipeline for top-N recommendation and rating prediction, with predictions falling back to a baseline scorer.</span><a class="headerlink" href="#id4" title="Link to this image">#</a></p>
+<p><span class="caption-text">Pipeline for top-N recommendation and rating prediction, with predictions falling back to a baseline scorer.</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -1011,6 +1011,40 @@ from two other components could look like this:</p>
 <p>See <a class="reference internal" href="conventions.html#conventions"><span class="std std-ref">Component Conventions</span></a> for more conventions for component design.</p>
 </section>
 </section>
+<section id="poprox-and-other-integrators">
+<h2>POPROX and Other Integrators<a class="headerlink" href="#poprox-and-other-integrators" title="Link to this heading">#</a></h2>
+<p>One of LensKit’s <a class="reference internal" href="principles.html#principles"><span class="std std-ref">design principles</span></a> is “use the pieces you
+want”.  That extends to the pipeline code — while the pipeline components
+included with LensKit use LensKit’s data structures like
+<a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a> and <a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a>, the
+pipeline itself is fully generic.  Components can accept and return any types,
+and the pipeline code makes no assumptions about the kinds of data routed
+through the pipeline, the structure of the pipeline, or the presence or absence
+of any particular components.  The only aspects of component interface or
+behavior defined by the pipeline are that:</p>
+<ul class="simple">
+<li><p>Pipeline objects are callable, and accept their inputs as keyword parameters.</p></li>
+<li><p>Configurable components extend the <a class="reference internal" href="../api/lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a> interface and use
+Pydantic models to house their configurable options (with its requirements,
+such as defining a <code class="docutils literal notranslate"><span class="pre">config</span></code> attribute to store the configuration).</p></li>
+<li><p>Components can be constructed with either zero arguments or a single
+configuration model argument.</p></li>
+</ul>
+<p>The exception to this is training support — <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.train" title="lenskit.pipeline.Pipeline.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.train()</span></code></a> takes a
+LensKit dataset and trains components implementing the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code> protocol.  But it is entirely possible to
+handle model training outside of the pipeline and ignore LensKit <code class="docutils literal notranslate"><span class="pre">train</span></code>
+method.  You can also use the method, but with a different input data object; it
+will fail static typechecking, but <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.train" title="lenskit.pipeline.Pipeline.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.train()</span></code></a> doesn’t actually care
+what the type of its first argument is, and will pass it as-is to the component
+<code class="docutils literal notranslate"><span class="pre">train()</span></code> methods.</p>
+<p>One example of an integrator that uses the pipeline without the rest of
+LensKit’s data structures is _POPROX: the POPROX recommender design uses its own
+data structures, like a Pydantic-backed <code class="docutils literal notranslate"><span class="pre">ArticleSet</span></code>, instead of
+<a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a> and friends, and expects components to be
+pre-trained by other code.  It still uses the LensKit pipeline to wire these
+components together.</p>
+</section>
 </section>
 
 
@@ -1074,6 +1108,7 @@ from two other components could look like this:</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-components">Implementing Components</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#poprox-and-other-integrators">POPROX and Other Integrators</a></li>
 </ul>
   </nav></div>
 
