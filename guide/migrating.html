@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit 2025.1 brings the largest changes to LensKit’s APIs and operation since moving to Python. These changes are a result of years of experience using and teaching the current Python APIs, talki..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Migrating from LensKit 0.x &#8212; LensKit 2025.0.0a4.dev27+gf077dc76 documentation</title>
+    <title>Migrating from LensKit 0.x &#8212; LensKit 2025.0.0a5.dev51+gd1afbcb5 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=5200ed41"></script>
+    <script src="../_static/documentation_options.js?v=97ad1809"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -75,7 +75,7 @@
     <link rel="prev" title="Parallel Processing" href="parallelism.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.0.0a4" />
+  <meta name="docsearch:version" content="2025.0.0a5" />
   </head>
   
   
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a4.dev27+gf077dc76 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a4.dev27+gf077dc76 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev51+gd1afbcb5 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev51+gd1afbcb5 documentation - Home"/>
   
   
 </a></div>
@@ -563,6 +563,10 @@ instead of one list at a time.</p></li>
 <p>New code should use <a class="reference internal" href="../api/lenskit.data.from_interactions_df.html#lenskit.data.from_interactions_df" title="lenskit.data.from_interactions_df"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.data.from_interactions_df()</span></code></a> to convert a Pandas
 data frame into a <a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-func docutils literal notranslate"><span class="pre">Dataset()</span></code></a>, or one of the standard loaders
 such as <a class="reference internal" href="../api/lenskit.data.load_movielens.html#lenskit.data.load_movielens" title="lenskit.data.load_movielens"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.data.load_movielens()</span></code></a>.</p>
+<p>While most LensKit data frame code still recognizes the legacy <code class="docutils literal notranslate"><span class="pre">user</span></code> and
+<code class="docutils literal notranslate"><span class="pre">item</span></code> columns from LensKit 0.14 and earlier, data frames of LensKit data
+should use the column names <code class="docutils literal notranslate"><span class="pre">user_id</span></code> and <code class="docutils literal notranslate"><span class="pre">item_id</span></code> instead, to
+unambiguously distinguish them from user and item numbers.</p>
 <p>Additional dataset construction support and possible implementations (e.g.
 database-backed datasets) are coming, but this is the migration path for the
 typical code patterns used in LensKit 0.14 and earlier.</p>
@@ -662,10 +666,17 @@ them for very different ways of turning scoring models into full recommenders.</
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since 2025, we no longer use the term “algorithm” in LensKit, as it is
-ambiguous and promotes confusion about very different things.  Instead we
+ambiguous and promotes confusion about very different things.  Instead, we
 have “pipelines” consisting of ”components”, some of which may be ”models”
 (for scoring, ranking, etc.).</p>
 </div>
+<section id="configuration-components">
+<h3>Configuration Components<a class="headerlink" href="#configuration-components" title="Link to this heading">#</a></h3>
+<p>Individual components now use <a href="#id2"><span class="problematic" id="id3">Pydantic_</span></a> models to represent their configuration
+(e.g. hyperparameters).  This is to reduce redundancy, improve documentation,
+enable consistent serialization, and validate parameter values in a consistent
+and automated fashion.  See <a class="reference internal" href="pipeline.html#component-config"><span class="std std-ref">Configuring Components</span></a> for details.</p>
+</section>
 </section>
 <section id="obtaining-recommendations">
 <h2>Obtaining Recommendations<a class="headerlink" href="#obtaining-recommendations" title="Link to this heading">#</a></h2>
@@ -790,7 +801,10 @@ provides better defaults (e.g. how users without recommendations are handled).</
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#motivation">Motivation</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-recommenders">Configuring Recommenders</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-recommenders">Configuring Recommenders</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuration-components">Configuration Components</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#obtaining-recommendations">Obtaining Recommendations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-inference">Batch Inference</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-recommendations">Evaluating Recommendations</a></li>
