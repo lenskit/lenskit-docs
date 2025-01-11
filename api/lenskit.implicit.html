@@ -19,7 +19,7 @@
 <meta name="description" content="Classes" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.implicit &#8212; LensKit 2025.0.0a5.dev62+gb287d651 documentation</title>
+    <title>lenskit.implicit &#8212; LensKit 2025.0.0a5.dev83+g1954efb1 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=d8678535"></script>
+    <script src="../_static/documentation_options.js?v=4f8104f3"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev62+gb287d651 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev62+gb287d651 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev83+g1954efb1 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev83+g1954efb1 documentation - Home"/>
   
   
 </a></div>
@@ -430,7 +430,6 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Node.html">lenskit.pipeline.Node</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Lazy.html">lenskit.pipeline.Lazy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Component.html">lenskit.pipeline.Component</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Trainable.html">lenskit.pipeline.Trainable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.RecPipelineBuilder.html">lenskit.pipeline.RecPipelineBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.topn_pipeline.html">lenskit.pipeline.topn_pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.PipelineConfig.html">lenskit.pipeline.PipelineConfig</a></li>
@@ -438,6 +437,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="operations.html">Operation Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Diagnostic APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">Model Training</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
 <ul class="current nav bd-sidenav">
@@ -619,7 +619,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.implicit.BaseRec">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.implicit.</span></span><span class="sig-name descname"><span class="pre">BaseRec</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.implicit.BaseRec" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>[<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>], <a class="reference internal" href="lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable" title="lenskit.pipeline.components.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>[<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>], <a class="reference internal" href="training.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a></p>
 <p>Base class for Implicit-backed recommenders.</p>
 <dl class="field-list">
 <dt class="field-odd">Stability<span class="colon">:</span></dt>
@@ -655,23 +655,15 @@
 <dd><p>The item ID mapping from training.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="lenskit.implicit.BaseRec.is_trained">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_trained</span></span><a class="headerlink" href="#lenskit.implicit.BaseRec.is_trained" title="Link to this definition">#</a></dt>
-<dd><p>Check if this model has already been trained.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.implicit.BaseRec.train">
-<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.implicit.BaseRec.train" title="Link to this definition">#</a></dt>
-<dd><p>Train the pipeline component to learn its parameters from a training
-dataset.</p>
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">TrainingOptions(retrain=True,</span> <span class="pre">device=None,</span> <span class="pre">rng=None)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.implicit.BaseRec.train" title="Link to this definition">#</a></dt>
+<dd><p>Train the model to learn its parameters from a training dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>) – The training dataset.</p></li>
-<li><p><strong>retrain</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, retrain the model even if it has already been
-trained.</p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="training.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><em>TrainingOptions</em></a>) – The training options.</p></li>
 </ul>
 </dd>
 </dl>
@@ -773,7 +765,6 @@ trained.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.implicit.BaseRec.matrix_"><code class="docutils literal notranslate"><span class="pre">BaseRec.matrix_</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.implicit.BaseRec.users_"><code class="docutils literal notranslate"><span class="pre">BaseRec.users_</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.implicit.BaseRec.items_"><code class="docutils literal notranslate"><span class="pre">BaseRec.items_</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.implicit.BaseRec.is_trained"><code class="docutils literal notranslate"><span class="pre">BaseRec.is_trained</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.implicit.BaseRec.train"><code class="docutils literal notranslate"><span class="pre">BaseRec.train()</span></code></a></li>
 </ul>
 </li>

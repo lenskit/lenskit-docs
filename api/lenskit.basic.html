@@ -19,7 +19,7 @@
 <meta name="description" content="Basic and baseline pipeline components. Modules" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.basic &#8212; LensKit 2025.0.0a5.dev62+gb287d651 documentation</title>
+    <title>lenskit.basic &#8212; LensKit 2025.0.0a5.dev83+g1954efb1 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=d8678535"></script>
+    <script src="../_static/documentation_options.js?v=4f8104f3"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -73,7 +73,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="lenskit.basic.bias" href="lenskit.basic.bias.html" />
-    <link rel="prev" title="Diagnostic APIs" href="diagnostics.html" />
+    <link rel="prev" title="Model Training" href="training.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="2025.0.0a5" />
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev62+gb287d651 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev62+gb287d651 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev83+g1954efb1 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev83+g1954efb1 documentation - Home"/>
   
   
 </a></div>
@@ -431,7 +431,6 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Node.html">lenskit.pipeline.Node</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Lazy.html">lenskit.pipeline.Lazy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Component.html">lenskit.pipeline.Component</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Trainable.html">lenskit.pipeline.Trainable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.RecPipelineBuilder.html">lenskit.pipeline.RecPipelineBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.topn_pipeline.html">lenskit.pipeline.topn_pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.PipelineConfig.html">lenskit.pipeline.PipelineConfig</a></li>
@@ -439,6 +438,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="operations.html">Operation Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Diagnostic APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">Model Training</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
 <ul class="current nav bd-sidenav">
@@ -736,7 +736,7 @@ only the composite bias scores are returned.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.basic.BiasScorer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.basic.</span></span><span class="sig-name descname"><span class="pre">BiasScorer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.BiasScorer" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>[<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>]</p>
+<dd><p>Bases: <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>[<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>], <a class="reference internal" href="training.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a></p>
 <p>A user-item bias rating prediction model.  This component uses
 <a class="reference internal" href="#lenskit.basic.BiasModel" title="lenskit.basic.BiasModel"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiasModel</span></code></a> to predict ratings for users and items.</p>
 <dl class="field-list">
@@ -751,13 +751,14 @@ only the composite bias scores are returned.</p>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.basic.BiasScorer.train">
-<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.BiasScorer.train" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">TrainingOptions(retrain=True,</span> <span class="pre">device=None,</span> <span class="pre">rng=None)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.BiasScorer.train" title="Link to this definition">#</a></dt>
 <dd><p>Train the bias model on some rating data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ratings</strong> – The training data (must have ratings).</p></li>
 <li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>)</p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="training.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><em>TrainingOptions</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -771,7 +772,7 @@ only the composite bias scores are returned.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.basic.PopScorer">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.basic.</span></span><span class="sig-name descname"><span class="pre">PopScorer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.PopScorer" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>[<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>], <a class="reference internal" href="lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable" title="lenskit.pipeline.components.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>[<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>], <a class="reference internal" href="training.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a></p>
 <p>Score items by their popularity.  Use with <code class="xref py py-class docutils literal notranslate"><span class="pre">TopN</span></code> to get a
 most-popular-items recommender.</p>
 <dl class="field-list">
@@ -790,23 +791,15 @@ most-popular-items recommender.</p>
 <dd><p>Item popularity scores.</p>
 </dd></dl>
 
-<dl class="py property">
-<dt class="sig sig-object py" id="lenskit.basic.PopScorer.is_trained">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_trained</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#lenskit.basic.PopScorer.is_trained" title="Link to this definition">#</a></dt>
-<dd><p>Check if this model has already been trained.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.basic.PopScorer.train">
-<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.PopScorer.train" title="Link to this definition">#</a></dt>
-<dd><p>Train the pipeline component to learn its parameters from a training
-dataset.</p>
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">TrainingOptions(retrain=True,</span> <span class="pre">device=None,</span> <span class="pre">rng=None)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.PopScorer.train" title="Link to this definition">#</a></dt>
+<dd><p>Train the model to learn its parameters from a training dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>) – The training dataset.</p></li>
-<li><p><strong>retrain</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, retrain the model even if it has already been
-trained.</p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="training.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><em>TrainingOptions</em></a>) – The training options.</p></li>
 </ul>
 </dd>
 </dl>
@@ -883,7 +876,7 @@ class supports derivable RNGs.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.basic.UserTrainingHistoryLookup">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.basic.</span></span><span class="sig-name descname"><span class="pre">UserTrainingHistoryLookup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.UserTrainingHistoryLookup" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>[<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>], <a class="reference internal" href="lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable" title="lenskit.pipeline.components.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>[<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>], <a class="reference internal" href="training.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a></p>
 <p>Look up a user’s history from the training data.</p>
 <dl class="field-list">
 <dt class="field-odd">Stability<span class="colon">:</span></dt>
@@ -895,23 +888,15 @@ class supports derivable RNGs.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py property">
-<dt class="sig sig-object py" id="lenskit.basic.UserTrainingHistoryLookup.is_trained">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_trained</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#lenskit.basic.UserTrainingHistoryLookup.is_trained" title="Link to this definition">#</a></dt>
-<dd><p>Check if this model has already been trained.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.basic.UserTrainingHistoryLookup.train">
-<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.UserTrainingHistoryLookup.train" title="Link to this definition">#</a></dt>
-<dd><p>Train the pipeline component to learn its parameters from a training
-dataset.</p>
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">TrainingOptions(retrain=True,</span> <span class="pre">device=None,</span> <span class="pre">rng=None)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.UserTrainingHistoryLookup.train" title="Link to this definition">#</a></dt>
+<dd><p>Train the model to learn its parameters from a training dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>) – The training dataset.</p></li>
-<li><p><strong>retrain</strong> – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, retrain the model even if it has already been
-trained.</p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="training.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><em>TrainingOptions</em></a>) – The training options.</p></li>
 </ul>
 </dd>
 </dl>
@@ -1015,12 +1000,12 @@ be combined with a component like
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="diagnostics.html"
+       href="training.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Diagnostic APIs</p>
+        <p class="prev-next-title">Model Training</p>
       </div>
     </a>
     <a class="right-next"
@@ -1069,7 +1054,6 @@ be combined with a component like
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.PopScorer"><code class="docutils literal notranslate"><span class="pre">PopScorer</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.PopScorer.item_pop_"><code class="docutils literal notranslate"><span class="pre">PopScorer.item_pop_</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.PopScorer.is_trained"><code class="docutils literal notranslate"><span class="pre">PopScorer.is_trained</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.PopScorer.train"><code class="docutils literal notranslate"><span class="pre">PopScorer.train()</span></code></a></li>
 </ul>
 </li>
@@ -1077,7 +1061,6 @@ be combined with a component like
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.RandomSelector"><code class="docutils literal notranslate"><span class="pre">RandomSelector</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.SoftmaxRanker"><code class="docutils literal notranslate"><span class="pre">SoftmaxRanker</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.UserTrainingHistoryLookup"><code class="docutils literal notranslate"><span class="pre">UserTrainingHistoryLookup</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.UserTrainingHistoryLookup.is_trained"><code class="docutils literal notranslate"><span class="pre">UserTrainingHistoryLookup.is_trained</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.UserTrainingHistoryLookup.train"><code class="docutils literal notranslate"><span class="pre">UserTrainingHistoryLookup.train()</span></code></a></li>
 </ul>
 </li>

@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.pipeline.Pipeline &#8212; LensKit 2025.0.0a5.dev62+gb287d651 documentation</title>
+    <title>lenskit.pipeline.Pipeline &#8212; LensKit 2025.0.0a5.dev83+g1954efb1 documentation</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=d8678535"></script>
+    <script src="../_static/documentation_options.js?v=4f8104f3"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev62+gb287d651 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev62+gb287d651 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev83+g1954efb1 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev83+g1954efb1 documentation - Home"/>
   
   
 </a></div>
@@ -428,7 +428,6 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Node.html">lenskit.pipeline.Node</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Lazy.html">lenskit.pipeline.Lazy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Component.html">lenskit.pipeline.Component</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Trainable.html">lenskit.pipeline.Trainable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.RecPipelineBuilder.html">lenskit.pipeline.RecPipelineBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.topn_pipeline.html">lenskit.pipeline.topn_pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.PipelineConfig.html">lenskit.pipeline.PipelineConfig</a></li>
@@ -436,6 +435,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="operations.html">Operation Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Diagnostic APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">Model Training</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
 <ul class="nav bd-sidenav">
@@ -606,6 +606,8 @@ way.  It allows you to wire together components in (mostly) abitrary graphs,
 train them on data, and serialize pipelines to disk for use elsewhere.</p>
 <p>If you have a scoring model and just want to generate recommenations with a
 default setup and minimal configuration, see <a class="reference internal" href="lenskit.pipeline.topn_pipeline.html#lenskit.pipeline.topn_pipeline" title="lenskit.pipeline.topn_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">topn_pipeline()</span></code></a>.</p>
+<p>Pipelines are also <a class="reference internal" href="training.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a>, and train all
+trainable components.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -686,7 +688,7 @@ default setup and minimal configuration, see <a class="reference internal" href=
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.Pipeline.set_default" title="lenskit.pipeline.Pipeline.set_default"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_default</span></code></a>(name, node)</p></td>
 <td><p>Set the default wiring for a component input.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.Pipeline.train" title="lenskit.pipeline.Pipeline.train"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train</span></code></a>(data, *[, retrain])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.Pipeline.train" title="lenskit.pipeline.Pipeline.train"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train</span></code></a>(data[, options])</p></td>
 <td><p>Trains the pipeline's trainable components (those implementing the <code class="xref py py-class docutils literal notranslate"><span class="pre">TrainableComponent</span></code> interface) on some training data.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.Pipeline.use_first_of" title="lenskit.pipeline.Pipeline.use_first_of"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_first_of</span></code></a>(name, primary, fallback)</p></td>
@@ -1042,14 +1044,22 @@ not have a matching hash.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.pipeline.Pipeline.train">
-<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">retrain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Pipeline.train" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Pipeline.train" title="Link to this definition">#</a></dt>
 <dd><p>Trains the pipeline’s trainable components (those implementing the
 <code class="xref py py-class docutils literal notranslate"><span class="pre">TrainableComponent</span></code> interface) on some training data.</p>
+<div class="note admonition">
+<p class="admonition-title">Random Number Generation</p>
+<p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">TrainingOptions.rng</span></code> is set and is not a generator or bit
+generator (i.e. it is a seed), then this method wraps the seed in a
+<a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" title="(in NumPy v2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SeedSequence</span></code></a> and calls
+<code class="xref py py-class docutils literal notranslate"><span class="pre">spawn()</span></code> to generate a distinct
+seed for each component in the pipeline.</p>
+</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>) – The dataset to train on.</p></li>
-<li><p><strong>retrain</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to re-train components that have already been trained.</p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="training.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><em>TrainingOptions</em></a><em> | </em><em>None</em>) – The training options.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, default options are used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>

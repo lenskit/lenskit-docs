@@ -19,7 +19,7 @@
 <meta name="description" content="The components shipped with LensKit follow certain conventions to make their configuration and operation consistent and predictable. We encourage you to follow these conventions in your own code as..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Component Conventions &#8212; LensKit 2025.0.0a5.dev62+gb287d651 documentation</title>
+    <title>Component Conventions &#8212; LensKit 2025.0.0a5.dev83+g1954efb1 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=d8678535"></script>
+    <script src="../_static/documentation_options.js?v=4f8104f3"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev62+gb287d651 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev62+gb287d651 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev83+g1954efb1 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev83+g1954efb1 documentation - Home"/>
   
   
 </a></div>
@@ -520,17 +520,28 @@ specified, the runtime length takes precedence.</p>
 </section>
 <section id="random-seeds">
 <span id="rng"></span><h2>Random Seeds<a class="headerlink" href="#random-seeds" title="Link to this heading">#</a></h2>
-<p>LensKit components follow <a class="reference external" href="https://scientific-python.org/specs/spec-0007/">SPEC 7</a> for specifying random number seeds.
-Components that use randomization (either at runtime, or to set initial
-conditions for training) have a constructor parameter <cite>rng</cite> that takes either a
-<a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a> or seed material.  If you want reproducible
-stochastic pipelines, configure the random seeds for your components.</p>
-<p>This convention is also followed for other LensKit code, such as the <a class="reference external" href="./splitting">data
-splitting support</a>.</p>
+<p>LensKit components follow <a class="reference external" href="https://scientific-python.org/specs/spec-0007/">SPEC 7</a> for specifying random number seeds.  If you
+want reproducible stochastic pipelines, configure the random seeds for your
+components and/or training process.</p>
+<p>Components that use randomization at <strong>inference time</strong> take either seed
+material or a <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a> as an <code class="docutils literal notranslate"><span class="pre">rng</span></code> constructor
+parameter; if seed material is supplied, that seed should be considered part of
+the configuration (see the source code in <a class="reference internal" href="../api/lenskit.basic.random.html#module-lenskit.basic.random" title="lenskit.basic.random"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.basic.random</span></code></a> for
+examples).</p>
+<p>Components that use randomization at <strong>training time</strong> (e.g. to shuffle data or
+to initialize parameter values) should obtain their generator or seed from the
+<a class="reference internal" href="../api/training.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TrainingOptions</span></code></a>.  This makes it easy to configure a
+seed for the training process without needing to configure each component.  For
+consistent configurability, it’s best for components using other frameworks such
+as PyTorch to use NumPy to initialize the parameter values and then convert the
+initial values to the appropriate compute backend.</p>
+<p>Other LensKit code, such as the <a class="reference external" href="./splitting">data splitting support</a>, follow
+SPEC 7 directly by accepting an <code class="docutils literal notranslate"><span class="pre">rng</span></code> keyword parameter.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
-<p>If you specify random seeds, we strongly recommend specifying seeds instead of
-generators, so that the seed can be included in serialized configurations.</p>
+<p>If you specify random seeds for component configurations, we strongly
+recommend specifying seeds instead of generators, so that the seed can be
+included in serialized configurations.</p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 2025.1: </span>Now that <a class="reference external" href="https://scientific-python.org/specs/spec-0007/">SPEC 7</a> has standardized RNG seeding across the scientific Python
@@ -539,18 +550,10 @@ ecosystem, we use that with some lightweight helpers in the
 </div>
 <p>LensKit extends SPEC 7 with a global RNG that components can use as a fallback,
 to make it easier to configure system-wide generation for things like tests.
-This is configured with <a class="reference internal" href="../api/lenskit.random.html#lenskit.random.set_global_rng" title="lenskit.random.set_global_rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_global_rng()</span></code></a>.</p>
-<p>When implementing a component that uses randomness in its training, we recommend
-deferring conversion of the provided RNG into an actual generator until
-model-training time, so that serializing an untrained pipeline or its
-configuration includes the original seed instead of the resulting generator.
-When using the RNG to create initial state for e.g. training a model with
-PyTorch, it can be useful to create that state in NumPy and then convert to a
-tensor, so that components are consistent in their random number generation
-behavior instead of having variation between NumPy and other backends.
-Components can use the <code class="xref py py-func docutils literal notranslate"><span class="pre">random_generator()</span></code> function to
-convert seed material or a generator into a NumPy generator, falling back to the
-global RNG if one is specified.</p>
+This is configured with <a class="reference internal" href="../api/lenskit.random.html#lenskit.random.set_global_rng" title="lenskit.random.set_global_rng"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_global_rng()</span></code></a>. Components can
+use the <code class="xref py py-func docutils literal notranslate"><span class="pre">random_generator()</span></code> function to convert seed material or a
+generator into a NumPy generator, falling back to the global RNG if one is
+specified.</p>
 <section id="derived-seeds">
 <h3>Derived Seeds<a class="headerlink" href="#derived-seeds" title="Link to this heading">#</a></h3>
 <p>Recommendation provides a particular challenge for deterministic random behavior

@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit ALS implementations." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.als &#8212; LensKit 2025.0.0a5.dev62+gb287d651 documentation</title>
+    <title>lenskit.als &#8212; LensKit 2025.0.0a5.dev83+g1954efb1 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=d8678535"></script>
+    <script src="../_static/documentation_options.js?v=4f8104f3"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev62+gb287d651 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev62+gb287d651 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev83+g1954efb1 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev83+g1954efb1 documentation - Home"/>
   
   
 </a></div>
@@ -431,7 +431,6 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Node.html">lenskit.pipeline.Node</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Lazy.html">lenskit.pipeline.Lazy</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Component.html">lenskit.pipeline.Component</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Trainable.html">lenskit.pipeline.Trainable</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.RecPipelineBuilder.html">lenskit.pipeline.RecPipelineBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.topn_pipeline.html">lenskit.pipeline.topn_pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.PipelineConfig.html">lenskit.pipeline.PipelineConfig</a></li>
@@ -439,6 +438,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="operations.html">Operation Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Diagnostic APIs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="training.html">Model Training</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
 <ul class="current nav bd-sidenav">
@@ -599,49 +599,50 @@
 <p>LensKit ALS implementations.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.als.ALSBase">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.als.</span></span><span class="sig-name descname"><span class="pre">ALSBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.als.ALSBase" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a>, <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>[<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>], <a class="reference internal" href="lenskit.pipeline.Trainable.html#lenskit.pipeline.Trainable" title="lenskit.pipeline.components.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.als.</span></span><span class="sig-name descname"><span class="pre">ALSBase</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.als.ALSBase" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a>, <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>[<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>], <a class="reference internal" href="training.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a></p>
 <p>Base class for ALS models.</p>
 <dl class="field-list">
 <dt class="field-odd">Stability<span class="colon">:</span></dt>
 <dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>config</strong> (<em>ALSConfig</em><em> | </em><em>None</em>)</p></li>
-<li><p><strong>rng</strong> (<em>RNGInput</em>)</p></li>
+<li><p><strong>config</strong> (<em>ALSConfig</em>)</p></li>
 <li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py property">
-<dt class="sig sig-object py" id="lenskit.als.ALSBase.is_trained">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">is_trained</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><a class="headerlink" href="#lenskit.als.ALSBase.is_trained" title="Link to this definition">#</a></dt>
-<dd><p>Check if this model has already been trained.</p>
-</dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.als.ALSBase.train">
-<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.als.ALSBase.train" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">TrainingOptions(retrain=True,</span> <span class="pre">device=None,</span> <span class="pre">rng=None)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.als.ALSBase.train" title="Link to this definition">#</a></dt>
 <dd><p>Run ALS to train a model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ratings</strong> – the ratings data frame.</p></li>
 <li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>)</p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="training.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><em>TrainingOptions</em></a>)</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the model was trained.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.als.ALSBase.fit_iters">
-<span class="sig-name descname"><span class="pre">fit_iters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.als.ALSBase.fit_iters" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">fit_iters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.als.ALSBase.fit_iters" title="Link to this definition">#</a></dt>
 <dd><p>Run ALS to train a model, yielding after each iteration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ratings</strong> – the ratings data frame.</p></li>
 <li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>)</p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="training.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><em>TrainingOptions</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -674,11 +675,14 @@ the appropriate member variables.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.als.ALSBase.initialize_params">
-<span class="sig-name descname"><span class="pre">initialize_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.als.ALSBase.initialize_params" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">initialize_params</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.als.ALSBase.initialize_params" title="Link to this definition">#</a></dt>
 <dd><p>Initialize the model parameters at the beginning of training.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>data</strong> (<em>TrainingData</em>)</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<em>TrainingData</em>)</p></li>
+<li><p><strong>rng</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.2)"><em>Generator</em></a>)</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -757,7 +761,7 @@ the appropriate member variables.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.als.BiasedMFScorer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.als.</span></span><span class="sig-name descname"><span class="pre">BiasedMFScorer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.als.BiasedMFScorer" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.als.</span></span><span class="sig-name descname"><span class="pre">BiasedMFScorer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.als.BiasedMFScorer" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#lenskit.als.ALSBase" title="lenskit.als._common.ALSBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ALSBase</span></code></a></p>
 <p>Biased matrix factorization trained with alternating least squares
 <span id="id1">[<a class="reference internal" href="../references.html#id37" title="Yunhong Zhou, Dennis Wilkinson, Robert Schreiber, and Rong Pan. Large-Scale Parallel Collaborative Filtering for the Netflix Prize. In Algorithmic Aspects in Information and Management, 337–348. Springer Berlin Heidelberg, 2008. doi:10.1007/978-3-540-68880-8_32.">ZWSP08</a>]</span>.  This is a
@@ -771,8 +775,7 @@ parameters you can extract from a trained model.</p>
 <dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>config</strong> (<em>ALSConfig</em><em> | </em><em>None</em>)</p></li>
-<li><p><strong>rng</strong> (<em>RNGInput</em>)</p></li>
+<li><p><strong>config</strong> (<em>BiasedMFConfig</em>)</p></li>
 <li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
@@ -867,7 +870,7 @@ the appropriate member variables.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.als.ImplicitMFScorer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.als.</span></span><span class="sig-name descname"><span class="pre">ImplicitMFScorer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.als.ImplicitMFScorer" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.als.</span></span><span class="sig-name descname"><span class="pre">ImplicitMFScorer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.als.ImplicitMFScorer" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#lenskit.als.ALSBase" title="lenskit.als._common.ALSBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">ALSBase</span></code></a></p>
 <p>Implicit matrix factorization trained with alternating least squares
 <span id="id2">[<a class="reference internal" href="../references.html#id36" title="Y Hu, Y Koren, and C Volinsky. Collaborative Filtering for Implicit Feedback Datasets. In 2008 Eighth IEEE International Conference on Data Mining, 263–272. ieeexplore.ieee.org, December 2008. doi:10.1109/ICDM.2008.22.">HKV08</a>]</span>.  This algorithm outputs ‘predictions’, but they
@@ -897,22 +900,25 @@ initially defaulted to <code class="docutils literal notranslate"><span class="p
 <dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>config</strong> (<em>ALSConfig</em><em> | </em><em>None</em>)</p></li>
-<li><p><strong>rng</strong> (<em>RNGInput</em>)</p></li>
+<li><p><strong>config</strong> (<em>ImplicitMFConfig</em>)</p></li>
 <li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.als.ImplicitMFScorer.train">
-<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.als.ImplicitMFScorer.train" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">TrainingOptions(retrain=True,</span> <span class="pre">device=None,</span> <span class="pre">rng=None)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.als.ImplicitMFScorer.train" title="Link to this definition">#</a></dt>
 <dd><p>Run ALS to train a model.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ratings</strong> – the ratings data frame.</p></li>
 <li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>)</p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="training.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><em>TrainingOptions</em></a>)</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the model was trained.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1043,7 +1049,6 @@ the appropriate member variables.</p></li>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.als.ALSBase"><code class="docutils literal notranslate"><span class="pre">ALSBase</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.als.ALSBase.is_trained"><code class="docutils literal notranslate"><span class="pre">ALSBase.is_trained</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.als.ALSBase.train"><code class="docutils literal notranslate"><span class="pre">ALSBase.train()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.als.ALSBase.fit_iters"><code class="docutils literal notranslate"><span class="pre">ALSBase.fit_iters()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.als.ALSBase.prepare_data"><code class="docutils literal notranslate"><span class="pre">ALSBase.prepare_data()</span></code></a></li>
