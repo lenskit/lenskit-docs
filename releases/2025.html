@@ -19,7 +19,7 @@
 <meta name="description" content="The 2025 release series is currently in development. No specific release date is set yet. 2025 will bring breaking changes to several LensKit APIs to improve ergonomics, correctness-by-default, and..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>2025 Releases &#8212; LensKit 2025.0.0a5.dev53+g204dceeb documentation</title>
+    <title>2025 Releases &#8212; LensKit 2025.0.0a5.dev56+g1c97b8aa documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=3be82b6a"></script>
+    <script src="../_static/documentation_options.js?v=1bb4dba2"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev53+g204dceeb documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev53+g204dceeb documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev56+g1c97b8aa documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev56+g1c97b8aa documentation - Home"/>
   
   
 </a></div>
@@ -497,9 +497,6 @@ covered by that document:</p>
 have been renamed to <code class="docutils literal notranslate"><span class="pre">user_id</span></code> and <code class="docutils literal notranslate"><span class="pre">item_id</span></code> respectively, with
 <code class="docutils literal notranslate"><span class="pre">user_num</span></code> and <code class="docutils literal notranslate"><span class="pre">item_num</span></code> for 0-based user and item numbers.  This is to
 remove ambiguity about how users and items are being referenced.</p></li>
-<li><p>LensKit no longer has top-level exports (and is now in fact a namespace
-package).  Classes and functions must be imported from appropriate
-subpackages.</p></li>
 <li><p>The <code class="docutils literal notranslate"><span class="pre">Popular</span></code> recommender has been removed in favor of <code class="xref py py-class docutils literal notranslate"><span class="pre">PopScore</span></code>.</p></li>
 <li><p>The DCG metric has been removed, as it is basically never used and was not
 useful as a part of the NDCG implementation.</p></li>
@@ -513,6 +510,19 @@ progress the progress API in <a class="reference internal" href="../api/lenskit.
 connected to TQDM or Rich.</p></li>
 <li><p>Added RBP top-N metric (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/334">⛙ 334</a>).</p></li>
 <li><p>Added command-line tool to fetch datasets (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/347">⛙ 347</a>).</p></li>
+</ul>
+</section>
+<section id="metric-behavior-changes">
+<h3>Metric Behavior Changes<a class="headerlink" href="#metric-behavior-changes" title="Link to this heading">#</a></h3>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Some LensKit metric default has been changed; this results in values
+different from those computed by previous versions, either more correct or
+more consistent with common practice.</p>
+</div>
+<ul class="simple">
+<li><p>The <a class="reference internal" href="../api/lenskit.metrics.NDCG.html#lenskit.metrics.NDCG" title="lenskit.metrics.NDCG"><code class="xref py py-class docutils literal notranslate"><span class="pre">NDCG</span></code></a> metric now defaults to <em>ignore</em> rating
+values.</p></li>
 </ul>
 </section>
 <section id="model-behavior-changes">
@@ -608,6 +618,7 @@ FunkSVD is not commonly used.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-progress">2025.1 (in progress)</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking Changes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features-incremental">New Features (incremental)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#metric-behavior-changes">Metric Behavior Changes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-behavior-changes">Model Behavior Changes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#bug-fixes">Bug Fixes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dependencies-and-maintenance">Dependencies and Maintenance</a></li>

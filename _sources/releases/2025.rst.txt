@@ -41,10 +41,6 @@ covered by that document:
     ``user_num`` and ``item_num`` for 0-based user and item numbers.  This is to
     remove ambiguity about how users and items are being referenced.
 
-*   LensKit no longer has top-level exports (and is now in fact a namespace
-    package).  Classes and functions must be imported from appropriate
-    subpackages.
-
 *   The ``Popular`` recommender has been removed in favor of :class:`~lenskit.basic.PopScore`.
 
 *   The DCG metric has been removed, as it is basically never used and was not
@@ -58,6 +54,18 @@ New Features (incremental)
     connected to TQDM or Rich.
 *   Added RBP top-N metric (:pr:`334`).
 *   Added command-line tool to fetch datasets (:pr:`347`).
+
+Metric Behavior Changes
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. important::
+
+    Some LensKit metric default has been changed; this results in values
+    different from those computed by previous versions, either more correct or
+    more consistent with common practice.
+
+*   The :class:`~lenskit.metrics.NDCG` metric now defaults to *ignore* rating
+    values.
 
 Model Behavior Changes
 ~~~~~~~~~~~~~~~~~~~~~~
