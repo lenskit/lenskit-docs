@@ -7,19 +7,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Algorithm Implementation Tips" />
+<meta property="og:title" content="Model Implementation Tips" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="guide/impl-tips.html" />
 <meta property="og:site_name" content="LensKit" />
 <meta property="og:description" content="Implementing algorithms is fun, but there are a few things that are good to keep in mind. In general, development follows the following: Correct, Clear, Fast. In that order. Further, we always want..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_guide_impl-tips_045cb15e.png" />
+<meta property="og:image" content="/_images/social_previews/summary_guide_impl-tips_f9b85887.png" />
 <meta property="og:image:alt" content="Implementing algorithms is fun, but there are a few things that are good to keep in mind. In general, development follows the following: Correct, Clear, Fast..." />
 <meta name="description" content="Implementing algorithms is fun, but there are a few things that are good to keep in mind. In general, development follows the following: Correct, Clear, Fast. In that order. Further, we always want..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Algorithm Implementation Tips &#8212; LensKit 2025.0.0a5.dev83+g1954efb1 documentation</title>
+    <title>Model Implementation Tips &#8212; LensKit 2025.0.0a5.dev87+gf24d461a documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=4f8104f3"></script>
+    <script src="../_static/documentation_options.js?v=66e3b7ab"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev83+g1954efb1 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev83+g1954efb1 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a5.dev87+gf24d461a documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a5.dev87+gf24d461a documentation - Home"/>
   
   
 </a></div>
@@ -448,7 +448,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="migrating.html">Migrating from LensKit 0.x</a></li>
 <li class="toctree-l1"><a class="reference internal" href="performance.html">Performance Tips</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Algorithm Implementation Tips</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Model Implementation Tips</a></li>
 </ul>
 </div>
 </nav></div>
@@ -487,7 +487,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Algorithm Implementation Tips</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Model Implementation Tips</span></li>
   </ul>
 </nav>
 </div>
@@ -504,8 +504,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="algorithm-implementation-tips">
-<h1>Algorithm Implementation Tips<a class="headerlink" href="#algorithm-implementation-tips" title="Link to this heading">#</a></h1>
+  <section id="model-implementation-tips">
+<h1>Model Implementation Tips<a class="headerlink" href="#model-implementation-tips" title="Link to this heading">#</a></h1>
 <p>Implementing algorithms is fun, but there are a few things that are good to keep in mind.</p>
 <p>In general, development follows the following:</p>
 <ol class="arabic simple">
@@ -513,8 +513,59 @@
 <li><p>Clear</p></li>
 <li><p>Fast</p></li>
 </ol>
-<p>In that order.  Further, we always want LensKit to be <em>usable</em> in an easy fashion.  Code
-implementing algorithms, however, may be quite complex in order to achieve good performance.</p>
+<p>In that order.  Further, we always want LensKit to be <em>usable</em> in an easy
+fashion.  Code implementing commonly-used models, however, may be quite complex
+in order to achieve good performance.</p>
+<section id="iterative-training">
+<span id="id1"></span><h2>Iterative Training<a class="headerlink" href="#iterative-training" title="Link to this heading">#</a></h2>
+<p>The <a class="reference internal" href="../api/training.html#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.training.IterativeTraining</span></code></a> class provides a standardized
+interface and training loop support for training models with iterative methods
+that pass through the training data in multiple <em>epochs</em>.  Models that use this
+support extend <a class="reference internal" href="../api/training.html#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeTraining</span></code></a> in addition to
+<a class="reference internal" href="../api/lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>, and implement the
+<a class="reference internal" href="../api/training.html#lenskit.training.IterativeTraining.training_loop" title="lenskit.training.IterativeTraining.training_loop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">training_loop()</span></code></a> method instead of
+<a class="reference internal" href="../api/training.html#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a>.  Iteratively-trainable components
+should also have an <code class="docutils literal notranslate"><span class="pre">epochs</span></code> setting on their configuration class that
+specifies the number of training epochs to run.</p>
+<p>The <a class="reference internal" href="../api/training.html#lenskit.training.IterativeTraining.training_loop" title="lenskit.training.IterativeTraining.training_loop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">training_loop()</span></code></a> method does 3 things:</p>
+<ol class="arabic simple">
+<li><p>Set up initial data structures, preparation, etc. needed for model training.</p></li>
+<li><p>Train the model, yielding after each training epoch.  It can optionally
+yield a set of metrics, such as training loss or update magnitudes.</p></li>
+<li><p>Perform any final steps and training data cleanup.</p></li>
+</ol>
+<p>The model should be usable after each epoch, to support things like measuring
+performance on validation data.</p>
+<p>The training loop itself is represented as a Python iterator, so that a <code class="docutils literal notranslate"><span class="pre">for</span></code>
+loop will loop through the training epochs.  While the interface definition
+specifies the <code class="docutils literal notranslate"><span class="pre">Iterator</span></code> type in order to minimize restrictions on component
+implementers, we recommend that it actually be a <code class="docutils literal notranslate"><span class="pre">Generator</span></code>, which allows the
+caller to request early termination (through the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code> method).  We also recommend that the
+<code class="docutils literal notranslate"><span class="pre">training_loop()</span></code> method only return the generator after initial data preparation
+is complete, so that setup time is not included in the time taken for the first
+loop iteration.  The easiest way to do implement this is by delegating to an
+inner loop function, written as a Python generator:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">training_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="n">TrainingOptions</span><span class="p">):</span>
+    <span class="c1"># do initial data setup/prep for training</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="c1"># pass off to inner generator</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_training_loop_impl</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_training_loop_impl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="c1"># do the model training</span>
+        <span class="c1"># compute the metrics</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="p">{</span><span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span>
+        <span class="k">except</span> <span class="ne">GeneratorExit</span><span class="p">:</span>
+            <span class="c1"># client code has requested early termination</span>
+            <span class="k">break</span>
+
+    <span class="c1"># any final cleanup steps</span>
+</pre></div>
+</div>
+</section>
 </section>
 
 
@@ -555,6 +606,18 @@ implementing algorithms, however, may be quite complex in order to achieve good 
                 <dialog id="pst-secondary-sidebar-modal"></dialog>
                 <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#iterative-training">Iterative Training</a></li>
+</ul>
+  </nav></div>
 
   <div class="sidebar-secondary-item">
 
