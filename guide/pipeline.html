@@ -19,7 +19,7 @@
 <meta name="description" content="Since version 2025.1 (in progress), LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Recommendation Pipelines &#8212; LensKit 2025.0.0a6.dev9+g07f70c35 documentation</title>
+    <title>Recommendation Pipelines &#8212; LensKit 2025.0.0a7.dev1+g33c5ec11 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=b881f2ce"></script>
+    <script src="../_static/documentation_options.js?v=a92407ff"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -112,7 +112,7 @@ window.addEventListener("load", load);
     <link rel="prev" title="Queries and Operations" href="queries.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.0.0a6" />
+  <meta name="docsearch:version" content="2025.0.0a7" />
   </head>
   
   
@@ -178,8 +178,8 @@ window.addEventListener("load", load);
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a6.dev9+g07f70c35 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a6.dev9+g07f70c35 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a7.dev1+g33c5ec11 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a7.dev1+g33c5ec11 documentation - Home"/>
   
   
 </a></div>
@@ -589,7 +589,10 @@ that class, do:</p>
 </pre></div>
 </div>
 <p>For maximum flexibility, you can directly construct and wire the pipeline
-yourself; this is described in <a class="reference internal" href="#standard-pipelines"><span class="std std-ref">Standard Layouts</span></a>.</p>
+yourself; this is described in <a class="reference internal" href="#standard-pipelines"><span class="std std-ref">Standard Layouts</span></a>.  Pipelines are built
+with a <a class="reference internal" href="../api/lenskit.pipeline.PipelineBuilder.html#lenskit.pipeline.PipelineBuilder" title="lenskit.pipeline.PipelineBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">PipelineBuilder</span></code></a>, which sets up the nodes and connections, checks
+for things like cycles, and instantiates the components to make a pipeline that
+can be trained and used.</p>
 <p>After any of these methods, you can run the pipeline to produce recommendations
 with:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">user_recs</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;recommender&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
@@ -624,8 +627,8 @@ components and how to provide each component with the inputs it requires; see
 <a class="reference internal" href="#pipeline-connections"><span class="std std-ref">Connections</span></a> for details.</p></li>
 </ul>
 <p>Each node has a name that can be used to look up the node with
-<a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.node" title="lenskit.pipeline.Pipeline.node"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.node()</span></code></a> and appears in serialization and logging situations. Names
-must be unique within a pipeline.</p>
+<a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.node" title="lenskit.pipeline.Pipeline.node"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.node()</span></code></a> (or <a class="reference internal" href="../api/lenskit.pipeline.PipelineBuilder.html#lenskit.pipeline.PipelineBuilder.node" title="lenskit.pipeline.PipelineBuilder.node"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PipelineBuilder.node()</span></code></a>) and appears in
+serialization and logging situations. Names must be unique within a pipeline.</p>
 <section id="connections">
 <span id="pipeline-connections"></span><h3>Connections<a class="headerlink" href="#connections" title="Link to this heading">#</a></h3>
 <p>Components declare their inputs as keyword arguments on their call signatures
@@ -637,22 +640,46 @@ the following types:</p>
 <ul class="simple">
 <li><p>A <a class="reference internal" href="../api/lenskit.pipeline.Node.html#lenskit.pipeline.Node" title="lenskit.pipeline.Node"><code class="xref py py-class docutils literal notranslate"><span class="pre">Node</span></code></a>, in which case the input will be provided from the
 corresponding pipeline input or component return value.  Nodes are returned by
-<a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.create_input" title="lenskit.pipeline.Pipeline.create_input"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_input()</span></code></a> or <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.add_component" title="lenskit.pipeline.Pipeline.add_component"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_component()</span></code></a>, and can be
-looked up after creation with <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.node" title="lenskit.pipeline.Pipeline.node"><code class="xref py py-meth docutils literal notranslate"><span class="pre">node()</span></code></a>.</p></li>
+<a class="reference internal" href="../api/lenskit.pipeline.PipelineBuilder.html#lenskit.pipeline.PipelineBuilder.create_input" title="lenskit.pipeline.PipelineBuilder.create_input"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_input()</span></code></a> or <a class="reference internal" href="../api/lenskit.pipeline.PipelineBuilder.html#lenskit.pipeline.PipelineBuilder.add_component" title="lenskit.pipeline.PipelineBuilder.add_component"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_component()</span></code></a>, and can be
+looked up after creation with <a class="reference internal" href="../api/lenskit.pipeline.PipelineBuilder.html#lenskit.pipeline.PipelineBuilder.node" title="lenskit.pipeline.PipelineBuilder.node"><code class="xref py py-meth docutils literal notranslate"><span class="pre">node()</span></code></a>.</p></li>
 <li><p>A Python object, in which case that value will be provided directly to
 the component input argument.</p></li>
 </ul>
 <p>These input connections are specified via keyword arguments to the
-<a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.add_component" title="lenskit.pipeline.Pipeline.add_component"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.add_component()</span></code></a> or <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.connect" title="lenskit.pipeline.Pipeline.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.connect()</span></code></a> methods — specify the
-component’s input name(s) and the node or data to which each input should be
-wired.</p>
+<a class="reference internal" href="../api/lenskit.pipeline.PipelineBuilder.html#lenskit.pipeline.PipelineBuilder.add_component" title="lenskit.pipeline.PipelineBuilder.add_component"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PipelineBuilder.add_component()</span></code></a> or <a class="reference internal" href="../api/lenskit.pipeline.PipelineBuilder.html#lenskit.pipeline.PipelineBuilder.connect" title="lenskit.pipeline.PipelineBuilder.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PipelineBuilder.connect()</span></code></a> methods
+— specify the component’s input name(s) and the node or data to which each input
+should be wired.</p>
+<p>You can also use <code class="xref py py-meth docutils literal notranslate"><span class="pre">PipelineBuilder.default_conection()</span></code> to specify default
+connections. For example, you can specify a default for inputs named <code class="docutils literal notranslate"><span class="pre">user</span></code>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span><span class="o">.</span><span class="n">default_connection</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="n">user_history</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>With this default in place, if a component has an input named <code class="docutils literal notranslate"><span class="pre">user</span></code> and that
+input is not explicitly connected to a node, then the <code class="docutils literal notranslate"><span class="pre">user_history</span></code> node will
+be used to supply its value.  Judicious use of defaults can reduce the amount of
+code overhead needed to wire common pipelines.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>You cannot directly wire an input another component using only that
-component’s name; if you only have a name, pass it to <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.node" title="lenskit.pipeline.Pipeline.node"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.node()</span></code></a>
-to obtain the node.  This is because it would be impossible to distinguish
-between a string component name and a string data value.</p>
+component’s name; if you only have a name, pass it to
+<a class="reference internal" href="../api/lenskit.pipeline.PipelineBuilder.html#lenskit.pipeline.PipelineBuilder.node" title="lenskit.pipeline.PipelineBuilder.node"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PipelineBuilder.node()</span></code></a> to obtain the node.  This is because it would
+be impossible to distinguish between a string component name and a string
+data value.</p>
 </div>
+</section>
+<section id="building-the-pipeline">
+<span id="pipeline-building"></span><h3>Building the Pipeline<a class="headerlink" href="#building-the-pipeline" title="Link to this heading">#</a></h3>
+<p>Once you have set up the pipeline with the various methods to <a class="reference internal" href="../api/lenskit.pipeline.PipelineBuilder.html#lenskit.pipeline.PipelineBuilder" title="lenskit.pipeline.PipelineBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">PipelineBuilder</span></code></a>,
+you can do a couple of things:</p>
+<ul class="simple">
+<li><p>Call <a class="reference internal" href="../api/lenskit.pipeline.PipelineBuilder.html#lenskit.pipeline.PipelineBuilder.build" title="lenskit.pipeline.PipelineBuilder.build"><code class="xref py py-class docutils literal notranslate"><span class="pre">PipelineBuilder.build</span></code></a> to build a usable <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pipeline</span></code></a>.
+The pipeline can then be trained, run, etc.</p></li>
+<li><p>Call <a class="reference internal" href="../api/lenskit.pipeline.PipelineBuilder.html#lenskit.pipeline.PipelineBuilder.build_config" title="lenskit.pipeline.PipelineBuilder.build_config"><code class="xref py py-class docutils literal notranslate"><span class="pre">PipelineBuilder.build_config</span></code></a> to build a
+<a class="reference internal" href="../api/lenskit.pipeline.PipelineConfig.html#lenskit.pipeline.PipelineConfig" title="lenskit.pipeline.PipelineConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">PipelineConfig</span></code></a> that can be serialized and reloaded from JSON, YAML,
+or similar formats.</p></li>
+</ul>
+<p>Building a pipeline resolves default connections, instantiates components from their
+configurations, and checks for cycles.</p>
 </section>
 <section id="execution">
 <span id="pipeline-execution"></span><h3>Execution<a class="headerlink" href="#execution" title="Link to this heading">#</a></h3>
@@ -660,17 +687,14 @@ between a string component name and a string data value.</p>
 the operation functions (see <a class="reference internal" href="queries.html#recommender-ops"><span class="std std-ref">Invoking Recommenders</span></a>; these functions call
 <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.run" title="lenskit.pipeline.Pipeline.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a> under the hood).</p>
 <p>The <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.run" title="lenskit.pipeline.Pipeline.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a> method takes two types of inputs:</p>
-<ul>
+<ul class="simple">
 <li><p>Positional arguments specifying the node(s) to run and whose results should
 be returned.  This is to allow partial runs of pipelines (e.g. to only score
 items without ranking them), and to allow multiple return values to be
 obtained (e.g. initial item scores and final rankings, which may have
-altered scores).</p>
-<p>If no components are specified, it is the same as specifying the last
-component that was added to the pipeline.</p>
-</li>
+altered scores).</p></li>
 <li><p>Keyword arguments specifying the values for the pipeline’s inputs, as defined by
-calls to <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.create_input" title="lenskit.pipeline.Pipeline.create_input"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.create_input()</span></code></a>.</p></li>
+calls to <code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.create_input()</span></code>.</p></li>
 </ul>
 <p>Pipeline execution logically proceeds in the following steps:</p>
 <ol class="arabic simple">
@@ -698,7 +722,7 @@ itself, e.g.:</p>
 <li><p><code class="docutils literal notranslate"><span class="pre">item-embedder</span></code></p></li>
 </ul>
 <p>Component nodes can also have <em>aliases</em>, allowing them to be accessed by more
-than one name. Use <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.alias" title="lenskit.pipeline.Pipeline.alias"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.alias()</span></code></a> to define these aliases.</p>
+than one name. Use <code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.alias()</span></code> to define these aliases.</p>
 <p>Various LensKit facilities recognize several standard component names used by
 the standard pipeline builders, and we recommend you use them in your own
 pipelines when applicable:</p>
@@ -737,7 +761,7 @@ two ways to save a pipeline or part thereof:</p>
 pipeline; it has the usual downsides of pickling (arbitrary code execution,
 etc.). LensKit uses pickling to share pipelines with worker processes for
 parallel batch operations.</p></li>
-<li><p>Save the pipeline configuration with <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.get_config" title="lenskit.pipeline.Pipeline.get_config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.get_config()</span></code></a>.  This saves
+<li><p>Save the pipeline configuration with <code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.get_config()</span></code>.  This saves
 the components, their configurations, and their connections, but <strong>not</strong> any
 learned parameter data.  A new pipeline can be constructed from such a
 configuration can be reloaded with <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.from_config" title="lenskit.pipeline.Pipeline.from_config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.from_config()</span></code></a>.</p></li>
@@ -797,17 +821,17 @@ flowchart LR
 </figcaption>
 </figure>
 <p>The convenience methods are equivalent to the following pipeline code:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">()</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">PipelineBuilder</span><span class="p">()</span>
 <span class="c1"># define an input parameter for the user ID (the &#39;query&#39;)</span>
 <span class="n">query</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">,</span> <span class="n">ID</span><span class="p">)</span>
 <span class="c1"># allow candidate items to be optionally specified</span>
 <span class="n">items</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">&#39;items&#39;</span><span class="p">,</span> <span class="n">ItemList</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
 <span class="c1"># look up a user&#39;s history in the training data</span>
-<span class="n">history</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;history-lookup&#39;</span><span class="p">,</span> <span class="n">LookupTrainingHistory</span><span class="p">(),</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">)</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;history-lookup&#39;</span><span class="p">,</span> <span class="n">LookupTrainingHistory</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">)</span>
 <span class="c1"># find candidates from the training data</span>
 <span class="n">default_candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span>
     <span class="s1">&#39;candidate-selector&#39;</span><span class="p">,</span>
-    <span class="n">UnratedTrainingItemsCandidateSelector</span><span class="p">(),</span>
+    <span class="n">UnratedTrainingItemsCandidateSelector</span><span class="p">,</span>
     <span class="n">query</span><span class="o">=</span><span class="n">history</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="c1"># if the client provided items as a pipeline input, use those; otherwise</span>
@@ -816,8 +840,10 @@ flowchart LR
 <span class="c1"># score the candidate items using the specified scorer</span>
 <span class="n">score</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;scorer&#39;</span><span class="p">,</span> <span class="n">scorer</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">candidates</span><span class="p">)</span>
 <span class="c1"># rank the items by score</span>
-<span class="n">recommend</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;ranker&#39;</span><span class="p">,</span> <span class="n">TopNRanker</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span> <span class="n">items</span><span class="o">=</span><span class="n">score</span><span class="p">)</span>
+<span class="n">recommend</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;ranker&#39;</span><span class="p">,</span> <span class="n">TopNRanker</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">},</span> <span class="n">items</span><span class="o">=</span><span class="n">score</span><span class="p">)</span>
 <span class="n">pipe</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;recommender&#39;</span><span class="p">,</span> <span class="n">recommend</span><span class="p">)</span>
+<span class="n">pipe</span><span class="o">.</span><span class="n">default_component</span><span class="p">(</span><span class="s1">&#39;recommender&#39;</span><span class="p">)</span>
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>If we want to also emit rating predictions, with fallback to a baseline model to
@@ -1011,6 +1037,33 @@ from two other components could look like this:</p>
 </div>
 <p>See <a class="reference internal" href="conventions.html#conventions"><span class="std std-ref">Component Conventions</span></a> for more conventions for component design.</p>
 </section>
+<section id="adding-components-to-the-pipeline">
+<h3>Adding Components to the Pipeline<a class="headerlink" href="#adding-components-to-the-pipeline" title="Link to this heading">#</a></h3>
+<p>You can add components to the pipeline in two ways:</p>
+<ul>
+<li><p>Instantiate the component with its configuration options and pass it to
+<a class="reference internal" href="../api/lenskit.pipeline.PipelineBuilder.html#lenskit.pipeline.PipelineBuilder.add_component" title="lenskit.pipeline.PipelineBuilder.add_component"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PipelineBuilder.add_component()</span></code></a>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">builder</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;component-name&#39;</span><span class="p">,</span> <span class="n">MyComponent</span><span class="p">(</span><span class="n">option</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>When you convert the pipeline into
+a configuration or clone it, the component will be re-instantiated from its
+configuration.</p>
+</li>
+<li><p>Pass the component class and configuration separately to
+<a class="reference internal" href="../api/lenskit.pipeline.PipelineBuilder.html#lenskit.pipeline.PipelineBuilder.add_component" title="lenskit.pipeline.PipelineBuilder.add_component"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PipelineBuilder.add_component()</span></code></a>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">builder</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;component-name&#39;</span><span class="p">,</span> <span class="n">MyComponent</span><span class="p">,</span> <span class="n">MyConfig</span><span class="p">(</span><span class="n">option</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Alternatively:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">builder</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;component-name&#39;</span><span class="p">,</span> <span class="n">MyComponent</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;option&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">}))</span>
+</pre></div>
+</div>
+</li>
+</ul>
+<p>When you use the second approach, <a class="reference internal" href="../api/lenskit.pipeline.PipelineBuilder.html#lenskit.pipeline.PipelineBuilder.build" title="lenskit.pipeline.PipelineBuilder.build"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PipelineBuilder.build()</span></code></a> instantiates the
+component from the provided configuration.</p>
+</section>
 </section>
 <section id="poprox-and-other-integrators">
 <h2>POPROX and Other Integrators<a class="headerlink" href="#poprox-and-other-integrators" title="Link to this heading">#</a></h2>
@@ -1098,6 +1151,7 @@ components together.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#constructing-pipelines">Constructing Pipelines</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-model">Pipeline Model</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#connections">Connections</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#building-the-pipeline">Building the Pipeline</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#execution">Execution</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#component-names">Component Names</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#pipeline-serialization">Pipeline Serialization</a></li>
@@ -1107,6 +1161,7 @@ components together.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-interface">Component Interface</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-components">Configuring Components</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-components">Implementing Components</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-components-to-the-pipeline">Adding Components to the Pipeline</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#poprox-and-other-integrators">POPROX and Other Integrators</a></li>
