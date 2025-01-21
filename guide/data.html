@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit provides a unified data model for recommender systems data along with classes and utility functions for working with it, described in this section of the manual. Getting started with the da..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Datasets &#8212; LensKit 2025.0.0a7.dev106+g3d0ea7cb documentation</title>
+    <title>Datasets &#8212; LensKit 2025.0.0a7.dev116+g7724eb69 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=b17b02d5"></script>
+    <script src="../_static/documentation_options.js?v=97073cba"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a7.dev106+g3d0ea7cb documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a7.dev106+g3d0ea7cb documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a7.dev116+g7724eb69 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a7.dev116+g7724eb69 documentation - Home"/>
   
   
 </a></div>
@@ -550,11 +550,12 @@ For example, if you want to get the ratings as a data frame:</p>
 </div>
 <section id="data-model-and-key-concepts">
 <span id="data-model"></span><h2>Data Model and Key Concepts<a class="headerlink" href="#data-model-and-key-concepts" title="Link to this heading">#</a></h2>
-<p>The LensKit data model consists of <strong>users</strong>, <strong>items</strong>, and <strong>interactions</strong>,
-with fields providing additional (optional) data about each of these entities.
-The simplest valid LensKit data set is simply a list of user and item
-identifiers indicating which items each user has interacted with.  These may be
-augmented with ratings, timestamps, or any other attributes.</p>
+<p>The LensKit data model, detailed in <a class="reference internal" href="data-model.html#data-model"><span class="std std-ref">Data Model</span></a> consists of <strong>entities</strong>
+(often <em>users</em> and <em>items</em>) and <strong>interactions</strong>, with attributes providing
+additional (optional) data about each of these entities. The simplest valid
+LensKit data set is simply a list of user and item identifiers indicating which
+items each user has interacted with.  These may be augmented with ratings,
+timestamps, or any other attributes.</p>
 <p>Data can be read from a range of sources, but ultimately resolves to a
 collection of tables (e.g. Pandas <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">DataFrame</span></code></a>) that record user,
 item, and interaction data.</p>
@@ -571,12 +572,14 @@ contiguous user or item number that is suitable for indexing into arrays or
 matrices, a common operation in recommendation models.  In data frames, this
 appears as a <code class="docutils literal notranslate"><span class="pre">user_num</span></code> or <code class="docutils literal notranslate"><span class="pre">item_num</span></code> column.  It is the only
 representation supported by NumPy and PyTorch array formats.</p>
-<p>User and item numbers are assigned based on sorted identifiers in the initial
-data source, so reloading the same data set will yield the same numbers.
-Loading a subset, however, is not guaranteed to result in the same numbers, as
-the subset may be missing some users or items.</p>
-<p>Methods that add additional users or items will assign numbers based on the
-sorted identifiers that do not yet have numbers.</p>
+<p>User and item numbers are assigned based on identifiers in the initial data
+source.  Adding all entities at once, or using one of the standard loaders,
+will sort the identifiers before assigning numbers, so reloading the same data
+set will yield the same numbers. Loading a subset, however, is not guaranteed
+to result in the same numbers, as the subset may be missing some users or
+items.</p>
+<p>Adding additional users or items to a data set builder will assign numbers
+based on the sorted identifiers that do not yet have numbers.</p>
 </li>
 </ul>
 <p>Identifiers and numbers can be mapped to each other with the user and item
