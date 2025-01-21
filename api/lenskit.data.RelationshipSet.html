@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.data.RelationshipSet &#8212; LensKit 2025.0.0a7.dev100+g016e580e documentation</title>
+    <title>lenskit.data.RelationshipSet &#8212; LensKit 2025.0.0a7.dev106+g3d0ea7cb documentation</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=cf52f9c4"></script>
+    <script src="../_static/documentation_options.js?v=b17b02d5"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a7.dev100+g016e580e documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a7.dev100+g016e580e documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a7.dev106+g3d0ea7cb documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a7.dev106+g3d0ea7cb documentation - Home"/>
   
   
 </a></div>
@@ -602,6 +602,9 @@ involved and repeated relationships allowed.</p>
 <p>For two-entity relationships without duplicates (including relationships
 formed by coalescing repeated relationships or interactions),
 <a class="reference internal" href="lenskit.data.MatrixRelationshipSet.html#lenskit.data.MatrixRelationshipSet" title="lenskit.data.MatrixRelationshipSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatrixRelationshipSet</span></code></a> extends this with additional capabilities.</p>
+<p>Relationship sets can be pickled or serialized, and will not save the entire
+dataset with them.  They are therefore safe to save as component elements
+during training processes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -657,24 +660,15 @@ formed by coalescing repeated relationships or interactions),
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.RelationshipSet.is_interaction" title="lenskit.data.RelationshipSet.is_interaction"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_interaction</span></code></a></p></td>
 <td><p>Query whether these relationships represent interactions.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.RelationshipSet.dataset" title="lenskit.data.RelationshipSet.dataset"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dataset</span></code></a></p></td>
-<td><p>The dataset for these relationships.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.RelationshipSet.name" title="lenskit.data.RelationshipSet.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.RelationshipSet.name" title="lenskit.data.RelationshipSet.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
 <td><p>The name of the relationship class for these relationships.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">schema</span></code></p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">schema</span></code></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
 </div>
-<dl class="py attribute">
-<dt class="sig sig-object py" id="lenskit.data.RelationshipSet.dataset">
-<span class="sig-name descname"><span class="pre">dataset</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><span class="pre">Dataset</span></a></em><a class="headerlink" href="#lenskit.data.RelationshipSet.dataset" title="Link to this definition">#</a></dt>
-<dd><p>The dataset for these relationships.</p>
-</dd></dl>
-
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.data.RelationshipSet.name">
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><a class="headerlink" href="#lenskit.data.RelationshipSet.name" title="Link to this definition">#</a></dt>
@@ -793,7 +787,6 @@ or a mapping from attribute names to combination strategies.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.RelationshipSet"><code class="docutils literal notranslate"><span class="pre">RelationshipSet</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.RelationshipSet.__init__"><code class="docutils literal notranslate"><span class="pre">RelationshipSet.__init__()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.RelationshipSet.dataset"><code class="docutils literal notranslate"><span class="pre">RelationshipSet.dataset</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.RelationshipSet.name"><code class="docutils literal notranslate"><span class="pre">RelationshipSet.name</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.RelationshipSet.is_interaction"><code class="docutils literal notranslate"><span class="pre">RelationshipSet.is_interaction</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.RelationshipSet.arrow"><code class="docutils literal notranslate"><span class="pre">RelationshipSet.arrow()</span></code></a></li>
