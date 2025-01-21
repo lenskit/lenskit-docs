@@ -1,0 +1,844 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Data Model" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="guide/data-model.html" />
+<meta property="og:site_name" content="LensKit" />
+<meta property="og:description" content="LensKit defines holistic data model for recommender training (and evaluation) data. The model is graph-structured, but the interfaces and definitions center tabular (data frame) views of that data ..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary_guide_data-model_dc500ddd.png" />
+<meta property="og:image:alt" content="LensKit defines holistic data model for recommender training (and evaluation) data. The model is graph-structured, but the interfaces and definitions center..." />
+<meta name="description" content="LensKit defines holistic data model for recommender training (and evaluation) data. The model is graph-structured, but the interfaces and definitions center tabular (data frame) views of that data ..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Data Model &#8212; LensKit 2025.0.0a7.dev100+g016e580e documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=19a5d3c0" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=cf52f9c4"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'guide/data-model';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lkpy.lenskit.org/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
+        </script>
+    <link rel="canonical" href="https://lkpy.lenskit.org/en/latest/guide/data-model.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Item Lists and Collections" href="item-lists.html" />
+    <link rel="prev" title="Datasets" href="data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2025.0.0a7" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a7.dev100+g016e580e documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a7.dev100+g016e580e documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminaries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing LensKit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="principles.html">Design Goals and Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Datasets</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-lists.html">Item Lists and Collections</a></li>
+<li class="toctree-l1"><a class="reference internal" href="queries.html">Queries and Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline.html">Recommendation Pipelines</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="conventions.html">Component Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scorers.html">Scoring Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rankers.html">Ranking Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other-components.html">Other Components</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="splitting.html">Splitting Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Pipelines</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="evaluation/predictions.html">Evaluating Rating Predictions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluation/rankings.html">Evaluating Top-N Rankings</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="documenting.html">Documenting Experiments</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Support Code</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging and Progress Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Processing</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tips and Help</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="migrating.html">Migrating from LensKit 0.x</a></li>
+<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance Tips</a></li>
+<li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Model Implementation Tips</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Data Model</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="data-model">
+<span id="id1"></span><h1>Data Model<a class="headerlink" href="#data-model" title="Link to this heading">#</a></h1>
+<p>LensKit defines holistic data model for recommender training (and evaluation)
+data.  The model is graph-structured, but the interfaces and definitions center
+tabular (data frame) views of that data for ease of training across a variety of
+statistical modeling packages.</p>
+<p>Apache Arrow is used as the common format for data, and data type definitions
+are drawn from there.  Data is transparently converted to NumPy arrays, Pandas
+series or data frames, Torch tensors, etc. as requested.</p>
+<p>Most code will either use one of the predefined dataset loading functions (such
+as <a class="reference internal" href="../api/lenskit.data.load_movielens.html#lenskit.data.load_movielens" title="lenskit.data.load_movielens"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_movielens()</span></code></a>) or the
+<a class="reference internal" href="../api/lenskit.data.DatasetBuilder.html#lenskit.data.DatasetBuilder" title="lenskit.data.DatasetBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetBuilder</span></code></a> to create data sets (see <a class="reference internal" href="data.html#data-api"><span class="std std-ref">Datasets</span></a>).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Working with the data directly as a heterogeneous graph for integration with
+packages like PyTorch-Geometric is not difficult, and will be directly
+supported in an upcoming backwards-compatible revision.</p>
+</div>
+<section id="core-concepts">
+<h2>Core Concepts<a class="headerlink" href="#core-concepts" title="Link to this heading">#</a></h2>
+<p>The LensKit data model has several core concepts, derived from
+entity-relationship database model:</p>
+<dl class="simple glossary">
+<dt id="term-Entity">Entity<a class="headerlink" href="#term-Entity" title="Link to this term">#</a></dt><dd><p>The items, users, sessions, etc. about which the data set records data.
+In a graph view of the data, these are the nodes in the graph.</p>
+</dd>
+<dt id="term-Entity-Class">Entity Class<a class="headerlink" href="#term-Entity-Class" title="Link to this term">#</a></dt><dd><p>Each entity has a particular class, such as <code class="docutils literal notranslate"><span class="pre">item</span></code> or <code class="docutils literal notranslate"><span class="pre">user</span></code>, based
+on its role in the dataset.  All data sets have at least the <code class="docutils literal notranslate"><span class="pre">item</span></code>
+entity class.  Entities do not have subtypes in the raw data model; if
+components want to conceptually treat entities as having subtypes, such
+as different types of items, they can use attributes to distinguish the
+different subtypes.</p>
+</dd>
+<dt id="term-Entity-Identifier">Entity Identifier<a class="headerlink" href="#term-Entity-Identifier" title="Link to this term">#</a></dt><dd><p>Each entity has a unique (within its type) <em>identifier</em>.  Entity
+identifiers can be either integers or strings.</p>
+</dd>
+<dt id="term-Attribute">Attribute<a class="headerlink" href="#term-Attribute" title="Link to this term">#</a></dt><dd><p>Entities can have one or more <em>attributes</em>.  Attributes are consistent
+within an entity type, and are nullable (any individual entity may be
+missing a value for an attribute).</p>
+</dd>
+<dt id="term-Relationship">Relationship<a class="headerlink" href="#term-Relationship" title="Link to this term">#</a></dt><dd><p>A relationship connects two (or more) entities and may have additional
+attributes attached to the relationship itself.  Relationships may also
+be repeated (more than one relationship record may exist for the same
+combination of entities).</p>
+</dd>
+<dt id="term-Relationship-Class">Relationship Class<a class="headerlink" href="#term-Relationship-Class" title="Link to this term">#</a></dt><dd><p>Relationship classes are like entity classes, but describe the type of a
+particular relationship.  This allows for models or client code to query
+for records of a particular relationship, such as “follows” or
+“purchased”.</p>
+</dd>
+<dt id="term-Interaction">Interaction<a class="headerlink" href="#term-Interaction" title="Link to this term">#</a></dt><dd><p>An interaction is a specific type of relationship record that records an
+interaction between two or more entities, such as a user rating a book,
+or a user purchasing a product in a particular session.  Interactions
+usually, but not always, have timestamps.</p>
+</dd>
+</dl>
+</section>
+<section id="entities">
+<span id="data-entities"></span><h2>Entities<a class="headerlink" href="#entities" title="Link to this heading">#</a></h2>
+<p><em>Entities</em> in the LensKit data model represent individual objects in the data,
+such as users or items.  An entity is defined by its class and identifier, and
+nothing else is directly recorded about the entity itself — the interesting data
+resides in its attributes and relationships.</p>
+<p>Entity identifiers can be integers or strings.</p>
+<p>Every data set has the entity class <code class="docutils literal notranslate"><span class="pre">item</span></code> for the items that may be
+recommended.  Most datasets also have the class <code class="docutils literal notranslate"><span class="pre">user</span></code>.  Session-aware
+recommendation data sets may have an entity class <code class="docutils literal notranslate"><span class="pre">session</span></code>.</p>
+<p>When representing entities or entity data in tabular form, identifiers are
+stored in a column named <code class="docutils literal notranslate"><span class="pre">&lt;class&gt;_id</span></code> (e.g. <code class="docutils literal notranslate"><span class="pre">item_id</span></code>).  Dataset functions
+that map identifiers to 0-based contiguous array indexes will use the
+<code class="docutils literal notranslate"><span class="pre">&lt;class&gt;_num</span></code> for this index, referred to as the <em>entity number</em>.</p>
+</section>
+<section id="attributes">
+<span id="data-attributes"></span><h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h2>
+<p>Entities (and relationships) can have associated <em>attributes</em> providing data
+about that entity, relationship, or interaction.  This can be anything from a
+timestamp to review text to complex item metadata.  Attributes are associated
+with entity or relationship <em>classes</em>, and have types that must be consistent
+across the class (each entity or relationship class has a schema defining its
+attributes and their types).</p>
+<p>Attributes come in several forms (called a <em>layout</em>):</p>
+<ul class="simple">
+<li><p><strong>Scalar</strong> attributes store a single value for each entity or relationship
+instance.  The value can be any type supported by NumPy or Apache Arrow.
+Attribute values may be missing.</p></li>
+<li><p><strong>List</strong> attributes store zero or more values for each entity or
+relationship instance.  List elements must have the same type.</p></li>
+<li><p><strong>Vector</strong> attributes store a fixed-length vector of integer or
+floating-point values for each entity or relationship instance.  The vector
+length is defined by the entity or relationship class, and must be the same
+for all instances of that class for which the vector attribute is defined.
+The vector dimensions may have associated labels or names, or they may just
+be numbered (e.g., for representing embeddings from a language model).</p></li>
+<li><p><strong>Sparse</strong> attributes are vector attributes that are stored in compressed
+sparse format, with missing values understood to be 0.</p></li>
+</ul>
+<section id="attribute-name-restrictions">
+<h3>Attribute Name Restrictions<a class="headerlink" href="#attribute-name-restrictions" title="Link to this heading">#</a></h3>
+<p>Attribute names can be freely chosen, subject to a few lightweight restrictions:</p>
+<ul class="simple">
+<li><p>Within an entity or relationship class, names must be unique.</p></li>
+<li><p>For each entity class <code class="docutils literal notranslate"><span class="pre">$FOO</span></code>, the names <code class="docutils literal notranslate"><span class="pre">$FOO_id</span></code> and <code class="docutils literal notranslate"><span class="pre">$FOO_num</span></code> are
+reserved by LensKit and cannot be used by user-defined attributes (on any
+entity or relationship).  We recommend avoiding all attribute names of the
+form <code class="docutils literal notranslate"><span class="pre">$FOO_&lt;ident&gt;</span></code>.</p></li>
+</ul>
+</section>
+<section id="unsupported-features">
+<h3>Unsupported Features<a class="headerlink" href="#unsupported-features" title="Link to this heading">#</a></h3>
+<p>In the initial release of the new LensKit data model (in <a class="reference internal" href="../releases/2025.html#id1"><span class="std std-ref">2025.1 (in progress)</span></a>), not all
+possible attribute and entity or relationship class combinations are supported.
+In particular, relationships can only have scalar attributes.  We intend to
+relax this restriction in the future, with more time to determine an ergonomic
+API for accessing such data.  All attribute formats are supported for entities.</p>
+<p>Repeated relationships are also not yet fully supported. Support is planned for
+LensKit 2025.2.</p>
+</section>
+</section>
+<section id="relationships">
+<span id="data-relationships"></span><h2>Relationships<a class="headerlink" href="#relationships" title="Link to this heading">#</a></h2>
+<p>Relationships are links between two (or more) entities, optionally with
+associated attributes.  They are further divided into classes, with each class
+defining its own set of relationship attributes.</p>
+<p>Most relationships are between entities of different classes, in which case the
+entity identifiers are stored in <code class="docutils literal notranslate"><span class="pre">&lt;class&gt;_id</span></code> (or <code class="docutils literal notranslate"><span class="pre">&lt;class&gt;_num</span></code>) columns.
+For self-relationships, however, this is not possible; such relationships must
+define <em>aliases</em> for one or more of their appearances, and LensKit uses these
+aliases to derive the appropriate column names.  For example, a relationship
+class that encodes citation relationships in a research paper recommender system
+would be a self-relationship between items.  It can alias <code class="docutils literal notranslate"><span class="pre">item</span></code> to <code class="docutils literal notranslate"><span class="pre">citing</span></code>
+and <code class="docutils literal notranslate"><span class="pre">cited</span></code>, in which case the item identifiers are taken from <code class="docutils literal notranslate"><span class="pre">citing_id</span></code>
+and <code class="docutils literal notranslate"><span class="pre">cited_id</span></code> columns (or <code class="docutils literal notranslate"><span class="pre">citing_num</span></code> and <code class="docutils literal notranslate"><span class="pre">cited_num</span></code>).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Entity and relationship class names must be unique (you cannot use the same
+name for an entity class and a relationship class).</p>
+</div>
+</section>
+<section id="interactions">
+<span id="data-interactions"></span><h2>Interactions<a class="headerlink" href="#interactions" title="Link to this heading">#</a></h2>
+<p>An interaction is a relationship that indicates some kind of interaction between
+entities for the purposes of learning and evaluating recommendations, such as
+purchasing, shelving, clicking, or rating.  There is no logical difference
+between relationships and interactions; an interaction class is just a
+relationship class that has been declared to represent interactions, so that
+client and model code knows to treat it as interaction data.  Most data sets
+define a single interaction class, but can define more than one.</p>
+<ul class="simple">
+<li><p>Interactions should always involve the <code class="docutils literal notranslate"><span class="pre">item</span></code> entity class, without an
+alias, preferably as the last entity class in the relationship definition.</p></li>
+<li><p>Interactions usually have timestamps (although this is not strictly
+required).  Timestamps can be either integers (treated as UNIX timestamps)
+or Arrow timestamp types.</p></li>
+<li><p>The dataset can designate a <em>default interaction class</em> so that model code
+can request the “interactions” without needing to know the different classes
+involved.  If no default class is specified, and more than one class is
+defined, it is an error to request the interactions without specifying an
+interaction class.</p></li>
+</ul>
+<p>Certain attribute names, if defined, have particular meaning for interaction
+records:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">timestamp</span></code></dt><dd><p>The date and time of the interaction, as a UNIX or Arrow timestamp.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">rating</span></code></dt><dd><p>A user-supplied rating for the user-item pair.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">count</span></code></dt><dd><p>A count of the interactions between this pair.  If client code requests an
+matrix of interaction counts, and this attribute is defined, then its sum is
+used as the total count of interactions between the entities.  If no
+<code class="docutils literal notranslate"><span class="pre">count</span></code> attribute is defined, then a matrix of interaction counts is
+computed by counting the interaction records.</p>
+<div class="admonition-todo admonition" id="id2">
+<p class="admonition-title">Todo</p>
+<p>Define what happens when <code class="docutils literal notranslate"><span class="pre">count</span></code> is NULL.</p>
+</div>
+</dd>
+</dl>
+<p>The order of entity classes in an interaction type is mildly meaningful: it is
+convention for the last entity class to be the item, and for “interactor” (e.g.,
+user or session) to be first.</p>
+</section>
+<section id="schemas">
+<span id="data-schema"></span><h2>Schemas<a class="headerlink" href="#schemas" title="Link to this heading">#</a></h2>
+<p>A data <em>schema</em> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataSchema</span></code>) defines the layout of the
+tables, entity types, and relationship types.  Client code will rarely need to
+create or work with the schema directly; it is created and maintained by the
+<a class="reference internal" href="../api/lenskit.data.DatasetBuilder.html#lenskit.data.DatasetBuilder" title="lenskit.data.DatasetBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetBuilder</span></code></a>.</p>
+</section>
+<section id="internal-representation">
+<span id="data-internal"></span><h2>Internal Representation<a class="headerlink" href="#internal-representation" title="Link to this heading">#</a></h2>
+<p>Data should only be accessed through the <a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> API, as
+the internal storage is subject to change.  Logically, each entity or
+relationship type is represented as a table, consisting of:</p>
+<ul class="simple">
+<li><p>One or more entity identifier or number columns</p></li>
+<li><p>Zero or more attribute columns</p></li>
+</ul>
+<p>Data may be internally broken into sub-tables for efficiency (e.g., for very
+sparse attributes), but this is the logical view. Internally, relationships use
+entity numbers instead of entity IDs to record the entities involved in a
+relationship record.</p>
+<p>As of LensKit 2025.1, the native format for storing a dataset on disk (used by
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">save()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">load()</span></code>) is a
+directory with a <code class="docutils literal notranslate"><span class="pre">schema.json</span></code> file containing the serialized logical schema
+and a Parquet file <code class="docutils literal notranslate"><span class="pre">&lt;class&gt;.parquet</span></code> for each entity or relationship class
+containing the identifiers and attribute values. For entity classes,
+<code class="docutils literal notranslate"><span class="pre">&lt;class&gt;.parquet</span></code> contains both the entity IDS and entity numbers.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="data.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Datasets</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="item-lists.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Item Lists and Collections</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-concepts">Core Concepts</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entities">Entities</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attribute-name-restrictions">Attribute Name Restrictions</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unsupported-features">Unsupported Features</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relationships">Relationships</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions">Interactions</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#schemas">Schemas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#internal-representation">Internal Representation</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/guide/data-model.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2018–2024 Drexel University, Boise State University, and collaborators.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

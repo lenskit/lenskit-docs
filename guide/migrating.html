@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit 2025.1 brings the largest changes to LensKit’s APIs and operation since moving to Python. These changes are a result of years of experience using and teaching the current Python APIs, talki..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Migrating from LensKit 0.x &#8212; LensKit 2025.0.0a7.dev19+g01907a88 documentation</title>
+    <title>Migrating from LensKit 0.x &#8212; LensKit 2025.0.0a7.dev100+g016e580e documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=9554e660"></script>
+    <script src="../_static/documentation_options.js?v=cf52f9c4"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a7.dev19+g01907a88 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a7.dev19+g01907a88 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a7.dev100+g016e580e documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a7.dev100+g016e580e documentation - Home"/>
   
   
 </a></div>
@@ -417,6 +417,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="principles.html">Design Goals and Principles</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-model.html">Data Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="item-lists.html">Item Lists and Collections</a></li>
 <li class="toctree-l1"><a class="reference internal" href="queries.html">Queries and Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pipeline.html">Recommendation Pipelines</a></li>
@@ -566,9 +567,11 @@ than previous versions of LensKit.</p>
 </section>
 <section id="loading-data">
 <h2>Loading Data<a class="headerlink" href="#loading-data" title="Link to this heading">#</a></h2>
-<p>New code should use <a class="reference internal" href="../api/lenskit.data.from_interactions_df.html#lenskit.data.from_interactions_df" title="lenskit.data.from_interactions_df"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.data.from_interactions_df()</span></code></a> to convert a Pandas
-data frame into a <a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-func docutils literal notranslate"><span class="pre">Dataset()</span></code></a>, or one of the standard loaders
-such as <a class="reference internal" href="../api/lenskit.data.load_movielens.html#lenskit.data.load_movielens" title="lenskit.data.load_movielens"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.data.load_movielens()</span></code></a>.</p>
+<p>New code should use <a class="reference internal" href="../api/lenskit.data.from_interactions_df.html#lenskit.data.from_interactions_df" title="lenskit.data.from_interactions_df"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.data.from_interactions_df()</span></code></a> to convert a
+Pandas data frame into a <a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-func docutils literal notranslate"><span class="pre">Dataset()</span></code></a>, or one of the
+standard loaders such as <a class="reference internal" href="../api/lenskit.data.load_movielens.html#lenskit.data.load_movielens" title="lenskit.data.load_movielens"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.data.load_movielens()</span></code></a>.
+<a class="reference internal" href="../api/lenskit.data.DatasetBuilder.html#lenskit.data.DatasetBuilder" title="lenskit.data.DatasetBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetBuilder</span></code></a> provides more fine-grained control over
+building datasets, including addition entity and interaction attributes.</p>
 <p>While most LensKit data frame code still recognizes the legacy <code class="docutils literal notranslate"><span class="pre">user</span></code> and
 <code class="docutils literal notranslate"><span class="pre">item</span></code> columns from LensKit 0.14 and earlier, data frames of LensKit data
 should use the column names <code class="docutils literal notranslate"><span class="pre">user_id</span></code> and <code class="docutils literal notranslate"><span class="pre">item_id</span></code> instead, to
@@ -659,11 +662,11 @@ components with your choice of support libraries.</p>
 the <code class="docutils literal notranslate"><span class="pre">Recommender</span></code> interface.</p>
 <p>LensKit 2025 introduces the <em>pipeline</em> design; you configure the core
 recommendation model in a very similar way (constructor arguments), and pass it
-to <a class="reference internal" href="../api/lenskit.pipeline.topn_pipeline.html#lenskit.pipeline.topn_pipeline" title="lenskit.pipeline.topn_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">topn_pipeline()</span></code></a> instead of <code class="docutils literal notranslate"><span class="pre">Recommender.adapt</span></code>.
+to <code class="xref py py-func docutils literal notranslate"><span class="pre">topn_pipeline()</span></code> instead of <code class="docutils literal notranslate"><span class="pre">Recommender.adapt</span></code>.
 The resulting pipeline object can be directly used by the batch inference
 facilities.</p>
 <p>The model and pipeline training method is now named <code class="docutils literal notranslate"><span class="pre">train</span></code>, so after creating
-the pipeline, you will call <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.train" title="lenskit.pipeline.Pipeline.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a>:</p>
+the pipeline, you will call <code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code>:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -701,7 +704,7 @@ component called <code class="docutils literal notranslate"><span class="pre">re
 recommended items. You can optionally specify candidate items with an <code class="docutils literal notranslate"><span class="pre">items=</span></code>
 parameter to <code class="docutils literal notranslate"><span class="pre">run</span></code> (it takes an <a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>), or a list
 length with <code class="docutils literal notranslate"><span class="pre">n=</span></code> (you can also bake a default list length into the pipeline
-when you call <a class="reference internal" href="../api/lenskit.pipeline.topn_pipeline.html#lenskit.pipeline.topn_pipeline" title="lenskit.pipeline.topn_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">topn_pipeline()</span></code></a>).</p>
+when you call <code class="xref py py-func docutils literal notranslate"><span class="pre">topn_pipeline()</span></code>).</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
 <p>The input specifying the user identifier is now called a <code class="docutils literal notranslate"><span class="pre">query</span></code>, in order

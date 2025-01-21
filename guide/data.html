@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit provides a unified data model for recommender systems data along with classes and utility functions for working with it, described in this section of the manual. Getting started with the da..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Datasets &#8212; LensKit 2025.0.0a7.dev19+g01907a88 documentation</title>
+    <title>Datasets &#8212; LensKit 2025.0.0a7.dev100+g016e580e documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=9554e660"></script>
+    <script src="../_static/documentation_options.js?v=cf52f9c4"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -71,7 +71,7 @@
     <link rel="canonical" href="https://lkpy.lenskit.org/en/latest/guide/data.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Item Lists and Collections" href="item-lists.html" />
+    <link rel="next" title="Data Model" href="data-model.html" />
     <link rel="prev" title="Design Goals and Principles" href="principles.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a7.dev19+g01907a88 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a7.dev19+g01907a88 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.0.0a7.dev100+g016e580e documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.0.0a7.dev100+g016e580e documentation - Home"/>
   
   
 </a></div>
@@ -417,6 +417,7 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="principles.html">Design Goals and Principles</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data-model.html">Data Model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="item-lists.html">Item Lists and Collections</a></li>
 <li class="toctree-l1"><a class="reference internal" href="queries.html">Queries and Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pipeline.html">Recommendation Pipelines</a></li>
@@ -504,8 +505,8 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="datasets">
-<span id="id1"></span><h1>Datasets<a class="headerlink" href="#datasets" title="Link to this heading">#</a></h1>
+  <section id="data-api">
+<span id="datasets"></span><span id="id1"></span><h1>Datasets<a class="headerlink" href="#data-api" title="Link to this heading">#</a></h1>
 <p>LensKit provides a unified data model for recommender systems data along with
 classes and utility functions for working with it, described in this section of
 the manual.</p>
@@ -523,7 +524,7 @@ the old support for producing sparse matrices from rating frames.</p>
 </div>
 <p>You can then access the data from the various methods of the <a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> class.
 For example, if you want to get the ratings as a data frame:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mlds</span><span class="o">.</span><span class="n">interaction_matrix</span><span class="p">(</span><span class="s1">&#39;pandas&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;rating&#39;</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mlds</span><span class="o">.</span><span class="n">interaction_matrix</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s1">&#39;pandas&#39;</span><span class="p">,</span> <span class="n">field</span><span class="o">=</span><span class="s1">&#39;rating&#39;</span><span class="p">)</span>
 <span class="go">        user_num  item_num  rating</span>
 <span class="go">0              0        30     2.5</span>
 <span class="go">1              0       833     3.0</span>
@@ -536,15 +537,15 @@ For example, if you want to get the ratings as a data frame:</p>
 </div>
 <p>Or obtain item statistics:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">mlds</span><span class="o">.</span><span class="n">item_stats</span><span class="p">()</span>
-<span class="go">        count  user_count  rating_count  mean_rating  first_time</span>
-<span class="go">item</span>
-<span class="go">1         247         247           247     3.872470   828212413</span>
-<span class="go">2         107         107           107     3.401869   828213150</span>
-<span class="go">3          59          59            59     3.161017   833955544</span>
-<span class="go">4          13          13            13     2.384615   834425135</span>
-<span class="go">5          56          56            56     3.267857   829491839</span>
+<span class="go">        record_count  user_count  rating_count  ...  count  first_time   last_time</span>
+<span class="go">item                                            ...</span>
+<span class="go">1                247         247           247  ...    247   828212413  1475783711</span>
+<span class="go">2                107         107           107  ...    107   828213150  1470073353</span>
+<span class="go">3                 59          59            59  ...     59   833955544  1471385241</span>
+<span class="go">4                 13          13            13  ...     13   834425135  1090908852</span>
+<span class="go">5                 56          56            56  ...     56   829491839  1471385747</span>
 <span class="go">...</span>
-<span class="go">[9066 rows x 5 columns]</span>
+<span class="go">[9066 rows x 7 columns]</span>
 </pre></div>
 </div>
 <section id="data-model-and-key-concepts">
@@ -594,14 +595,63 @@ more detail in the <a class="reference internal" href="../api/lenskit.data.Datas
 <li><p>Sets of known user and item identifiers, through <a class="reference internal" href="../api/lenskit.data.Vocabulary.html#lenskit.data.Vocabulary" title="lenskit.data.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a> objects
 exposed through the <a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset.users" title="lenskit.data.Dataset.users"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Dataset.users</span></code></a> and <a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset.items" title="lenskit.data.Dataset.items"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Dataset.items</span></code></a>
 properties.</p></li>
+<li><p>Access to the entities and relationships (including interactions) defined in
+the dataset.</p></li>
 </ul>
+</section>
+<section id="analyzing-interactions">
+<h2>Analyzing Interactions<a class="headerlink" href="#analyzing-interactions" title="Link to this heading">#</a></h2>
+<p><a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> allows client code to obtain <em>interactions</em> between entities
+(such as users rating items), or other inter-entity relationships, in a variety
+of formats (including Pandas data frames and SciPy or PyTorch sparse matrices).
+The <a class="reference internal" href="../api/lenskit.data.RelationshipSet.html#lenskit.data.RelationshipSet" title="lenskit.data.RelationshipSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">RelationshipSet</span></code></a> and <a class="reference internal" href="../api/lenskit.data.MatrixRelationshipSet.html#lenskit.data.MatrixRelationshipSet" title="lenskit.data.MatrixRelationshipSet"><code class="xref py py-class docutils literal notranslate"><span class="pre">MatrixRelationshipSet</span></code></a> classes provide
+the primary interfaces to these capabilities.</p>
+<section id="interaction-statistics">
+<span id="interaction-stats"></span><h3>Interaction Statistics<a class="headerlink" href="#interaction-statistics" title="Link to this heading">#</a></h3>
+<p>Datasets also provide cached access to various statistics of the entities
+involved in an interaction class.  These are currently exposed through
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">MatrixRelationshipSet.row_stats()</span></code> and
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">col_stats()</span></code>; for convenience, the statistics from
+the default interaction class are available on <a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset.user_stats" title="lenskit.data.Dataset.user_stats"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.user_stats()</span></code></a> and
+<a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset.item_stats" title="lenskit.data.Dataset.item_stats"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.item_stats()</span></code></a>.</p>
+<p>These statistics include:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">count</span></code></dt><dd><p>The total number of relationships for the entity.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">record_count</span></code></dt><dd><p>The number of relationship or interaction records for the entity.  This is
+equal to <code class="docutils literal notranslate"><span class="pre">count</span></code>, unless the relationship type has a <code class="docutils literal notranslate"><span class="pre">count</span></code> attribute,
+in which case this attribute is the number of records and <code class="docutils literal notranslate"><span class="pre">count</span></code> is the
+total number of interactions.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&lt;other&gt;_count</span></code></dt><dd><p>The number of distinct entities of type &lt;other&gt; this entity has interacted
+with.  For example, the user statistics of a normal user-item interaction
+type will have an <code class="docutils literal notranslate"><span class="pre">item_count</span></code> column.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">rating_count</span></code></dt><dd><p>The number of explicit rating values (only defined if the interaction type
+has a <code class="docutils literal notranslate"><span class="pre">rating</span></code> attribute).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">mean_rating</span></code></dt><dd><p>The mean rating provided by or for this entity (only defined if the interaction
+type has a <code class="docutils literal notranslate"><span class="pre">rating</span></code> attribute).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">first_time</span></code></dt><dd><p>The first recorded timestamp for this entity’s interactions (only defined if
+the interaction type has a <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> attribute).</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">last_time</span></code></dt><dd><p>The last recorded timestamp for this entity’s interactions (only defined if
+the interaction type has a <code class="docutils literal notranslate"><span class="pre">timestamp</span></code> attribute).</p>
+</dd>
+</dl>
+</section>
 </section>
 <section id="creating-datasets">
 <h2>Creating Datasets<a class="headerlink" href="#creating-datasets" title="Link to this heading">#</a></h2>
-<p>Several functions can create a <a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> from different input data sources.</p>
+<p>Several functions and classes can create a <a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> from different input
+data sources.</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../api/lenskit.data.from_interactions_df.html#lenskit.data.from_interactions_df" title="lenskit.data.from_interactions_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_interactions_df</span></code></a>(df, *[, user_col, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/lenskit.data.DatasetBuilder.html#lenskit.data.DatasetBuilder" title="lenskit.data.DatasetBuilder"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DatasetBuilder</span></code></a>([name])</p></td>
+<td><p>Construct data sets from data and tables.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/lenskit.data.from_interactions_df.html#lenskit.data.from_interactions_df" title="lenskit.data.from_interactions_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_interactions_df</span></code></a>(df, *[, user_col, ...])</p></td>
 <td><p>Create a dataset from a data frame of ratings or other user-item interactions.</p></td>
 </tr>
 </tbody>
@@ -616,23 +666,6 @@ their source files.</p>
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="../api/lenskit.data.load_movielens.html#lenskit.data.load_movielens" title="lenskit.data.load_movielens"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_movielens</span></code></a>(path)</p></td>
 <td><p>Load a MovieLens dataset.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-<section id="dataset-implementations">
-<h2>Dataset Implementations<a class="headerlink" href="#dataset-implementations" title="Link to this heading">#</a></h2>
-<p><a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> itself is an abstract class that can be extended to provide new
-data set implementations (e.g. querying a database).  LensKit provides a few
-implementations.</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">MatrixDataset</span></code>(users, items, interact_df)</p></td>
-<td><p>Dataset implementation using an in-memory rating or implicit-feedback matrix (with no duplicate interactions).</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">LazyDataset</span></code>(loader)</p></td>
-<td><p>A data set with an underlying load function, that doesn't call the function until data is actually needed.</p></td>
 </tr>
 </tbody>
 </table>
@@ -660,11 +693,11 @@ implementations.</p>
       </div>
     </a>
     <a class="right-next"
-       href="item-lists.html"
+       href="data-model.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Item Lists and Collections</p>
+        <p class="prev-next-title">Data Model</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -692,9 +725,12 @@ implementations.</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-abstraction">Dataset Abstraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analyzing-interactions">Analyzing Interactions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interaction-statistics">Interaction Statistics</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-datasets">Creating Datasets</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-common-datasets">Loading Common Datasets</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-implementations">Dataset Implementations</a></li>
 </ul>
   </nav></div>
 
