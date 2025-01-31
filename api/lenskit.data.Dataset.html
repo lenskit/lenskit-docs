@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.data.Dataset &#8212; LensKit 2025.1.0b2.dev56+gfe2213c7 documentation</title>
+    <title>lenskit.data.Dataset &#8212; LensKit 2025.1.0b2.dev71+g984f6e5a documentation</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=08df73f4"></script>
+    <script src="../_static/documentation_options.js?v=a995ed31"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.0b2.dev56+gfe2213c7 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.0b2.dev56+gfe2213c7 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.0b2.dev71+g984f6e5a documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.0b2.dev71+g984f6e5a documentation - Home"/>
   
   
 </a></div>
@@ -603,26 +603,13 @@
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Representation of a data set for LensKit training, evaluation, etc. Data can
 be accessed in a variety of formats depending on the needs of a component.
-See <a class="reference internal" href="../guide/data-model.html#data-model"><span class="std std-ref">Data Model</span></a> for details of the LensKit data model.</p>
+See <a class="reference internal" href="../guide/data/model.html#data-model"><span class="std std-ref">Data Model</span></a> for details of the LensKit data model.</p>
 <p>Dataset objects should not be directly constructed; instead, use a
-<a class="reference internal" href="lenskit.data.DatasetBuilder.html#lenskit.data.DatasetBuilder" title="lenskit.data.DatasetBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetBuilder</span></code></a>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">load()</span></code>, or <a class="reference internal" href="lenskit.data.from_interactions_df.html#lenskit.data.from_interactions_df" title="lenskit.data.from_interactions_df"><code class="xref py py-func docutils literal notranslate"><span class="pre">from_interactions_df()</span></code></a>.</p>
+<a class="reference internal" href="lenskit.data.DatasetBuilder.html#lenskit.data.DatasetBuilder" title="lenskit.data.DatasetBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetBuilder</span></code></a>, <a class="reference internal" href="#lenskit.data.Dataset.load" title="lenskit.data.Dataset.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load()</span></code></a>, or <a class="reference internal" href="lenskit.data.from_interactions_df.html#lenskit.data.from_interactions_df" title="lenskit.data.from_interactions_df"><code class="xref py py-func docutils literal notranslate"><span class="pre">from_interactions_df()</span></code></a>.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Zero-copy conversions are used whenever possible, so client code <strong>must
 not</strong> modify returned data in-place.</p>
-</div>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Support for advanced rating situations is not yet supported:</p>
-<ul class="simple">
-<li><p>repeated ratings</p></li>
-<li><p>mixed implicit &amp; explicit feedback</p></li>
-<li><p>later actions removing earlier ratings</p></li>
-</ul>
-</div>
-<div class="admonition-todo admonition" id="id2">
-<p class="admonition-title">Todo</p>
-<p>Support for item and user content or metadata is not yet implemented.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -672,16 +659,19 @@ versions may introduce changes that break subclasses or reimplementations. See
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.Dataset.item_stats" title="lenskit.data.Dataset.item_stats"><code class="xref py py-obj docutils literal notranslate"><span class="pre">item_stats</span></code></a>()</p></td>
 <td><p>Get item statistics from the default interaction class.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">load</span></code>(path)</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.Dataset.load" title="lenskit.data.Dataset.load"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load</span></code></a>(path)</p></td>
+<td><p>Load a dataset in the LensKit native format.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.Dataset.relationships" title="lenskit.data.Dataset.relationships"><code class="xref py py-obj docutils literal notranslate"><span class="pre">relationships</span></code></a>(name)</p></td>
 <td><p>Get the relationship records of a particular type / class.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.Dataset.user_row" title="lenskit.data.Dataset.user_row"><code class="xref py py-obj docutils literal notranslate"><span class="pre">user_row</span></code></a>([user_id, user_num])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.Dataset.save" title="lenskit.data.Dataset.save"><code class="xref py py-obj docutils literal notranslate"><span class="pre">save</span></code></a>(path)</p></td>
+<td><p>Save the data set in the LensKit native format.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.Dataset.user_row" title="lenskit.data.Dataset.user_row"><code class="xref py py-obj docutils literal notranslate"><span class="pre">user_row</span></code></a>([user_id, user_num])</p></td>
 <td><p>Get a user's row from the interaction matrix for the default interaction class, using <span class="xref std std-ref">default coalsecing</span> for repeated interactions.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.Dataset.user_stats" title="lenskit.data.Dataset.user_stats"><code class="xref py py-obj docutils literal notranslate"><span class="pre">user_stats</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.Dataset.user_stats" title="lenskit.data.Dataset.user_stats"><code class="xref py py-obj docutils literal notranslate"><span class="pre">user_stats</span></code></a>()</p></td>
 <td><p>Get user statistics from the default interaction class.</p></td>
 </tr>
 </tbody>
@@ -711,6 +701,35 @@ versions may introduce changes that break subclasses or reimplementations. See
 </tbody>
 </table>
 </div>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.Dataset.load">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.Dataset.load" title="Link to this definition">#</a></dt>
+<dd><p>Load a dataset in the LensKit native format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/os.html#os.PathLike" title="(in Python v3.13)"><em>PathLike</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The path to the dataset to load.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The loaded dataset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.Dataset.save">
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.Dataset.save" title="Link to this definition">#</a></dt>
+<dd><p>Save the data set in the LensKit native format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>path</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/os.html#os.PathLike" title="(in Python v3.13)"><em>PathLike</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>]</em>) – The path in which to save the data set (will be created as a
+directory).</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.data.Dataset.schema">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">schema</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="lenskit.data.schema.html#lenskit.data.schema.DataSchema" title="lenskit.data.schema.DataSchema"><span class="pre">DataSchema</span></a></em><a class="headerlink" href="#lenskit.data.Dataset.schema" title="Link to this definition">#</a></dt>
@@ -912,7 +931,7 @@ ID exists.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><p>A data frame indexed by item ID with the interaction statistics. See
-<a class="reference internal" href="../guide/data.html#interaction-stats"><span class="std std-ref">Interaction Statistics</span></a> for a description of the columns returned.</p>
+<a class="reference internal" href="../guide/data/index.html#interaction-stats"><span class="std std-ref">Interaction Statistics</span></a> for a description of the columns returned.</p>
 <p>The index is the vocabulary, so <code class="docutils literal notranslate"><span class="pre">iloc</span></code> works with item numbers.</p>
 </p>
 </dd>
@@ -929,7 +948,7 @@ ID exists.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><p>A data frame indexed by user ID with the interaction statistics. See
-<a class="reference internal" href="../guide/data.html#interaction-stats"><span class="std std-ref">Interaction Statistics</span></a> for a description of the columns returned.</p>
+<a class="reference internal" href="../guide/data/index.html#interaction-stats"><span class="std std-ref">Interaction Statistics</span></a> for a description of the columns returned.</p>
 <p>The index is the vocabulary, so <code class="docutils literal notranslate"><span class="pre">iloc</span></code> works with user numbers.</p>
 </p>
 </dd>
@@ -992,6 +1011,8 @@ ID exists.</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset"><code class="docutils literal notranslate"><span class="pre">Dataset</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.__init__"><code class="docutils literal notranslate"><span class="pre">Dataset.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.load"><code class="docutils literal notranslate"><span class="pre">Dataset.load()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.save"><code class="docutils literal notranslate"><span class="pre">Dataset.save()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.schema"><code class="docutils literal notranslate"><span class="pre">Dataset.schema</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.items"><code class="docutils literal notranslate"><span class="pre">Dataset.items</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.Dataset.users"><code class="docutils literal notranslate"><span class="pre">Dataset.users</span></code></a></li>
