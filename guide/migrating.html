@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit 2025.1 brings the largest changes to LensKit’s APIs and operation since moving to Python. These changes are a result of years of experience using and teaching the current Python APIs, talki..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Migrating from LensKit 0.x &#8212; LensKit 2025.1.1b3.dev3+g5e057a86 documentation</title>
+    <title>Migrating from LensKit 0.x &#8212; LensKit 2025.1.1b3.dev11+gd6e8c801 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=c43b23c3"></script>
+    <script src="../_static/documentation_options.js?v=94adbf8d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1b3.dev3+g5e057a86 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1b3.dev3+g5e057a86 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1b3.dev11+gd6e8c801 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1b3.dev11+gd6e8c801 documentation - Home"/>
   
   
 </a></div>
@@ -679,7 +679,8 @@ the pipeline, you will call <code class="xref py py-meth docutils literal notran
 </pre></div>
 </div>
 <p>See <a class="reference internal" href="pipeline.html#pipeline"><span class="std std-ref">Recommendation Pipelines</span></a> for more details on pipelines and how you can reconfigure
-them for very different ways of turning scoring models into full recommenders.</p>
+them for very different ways of turning scoring models into full recommenders.
+This replaces the old <code class="docutils literal notranslate"><span class="pre">fit</span></code> method on algorithm objects.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Since 2025, we no longer use the term “algorithm” in LensKit, as it is
@@ -688,7 +689,7 @@ have “pipelines” consisting of ”components”, some of which may be ”mod
 (for scoring, ranking, etc.).</p>
 </div>
 <section id="configuration-components">
-<h3>Configuration Components<a class="headerlink" href="#configuration-components" title="Link to this heading">#</a></h3>
+<span id="migrate-component-config"></span><h3>Configuration Components<a class="headerlink" href="#configuration-components" title="Link to this heading">#</a></h3>
 <p>Individual components now use <a href="#id2"><span class="problematic" id="id3">Pydantic_</span></a> models to represent their configuration
 (e.g. hyperparameters).  This is to reduce redundancy, improve documentation,
 enable consistent serialization, and validate parameter values in a consistent
@@ -718,11 +719,6 @@ when you call <code class="xref py py-func docutils literal notranslate"><span c
 <p>The input specifying the user identifier is now called a <code class="docutils literal notranslate"><span class="pre">query</span></code>, in order
 to support recommendation tasks beyond simple user-based recommendation such
 as context-based or session-based recommendation.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>We are considering adding a more ergonomic interface to obtain
-recommendations from pipelines.</p>
 </div>
 </section>
 <section id="batch-inference">
@@ -762,6 +758,41 @@ quickly building out additional metrics that take advantage of this
 functionality.  See <a class="reference internal" href="evaluation/index.html#evaluation"><span class="std std-ref">Evaluating Recommender Output</span></a> for details on metrics and analysis.</p>
 <p><a class="reference internal" href="../api/lenskit.metrics.RunAnalysis.html#lenskit.metrics.RunAnalysis" title="lenskit.metrics.RunAnalysis"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.metrics.RunAnalysis</span></code></a> replaces the old <code class="docutils literal notranslate"><span class="pre">RecListAnalysis</span></code>, and
 provides better defaults (e.g. how users without recommendations are handled).</p>
+</section>
+<section id="model-configuration-changes">
+<h2>Model Configuration Changes<a class="headerlink" href="#model-configuration-changes" title="Link to this heading">#</a></h2>
+<p>In line with the new component configuration framework (see
+<a class="reference internal" href="#migrate-component-config"><span class="std std-ref">Configuration Components</span></a>) and to make configuration more consistent
+between models, we have changed several configuration options and defaults.</p>
+<p>These changes for the most popular models are below:</p>
+<section id="cross-model-standardization">
+<h3>Cross-Model Standardization<a class="headerlink" href="#cross-model-standardization" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>All configuration options must be named, no positional options are accepted.</p></li>
+<li><p>Any model that uses training epochs now uses the configuration option
+<code class="docutils literal notranslate"><span class="pre">epochs</span></code> (was previously <code class="docutils literal notranslate"><span class="pre">iterations</span></code> on some models).</p></li>
+<li><p>Latent-feature models use the configuration option <code class="docutils literal notranslate"><span class="pre">embedding_size</span></code> to
+declare the embedding size.</p></li>
+</ul>
+</section>
+<section id="als">
+<h3>ALS<a class="headerlink" href="#als" title="Link to this heading">#</a></h3>
+<p>The ALS models have the following configuration changes:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">epochs</span></code> and <code class="docutils literal notranslate"><span class="pre">embedding_size</span></code> as noted above.  <code class="docutils literal notranslate"><span class="pre">features</span></code> is accepted
+as an input alias for <code class="docutils literal notranslate"><span class="pre">embedding_size</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">save_user_embeddings</span></code> is now <code class="docutils literal notranslate"><span class="pre">user_embeddings</span></code>, with three options:
+<code class="docutils literal notranslate"><span class="pre">True</span></code>, <code class="docutils literal notranslate"><span class="pre">False</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;prefer&quot;</span></code>.</p></li>
+</ul>
+</section>
+<section id="k-nn">
+<h3>k-NN<a class="headerlink" href="#k-nn" title="Link to this heading">#</a></h3>
+<p>The k-NN models have the following changes:</p>
+<ul class="simple">
+<li><p>Max neighbors is now called <code class="docutils literal notranslate"><span class="pre">max_nbrs</span></code> instead of <code class="docutils literal notranslate"><span class="pre">nnbrs</span></code> (<code class="docutils literal notranslate"><span class="pre">k</span></code> is
+accepted as an input alias).</p></li>
+</ul>
+</section>
 </section>
 </section>
 
@@ -825,6 +856,12 @@ provides better defaults (e.g. how users without recommendations are handled).</
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#obtaining-recommendations">Obtaining Recommendations</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#batch-inference">Batch Inference</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#evaluating-recommendations">Evaluating Recommendations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-configuration-changes">Model Configuration Changes</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-model-standardization">Cross-Model Standardization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#als">ALS</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#k-nn">k-NN</a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

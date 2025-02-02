@@ -19,7 +19,7 @@
 <meta name="description" content="Singular value decomposition for explicit feedback. This module contains a truncated SVD explicit-feedback scorer built on sklearn.decomposition.TruncatedSVD. Classes" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.sklearn.svd &#8212; LensKit 2025.1.1b3.dev3+g5e057a86 documentation</title>
+    <title>lenskit.sklearn.svd &#8212; LensKit 2025.1.1b3.dev11+gd6e8c801 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=c43b23c3"></script>
+    <script src="../_static/documentation_options.js?v=94adbf8d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1b3.dev3+g5e057a86 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1b3.dev3+g5e057a86 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1b3.dev11+gd6e8c801 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1b3.dev11+gd6e8c801 documentation - Home"/>
   
   
 </a></div>
@@ -605,7 +605,7 @@
 <p class="rubric">Classes</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.sklearn.svd.BiasedSVDConfig" title="lenskit.sklearn.svd.BiasedSVDConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BiasedSVDConfig</span></code></a>([features, damping, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.sklearn.svd.BiasedSVDConfig" title="lenskit.sklearn.svd.BiasedSVDConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BiasedSVDConfig</span></code></a>([embedding_size, damping, ...])</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.sklearn.svd.BiasedSVDScorer" title="lenskit.sklearn.svd.BiasedSVDScorer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BiasedSVDScorer</span></code></a>([config])</p></td>
@@ -616,18 +616,25 @@
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.sklearn.svd.BiasedSVDConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.sklearn.svd.</span></span><span class="sig-name descname"><span class="pre">BiasedSVDConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'Damping'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">&quot;Literal['arpack',</span> <span class="pre">'randomized']&quot;</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'randomized'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sklearn.svd.BiasedSVDConfig" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.sklearn.svd.</span></span><span class="sig-name descname"><span class="pre">BiasedSVDConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">FieldInfo(annotation=NoneType,</span> <span class="pre">required=False,</span> <span class="pre">default=50,</span> <span class="pre">alias_priority=2,</span> <span class="pre">validation_alias=AliasChoices(choices=['embedding_size',</span> <span class="pre">'features']))</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'Damping'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">&quot;Literal['arpack',</span> <span class="pre">'randomized']&quot;</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'randomized'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_iter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="s"><span class="pre">'int'</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.sklearn.svd.BiasedSVDConfig" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
+<li><p><strong>embedding_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
 <li><p><strong>damping</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'user'</em><em>, </em><em>'item'</em><em>]</em><em>, </em><em>float</em><em>]</em>)</p></li>
 <li><p><strong>algorithm</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'arpack'</em><em>, </em><em>'randomized'</em><em>]</em>)</p></li>
 <li><p><strong>n_iter</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.sklearn.svd.BiasedSVDConfig.embedding_size">
+<span class="sig-name descname"><span class="pre">embedding_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">FieldInfo(annotation=NoneType,</span> <span class="pre">required=False,</span> <span class="pre">default=50,</span> <span class="pre">alias_priority=2,</span> <span class="pre">validation_alias=AliasChoices(choices=['embedding_size',</span> <span class="pre">'features']))</span></em><a class="headerlink" href="#lenskit.sklearn.svd.BiasedSVDConfig.embedding_size" title="Link to this definition">#</a></dt>
+<dd><p>The dimension of user and item embeddings (number of latent features to
+learn).</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -716,7 +723,10 @@ implementation.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.sklearn.svd.BiasedSVDConfig"><code class="docutils literal notranslate"><span class="pre">BiasedSVDConfig</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.sklearn.svd.BiasedSVDConfig"><code class="docutils literal notranslate"><span class="pre">BiasedSVDConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.sklearn.svd.BiasedSVDConfig.embedding_size"><code class="docutils literal notranslate"><span class="pre">BiasedSVDConfig.embedding_size</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.sklearn.svd.BiasedSVDScorer"><code class="docutils literal notranslate"><span class="pre">BiasedSVDScorer</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.sklearn.svd.BiasedSVDScorer.train"><code class="docutils literal notranslate"><span class="pre">BiasedSVDScorer.train()</span></code></a></li>
 </ul>
