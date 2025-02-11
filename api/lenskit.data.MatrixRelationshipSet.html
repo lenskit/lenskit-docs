@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.data.MatrixRelationshipSet &#8212; LensKit 2025.1.1b8.dev15+gb9fdf768 documentation</title>
+    <title>lenskit.data.MatrixRelationshipSet &#8212; LensKit 2025.1.1b9.dev7+ga77d0c9d documentation</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=6f0f0a7b"></script>
+    <script src="../_static/documentation_options.js?v=4322f438"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -73,7 +73,7 @@
     <link rel="prev" title="lenskit.data.RelationshipSet" href="lenskit.data.RelationshipSet.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.1.1b8" />
+  <meta name="docsearch:version" content="2025.1.1b9" />
   </head>
   
   
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1b8.dev15+gb9fdf768 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1b8.dev15+gb9fdf768 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1b9.dev7+ga77d0c9d documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1b9.dev7+ga77d0c9d documentation - Home"/>
   
   
 </a></div>
@@ -662,10 +662,13 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.MatrixRelationshipSet.row_table" title="lenskit.data.MatrixRelationshipSet.row_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">row_table</span></code></a>([id, number])</p></td>
 <td><p>Get a single row of this interaction matrix as a table.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.MatrixRelationshipSet.scipy" title="lenskit.data.MatrixRelationshipSet.scipy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy</span></code></a>([attribute, layout, legacy])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.MatrixRelationshipSet.sample_negatives" title="lenskit.data.MatrixRelationshipSet.sample_negatives"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sample_negatives</span></code></a>(rows, *[, weighting, ...])</p></td>
+<td><p>Sample negative columns (columns with no observation recorded) for an array of rows.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.MatrixRelationshipSet.scipy" title="lenskit.data.MatrixRelationshipSet.scipy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy</span></code></a>([attribute, layout, legacy])</p></td>
 <td><p>Get this relationship matrix as a SciPy sparse matrix.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.MatrixRelationshipSet.torch" title="lenskit.data.MatrixRelationshipSet.torch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a>([attribute, layout])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.MatrixRelationshipSet.torch" title="lenskit.data.MatrixRelationshipSet.torch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code></a>([attribute, layout])</p></td>
 <td><p>Get this relationship matrix as a PyTorch sparse tensor.</p></td>
 </tr>
 </tbody>
@@ -680,6 +683,12 @@
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_interaction</span></code></p></td>
 <td><p>Query whether these relationships represent interactions.</p></td>
 </tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_cols</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">n_rows</span></code></p></td>
+<td><p></p></td>
+</tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">row_vocabulary</span></code></p></td>
 <td><p></p></td>
 </tr>
@@ -692,10 +701,13 @@
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">col_type</span></code></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">rc_index</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></p></td>
 <td><p>The name of the relationship class for these relationships.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">schema</span></code></p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">schema</span></code></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -768,6 +780,35 @@ sparse matrix (all observed values are 1).</p></li>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.6)"><em>Tensor</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.MatrixRelationshipSet.sample_negatives">
+<span class="sig-name descname"><span class="pre">sample_negatives</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rows</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weighting</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'uniform'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verify</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_attempts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.MatrixRelationshipSet.sample_negatives" title="Link to this definition">#</a></dt>
+<dd><p>Sample negative columns (columns with no observation recorded) for an
+array of rows. On a normal interaction matrix, this samples negative
+items for users.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rows</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.2)"><em>dtype</em></a><em>[</em><em>int32</em><em>]</em><em>]</em>) – The row numbers.  Duplicates are allowed, and negative columns
+are sampled independently for each row. Must be a 1D array or
+tensor.</p></li>
+<li><p><strong>weighting</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'uniform'</em><em>, </em><em>'popularity'</em><em>]</em>) – The weighting for sampled negatives; <code class="docutils literal notranslate"><span class="pre">uniform</span></code> samples them
+uniformly at random, while <code class="docutils literal notranslate"><span class="pre">popularity</span></code> samples them
+proportional to their popularity (number of occurrences).</p></li>
+<li><p><strong>verify</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to verify that the negative items are actually negative.
+Unverified sampling is much faster but can return false
+negatives.</p></li>
+<li><p><strong>max_attempts</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – When verification is on, the maximum attempts before giving up
+and returning a possible false negative.</p></li>
+<li><p><strong>rng</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.2)"><em>Generator</em></a><em> | </em><em>None</em>) – A random number generator to use.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>, <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.2)"><em>dtype</em></a>[<em>int32</em>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -864,6 +905,7 @@ when the column entity class is <a href="#id3"><span class="problematic" id="id4
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.MatrixRelationshipSet.csr_structure"><code class="docutils literal notranslate"><span class="pre">MatrixRelationshipSet.csr_structure()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.MatrixRelationshipSet.scipy"><code class="docutils literal notranslate"><span class="pre">MatrixRelationshipSet.scipy()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.MatrixRelationshipSet.torch"><code class="docutils literal notranslate"><span class="pre">MatrixRelationshipSet.torch()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.MatrixRelationshipSet.sample_negatives"><code class="docutils literal notranslate"><span class="pre">MatrixRelationshipSet.sample_negatives()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.MatrixRelationshipSet.row_table"><code class="docutils literal notranslate"><span class="pre">MatrixRelationshipSet.row_table()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.MatrixRelationshipSet.row_items"><code class="docutils literal notranslate"><span class="pre">MatrixRelationshipSet.row_items()</span></code></a></li>
 </ul>
