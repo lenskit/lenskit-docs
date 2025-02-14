@@ -11,15 +11,15 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="api/lenskit.logging.worker.html" />
 <meta property="og:site_name" content="LensKit" />
-<meta property="og:description" content="Support for logging from worker processes. This is internal support code, clients and LensKit implementers can usually ignore it. Classes" />
+<meta property="og:description" content="Support for logging from worker processes. This is internal support code, clients and LensKit implementers can usually ignore it. Functions Classes" />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_api_lenskit.logging.worker_6a5e9e02.png" />
-<meta property="og:image:alt" content="Support for logging from worker processes. This is internal support code, clients and LensKit implementers can usually ignore it. Classes" />
-<meta name="description" content="Support for logging from worker processes. This is internal support code, clients and LensKit implementers can usually ignore it. Classes" />
+<meta property="og:image" content="/_images/social_previews/summary_api_lenskit.logging.worker_f5d4c1f1.png" />
+<meta property="og:image:alt" content="Support for logging from worker processes. This is internal support code, clients and LensKit implementers can usually ignore it. Functions Classes" />
+<meta name="description" content="Support for logging from worker processes. This is internal support code, clients and LensKit implementers can usually ignore it. Functions Classes" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.logging.worker &#8212; LensKit 2025.1.1b9 documentation</title>
+    <title>lenskit.logging.worker &#8212; LensKit 2025.1.1b10.dev9+gfedc0121 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=43954dc2"></script>
+    <script src="../_static/documentation_options.js?v=cbe7a74a"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -68,14 +68,14 @@
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
         </script>
-    <link rel="canonical" href="https://lkpy.lenskit.org/en/stable/api/lenskit.logging.worker.html" />
+    <link rel="canonical" href="https://lkpy.lenskit.org/en/latest/api/lenskit.logging.worker.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="lenskit.math" href="lenskit.math.html" />
     <link rel="prev" title="lenskit.logging.tracing" href="lenskit.logging.tracing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.1.1b9" />
+  <meta name="docsearch:version" content="2025.1.1b10" />
   </head>
   
   
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1b9 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1b9 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1b10.dev9+gfedc0121 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1b10.dev9+gfedc0121 documentation - Home"/>
   
   
 </a></div>
@@ -529,6 +529,7 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.config.html">lenskit.parallel.config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.invoker.html">lenskit.parallel.invoker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.pool.html">lenskit.parallel.pool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.ray.html">lenskit.parallel.ray</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.sequential.html">lenskit.parallel.sequential</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.serialize.html">lenskit.parallel.serialize</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.worker.html">lenskit.parallel.worker</a></li>
@@ -604,6 +605,15 @@
 <p>Support for logging from worker processes.</p>
 <p>This is internal support code, clients and LensKit implementers can usually
 ignore it.</p>
+<p class="rubric">Functions</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">send_task</span></code>(task)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <p class="rubric">Classes</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
 <tbody>
@@ -648,11 +658,19 @@ ignore it.</p>
 <p>Activate (and deactivate) a worker context.  This handles setup and teardown
 of logging, etc.</p>
 <p>Only one worker context can be active, regardless of how many threads are active.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>config</strong> (<a class="reference internal" href="#lenskit.logging.worker.WorkerLogConfig" title="lenskit.logging.worker.WorkerLogConfig"><em>WorkerLogConfig</em></a>)</p>
+<dl class="field-list">
+<dt class="field-odd">Stability<span class="colon">:</span></dt>
+<dd class="field-odd">Internal (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>config</strong> (<a class="reference internal" href="#lenskit.logging.worker.WorkerLogConfig" title="lenskit.logging.worker.WorkerLogConfig"><em>WorkerLogConfig</em></a>)</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.logging.worker.WorkerContext.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.worker.WorkerContext.start" title="Link to this definition">#</a></dt>
+<dd><p>Start the logging context.</p>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py class">
@@ -741,7 +759,10 @@ if it passed all filters, otherwise a false value is returned.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.worker.WorkerLogConfig.current"><code class="docutils literal notranslate"><span class="pre">WorkerLogConfig.current()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.worker.WorkerContext"><code class="docutils literal notranslate"><span class="pre">WorkerContext</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.worker.WorkerContext"><code class="docutils literal notranslate"><span class="pre">WorkerContext</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.worker.WorkerContext.start"><code class="docutils literal notranslate"><span class="pre">WorkerContext.start()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.worker.ZMQLogHandler"><code class="docutils literal notranslate"><span class="pre">ZMQLogHandler</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.worker.ZMQLogHandler.handle"><code class="docutils literal notranslate"><span class="pre">ZMQLogHandler.handle()</span></code></a></li>
 </ul>

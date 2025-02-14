@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit parallel computation support. Modules" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.parallel &#8212; LensKit 2025.1.1b9 documentation</title>
+    <title>lenskit.parallel &#8212; LensKit 2025.1.1b10.dev9+gfedc0121 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=43954dc2"></script>
+    <script src="../_static/documentation_options.js?v=cbe7a74a"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -68,14 +68,14 @@
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
         </script>
-    <link rel="canonical" href="https://lkpy.lenskit.org/en/stable/api/lenskit.parallel.html" />
+    <link rel="canonical" href="https://lkpy.lenskit.org/en/latest/api/lenskit.parallel.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="lenskit.parallel.chunking" href="lenskit.parallel.chunking.html" />
     <link rel="prev" title="lenskit.math.sparse" href="lenskit.math.sparse.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.1.1b9" />
+  <meta name="docsearch:version" content="2025.1.1b10" />
   </head>
   
   
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1b9 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1b9 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1b10.dev9+gfedc0121 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1b10.dev9+gfedc0121 documentation - Home"/>
   
   
 </a></div>
@@ -529,6 +529,7 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.config.html">lenskit.parallel.config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.invoker.html">lenskit.parallel.invoker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.pool.html">lenskit.parallel.pool</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.ray.html">lenskit.parallel.ray</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.sequential.html">lenskit.parallel.sequential</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.serialize.html">lenskit.parallel.serialize</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.worker.html">lenskit.parallel.worker</a></li>
@@ -668,13 +669,15 @@ function before they begin training.</p>
 <dt class="sig sig-object py" id="lenskit.parallel.invoker">
 <span class="sig-prename descclassname"><span class="pre">lenskit.parallel.</span></span><span class="sig-name descname"><span class="pre">invoker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">worker_parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.invoker" title="Link to this definition">#</a></dt>
 <dd><p>Get an appropriate invoker for performing operations on <code class="docutils literal notranslate"><span class="pre">model</span></code>.</p>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>model</strong> (<em>M</em>) – The model object on which to perform operations.</p></li>
 <li><p><strong>func</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Callable" title="(in Python v3.13)"><em>Callable</em></a><em>[</em><em>[</em><em>M</em><em>, </em><em>A</em><em>]</em><em>, </em><em>R</em><em>]</em>) – The function to call.  The function must be pickleable.</p></li>
-<li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – The number of processes to use for parallel operations.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, will
-call <code class="xref py py-func docutils literal notranslate"><span class="pre">proc_count()</span></code> with a maximum default process count of 4.</p></li>
+<li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'ray'</em><em>]</em>) – The number of processes to use for parallel operations.  If
+<code class="docutils literal notranslate"><span class="pre">None</span></code>, will call <code class="xref py py-func docutils literal notranslate"><span class="pre">proc_count()</span></code> with a maximum default
+process count of 4.  If <code class="docutils literal notranslate"><span class="pre">ray</span></code> (experimental), uses the Ray
+cluster.</p></li>
 <li><p><strong>worker_parallel</strong> (<a class="reference internal" href="lenskit.parallel.config.html#lenskit.parallel.config.ParallelConfig" title="lenskit.parallel.config.ParallelConfig"><em>ParallelConfig</em></a><em> | </em><em>None</em>) – A parallel configuration for subprocess workers.</p></li>
 </ul>
 </dd>
@@ -684,6 +687,8 @@ call <code class="xref py py-func docutils literal notranslate"><span class="pre
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#lenskit.parallel.ModelOpInvoker" title="lenskit.parallel.ModelOpInvoker">ModelOpInvoker</a></p>
 </dd>
+<dt class="field-even">Stability<span class="colon">:</span></dt>
+<dd class="field-even">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 </dl>
 </dd></dl>
 
@@ -752,13 +757,16 @@ to <code class="docutils literal notranslate"><span class="pre">func</span></cod
 <tr class="row-even"><td><p><a class="reference internal" href="lenskit.parallel.pool.html#module-lenskit.parallel.pool" title="lenskit.parallel.pool"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pool</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="lenskit.parallel.sequential.html#module-lenskit.parallel.sequential" title="lenskit.parallel.sequential"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sequential</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="lenskit.parallel.ray.html#module-lenskit.parallel.ray" title="lenskit.parallel.ray"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ray</span></code></a></p></td>
+<td><p>Support for parallelism with Ray.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="lenskit.parallel.sequential.html#module-lenskit.parallel.sequential" title="lenskit.parallel.sequential"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sequential</span></code></a></p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="lenskit.parallel.serialize.html#module-lenskit.parallel.serialize" title="lenskit.parallel.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="lenskit.parallel.serialize.html#module-lenskit.parallel.serialize" title="lenskit.parallel.serialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">serialize</span></code></a></p></td>
 <td><p>Serialization utilities for parallel processing.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="lenskit.parallel.worker.html#module-lenskit.parallel.worker" title="lenskit.parallel.worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">worker</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="lenskit.parallel.worker.html#module-lenskit.parallel.worker" title="lenskit.parallel.worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">worker</span></code></a></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
