@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.metrics.RBP &#8212; LensKit 2025.1.1b10.dev14+g94f0f54a documentation</title>
+    <title>lenskit.metrics.RBP &#8212; LensKit 2025.1.1b10.dev15+g27b8e258 documentation</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=57f98b60"></script>
+    <script src="../_static/documentation_options.js?v=d290726a"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -140,8 +140,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1b10.dev14+g94f0f54a documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1b10.dev14+g94f0f54a documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1b10.dev15+g27b8e258 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1b10.dev15+g27b8e258 documentation - Home"/>
   
   
 </a></div>
@@ -603,7 +603,7 @@
 <h1>lenskit.metrics.RBP<a class="headerlink" href="#lenskit-metrics-rbp" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.metrics.RBP">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.metrics.</span></span><span class="sig-name descname"><span class="pre">RBP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RBP" title="Link to this definition">#</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.metrics.</span></span><span class="sig-name descname"><span class="pre">RBP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.85</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RBP" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="lenskit.metrics.ListMetric.html#lenskit.metrics.ListMetric" title="lenskit.metrics._base.ListMetric"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListMetric</span></code></a>, <a class="reference internal" href="lenskit.metrics.RankingMetricBase.html#lenskit.metrics.RankingMetricBase" title="lenskit.metrics.ranking._base.RankingMetricBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">RankingMetricBase</span></code></a></p>
 <p>Evaluate recommendations with rank-biased precision <span id="id1">[<a class="reference internal" href="../references.html#id47" title="Alistair Moffat and Justin Zobel. Rank-Biased Precision for Measurement of Retrieval Effectiveness. Transactions on Information Systems, 27(1):2:1-27, December 2008. doi:10.1145/1416950.1416952.">MZ08</a>]</span> with a
 patience parameter <span class="math notranslate nohighlight">\(\gamma\)</span>.</p>
@@ -620,12 +620,24 @@ a small test set, so the maximum achievable RBP is significantly less, and
 is a function of the number of test items.  With <code class="docutils literal notranslate"><span class="pre">normalize=True</span></code>, the RBP
 metric will be normalized by the maximum achievable with the provided test
 data.</p>
+<p><span id="id2">Moffat and Zobel [<a class="reference internal" href="../references.html#id47" title="Alistair Moffat and Justin Zobel. Rank-Biased Precision for Measurement of Retrieval Effectiveness. Transactions on Information Systems, 27(1):2:1-27, December 2008. doi:10.1145/1416950.1416952.">MZ08</a>]</span> provide an extended discussion on choosing the patience
+parameter <span class="math notranslate nohighlight">\(\gamma\)</span>.  This metric defaults to <span class="math notranslate nohighlight">\(\gamma=0.85\)</span>, to
+provide a relatively shallow curve and reward good items on the first few
+pages of results (in a 10-per-page setting).  Recommendation systems data
+has no pooling, so the variance of this estimator may be high as they note
+in the paper; however, RBP with high patience should be no worse than nDCG
+(and perhaps even better) in this regard.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The additional normalization is experimental, and should not yet be used
+for published research results.</p>
+</div>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>) – The maximum recommendation list length.</p></li>
 <li><p><strong>patience</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>) – The patience parameter <span class="math notranslate nohighlight">\(\gamma\)</span>, the probability that the
-user continues browsing at each point.</p></li>
+user continues browsing at each point.  The default is 0.85.</p></li>
 <li><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to normalize the RBP scores; if <code class="docutils literal notranslate"><span class="pre">True</span></code>, divides the RBP
 score by the maximum achievable with the test data (as in nDCG).</p></li>
 </ul>
@@ -635,7 +647,7 @@ score by the maximum achievable with the test data (as in nDCG).</p></li>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.RBP.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RBP.__init__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.85</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RBP.__init__" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
