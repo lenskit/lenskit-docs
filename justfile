@@ -7,7 +7,7 @@ init:
     mkdir -p "{{SITE}}"
 
 copy: init
-    cp index.html "{{SITE}}"
+    cp index.html _redirects _headers "{{SITE}}"
 
 content: init
     deno run -A copy-docs.ts
