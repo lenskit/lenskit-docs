@@ -8,13 +8,13 @@ await ensureDir("site");
 
 for (let version of versions) {
   console.info("extracting branch %s", version.branch);
-  await ensureDir(`site/en/${version.label}`);
+  await ensureDir(`site/${version.label}`);
   let archive = new Deno.Command("git", {
     args: ["archive", "--format=tar", version.branch],
     stdout: "piped",
   });
   let untar = new Deno.Command("tar", {
-    args: ["xf", "-", "-C", `site/en/${version.label}`],
+    args: ["xf", "-", "-C", `site/${version.label}`],
     stdin: "piped",
   });
   let ar_proc = archive.spawn();
