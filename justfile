@@ -19,6 +19,13 @@ versions: init
 clean:
     rm -rf {{SITE}}
 
+# make local branches
+ref-branches:
+    #!/bin/sh
+    for branch in $(git branch -r --list 'origin/version/*'); do
+        git branch -t ${branch##origin/} $branch
+    done
+
 # deploy to Netlify
 deploy:
     netlify deploy --prod -d site
