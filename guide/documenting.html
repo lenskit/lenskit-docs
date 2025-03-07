@@ -11,15 +11,15 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="guide/documenting.html" />
 <meta property="og:site_name" content="LensKit" />
-<meta property="og:description" content="When publishing results — either formally, through a venue such as ACM Recsys, or informally in your organization, it’s important to clearly and completely specify how the evaluation and algorithms..." />
+<meta property="og:description" content="When publishing results — either formally, through a venue such as ACM RecSys, or informally in your organization, it’s important to clearly and completely specify how the evaluation and algorithms..." />
 <meta property="og:image:width" content="1146" />
 <meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_guide_documenting_bb4cbdeb.png" />
-<meta property="og:image:alt" content="When publishing results — either formally, through a venue such as ACM Recsys, or informally in your organization, it’s important to clearly and completely s..." />
-<meta name="description" content="When publishing results — either formally, through a venue such as ACM Recsys, or informally in your organization, it’s important to clearly and completely specify how the evaluation and algorithms..." />
+<meta property="og:image" content="/_images/social_previews/summary_guide_documenting_ad83fa8a.png" />
+<meta property="og:image:alt" content="When publishing results — either formally, through a venue such as ACM RecSys, or informally in your organization, it’s important to clearly and completely s..." />
+<meta name="description" content="When publishing results — either formally, through a venue such as ACM RecSys, or informally in your organization, it’s important to clearly and completely specify how the evaluation and algorithms..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Documenting Experiments &#8212; LensKit 2025.1.1rc6.dev7+g710f813c documentation</title>
+    <title>Documenting Experiments &#8212; LensKit 2025.1.1rc6.dev21+gf57f9a0a documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=cbd6320c"></script>
+    <script src="../_static/documentation_options.js?v=e621d617"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1rc6.dev7+g710f813c documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1rc6.dev7+g710f813c documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1rc6.dev21+gf57f9a0a documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1rc6.dev21+gf57f9a0a documentation - Home"/>
   
   
 </a></div>
@@ -413,6 +413,7 @@
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installing LensKit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migrating.html">Migrating from LensKit 0.x</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
 <ul class="nav bd-sidenav">
@@ -454,12 +455,6 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="logging.html">Logging and Progress Reporting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Processing</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tips and Help</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="migrating.html">Migrating from LensKit 0.x</a></li>
-<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance Tips</a></li>
-<li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Model Implementation Tips</a></li>
 </ul>
 </div>
 </nav></div>
@@ -519,9 +514,9 @@
 <h1>Documenting Experiments<a class="headerlink" href="#documenting-experiments" title="Link to this heading">#</a></h1>
 <div class="admonition-todo admonition" id="id1">
 <p class="admonition-title">Todo</p>
-<p>This chapter needs to be rewritten for <a class="reference internal" href="../releases/2025.html#id1"><span class="std std-ref">2025.1 (in progress)</span></a>.</p>
+<p>This chapter needs to be rewritten for <a class="reference internal" href="../releases/2025.html#id1"><span class="std std-ref">2025.1</span></a>.</p>
 </div>
-<p>When publishing results — either formally, through a venue such as ACM Recsys,
+<p>When publishing results — either formally, through a venue such as ACM RecSys,
 or informally in your organization, it’s important to clearly and completely
 specify how the evaluation and algorithms were run.</p>
 <p>Since LensKit is a toolkit of individual pieces that you combine into your
@@ -533,17 +528,10 @@ how you should report, and how it maps to the LensKit code you are using.</p>
 <p>This checklist is to help you make sure that your evaluation and results are
 accurately reported.</p>
 <ul class="simple">
-<li><p>Pass <cite>include_missing=True</cite> to <code class="xref py py-meth docutils literal notranslate"><span class="pre">compute()</span></code>. This
-operation defaults to <cite>False</cite> for compatiability reasons, but the default will
-change in the future.</p></li>
-<li><p>Correctly fill missing values from the evaluation metric results.  They are
-reported as <cite>NaN</cite> (Pandas NA) so you can distinguish between empty lists and
-lists with no relevant items, but should be appropraitely filled before
-computing aggregates.</p></li>
-<li><p>Pass <cite>k</cite> to <code class="xref py py-meth docutils literal notranslate"><span class="pre">add_metric()</span></code> with the
-target list length for your experiment.  LensKit cannot reliably detect how
-long you intended to make the recommendation lists, so you need to specify the
-intended length to the metrics in order to correctly account for it.</p></li>
+<li><p>Pass <cite>k</cite> to your ranking metrics with the target list length for your
+experiment.  LensKit cannot reliably detect how long you intended to make the
+recommendation lists, so you need to specify the intended length to the
+metrics in order to correctly account for it.</p></li>
 </ul>
 </section>
 <section id="reporting-algorithms">
@@ -561,23 +549,21 @@ algorithn peformance but not behavior.</p>
 <p>For example:</p>
 <div class="pst-scrollable-table-container"><table class="table">
 <thead>
-<tr class="row-odd"><th class="head"><p>Algorithm</p></th>
-<th class="head"><p>Hyperparameters</p></th>
+<tr class="row-odd"><th class="head" colspan="3"><p>Algorithm        |                                Hyperparameters</p></th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p>ItemItem</p></td>
-<td><p><span class="math notranslate nohighlight">\(k_\mathrm{max}=20, k_\mathrm{min}=2, s_\mathrm{min}=1.0\times 10^{-3}\)</span></p></td>
+<tr class="row-even"><td colspan="3"><p>ItemKNNScorer    | <span class="math notranslate nohighlight">\(k_\mathrm{max}=20, k_\mathrm{min}=2, s_\mathrm{min}=1.0\times 10^{-3}\)</span></p></td>
 </tr>
-<tr class="row-odd"><td><p>ImplicitMF</p></td>
+<tr class="row-odd"><td colspan="2"><p>ImplicitMFScorer</p></td>
 <td><p><span class="math notranslate nohighlight">\(k=50, \lambda_u=0.1, \lambda_i=0.1, w=40\)</span></p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <p>If you use a top-N implementation other than the default
-<a class="reference internal" href="../api/lenskit.basic.html#lenskit.basic.TopNRanker" title="lenskit.basic.TopNRanker"><code class="xref py py-class docutils literal notranslate"><span class="pre">TopNRanker</span></code></a>, or reconfigure its candidate
-selector, also clearly document that.</p>
+<a class="reference internal" href="../api/lenskit.basic.html#lenskit.basic.TopNRanker" title="lenskit.basic.TopNRanker"><code class="xref py py-class docutils literal notranslate"><span class="pre">TopNRanker</span></code></a>, or reconfigure its candidate selector,
+also clearly document that.</p>
 </section>
 <section id="reporting-experimental-setup">
 <h2>Reporting Experimental Setup<a class="headerlink" href="#reporting-experimental-setup" title="Link to this heading">#</a></h2>
@@ -589,12 +575,13 @@ without modification, report:</p>
 <ul class="simple">
 <li><p>The splitting function used.</p></li>
 <li><p>The number of partitions or test samples.</p></li>
+<li><p>The timestamp or fraction used for temporal splitting.</p></li>
 <li><p>The number of users per sample (when using
-<a class="reference internal" href="../api/lenskit.splitting.sample_users.html#lenskit.splitting.sample_users" title="lenskit.splitting.sample_users"><code class="xref py py-class docutils literal notranslate"><span class="pre">sample_users</span></code></a>) or records per sample (when using
-<a class="reference internal" href="../api/lenskit.splitting.sample_records.html#lenskit.splitting.sample_records" title="lenskit.splitting.sample_records"><code class="xref py py-class docutils literal notranslate"><span class="pre">sample_records</span></code></a>).</p></li>
+<a class="reference internal" href="../api/lenskit.splitting.sample_users.html#lenskit.splitting.sample_users" title="lenskit.splitting.sample_users"><code class="xref py py-func docutils literal notranslate"><span class="pre">sample_users()</span></code></a>) or records per sample (when using
+<a class="reference internal" href="../api/lenskit.splitting.sample_records.html#lenskit.splitting.sample_records" title="lenskit.splitting.sample_records"><code class="xref py py-func docutils literal notranslate"><span class="pre">sample_records()</span></code></a>).</p></li>
 <li><p>When using a user-based strategy (either
-<a class="reference internal" href="../api/lenskit.splitting.crossfold_users.html#lenskit.splitting.crossfold_users" title="lenskit.splitting.crossfold_users"><code class="xref py py-class docutils literal notranslate"><span class="pre">crossfold_users</span></code></a> or
-<a class="reference internal" href="../api/lenskit.splitting.sample_users.html#lenskit.splitting.sample_users" title="lenskit.splitting.sample_users"><code class="xref py py-class docutils literal notranslate"><span class="pre">sample_users</span></code></a>), the test rating selection
+<a class="reference internal" href="../api/lenskit.splitting.crossfold_users.html#lenskit.splitting.crossfold_users" title="lenskit.splitting.crossfold_users"><code class="xref py py-func docutils literal notranslate"><span class="pre">crossfold_users()</span></code></a> or
+<a class="reference internal" href="../api/lenskit.splitting.sample_users.html#lenskit.splitting.sample_users" title="lenskit.splitting.sample_users"><code class="xref py py-func docutils literal notranslate"><span class="pre">sample_users()</span></code></a>), the test rating selection
 strategy (class and parameters), e.g. <code class="docutils literal notranslate"><span class="pre">SampleN(5)</span></code>.</p></li>
 </ul>
 <p>Any additional pre-processing (e.g. filtering ratings) should also be clearly
@@ -605,27 +592,21 @@ automated reporting is not practical.</p>
 </section>
 <section id="reporting-metrics">
 <h2>Reporting Metrics<a class="headerlink" href="#reporting-metrics" title="Link to this heading">#</a></h2>
-<p>Reporting the metrics themelves is relatively straightforward.  The
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.topn.RecListAnalysis.compute()</span></code> method will return a data frame
-with a metric score for each list.  Group those by algorithm and report the
-resulting scores (typically with a mean).</p>
-<p>The following code will produce a table of algorithm scores for hit rate, nDCG
-and MRR, assuming that your algorithm identifier is in a column named <code class="docutils literal notranslate"><span class="pre">algo</span></code>
+<p>Reporting the metrics themselves is relatively straightforward.  The
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.bulk.RunAnalysis.measure()</span></code> method returns a results object
+contianing the metrics for individual lists, the global metrics, and easy access
+(through <code class="xref py py-meth docutils literal notranslate"><span class="pre">list_summary()</span></code>) to summary statistics
+of per-list metrics, optionally grouped by keys such as model name.</p>
+<p>The following code will produce a table of algorithm scores for hit rate, NDCG
+and MRR, assuming that your algorithm identifier is in a column named <code class="docutils literal notranslate"><span class="pre">model</span></code>
 and the target list length is in <code class="docutils literal notranslate"><span class="pre">N</span></code>:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">rla</span> <span class="o">=</span> <span class="n">RecListAnalysis</span><span class="p">()</span>
-<span class="n">rla</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">topn</span><span class="o">.</span><span class="n">hit</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
-<span class="n">rla</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">topn</span><span class="o">.</span><span class="n">ndcg</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
-<span class="n">rla</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">topn</span><span class="o">.</span><span class="n">recip_rank</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="n">N</span><span class="p">)</span>
-<span class="n">scores</span> <span class="o">=</span> <span class="n">rla</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">recs</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">include_missing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="c1"># empty lists will have na scores</span>
-<span class="n">scores</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">rla</span> <span class="o">=</span> <span class="n">RunAnalysis</span><span class="p">()</span>
+<span class="n">rla</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">Hit</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">N</span><span class="p">))</span>
+<span class="n">rla</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">NDCG</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">N</span><span class="p">))</span>
+<span class="n">rla</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RecipRank</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="n">N</span><span class="p">))</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">rla</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">recs</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span>
 <span class="c1"># group by agorithm</span>
-<span class="n">algo_scores</span> <span class="o">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;algorithm&#39;</span><span class="p">)[[</span><span class="s1">&#39;hit&#39;</span><span class="p">,</span> <span class="s1">&#39;ndcg&#39;</span><span class="p">,</span> <span class="s1">&#39;recip_rank&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-<span class="n">algo_scores</span> <span class="o">=</span> <span class="n">algo_scores</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
-    <span class="s1">&#39;hit&#39;</span><span class="p">:</span> <span class="s1">&#39;HR&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;ndcg&#39;</span><span class="p">:</span> <span class="s1">&#39;nDCG&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;recip_rank&#39;</span><span class="p">:</span> <span class="s1">&#39;MRR&#39;</span>
-<span class="p">})</span>
+<span class="n">model_metrics</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">list_summary</span><span class="p">(</span><span class="s1">&#39;model&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>You can then use <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_latex.html#pandas.DataFrame.to_latex" title="(in pandas v2.2.3)"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pandas.DataFrame.to_latex()</span></code></a> to convert <code class="docutils literal notranslate"><span class="pre">algo_scores</span></code>

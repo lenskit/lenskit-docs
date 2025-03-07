@@ -19,7 +19,7 @@
 <meta name="description" content="While rating prediction is no longer a widely-studied recommendation task, LensKit provides support for evaluating predictions for completeness and reproducing or comparing against historical resea..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Evaluating Rating Predictions &#8212; LensKit 2025.1.1rc6.dev7+g710f813c documentation</title>
+    <title>Evaluating Rating Predictions &#8212; LensKit 2025.1.1rc6.dev21+gf57f9a0a documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../../_static/documentation_options.js?v=cbd6320c"></script>
+    <script src="../../_static/documentation_options.js?v=e621d617"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1rc6.dev7+g710f813c documentation - Home"/>
-    <img src="../../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1rc6.dev7+g710f813c documentation - Home"/>
+    <img src="../../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1rc6.dev21+gf57f9a0a documentation - Home"/>
+    <img src="../../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1rc6.dev21+gf57f9a0a documentation - Home"/>
   
   
 </a></div>
@@ -412,6 +412,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../install.html">Installing LensKit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../migrating.html">Migrating from LensKit 0.x</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
 <ul class="nav bd-sidenav">
@@ -453,12 +454,6 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../logging.html">Logging and Progress Reporting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../parallelism.html">Parallel Processing</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tips and Help</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../migrating.html">Migrating from LensKit 0.x</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../performance.html">Performance Tips</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../impl-tips.html">Model Implementation Tips</a></li>
 </ul>
 </div>
 </nav></div>
@@ -558,9 +553,12 @@ ensure that all items are scored.  The alternative design — ignoring missing
 predictions — means that different scorers may be evaluated on different items,
 and a scorer perform exceptionally well by only scoring items with high
 confidence.</p>
-<div class="admonition-todo admonition" id="id1">
-<p class="admonition-title">Todo</p>
-<p>Add example (and simplified ergonomics) for fallback prediction.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Both <a class="reference internal" href="../../api/lenskit.pipeline.topn_pipeline.html#lenskit.pipeline.topn_pipeline" title="lenskit.pipeline.topn_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">topn_pipeline()</span></code></a> and
+<a class="reference internal" href="../../api/lenskit.pipeline.predict_pipeline.html#lenskit.pipeline.predict_pipeline" title="lenskit.pipeline.predict_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">predict_pipeline()</span></code></a> default to using a
+<a class="reference internal" href="../../api/lenskit.basic.html#lenskit.basic.BiasScorer" title="lenskit.basic.BiasScorer"><code class="xref py py-func docutils literal notranslate"><span class="pre">BiasScorer()</span></code></a> as a fallback when rating prediction is
+enabled.</p>
 </div>
 <p>If you want to skip missing predictions, pass <code class="docutils literal notranslate"><span class="pre">missing_scores=&quot;ignore&quot;</span></code> to the
 metric function:</p>

@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit is particularly designed to excel in research and educational applications, and for that you will often need to write your own components implementing new scoring models, rankers, or other ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Implementing Components &#8212; LensKit 2025.1.1rc6.dev7+g710f813c documentation</title>
+    <title>Implementing Components &#8212; LensKit 2025.1.1rc6.dev21+gf57f9a0a documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=cbd6320c"></script>
+    <script src="../_static/documentation_options.js?v=e621d617"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1rc6.dev7+g710f813c documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1rc6.dev7+g710f813c documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1rc6.dev21+gf57f9a0a documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1rc6.dev21+gf57f9a0a documentation - Home"/>
   
   
 </a></div>
@@ -412,6 +412,7 @@
 <li class="toctree-l1"><a class="reference internal" href="install.html">Installing LensKit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migrating.html">Migrating from LensKit 0.x</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
 <ul class="nav bd-sidenav">
@@ -453,12 +454,6 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="logging.html">Logging and Progress Reporting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Processing</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Tips and Help</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="migrating.html">Migrating from LensKit 0.x</a></li>
-<li class="toctree-l1"><a class="reference internal" href="performance.html">Performance Tips</a></li>
-<li class="toctree-l1"><a class="reference internal" href="impl-tips.html">Model Implementation Tips</a></li>
 </ul>
 </div>
 </nav></div>
@@ -534,7 +529,7 @@ component’s actual computation.</p></li>
 <li><p>If the component supports training, implementing the
 <a class="reference internal" href="../api/training.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a> protocol by defining a
 <a class="reference internal" href="../api/training.html#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a> method, or implement
-<a class="reference internal" href="impl-tips.html#iterative-training"><span class="std std-ref">Iterative Training</span></a>.</p></li>
+<a class="reference internal" href="#iterative-training"><span class="std std-ref">Iterative Training</span></a>.</p></li>
 </ol>
 <p>A simple example component that computes a linear weighted blend of the scores
 from two other components could look like this:</p>
@@ -692,6 +687,56 @@ either directly or in a container object (such as a PyTorch
 <code class="docutils literal notranslate"><span class="pre">train</span></code> method should return without any training.
 <a class="reference internal" href="../api/training.html#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeTraining</span></code></a> handles this automatically.</p>
 </div>
+<section id="iterative-training">
+<span id="id1"></span><h3>Iterative Training<a class="headerlink" href="#iterative-training" title="Link to this heading">#</a></h3>
+<p>The <a class="reference internal" href="../api/training.html#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.training.IterativeTraining</span></code></a> class provides a standardized
+interface and training loop support for training models with iterative methods
+that pass through the training data in multiple <em>epochs</em>.  Models that use this
+support extend <a class="reference internal" href="../api/training.html#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeTraining</span></code></a> in addition to
+<a class="reference internal" href="../api/lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>, and implement the
+<a class="reference internal" href="../api/training.html#lenskit.training.IterativeTraining.training_loop" title="lenskit.training.IterativeTraining.training_loop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">training_loop()</span></code></a> method instead of
+<a class="reference internal" href="../api/training.html#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a>.  Iteratively-trainable components
+should also have an <code class="docutils literal notranslate"><span class="pre">epochs</span></code> setting on their configuration class that
+specifies the number of training epochs to run.</p>
+<p>The <a class="reference internal" href="../api/training.html#lenskit.training.IterativeTraining.training_loop" title="lenskit.training.IterativeTraining.training_loop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">training_loop()</span></code></a> method does 3 things:</p>
+<ol class="arabic simple">
+<li><p>Set up initial data structures, preparation, etc. needed for model training.</p></li>
+<li><p>Train the model, yielding after each training epoch.  It can optionally
+yield a set of metrics, such as training loss or update magnitudes.</p></li>
+<li><p>Perform any final steps and training data cleanup.</p></li>
+</ol>
+<p>The model should be usable after each epoch, to support things like measuring
+performance on validation data.</p>
+<p>The training loop itself is represented as a Python iterator, so that a <code class="docutils literal notranslate"><span class="pre">for</span></code>
+loop will loop through the training epochs.  While the interface definition
+specifies the <code class="docutils literal notranslate"><span class="pre">Iterator</span></code> type in order to minimize restrictions on component
+implementers, we recommend that it actually be a <code class="docutils literal notranslate"><span class="pre">Generator</span></code>, which allows the
+caller to request early termination (through the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code> method).  We also recommend that the
+<code class="docutils literal notranslate"><span class="pre">training_loop()</span></code> method only return the generator after initial data preparation
+is complete, so that setup time is not included in the time taken for the first
+loop iteration.  The easiest way to do implement this is by delegating to an
+inner loop function, written as a Python generator:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">training_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="n">TrainingOptions</span><span class="p">):</span>
+    <span class="c1"># do initial data setup/prep for training</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="c1"># pass off to inner generator</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_training_loop_impl</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_training_loop_impl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="c1"># do the model training</span>
+        <span class="c1"># compute the metrics</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="p">{</span><span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span>
+        <span class="k">except</span> <span class="ne">GeneratorExit</span><span class="p">:</span>
+            <span class="c1"># client code has requested early termination</span>
+            <span class="k">break</span>
+
+    <span class="c1"># any final cleanup steps</span>
+</pre></div>
+</div>
+</section>
 </section>
 <section id="further-reading">
 <h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
@@ -749,7 +794,10 @@ either directly or in a container object (such as a PyTorch
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics">Basics</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-configuration">Component Configuration</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-operation">Component Operation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-training">Component Training</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-training">Component Training</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterative-training">Iterative Training</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
 </ul>
   </nav></div>
