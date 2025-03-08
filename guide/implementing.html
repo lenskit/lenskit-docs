@@ -1,0 +1,871 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Implementing Components" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="guide/implementing.html" />
+<meta property="og:site_name" content="LensKit" />
+<meta property="og:description" content="LensKit is particularly designed to excel in research and educational applications, and for that you will often need to write your own components implementing new scoring models, rankers, or other ..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="/_images/social_previews/summary_guide_implementing_44155fd9.png" />
+<meta property="og:image:alt" content="LensKit is particularly designed to excel in research and educational applications, and for that you will often need to write your own components implementin..." />
+<meta name="description" content="LensKit is particularly designed to excel in research and educational applications, and for that you will often need to write your own components implementing new scoring models, rankers, or other ..." />
+<meta name="twitter:card" content="summary_large_image" />
+
+    <title>Implementing Components &#8212; LensKit 2025.1.1 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!-- 
+    this give us a css class that will be invisible only if js is disabled 
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=474ac1f0" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+
+    <script src="../_static/documentation_options.js?v=c18f53dd"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'guide/implementing';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lkpy.lenskit.org/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
+        </script>
+    <link rel="canonical" href="https://lkpy.lenskit.org/en/stable/guide/implementing.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Splitting Data" href="splitting.html" />
+    <link rel="prev" title="Other Components" href="other-components.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2025.1.1" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../api/index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Preliminaries</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installing LensKit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="GettingStarted.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="migrating.html">Migrating from LensKit 0.x</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="principles.html">Design Goals and Principles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="queries.html">Queries and Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pipeline.html">Recommendation Pipelines</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Data</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="data/index.html">Datasets</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data/model.html">Data Model</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data/item-lists.html">Item Lists and Collections</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="data/datasets.html">Standard Datasets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="data/movielens.html">MovieLens Data</a></li>
+
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="conventions.html">Component Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scorers.html">Scoring Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="rankers.html">Ranking Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other-components.html">Other Components</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Implementing Components</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Experiments</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="splitting.html">Splitting Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="batch.html">Batch-Running Pipelines</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="evaluation/index.html">Evaluating Recommender Output</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="evaluation/predictions.html">Evaluating Rating Predictions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="evaluation/rankings.html">Evaluating Top-N Rankings</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="documenting.html">Documenting Experiments</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Support Code</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging and Progress Reporting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="parallelism.html">Parallel Processing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cli/index.html">LensKit CLI</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Implementing Components</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="implementing-components">
+<span id="component-impl"></span><h1>Implementing Components<a class="headerlink" href="#implementing-components" title="Link to this heading">#</a></h1>
+<p>LensKit is particularly designed to excel in research and educational
+applications, and for that you will often need to write your own components
+implementing new scoring models, rankers, or other components. The
+<a class="reference internal" href="pipeline.html#pipeline"><span class="std std-ref">pipeline design</span></a> and <a class="reference internal" href="pipeline.html#standard-pipelines"><span class="std std-ref">standard pipelines</span></a> are intended to make this as easy as possible and allow
+you to focus just on your logic without needing to implement a lot of
+boilerplate like looking up user histories or ranking by score: you can
+implement your training and scoring logic, and let LensKit do the rest.</p>
+<section id="basics">
+<h2>Basics<a class="headerlink" href="#basics" title="Link to this heading">#</a></h2>
+<p>Implementing a component therefore consists of a few steps:</p>
+<ol class="arabic simple">
+<li><p>Defining the configuration class.</p></li>
+<li><p>Defining the component class, with its <code class="docutils literal notranslate"><span class="pre">config</span></code> attribute declaration.</p></li>
+<li><p>Defining a <code class="docutils literal notranslate"><span class="pre">__call__</span></code> method for the component class that performs the
+component’s actual computation.</p></li>
+<li><p>If the component supports training, implementing the
+<a class="reference internal" href="../api/training.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a> protocol by defining a
+<a class="reference internal" href="../api/training.html#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a> method, or implement
+<a class="reference internal" href="#iterative-training"><span class="std std-ref">Iterative Training</span></a>.</p></li>
+</ol>
+<p>A simple example component that computes a linear weighted blend of the scores
+from two other components could look like this:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This file is part of LensKit.</span>
+<span class="c1"># Copyright (C) 2018-2023 Boise State University</span>
+<span class="c1"># Copyright (C) 2023-2025 Drexel University</span>
+<span class="c1"># Licensed under the MIT license, see LICENSE.md for details.</span>
+<span class="c1"># SPDX-License-Identifier: MIT</span>
+
+<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+
+<span class="kn">from</span> <span class="nn">lenskit.data</span> <span class="kn">import</span> <span class="n">ItemList</span>
+<span class="kn">from</span> <span class="nn">lenskit.pipeline</span> <span class="kn">import</span> <span class="n">Component</span>
+
+
+<span class="k">class</span> <span class="nc">LinearBlendConfig</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+    <span class="s2">&quot;Configuration for :class:`LinearBlendScorer`.&quot;</span>
+
+    <span class="c1"># define the parameter with a type, default value, and docstring.</span>
+    <span class="n">mix_weight</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Linear blending mixture weight :math:`\alpha`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<span class="k">class</span> <span class="nc">LinearBlendScorer</span><span class="p">(</span><span class="n">Component</span><span class="p">[</span><span class="n">ItemList</span><span class="p">]):</span>
+<span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Score items with a linear blend of two other scores.</span>
+
+<span class="sd">    Given a mixture weight :math:`\alpha` and two scores</span>
+<span class="sd">    :math:`s_i^{\mathrm{left}}` and :math:`s_i^{\mathrm{right}}`, this</span>
+<span class="sd">    computes :math:`s_i = \alpha s_i^{\mathrm{left}} + (1 - \alpha)</span>
+<span class="sd">    s_i^{\mathrm{right}}`.  Missing values propagate, so only items</span>
+<span class="sd">    scored in both inputs have scores in the output.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># define the configuration attribute, with a docstring to make sure</span>
+    <span class="c1"># it shows up in component docs.</span>
+    <span class="n">config</span><span class="p">:</span> <span class="n">LinearBlendConfig</span>
+    <span class="s2">&quot;Configuration parameters for the linear blend.&quot;</span>
+
+    <span class="c1"># the __call__ method defines the component&#39;s operation</span>
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">,</span> <span class="n">right</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ItemList</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Blend the scores of two item lists.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ls</span> <span class="o">=</span> <span class="n">left</span><span class="o">.</span><span class="n">scores</span><span class="p">(</span><span class="s2">&quot;pandas&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s2">&quot;ids&quot;</span><span class="p">)</span>
+        <span class="n">rs</span> <span class="o">=</span> <span class="n">right</span><span class="o">.</span><span class="n">scores</span><span class="p">(</span><span class="s2">&quot;pandas&quot;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="s2">&quot;ids&quot;</span><span class="p">)</span>
+        <span class="n">ls</span><span class="p">,</span> <span class="n">rs</span> <span class="o">=</span> <span class="n">ls</span><span class="o">.</span><span class="n">align</span><span class="p">(</span><span class="n">rs</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">mix_weight</span>
+        <span class="n">combined</span> <span class="o">=</span> <span class="n">ls</span> <span class="o">*</span> <span class="n">alpha</span> <span class="o">+</span> <span class="n">rs</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">alpha</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ItemList</span><span class="p">(</span><span class="n">item_ids</span><span class="o">=</span><span class="n">combined</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">combined</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This component can be instantiated with its defaults:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">LinearBlendScorer</span><span class="p">()</span>
+<span class="go">&lt;LinearBlendScorer {</span>
+<span class="go">    &quot;mix_weight&quot;: 0.5</span>
+<span class="go">}&gt;</span>
+</pre></div>
+</div>
+<p>You an instantiate it with its configuration class:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">LinearBlendScorer</span><span class="p">(</span><span class="n">LinearBlendConfig</span><span class="p">(</span><span class="n">mix_weight</span><span class="o">=</span><span class="mf">0.2</span><span class="p">))</span>
+<span class="go">&lt;LinearBlendScorer {</span>
+<span class="go">    &quot;mix_weight&quot;: 0.2</span>
+<span class="go">}&gt;</span>
+</pre></div>
+</div>
+<p>Finally, you can directly pass configuration parameters to the component constructor:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">LinearBlendScorer</span><span class="p">(</span><span class="n">mix_weight</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="go">&lt;LinearBlendScorer {</span>
+<span class="go">    &quot;mix_weight&quot;: 0.7</span>
+<span class="go">}&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="component-configuration">
+<h2>Component Configuration<a class="headerlink" href="#component-configuration" title="Link to this heading">#</a></h2>
+<p>As noted in the <a class="reference internal" href="pipeline.html#component-config"><span class="std std-ref">pipeline documentation</span></a>, components are
+configured with <em>configuration objects</em>.  These are JSON-serializable objects
+defined as Python dataclasses or Pydantic models, and define the different
+settings or hyperparameters that control the model’s behavior.</p>
+<p>The choice of parameters are up to the component author, and each component will
+have different configuration needs.  Some needs are common across many
+components, though; see <a class="reference internal" href="conventions.html#config-conventions"><span class="std std-ref">Configuration Conventions</span></a> for common LensKit
+configuration conventions.</p>
+</section>
+<section id="component-operation">
+<h2>Component Operation<a class="headerlink" href="#component-operation" title="Link to this heading">#</a></h2>
+<p>The heart of the component interface is the <code class="docutils literal notranslate"><span class="pre">__call__</span></code> method (components are
+just callable objects).  This method takes the component inputs as parameters,
+and returns the component’s result.</p>
+<p>Most components return an <a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>.  Scoring components usually
+have the following signature:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">QueryInput</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ItemList</span><span class="p">:</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">query</span></code> input receives the user ID, history, context, or other query
+input; the <code class="docutils literal notranslate"><span class="pre">items</span></code> input receives the list of items to be scored (e.g., the
+candidate items for recommendation).  The scorer then returns a list of scored
+items.</p>
+<p>Most component begin by converting the query to a
+<a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">QueryInput</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ItemList</span><span class="p">:</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="n">RecQuery</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>It is conventional for scorers to return a copy of the input item list with the scores
+attached, filling in <code class="docutils literal notranslate"><span class="pre">NaN</span></code> for items that cannot be scored.  After assembling a NumPy
+array of scores, you can do this with:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="n">ItemList</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">scores</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Scalars can also be supplied, so if the scorer cannot score any of the items, it
+can simply return a list with no scores:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">return</span> <span class="n">ItemList</span><span class="p">(</span><span class="n">items</span><span class="p">,</span> <span class="n">scores</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Components do need to be able to handle items in <code class="docutils literal notranslate"><span class="pre">items</span></code> that were not seen
+at training time.  If the component has saved the training item vocabulary, the
+easiest way to do this is to use <a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList.numbers" title="lenskit.data.ItemList.numbers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">numbers()</span></code></a>: with
+<code class="docutils literal notranslate"><span class="pre">missing=&quot;negative&quot;</span></code>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">i_nums</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="n">numbers</span><span class="p">(</span><span class="n">vocabulary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="s2">&quot;negative&quot;</span><span class="p">)</span>
+<span class="n">scorable_mask</span> <span class="o">=</span> <span class="n">i_nums</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+</pre></div>
+</div>
+</section>
+<section id="component-training">
+<h2>Component Training<a class="headerlink" href="#component-training" title="Link to this heading">#</a></h2>
+<p>Components that need to train models on training data must implement the
+<a class="reference internal" href="../api/training.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a> protocol, either directly or through a
+helper implementation like <a class="reference internal" href="../api/training.html#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeTraining</span></code></a>.  The
+core of the <code class="docutils literal notranslate"><span class="pre">Trainable</span></code> protocol is the
+<a class="reference internal" href="../api/training.html#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a> method, which takes a
+<a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> and <a class="reference internal" href="../api/training.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainingOptions</span></code></a>
+and trains the model.</p>
+<p>The details of training will vary significantly from model to model.  Typically,
+though, it follows the following steps:</p>
+<ol class="arabic simple">
+<li><p>Extract, prepare, and preprocess training data as needed for the model.</p></li>
+<li><p>Compute the model’s parameters, either directly (i.e.
+<a class="reference internal" href="../api/lenskit.basic.html#lenskit.basic.BiasScorer" title="lenskit.basic.BiasScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiasScorer</span></code></a>) or through an optimization method (i.e.
+<code class="xref py py-class docutils literal notranslate"><span class="pre">ImplicitMFScorer</span></code>).</p></li>
+<li><p>Finalize the model parameters and clean up any temporary data.</p></li>
+</ol>
+<p>Learned model parameters are then stored as attributes on the component class,
+either directly or in a container object (such as a PyTorch
+<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module" title="(in PyTorch v2.6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></a>).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the model is already trained and the
+<a class="reference internal" href="../api/training.html#lenskit.training.TrainingOptions.retrain" title="lenskit.training.TrainingOptions.retrain"><code class="xref py py-attr docutils literal notranslate"><span class="pre">retrain</span></code></a> is <code class="docutils literal notranslate"><span class="pre">False</span></code>, then the
+<code class="docutils literal notranslate"><span class="pre">train</span></code> method should return without any training.
+<a class="reference internal" href="../api/training.html#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeTraining</span></code></a> handles this automatically.</p>
+</div>
+<section id="iterative-training">
+<span id="id1"></span><h3>Iterative Training<a class="headerlink" href="#iterative-training" title="Link to this heading">#</a></h3>
+<p>The <a class="reference internal" href="../api/training.html#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.training.IterativeTraining</span></code></a> class provides a standardized
+interface and training loop support for training models with iterative methods
+that pass through the training data in multiple <em>epochs</em>.  Models that use this
+support extend <a class="reference internal" href="../api/training.html#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeTraining</span></code></a> in addition to
+<a class="reference internal" href="../api/lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>, and implement the
+<a class="reference internal" href="../api/training.html#lenskit.training.IterativeTraining.training_loop" title="lenskit.training.IterativeTraining.training_loop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">training_loop()</span></code></a> method instead of
+<a class="reference internal" href="../api/training.html#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a>.  Iteratively-trainable components
+should also have an <code class="docutils literal notranslate"><span class="pre">epochs</span></code> setting on their configuration class that
+specifies the number of training epochs to run.</p>
+<p>The <a class="reference internal" href="../api/training.html#lenskit.training.IterativeTraining.training_loop" title="lenskit.training.IterativeTraining.training_loop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">training_loop()</span></code></a> method does 3 things:</p>
+<ol class="arabic simple">
+<li><p>Set up initial data structures, preparation, etc. needed for model training.</p></li>
+<li><p>Train the model, yielding after each training epoch.  It can optionally
+yield a set of metrics, such as training loss or update magnitudes.</p></li>
+<li><p>Perform any final steps and training data cleanup.</p></li>
+</ol>
+<p>The model should be usable after each epoch, to support things like measuring
+performance on validation data.</p>
+<p>The training loop itself is represented as a Python iterator, so that a <code class="docutils literal notranslate"><span class="pre">for</span></code>
+loop will loop through the training epochs.  While the interface definition
+specifies the <code class="docutils literal notranslate"><span class="pre">Iterator</span></code> type in order to minimize restrictions on component
+implementers, we recommend that it actually be a <code class="docutils literal notranslate"><span class="pre">Generator</span></code>, which allows the
+caller to request early termination (through the
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code> method).  We also recommend that the
+<code class="docutils literal notranslate"><span class="pre">training_loop()</span></code> method only return the generator after initial data preparation
+is complete, so that setup time is not included in the time taken for the first
+loop iteration.  The easiest way to do implement this is by delegating to an
+inner loop function, written as a Python generator:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">training_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="n">TrainingOptions</span><span class="p">):</span>
+    <span class="c1"># do initial data setup/prep for training</span>
+    <span class="n">context</span> <span class="o">=</span> <span class="o">...</span>
+    <span class="c1"># pass off to inner generator</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_training_loop_impl</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">_training_loop_impl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="c1"># do the model training</span>
+        <span class="c1"># compute the metrics</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="p">{</span><span class="s1">&#39;loss&#39;</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span>
+        <span class="k">except</span> <span class="ne">GeneratorExit</span><span class="p">:</span>
+            <span class="c1"># client code has requested early termination</span>
+            <span class="k">break</span>
+
+    <span class="c1"># any final cleanup steps</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="further-reading">
+<h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
+<p>See <a class="reference internal" href="conventions.html#conventions"><span class="std std-ref">Component Conventions</span></a> for more conventions for component design and configuration.</p>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="other-components.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Other Components</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="splitting.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Splitting Data</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics">Basics</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-configuration">Component Configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-operation">Component Operation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-training">Component Training</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterative-training">Iterative Training</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+
+  <div class="tocsection sourcelink">
+    <a href="../_sources/guide/implementing.rst.txt">
+      <i class="fa-solid fa-file-lines"></i> Show Source
+    </a>
+  </div>
+</div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2018–2024 Drexel University, Boise State University, and collaborators.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
