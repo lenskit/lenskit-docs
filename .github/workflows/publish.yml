@@ -1,0 +1,41 @@
+name: Publish Documentation Site
+'on':
+  push:
+    branches:
+      - main
+  workflow_dispatch: {}
+
+jobs:
+  publish:
+    name: Publish documentation
+    runs-on: ubuntu-latest
+    environment:
+      name: publish
+      url: 'https://lkpy.lenskit.org'
+    steps:
+      - name: Check out doc site
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: "🧛🏼 Set up Just"
+        uses: extractions/setup-just@v2
+      - name: "🛸 Set up Deno"
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: ~1.44
+
+      - name: "🌳 Fix local git branches"
+        run: just ref-branches
+
+      - name: Build site content
+        run: just build
+
+      - name: "🕸️ Deploy to Netlify"
+        id: deployment
+        uses: netlify/actions/cli@master
+        with:
+          args: deploy --dir=site --prod
+        env:
+          NETLIFY_AUTH_TOKEN: '${{secrets.NETLIFY_AUTH_TOKEN}}'
+          NETLIFY_SITE_ID: '${{vars.NETLIFY_SITE_ID}}'
