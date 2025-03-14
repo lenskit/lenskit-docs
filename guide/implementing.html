@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit is particularly designed to excel in research and educational applications, and for that you will often need to write your own components implementing new scoring models, rankers, or other ..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Implementing Components &#8212; LensKit 2025.2.1.dev7+gaa827ea4 documentation</title>
+    <title>Implementing Components &#8212; LensKit 2025.2.1.dev25+ga4bc6049 documentation</title>
   
   
   
@@ -27,8 +27,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -38,21 +38,21 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=474ac1f0" />
   
   <!-- So that users can add custom icons -->
-  <script src="../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=09060c60"></script>
+    <script src="../_static/documentation_options.js?v=b396b951"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -60,13 +60,13 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'guide/implementing';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lkpy.lenskit.org/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
-        DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            true;
         </script>
     <link rel="canonical" href="https://lkpy.lenskit.org/latest/guide/implementing.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -75,7 +75,7 @@
     <link rel="prev" title="Other Components" href="other-components.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.2.1.dev7+gaa827ea4" />
+  <meta name="docsearch:version" content="2025.2.1.dev25+ga4bc6049" />
   </head>
   
   
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev7+gaa827ea4 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev7+gaa827ea4 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev25+ga4bc6049 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev25+ga4bc6049 documentation - Home"/>
   
   
 </a></div>
@@ -462,9 +462,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -540,13 +545,13 @@ from two other components could look like this:</p>
 <span class="c1"># Licensed under the MIT license, see LICENSE.md for details.</span>
 <span class="c1"># SPDX-License-Identifier: MIT</span>
 
-<span class="kn">from</span> <span class="nn">pydantic</span> <span class="kn">import</span> <span class="n">BaseModel</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span>
 
-<span class="kn">from</span> <span class="nn">lenskit.data</span> <span class="kn">import</span> <span class="n">ItemList</span>
-<span class="kn">from</span> <span class="nn">lenskit.pipeline</span> <span class="kn">import</span> <span class="n">Component</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">ItemList</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">Component</span>
 
 
-<span class="k">class</span> <span class="nc">LinearBlendConfig</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LinearBlendConfig</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
     <span class="s2">&quot;Configuration for :class:`LinearBlendScorer`.&quot;</span>
 
     <span class="c1"># define the parameter with a type, default value, and docstring.</span>
@@ -556,7 +561,7 @@ from two other components could look like this:</p>
 <span class="sd">    &quot;&quot;&quot;</span>
 
 
-<span class="k">class</span> <span class="nc">LinearBlendScorer</span><span class="p">(</span><span class="n">Component</span><span class="p">[</span><span class="n">ItemList</span><span class="p">]):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">LinearBlendScorer</span><span class="p">(</span><span class="n">Component</span><span class="p">[</span><span class="n">ItemList</span><span class="p">]):</span>
 <span class="w">    </span><span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Score items with a linear blend of two other scores.</span>
 
@@ -573,7 +578,7 @@ from two other components could look like this:</p>
     <span class="s2">&quot;Configuration parameters for the linear blend.&quot;</span>
 
     <span class="c1"># the __call__ method defines the component&#39;s operation</span>
-    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">,</span> <span class="n">right</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ItemList</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">left</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">,</span> <span class="n">right</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ItemList</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Blend the scores of two item lists.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -625,7 +630,7 @@ just callable objects).  This method takes the component inputs as parameters,
 and returns the component’s result.</p>
 <p>Most components return an <a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>.  Scoring components usually
 have the following signature:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">QueryInput</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ItemList</span><span class="p">:</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">QueryInput</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ItemList</span><span class="p">:</span>
     <span class="o">...</span>
 </pre></div>
 </div>
@@ -635,7 +640,7 @@ candidate items for recommendation).  The scorer then returns a list of scored
 items.</p>
 <p>Most component begin by converting the query to a
 <a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a>:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">QueryInput</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ItemList</span><span class="p">:</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">QueryInput</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ItemList</span><span class="p">:</span>
     <span class="n">query</span> <span class="o">=</span> <span class="n">RecQuery</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
     <span class="o">...</span>
 </pre></div>
@@ -718,13 +723,13 @@ caller to request early termination (through the
 is complete, so that setup time is not included in the time taken for the first
 loop iteration.  The easiest way to do implement this is by delegating to an
 inner loop function, written as a Python generator:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">training_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="n">TrainingOptions</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">training_loop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">options</span><span class="p">:</span> <span class="n">TrainingOptions</span><span class="p">):</span>
     <span class="c1"># do initial data setup/prep for training</span>
     <span class="n">context</span> <span class="o">=</span> <span class="o">...</span>
     <span class="c1"># pass off to inner generator</span>
     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_training_loop_impl</span><span class="p">(</span><span class="n">context</span><span class="p">)</span>
 
-<span class="k">def</span> <span class="nf">_training_loop_impl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">_training_loop_impl</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">context</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">epochs</span><span class="p">):</span>
         <span class="c1"># do the model training</span>
         <span class="c1"># compute the metrics</span>
@@ -804,13 +809,13 @@ inner loop function, written as a Python generator:</p>
   </nav></div>
 
   <div class="sidebar-secondary-item">
-
-  <div class="tocsection sourcelink">
-    <a href="../_sources/guide/implementing.rst.txt">
-      <i class="fa-solid fa-file-lines"></i> Show Source
-    </a>
-  </div>
-</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/guide/implementing.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
 
 </div></div>
               
@@ -825,8 +830,8 @@ inner loop function, written as a Python generator:</p>
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -846,7 +851,7 @@ inner loop function, written as a Python generator:</p>
         <div class="footer-item">
 
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
     <br/>
   </p>
 </div>
@@ -859,7 +864,8 @@ inner loop function, written as a Python generator:</p>
       
         <div class="footer-item">
 <p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
 </p></div>
       
     </div>
