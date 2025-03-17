@@ -659,7 +659,19 @@ rankings.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.stochastic.StochasticTopNConfig.transform">
 <span class="sig-name descname"><span class="pre">transform</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'softmax'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'linear'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'softmax'</span></em><a class="headerlink" href="#lenskit.stochastic.StochasticTopNConfig.transform" title="Link to this definition">#</a></dt>
-<dd><p>Transformation to apply to scores prior to ranking.</p>
+<dd><p>Transformation to convert scores into ranking probabilities.</p>
+<dl class="simple">
+<dt>softmax</dt><dd><p>Use the softmax of the item scores as the selection probabilities.</p>
+</dd>
+<dt>linear</dt><dd><p>Linearly re-scale item scores to be selection probabilities. This
+equivalent to min-max scaling the scores, then re-scaling to sum
+to 1.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">None</span></code></dt><dd><p>No transformation, except negative scores are clamped to (almost)
+zero.  Not recommended unless your item scorer emits multinomial
+probabilities.</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -676,7 +688,8 @@ with selection probabilities proportional to their scores.  Scores can be
 optionally rescaled (inverse temperature) and transformed (e.g. softmax).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Negative scores are clamped to (approximately) zero.</p>
+<p>When no transformation is used, negative scores are still clamped to
+(approximately) zero.</p>
 </div>
 <dl class="field-list">
 <dt class="field-odd">Stability<span class="colon">:</span></dt>
