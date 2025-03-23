@@ -19,7 +19,7 @@
 <meta name="description" content="Support for parallelism with Ray. Functions Classes" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.parallel.ray &#8212; LensKit 2025.2.1.dev82+g91bb53ad documentation</title>
+    <title>lenskit.parallel.ray &#8212; LensKit 2025.2.1.dev92+g1e9780c8 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=3fc9a929"></script>
+    <script src="../_static/documentation_options.js?v=e4be00bb"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -75,7 +75,7 @@
     <link rel="prev" title="lenskit.parallel.pool" href="lenskit.parallel.pool.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.2.1.dev82+g91bb53ad" />
+  <meta name="docsearch:version" content="2025.2.1.dev92+g1e9780c8" />
   </head>
   
   
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev82+g91bb53ad documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev82+g91bb53ad documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev92+g1e9780c8 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev92+g1e9780c8 documentation - Home"/>
   
   
 </a></div>
@@ -634,19 +634,22 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.ray.init_cluster" title="lenskit.parallel.ray.init_cluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_cluster</span></code></a>(*[, num_cpus, proc_slots, ...])</p></td>
 <td><p>Initialize or connect to a Ray cluster, with the LensKit options.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.parallel.ray.is_ray_worker" title="lenskit.parallel.ray.is_ray_worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_ray_worker</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.parallel.ray.init_worker" title="lenskit.parallel.ray.init_worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_worker</span></code></a>(*[, autostart])</p></td>
+<td><p>Initialize a Ray worker process.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.ray.is_ray_worker" title="lenskit.parallel.ray.is_ray_worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_ray_worker</span></code></a>()</p></td>
 <td><p>Determine whether the current process is running on a Ray worker.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.ray.ray_active" title="lenskit.parallel.ray.ray_active"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ray_active</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.parallel.ray.ray_active" title="lenskit.parallel.ray.ray_active"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ray_active</span></code></a>()</p></td>
 <td><p>Query whether Ray is active.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.parallel.ray.ray_available" title="lenskit.parallel.ray.ray_available"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ray_available</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.ray.ray_available" title="lenskit.parallel.ray.ray_available"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ray_available</span></code></a>()</p></td>
 <td><p>Check if Ray is available.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.ray.ray_supported" title="lenskit.parallel.ray.ray_supported"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ray_supported</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.parallel.ray.ray_supported" title="lenskit.parallel.ray.ray_supported"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ray_supported</span></code></a>()</p></td>
 <td><p>Check if this Ray setup is supported by LensKit.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">training_worker_cpus</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">training_worker_cpus</span></code>()</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -663,7 +666,7 @@
 </div>
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.parallel.ray.init_cluster">
-<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.ray.</span></span><span class="sig-name descname"><span class="pre">init_cluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_cpus</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proc_slots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">worker_parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_slots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.ray.init_cluster" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.ray.</span></span><span class="sig-name descname"><span class="pre">init_cluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_cpus</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proc_slots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">worker_parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_slots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_logging</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.ray.init_cluster" title="Link to this definition">#</a></dt>
 <dd><p>Initialize or connect to a Ray cluster, with the LensKit options.</p>
 <p>The resulting cluster can be used by an invoker, or it can be used directly.
 The Ray invoker uses batching, though, so it only works well with many small
@@ -680,6 +683,8 @@ the <code class="docutils literal notranslate"><span class="pre">lk_process</spa
 <li><p><strong>worker_parallel</strong> (<a class="reference internal" href="lenskit.parallel.config.html#lenskit.parallel.config.ParallelConfig" title="lenskit.parallel.config.ParallelConfig"><em>ParallelConfig</em></a><em> | </em><em>None</em>) – Parallel processing configuration for worker processes.  If
 <code class="docutils literal notranslate"><span class="pre">None</span></code>, uses the default.</p></li>
 <li><p><strong>limit_slots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – <code class="docutils literal notranslate"><span class="pre">False</span></code> to disable the LensKit slot interface.</p></li>
+<li><p><strong>global_logging</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> to wire up logging in the workers at startup, instead of only
+connecting logs when a task is run.</p></li>
 <li><p><strong>kwargs</strong> – Other options to pass to <a class="reference external" href="https://docs.ray.io/en/latest/ray-core/api/doc/ray.init.html#ray.init" title="(in Ray)"><code class="xref py py-func docutils literal notranslate"><span class="pre">ray.init()</span></code></a>.</p></li>
 </ul>
 </dd>
@@ -775,6 +780,21 @@ to <code class="docutils literal notranslate"><span class="pre">func</span></cod
 
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.parallel.ray.init_worker">
+<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.ray.</span></span><span class="sig-name descname"><span class="pre">init_worker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">autostart</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.ray.init_worker" title="Link to this definition">#</a></dt>
+<dd><p>Initialize a Ray worker process.  Sets up logging, and returns the context.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>autostart</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Set to <code class="docutils literal notranslate"><span class="pre">False</span></code> to disable calling <code class="xref py py-meth docutils literal notranslate"><span class="pre">WorkerContext.start()</span></code>, for
+when the caller will start and stop the context if it is new.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="lenskit.logging.worker.html#lenskit.logging.worker.WorkerContext" title="lenskit.logging.worker.WorkerContext"><em>WorkerContext</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -834,6 +854,7 @@ to <code class="docutils literal notranslate"><span class="pre">func</span></cod
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ray.RayOpInvoker.shutdown"><code class="docutils literal notranslate"><span class="pre">RayOpInvoker.shutdown()</span></code></a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ray.init_worker"><code class="docutils literal notranslate"><span class="pre">init_worker()</span></code></a></li>
 </ul>
   </nav></div>
 
