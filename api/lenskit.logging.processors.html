@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit logging processors and converters. Functions" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.logging.processors &#8212; LensKit 2025.2.1.dev94+g40337471 documentation</title>
+    <title>lenskit.logging.processors &#8212; LensKit 2025.2.1.dev113+ge13381f0 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=064ffa50"></script>
+    <script src="../_static/documentation_options.js?v=4526e95d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -75,7 +75,7 @@
     <link rel="prev" title="lenskit.logging.monitor" href="lenskit.logging.monitor.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.2.1.dev94+g40337471" />
+  <meta name="docsearch:version" content="2025.2.1.dev113+ge13381f0" />
   </head>
   
   
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev94+g40337471 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev94+g40337471 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev113+ge13381f0 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev113+ge13381f0 documentation - Home"/>
   
   
 </a></div>
@@ -628,11 +628,17 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.logging.processors.add_process_info" title="lenskit.logging.processors.add_process_info"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_process_info</span></code></a>(logger, method, event_dict)</p></td>
 <td><p>Add process info if it does not exist.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.logging.processors.format_timestamp" title="lenskit.logging.processors.format_timestamp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format_timestamp</span></code></a>(logger, method, event_dict)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.logging.processors.error_was_logged" title="lenskit.logging.processors.error_was_logged"><code class="xref py py-obj docutils literal notranslate"><span class="pre">error_was_logged</span></code></a>(exc)</p></td>
+<td><p>Query whether an exception was logged.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.logging.processors.format_timestamp" title="lenskit.logging.processors.format_timestamp"><code class="xref py py-obj docutils literal notranslate"><span class="pre">format_timestamp</span></code></a>(logger, method, event_dict)</p></td>
 <td><p>Reformat UNIX timestamps.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_warning</span></code>(message, category, filename, lineno)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">log_warning</span></code>(message, category, filename, lineno)</p></td>
 <td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.logging.processors.record_logged_error" title="lenskit.logging.processors.record_logged_error"><code class="xref py py-obj docutils literal notranslate"><span class="pre">record_logged_error</span></code></a>(logger, method, event_dict)</p></td>
+<td><p>Keep a record of recently-logged errors to avoid duplicate rendering in some cases.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.logging.processors.remove_internal" title="lenskit.logging.processors.remove_internal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_internal</span></code></a>(logger, method, event_dict)</p></td>
 <td><p>Filter out “internal” attrs (beginning with <code class="docutils literal notranslate"><span class="pre">_</span></code>) for console logging.</p></td>
@@ -640,6 +646,36 @@
 </tbody>
 </table>
 </div>
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.logging.processors.error_was_logged">
+<span class="sig-prename descclassname"><span class="pre">lenskit.logging.processors.</span></span><span class="sig-name descname"><span class="pre">error_was_logged</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exc</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.processors.error_was_logged" title="Link to this definition">#</a></dt>
+<dd><p>Query whether an exception was logged.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>exc</strong> (<a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><em>Exception</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.logging.processors.record_logged_error">
+<span class="sig-prename descclassname"><span class="pre">lenskit.logging.processors.</span></span><span class="sig-name descname"><span class="pre">record_logged_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.processors.record_logged_error" title="Link to this definition">#</a></dt>
+<dd><p>Keep a record of recently-logged errors to avoid duplicate rendering in some
+cases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+<li><p><strong>method</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
+<li><p><strong>event_dict</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.MutableMapping" title="(in Python v3.13)"><em>MutableMapping</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>]</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.logging.processors.remove_internal">
 <span class="sig-prename descclassname"><span class="pre">lenskit.logging.processors.</span></span><span class="sig-name descname"><span class="pre">remove_internal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">event_dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.processors.remove_internal" title="Link to this definition">#</a></dt>
@@ -743,6 +779,8 @@
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.processors.error_was_logged"><code class="docutils literal notranslate"><span class="pre">error_was_logged()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.processors.record_logged_error"><code class="docutils literal notranslate"><span class="pre">record_logged_error()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.processors.remove_internal"><code class="docutils literal notranslate"><span class="pre">remove_internal()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.processors.format_timestamp"><code class="docutils literal notranslate"><span class="pre">format_timestamp()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.processors.add_process_info"><code class="docutils literal notranslate"><span class="pre">add_process_info()</span></code></a></li>
