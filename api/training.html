@@ -14,7 +14,7 @@
 <meta property="og:description" content="Interfaces and support for model training." />
 <meta name="description" content="Interfaces and support for model training." />
 
-    <title>Model Training &#8212; LensKit 2025.2.1.dev167+gcc08d9ef documentation</title>
+    <title>Model Training &#8212; LensKit 2025.2.1.dev172+g680c9176 documentation</title>
   
   
   
@@ -47,7 +47,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=4c79c870"></script>
+    <script src="../_static/documentation_options.js?v=d7593930"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -66,11 +66,11 @@
     <link rel="canonical" href="https://lkpy.lenskit.org/latest/api/training.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="lenskit.basic" href="lenskit.basic.html" />
+    <link rel="next" title="Model State" href="state.html" />
     <link rel="prev" title="Diagnostic APIs" href="diagnostics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.2.1.dev167+gcc08d9ef" />
+  <meta name="docsearch:version" content="2025.2.1.dev172+g680c9176" />
   </head>
   
   
@@ -136,8 +136,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev167+gcc08d9ef documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev167+gcc08d9ef documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev172+g680c9176 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev172+g680c9176 documentation - Home"/>
   
   
 </a></div>
@@ -446,6 +446,10 @@
 <li class="toctree-l1"><a class="reference internal" href="operations.html">Operation Functions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="diagnostics.html">Diagnostic APIs</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Model Training</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="state.html">Model State</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.state.ParameterContainer.html">lenskit.state.ParameterContainer</a></li>
+</ul>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
 <ul class="nav bd-sidenav">
@@ -698,18 +702,16 @@ device has been specified.</p>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
 <p>Interface for components and objects that can learn parameters from training
 data. It supports training and checking if a component has already been
-trained.  The resulting model should be pickleable.  Trainable objects are
-usually also components.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Trainable components must also implement <code class="docutils literal notranslate"><span class="pre">__call__</span></code>.</p>
-</div>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>A future LensKit version will add support for extracting model
-parameters a la Pytorch’s <code class="docutils literal notranslate"><span class="pre">state_dict</span></code>, but this capability was not
-ready for 2025.1.</p>
-</div>
+trained.  This protocol only captures the concept of trainability; most
+trainable components should have other properties and behaviors as well:</p>
+<ul class="simple">
+<li><p>They are usually components (<a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>), with
+an appropriate <code class="docutils literal notranslate"><span class="pre">__call__</span></code> method.</p></li>
+<li><p>They should be pickleable.</p></li>
+<li><p>They should also usually implement
+<a class="reference internal" href="lenskit.state.ParameterContainer.html#lenskit.state.ParameterContainer" title="lenskit.state.ParameterContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParameterContainer</span></code></a>, to allow the learned
+parameters to be serialized and deserialized without pickling.</p></li>
+</ul>
 <dl class="field-list">
 <dt class="field-odd">Stability<span class="colon">:</span></dt>
 <dd class="field-odd">Full (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
@@ -830,11 +832,11 @@ training loops.</p>
       </div>
     </a>
     <a class="right-next"
-       href="lenskit.basic.html"
+       href="state.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">lenskit.basic</p>
+        <p class="prev-next-title">Model State</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
