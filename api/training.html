@@ -14,7 +14,7 @@
 <meta property="og:description" content="Interfaces and support for model training." />
 <meta name="description" content="Interfaces and support for model training." />
 
-    <title>Model Training &#8212; LensKit 2025.2.1.dev174+g13b7d889 documentation</title>
+    <title>Model Training &#8212; LensKit 2025.2.1.dev196+g7e6d09cd documentation</title>
   
   
   
@@ -47,7 +47,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=afb5fb7e"></script>
+    <script src="../_static/documentation_options.js?v=792aba75"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -70,7 +70,7 @@
     <link rel="prev" title="Diagnostic APIs" href="diagnostics.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.2.1.dev174+g13b7d889" />
+  <meta name="docsearch:version" content="2025.2.1.dev196+g7e6d09cd" />
   </head>
   
   
@@ -136,8 +136,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev174+g13b7d889 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev174+g13b7d889 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev196+g7e6d09cd documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev196+g7e6d09cd documentation - Home"/>
   
   
 </a></div>
@@ -810,6 +810,115 @@ training loops.</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.training.UsesTrainer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.training.</span></span><span class="sig-name descname"><span class="pre">UsesTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.training.UsesTrainer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeTraining</span></code></a>, <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<p>Base class for models that implement <a class="reference internal" href="#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a> via a
+<a class="reference internal" href="#lenskit.training.ModelTrainer" title="lenskit.training.ModelTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelTrainer</span></code></a>.  This class implements <a class="reference internal" href="#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeTraining</span></code></a> for
+compatibility, but the <a class="reference internal" href="#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeTraining</span></code></a> interface is deprecated.</p>
+<p>The component’s configuration must have an <code class="docutils literal notranslate"><span class="pre">epochs</span></code> attribute noting the
+number of epochs to train.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.training.UsesTrainer.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">TrainingOptions(retrain=True,</span> <span class="pre">device=None,</span> <span class="pre">rng=None)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.training.UsesTrainer.train" title="Link to this definition">#</a></dt>
+<dd><p>Implementation of <a class="reference internal" href="#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Trainable.train()</span></code></a> that uses the model trainer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>)</p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><em>TrainingOptions</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.training.UsesTrainer.training_loop">
+<span class="sig-name descname"><span class="pre">training_loop</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.training.UsesTrainer.training_loop" title="Link to this definition">#</a></dt>
+<dd><p>Training loop implementation, to be supplied by the derived class.  This
+method should return a iterator that, when iterated, will perform each
+training epoch; when training is complete, it should finalize the model
+and signal iteration completion.</p>
+<p>Each epoch can yield metrics, such as training or validation loss, to be
+logged with structured logging and can be used by calling code to do
+other analysis.</p>
+<p>See <a class="reference internal" href="../guide/implementing.html#iterative-training"><span class="std std-ref">Iterative Training</span></a> for more details on writing iterative
+training loops.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>)</p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><em>TrainingOptions</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.training.UsesTrainer.create_trainer">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_trainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.training.UsesTrainer.create_trainer" title="Link to this definition">#</a></dt>
+<dd><p>Create a model trainer to train this model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>)</p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><em>TrainingOptions</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#lenskit.training.ModelTrainer" title="lenskit.training.ModelTrainer"><em>ModelTrainer</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.training.ModelTrainer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.training.</span></span><span class="sig-name descname"><span class="pre">ModelTrainer</span></span><a class="headerlink" href="#lenskit.training.ModelTrainer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<p>Protocol implemented by iterative trainers for models.  Models that
+implement <a class="reference internal" href="#lenskit.training.UsesTrainer" title="lenskit.training.UsesTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UsesTrainer</span></code></a> will return an object implementing this
+protocol from their <a class="reference internal" href="#lenskit.training.UsesTrainer.create_trainer" title="lenskit.training.UsesTrainer.create_trainer"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_trainer()</span></code></a> method.</p>
+<p>This protocol only defines the core aspects of training a model. Trainers
+should also implement <a class="reference internal" href="lenskit.state.ParameterContainer.html#lenskit.state.ParameterContainer" title="lenskit.state.ParameterContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ParameterContainer</span></code></a> to allow
+training to be checkpointed and resumed.</p>
+<p>It is also a good idea for the trainer to be pickleable, but the parameter
+container interface is the primary mechanism for checkpointing.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.training.ModelTrainer.train_epoch">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">train_epoch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.training.ModelTrainer.train_epoch" title="Link to this definition">#</a></dt>
+<dd><p>Perform one epoch of the training process, optionally returning metrics
+on the training behavior.  After each training iteration, the mmodel
+must be usable.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a>] | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.training.ModelTrainer.finalize">
+<em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">finalize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.training.ModelTrainer.finalize" title="Link to this definition">#</a></dt>
+<dd><p>Finish the training process, cleaning up any unneeded data structures
+and doing any finalization steps to the model.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 
 
@@ -876,6 +985,17 @@ training loops.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.IterativeTraining.expected_training_epochs"><code class="docutils literal notranslate"><span class="pre">IterativeTraining.expected_training_epochs</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.IterativeTraining.train"><code class="docutils literal notranslate"><span class="pre">IterativeTraining.train()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.IterativeTraining.training_loop"><code class="docutils literal notranslate"><span class="pre">IterativeTraining.training_loop()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.UsesTrainer"><code class="docutils literal notranslate"><span class="pre">UsesTrainer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.UsesTrainer.train"><code class="docutils literal notranslate"><span class="pre">UsesTrainer.train()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.UsesTrainer.training_loop"><code class="docutils literal notranslate"><span class="pre">UsesTrainer.training_loop()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.UsesTrainer.create_trainer"><code class="docutils literal notranslate"><span class="pre">UsesTrainer.create_trainer()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.ModelTrainer"><code class="docutils literal notranslate"><span class="pre">ModelTrainer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.ModelTrainer.train_epoch"><code class="docutils literal notranslate"><span class="pre">ModelTrainer.train_epoch()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.ModelTrainer.finalize"><code class="docutils literal notranslate"><span class="pre">ModelTrainer.finalize()</span></code></a></li>
 </ul>
 </li>
 </ul>
