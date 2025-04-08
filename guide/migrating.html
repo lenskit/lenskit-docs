@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit 2025.1 brings the largest changes to LensKit’s APIs and operation since moving to Python. These changes are a result of years of experience using and teaching the current Python APIs, talki..." />
 <meta name="description" content="LensKit 2025.1 brings the largest changes to LensKit’s APIs and operation since moving to Python. These changes are a result of years of experience using and teaching the current Python APIs, talki..." />
 
-    <title>Migrating from LensKit 0.x &#8212; LensKit 2025.2.1.dev202+g3ba7b9d3 documentation</title>
+    <title>Migrating from LensKit 0.x &#8212; LensKit 2025.2.1.dev212+g4a4dd469 documentation</title>
   
   
   
@@ -47,7 +47,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=4a3a5486"></script>
+    <script src="../_static/documentation_options.js?v=92a96953"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -70,7 +70,7 @@
     <link rel="prev" title="Examples" href="examples.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.2.1.dev202+g3ba7b9d3" />
+  <meta name="docsearch:version" content="2025.2.1.dev212+g4a4dd469" />
   </head>
   
   
@@ -136,8 +136,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev202+g3ba7b9d3 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev202+g3ba7b9d3 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev212+g4a4dd469 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev212+g4a4dd469 documentation - Home"/>
   
   
 </a></div>
@@ -576,7 +576,8 @@ than previous versions of LensKit.</p>
 Pandas data frame into a <a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-func docutils literal notranslate"><span class="pre">Dataset()</span></code></a>, or one of the
 standard loaders such as <a class="reference internal" href="../api/lenskit.data.load_movielens.html#lenskit.data.load_movielens" title="lenskit.data.load_movielens"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.data.load_movielens()</span></code></a>.
 <a class="reference internal" href="../api/lenskit.data.DatasetBuilder.html#lenskit.data.DatasetBuilder" title="lenskit.data.DatasetBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetBuilder</span></code></a> provides more fine-grained control over
-building datasets, including addition entity and interaction attributes.</p>
+building datasets, including addition entity and interaction attributes in
+the new <a class="reference internal" href="data/model.html#data-model"><span class="std std-ref">Data Model</span></a>.</p>
 <p>While most LensKit data frame code still recognizes the legacy <code class="docutils literal notranslate"><span class="pre">user</span></code> and
 <code class="docutils literal notranslate"><span class="pre">item</span></code> columns from LensKit 0.14 and earlier, data frames of LensKit data
 should use the column names <code class="docutils literal notranslate"><span class="pre">user_id</span></code> and <code class="docutils literal notranslate"><span class="pre">item_id</span></code> instead, to
@@ -584,6 +585,9 @@ unambiguously distinguish them from user and item numbers.</p>
 <p>Additional dataset construction support and possible implementations (e.g.
 database-backed datasets) are coming, but this is the migration path for the
 typical code patterns used in LensKit 0.14 and earlier.</p>
+<p>LensKit now also has a native dataset format to facilitate efficient saving and
+loading of complete, configured data set in a Parquet-based format.  The native
+format round-trips all supported elements of the LensKit data model.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
 <p>The <a class="reference internal" href="../api/lenskit.data.load_movielens.html#lenskit.data.load_movielens" title="lenskit.data.load_movielens"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_movielens()</span></code></a> function can now directly load
