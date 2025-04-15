@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its: Batch operations using multi-process execution., Parallel model training. For most models pr..." />
 <meta name="description" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its: Batch operations using multi-process execution., Parallel model training. For most models pr..." />
 
-    <title>Parallel Processing &#8212; LensKit 2025.2.1.dev243+g255d2fdc documentation</title>
+    <title>Parallel Processing &#8212; LensKit 2025.2.1.dev325+g364a2daf documentation</title>
   
   
   
@@ -47,7 +47,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=792de037"></script>
+    <script src="../_static/documentation_options.js?v=792f88ba"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -70,7 +70,7 @@
     <link rel="prev" title="Logging and Progress Reporting" href="logging.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.2.1.dev243+g255d2fdc" />
+  <meta name="docsearch:version" content="2025.2.1.dev325+g364a2daf" />
   </head>
   
   
@@ -136,8 +136,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev243+g255d2fdc documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev243+g255d2fdc documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev325+g364a2daf documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev325+g364a2daf documentation - Home"/>
   
   
 </a></div>
@@ -516,8 +516,9 @@
 variable controlling its:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="batch.html"><span class="doc">Batch operations</span></a> using <a class="reference internal" href="#parallel-model-ops"><span class="std std-ref">multi-process execution</span></a>.</p></li>
-<li><p>Parallel model training.  For most models provided by LensKit, this is usually
-implemented using PyTorch JIT parallelism (<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.jit.fork.html#torch.jit.fork" title="(in PyTorch v2.6)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.jit.fork()</span></code></a>).</p></li>
+<li><p>Parallel model training.  For most models provided by LensKit, this is
+implemented either using PyTorch JIT parallelism (<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.jit.fork.html#torch.jit.fork" title="(in PyTorch v2.6)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.jit.fork()</span></code></a>) or
+using Rayon in the Rust extension module.</p></li>
 <li><p>Parallel computation in the various backends (BLAS, MKL, Torch, etc.).</p></li>
 </ul>
 <section id="configuring-parallelism">
@@ -542,7 +543,8 @@ of CPUs or 4, whichever is lower.</p>
 <dd><p>The number of threads to use for parallel model building.  Defaults to the
 number of CPUs or 8, whichever is smaller.</p>
 <p>This number is passed to <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.set_num_interop_threads.html#torch.set_num_interop_threads" title="(in PyTorch v2.6)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_interop_threads()</span></code></a> to set up the
-Torch JIT thread count.</p>
+Torch JIT thread count, and is used to configure the Rayon thread pool used
+by the Rust acceleration module.</p>
 </dd></dl>
 
 <dl class="std envvar">

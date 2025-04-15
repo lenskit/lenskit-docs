@@ -14,7 +14,7 @@
 <meta property="og:description" content="Since version 2025.1.1, LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produce predictio..." />
 <meta name="description" content="Since version 2025.1.1, LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produce predictio..." />
 
-    <title>Recommendation Pipelines &#8212; LensKit 2025.2.1.dev243+g255d2fdc documentation</title>
+    <title>Recommendation Pipelines &#8212; LensKit 2025.2.1.dev325+g364a2daf documentation</title>
   
   
   
@@ -47,7 +47,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=792de037"></script>
+    <script src="../_static/documentation_options.js?v=792f88ba"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -107,7 +107,7 @@ window.addEventListener("load", load);
     <link rel="prev" title="Queries and Operations" href="queries.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.2.1.dev243+g255d2fdc" />
+  <meta name="docsearch:version" content="2025.2.1.dev325+g364a2daf" />
   </head>
   
   
@@ -173,8 +173,8 @@ window.addEventListener("load", load);
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev243+g255d2fdc documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev243+g255d2fdc documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.1.dev325+g364a2daf documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.1.dev325+g364a2daf documentation - Home"/>
   
   
 </a></div>
@@ -762,11 +762,17 @@ components.</p>
 <p>LensKit supports serializing both pipeline descriptions (components,
 connections, and configurations) and pipeline parameters.  There are
 two ways to save a pipeline or part thereof:</p>
-<ol class="arabic simple">
+<ol class="arabic">
 <li><p>Pickle the entire pipeline.  This is easy, and saves everything in the
 pipeline; it has the usual downsides of pickling (arbitrary code execution,
 etc.). LensKit uses pickling to share pipelines with worker processes for
-parallel batch operations.</p></li>
+parallel batch operations.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Pickled pipelines must be unpickled with the same LensKit version — we
+make no attempt to maintain pickle compatibility.</p>
+</div>
+</li>
 <li><p>Save the pipeline configuration (<a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.config" title="lenskit.pipeline.Pipeline.config"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Pipeline.config</span></code></a>, using <a class="reference external" href="https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel.model_dump_json" title="(in Pydantic v0.0.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">model_dump_json()</span></code></a>).  This saves the components,
 their configurations, and their connections, but <strong>not</strong> any learned
 parameter data.  A new pipeline can be constructed from such a configuration
