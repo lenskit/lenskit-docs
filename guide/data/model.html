@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit defines holistic data model for recommender training (and evaluation) data. The model is graph-structured, but the interfaces and definitions center tabular (data frame) views of that data ..." />
 <meta name="description" content="LensKit defines holistic data model for recommender training (and evaluation) data. The model is graph-structured, but the interfaces and definitions center tabular (data frame) views of that data ..." />
 
-    <title>Data Model &#8212; LensKit 2025.3.0a2.post2.dev1+g25026b1d documentation</title>
+    <title>Data Model &#8212; LensKit 2025.3.0a2.post3.dev9+g8d5ab3b0 documentation</title>
   
   
   
@@ -47,7 +47,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=d675e3f5"></script>
+    <script src="../../_static/documentation_options.js?v=27380d9f"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -70,7 +70,7 @@
     <link rel="prev" title="Datasets" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.3.0a2.post2" />
+  <meta name="docsearch:version" content="2025.3.0a2.post3" />
   </head>
   
   
@@ -136,8 +136,8 @@
       
     
     
-    <img src="../../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a2.post2.dev1+g25026b1d documentation - Home"/>
-    <img src="../../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a2.post2.dev1+g25026b1d documentation - Home"/>
+    <img src="../../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a2.post3.dev9+g8d5ab3b0 documentation - Home"/>
+    <img src="../../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a2.post3.dev9+g8d5ab3b0 documentation - Home"/>
   
   
 </a></div>
@@ -698,11 +698,29 @@ tables, entity types, and relationship types.  Client code will rarely need to
 create or work with the schema directly; it is created and maintained by the
 <a class="reference internal" href="../../api/lenskit.data.DatasetBuilder.html#lenskit.data.DatasetBuilder" title="lenskit.data.DatasetBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetBuilder</span></code></a>.</p>
 </section>
+<section id="lenskit-native-format">
+<span id="data-format"></span><h2>LensKit Native Format<a class="headerlink" href="#lenskit-native-format" title="Link to this heading">#</a></h2>
+<p>LensKit supports saving and loading data sets in <em>native</em> format: an optimized
+format that can fully serialize and deserialize a dataset, with all supported
+features.  The <a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset.save" title="lenskit.data.Dataset.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.save()</span></code></a> (or <a class="reference internal" href="../../api/lenskit.data.DatasetBuilder.html#lenskit.data.DatasetBuilder.save" title="lenskit.data.DatasetBuilder.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DatasetBuilder.save()</span></code></a>) and
+<a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset.load" title="lenskit.data.Dataset.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.load()</span></code></a> save and load datasets in this format, respectively. The
+native format is not intended to be directly manipulated; loading it with
+<a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset.load" title="lenskit.data.Dataset.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.load()</span></code></a> and extracting data from the resulting <a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> is
+the best way to process it.</p>
+<p>LensKit maintains backwards compatibility within the current and previous major
+releases.  That is, data saved with LensKit 2025.3 can be read by any later
+release of LensKit 2025.x or LensKit 2026.x.  Further, dataset changes will not
+be introduced in patch levels, so data is mutually intelligible between
+202X.Y.Z1 and 202X.Y.Z2 for any Z1 and Z2.</p>
+<p>Forward-compatibility is not yet maintained; data saved with LensKit may not be
+readable by prior versions.</p>
+</section>
 <section id="internal-representation">
 <span id="data-internal"></span><h2>Internal Representation<a class="headerlink" href="#internal-representation" title="Link to this heading">#</a></h2>
 <p>Data should only be accessed through the <a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> API, as
-the internal storage is subject to change.  Logically, each entity or
-relationship type is represented as a table, consisting of:</p>
+the internal storage is subject to change.</p>
+<p>In the current version, logically, each entity or relationship type is
+represented as a table, consisting of:</p>
 <ul class="simple">
 <li><p>One or more entity identifier or number columns</p></li>
 <li><p>Zero or more attribute columns</p></li>
@@ -777,6 +795,7 @@ containing the identifiers and attribute values. For entity classes,
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relationships">Relationships</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions">Interactions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#schemas">Schemas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit-native-format">LensKit Native Format</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#internal-representation">Internal Representation</a></li>
 </ul>
   </nav></div>
