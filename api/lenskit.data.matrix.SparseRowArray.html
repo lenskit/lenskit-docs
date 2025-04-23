@@ -686,8 +686,8 @@ the release notes. See <a class="reference internal" href="../releases/index.htm
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_pandas</span></code>(obj[, mask, type])</p></td>
 <td><p>Convert pandas.Series to an Arrow Array.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_scipy</span></code>(csr, *[, large])</p></td>
-<td><p></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.matrix.SparseRowArray.from_scipy" title="lenskit.data.matrix.SparseRowArray.from_scipy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_scipy</span></code></a>(csr, *[, values, large])</p></td>
+<td><p>Create a sparse row array from a SciPy sparse matrix.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_storage</span></code>(BaseExtensionType typ, ...)</p></td>
 <td><p>Construct ExtensionArray from type and storage array.</p></td>
@@ -825,6 +825,27 @@ legacy layouts without the extension types.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.matrix.SparseRowArray.from_scipy">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_scipy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csr</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">large</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.matrix.SparseRowArray.from_scipy" title="Link to this definition">#</a></dt>
+<dd><p>Create a sparse row array from a SciPy sparse matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>csr</strong> (<em>sps.csr_array</em><em>[</em><em>Any</em><em>, </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>]</em><em>]</em>) – The SciPy sparse matrix (in CSR format).</p></li>
+<li><p><strong>values</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether to include the values or create a structure-only array.</p></li>
+<li><p><strong>large</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em> | </em><em>None</em>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> to force creation of a <code class="xref py py-class docutils literal notranslate"><span class="pre">pa.LargeListArray</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The sparse row array.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.data.matrix.SparseRowArray" title="lenskit.data.matrix.SparseRowArray">SparseRowArray</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="lenskit.data.matrix.SparseRowArray.to_scipy">
 <span class="sig-name descname"><span class="pre">to_scipy</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.matrix.SparseRowArray.to_scipy" title="Link to this definition">#</a></dt>
 <dd><p>Convert this sparse row array to a SciPy sparse array.</p>
@@ -934,6 +955,7 @@ legacy layouts without the extension types.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.matrix.SparseRowArray"><code class="docutils literal notranslate"><span class="pre">SparseRowArray</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.matrix.SparseRowArray.__init__"><code class="docutils literal notranslate"><span class="pre">SparseRowArray.__init__()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.matrix.SparseRowArray.from_array"><code class="docutils literal notranslate"><span class="pre">SparseRowArray.from_array()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.matrix.SparseRowArray.from_scipy"><code class="docutils literal notranslate"><span class="pre">SparseRowArray.from_scipy()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.matrix.SparseRowArray.to_scipy"><code class="docutils literal notranslate"><span class="pre">SparseRowArray.to_scipy()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.matrix.SparseRowArray.to_torch"><code class="docutils literal notranslate"><span class="pre">SparseRowArray.to_torch()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.matrix.SparseRowArray.dimension"><code class="docutils literal notranslate"><span class="pre">SparseRowArray.dimension</span></code></a></li>

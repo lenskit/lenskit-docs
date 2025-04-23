@@ -493,12 +493,13 @@ the Arrow metadata).</p></li>
 <section id="component-changes">
 <h3>Component Changes<a class="headerlink" href="#component-changes" title="Link to this heading">#</a></h3>
 <ul>
-<li><p><a class="reference internal" href="../api/lenskit.knn.html#lenskit.knn.ItemKNNScorer" title="lenskit.knn.ItemKNNScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemKNNScorer</span></code></a> is rewritten to use Rust acceleration,
-along with changes to its internal data representation to use Arrow instead
-of SciPy.  This also fixes a segfault with very large similarity matrices.</p>
+<li><p><a class="reference internal" href="../api/lenskit.knn.html#lenskit.knn.ItemKNNScorer" title="lenskit.knn.ItemKNNScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemKNNScorer</span></code></a> and <code class="xref py py-class docutils literal notranslate"><span class="pre">UserkNNScorer</span></code>
+are rewritten to use Rust acceleration, along with changes to its internal
+data representation to use Arrow instead of SciPy.  This also fixes a
+segfault with very large similarity matrices.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The model parameters of the Item KNN scorer have changed.  They are no
+<p>The model parameters of the KNN scorers have changed.  They are no
 longer suffixed with <code class="docutils literal notranslate"><span class="pre">_</span></code>, and the similarity matrix is a PyArrow list
 array.  Code that was directly examining internal elements will need to
 change.</p>
