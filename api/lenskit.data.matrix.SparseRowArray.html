@@ -707,6 +707,12 @@ the release notes. See <a class="reference internal" href="../releases/index.htm
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_valid</span></code>(self)</p></td>
 <td><p>Return BooleanArray indicating the non-null values.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.matrix.SparseRowArray.row_extent" title="lenskit.data.matrix.SparseRowArray.row_extent"><code class="xref py py-obj docutils literal notranslate"><span class="pre">row_extent</span></code></a>(row)</p></td>
+<td><p>Get the start and end of a row.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.matrix.SparseRowArray.row_indices" title="lenskit.data.matrix.SparseRowArray.row_indices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">row_indices</span></code></a>(row)</p></td>
+<td><p>Get the index array for a compressed sparse row.</p></td>
+</tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">slice</span></code>(self[, offset, length])</p></td>
 <td><p>Compute zero-copy slice of this array.</p></td>
 </tr>
@@ -835,7 +841,7 @@ legacy layouts without the extension types.</p>
 <dd><p>Convert this sparse row array to a Torch sparse tensor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.6)"><em>Tensor</em></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://pytorch.org/docs/stable/tensors.html#torch.Tensor" title="(in PyTorch v2.7)"><em>Tensor</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -844,6 +850,34 @@ legacy layouts without the extension types.</p>
 <dt class="sig sig-object py" id="lenskit.data.matrix.SparseRowArray.dimension">
 <em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">dimension</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#lenskit.data.matrix.SparseRowArray.dimension" title="Link to this definition">#</a></dt>
 <dd><p>Get the number of columns in the sparse matrix.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.matrix.SparseRowArray.row_extent">
+<span class="sig-name descname"><span class="pre">row_extent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.matrix.SparseRowArray.row_extent" title="Link to this definition">#</a></dt>
+<dd><p>Get the start and end of a row.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>row</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.matrix.SparseRowArray.row_indices">
+<span class="sig-name descname"><span class="pre">row_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.matrix.SparseRowArray.row_indices" title="Link to this definition">#</a></dt>
+<dd><p>Get the index array for a compressed sparse row.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>row</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.Int32Array.html#pyarrow.Int32Array" title="(in Apache Arrow v19.0.1)"><em>Int32Array</em></a></p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -903,6 +937,8 @@ legacy layouts without the extension types.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.matrix.SparseRowArray.to_scipy"><code class="docutils literal notranslate"><span class="pre">SparseRowArray.to_scipy()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.matrix.SparseRowArray.to_torch"><code class="docutils literal notranslate"><span class="pre">SparseRowArray.to_torch()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.matrix.SparseRowArray.dimension"><code class="docutils literal notranslate"><span class="pre">SparseRowArray.dimension</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.matrix.SparseRowArray.row_extent"><code class="docutils literal notranslate"><span class="pre">SparseRowArray.row_extent()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.matrix.SparseRowArray.row_indices"><code class="docutils literal notranslate"><span class="pre">SparseRowArray.row_indices()</span></code></a></li>
 </ul>
 </li>
 </ul>
