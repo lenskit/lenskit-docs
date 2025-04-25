@@ -11,8 +11,8 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="api/lenskit.funksvd.html" />
 <meta property="og:site_name" content="LensKit" />
-<meta property="og:description" content="FunkSVD (biased MF). Functions Classes" />
-<meta name="description" content="FunkSVD (biased MF). Functions Classes" />
+<meta property="og:description" content="FunkSVD (biased MF). Classes" />
+<meta name="description" content="FunkSVD (biased MF). Classes" />
 
     <title>lenskit.funksvd &#8212; LensKit 2025.3.0a3 documentation</title>
   
@@ -620,74 +620,62 @@
   <section id="module-lenskit.funksvd">
 <span id="lenskit-funksvd"></span><h1>lenskit.funksvd<a class="headerlink" href="#module-lenskit.funksvd" title="Link to this heading">#</a></h1>
 <p>FunkSVD (biased MF).</p>
-<p class="rubric">Functions</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
-<tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_params</span></code>(niters, lrate, reg, range)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">train</span></code>(ctx, params, model, timer)</p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-</div>
 <p class="rubric">Classes</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Context</span></code>(*args, **kwargs)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.funksvd.FunkSVDConfig" title="lenskit.funksvd.FunkSVDConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FunkSVDConfig</span></code></a>(*[, features, epochs, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.funksvd.FunkSVDConfig" title="lenskit.funksvd.FunkSVDConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FunkSVDConfig</span></code></a>(*[, embedding_size, epochs, ...])</p></td>
 <td><p>Configuration for <a class="reference internal" href="#lenskit.funksvd.FunkSVDScorer" title="lenskit.funksvd.FunkSVDScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunkSVDScorer</span></code></a>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.funksvd.FunkSVDScorer" title="lenskit.funksvd.FunkSVDScorer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FunkSVDScorer</span></code></a>(*args, **kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.funksvd.FunkSVDScorer" title="lenskit.funksvd.FunkSVDScorer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FunkSVDScorer</span></code></a>(*args, **kwargs)</p></td>
 <td><p>FunkSVD explicit-feedback matrix factoriation.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.funksvd.Model" title="lenskit.funksvd.Model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Model</span></code></a>(*args, **kwargs)</p></td>
-<td><p>Internal model class for training SGD MF.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.funksvd.FunkSVDTrainingData" title="lenskit.funksvd.FunkSVDTrainingData"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FunkSVDTrainingData</span></code></a>(users, items, ratings)</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.funksvd.FunkSVDTrainingParams" title="lenskit.funksvd.FunkSVDTrainingParams"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FunkSVDTrainingParams</span></code></a>(learning_rate, ...)</p></td>
+<td><p></p></td>
 </tr>
 </tbody>
 </table>
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.funksvd.FunkSVDConfig">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.funksvd.</span></span><span class="sig-name descname"><span class="pre">FunkSVDConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regularization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.015</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.funksvd.FunkSVDConfig" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.funksvd.</span></span><span class="sig-name descname"><span class="pre">FunkSVDConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">regularization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.015</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">damping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.funksvd.FunkSVDConfig" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel" title="(in Pydantic v0.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
 <p>Configuration for <a class="reference internal" href="#lenskit.funksvd.FunkSVDScorer" title="lenskit.funksvd.FunkSVDScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunkSVDScorer</span></code></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>features</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
-<li><p><strong>epochs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>)</p></li>
-<li><p><strong>learning_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
-<li><p><strong>regularization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
+<li><p><strong>embedding_size</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.13)"><em>Annotated</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>Gt</em><em>(</em><em>gt=0</em><em>)</em><em>]</em>)</p></li>
+<li><p><strong>epochs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.13)"><em>Annotated</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em>, </em><em>Gt</em><em>(</em><em>gt=0</em><em>)</em><em>]</em>)</p></li>
+<li><p><strong>learning_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.13)"><em>Annotated</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>Gt</em><em>(</em><em>gt=0</em><em>)</em><em>]</em>)</p></li>
+<li><p><strong>regularization</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.13)"><em>Annotated</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><em>Ge</em><em>(</em><em>ge=0</em><em>)</em><em>]</em>)</p></li>
 <li><p><strong>damping</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'user'</em><em>, </em><em>'item'</em><em>]</em><em>, </em><em>float</em><em>]</em>)</p></li>
 <li><p><strong>range</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="lenskit.funksvd.FunkSVDConfig.features">
-<span class="sig-name descname"><span class="pre">features</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#lenskit.funksvd.FunkSVDConfig.features" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="lenskit.funksvd.FunkSVDConfig.embedding_size">
+<span class="sig-name descname"><span class="pre">embedding_size</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.13)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Gt</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">gt</span></span><span class="o"><span class="pre">=</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.funksvd.FunkSVDConfig.embedding_size" title="Link to this definition">#</a></dt>
 <dd><p>Number of latent features.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.funksvd.FunkSVDConfig.epochs">
-<span class="sig-name descname"><span class="pre">epochs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><a class="headerlink" href="#lenskit.funksvd.FunkSVDConfig.epochs" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">epochs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.13)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Gt</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">gt</span></span><span class="o"><span class="pre">=</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.funksvd.FunkSVDConfig.epochs" title="Link to this definition">#</a></dt>
 <dd><p>Number of training epochs (per feature).</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.funksvd.FunkSVDConfig.learning_rate">
-<span class="sig-name descname"><span class="pre">learning_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#lenskit.funksvd.FunkSVDConfig.learning_rate" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">learning_rate</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.13)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Gt</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">gt</span></span><span class="o"><span class="pre">=</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.funksvd.FunkSVDConfig.learning_rate" title="Link to this definition">#</a></dt>
 <dd><p>Gradient descent learning rate.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.funksvd.FunkSVDConfig.regularization">
-<span class="sig-name descname"><span class="pre">regularization</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></em><a class="headerlink" href="#lenskit.funksvd.FunkSVDConfig.regularization" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">regularization</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" title="(in Python v3.13)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Ge</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">ge</span></span><span class="o"><span class="pre">=</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.funksvd.FunkSVDConfig.regularization" title="Link to this definition">#</a></dt>
 <dd><p>Parameter regularization.</p>
 </dd></dl>
 
@@ -712,10 +700,34 @@
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="lenskit.funksvd.Model">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.funksvd.</span></span><span class="sig-name descname"><span class="pre">Model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.funksvd.Model" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#lenskit.funksvd.Model" title="lenskit.funksvd.Model"><code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></a></p>
-<p>Internal model class for training SGD MF.</p>
+<dt class="sig sig-object py" id="lenskit.funksvd.FunkSVDTrainingParams">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.funksvd.</span></span><span class="sig-name descname"><span class="pre">FunkSVDTrainingParams</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">learning_rate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">regularization</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rating_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">rating_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.funksvd.FunkSVDTrainingParams" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>learning_rate</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
+<li><p><strong>regularization</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
+<li><p><strong>rating_min</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
+<li><p><strong>rating_max</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.funksvd.FunkSVDTrainingData">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.funksvd.</span></span><span class="sig-name descname"><span class="pre">FunkSVDTrainingData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">users</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.Int32Array.html#pyarrow.Int32Array" title="(in Apache Arrow v19.0.1)"><span class="pre">pyarrow.lib.Int32Array</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">items</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.Int32Array.html#pyarrow.Int32Array" title="(in Apache Arrow v19.0.1)"><span class="pre">pyarrow.lib.Int32Array</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ratings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.FloatArray.html#pyarrow.FloatArray" title="(in Apache Arrow v19.0.1)"><span class="pre">pyarrow.lib.FloatArray</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.funksvd.FunkSVDTrainingData" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>users</strong> (<a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.Int32Array.html#pyarrow.Int32Array" title="(in Apache Arrow v19.0.1)"><em>Int32Array</em></a>)</p></li>
+<li><p><strong>items</strong> (<a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.Int32Array.html#pyarrow.Int32Array" title="(in Apache Arrow v19.0.1)"><em>Int32Array</em></a>)</p></li>
+<li><p><strong>ratings</strong> (<a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.FloatArray.html#pyarrow.FloatArray" title="(in Apache Arrow v19.0.1)"><em>FloatArray</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py class">
@@ -802,7 +814,7 @@ parameters you can extract from a trained model.</p>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.funksvd.FunkSVDConfig"><code class="docutils literal notranslate"><span class="pre">FunkSVDConfig</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.funksvd.FunkSVDConfig.features"><code class="docutils literal notranslate"><span class="pre">FunkSVDConfig.features</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.funksvd.FunkSVDConfig.embedding_size"><code class="docutils literal notranslate"><span class="pre">FunkSVDConfig.embedding_size</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.funksvd.FunkSVDConfig.epochs"><code class="docutils literal notranslate"><span class="pre">FunkSVDConfig.epochs</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.funksvd.FunkSVDConfig.learning_rate"><code class="docutils literal notranslate"><span class="pre">FunkSVDConfig.learning_rate</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.funksvd.FunkSVDConfig.regularization"><code class="docutils literal notranslate"><span class="pre">FunkSVDConfig.regularization</span></code></a></li>
@@ -811,7 +823,8 @@ parameters you can extract from a trained model.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.funksvd.FunkSVDConfig.model_config"><code class="docutils literal notranslate"><span class="pre">FunkSVDConfig.model_config</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.funksvd.Model"><code class="docutils literal notranslate"><span class="pre">Model</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.funksvd.FunkSVDTrainingParams"><code class="docutils literal notranslate"><span class="pre">FunkSVDTrainingParams</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.funksvd.FunkSVDTrainingData"><code class="docutils literal notranslate"><span class="pre">FunkSVDTrainingData</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.funksvd.FunkSVDScorer"><code class="docutils literal notranslate"><span class="pre">FunkSVDScorer</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.funksvd.FunkSVDScorer.train"><code class="docutils literal notranslate"><span class="pre">FunkSVDScorer.train()</span></code></a></li>
 </ul>
