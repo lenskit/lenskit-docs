@@ -12,7 +12,7 @@
 <meta property="og:url" content="api/lenskit.data.ItemList.html" />
 <meta property="og:site_name" content="LensKit" />
 
-    <title>lenskit.data.ItemList &#8212; LensKit 2025.3.0a3.dev310+gc96d403c documentation</title>
+    <title>lenskit.data.ItemList &#8212; LensKit 2025.3.0a3.dev320+g92cb429b documentation</title>
   
   
   
@@ -45,7 +45,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=63699600"></script>
+    <script src="../_static/documentation_options.js?v=b2749109"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -134,8 +134,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a3.dev310+gc96d403c documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a3.dev310+gc96d403c documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a3.dev320+g92cb429b documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a3.dev320+g92cb429b documentation - Home"/>
   
   
 </a></div>
@@ -747,19 +747,22 @@ from a source list.</p></li>
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.ids" title="lenskit.data.ItemList.ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ids</span></code></a>()</p></td>
 <td><p>Get the item IDs.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.numbers" title="lenskit.data.ItemList.numbers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numbers</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.isin" title="lenskit.data.ItemList.isin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isin</span></code></a>(other)</p></td>
+<td><p>Return a boolean mask identifying the items of this list that are in the other list.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.numbers" title="lenskit.data.ItemList.numbers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numbers</span></code></a>()</p></td>
 <td><p>Get the item numbers.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.ranks" title="lenskit.data.ItemList.ranks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ranks</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.ranks" title="lenskit.data.ItemList.ranks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ranks</span></code></a>()</p></td>
 <td><p>Get an array of ranks for the items in this list, if it is ordered.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.scores" title="lenskit.data.ItemList.scores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scores</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.scores" title="lenskit.data.ItemList.scores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scores</span></code></a>()</p></td>
 <td><p>Get the item scores (if available).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.to_arrow" title="lenskit.data.ItemList.to_arrow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_arrow</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.to_arrow" title="lenskit.data.ItemList.to_arrow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_arrow</span></code></a>()</p></td>
 <td><p>Convert the item list to a Pandas table.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.to_df" title="lenskit.data.ItemList.to_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_df</span></code></a>(*[, ids, numbers])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.to_df" title="lenskit.data.ItemList.to_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_df</span></code></a>(*[, ids, numbers])</p></td>
 <td><p>Convert this item list to a Pandas data frame.</p></td>
 </tr>
 </tbody>
@@ -845,7 +848,9 @@ are dropped by default.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.data.ItemList.ids">
-<span class="sig-name descname"><span class="pre">ids</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.ids" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'numpy'</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'numpy'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.2)"><span class="pre">dtype</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><span class="pre">integer</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.2)"><span class="pre">str_</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.2)"><span class="pre">bytes_</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.object_" title="(in NumPy v2.2)"><span class="pre">object_</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#lenskit.data.ItemList.ids" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">ids</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'arrow'</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.Array.html#pyarrow.Array" title="(in Apache Arrow v20.0.0)"><span class="pre">Array</span></a></span></span></dt>
 <dd><p>Get the item IDs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -853,9 +858,6 @@ are dropped by default.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.13)"><strong>RuntimeError</strong></a> – if the item list was not created with IDs or a <a class="reference internal" href="lenskit.data.Vocabulary.html#lenskit.data.Vocabulary" title="lenskit.data.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a>.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>], <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.2)"><em>dtype</em></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><em>integer</em></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>] | <a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.2)"><em>str_</em></a> | <a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.2)"><em>bytes_</em></a> | <a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.object_" title="(in NumPy v2.2)"><em>object_</em></a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -922,6 +924,23 @@ mathematically defining information retrieval metrics and operations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>An array of item ranks, or <code class="docutils literal notranslate"><span class="pre">None</span></code> if the list is unordered.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemList.isin">
+<span class="sig-name descname"><span class="pre">isin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.isin" title="Link to this definition">#</a></dt>
+<dd><p>Return a boolean mask identifying the items of this list that are in the
+other list.</p>
+<p>This is equivalent to <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.isin.html#numpy.isin" title="(in NumPy v2.2)"><code class="xref py py-func docutils literal notranslate"><span class="pre">numpy.isin()</span></code></a> applied to the ID arrays, but
+is much more efficient in many cases.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v2.2)"><em>ndarray</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>], <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" title="(in NumPy v2.2)"><em>dtype</em></a>[<a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bool" title="(in NumPy v2.2)"><em>bool</em></a>]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1037,6 +1056,7 @@ mathematically defining information retrieval metrics and operations.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.numbers"><code class="docutils literal notranslate"><span class="pre">ItemList.numbers()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.scores"><code class="docutils literal notranslate"><span class="pre">ItemList.scores()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.ranks"><code class="docutils literal notranslate"><span class="pre">ItemList.ranks()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.isin"><code class="docutils literal notranslate"><span class="pre">ItemList.isin()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.to_df"><code class="docutils literal notranslate"><span class="pre">ItemList.to_df()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.to_arrow"><code class="docutils literal notranslate"><span class="pre">ItemList.to_arrow()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.arrow_types"><code class="docutils literal notranslate"><span class="pre">ItemList.arrow_types()</span></code></a></li>
@@ -1085,7 +1105,7 @@ mathematically defining information retrieval metrics and operations.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a3.dev310+gc96d403c.</div>
+        <div class="footer-item">LensKit version 2025.3.0a3.dev320+g92cb429b.</div>
       
         <div class="footer-item"><p>
     This material is based upon work supported by the National Science Foundation under
