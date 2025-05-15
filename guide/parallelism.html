@@ -19,7 +19,7 @@
 <meta name="description" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its: Batch operations using multi-process execution., Parallel model training. For most models pr..." />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>Parallel Processing &#8212; LensKit 2025.1.1 documentation</title>
+    <title>Parallel Processing &#8212; LensKit 2025.2.0 documentation</title>
   
   
   
@@ -52,7 +52,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=c18f53dd"></script>
+    <script src="../_static/documentation_options.js?v=f788092f"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -68,14 +68,14 @@
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
         </script>
-    <link rel="canonical" href="https://lkpy.lenskit.org/en/stable/guide/parallelism.html" />
+    <link rel="canonical" href="https://lkpy.lenskit.org/stable/guide/parallelism.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="LensKit CLI" href="../cli/index.html" />
     <link rel="prev" title="Logging and Progress Reporting" href="logging.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.1.1" />
+  <meta name="docsearch:version" content="2025.2.0" />
   </head>
   
   
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.0 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.0 documentation - Home"/>
   
   
 </a></div>
@@ -517,7 +517,7 @@ variable controlling its:</p>
 <ul class="simple">
 <li><p><a class="reference internal" href="batch.html"><span class="doc">Batch operations</span></a> using <a class="reference internal" href="#parallel-model-ops"><span class="std std-ref">multi-process execution</span></a>.</p></li>
 <li><p>Parallel model training.  For most models provided by LensKit, this is usually
-implemented using PyTorch JIT parallelism (<a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.jit.fork.html#torch.jit.fork" title="(in PyTorch v2.6)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.jit.fork()</span></code></a>).</p></li>
+implemented using PyTorch JIT parallelism (<a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.jit.fork.html#torch.jit.fork" title="(in PyTorch v2.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.jit.fork()</span></code></a>).</p></li>
 <li><p>Parallel computation in the various backends (BLAS, MKL, Torch, etc.).</p></li>
 </ul>
 <section id="configuring-parallelism">
@@ -541,7 +541,7 @@ of CPUs or 4, whichever is lower.</p>
 <span class="sig-name descname"><span class="pre">LK_NUM_THREADS</span></span><a class="headerlink" href="#envvar-LK_NUM_THREADS" title="Link to this definition">#</a></dt>
 <dd><p>The number of threads to use for parallel model building.  Defaults to the
 number of CPUs or 8, whichever is smaller.</p>
-<p>This number is passed to <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.set_num_interop_threads.html#torch.set_num_interop_threads" title="(in PyTorch v2.6)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_interop_threads()</span></code></a> to set up the
+<p>This number is passed to <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.set_num_interop_threads.html#torch.set_num_interop_threads" title="(in PyTorch v2.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_interop_threads()</span></code></a> to set up the
 Torch JIT thread count.</p>
 </dd></dl>
 
@@ -554,7 +554,7 @@ machine:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">NCPUS</span> <span class="o">//</span> <span class="n">LK_NUM_THREADS</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This is passed to <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.set_num_threads.html#torch.set_num_threads" title="(in PyTorch v2.6)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_threads()</span></code></a> (to control PyTorch internal
+<p>This is passed to <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.set_num_threads.html#torch.set_num_threads" title="(in PyTorch v2.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_threads()</span></code></a> (to control PyTorch internal
 parallelism), and to the underlying BLAS layer (via <a class="reference external" href="https://github.com/joblib/threadpoolctl">threadpoolctl</a>).</p>
 </dd></dl>
 

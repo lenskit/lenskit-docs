@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="" />
 <meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.batch.predict &#8212; LensKit 2025.1.1 documentation</title>
+    <title>lenskit.batch.predict &#8212; LensKit 2025.2.0 documentation</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
 
-    <script src="../_static/documentation_options.js?v=c18f53dd"></script>
+    <script src="../_static/documentation_options.js?v=f788092f"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -66,14 +66,14 @@
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
         DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
         </script>
-    <link rel="canonical" href="https://lkpy.lenskit.org/en/stable/api/lenskit.batch.predict.html" />
+    <link rel="canonical" href="https://lkpy.lenskit.org/stable/api/lenskit.batch.predict.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="lenskit.batch.recommend" href="lenskit.batch.recommend.html" />
     <link rel="prev" title="lenskit.batch.BatchResults" href="lenskit.batch.BatchResults.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.1.1" />
+  <meta name="docsearch:version" content="2025.2.0" />
   </head>
   
   
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.1.1 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.1.1 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.0 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.0 documentation - Home"/>
   
   
 </a></div>
@@ -438,6 +438,7 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.PipelineState.html">lenskit.pipeline.PipelineState</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Node.html">lenskit.pipeline.Node</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Lazy.html">lenskit.pipeline.Lazy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.PipelineCache.html">lenskit.pipeline.PipelineCache</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.Component.html">lenskit.pipeline.Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.RecPipelineBuilder.html">lenskit.pipeline.RecPipelineBuilder</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.topn_pipeline.html">lenskit.pipeline.topn_pipeline</a></li>
@@ -614,16 +615,21 @@
 <h1>lenskit.batch.predict<a class="headerlink" href="#lenskit-batch-predict" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.batch.predict">
-<span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.predict" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.predict" title="Link to this definition">#</a></dt>
 <dd><p>Convenience function to batch-generate rating predictions (or other per-item
 scores) from a pipeline.  This is a batch version of <code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.predict()</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">test</span></code> is just a sequence of IDs, this method will still work, but
+it will score _all candidate <a href="#id1"><span class="problematic" id="id2">items_</span></a> for each of the IDs.</p>
+</div>
 <dl class="field-list">
 <dt class="field-odd">Stability<span class="colon">:</span></dt>
 <dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>pipeline</strong> (<a class="reference internal" href="lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline._impl.Pipeline"><em>Pipeline</em></a>)</p></li>
-<li><p><strong>test</strong> (<a class="reference internal" href="lenskit.data.ItemListCollection.html#lenskit.data.ItemListCollection" title="lenskit.data.collection._base.ItemListCollection"><em>ItemListCollection</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.2)"><em>str_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.2)"><em>bytes_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.object_" title="(in NumPy v2.2)"><em>object_</em></a><em>, </em><em>...</em><em>]</em><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Mapping" title="(in Python v3.13)"><em>Mapping</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.2)"><em>str_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.2)"><em>bytes_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.object_" title="(in NumPy v2.2)"><em>object_</em></a><em>, </em><a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a><em>]</em>)</p></li>
+<li><p><strong>test</strong> (<a class="reference internal" href="lenskit.data.ItemListCollection.html#lenskit.data.ItemListCollection" title="lenskit.data.collection._base.ItemListCollection"><em>ItemListCollection</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.2)"><em>str_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.2)"><em>bytes_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.object_" title="(in NumPy v2.2)"><em>object_</em></a><em>, </em><em>...</em><em>]</em><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Mapping" title="(in Python v3.13)"><em>Mapping</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" title="(in Python v3.13)"><em>bytes</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" title="(in NumPy v2.2)"><em>integer</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.str_" title="(in NumPy v2.2)"><em>str_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.bytes_" title="(in NumPy v2.2)"><em>bytes_</em></a><em> | </em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.object_" title="(in NumPy v2.2)"><em>object_</em></a><em>, </em><a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a><em>] </em><em>| </em><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v2.2.3)"><em>DataFrame</em></a>)</p></li>
 <li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
 </ul>
 </dd>
