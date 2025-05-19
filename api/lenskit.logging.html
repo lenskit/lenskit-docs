@@ -14,7 +14,7 @@
 <meta property="og:description" content="Logging, progress, and resource records. Modules" />
 <meta name="description" content="Logging, progress, and resource records. Modules" />
 
-    <title>lenskit.logging &#8212; LensKit 2025.3.0a3.dev351+gfa696472 documentation</title>
+    <title>lenskit.logging &#8212; LensKit 2025.3.0a3.dev435+gb2cabb4e documentation</title>
   
   
   
@@ -47,7 +47,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=78b499fc"></script>
+    <script src="../_static/documentation_options.js?v=eb5242ed"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -136,8 +136,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a3.dev351+gfa696472 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a3.dev351+gfa696472 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a3.dev435+gb2cabb4e documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a3.dev435+gb2cabb4e documentation - Home"/>
   
   
 </a></div>
@@ -536,7 +536,9 @@
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">lenskit.logging</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.config.html">lenskit.logging.config</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.logging.formats.html">lenskit.logging.formats</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.monitor.html">lenskit.logging.monitor</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.logging.multiprocess.html">lenskit.logging.multiprocess</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.processors.html">lenskit.logging.processors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.progress.html">lenskit.logging.progress</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.logging.resource.html">lenskit.logging.resource</a></li>
@@ -721,13 +723,14 @@ apply in the absence of a configuration option.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.logging.Progress">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.logging.</span></span><span class="sig-name descname"><span class="pre">Progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.Progress" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.logging.</span></span><span class="sig-name descname"><span class="pre">Progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uuid</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.Progress" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Base class for progress reporting.  The default implementations do nothing.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>args</strong> (<em>Any</em>)</p></li>
+<li><p><strong>uuid</strong> (<a class="reference external" href="https://docs.python.org/3/library/uuid.html#uuid.UUID" title="(in Python v3.13)"><em>UUID</em></a>)</p></li>
 <li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
@@ -786,9 +789,12 @@ mapping to <code class="docutils literal notranslate"><span class="pre">None</sp
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>ProgressBackend</em><em> | </em><em>None</em>)</p></li>
 <li><p><strong>options</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
 </ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1106,6 +1112,17 @@ don’t want them.</p>
 <dd><p>Get a console attached to <code class="docutils literal notranslate"><span class="pre">stdout</span></code>.</p>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.logging.friendly_duration">
+<span class="sig-prename descclassname"><span class="pre">lenskit.logging.</span></span><span class="sig-name descname"><span class="pre">friendly_duration</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">elapsed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.friendly_duration" title="Link to this definition">#</a></dt>
+<dd><p>Short, human-friendly representation of a duration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>elapsed</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><em>float</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.timedelta" title="(in Python v3.13)"><em>timedelta</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.logging.Stopwatch">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.logging.</span></span><span class="sig-name descname"><span class="pre">Stopwatch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.Stopwatch" title="Link to this definition">#</a></dt>
@@ -1141,8 +1158,14 @@ don’t want them.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="lenskit.logging.config.html#module-lenskit.logging.config" title="lenskit.logging.config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">config</span></code></a></p></td>
 <td><p>Logging pipeline configuration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="lenskit.logging.monitor.html#module-lenskit.logging.monitor" title="lenskit.logging.monitor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">monitor</span></code></a></p></td>
-<td><p>LensKit background monitoring.</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="lenskit.logging.formats.html#module-lenskit.logging.formats" title="lenskit.logging.formats"><code class="xref py py-obj docutils literal notranslate"><span class="pre">formats</span></code></a></p></td>
+<td><p>Formatting utilities for log and diagnostic output.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="lenskit.logging.monitor.html#module-lenskit.logging.monitor" title="lenskit.logging.monitor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">monitor</span></code></a></p></td>
+<td><p>Old home of the LensKit logging monitor.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="lenskit.logging.multiprocess.html#module-lenskit.logging.multiprocess" title="lenskit.logging.multiprocess"><code class="xref py py-obj docutils literal notranslate"><span class="pre">multiprocess</span></code></a></p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="lenskit.logging.processors.html#module-lenskit.logging.processors" title="lenskit.logging.processors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">processors</span></code></a></p></td>
 <td><p>LensKit logging processors and converters.</p></td>
@@ -1163,7 +1186,7 @@ don’t want them.</p>
 <td><p>Extended logger providing TRACE support.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="lenskit.logging.worker.html#module-lenskit.logging.worker" title="lenskit.logging.worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">worker</span></code></a></p></td>
-<td><p>Support for logging from worker processes.</p></td>
+<td><p>Old home of the LensKit logging worker logic.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1263,6 +1286,7 @@ don’t want them.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.get_logger"><code class="docutils literal notranslate"><span class="pre">get_logger()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.trace"><code class="docutils literal notranslate"><span class="pre">trace()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.stdout_console"><code class="docutils literal notranslate"><span class="pre">stdout_console()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.friendly_duration"><code class="docutils literal notranslate"><span class="pre">friendly_duration()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.Stopwatch"><code class="docutils literal notranslate"><span class="pre">Stopwatch</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.Stopwatch.elapsed"><code class="docutils literal notranslate"><span class="pre">Stopwatch.elapsed()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.Stopwatch.measure"><code class="docutils literal notranslate"><span class="pre">Stopwatch.measure()</span></code></a></li>
@@ -1311,7 +1335,7 @@ don’t want them.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a3.dev351+gfa696472.</div>
+        <div class="footer-item">LensKit version 2025.3.0a3.dev435+gb2cabb4e.</div>
       
         <div class="footer-item"><p>
     This material is based upon work supported by the National Science Foundation under
