@@ -12,7 +12,7 @@
 <meta property="og:url" content="api/lenskit.pipeline.Lazy.html" />
 <meta property="og:site_name" content="LensKit" />
 
-    <title>lenskit.pipeline.Lazy &#8212; LensKit 2025.3.0a4.dev60+g6f1be048 documentation</title>
+    <title>lenskit.pipeline.Lazy &#8212; LensKit 2025.3.0a4.dev85+g16e5fc7d documentation</title>
   
   
   
@@ -45,7 +45,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=87dc4513"></script>
+    <script src="../_static/documentation_options.js?v=300792b8"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -134,8 +134,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev60+g6f1be048 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev60+g6f1be048 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev85+g16e5fc7d documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev85+g16e5fc7d documentation - Home"/>
   
   
 </a></div>
@@ -442,6 +442,7 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.topn_pipeline.html">lenskit.pipeline.topn_pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.predict_pipeline.html">lenskit.pipeline.predict_pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.PipelineConfig.html">lenskit.pipeline.PipelineConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.ComponentInputHook.html">lenskit.pipeline.ComponentInputHook</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="operations.html">Operation Functions</a></li>
@@ -668,9 +669,25 @@ run it as needed:</p>
 <dt class="sig sig-object py" id="lenskit.pipeline.Lazy.get">
 <span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Lazy.get" title="Link to this definition">#</a></dt>
 <dd><p>Get the value behind this lazy instance.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>As this method invokes upstream components if they have not yet been
+run, it may fail if one of the required components fails or pipeline
+data checks fail.</p>
+</div>
 <dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>T</em></p>
+<dt class="field-odd">Raises<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" title="(in Python v3.13)"><strong>Exception</strong></a> – Any exception raised by the component(s) needed to supply the
+    lazy value may be raised when this method is called.</p></li>
+<li><p><strong>SkipComponent</strong> – Internal exception raised to indicate that no value is available
+    and the calling component should be skipped.  Components
+    generally do not need to handle this directly, as it is used to
+    signal the pipeline runner.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><em>T</em></p>
 </dd>
 </dl>
 </dd></dl>
@@ -774,7 +791,7 @@ run it as needed:</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev60+g6f1be048.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev85+g16e5fc7d.</div>
       
         <div class="footer-item"><p>
     This material is based upon work supported by the National Science Foundation under

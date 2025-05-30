@@ -12,7 +12,7 @@
 <meta property="og:url" content="api/lenskit.pipeline.Pipeline.html" />
 <meta property="og:site_name" content="LensKit" />
 
-    <title>lenskit.pipeline.Pipeline &#8212; LensKit 2025.3.0a4.dev60+g6f1be048 documentation</title>
+    <title>lenskit.pipeline.Pipeline &#8212; LensKit 2025.3.0a4.dev85+g16e5fc7d documentation</title>
   
   
   
@@ -45,7 +45,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=87dc4513"></script>
+    <script src="../_static/documentation_options.js?v=300792b8"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -134,8 +134,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev60+g6f1be048 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev60+g6f1be048 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev85+g16e5fc7d documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev85+g16e5fc7d documentation - Home"/>
   
   
 </a></div>
@@ -442,6 +442,7 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.topn_pipeline.html">lenskit.pipeline.topn_pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.predict_pipeline.html">lenskit.pipeline.predict_pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.PipelineConfig.html">lenskit.pipeline.PipelineConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.ComponentInputHook.html">lenskit.pipeline.ComponentInputHook</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="operations.html">Operation Functions</a></li>
@@ -631,7 +632,7 @@
 <h1>lenskit.pipeline.Pipeline<a class="headerlink" href="#lenskit-pipeline-pipeline" title="Link to this heading">#</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.pipeline.Pipeline">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.pipeline.</span></span><span class="sig-name descname"><span class="pre">Pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Pipeline" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.pipeline.</span></span><span class="sig-name descname"><span class="pre">Pipeline</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_hooks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Pipeline" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>LensKit recommendation pipeline.  This is the core abstraction for using
 LensKit models and other components to produce recommendations in a useful
@@ -652,17 +653,19 @@ trainable components.</p>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>config</strong> (<a class="reference internal" href="lenskit.pipeline.PipelineConfig.html#lenskit.pipeline.PipelineConfig" title="lenskit.pipeline.config.PipelineConfig"><em>config.PipelineConfig</em></a>)</p></li>
 <li><p><strong>nodes</strong> (<em>Iterable</em><em>[</em><a class="reference internal" href="lenskit.pipeline.Node.html#lenskit.pipeline.Node" title="lenskit.pipeline.Node"><em>Node</em></a><em>[</em><em>Any</em><em>]</em><em>]</em>)</p></li>
+<li><p><strong>run_hooks</strong> (<em>RunHooks</em>)</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.pipeline.Pipeline.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Pipeline.__init__" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nodes</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">run_hooks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Pipeline.__init__" title="Link to this definition">#</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>config</strong> (<a class="reference internal" href="lenskit.pipeline.PipelineConfig.html#lenskit.pipeline.PipelineConfig" title="lenskit.pipeline.config.PipelineConfig"><em>PipelineConfig</em></a>)</p></li>
 <li><p><strong>nodes</strong> (<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" title="(in Python v3.13)"><em>Iterable</em></a><em>[</em><a class="reference internal" href="lenskit.pipeline.Node.html#lenskit.pipeline.Node" title="lenskit.pipeline.nodes.Node"><em>Node</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a><em>]</em><em>]</em>)</p></li>
+<li><p><strong>run_hooks</strong> (<em>RunHooks</em>)</p></li>
 </ul>
 </dd>
 </dl>
@@ -671,7 +674,7 @@ trainable components.</p>
 <p class="rubric">Methods</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.Pipeline.__init__" title="lenskit.pipeline.Pipeline.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(config, nodes)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.Pipeline.__init__" title="lenskit.pipeline.Pipeline.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>(config, nodes, *, run_hooks)</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.Pipeline.clone" title="lenskit.pipeline.Pipeline.clone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clone</span></code></a>()</p></td>
@@ -1092,7 +1095,7 @@ the last node specified.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev60+g6f1be048.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev85+g16e5fc7d.</div>
       
         <div class="footer-item"><p>
     This material is based upon work supported by the National Science Foundation under

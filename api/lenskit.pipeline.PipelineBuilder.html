@@ -12,7 +12,7 @@
 <meta property="og:url" content="api/lenskit.pipeline.PipelineBuilder.html" />
 <meta property="og:site_name" content="LensKit" />
 
-    <title>lenskit.pipeline.PipelineBuilder &#8212; LensKit 2025.3.0a4.dev60+g6f1be048 documentation</title>
+    <title>lenskit.pipeline.PipelineBuilder &#8212; LensKit 2025.3.0a4.dev85+g16e5fc7d documentation</title>
   
   
   
@@ -45,7 +45,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=87dc4513"></script>
+    <script src="../_static/documentation_options.js?v=300792b8"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -134,8 +134,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev60+g6f1be048 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev60+g6f1be048 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev85+g16e5fc7d documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev85+g16e5fc7d documentation - Home"/>
   
   
 </a></div>
@@ -442,6 +442,7 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.topn_pipeline.html">lenskit.pipeline.topn_pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.predict_pipeline.html">lenskit.pipeline.predict_pipeline</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.PipelineConfig.html">lenskit.pipeline.PipelineConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.pipeline.ComponentInputHook.html">lenskit.pipeline.ComponentInputHook</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="operations.html">Operation Functions</a></li>
@@ -674,64 +675,67 @@ or <a class="reference internal" href="lenskit.pipeline.RecPipelineBuilder.html#
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.add_component" title="lenskit.pipeline.PipelineBuilder.add_component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_component</span></code></a>(name, comp[, config])</p></td>
 <td><p>Add a component and connect it into the graph.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.alias" title="lenskit.pipeline.PipelineBuilder.alias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">alias</span></code></a>(alias, node)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.add_run_hook" title="lenskit.pipeline.PipelineBuilder.add_run_hook"><code class="xref py py-obj docutils literal notranslate"><span class="pre">add_run_hook</span></code></a>(name, hook, *[, priority])</p></td>
+<td><p>Add a hook to be called when the pipeline is run (see <a class="reference internal" href="../guide/pipeline.html#pipeline-hooks"><span class="std std-ref">Pipeline Hooks</span></a>).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.alias" title="lenskit.pipeline.PipelineBuilder.alias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">alias</span></code></a>(alias, node)</p></td>
 <td><p>Create an alias for a node.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.build" title="lenskit.pipeline.PipelineBuilder.build"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build</span></code></a>([cache])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.build" title="lenskit.pipeline.PipelineBuilder.build"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build</span></code></a>([cache])</p></td>
 <td><p>Build the pipeline.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.build_config" title="lenskit.pipeline.PipelineBuilder.build_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_config</span></code></a>(*[, include_hash])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.build_config" title="lenskit.pipeline.PipelineBuilder.build_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_config</span></code></a>(*[, include_hash])</p></td>
 <td><p>Get this pipeline's configuration for serialization.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.clear_inputs" title="lenskit.pipeline.PipelineBuilder.clear_inputs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_inputs</span></code></a>(node)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.clear_inputs" title="lenskit.pipeline.PipelineBuilder.clear_inputs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clear_inputs</span></code></a>(node)</p></td>
 <td><p>Remove input wirings for a node.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.clone" title="lenskit.pipeline.PipelineBuilder.clone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clone</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.clone" title="lenskit.pipeline.PipelineBuilder.clone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clone</span></code></a>()</p></td>
 <td><p>Clone the pipeline builder.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.config_hash" title="lenskit.pipeline.PipelineBuilder.config_hash"><code class="xref py py-obj docutils literal notranslate"><span class="pre">config_hash</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.config_hash" title="lenskit.pipeline.PipelineBuilder.config_hash"><code class="xref py py-obj docutils literal notranslate"><span class="pre">config_hash</span></code></a>()</p></td>
 <td><p>Get a hash of the pipeline's configuration to uniquely identify it for logging, version control, or other purposes.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.connect" title="lenskit.pipeline.PipelineBuilder.connect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connect</span></code></a>(obj, **inputs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.connect" title="lenskit.pipeline.PipelineBuilder.connect"><code class="xref py py-obj docutils literal notranslate"><span class="pre">connect</span></code></a>(obj, **inputs)</p></td>
 <td><p>Provide additional input connections for a component that has already been added.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.create_input" title="lenskit.pipeline.PipelineBuilder.create_input"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_input</span></code></a>(name, *types)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.create_input" title="lenskit.pipeline.PipelineBuilder.create_input"><code class="xref py py-obj docutils literal notranslate"><span class="pre">create_input</span></code></a>(name, *types)</p></td>
 <td><p>Create an input node for the pipeline.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.default_component" title="lenskit.pipeline.PipelineBuilder.default_component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_component</span></code></a>(node)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.default_component" title="lenskit.pipeline.PipelineBuilder.default_component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_component</span></code></a>(node)</p></td>
 <td><p>Set the default node for the pipeline.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.default_connection" title="lenskit.pipeline.PipelineBuilder.default_connection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_connection</span></code></a>(name, node)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.default_connection" title="lenskit.pipeline.PipelineBuilder.default_connection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">default_connection</span></code></a>(name, node)</p></td>
 <td><p>Set the default wiring for a component input.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.from_config" title="lenskit.pipeline.PipelineBuilder.from_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_config</span></code></a>(config)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.from_config" title="lenskit.pipeline.PipelineBuilder.from_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_config</span></code></a>(config)</p></td>
 <td><p>Reconstruct a pipeline builder from a serialized configuration.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.from_pipeline" title="lenskit.pipeline.PipelineBuilder.from_pipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_pipeline</span></code></a>(pipeline)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.from_pipeline" title="lenskit.pipeline.PipelineBuilder.from_pipeline"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_pipeline</span></code></a>(pipeline)</p></td>
 <td><p>Create a builder initialized with a pipeline's internal state.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.literal" title="lenskit.pipeline.PipelineBuilder.literal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">literal</span></code></a>(value, *[, name])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.literal" title="lenskit.pipeline.PipelineBuilder.literal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">literal</span></code></a>(value, *[, name])</p></td>
 <td><p>Create a literal node (a node with a fixed value).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.meta" title="lenskit.pipeline.PipelineBuilder.meta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meta</span></code></a>(*[, include_hash])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.meta" title="lenskit.pipeline.PipelineBuilder.meta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">meta</span></code></a>(*[, include_hash])</p></td>
 <td><p>Get the metadata (name, version, hash, etc.) for this pipeline without returning the whole config.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.node" title="lenskit.pipeline.PipelineBuilder.node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">node</span></code></a>(node, *[, missing])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.node" title="lenskit.pipeline.PipelineBuilder.node"><code class="xref py py-obj docutils literal notranslate"><span class="pre">node</span></code></a>(node, *[, missing])</p></td>
 <td><p>Get the pipeline node with the specified name.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.nodes" title="lenskit.pipeline.PipelineBuilder.nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nodes</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.nodes" title="lenskit.pipeline.PipelineBuilder.nodes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nodes</span></code></a>()</p></td>
 <td><p>Get the nodes in the pipeline graph.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.remove_alias" title="lenskit.pipeline.PipelineBuilder.remove_alias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_alias</span></code></a>(alias, *[, exist_ok])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.remove_alias" title="lenskit.pipeline.PipelineBuilder.remove_alias"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_alias</span></code></a>(alias, *[, exist_ok])</p></td>
 <td><p>Remove an alias from the builder.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.replace_component" title="lenskit.pipeline.PipelineBuilder.replace_component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_component</span></code></a>(name, comp[, config])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.replace_component" title="lenskit.pipeline.PipelineBuilder.replace_component"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_component</span></code></a>(name, comp[, config])</p></td>
 <td><p>Replace a component in the graph.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.use_first_of" title="lenskit.pipeline.PipelineBuilder.use_first_of"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_first_of</span></code></a>(name, primary, fallback)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.use_first_of" title="lenskit.pipeline.PipelineBuilder.use_first_of"><code class="xref py py-obj docutils literal notranslate"><span class="pre">use_first_of</span></code></a>(name, primary, fallback)</p></td>
 <td><p>Ergonomic method to create a new node that returns the result of its <code class="docutils literal notranslate"><span class="pre">input</span></code> if it is provided and not <code class="docutils literal notranslate"><span class="pre">None</span></code>, and otherwise returns the result of <code class="docutils literal notranslate"><span class="pre">fallback</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.validate" title="lenskit.pipeline.PipelineBuilder.validate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineBuilder.validate" title="lenskit.pipeline.PipelineBuilder.validate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">validate</span></code></a>()</p></td>
 <td><p>Check the built pipeline for errors.</p></td>
 </tr>
 </tbody>
@@ -1033,6 +1037,26 @@ argument of the component when the pipeline is run.</p></li>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="lenskit.pipeline.PipelineBuilder.add_run_hook">
+<span class="sig-name descname"><span class="pre">add_run_hook</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hook</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">priority</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.PipelineBuilder.add_run_hook" title="Link to this definition">#</a></dt>
+<dd><p>Add a hook to be called when the pipeline is run (see <a class="reference internal" href="../guide/pipeline.html#pipeline-hooks"><span class="std std-ref">Pipeline Hooks</span></a>).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'component-input'</em><em>]</em>) – The name of the hook to add a handler for.</p></li>
+<li><p><strong>hook</strong> (<a class="reference internal" href="lenskit.pipeline.ComponentInputHook.html#lenskit.pipeline.ComponentInputHook" title="lenskit.pipeline._hooks.ComponentInputHook"><em>ComponentInputHook</em></a>) – The hook function to run.</p></li>
+<li><p><strong>priority</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><em>int</em></a>) – The hook priority. Hooks are run in ascending priority, and
+hooks with the same priority are run in the order they are
+added.  LensKit’s built-in hooks run at priority 0.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="lenskit.pipeline.PipelineBuilder.validate">
 <span class="sig-name descname"><span class="pre">validate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.PipelineBuilder.validate" title="Link to this definition">#</a></dt>
 <dd><p>Check the built pipeline for errors.</p>
@@ -1265,6 +1289,7 @@ with arbitrarily-deep transitive chains.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.PipelineBuilder.replace_component"><code class="docutils literal notranslate"><span class="pre">PipelineBuilder.replace_component()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.PipelineBuilder.connect"><code class="docutils literal notranslate"><span class="pre">PipelineBuilder.connect()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.PipelineBuilder.clear_inputs"><code class="docutils literal notranslate"><span class="pre">PipelineBuilder.clear_inputs()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.PipelineBuilder.add_run_hook"><code class="docutils literal notranslate"><span class="pre">PipelineBuilder.add_run_hook()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.PipelineBuilder.validate"><code class="docutils literal notranslate"><span class="pre">PipelineBuilder.validate()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.PipelineBuilder.clone"><code class="docutils literal notranslate"><span class="pre">PipelineBuilder.clone()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.PipelineBuilder.build_config"><code class="docutils literal notranslate"><span class="pre">PipelineBuilder.build_config()</span></code></a></li>
@@ -1317,7 +1342,7 @@ with arbitrarily-deep transitive chains.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev60+g6f1be048.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev85+g16e5fc7d.</div>
       
         <div class="footer-item"><p>
     This material is based upon work supported by the National Science Foundation under
