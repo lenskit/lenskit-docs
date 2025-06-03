@@ -14,7 +14,7 @@
 <meta property="og:description" content="Extended logger providing TRACE support. Functions Classes" />
 <meta name="description" content="Extended logger providing TRACE support. Functions Classes" />
 
-    <title>lenskit.logging.tracing &#8212; LensKit 2025.3.0a4.dev85+g16e5fc7d documentation</title>
+    <title>lenskit.logging.tracing &#8212; LensKit 2025.3.0a4.dev88+g2a08addf documentation</title>
   
   
   
@@ -47,7 +47,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=300792b8"></script>
+    <script src="../_static/documentation_options.js?v=bb2d8d90"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script>let toggleHintShow = 'Click to show';</script>
@@ -136,8 +136,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev85+g16e5fc7d documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev85+g16e5fc7d documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev88+g2a08addf documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev88+g2a08addf documentation - Home"/>
   
   
 </a></div>
@@ -636,11 +636,20 @@
 <p class="rubric">Functions</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.logging.tracing.activate_tracing" title="lenskit.logging.tracing.activate_tracing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">activate_tracing</span></code></a>([active])</p></td>
+<td><p>Mark tracing as active (or inactive).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.logging.tracing.get_tracer" title="lenskit.logging.tracing.get_tracer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_tracer</span></code></a>(logger, **initial_values)</p></td>
+<td><p>Get a tracer for efficient low-level tracing of computations.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.logging.tracing.lenskit_filtering_logger" title="lenskit.logging.tracing.lenskit_filtering_logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lenskit_filtering_logger</span></code></a>(level)</p></td>
 <td><p>No-op filtering logger.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.logging.tracing.trace" title="lenskit.logging.tracing.trace"><code class="xref py py-obj docutils literal notranslate"><span class="pre">trace</span></code></a>(logger, *args, **kwargs)</p></td>
 <td><p>Emit a trace-level message, if LensKit tracing is enabled.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.logging.tracing.tracing_active" title="lenskit.logging.tracing.tracing_active"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tracing_active</span></code></a>()</p></td>
+<td><p>Query whether tracing is active.</p></td>
 </tr>
 </tbody>
 </table>
@@ -648,12 +657,46 @@
 <p class="rubric">Classes</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.logging.tracing.ActiveTracer" title="lenskit.logging.tracing.ActiveTracer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ActiveTracer</span></code></a>(logger)</p></td>
+<td><p>Active tracer that actually sends trace messages.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.logging.tracing.Tracer" title="lenskit.logging.tracing.Tracer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Tracer</span></code></a>(logger)</p></td>
+<td><p>Logger-like thing that is only for TRACE-level events.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.logging.tracing.TracingLogger" title="lenskit.logging.tracing.TracingLogger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TracingLogger</span></code></a>(logger, processors, context)</p></td>
 <td><p>Class for LensKit loggers with trace-level logging support.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.logging.tracing.tracing_active">
+<span class="sig-prename descclassname"><span class="pre">lenskit.logging.tracing.</span></span><span class="sig-name descname"><span class="pre">tracing_active</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.tracing.tracing_active" title="Link to this definition">#</a></dt>
+<dd><p>Query whether tracing is active.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.logging.tracing.activate_tracing">
+<span class="sig-prename descclassname"><span class="pre">lenskit.logging.tracing.</span></span><span class="sig-name descname"><span class="pre">activate_tracing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">active</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.tracing.activate_tracing" title="Link to this definition">#</a></dt>
+<dd><p>Mark tracing as active (or inactive).</p>
+<p>Global tracing state is just used to short-cut tracing.  This method should
+only be called from <a class="reference internal" href="lenskit.logging.html#lenskit.logging.LoggingConfig" title="lenskit.logging.LoggingConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoggingConfig</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>active</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" title="(in Python v3.13)"><em>Literal</em></a><em>[</em><em>'debug'</em><em>]</em>) – The global tracing state.  If <code class="docutils literal notranslate"><span class="pre">&quot;debug&quot;</span></code>, trace messages are
+emitted at DEBUG level.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.logging.tracing.trace">
 <span class="sig-prename descclassname"><span class="pre">lenskit.logging.tracing.</span></span><span class="sig-name descname"><span class="pre">trace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.tracing.trace" title="Link to this definition">#</a></dt>
@@ -667,7 +710,7 @@ don’t want them.</p>
 <dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>logger</strong> (<a class="reference external" href="https://www.structlog.org/en/stable/api.html#structlog.stdlib.BoundLogger" title="(in structlog v25.3)"><em>BoundLogger</em></a>)</p></li>
+<li><p><strong>logger</strong> (<a class="reference external" href="https://www.structlog.org/en/stable/api.html#structlog.stdlib.BoundLogger" title="(in structlog v25.4)"><em>BoundLogger</em></a>)</p></li>
 <li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
 <li><p><strong>kwargs</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
 </ul>
@@ -675,11 +718,201 @@ don’t want them.</p>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.logging.tracing.get_tracer">
+<span class="sig-prename descclassname"><span class="pre">lenskit.logging.tracing.</span></span><span class="sig-name descname"><span class="pre">get_tracer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">initial_values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.tracing.get_tracer" title="Link to this definition">#</a></dt>
+<dd><p>Get a tracer for efficient low-level tracing of computations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Stability<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Experimental</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>logger</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><a class="reference external" href="https://www.structlog.org/en/stable/api.html#structlog.stdlib.BoundLogger" title="(in structlog v25.4)"><em>BoundLogger</em></a>)</p></li>
+<li><p><strong>initial_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.logging.tracing.Tracer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.logging.tracing.</span></span><span class="sig-name descname"><span class="pre">Tracer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.tracing.Tracer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Logger-like thing that is only for TRACE-level events.</p>
+<p>This class is designed to support structured tracing without the overhead of
+creating and binding new loggers.  It is also imperative, rather than
+functional, so we create fewer objects and so it is a little more ergonomic
+for common tracing flows.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Don’t create instances of this class directly — use
+<a class="reference internal" href="lenskit.logging.html#lenskit.logging.get_tracer" title="lenskit.logging.get_tracer"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_tracer()</span></code></a> to create a tracer.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Stability<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Experimental</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>logger</strong> (<em>BoundLogger</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.logging.tracing.Tracer.add_bindings">
+<span class="sig-name descname"><span class="pre">add_bindings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">new_values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.tracing.Tracer.add_bindings" title="Link to this definition">#</a></dt>
+<dd><p>Bind new data in the keys.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unlike <code class="xref py py-meth docutils literal notranslate"><span class="pre">structlog.Logger.bind()</span></code>, this method is <a href="#id1"><span class="problematic" id="id2">**</span></a>imperative*: it
+updates the tracer in-place instead of returning a new tracer.  If you
+need a new, disconnected tracer, use <code class="xref py py-meth docutils literal notranslate"><span class="pre">split()</span></code>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.logging.tracing.Tracer.remove_bindings">
+<span class="sig-name descname"><span class="pre">remove_bindings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">keys</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.tracing.Tracer.remove_bindings" title="Link to this definition">#</a></dt>
+<dd><p>Unbind keys in the tracer.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unlike <code class="xref py py-meth docutils literal notranslate"><span class="pre">structlog.Logger.bind()</span></code>, this method is <a href="#id3"><span class="problematic" id="id4">**</span></a>imperative*: it
+updates the tracer in-place instead of returning a new tracer.  If you
+need a new, disconnected tracer, use <code class="xref py py-meth docutils literal notranslate"><span class="pre">split()</span></code>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>keys</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.logging.tracing.Tracer.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.tracing.Tracer.reset" title="Link to this definition">#</a></dt>
+<dd><p>Reset this tracer’s underlying logger to the original logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.logging.tracing.Tracer.trace">
+<span class="sig-name descname"><span class="pre">trace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">bindings</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.tracing.Tracer.trace" title="Link to this definition">#</a></dt>
+<dd><p>Emit a TRACE-level event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>event</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+<li><p><strong>bindings</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.logging.tracing.ActiveTracer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.logging.tracing.</span></span><span class="sig-name descname"><span class="pre">ActiveTracer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.tracing.ActiveTracer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.logging.tracing.Tracer" title="lenskit.logging.tracing.Tracer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Tracer</span></code></a></p>
+<p>Active tracer that actually sends trace messages.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>logger</strong> (<em>BoundLogger</em>)</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.logging.tracing.ActiveTracer.add_bindings">
+<span class="sig-name descname"><span class="pre">add_bindings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">new_values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.tracing.ActiveTracer.add_bindings" title="Link to this definition">#</a></dt>
+<dd><p>Bind new data in the keys.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unlike <code class="xref py py-meth docutils literal notranslate"><span class="pre">structlog.Logger.bind()</span></code>, this method is <a href="#id5"><span class="problematic" id="id6">**</span></a>imperative*: it
+updates the tracer in-place instead of returning a new tracer.  If you
+need a new, disconnected tracer, use <code class="xref py py-meth docutils literal notranslate"><span class="pre">split()</span></code>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>new_values</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.logging.tracing.ActiveTracer.remove_bindings">
+<span class="sig-name descname"><span class="pre">remove_bindings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">keys</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.tracing.ActiveTracer.remove_bindings" title="Link to this definition">#</a></dt>
+<dd><p>Unbind keys in the tracer.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Unlike <code class="xref py py-meth docutils literal notranslate"><span class="pre">structlog.Logger.bind()</span></code>, this method is <a href="#id7"><span class="problematic" id="id8">**</span></a>imperative*: it
+updates the tracer in-place instead of returning a new tracer.  If you
+need a new, disconnected tracer, use <code class="xref py py-meth docutils literal notranslate"><span class="pre">split()</span></code>.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>keys</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.logging.tracing.ActiveTracer.reset">
+<span class="sig-name descname"><span class="pre">reset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.tracing.ActiveTracer.reset" title="Link to this definition">#</a></dt>
+<dd><p>Reset this tracer’s underlying logger to the original logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.logging.tracing.ActiveTracer.trace">
+<span class="sig-name descname"><span class="pre">trace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">event</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">bindings</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.tracing.ActiveTracer.trace" title="Link to this definition">#</a></dt>
+<dd><p>Emit a TRACE-level event.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>event</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a>)</p></li>
+<li><p><strong>args</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+<li><p><strong>bindings</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.logging.tracing.TracingLogger">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.logging.tracing.</span></span><span class="sig-name descname"><span class="pre">TracingLogger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processors</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.tracing.TracingLogger" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://www.structlog.org/en/stable/api.html#structlog.stdlib.BoundLogger" title="(in structlog v25.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoundLogger</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://www.structlog.org/en/stable/api.html#structlog.stdlib.BoundLogger" title="(in structlog v25.4)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BoundLogger</span></code></a></p>
 <p>Class for LensKit loggers with trace-level logging support.</p>
+<p>Code should not directly use the tracing logger — it should use the
+<a class="reference internal" href="#lenskit.logging.tracing.trace" title="lenskit.logging.tracing.trace"><code class="xref py py-func docutils literal notranslate"><span class="pre">trace()</span></code></a> function that intelligently checks the logger.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -782,7 +1015,24 @@ are reused.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.tracing_active"><code class="docutils literal notranslate"><span class="pre">tracing_active()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.activate_tracing"><code class="docutils literal notranslate"><span class="pre">activate_tracing()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.trace"><code class="docutils literal notranslate"><span class="pre">trace()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.get_tracer"><code class="docutils literal notranslate"><span class="pre">get_tracer()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.Tracer"><code class="docutils literal notranslate"><span class="pre">Tracer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.Tracer.add_bindings"><code class="docutils literal notranslate"><span class="pre">Tracer.add_bindings()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.Tracer.remove_bindings"><code class="docutils literal notranslate"><span class="pre">Tracer.remove_bindings()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.Tracer.reset"><code class="docutils literal notranslate"><span class="pre">Tracer.reset()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.Tracer.trace"><code class="docutils literal notranslate"><span class="pre">Tracer.trace()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.ActiveTracer"><code class="docutils literal notranslate"><span class="pre">ActiveTracer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.ActiveTracer.add_bindings"><code class="docutils literal notranslate"><span class="pre">ActiveTracer.add_bindings()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.ActiveTracer.remove_bindings"><code class="docutils literal notranslate"><span class="pre">ActiveTracer.remove_bindings()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.ActiveTracer.reset"><code class="docutils literal notranslate"><span class="pre">ActiveTracer.reset()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.ActiveTracer.trace"><code class="docutils literal notranslate"><span class="pre">ActiveTracer.trace()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.TracingLogger"><code class="docutils literal notranslate"><span class="pre">TracingLogger</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.TracingLogger.bind"><code class="docutils literal notranslate"><span class="pre">TracingLogger.bind()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.tracing.TracingLogger.new"><code class="docutils literal notranslate"><span class="pre">TracingLogger.new()</span></code></a></li>
@@ -832,7 +1082,7 @@ are reused.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev85+g16e5fc7d.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev88+g2a08addf.</div>
       
         <div class="footer-item"><p>
     This material is based upon work supported by the National Science Foundation under
