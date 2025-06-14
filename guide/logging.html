@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit provides support code for logging and progress reporting. This code lives in the lenskit.logging package and provides several capabilities: Logger acquisition functions with useful defaults..." />
 <meta name="description" content="LensKit provides support code for logging and progress reporting. This code lives in the lenskit.logging package and provides several capabilities: Logger acquisition functions with useful defaults..." />
 
-    <title>Logging and Progress Reporting &#8212; LensKit 2025.3.0a4.dev145+g76bbdb3f documentation</title>
+    <title>Logging and Progress Reporting &#8212; LensKit 2025.3.0a4.dev151+g44e08bbc documentation</title>
   
   
   
@@ -39,7 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=474ac1f0" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=9d9b0268" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -47,9 +48,11 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=d69bbbd3"></script>
+    <script src="../_static/documentation_options.js?v=31b05004"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -136,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev145+g76bbdb3f documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev145+g76bbdb3f documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev151+g44e08bbc documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev151+g44e08bbc documentation - Home"/>
   
   
 </a></div>
@@ -169,6 +172,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../releases/index.html">
     Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../research/index.html">
+    Research
   </a>
 </li>
 
@@ -252,6 +262,18 @@
           <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Mastodon</span></a>
         </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
+        </li>
 </ul></div>
       
     </div>
@@ -317,6 +339,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../releases/index.html">
     Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../research/index.html">
+    Research
   </a>
 </li>
 
@@ -390,6 +419,18 @@
           
           <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Mastodon</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
         </li>
 </ul></div>
         
@@ -519,10 +560,10 @@ capabilities:</p>
 <ul class="simple">
 <li><p>Logger acquisition functions with useful defaults.</p></li>
 <li><p>Backend-independent progress reporting, with colorful progress bars (via
-<a class="reference external" href="https://rich.readthedocs.io/">Rich</a>) on terminals.</p></li>
+<a class="reference external" href="https://rich.readthedocs.io/" rel="noreferrer" target="_blank">Rich</a>) on terminals.</p></li>
 <li><p>Easy logging configuration for recommender scripts, supporting log files and
 verbosity options, along with environment variables for logging levels.</p></li>
-<li><p>Integration between <a class="reference external" href="https://www.structlog.org/en/stable/api.html#module-structlog" title="(in structlog v25.4)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">structlog</span></code></a> and Python <a class="reference external" href="https://docs.python.org/3/library/logging.html#module-logging" title="(in Python v3.13)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code></a>.</p></li>
+<li><p>Integration between <a class="reference external" href="https://www.structlog.org/en/stable/api.html#module-structlog" rel="noreferrer" target="_blank" title="(in structlog v25.4)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">structlog</span></code></a> and Python <a class="reference external" href="https://docs.python.org/3/library/logging.html#module-logging" rel="noreferrer" target="_blank" title="(in Python v3.13)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code></a>.</p></li>
 <li><p>Tracking resource consumption for recommender experiment tasks (via <a class="reference internal" href="../api/lenskit.logging.html#lenskit.logging.Task" title="lenskit.logging.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a>).</p></li>
 <li><p>Collecting log output from subprocesses in process-based parallel computation.</p></li>
 </ul>
@@ -531,7 +572,7 @@ verbosity options, along with environment variables for logging levels.</p></li>
 <p>When writing code that uses LensKit, such as experiment runners, the
 <a class="reference internal" href="../api/lenskit.logging.html#lenskit.logging.LoggingConfig" title="lenskit.logging.LoggingConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoggingConfig</span></code></a> class provides an easy way to set up logging for
 common command-line scenarios.  Common usage looks like this (where <code class="docutils literal notranslate"><span class="pre">options</span></code>
-is a variable of command-line options from <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" title="(in Python v3.13)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> or similar):</p>
+is a variable of command-line options from <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" rel="noreferrer" target="_blank" title="(in Python v3.13)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> or similar):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lc</span> <span class="o">=</span> <span class="n">LoggingConfig</span><span class="p">()</span>
 <span class="c1"># turn on verbosity if requested</span>
 <span class="k">if</span> <span class="n">options</span><span class="o">.</span><span class="n">verbose</span><span class="p">:</span>
@@ -544,7 +585,7 @@ is a variable of command-line options from <a class="reference external" href="h
 </pre></div>
 </div>
 <p>Calling <a class="reference internal" href="../api/lenskit.logging.html#lenskit.logging.LoggingConfig.apply" title="lenskit.logging.LoggingConfig.apply"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoggingConfig.apply()</span></code></a> configures both Python standard library
-<a class="reference external" href="https://docs.python.org/3/library/logging.html#module-logging" title="(in Python v3.13)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code></a> and <a class="reference external" href="https://www.structlog.org/en/stable/api.html#module-structlog" title="(in structlog v25.4)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">structlog</span></code></a> to log in a consistent format to <code class="docutils literal notranslate"><span class="pre">stderr</span></code>
+<a class="reference external" href="https://docs.python.org/3/library/logging.html#module-logging" rel="noreferrer" target="_blank" title="(in Python v3.13)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code></a> and <a class="reference external" href="https://www.structlog.org/en/stable/api.html#module-structlog" rel="noreferrer" target="_blank" title="(in structlog v25.4)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">structlog</span></code></a> to log in a consistent format to <code class="docutils literal notranslate"><span class="pre">stderr</span></code>
 (and to the log file, if configured), sets up progress bars, routes Python
 warnings to the log system, and generally makes sure that LensKit and other code
 emitting logs (including your code) will send them to useful places.</p>
@@ -704,12 +745,12 @@ backend.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev145+g76bbdb3f.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev151+g44e08bbc.</div>
       
         <div class="footer-item"><p>
-    This material is based upon work supported by the National Science Foundation under
-    Grant No. <a href="https://md.ekstrandom.net/research/career">IIS 17-51278</a>. Any
-    opinions, findings, and conclusions or recommendations expressed in this material
+    This material is partially based upon work supported by the National Science Foundation under
+    Grant Nos. <a href="https://md.ekstrandom.net/research/career" target="_blank">17-51278</a> and
+    24-15042. Any opinions, findings, and conclusions or recommendations expressed in this material
     are those of the author(s) and do not necessarily reflect the views of the
     National Science Foundation, Drexel University, or Boise State University.</p>
 </p></div>

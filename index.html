@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit is a set of Python tools for experimenting with and studying recommender systems. It provides support for training, running, and evaluating recommender algorithms in a flexible fashion suit..." />
 <meta name="description" content="LensKit is a set of Python tools for experimenting with and studying recommender systems. It provides support for training, running, and evaluating recommender algorithms in a flexible fashion suit..." />
 
-    <title>LensKit &#8212; LensKit 2025.3.0a4.dev145+g76bbdb3f documentation</title>
+    <title>LensKit &#8212; LensKit 2025.3.0a4.dev151+g44e08bbc documentation</title>
   
   
   
@@ -39,7 +39,8 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=474ac1f0" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=9d9b0268" />
   
   <!-- So that users can add custom icons -->
   <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -47,9 +48,11 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=d69bbbd3"></script>
+    <script src="_static/documentation_options.js?v=31b05004"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -135,8 +138,8 @@
       
     
     
-    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev145+g76bbdb3f documentation - Home"/>
-    <img src="_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev145+g76bbdb3f documentation - Home"/>
+    <img src="_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev151+g44e08bbc documentation - Home"/>
+    <img src="_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev151+g44e08bbc documentation - Home"/>
   
   
 </a></div>
@@ -168,6 +171,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="releases/index.html">
     Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="research/index.html">
+    Research
   </a>
 </li>
 
@@ -251,6 +261,18 @@
           <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Mastodon</span></a>
         </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
+        </li>
 </ul></div>
       
     </div>
@@ -318,6 +340,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="releases/index.html">
     Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="research/index.html">
+    Research
   </a>
 </li>
 
@@ -392,6 +421,18 @@
           <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Mastodon</span></a>
         </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
+        </li>
 </ul></div>
         
       </div>
@@ -431,32 +472,39 @@
 <p>LensKit is a set of Python tools for experimenting with and studying recommender
 systems.  It provides support for training, running, and evaluating recommender
 algorithms in a flexible fashion suitable for research and education.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>To start using LensKit, see <a class="reference internal" href="guide/install.html#installation"><span class="std std-ref">Installing LensKit</span></a> and then <a class="reference internal" href="guide/GettingStarted.html#getting-started"><span class="std std-ref">Getting Started</span></a>.</p>
+</div>
 <p>LensKit for Python (also known as LKPY) is the successor to the Java-based
 LensKit toolkit and a part of the LensKit project.</p>
-<p>If you use LensKit in published research, cite <a class="reference internal" href="#lkpy" id="id1"><span>[LKPY]</span></a>.</p>
-<div role="list" class="citation-list">
-<div class="citation" id="lkpy" role="doc-biblioentry">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">LKPY</a><span class="fn-bracket">]</span></span>
-<p>Michael D. Ekstrand. 2020.
-LensKit for Python: Next-Generation Software for Recommender Systems Experiments.
-In &lt;cite&gt;Proceedings of the 29th ACM International Conference on Information and Knowledge Management&lt;/cite&gt; (CIKM ‘20).
-DOI:<a class="reference external" href="https://dx.doi.org/10.1145/3340531.3412778">10.1145/3340531.3412778</a>.
-arXiv:<a class="reference external" href="https://arxiv.org/abs/1809.03125">1809.03125</a> [cs.IR].</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>If you use LensKit in published research, see the <a class="reference internal" href="research/index.html#citation"><span class="std std-ref">citation
+instructions</span></a>, and particularly cite our paper <a class="reference internal" href="research/index.html#lkpy" id="id1"><span>[LKPY]</span></a>.</p>
 </div>
-</div>
-<p>Throughout this documentation, we use the notation of <span id="id4">Ekstrand and Konstan [<a class="reference internal" href="references.html#id10" title="Michael D Ekstrand and Joseph A Konstan. Recommender Systems Notation. Technical Report 177, Boise State University, 2019. doi:10.18122/cs_facpubs/177/boisestate.">EK19</a>]</span>.</p>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 2025.1: </span>The LensKit documentation is now split apart for easier readability, with
-the <a class="reference external" href="guide/index">topical user guide</a> and <a class="reference external" href="api/index">API reference</a> in
-separate sections.</p>
-<p>There have been significant incompatible changes in LensKit 2025.1.  See the
-<a class="reference internal" href="releases/2025.html#id4"><span class="std std-ref">release notes</span></a> and <a class="reference internal" href="guide/migrating.html#migrating"><span class="std std-ref">migration guide</span></a>.</p>
-</div>
-<section id="resources">
-<h2>Resources<a class="headerlink" href="#resources" title="Link to this heading">#</a></h2>
+<section id="news">
+<h2>News<a class="headerlink" href="#news" title="Link to this heading">#</a></h2>
+<a class="mastodon-feed"
+    href="https://recsys.social/@LensKit"
+    data-toot-limit="5"
+    data-exclude-replies="true"
+    data-exclude-reblogs="true">
+    Follow us on Mastodon
+</a>
+<script type="module" src="https://esm.sh/emfed@1"></script></section>
+<section id="connecting-with-lenskit">
+<h2>Connecting with LensKit<a class="headerlink" href="#connecting-with-lenskit" title="Link to this heading">#</a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="https://github.com/orgs/lenskit/discussions">Discussion and Announcements</a></p></li>
-<li><p><a class="reference external" href="https://github.com/lenskit/lkpy">Source and issues on GitHub</a></p></li>
+<li><p><i class="fa-solid fa-user-plus"></i> <strong>Follow us</strong> on <a href="#id2"><span class="problematic" id="id3">|blusesky|</span></a> or <a href="https://recsys.social/@LensKit" rel="me" target="_blank"><i class="fa-brands fa-mastodon"></i> Mastodon</a>.  We post LensKit-related
+announcements and information, and love to hear what you’re doing with
+LensKit.</p></li>
+<li><p><i class="fa-solid fa-comments"></i> <strong>Join</strong> the <a class="reference external" href="https://github.com/orgs/lenskit/discussions" rel="noreferrer" target="_blank">GitHub discussions</a>. This is where we answer questions about how
+to use LensKit or ideas for new contributions.  Release announcements are
+also posted here.</p></li>
+<li><p><i class="fa-solid fa-hammer"></i> <strong>Contribute</strong> to <a class="github reference external" href="https://github.com/lenskit/lkpy/" rel="noreferrer" target="_blank">lenskit/lkpy</a>, where we
+keep the source code and issue tracker.  We take new contributions via
+GitHub pull requests.</p></li>
 </ul>
 <div class="toctree-wrapper compound">
 </div>
@@ -464,7 +512,7 @@ separate sections.</p>
 <section id="acknowledgements">
 <h2>Acknowledgements<a class="headerlink" href="#acknowledgements" title="Link to this heading">#</a></h2>
 <p>This material is based upon work supported by the National Science Foundation
-under Grant No. IIS 17-51278. Any opinions, findings, and conclusions or
+under Grant Nos. 17-51278 and 24-15042. Any opinions, findings, and conclusions or
 recommendations expressed in this material are those of the author(s) and do not
 necessarily reflect the views of the National Science Foundation.</p>
 </section>
@@ -508,7 +556,8 @@ necessarily reflect the views of the National Science Foundation.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#resources">Resources</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#news">News</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#connecting-with-lenskit">Connecting with LensKit</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#acknowledgements">Acknowledgements</a></li>
 </ul>
   </nav></div>
@@ -553,12 +602,12 @@ necessarily reflect the views of the National Science Foundation.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev145+g76bbdb3f.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev151+g44e08bbc.</div>
       
         <div class="footer-item"><p>
-    This material is based upon work supported by the National Science Foundation under
-    Grant No. <a href="https://md.ekstrandom.net/research/career">IIS 17-51278</a>. Any
-    opinions, findings, and conclusions or recommendations expressed in this material
+    This material is partially based upon work supported by the National Science Foundation under
+    Grant Nos. <a href="https://md.ekstrandom.net/research/career" target="_blank">17-51278</a> and
+    24-15042. Any opinions, findings, and conclusions or recommendations expressed in this material
     are those of the author(s) and do not necessarily reflect the views of the
     National Science Foundation, Drexel University, or Boise State University.</p>
 </p></div>

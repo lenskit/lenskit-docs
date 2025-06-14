@@ -14,7 +14,7 @@
 <meta property="og:description" content="Interfaces and support for model training." />
 <meta name="description" content="Interfaces and support for model training." />
 
-    <title>Model Training &#8212; LensKit 2025.3.0a4.dev145+g76bbdb3f documentation</title>
+    <title>Model Training &#8212; LensKit 2025.3.0a4.dev151+g44e08bbc documentation</title>
   
   
   
@@ -39,7 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=474ac1f0" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=9d9b0268" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -47,9 +48,11 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=d69bbbd3"></script>
+    <script src="../_static/documentation_options.js?v=31b05004"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -136,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev145+g76bbdb3f documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev145+g76bbdb3f documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev151+g44e08bbc documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev151+g44e08bbc documentation - Home"/>
   
   
 </a></div>
@@ -169,6 +172,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../releases/index.html">
     Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../research/index.html">
+    Research
   </a>
 </li>
 
@@ -252,6 +262,18 @@
           <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Mastodon</span></a>
         </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
+        </li>
 </ul></div>
       
     </div>
@@ -317,6 +339,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../releases/index.html">
     Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../research/index.html">
+    Research
   </a>
 </li>
 
@@ -390,6 +419,18 @@
           
           <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Mastodon</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
         </li>
 </ul></div>
         
@@ -633,27 +674,27 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.training.TrainingOptions">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.training.</span></span><span class="sig-name descname"><span class="pre">TrainingOptions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">retrain</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rng</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.training.TrainingOptions" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" rel="noreferrer" target="_blank" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Options and context settings that govern model training.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>retrain</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
-<li><p><strong>device</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
+<li><p><strong>retrain</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.13)"><em>bool</em></a>)</p></li>
+<li><p><strong>device</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.13)"><em>str</em></a><em> | </em><em>None</em>)</p></li>
 <li><p><strong>rng</strong> (<em>lenskit.random.RNGInput</em>)</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.training.TrainingOptions.retrain">
-<span class="sig-name descname"><span class="pre">retrain</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#lenskit.training.TrainingOptions.retrain" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">retrain</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.13)"><span class="pre">bool</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></em><a class="headerlink" href="#lenskit.training.TrainingOptions.retrain" title="Link to this definition">#</a></dt>
 <dd><p>Whether the model should retrain if it is already trained.  If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
 the model should cleanly skip training if it is already trained.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.training.TrainingOptions.device">
-<span class="sig-name descname"><span class="pre">device</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lenskit.training.TrainingOptions.device" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">device</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.13)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#lenskit.training.TrainingOptions.device" title="Link to this definition">#</a></dt>
 <dd><p>The device on which to train (e.g. <code class="docutils literal notranslate"><span class="pre">'cuda'</span></code>).  May be ignored if the model
 does not support the specified device.</p>
 </dd></dl>
@@ -664,7 +705,7 @@ does not support the specified device.</p>
 <dd><p>Random number generator to use for any randomness in the training process.
 This option contains any <a href="#id1"><span class="problematic" id="id2">`SPEC 7`_</span></a>-compatible random number generator
 specification; the <a class="reference internal" href="lenskit.random.html#lenskit.random.random_generator" title="lenskit.random.random_generator"><code class="xref py py-func docutils literal notranslate"><span class="pre">random_generator()</span></code></a> will convert
-that into a NumPy <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a>.</p>
+that into a NumPy <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" rel="noreferrer" target="_blank" title="(in NumPy v2.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -679,7 +720,7 @@ training procesess.</p>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.3)"><em>Generator</em></a></p>
+<dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" rel="noreferrer" target="_blank" title="(in NumPy v2.3)"><em>Generator</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -697,11 +738,11 @@ if necessary.  It looks for a device in the following order:</p>
 </ol>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>gpu_default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.13)"><em>bool</em></a>) – Whether a CUDA GPU should be preferred if it is available and no
+<dd class="field-odd"><p><strong>gpu_default</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.13)"><em>bool</em></a>) – Whether a CUDA GPU should be preferred if it is available and no
 device has been specified.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.13)">str</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -711,7 +752,7 @@ device has been specified.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.training.Trainable">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.training.</span></span><span class="sig-name descname"><span class="pre">Trainable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.training.Trainable" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" rel="noreferrer" target="_blank" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a></p>
 <p>Interface for components and objects that can learn parameters from training
 data. It supports training and checking if a component has already been
 trained.  This protocol only captures the concept of trainability; most
@@ -750,7 +791,7 @@ parameters to be serialized and deserialized without pickling.</p></li>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.training.IterativeTraining">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.training.</span></span><span class="sig-name descname"><span class="pre">IterativeTraining</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.training.IterativeTraining" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a>, <a class="reference internal" href="#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" rel="noreferrer" target="_blank" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a>, <a class="reference internal" href="#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a></p>
 <p>Base class for components that support iterative training.  This both
 automates the <a class="reference internal" href="#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Trainable.train()</span></code></a> method for iterative training in terms
 of initialization, epoch, and finalization methods, and exposes those
@@ -762,13 +803,13 @@ training process.</p>
 </dl>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.training.IterativeTraining.trained_epochs">
-<span class="sig-name descname"><span class="pre">trained_epochs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#lenskit.training.IterativeTraining.trained_epochs" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">trained_epochs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.13)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#lenskit.training.IterativeTraining.trained_epochs" title="Link to this definition">#</a></dt>
 <dd><p>The number of epochs for which this model has been trained.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.training.IterativeTraining.expected_training_epochs">
-<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">expected_training_epochs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></em><a class="headerlink" href="#lenskit.training.IterativeTraining.expected_training_epochs" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">expected_training_epochs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.13)"><span class="pre">None</span></a></em><a class="headerlink" href="#lenskit.training.IterativeTraining.expected_training_epochs" title="Link to this definition">#</a></dt>
 <dd><p>Get the number of training epochs expected to run.  The default
 implementation looks for an <code class="docutils literal notranslate"><span class="pre">epochs</span></code> attribute on the configuration
 object (<code class="docutils literal notranslate"><span class="pre">self.config</span></code>).</p>
@@ -815,7 +856,7 @@ training loops.</p>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" title="(in Python v3.13)"><em>Iterator</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a>] | None]</p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" rel="noreferrer" target="_blank" title="(in Python v3.13)"><em>Iterator</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" rel="noreferrer" target="_blank" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.13)">float</a>] | None]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -825,7 +866,7 @@ training loops.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.training.UsesTrainer">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.training.</span></span><span class="sig-name descname"><span class="pre">UsesTrainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.training.UsesTrainer" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeTraining</span></code></a>, <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeTraining</span></code></a>, <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" rel="noreferrer" target="_blank" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
 <p>Base class for models that implement <a class="reference internal" href="#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a> via a
 <a class="reference internal" href="#lenskit.training.ModelTrainer" title="lenskit.training.ModelTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelTrainer</span></code></a>.  This class implements <a class="reference internal" href="#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeTraining</span></code></a> for
 compatibility, but the <a class="reference internal" href="#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeTraining</span></code></a> interface is deprecated.</p>
@@ -834,7 +875,7 @@ number of epochs to train.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>config</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
+<li><p><strong>config</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" rel="noreferrer" target="_blank" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
 <li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
@@ -900,7 +941,7 @@ training loops.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.training.ModelTrainer">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.training.</span></span><span class="sig-name descname"><span class="pre">ModelTrainer</span></span><a class="headerlink" href="#lenskit.training.ModelTrainer" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" rel="noreferrer" target="_blank" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
 <p>Protocol implemented by iterative trainers for models.  Models that
 implement <a class="reference internal" href="#lenskit.training.UsesTrainer" title="lenskit.training.UsesTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UsesTrainer</span></code></a> will return an object implementing this
 protocol from their <a class="reference internal" href="#lenskit.training.UsesTrainer.create_trainer" title="lenskit.training.UsesTrainer.create_trainer"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_trainer()</span></code></a> method.</p>
@@ -917,7 +958,7 @@ on the training behavior.  After each training iteration, the mmodel
 must be usable.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)">float</a>] | None</p>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" rel="noreferrer" target="_blank" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.13)">str</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.13)">float</a>] | None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1053,12 +1094,12 @@ and doing any finalization steps to the model.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev145+g76bbdb3f.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev151+g44e08bbc.</div>
       
         <div class="footer-item"><p>
-    This material is based upon work supported by the National Science Foundation under
-    Grant No. <a href="https://md.ekstrandom.net/research/career">IIS 17-51278</a>. Any
-    opinions, findings, and conclusions or recommendations expressed in this material
+    This material is partially based upon work supported by the National Science Foundation under
+    Grant Nos. <a href="https://md.ekstrandom.net/research/career" target="_blank">17-51278</a> and
+    24-15042. Any opinions, findings, and conclusions or recommendations expressed in this material
     are those of the author(s) and do not necessarily reflect the views of the
     National Science Foundation, Drexel University, or Boise State University.</p>
 </p></div>

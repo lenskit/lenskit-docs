@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its: Batch operations using multi-process execution., Parallel model training. For most models pr..." />
 <meta name="description" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its: Batch operations using multi-process execution., Parallel model training. For most models pr..." />
 
-    <title>Parallel Processing &#8212; LensKit 2025.3.0a4.dev145+g76bbdb3f documentation</title>
+    <title>Parallel Processing &#8212; LensKit 2025.3.0a4.dev151+g44e08bbc documentation</title>
   
   
   
@@ -39,7 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=474ac1f0" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=9d9b0268" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -47,9 +48,11 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=d69bbbd3"></script>
+    <script src="../_static/documentation_options.js?v=31b05004"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -136,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev145+g76bbdb3f documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev145+g76bbdb3f documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev151+g44e08bbc documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev151+g44e08bbc documentation - Home"/>
   
   
 </a></div>
@@ -169,6 +172,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../releases/index.html">
     Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../research/index.html">
+    Research
   </a>
 </li>
 
@@ -252,6 +262,18 @@
           <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Mastodon</span></a>
         </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
+        </li>
 </ul></div>
       
     </div>
@@ -317,6 +339,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../releases/index.html">
     Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../research/index.html">
+    Research
   </a>
 </li>
 
@@ -390,6 +419,18 @@
           
           <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Mastodon</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
         </li>
 </ul></div>
         
@@ -519,7 +560,7 @@ variable controlling its:</p>
 <li><p><a class="reference internal" href="batch.html"><span class="doc">Batch operations</span></a> using <a class="reference internal" href="#parallel-model-ops"><span class="std std-ref">multi-process execution</span></a>.</p></li>
 <li><p>Parallel model training.  For most models provided by LensKit, such
 parallelism uses Rayon in the Rust extension module or PyTorch JIT parallelism
-(<a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.jit.fork.html#torch.jit.fork" title="(in PyTorch v2.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.jit.fork()</span></code></a>) in Python code.</p></li>
+(<a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.jit.fork.html#torch.jit.fork" rel="noreferrer" target="_blank" title="(in PyTorch v2.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.jit.fork()</span></code></a>) in Python code.</p></li>
 <li><p>Parallel inference, using Rayon in the Rust extension module.</p></li>
 <li><p>Parallel computation in the various backends (BLAS, MKL, Torch, etc.), for
 both training and inference.</p></li>
@@ -555,7 +596,7 @@ of CPUs or 4, whichever is lower.</p>
 <dd><p>The number of threads to use for LensKit’s explicit parallelism (model
 building and inference).  Defaults to the number of CPUs or 8, whichever is
 smaller.</p>
-<p>This number is passed to <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.set_num_interop_threads.html#torch.set_num_interop_threads" title="(in PyTorch v2.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_interop_threads()</span></code></a> to set up the
+<p>This number is passed to <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.set_num_interop_threads.html#torch.set_num_interop_threads" rel="noreferrer" target="_blank" title="(in PyTorch v2.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_interop_threads()</span></code></a> to set up the
 Torch JIT thread count, and is used to configure the Rayon thread pool used
 by the Rust acceleration module.</p>
 <p>If this variable does not specify a list, worker process thread counts are
@@ -576,8 +617,8 @@ machine:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">NCPUS</span> <span class="o">//</span> <span class="n">LK_NUM_THREADS</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This is passed to <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.set_num_threads.html#torch.set_num_threads" title="(in PyTorch v2.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_threads()</span></code></a> (to control PyTorch internal
-parallelism), and to the underlying BLAS layer (via <a class="reference external" href="https://github.com/joblib/threadpoolctl">threadpoolctl</a>).</p>
+<p>This is passed to <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.set_num_threads.html#torch.set_num_threads" rel="noreferrer" target="_blank" title="(in PyTorch v2.7)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_threads()</span></code></a> (to control PyTorch internal
+parallelism), and to the underlying BLAS layer (via <a class="reference external" href="https://github.com/joblib/threadpoolctl" rel="noreferrer" target="_blank">threadpoolctl</a>).</p>
 <p>If this variable does not specify a list and <span class="target" id="index-3"></span><a class="reference internal" href="#envvar-LK_NUM_CHILD_THREADS"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LK_NUM_CHILD_THREADS</span></code></a>
 is not set, worker process thread counts are capped by the process count and
 CPU capacity, with a maximum of 4 threads per worker.</p>
@@ -615,7 +656,7 @@ when run as a script, with a block like this at the end of the file:</p>
 </section>
 <section id="parallel-model-ops">
 <span id="id1"></span><h2>Parallel Model Ops<a class="headerlink" href="#parallel-model-ops" title="Link to this heading">#</a></h2>
-<p>LensKit uses a custom API wrapping <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">multiprocessing.pool.Pool</span></code></a> to
+<p>LensKit uses a custom API wrapping <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool" rel="noreferrer" target="_blank" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">multiprocessing.pool.Pool</span></code></a> to
 parallelize batch operations (see <a class="reference internal" href="../api/batch.html#module-lenskit.batch" title="lenskit.batch"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.batch</span></code></a>).</p>
 <p>The basic idea of this API is to create an <em>invoker</em> that has a model and a function,
 and then passing lists of argument sets to the function:</p>
@@ -631,7 +672,7 @@ They may also be useful for other kinds of analysis.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Client code generally does not need to directly use this facility.  We are
-also exploring deprecating the internal parallelism support in favor of <a class="reference external" href="https://docs.ray.io">Ray</a>.</p>
+also exploring deprecating the internal parallelism support in favor of <a class="reference external" href="https://docs.ray.io" rel="noreferrer" target="_blank">Ray</a>.</p>
 </div>
 </section>
 <section id="debugging-parallelism-and-performance">
@@ -735,12 +776,12 @@ including parallelism configuration.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev145+g76bbdb3f.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev151+g44e08bbc.</div>
       
         <div class="footer-item"><p>
-    This material is based upon work supported by the National Science Foundation under
-    Grant No. <a href="https://md.ekstrandom.net/research/career">IIS 17-51278</a>. Any
-    opinions, findings, and conclusions or recommendations expressed in this material
+    This material is partially based upon work supported by the National Science Foundation under
+    Grant Nos. <a href="https://md.ekstrandom.net/research/career" target="_blank">17-51278</a> and
+    24-15042. Any opinions, findings, and conclusions or recommendations expressed in this material
     are those of the author(s) and do not necessarily reflect the views of the
     National Science Foundation, Drexel University, or Boise State University.</p>
 </p></div>

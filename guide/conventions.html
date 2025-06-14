@@ -14,7 +14,7 @@
 <meta property="og:description" content="The components shipped with LensKit follow certain conventions to make their configuration and operation consistent and predictable. We encourage you to follow these conventions in your own code as..." />
 <meta name="description" content="The components shipped with LensKit follow certain conventions to make their configuration and operation consistent and predictable. We encourage you to follow these conventions in your own code as..." />
 
-    <title>Component Conventions &#8212; LensKit 2025.3.0a4.dev145+g76bbdb3f documentation</title>
+    <title>Component Conventions &#8212; LensKit 2025.3.0a4.dev151+g44e08bbc documentation</title>
   
   
   
@@ -39,7 +39,8 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=474ac1f0" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=9d9b0268" />
   
   <!-- So that users can add custom icons -->
   <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
@@ -47,9 +48,11 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=d69bbbd3"></script>
+    <script src="../_static/documentation_options.js?v=31b05004"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
@@ -136,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev145+g76bbdb3f documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev145+g76bbdb3f documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev151+g44e08bbc documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev151+g44e08bbc documentation - Home"/>
   
   
 </a></div>
@@ -169,6 +172,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../releases/index.html">
     Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../research/index.html">
+    Research
   </a>
 </li>
 
@@ -252,6 +262,18 @@
           <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Mastodon</span></a>
         </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
+        </li>
 </ul></div>
       
     </div>
@@ -317,6 +339,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../releases/index.html">
     Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../research/index.html">
+    Research
   </a>
 </li>
 
@@ -390,6 +419,18 @@
           
           <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Mastodon</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
         </li>
 </ul></div>
         
@@ -548,11 +589,11 @@ required by <a class="reference internal" href="implementing.html#iterative-trai
 </section>
 <section id="random-seeds">
 <span id="rng"></span><h2>Random Seeds<a class="headerlink" href="#random-seeds" title="Link to this heading">#</a></h2>
-<p>LensKit components follow <a class="reference external" href="https://scientific-python.org/specs/spec-0007/">SPEC 7</a> for specifying random number seeds.  If you
+<p>LensKit components follow <a class="reference external" href="https://scientific-python.org/specs/spec-0007/" rel="noreferrer" target="_blank">SPEC 7</a> for specifying random number seeds.  If you
 want reproducible stochastic pipelines, configure the random seeds for your
 components and/or training process.</p>
 <p>Components that use randomization at <strong>inference time</strong> take either seed
-material or a <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" title="(in NumPy v2.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a> as an <code class="docutils literal notranslate"><span class="pre">rng</span></code> constructor
+material or a <a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" rel="noreferrer" target="_blank" title="(in NumPy v2.3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generator</span></code></a> as an <code class="docutils literal notranslate"><span class="pre">rng</span></code> constructor
 parameter; if seed material is supplied, that seed should be considered part of
 the configuration (see the source code in <a class="reference internal" href="../api/lenskit.basic.random.html#module-lenskit.basic.random" title="lenskit.basic.random"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.basic.random</span></code></a> for
 examples).</p>
@@ -563,7 +604,7 @@ seed for the training process without needing to configure each component.  For
 consistent configurability, it’s best for components using other frameworks such
 as PyTorch to use NumPy to initialize the parameter values and then convert the
 initial values to the appropriate compute backend.</p>
-<p>Other LensKit code, such as the <a class="reference external" href="./splitting">data splitting support</a>, follow
+<p>Other LensKit code, such as the <a class="reference external" href="./splitting" rel="noreferrer" target="_blank">data splitting support</a>, follow
 SPEC 7 directly by accepting an <code class="docutils literal notranslate"><span class="pre">rng</span></code> keyword parameter.</p>
 <div class="admonition important">
 <p class="admonition-title">Important</p>
@@ -572,7 +613,7 @@ recommend specifying seeds instead of generators, so that the seed can be
 included in serialized configurations.</p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 2025.1: </span>Now that <a class="reference external" href="https://scientific-python.org/specs/spec-0007/">SPEC 7</a> has standardized RNG seeding across the scientific Python
+<p><span class="versionmodified changed">Changed in version 2025.1: </span>Now that <a class="reference external" href="https://scientific-python.org/specs/spec-0007/" rel="noreferrer" target="_blank">SPEC 7</a> has standardized RNG seeding across the scientific Python
 ecosystem, we use that with some lightweight helpers in the
 <a class="reference internal" href="../api/lenskit.random.html#module-lenskit.random" title="lenskit.random"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.random</span></code></a> module instead of using SeedBank.</p>
 </div>
@@ -703,12 +744,12 @@ those users are processed.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev145+g76bbdb3f.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev151+g44e08bbc.</div>
       
         <div class="footer-item"><p>
-    This material is based upon work supported by the National Science Foundation under
-    Grant No. <a href="https://md.ekstrandom.net/research/career">IIS 17-51278</a>. Any
-    opinions, findings, and conclusions or recommendations expressed in this material
+    This material is partially based upon work supported by the National Science Foundation under
+    Grant Nos. <a href="https://md.ekstrandom.net/research/career" target="_blank">17-51278</a> and
+    24-15042. Any opinions, findings, and conclusions or recommendations expressed in this material
     are those of the author(s) and do not necessarily reflect the views of the
     National Science Foundation, Drexel University, or Boise State University.</p>
 </p></div>
