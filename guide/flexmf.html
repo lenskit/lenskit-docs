@@ -7,14 +7,14 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta property="og:title" content="Queries and Operations" />
+<meta property="og:title" content="Flexible Matrix Factorization" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="guide/queries.html" />
+<meta property="og:url" content="guide/flexmf.html" />
 <meta property="og:site_name" content="LensKit" />
-<meta property="og:description" content="To request recommendations from a LensKit pipeline, you supply the pipeline with a query(and, optionally, a list of candidate items). In the simplest case, for traditional personalized recommendati..." />
-<meta name="description" content="To request recommendations from a LensKit pipeline, you supply the pipeline with a query(and, optionally, a list of candidate items). In the simplest case, for traditional personalized recommendati..." />
+<meta property="og:description" content="Since 2025.3.0 (in progress), LensKit provides a family of embedding-based scoring models called FlexMF( Flexible Matrix Factorization). These models use matrix factorization in various configurati..." />
+<meta name="description" content="Since 2025.3.0 (in progress), LensKit provides a family of embedding-based scoring models called FlexMF( Flexible Matrix Factorization). These models use matrix factorization in various configurati..." />
 
-    <title>Queries and Operations &#8212; LensKit 2025.3.0a4.dev152+g35bade7b documentation</title>
+    <title>Flexible Matrix Factorization &#8212; LensKit 2025.3.0a4.dev152+g35bade7b documentation</title>
   
   
   
@@ -58,7 +58,7 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'guide/queries';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'guide/flexmf';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lkpy.lenskit.org/versions.json';
@@ -66,11 +66,11 @@
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
-    <link rel="canonical" href="https://lkpy.lenskit.org/latest/guide/queries.html" />
+    <link rel="canonical" href="https://lkpy.lenskit.org/latest/guide/flexmf.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Recommendation Pipelines" href="pipeline.html" />
-    <link rel="prev" title="Design Goals and Principles" href="principles.html" />
+    <link rel="next" title="Scoring Models" href="scorers.html" />
+    <link rel="prev" title="Component Conventions" href="conventions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="2025.3.0" />
@@ -451,9 +451,9 @@
 <li class="toctree-l1"><a class="reference internal" href="migrating.html">Migrating from LensKit 0.x</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Fundamentals</span></p>
-<ul class="current nav bd-sidenav">
+<ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="principles.html">Design Goals and Principles</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Queries and Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="queries.html">Queries and Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pipeline.html">Recommendation Pipelines</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Data</span></p>
@@ -469,9 +469,9 @@
 </details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
-<ul class="nav bd-sidenav">
+<ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="conventions.html">Component Conventions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flexmf.html">Flexible Matrix Factorization</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Flexible Matrix Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scorers.html">Scoring Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rankers.html">Ranking Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="other-components.html">Other Components</a></li>
@@ -536,7 +536,7 @@
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Queries and Operations</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Flexible Matrix Factorization</span></li>
   </ul>
 </nav>
 </div>
@@ -553,73 +553,133 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="queries-and-operations">
-<span id="queries"></span><h1>Queries and Operations<a class="headerlink" href="#queries-and-operations" title="Link to this heading">#</a></h1>
-<p>To request recommendations from a LensKit pipeline, you supply the pipeline with
-a <em>query</em> (and, optionally, a list of candidate items).  In the simplest case,
-for traditional personalized recommendations, the query just consists of a user
-ID.</p>
-<p>Queries are represented by the <a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a> class, and can have any or all
-of the following components:</p>
-<ul class="simple">
-<li><p>A user ID (<a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery.user_id" title="lenskit.data.RecQuery.user_id"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RecQuery.user_id</span></code></a>)</p></li>
-<li><p>A user’s historical items (<a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery.user_items" title="lenskit.data.RecQuery.user_items"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RecQuery.user_items</span></code></a>)</p></li>
-</ul>
+  <section id="flexible-matrix-factorization">
+<span id="flexmf"></span><h1>Flexible Matrix Factorization<a class="headerlink" href="#flexible-matrix-factorization" title="Link to this heading">#</a></h1>
 <div class="note admonition">
-<p class="admonition-title">Future Work</p>
-<p>Queries will also be the basis for eventually supporting session-based
-recommendation, etc.</p>
+<p class="admonition-title">Stability: Experimental</p>
+<p>The FlexMF model framework is currently provided as an experimental preview.
+It works pretty well, but may be adjusted as we stabilize it and gain more
+experience in the next months.</p>
 </div>
-<section id="creating-a-query">
-<h2>Creating a Query<a class="headerlink" href="#creating-a-query" title="Link to this heading">#</a></h2>
-<p>You can create a query in a couple of ways — you can pass named arguments to the
-<a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a> constructor, or you can call <a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery.create" title="lenskit.data.RecQuery.create"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RecQuery.create()</span></code></a> to
-“upgrade” a piece of data into a query using the following rules:</p>
-<ul class="simple">
-<li><p>A query is returned as-is.</p></li>
-<li><p>An identifier is used as the user identifier.</p></li>
-<li><p>An <a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a> is used as a list of the user’s historical items.</p></li>
-</ul>
-<p>These data types are encompased by the <a class="reference internal" href="../api/lenskit.data.QueryInput.html#lenskit.data.QueryInput" title="lenskit.data.QueryInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueryInput</span></code></a> type.</p>
-<p>You can also pass a raw user identifier or item list to the pipeline, as the key
-recommendation operations and most components accept a <a class="reference internal" href="../api/lenskit.data.QueryInput.html#lenskit.data.QueryInput" title="lenskit.data.QueryInput"><code class="xref py py-class docutils literal notranslate"><span class="pre">QueryInput</span></code></a> and
-pass it to <a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery.create" title="lenskit.data.RecQuery.create"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create()</span></code></a> to upgrade to a query.</p>
-</section>
-<section id="invoking-recommenders">
-<span id="recommender-ops"></span><h2>Invoking Recommenders<a class="headerlink" href="#invoking-recommenders" title="Link to this heading">#</a></h2>
-<p>LensKit provides three <em>operation</em> functions to ease calling the recommender for
-common operations, like top-<em>N</em> recommendation and rating prediction:</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="../api/operations.html#lenskit.operations.recommend" title="lenskit.operations.recommend"><code class="xref py py-func docutils literal notranslate"><span class="pre">recommend()</span></code></a></p></li>
-<li><p><a class="reference internal" href="../api/operations.html#lenskit.operations.score" title="lenskit.operations.score"><code class="xref py py-func docutils literal notranslate"><span class="pre">score()</span></code></a></p></li>
-<li><p><a class="reference internal" href="../api/operations.html#lenskit.operations.predict" title="lenskit.operations.predict"><code class="xref py py-func docutils literal notranslate"><span class="pre">predict()</span></code></a></p></li>
-</ul>
-<p>These functions take a pipeline and a query input and return the results:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">rec_list</span> <span class="o">=</span> <span class="n">recommend</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="n">user_id</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<p>Since <a class="reference internal" href="../releases/2025.html#id1"><span class="std std-ref">2025.3.0 (in progress)</span></a>, LensKit provides a family of embedding-based scoring
+models called <code class="docutils literal notranslate"><span class="pre">FlexMF</span></code> (<em>Flexible Matrix Factorization</em>).  These models use
+matrix factorization in various configurations to realize several scoring models
+from the literature in a single configurable design, implemented in PyTorch with
+support for GPU-based training.</p>
+<p>The FlexMF components and configuration are in the <a class="reference internal" href="../api/lenskit.flexmf.html#module-lenskit.flexmf" title="lenskit.flexmf"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.flexmf</span></code></a> package.</p>
+<section id="first-model">
+<h2>First Model<a class="headerlink" href="#first-model" title="Link to this heading">#</a></h2>
+<p>FlexMF works like any other LensKit scorer.  To train a simple implicit-feedback
+scorer with logistic matrix factorization, you can do:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.flexmf</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlexMFImplicitScorer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_movielens</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">lenskit</span><span class="w"> </span><span class="kn">import</span> <span class="n">topn_pipeline</span><span class="p">,</span> <span class="n">recommend</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># load movie data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">load_movielens</span><span class="p">(</span><span class="s1">&#39;data/ml-latest-small&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># set up model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">FlexMFImplicitScorer</span><span class="p">(</span><span class="n">embedding_size</span><span class="o">=</span><span class="s2">&quot;50&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;logistic&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span> <span class="o">=</span> <span class="n">topn_pipeline</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># train the model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># recommend for user 500</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">recommend</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="go">&lt;ItemList of 10 items with 1 fields {</span>
+<span class="go">  numbers: [...]</span>
+<span class="go">  score: [...]</span>
+<span class="go">}&gt;</span>
 </pre></div>
 </div>
 </section>
-<section id="processing-queries">
-<h2>Processing Queries<a class="headerlink" href="#processing-queries" title="Link to this heading">#</a></h2>
-<p>When writing a component that uses a query but works on user ID and/or user
-history arguments, it should have a <code class="docutils literal notranslate"><span class="pre">query</span></code> parameter of type <code class="docutils literal notranslate"><span class="pre">QueryInput</span></code>,
-and pass it to <a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery.create" title="lenskit.data.RecQuery.create"><code class="xref py py-meth docutils literal notranslate"><span class="pre">RecQuery.create()</span></code></a> to obtain a query.  You can declare the
-query to be of type <code class="docutils literal notranslate"><span class="pre">RecQuery</span></code> so long as you provide query objects to the
-operation functions, or configure a pipeline to upgrade the query before it gets
-to your component.</p>
-<p>When using a query in a component, we recommend using the user history if it is
-available, instead of relying on user IDs.  This makes components more flexible
-for other sources of user history data.</p>
+<section id="common-configuration">
+<h2>Common Configuration<a class="headerlink" href="#common-configuration" title="Link to this heading">#</a></h2>
+<p>All FlexMF models share some configuration option in common, defined by
+<a class="reference internal" href="../api/lenskit.flexmf.html#lenskit.flexmf.FlexMFConfigBase" title="lenskit.flexmf.FlexMFConfigBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlexMFConfigBase</span></code></a>:</p>
+<dl>
+<dt>Model Structure Options</dt><dd><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">embedding_size</span></code></dt><dd><p>The dimension of the matrix factorization.</p>
+</dd>
+</dl>
+</dd>
+<dt>Regularization Options</dt><dd><p>FlexMF supports two different forms of regularization:
+<a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.optim.AdamW.html#torch.optim.AdamW" rel="noreferrer" target="_blank" title="(in PyTorch v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AdamW</span></code></a> weight decay and L2 regularization.  With L2
+regularization, the term is included directly in the loss function, and
+the model can be trained with sparse gradients.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">reg_method</span></code>:</dt><dd><p>The method to use for regularization (<code class="docutils literal notranslate"><span class="pre">AdamW</span></code> or <code class="docutils literal notranslate"><span class="pre">L2</span></code>), or <code class="docutils literal notranslate"><span class="pre">None</span></code>
+to disable regularization.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">regularization</span></code>:</dt><dd><p>The regularization weight.</p>
+</dd>
+</dl>
+</dd>
+<dt>Training Options</dt><dd><dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">batch_size</span></code>:</dt><dd><p>The size for individual training batches.  The optimal batch size is usually
+much larger than deep models, because the collaborative filtering models are
+relatively simple.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">learning_rate</span></code>:</dt><dd><p>The base learning rate for the <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.optim.AdamW.html#torch.optim.AdamW" rel="noreferrer" target="_blank" title="(in PyTorch v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">AdamW</span></code></a> or
+<a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.optim.SparseAdam.html#torch.optim.SparseAdam" rel="noreferrer" target="_blank" title="(in PyTorch v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">SparseAdam</span></code></a> optimizer.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">epochs</span></code>:</dt><dd><p>The number of training epochs.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </section>
-<section id="expanding-queries-in-pipelines">
-<h2>Expanding Queries in Pipelines<a class="headerlink" href="#expanding-queries-in-pipelines" title="Link to this heading">#</a></h2>
-<p>The <a class="reference internal" href="pipeline.html#standard-pipelines"><span class="std std-ref">standard pipelines</span></a> include a
-<a class="reference internal" href="../api/lenskit.basic.html#lenskit.basic.UserTrainingHistoryLookup" title="lenskit.basic.UserTrainingHistoryLookup"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserTrainingHistoryLookup</span></code></a> that resolves a query and, if
-it does not have user history data, looks up the user’s historical clicks from
-the training data.  Therefore, if your components will be used in the standard
-pipeline (or another pipeline configured with this component), you can take a
-<a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a> as input, and expect it to have a user history if the user is
-known in the training data.</p>
+<section id="explicit-feedback">
+<h2>Explicit Feedback<a class="headerlink" href="#explicit-feedback" title="Link to this heading">#</a></h2>
+<p>The <a class="reference internal" href="../api/lenskit.flexmf.html#lenskit.flexmf.FlexMFExplicitScorer" title="lenskit.flexmf.FlexMFExplicitScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlexMFExplicitScorer</span></code></a> class provides an explicit-feedback rating
+prediction model with biased matrix factorization.  The model itself is the same
+as that used by <a class="reference internal" href="../api/lenskit.als.html#lenskit.als.BiasedMFScorer" title="lenskit.als.BiasedMFScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiasedMFScorer</span></code></a>, but is trained using
+minibatch gradient descent in PyTorch and can train a GPU.  User and item biases
+are learned jointly with the embeddings, and are attenuated for low-information
+users and items through regularization instead of an explicit damping term.</p>
+</section>
+<section id="implicit-feedback">
+<h2>Implicit Feedback<a class="headerlink" href="#implicit-feedback" title="Link to this heading">#</a></h2>
+<p><a class="reference internal" href="../api/lenskit.flexmf.html#lenskit.flexmf.FlexMFImplicitScorer" title="lenskit.flexmf.FlexMFImplicitScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlexMFImplicitScorer</span></code></a> provides the implicit-feedback scorers in FlexMF.
+This scorer supports multiple loss functions and training regimes that can be
+selected to yield logistic matrix factorization, BPR, WARP, or others (see
+<a class="reference internal" href="../api/lenskit.flexmf.html#lenskit.flexmf.FlexMFImplicitConfig" title="lenskit.flexmf.FlexMFImplicitConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlexMFImplicitConfig</span></code></a> for full options).</p>
+<p>The two primary options that control the model’s overall behavior are the <em>loss
+function</em> and the <em>sampling strategy</em>.</p>
+<p>Three loss functions (<code class="docutils literal notranslate"><span class="pre">loss</span></code>) are supported:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;logistic&quot;</span></code></dt><dd><p>Logistic loss, as used in Logistic Matrix Factorization <span id="id1">[<a class="reference internal" href="../references.html#id36" title="Christopher C Johnson. Logistic matrix factorization for implicit feedback data. Adv. Neural Inf. Process. Syst., 2014. URL: http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf.">Joh14</a>]</span>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;pairwise&quot;</span></code></dt><dd><p>Pairwise rank loss, as used in Bayesian Personalized Ranking <span id="id2">[<a class="reference internal" href="../references.html#id4" title="Steffen Rendle, Christoph Freudenthaler, Zeno Gantner, and Lars Schmidt-Thieme. BPR: Bayesian personalized ranking from implicit feedback. In UAI '09, 452–461. Arlington, Virginia, United States, 2009. AUAI Press. URL: http://dl.acm.org/citation.cfm?id=1795114.1795167 (visited on 2015-10-16).">RFGSchmidtThieme09</a>]</span>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;warp&quot;</span></code></dt><dd><p>Weighted approximate rank lost, a revised version of pairwise loss used in
+WARP <span id="id3">[<a class="reference internal" href="../references.html#id65" title="Jason Weston, Hector Yee, and Ron J Weiss. Learning to rank recommendations with the k-order statistic loss. In RecSys '13, 245–248. New York, NY, USA, October 2013. Association for Computing Machinery. doi:10.1145/2507157.2507210.">WYW13</a>]</span>.  Only works with the <code class="docutils literal notranslate"><span class="pre">&quot;misranked&quot;</span></code> sampling
+strategy.</p>
+</dd>
+</dl>
+<p>Three sampling strategies (<code class="docutils literal notranslate"><span class="pre">negative_strategy</span></code>) are supported:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;uniform&quot;</span></code></dt><dd><p>Negative items are sampled uniformly at random from the corpus.  This is the
+default for logistic and pairwise losses.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;popular&quot;</span></code></dt><dd><p>Negative items are sampled proportional to their popularity in the training
+data.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;misranked&quot;</span></code></dt><dd><p>Negative items are sampled based on their scores from the model so far, looking
+for misranked items.  This strategy comes from WARP, but can be used with other
+loss functions as well.  It is the default (and only) strategy for WARP loss.</p>
+</dd>
+</dl>
+<p>You can combine these to realize several designs from the literature:</p>
+<ul class="simple">
+<li><p><strong>Logistic matrix factorization</strong> <span id="id4">[<a class="reference internal" href="../references.html#id36" title="Christopher C Johnson. Logistic matrix factorization for implicit feedback data. Adv. Neural Inf. Process. Syst., 2014. URL: http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf.">Joh14</a>]</span> by using
+<code class="docutils literal notranslate"><span class="pre">loss=&quot;logistic&quot;</span></code> with any sampling strategy.  This implementation differs
+slightly from the paper in that it uses negative sampling instead of
+training on an entire user.</p></li>
+<li><p>Classic <strong>Bayesian Personalized Ranking</strong> <span id="id5">[<a class="reference internal" href="../references.html#id4" title="Steffen Rendle, Christoph Freudenthaler, Zeno Gantner, and Lars Schmidt-Thieme. BPR: Bayesian personalized ranking from implicit feedback. In UAI '09, 452–461. Arlington, Virginia, United States, 2009. AUAI Press. URL: http://dl.acm.org/citation.cfm?id=1795114.1795167 (visited on 2015-10-16).">RFGSchmidtThieme09</a>]</span> by using
+<code class="docutils literal notranslate"><span class="pre">loss=&quot;pairwise&quot;</span></code> with the <code class="docutils literal notranslate"><span class="pre">negative_strategy=&quot;uniform&quot;</span></code>.  The negative
+strategy can also be changed, although we have rarely seen <code class="docutils literal notranslate"><span class="pre">&quot;popular&quot;</span></code> be
+effective.</p></li>
+<li><p><strong>Weighted Approximate Rank Loss</strong> (WARP) <span id="id6">[<a class="reference internal" href="../references.html#id65" title="Jason Weston, Hector Yee, and Ron J Weiss. Learning to rank recommendations with the k-order statistic loss. In RecSys '13, 245–248. New York, NY, USA, October 2013. Association for Computing Machinery. doi:10.1145/2507157.2507210.">WYW13</a>]</span> by using
+<code class="docutils literal notranslate"><span class="pre">loss=&quot;warp&quot;</span></code>.</p></li>
+</ul>
 </section>
 </section>
 
@@ -634,20 +694,20 @@ known in the training data.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="principles.html"
+       href="conventions.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Design Goals and Principles</p>
+        <p class="prev-next-title">Component Conventions</p>
       </div>
     </a>
     <a class="right-next"
-       href="pipeline.html"
+       href="scorers.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Recommendation Pipelines</p>
+        <p class="prev-next-title">Scoring Models</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -670,10 +730,10 @@ known in the training data.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-a-query">Creating a Query</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#invoking-recommenders">Invoking Recommenders</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#processing-queries">Processing Queries</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#expanding-queries-in-pipelines">Expanding Queries in Pipelines</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-model">First Model</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-configuration">Common Configuration</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-feedback">Explicit Feedback</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-feedback">Implicit Feedback</a></li>
 </ul>
   </nav></div>
 
@@ -681,7 +741,7 @@ known in the training data.</p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/guide/queries.rst.txt"
+      <li><a href="../_sources/guide/flexmf.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>
