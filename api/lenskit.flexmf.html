@@ -14,7 +14,7 @@
 <meta property="og:description" content="Flexible PyTorch matrix factorization models for LensKit. The components in this package implement several matrix factorization models for LensKit, and also serve as an example for practical PyTorc..." />
 <meta name="description" content="Flexible PyTorch matrix factorization models for LensKit. The components in this package implement several matrix factorization models for LensKit, and also serve as an example for practical PyTorc..." />
 
-    <title>lenskit.flexmf &#8212; LensKit 2025.3.0a4.dev194+g756c50da documentation</title>
+    <title>lenskit.flexmf &#8212; LensKit 2025.3.0a4.dev222+g3d457e81 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=55247045"></script>
+    <script src="../_static/documentation_options.js?v=9f3a1b45"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev194+g756c50da documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev194+g756c50da documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev222+g3d457e81 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev222+g3d457e81 documentation - Home"/>
   
   
 </a></div>
@@ -736,7 +736,7 @@ as we gain more experience with it.</p>
 <span class="sig-name descname"><span class="pre">reg_method</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" rel="noreferrer" target="_blank" title="(in Python v3.13)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'AdamW'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'L2'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.13)"><span class="pre">None</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'L2'</span></em><a class="headerlink" href="#lenskit.flexmf.FlexMFConfigBase.reg_method" title="Link to this definition">#</a></dt>
 <dd><p>The regularization method to use.</p>
 <p>With the default L2 regularization, training will use sparse gradients and
-the <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.optim.SparseAdam.html#torch.optim.SparseAdam" rel="noreferrer" target="_blank" title="(in PyTorch v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.optim.SparseAdam</span></code></a> optimizer.</p>
+the <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.optim.SparseAdam.html#torch.optim.SparseAdam" rel="noreferrer" target="_blank" title="(in PyTorch v2.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.optim.SparseAdam</span></code></a> optimizer.</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">None</span></code></dt><dd><p>Use no regularization.</p>
 </dd>
@@ -744,7 +744,7 @@ the <a class="reference external" href="https://docs.pytorch.org/docs/stable/gen
 The strength is applied to the _mean_ norms in a batch, so that the
 regularization term scale is not dependent on the batch size.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">&quot;AdamW&quot;</span></code></dt><dd><p>Use <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.optim.AdamW.html#torch.optim.AdamW" rel="noreferrer" target="_blank" title="(in PyTorch v2.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.optim.AdamW</span></code></a> with the specified regularization
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;AdamW&quot;</span></code></dt><dd><p>Use <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.optim.AdamW.html#torch.optim.AdamW" rel="noreferrer" target="_blank" title="(in PyTorch v2.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.optim.AdamW</span></code></a> with the specified regularization
 strength.  This configuration does <em>not</em> use sparse gradients and may
 train more slowly.</p>
 </dd>
@@ -788,12 +788,12 @@ users and items.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>users</strong> (<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" rel="noreferrer" target="_blank" title="(in PyTorch v2.7)"><em>Tensor</em></a>)</p></li>
-<li><p><strong>items</strong> (<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" rel="noreferrer" target="_blank" title="(in PyTorch v2.7)"><em>Tensor</em></a>)</p></li>
+<li><p><strong>users</strong> (<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" rel="noreferrer" target="_blank" title="(in PyTorch v2.8)"><em>Tensor</em></a>)</p></li>
+<li><p><strong>items</strong> (<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" rel="noreferrer" target="_blank" title="(in PyTorch v2.8)"><em>Tensor</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" rel="noreferrer" target="_blank" title="(in PyTorch v2.7)"><em>Tensor</em></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" rel="noreferrer" target="_blank" title="(in PyTorch v2.8)"><em>Tensor</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -860,12 +860,12 @@ users and items.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>users</strong> (<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" rel="noreferrer" target="_blank" title="(in PyTorch v2.7)"><em>Tensor</em></a>)</p></li>
-<li><p><strong>items</strong> (<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" rel="noreferrer" target="_blank" title="(in PyTorch v2.7)"><em>Tensor</em></a>)</p></li>
+<li><p><strong>users</strong> (<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" rel="noreferrer" target="_blank" title="(in PyTorch v2.8)"><em>Tensor</em></a>)</p></li>
+<li><p><strong>items</strong> (<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" rel="noreferrer" target="_blank" title="(in PyTorch v2.8)"><em>Tensor</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" rel="noreferrer" target="_blank" title="(in PyTorch v2.7)"><em>Tensor</em></a></p>
+<dd class="field-even"><p><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" rel="noreferrer" target="_blank" title="(in PyTorch v2.8)"><em>Tensor</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1101,7 +1101,7 @@ realizing multiple models, including:</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev194+g756c50da.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev222+g3d457e81.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
