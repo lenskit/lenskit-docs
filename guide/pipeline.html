@@ -14,7 +14,7 @@
 <meta property="og:description" content="Since version 2025.1.1, LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produce predictio..." />
 <meta name="description" content="Since version 2025.1.1, LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produce predictio..." />
 
-    <title>Recommendation Pipelines &#8212; LensKit 2025.3.0a4.dev299+g32f7fb7b documentation</title>
+    <title>Recommendation Pipelines &#8212; LensKit 2025.3.0a4.dev321+g2638ee4b documentation</title>
   
   
   
@@ -48,7 +48,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=c4264901"></script>
+    <script src="../_static/documentation_options.js?v=2d76b887"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -176,8 +176,8 @@ window.addEventListener("load", load);
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev299+g32f7fb7b documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev299+g32f7fb7b documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev321+g2638ee4b documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev321+g2638ee4b documentation - Home"/>
   
   
 </a></div>
@@ -827,7 +827,7 @@ can be reloaded with <a class="reference internal" href="../api/lenskit.pipeline
 <span id="id3"></span><h2>Standard Pipelines<a class="headerlink" href="#standard-pipelines" title="Link to this heading">#</a></h2>
 <p>The standard recommendation pipeline, produced by either of the approaches
 described above in <a class="reference internal" href="#pipeline-construct"><span class="std std-ref">Constructing Pipelines</span></a>, looks like this:</p>
-<figure class="align-default" id="id5">
+<figure class="align-default" id="id6">
 <pre  class="mermaid">
         ---
 config:
@@ -872,7 +872,7 @@ flowchart LR
     classDef config font-weight:bold,stroke-width:4px;
 
     </pre><figcaption>
-<p><span class="caption-text">Top-N recommendation pipeline.</span><a class="headerlink" href="#id5" title="Link to this image">#</a></p>
+<p><span class="caption-text">Top-N recommendation pipeline.</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 <p>The convenience methods are equivalent to the following pipeline code:</p>
@@ -905,7 +905,7 @@ flowchart LR
 predict ratings for items the primary scorer cannot score (e.g. they are not in
 an item neighborhood), we use the following pipeline (created by
 <a class="reference internal" href="../api/lenskit.pipeline.RecPipelineBuilder.html#lenskit.pipeline.RecPipelineBuilder" title="lenskit.pipeline.RecPipelineBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecPipelineBuilder</span></code></a> when rating prediction is enabled):</p>
-<figure class="align-default" id="id6">
+<figure class="align-default" id="id7">
 <pre  class="mermaid">
         ---
 config:
@@ -958,7 +958,7 @@ flowchart LR
     classDef config font-weight:bold,stroke-width:4px;
 
     </pre><figcaption>
-<p><span class="caption-text">Pipeline for top-N recommendation and rating prediction, with predictions falling back to a baseline scorer.</span><a class="headerlink" href="#id6" title="Link to this image">#</a></p>
+<p><span class="caption-text">Pipeline for top-N recommendation and rating prediction, with predictions falling back to a baseline scorer.</span><a class="headerlink" href="#id7" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
 </section>
@@ -976,6 +976,19 @@ to be trained.</p>
 parallelism in its batch-inference code.</p>
 <p>See <a class="reference internal" href="implementing.html#component-impl"><span class="std std-ref">Implementing Components</span></a> for more information on implementing your own
 components.</p>
+<section id="component-inputs">
+<span id="id4"></span><h3>Component Inputs<a class="headerlink" href="#component-inputs" title="Link to this heading">#</a></h3>
+<p>A component’s inputs are defined by the <strong>keyword arguments</strong> in its function
+call interface.  The function signature (of the <code class="docutils literal notranslate"><span class="pre">__call__</span></code> method on a
+class-based component, or the function itself for a function component) provide
+the names and, optionally, the types of the inputs that can be connected to
+other components or to pipeline inputs.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Component input names cannot begin with <code class="docutils literal notranslate"><span class="pre">_</span></code>, as such names are reserved
+for internal LensKit use.</p>
+</div>
+</section>
 <section id="configuring-components">
 <span id="component-config"></span><h3>Configuring Components<a class="headerlink" href="#configuring-components" title="Link to this heading">#</a></h3>
 <p>Unlike components in some other machine learning packages, LensKit components
@@ -1057,7 +1070,7 @@ returns a <a class="reference internal" href="../api/lenskit.pipeline.PipelineBu
 </ol>
 </section>
 <section id="pipeline-hooks">
-<span id="id4"></span><h2>Pipeline Hooks<a class="headerlink" href="#pipeline-hooks" title="Link to this heading">#</a></h2>
+<span id="id5"></span><h2>Pipeline Hooks<a class="headerlink" href="#pipeline-hooks" title="Link to this heading">#</a></h2>
 <p>Pipelines support <em>hooks</em> to allow client code to inspect or modify their
 behavior. Hooks are also used internally to support things like runtime type
 checking.</p>
@@ -1193,6 +1206,7 @@ components together.</p>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-pipelines">Standard Pipelines</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-interface">Component Interface</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#component-inputs">Component Inputs</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-components">Configuring Components</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#adding-components-to-the-pipeline">Adding Components to the Pipeline</a></li>
 </ul>
@@ -1246,7 +1260,7 @@ components together.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev299+g32f7fb7b.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev321+g2638ee4b.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
