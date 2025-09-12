@@ -14,7 +14,7 @@
 <meta property="og:description" content="Interfaces and support for model training." />
 <meta name="description" content="Interfaces and support for model training." />
 
-    <title>Model Training &#8212; LensKit 2025.3.0a4.dev400+g6c169e8c documentation</title>
+    <title>Model Training &#8212; LensKit 2025.3.0a4.dev434+g249fb9aa documentation</title>
   
   
   
@@ -48,7 +48,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=d98a09d9"></script>
+    <script src="../_static/documentation_options.js?v=69fbc8b3"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev400+g6c169e8c documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev400+g6c169e8c documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev434+g249fb9aa documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev434+g249fb9aa documentation - Home"/>
   
   
 </a></div>
@@ -524,6 +524,10 @@
 <li class="toctree-l1"><a class="reference internal" href="lenskit.funksvd.html">lenskit.funksvd</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lenskit.implicit.html">lenskit.implicit</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lenskit.hpf.html">lenskit.hpf</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="lenskit.graphs.html">lenskit.graphs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.graphs.lightgcn.html">lenskit.graphs.lightgcn</a></li>
+</ul>
+</details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Evaluation</span></p>
 <ul class="nav bd-sidenav">
@@ -873,9 +877,11 @@ training loops.</p>
 compatibility, but the <a class="reference internal" href="#lenskit.training.IterativeTraining" title="lenskit.training.IterativeTraining"><code class="xref py py-class docutils literal notranslate"><span class="pre">IterativeTraining</span></code></a> interface is deprecated.</p>
 <p>The component’s configuration must have an <code class="docutils literal notranslate"><span class="pre">epochs</span></code> attribute noting the
 number of epochs to train.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dl class="field-list">
+<dt class="field-odd">Stability<span class="colon">:</span></dt>
+<dd class="field-odd">Full (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>config</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" rel="noreferrer" target="_blank" title="(in Python v3.13)"><em>Any</em></a>)</p></li>
 <li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
@@ -951,6 +957,10 @@ should also implement <a class="reference internal" href="lenskit.state.Paramete
 training to be checkpointed and resumed.</p>
 <p>It is also a good idea for the trainer to be pickleable, but the parameter
 container interface is the primary mechanism for checkpointing.</p>
+<dl class="field-list">
+<dt class="field-odd">Stability<span class="colon">:</span></dt>
+<dd class="field-odd">Full (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
+</dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.training.ModelTrainer.train_epoch">
 <em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">train_epoch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.training.ModelTrainer.train_epoch" title="Link to this definition">#</a></dt>
@@ -969,6 +979,11 @@ must be usable.</p>
 <em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">finalize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.training.ModelTrainer.finalize" title="Link to this definition">#</a></dt>
 <dd><p>Finish the training process, cleaning up any unneeded data structures
 and doing any finalization steps to the model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1095,7 +1110,7 @@ and doing any finalization steps to the model.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev400+g6c169e8c.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev434+g249fb9aa.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
