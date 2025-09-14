@@ -12,7 +12,7 @@
 <meta property="og:url" content="api/lenskit.metrics.ListGini.html" />
 <meta property="og:site_name" content="LensKit" />
 
-    <title>lenskit.metrics.ListGini &#8212; LensKit 2025.3.0a4.dev434+g249fb9aa documentation</title>
+    <title>lenskit.metrics.ListGini &#8212; LensKit 2025.3.0a4.dev543+g07e5ac90 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=69fbc8b3"></script>
+    <script src="../_static/documentation_options.js?v=fe77063f"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -137,8 +137,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev434+g249fb9aa documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev434+g249fb9aa documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev543+g07e5ac90 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev543+g07e5ac90 documentation - Home"/>
   
   
 </a></div>
@@ -718,13 +718,22 @@ will be used.</p></li>
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.metrics.ListGini.compute_list_data" title="lenskit.metrics.ListGini.compute_list_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_list_data</span></code></a>(output, test)</p></td>
 <td><p>Compute measurements for a single list.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_list_metric</span></code>(metric, /)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_list_metric</span></code>(data, /)</p></td>
 <td><p>Extract a single-list metric from the per-list measurement result (if applicable).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.metrics.ListGini.global_aggregate" title="lenskit.metrics.ListGini.global_aggregate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">global_aggregate</span></code></a>(values)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_list_metrics</span></code>(data, /)</p></td>
+<td><p>Extract per-list metric(s) from intermediate measurement data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.metrics.ListGini.global_aggregate" title="lenskit.metrics.ListGini.global_aggregate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">global_aggregate</span></code></a>(values)</p></td>
 <td><p>Aggregate list metrics to compute a global value.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">truncate</span></code>(items)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">measure_list</span></code>(output, test, /)</p></td>
+<td><p>Compute measurements for a single list.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">summarize</span></code>(values, /)</p></td>
+<td><p>Aggregate intermediate values into summary statistics.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">truncate</span></code>(items)</p></td>
 <td><p>Truncate an item list if it is longer than <code class="xref py py-attr docutils literal notranslate"><span class="pre">k</span></code>.</p></td>
 </tr>
 </tbody>
@@ -749,6 +758,7 @@ will be used.</p></li>
 <dt class="sig sig-object py" id="lenskit.metrics.ListGini.compute_list_data">
 <span class="sig-name descname"><span class="pre">compute_list_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ListGini.compute_list_data" title="Link to this definition">#</a></dt>
 <dd><p>Compute measurements for a single list.</p>
+<p>Use <cite>measure_list</cite> in <cite>Metric</cite> for new implementations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>output</strong> (<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a>)</p>
@@ -760,6 +770,7 @@ will be used.</p></li>
 <dt class="sig sig-object py" id="lenskit.metrics.ListGini.global_aggregate">
 <span class="sig-name descname"><span class="pre">global_aggregate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ListGini.global_aggregate" title="Link to this definition">#</a></dt>
 <dd><p>Aggregate list metrics to compute a global value.</p>
+<p>Implement <a class="reference internal" href="lenskit.metrics.Metric.html#lenskit.metrics.Metric.summarize" title="lenskit.metrics.Metric.summarize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric.summarize()</span></code></a> in new implementations.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" rel="noreferrer" target="_blank" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.Array.html#pyarrow.Array" rel="noreferrer" target="_blank" title="(in Apache Arrow v21.0.0)"><em>Array</em></a><em>]</em>)</p>
@@ -867,7 +878,7 @@ will be used.</p></li>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev434+g249fb9aa.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev543+g07e5ac90.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

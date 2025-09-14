@@ -12,7 +12,7 @@
 <meta property="og:url" content="api/lenskit.metrics.RMSE.html" />
 <meta property="og:site_name" content="LensKit" />
 
-    <title>lenskit.metrics.RMSE &#8212; LensKit 2025.3.0a4.dev434+g249fb9aa documentation</title>
+    <title>lenskit.metrics.RMSE &#8212; LensKit 2025.3.0a4.dev543+g07e5ac90 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=69fbc8b3"></script>
+    <script src="../_static/documentation_options.js?v=fe77063f"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -138,8 +138,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev434+g249fb9aa documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev434+g249fb9aa documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev543+g07e5ac90 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev543+g07e5ac90 documentation - Home"/>
   
   
 </a></div>
@@ -726,11 +726,17 @@ cannot predict), generate predictions with
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.metrics.RMSE.extract_list_metric" title="lenskit.metrics.RMSE.extract_list_metric"><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_list_metric</span></code></a>(metric)</p></td>
 <td><p>Extract a single-list metric from the per-list measurement result (if applicable).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.metrics.RMSE.global_aggregate" title="lenskit.metrics.RMSE.global_aggregate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">global_aggregate</span></code></a>(values)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_list_metrics</span></code>(data, /)</p></td>
+<td><p>Return the given per-list metric result.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.metrics.RMSE.global_aggregate" title="lenskit.metrics.RMSE.global_aggregate"><code class="xref py py-obj docutils literal notranslate"><span class="pre">global_aggregate</span></code></a>(values)</p></td>
 <td><p>Aggregate list metrics to compute a global value.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.metrics.RMSE.measure_list" title="lenskit.metrics.RMSE.measure_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">measure_list</span></code></a>(predictions[, test])</p></td>
-<td><p>Compute the metric value for a single result list.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.metrics.RMSE.measure_list" title="lenskit.metrics.RMSE.measure_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">measure_list</span></code></a>(predictions[, test])</p></td>
+<td><p>Compute measurements for a single list.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">summarize</span></code>(values, /)</p></td>
+<td><p>Summarize per-list metric values</p></td>
 </tr>
 </tbody>
 </table>
@@ -739,7 +745,7 @@ cannot predict), generate predictions with
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">default</span></code></p></td>
-<td><p>The default value to infer when computing statistics over missing values.</p></td>
+<td><p></p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">label</span></code></p></td>
 <td><p>The metric's default label in output.</p></td>
@@ -756,17 +762,24 @@ cannot predict), generate predictions with
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.RMSE.measure_list">
 <span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RMSE.measure_list" title="Link to this definition">#</a></dt>
-<dd><p>Compute the metric value for a single result list.</p>
-<p>Individual metric classes need to implement this method.</p>
+<dd><p>Compute measurements for a single list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>predictions</strong> (<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a>)</p></li>
 <li><p><strong>test</strong> (<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a><em> | </em><em>None</em>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.13)">float</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.13)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -775,6 +788,7 @@ cannot predict), generate predictions with
 <dt class="sig sig-object py" id="lenskit.metrics.RMSE.compute_list_data">
 <span class="sig-name descname"><span class="pre">compute_list_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RMSE.compute_list_data" title="Link to this definition">#</a></dt>
 <dd><p>Compute measurements for a single list.</p>
+<p>Use <cite>measure_list</cite> in <cite>Metric</cite> for new implementations.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -788,12 +802,14 @@ applicable).</p>
 per-list metrics.</p>
 </dd>
 </dl>
+<p>Implement <a class="reference internal" href="lenskit.metrics.Metric.html#lenskit.metrics.Metric.extract_list_metrics" title="lenskit.metrics.Metric.extract_list_metrics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric.extract_list_metrics()</span></code></a> in new implementations.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.RMSE.global_aggregate">
 <span class="sig-name descname"><span class="pre">global_aggregate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RMSE.global_aggregate" title="Link to this definition">#</a></dt>
 <dd><p>Aggregate list metrics to compute a global value.</p>
+<p>Implement <a class="reference internal" href="lenskit.metrics.Metric.html#lenskit.metrics.Metric.summarize" title="lenskit.metrics.Metric.summarize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Metric.summarize()</span></code></a> in new implementations.</p>
 </dd></dl>
 
 </dd></dl>
@@ -898,7 +914,7 @@ per-list metrics.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev434+g249fb9aa.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev543+g07e5ac90.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

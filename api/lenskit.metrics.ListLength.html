@@ -12,7 +12,7 @@
 <meta property="og:url" content="api/lenskit.metrics.ListLength.html" />
 <meta property="og:site_name" content="LensKit" />
 
-    <title>lenskit.metrics.ListLength &#8212; LensKit 2025.3.0a4.dev434+g249fb9aa documentation</title>
+    <title>lenskit.metrics.ListLength &#8212; LensKit 2025.3.0a4.dev543+g07e5ac90 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=69fbc8b3"></script>
+    <script src="../_static/documentation_options.js?v=fe77063f"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -137,8 +137,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev434+g249fb9aa documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev434+g249fb9aa documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev543+g07e5ac90 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev543+g07e5ac90 documentation - Home"/>
   
   
 </a></div>
@@ -679,7 +679,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.metrics.ListLength">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.metrics.</span></span><span class="sig-name descname"><span class="pre">ListLength</span></span><a class="headerlink" href="#lenskit.metrics.ListLength" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="lenskit.metrics.Metric.html#lenskit.metrics.Metric" title="lenskit.metrics._base.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="lenskit.metrics.ListMetric.html#lenskit.metrics.ListMetric" title="lenskit.metrics._base.ListMetric"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListMetric</span></code></a></p>
 <p>Report the length of the output (recommendation list or predictions).</p>
 <dl class="field-list">
 <dt class="field-odd">Stability<span class="colon">:</span></dt>
@@ -696,18 +696,59 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.metrics.ListLength.__init__" title="lenskit.metrics.ListLength.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_list_metrics</span></code>(data, /)</p></td>
+<td><p>Return the given per-list metric result.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.metrics.ListLength.measure_list" title="lenskit.metrics.ListLength.measure_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">measure_list</span></code></a>(recs, test)</p></td>
+<td><p>Compute the metric value for a single result list.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.metrics.ListLength.summarize" title="lenskit.metrics.ListLength.summarize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">summarize</span></code></a>(values)</p></td>
+<td><p>Summarize per-list metric values</p></td>
+</tr>
 </tbody>
 </table>
 </div>
 <p class="rubric">Attributes</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">label</span></code></p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">default</span></code></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">label</span></code></p></td>
 <td><p></p></td>
 </tr>
 </tbody>
 </table>
 </div>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.metrics.ListLength.measure_list">
+<span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ListLength.measure_list" title="Link to this definition">#</a></dt>
+<dd><p>Compute the metric value for a single result list.</p>
+<p>Individual metric classes need to implement this method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>recs</strong> (<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a>)</p></li>
+<li><p><strong>test</strong> (<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.metrics.ListLength.summarize">
+<span class="sig-name descname"><span class="pre">summarize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ListLength.summarize" title="Link to this definition">#</a></dt>
+<dd><p>Summarize per-list metric values</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary containing mean, median, and std.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -761,6 +802,8 @@
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ListLength"><code class="docutils literal notranslate"><span class="pre">ListLength</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ListLength.__init__"><code class="docutils literal notranslate"><span class="pre">ListLength.__init__()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ListLength.measure_list"><code class="docutils literal notranslate"><span class="pre">ListLength.measure_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ListLength.summarize"><code class="docutils literal notranslate"><span class="pre">ListLength.summarize()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -806,7 +849,7 @@
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev434+g249fb9aa.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev543+g07e5ac90.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

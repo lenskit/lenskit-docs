@@ -12,7 +12,7 @@
 <meta property="og:url" content="api/lenskit.metrics.GlobalMetric.html" />
 <meta property="og:site_name" content="LensKit" />
 
-    <title>lenskit.metrics.GlobalMetric &#8212; LensKit 2025.3.0a4.dev434+g249fb9aa documentation</title>
+    <title>lenskit.metrics.GlobalMetric &#8212; LensKit 2025.3.0a4.dev543+g07e5ac90 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=69fbc8b3"></script>
+    <script src="../_static/documentation_options.js?v=fe77063f"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -137,8 +137,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev434+g249fb9aa documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev434+g249fb9aa documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev543+g07e5ac90 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev543+g07e5ac90 documentation - Home"/>
   
   
 </a></div>
@@ -697,8 +697,17 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.metrics.GlobalMetric.__init__" title="lenskit.metrics.GlobalMetric.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>()</p></td>
 <td><p></p></td>
 </tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">extract_list_metrics</span></code>(data, /)</p></td>
+<td><p>Extract per-list metric(s) from intermediate measurement data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.metrics.GlobalMetric.measure_list" title="lenskit.metrics.GlobalMetric.measure_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">measure_list</span></code></a>(output, test, /)</p></td>
+<td><p>Compute measurements for a single list.</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.metrics.GlobalMetric.measure_run" title="lenskit.metrics.GlobalMetric.measure_run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">measure_run</span></code></a>(output, test, /)</p></td>
 <td><p>Compute a metric value for an entire run.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.metrics.GlobalMetric.summarize" title="lenskit.metrics.GlobalMetric.summarize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">summarize</span></code></a>(values, /)</p></td>
+<td><p>Aggregate intermediate values into summary statistics.</p></td>
 </tr>
 </tbody>
 </table>
@@ -726,6 +735,48 @@
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.13)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.metrics.GlobalMetric.measure_list">
+<span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.GlobalMetric.measure_list" title="Link to this definition">#</a></dt>
+<dd><p>Compute measurements for a single list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>output</strong> (<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a>)</p></li>
+<li><p><strong>test</strong> (<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a>)</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" rel="noreferrer" target="_blank" title="(in Python v3.13)"><em>Any</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.metrics.GlobalMetric.summarize">
+<span class="sig-name descname"><span class="pre">summarize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.GlobalMetric.summarize" title="Link to this definition">#</a></dt>
+<dd><p>Aggregate intermediate values into summary statistics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A dictionary of summary statistics.</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" rel="noreferrer" target="_blank" title="(in Python v3.13)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" rel="noreferrer" target="_blank" title="(in Python v3.13)"><em>Any</em></a><em>] </em><em>| </em><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.Array.html#pyarrow.Array" rel="noreferrer" target="_blank" title="(in Apache Arrow v21.0.0)"><em>Array</em></a><em> | </em><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.ChunkedArray.html#pyarrow.ChunkedArray" rel="noreferrer" target="_blank" title="(in Apache Arrow v21.0.0)"><em>ChunkedArray</em></a>)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.13)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -784,6 +835,8 @@
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.GlobalMetric"><code class="docutils literal notranslate"><span class="pre">GlobalMetric</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.GlobalMetric.__init__"><code class="docutils literal notranslate"><span class="pre">GlobalMetric.__init__()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.GlobalMetric.measure_run"><code class="docutils literal notranslate"><span class="pre">GlobalMetric.measure_run()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.GlobalMetric.measure_list"><code class="docutils literal notranslate"><span class="pre">GlobalMetric.measure_list()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.GlobalMetric.summarize"><code class="docutils literal notranslate"><span class="pre">GlobalMetric.summarize()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -829,7 +882,7 @@
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev434+g249fb9aa.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev543+g07e5ac90.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
