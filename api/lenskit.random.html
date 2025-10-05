@@ -14,7 +14,7 @@
 <meta property="og:description" content="Utilities to manage randomness in LensKit and LensKit experiments. Module Attributes Functions Classes" />
 <meta name="description" content="Utilities to manage randomness in LensKit and LensKit experiments. Module Attributes Functions Classes" />
 
-    <title>lenskit.random &#8212; LensKit 2025.3.0a4.dev593+ge4352016 documentation</title>
+    <title>lenskit.random &#8212; LensKit 2025.3.0a4.dev616+gd0c50a76 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=751e556e"></script>
+    <script src="../_static/documentation_options.js?v=734cafdf"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev593+ge4352016 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev593+ge4352016 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev616+gd0c50a76 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev616+gd0c50a76 documentation - Home"/>
   
   
 </a></div>
@@ -703,17 +703,23 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.random.init_global_rng" title="lenskit.random.init_global_rng"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_global_rng</span></code></a>(seed, *[, seed_stdlib, ...])</p></td>
 <td><p>Set the global default RNG.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.random.load_seed" title="lenskit.random.load_seed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_seed</span></code></a>(file[, key])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.random.int_seed" title="lenskit.random.int_seed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">int_seed</span></code></a>(seed)</p></td>
+<td><p>Convert a seed sequence into an integer seed.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.random.load_seed" title="lenskit.random.load_seed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_seed</span></code></a>(file[, key])</p></td>
 <td><p>Load a seed from a configuration file.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.random.make_seed" title="lenskit.random.make_seed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_seed</span></code></a>(*keys)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.random.make_seed" title="lenskit.random.make_seed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">make_seed</span></code></a>(*keys)</p></td>
 <td><p>Make an RNG seed from an input key, allowing strings as seed material.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.random.random_generator" title="lenskit.random.random_generator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random_generator</span></code></a>([seed])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.random.random_generator" title="lenskit.random.random_generator"><code class="xref py py-obj docutils literal notranslate"><span class="pre">random_generator</span></code></a>([seed])</p></td>
 <td><p>Create a a random generator with the given seed, falling back to a global generator if no seed is provided.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.random.set_global_rng" title="lenskit.random.set_global_rng"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_global_rng</span></code></a>(seed)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.random.set_global_rng" title="lenskit.random.set_global_rng"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_global_rng</span></code></a>(seed)</p></td>
 <td><p>Set the global default RNG.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.random.spawn_seed" title="lenskit.random.spawn_seed"><code class="xref py py-obj docutils literal notranslate"><span class="pre">spawn_seed</span></code></a>([seed])</p></td>
+<td><p>Spawn a derived seed from a seed or input.</p></td>
 </tr>
 </tbody>
 </table>
@@ -820,6 +826,34 @@ configured with <a class="reference internal" href="#lenskit.random.set_global_r
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/random/generator.html#numpy.random.Generator" rel="noreferrer" target="_blank" title="(in NumPy v2.3)"><em>Generator</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.random.spawn_seed">
+<span class="sig-prename descclassname"><span class="pre">lenskit.random.</span></span><span class="sig-name descname"><span class="pre">spawn_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.random.spawn_seed" title="Link to this definition">#</a></dt>
+<dd><p>Spawn a derived seed from a seed or input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> (<em>lenskit.random.RNGInput</em>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" rel="noreferrer" target="_blank" title="(in NumPy v2.3)"><em>SeedSequence</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lenskit.random.int_seed">
+<span class="sig-prename descclassname"><span class="pre">lenskit.random.</span></span><span class="sig-name descname"><span class="pre">int_seed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.random.int_seed" title="Link to this definition">#</a></dt>
+<dd><p>Convert a seed sequence into an integer seed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> (<a class="reference external" href="https://numpy.org/doc/stable/reference/random/bit_generators/generated/numpy.random.SeedSequence.html#numpy.random.SeedSequence" rel="noreferrer" target="_blank" title="(in NumPy v2.3)"><em>SeedSequence</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.13)">int</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -958,6 +992,8 @@ basis and drive from it a new seed based on the user ID.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.random.set_global_rng"><code class="docutils literal notranslate"><span class="pre">set_global_rng()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.random.init_global_rng"><code class="docutils literal notranslate"><span class="pre">init_global_rng()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.random.random_generator"><code class="docutils literal notranslate"><span class="pre">random_generator()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.random.spawn_seed"><code class="docutils literal notranslate"><span class="pre">spawn_seed()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.random.int_seed"><code class="docutils literal notranslate"><span class="pre">int_seed()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.random.make_seed"><code class="docutils literal notranslate"><span class="pre">make_seed()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.random.RNGFactory"><code class="docutils literal notranslate"><span class="pre">RNGFactory</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.random.FixedRNG"><code class="docutils literal notranslate"><span class="pre">FixedRNG</span></code></a></li>
@@ -1006,7 +1042,7 @@ basis and drive from it a new seed based on the user ID.</p></li>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev593+ge4352016.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev616+gd0c50a76.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
