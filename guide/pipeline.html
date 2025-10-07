@@ -14,7 +14,7 @@
 <meta property="og:description" content="Since version 2025.1.1, LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produce predictio..." />
 <meta name="description" content="Since version 2025.1.1, LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produce predictio..." />
 
-    <title>Recommendation Pipelines &#8212; LensKit 2025.3.0a4.dev635+g91c688a5 documentation</title>
+    <title>Recommendation Pipelines &#8212; LensKit 2025.3.0a4.dev637+g55e2d4d4 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=9c4c6544"></script>
+    <script src="../_static/documentation_options.js?v=a7735ef1"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -176,8 +176,8 @@ window.addEventListener("load", load);
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev635+g91c688a5 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev635+g91c688a5 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0a4.dev637+g55e2d4d4 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0a4.dev637+g55e2d4d4 documentation - Home"/>
   
   
 </a></div>
@@ -816,7 +816,7 @@ parallel batch operations.</p>
 make no attempt to maintain pickle compatibility.</p>
 </div>
 </li>
-<li><p>Save the pipeline configuration (<a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.config" title="lenskit.pipeline.Pipeline.config"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Pipeline.config</span></code></a>, using <a class="reference external" href="https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel.model_dump_json" rel="noreferrer" target="_blank" title="(in Pydantic v0.0.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">model_dump_json()</span></code></a>).  This saves the components,
+<li><p>Save the pipeline configuration (<a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.config" title="lenskit.pipeline.Pipeline.config"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Pipeline.config</span></code></a>, using <a class="reference external" href="https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel.model_dump_json" rel="noreferrer" target="_blank" title="(in Pydantic Validation v0.0.0)"><code class="xref py py-func docutils literal notranslate"><span class="pre">model_dump_json()</span></code></a>).  This saves the components,
 their configurations, and their connections, but <strong>not</strong> any learned
 parameter data.  A new pipeline can be constructed from such a configuration
 can be reloaded with <a class="reference internal" href="../api/lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.from_config" title="lenskit.pipeline.Pipeline.from_config"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.from_config()</span></code></a>.</p></li>
@@ -997,8 +997,8 @@ serialized to and from JSON-like data structures.</p>
 <p>To support configuration, all a component needs to do is (1) extend
 <a class="reference internal" href="../api/lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>, and (2) declare an instance variable whose type is the
 configuration object type.  This configuration object’s class can be either a
-Python dataclass (see <a class="reference external" href="https://docs.python.org/3/library/dataclasses.html#module-dataclasses" rel="noreferrer" target="_blank" title="(in Python v3.13)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dataclasses</span></code></a>) or a Pydantic model class (see
-<a class="reference external" href="https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel" rel="noreferrer" target="_blank" title="(in Pydantic v0.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.BaseModel</span></code></a>); in both cases, they are serialized and validated
+Python dataclass (see <a class="reference external" href="https://docs.python.org/3/library/dataclasses.html#module-dataclasses" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dataclasses</span></code></a>) or a Pydantic model class (see
+<a class="reference external" href="https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel" rel="noreferrer" target="_blank" title="(in Pydantic Validation v0.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.BaseModel</span></code></a>); in both cases, they are serialized and validated
 with Pydantic.  <a class="reference internal" href="../api/lenskit.pipeline.Component.html#lenskit.pipeline.Component.__init__" title="lenskit.pipeline.Component.__init__"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component.__init__</span></code></a> will take care of storing the
 configuration object if one is provided, or instantiating the configuration
 class with defaults or from keyword arguments.  In most cases, you don’t need
@@ -1260,7 +1260,7 @@ components together.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.0a4.dev635+g91c688a5.</div>
+        <div class="footer-item">LensKit version 2025.3.0a4.dev637+g55e2d4d4.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
