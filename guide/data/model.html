@@ -12,14 +12,9 @@
 <meta property="og:url" content="guide/data/model.html" />
 <meta property="og:site_name" content="LensKit" />
 <meta property="og:description" content="LensKit defines holistic data model for recommender training (and evaluation) data. The model is graph-structured, but the interfaces and definitions center tabular (data frame) views of that data ..." />
-<meta property="og:image:width" content="1146" />
-<meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_guide_data_model_dc500ddd.png" />
-<meta property="og:image:alt" content="LensKit defines holistic data model for recommender training (and evaluation) data. The model is graph-structured, but the interfaces and definitions center..." />
 <meta name="description" content="LensKit defines holistic data model for recommender training (and evaluation) data. The model is graph-structured, but the interfaces and definitions center tabular (data frame) views of that data ..." />
-<meta name="twitter:card" content="summary_large_image" />
 
-    <title>Data Model &#8212; LensKit 2025.2.0 documentation</title>
+    <title>Data Model &#8212; LensKit 2025.3.0 documentation</title>
   
   
   
@@ -27,8 +22,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -38,35 +33,38 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=474ac1f0" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=9d9b0268" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=f788092f"></script>
+    <script src="../../_static/documentation_options.js?v=865d4376"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'guide/data/model';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lkpy.lenskit.org/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
-        DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            true;
         </script>
     <link rel="canonical" href="https://lkpy.lenskit.org/stable/guide/data/model.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -75,7 +73,7 @@
     <link rel="prev" title="Datasets" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.2.0" />
+  <meta name="docsearch:version" content="2025.3.0" />
   </head>
   
   
@@ -141,8 +139,8 @@
       
     
     
-    <img src="../../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.0 documentation - Home"/>
-    <img src="../../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.0 documentation - Home"/>
+    <img src="../../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0 documentation - Home"/>
+    <img src="../../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0 documentation - Home"/>
   
   
 </a></div>
@@ -174,6 +172,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../releases/index.html">
     Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../research/index.html">
+    Research
   </a>
 </li>
 
@@ -257,6 +262,18 @@
           <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Mastodon</span></a>
         </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
+        </li>
 </ul></div>
       
     </div>
@@ -322,6 +339,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../releases/index.html">
     Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../research/index.html">
+    Research
   </a>
 </li>
 
@@ -396,6 +420,18 @@
           <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Mastodon</span></a>
         </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
+        </li>
 </ul></div>
         
       </div>
@@ -428,12 +464,14 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="datasets.html">Standard Datasets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="movielens.html">MovieLens Data</a></li>
 
+<li class="toctree-l2"><a class="reference internal" href="amazon.html">Amazon Data</a></li>
 </ul>
 </details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../conventions.html">Component Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../flexmf.html">Flexible Matrix Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../scorers.html">Scoring Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rankers.html">Ranking Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other-components.html">Other Components</a></li>
@@ -444,8 +482,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../splitting.html">Splitting Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../batch.html">Batch-Running Pipelines</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../evaluation/index.html">Evaluating Recommender Output</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
-<li class="toctree-l2"><a class="reference internal" href="../evaluation/predictions.html">Evaluating Rating Predictions</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../evaluation/rankings.html">Evaluating Top-N Rankings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../evaluation/predictions.html">Evaluating Rating Predictions</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../documenting.html">Documenting Experiments</a></li>
@@ -462,9 +500,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -546,9 +589,11 @@ different subtypes.</p>
 <dt id="term-Entity-Identifier">Entity Identifier<a class="headerlink" href="#term-Entity-Identifier" title="Link to this term">#</a></dt><dd><p>Each entity has a unique (within its type) <em>identifier</em>.  Entity
 identifiers can be either integers or strings.</p>
 </dd>
-<dt id="term-Attribute">Attribute<a class="headerlink" href="#term-Attribute" title="Link to this term">#</a></dt><dd><p>Entities can have one or more <em>attributes</em>.  Attributes are consistent
-within an entity type, and are nullable (any individual entity may be
-missing a value for an attribute).</p>
+<dt id="term-Attribute">Attribute<a class="headerlink" href="#term-Attribute" title="Link to this term">#</a></dt><dd><p>Entities and relationships can have one or more <em>attributes</em>.
+Attributes are consistent within an entity type (i.e., each entity or
+relationship of a particular type has the same attributes with the same
+types), and are nullable (any individual entity may be missing a value
+for an attribute).</p>
 </dd>
 <dt id="term-Relationship">Relationship<a class="headerlink" href="#term-Relationship" title="Link to this term">#</a></dt><dd><p>A relationship connects two (or more) entities and may have additional
 attributes attached to the relationship itself.  Relationships may also
@@ -558,7 +603,10 @@ combination of entities).</p>
 <dt id="term-Relationship-Class">Relationship Class<a class="headerlink" href="#term-Relationship-Class" title="Link to this term">#</a></dt><dd><p>Relationship classes are like entity classes, but describe the type of a
 particular relationship.  This allows for models or client code to query
 for records of a particular relationship, such as “follows” or
-“purchased”.</p>
+“purchased”.  Each relationship class has a fixed list of entity classes
+that participate in relationships of that class.  For example, a
+<code class="docutils literal notranslate"><span class="pre">rating</span></code> class typically has the <code class="docutils literal notranslate"><span class="pre">user</span></code> and <code class="docutils literal notranslate"><span class="pre">item</span></code> entity classes
+participating.</p>
 </dd>
 <dt id="term-Interaction">Interaction<a class="headerlink" href="#term-Interaction" title="Link to this term">#</a></dt><dd><p>An interaction is a specific type of relationship record that records an
 interaction between two or more entities, such as a user rating a book,
@@ -611,6 +659,7 @@ sparse format, with missing values understood to be 0.</p></li>
 <p>Attribute names can be freely chosen, subject to a few lightweight restrictions:</p>
 <ul class="simple">
 <li><p>Within an entity or relationship class, names must be unique.</p></li>
+<li><p>The names must not start with an underscore such as <code class="docutils literal notranslate"><span class="pre">_$FOO</span></code>.</p></li>
 <li><p>For each entity class <code class="docutils literal notranslate"><span class="pre">$FOO</span></code>, the names <code class="docutils literal notranslate"><span class="pre">$FOO_id</span></code> and <code class="docutils literal notranslate"><span class="pre">$FOO_num</span></code> are
 reserved by LensKit and cannot be used by user-defined attributes (on any
 entity or relationship).  We recommend avoiding all attribute names of the
@@ -619,7 +668,7 @@ form <code class="docutils literal notranslate"><span class="pre">$FOO_&lt;ident
 </section>
 <section id="unsupported-features">
 <h3>Unsupported Features<a class="headerlink" href="#unsupported-features" title="Link to this heading">#</a></h3>
-<p>In the initial release of the new LensKit data model (in <a class="reference internal" href="../../releases/2025.html#id1"><span class="std std-ref">2025.1.1</span></a>), not all
+<p>In the initial release of the new LensKit data model (in <a class="reference internal" href="../../releases/2025.html#id5"><span class="std std-ref">2025.1.1</span></a>), not all
 possible attribute and entity or relationship class combinations are supported.
 In particular, relationships can only have scalar attributes.  We intend to
 relax this restriction in the future, with more time to determine an ergonomic
@@ -698,11 +747,29 @@ tables, entity types, and relationship types.  Client code will rarely need to
 create or work with the schema directly; it is created and maintained by the
 <a class="reference internal" href="../../api/lenskit.data.DatasetBuilder.html#lenskit.data.DatasetBuilder" title="lenskit.data.DatasetBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetBuilder</span></code></a>.</p>
 </section>
+<section id="lenskit-native-format">
+<span id="data-format"></span><h2>LensKit Native Format<a class="headerlink" href="#lenskit-native-format" title="Link to this heading">#</a></h2>
+<p>LensKit supports saving and loading data sets in <em>native</em> format: an optimized
+format that can fully serialize and deserialize a dataset, with all supported
+features.  The <a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset.save" title="lenskit.data.Dataset.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.save()</span></code></a> (or <a class="reference internal" href="../../api/lenskit.data.DatasetBuilder.html#lenskit.data.DatasetBuilder.save" title="lenskit.data.DatasetBuilder.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DatasetBuilder.save()</span></code></a>) and
+<a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset.load" title="lenskit.data.Dataset.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.load()</span></code></a> save and load datasets in this format, respectively. The
+native format is not intended to be directly manipulated; loading it with
+<a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset.load" title="lenskit.data.Dataset.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.load()</span></code></a> and extracting data from the resulting <a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> is
+the best way to process it.</p>
+<p>LensKit maintains backwards compatibility within the current and previous major
+releases.  That is, data saved with LensKit 2025.3 can be read by any later
+release of LensKit 2025.x or LensKit 2026.x.  Further, dataset changes will not
+be introduced in patch levels, so data is mutually intelligible between
+202X.Y.Z1 and 202X.Y.Z2 for any Z1 and Z2.</p>
+<p>Forward-compatibility is not yet maintained; data saved with LensKit may not be
+readable by prior versions.</p>
+</section>
 <section id="internal-representation">
 <span id="data-internal"></span><h2>Internal Representation<a class="headerlink" href="#internal-representation" title="Link to this heading">#</a></h2>
 <p>Data should only be accessed through the <a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> API, as
-the internal storage is subject to change.  Logically, each entity or
-relationship type is represented as a table, consisting of:</p>
+the internal storage is subject to change.</p>
+<p>In the current version, logically, each entity or relationship type is
+represented as a table, consisting of:</p>
 <ul class="simple">
 <li><p>One or more entity identifier or number columns</p></li>
 <li><p>Zero or more attribute columns</p></li>
@@ -777,18 +844,19 @@ containing the identifiers and attribute values. For entity classes,
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relationships">Relationships</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interactions">Interactions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#schemas">Schemas</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit-native-format">LensKit Native Format</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#internal-representation">Internal Representation</a></li>
 </ul>
   </nav></div>
 
   <div class="sidebar-secondary-item">
-
-  <div class="tocsection sourcelink">
-    <a href="../../_sources/guide/data/model.rst.txt">
-      <i class="fa-solid fa-file-lines"></i> Show Source
-    </a>
-  </div>
-</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/guide/data/model.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
 
 </div></div>
               
@@ -803,8 +871,8 @@ containing the identifiers and attribute values. For entity classes,
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -815,32 +883,28 @@ containing the identifiers and attribute values. For entity classes,
 
   <p class="copyright">
     
-      © Copyright 2018–2024 Drexel University, Boise State University, and collaborators.
+      © Copyright 2018–2025 Drexel University, Boise State University, and collaborators.
       <br/>
     
   </p>
 </div>
       
-        <div class="footer-item">
-
-  <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
-    <br/>
-  </p>
-</div>
+        <div class="footer-item">LensKit version 2025.3.0.</div>
       
-    </div>
-  
-  
-  
-    <div class="footer-items__end">
-      
-        <div class="footer-item">
-<p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+        <div class="footer-item"><p>
+    This material is partially based upon work supported by the National Science Foundation under
+    Grant Nos. <a href="https://md.ekstrandom.net/research/career" target="_blank">17-51278</a> and
+    24-15042. Any opinions, findings, and conclusions or recommendations expressed in this material
+    are those of the author(s) and do not necessarily reflect the views of the
+    National Science Foundation, Drexel University, or Boise State University.</p>
 </p></div>
       
+        <div class="footer-item"><script data-goatcounter="https://lenskit.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script></div>
+      
     </div>
+  
+  
   
 </div>
 

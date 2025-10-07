@@ -12,14 +12,9 @@
 <meta property="og:url" content="guide/evaluation/rankings.html" />
 <meta property="og:site_name" content="LensKit" />
 <meta property="og:description" content="The lenskit.metrics.ranking module contains the core top- N ranking accuracy metrics (including rank-oblivious list metrics like precision, recall, and hit rate). Ranking metrics extend the Ranking..." />
-<meta property="og:image:width" content="1146" />
-<meta property="og:image:height" content="600" />
-<meta property="og:image" content="/_images/social_previews/summary_guide_evaluation_rankings_6fddfba9.png" />
-<meta property="og:image:alt" content="The lenskit.metrics.ranking module contains the core top- N ranking accuracy metrics (including rank-oblivious list metrics like precision, recall, and hit r..." />
 <meta name="description" content="The lenskit.metrics.ranking module contains the core top- N ranking accuracy metrics (including rank-oblivious list metrics like precision, recall, and hit rate). Ranking metrics extend the Ranking..." />
-<meta name="twitter:card" content="summary_large_image" />
 
-    <title>Evaluating Top-N Rankings &#8212; LensKit 2025.2.0 documentation</title>
+    <title>Evaluating Top-N Rankings &#8212; LensKit 2025.3.0 documentation</title>
   
   
   
@@ -27,8 +22,8 @@
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
     document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
   </script>
-  <!-- 
-    this give us a css class that will be invisible only if js is disabled 
+  <!--
+    this give us a css class that will be invisible only if js is disabled
   -->
   <noscript>
     <style>
@@ -38,45 +33,48 @@
   </noscript>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../../_static/styles/theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
-<link href="../../_static/styles/pydata-sphinx-theme.css?digest=26a4bc78f4c0ddb94549" rel="stylesheet" />
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
-    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=474ac1f0" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=9d9b0268" />
   
   <!-- So that users can add custom icons -->
-  <script src="../../_static/scripts/fontawesome.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549" />
-<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549" />
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=f788092f"></script>
+    <script src="../../_static/documentation_options.js?v=865d4376"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'guide/evaluation/rankings';</script>
     <script>
-        DOCUMENTATION_OPTIONS.theme_version = '0.16.0';
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
         DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lkpy.lenskit.org/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
-        DOCUMENTATION_OPTIONS.show_version_warning_banner = true;
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            true;
         </script>
     <link rel="canonical" href="https://lkpy.lenskit.org/stable/guide/evaluation/rankings.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Documenting Experiments" href="../documenting.html" />
-    <link rel="prev" title="Evaluating Rating Predictions" href="predictions.html" />
+    <link rel="next" title="Evaluating Rating Predictions" href="predictions.html" />
+    <link rel="prev" title="Evaluating Recommender Output" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.2.0" />
+  <meta name="docsearch:version" content="2025.3.0" />
   </head>
   
   
@@ -142,8 +140,8 @@
       
     
     
-    <img src="../../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.2.0 documentation - Home"/>
-    <img src="../../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.2.0 documentation - Home"/>
+    <img src="../../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.0 documentation - Home"/>
+    <img src="../../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.0 documentation - Home"/>
   
   
 </a></div>
@@ -175,6 +173,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../releases/index.html">
     Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../research/index.html">
+    Research
   </a>
 </li>
 
@@ -258,6 +263,18 @@
           <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Mastodon</span></a>
         </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
+        </li>
 </ul></div>
       
     </div>
@@ -323,6 +340,13 @@
 <li class="nav-item ">
   <a class="nav-link nav-internal" href="../../releases/index.html">
     Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../research/index.html">
+    Research
   </a>
 </li>
 
@@ -397,6 +421,18 @@
           <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
             <span class="sr-only">Mastodon</span></a>
         </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
+        </li>
 </ul></div>
         
       </div>
@@ -429,12 +465,14 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="../data/datasets.html">Standard Datasets</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../data/movielens.html">MovieLens Data</a></li>
 
+<li class="toctree-l2"><a class="reference internal" href="../data/amazon.html">Amazon Data</a></li>
 </ul>
 </details></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../conventions.html">Component Conventions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../flexmf.html">Flexible Matrix Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../scorers.html">Scoring Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rankers.html">Ranking Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other-components.html">Other Components</a></li>
@@ -445,8 +483,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../splitting.html">Splitting Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../batch.html">Batch-Running Pipelines</a></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="index.html">Evaluating Recommender Output</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="predictions.html">Evaluating Rating Predictions</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Evaluating Top-N Rankings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="predictions.html">Evaluating Rating Predictions</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="../documenting.html">Documenting Experiments</a></li>
@@ -463,9 +501,14 @@
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
   </div>
-  
-  <div id="rtd-footer-container"></div>
 
 
       </div>
@@ -525,7 +568,7 @@ a recommendation list and a test rating list, both as <a class="reference intern
 be <a class="reference internal" href="../../api/lenskit.data.ItemList.html#lenskit.data.ItemList.ordered" title="lenskit.data.ItemList.ordered"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ordered</span></code></a>.</p>
 <p>All LensKit ranking metrics take <cite>k</cite> as a constructor argument to control the
 list of the length that is considered; this allows multiple measurements (e.g.
-HR&#64;5 and <a class="reference external" href="mailto:HR&#37;&#52;&#48;10">HR<span>&#64;</span>10</a>) to be computed from a single set of rankings.</p>
+HR&#64;5 and <a class="reference external" href="mailto:HR&#37;&#52;&#48;10" rel="noreferrer" target="_blank">HR<span>&#64;</span>10</a>) to be computed from a single set of rankings.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 2025.1: </span>The top-N accuracy metric interface has changed to use item lists, and to
 be simpler to implement.</p>
@@ -536,7 +579,7 @@ be simpler to implement.</p>
 <h3>List and Set Metrics<a class="headerlink" href="#list-and-set-metrics" title="Link to this heading">#</a></h3>
 <p>These metrics just look at the recommendation list and do not consider the rank
 positions of items within it.</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Hit</span></code></p></td>
 <td><p>Compute whether or not a list is a hit; any list with at least one relevant item in the first <span class="math notranslate nohighlight">\(k\)</span> positions (<span class="math notranslate nohighlight">\(L_{\le k} \cap I_u^{\mathrm{test}} \ne \emptyset\)</span>) is scored as 1, and lists with no relevant items as 0.</p></td>
@@ -556,16 +599,19 @@ positions of items within it.</p>
 <p>These metrics treat the recommendation list as a ranked list of items that may
 or may not be relevant; some also support different item utilities (e.g. ratings
 or graded relevance scores).</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="../../api/lenskit.metrics.RecipRank.html#lenskit.metrics.RecipRank" title="lenskit.metrics.RecipRank"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RecipRank</span></code></a></p></td>
-<td><p>Compute the reciprocal rank <span id="id1">[<a class="reference internal" href="../../references.html#id57" title="Paul B Kantor and Ellen Voorhees. Report on the TREC-5 Confusion Track. In The Fifth Text REtrieval Conference (TREC-5). October 1997. URL: http://trec.nist.gov/pubs/trec5/t5_proceedings.html.">KV97</a>]</span> of the first relevant item in a list of recommendations.</p></td>
+<td><p>Compute the reciprocal rank <span id="id1">[<a class="reference internal" href="../../references.html#id59" title="Paul B Kantor and Ellen Voorhees. Report on the TREC-5 Confusion Track. In The Fifth Text REtrieval Conference (TREC-5). October 1997. URL: http://trec.nist.gov/pubs/trec5/t5_proceedings.html.">KV97</a>]</span> of the first relevant item in a list of recommendations.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="../../api/lenskit.metrics.RBP.html#lenskit.metrics.RBP" title="lenskit.metrics.RBP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RBP</span></code></a></p></td>
-<td><p>Evaluate recommendations with rank-biased precision <span id="id2">[<a class="reference internal" href="../../references.html#id47" title="Alistair Moffat and Justin Zobel. Rank-Biased Precision for Measurement of Retrieval Effectiveness. Transactions on Information Systems, 27(1):2:1-27, December 2008. doi:10.1145/1416950.1416952.">MZ08</a>]</span> with a patience parameter <span class="math notranslate nohighlight">\(\gamma\)</span>.</p></td>
+<td><p>Evaluate recommendations with rank-biased precision <span id="id2">[<a class="reference internal" href="../../references.html#id50" title="Alistair Moffat and Justin Zobel. Rank-biased precision for measurement of retrieval effectiveness. Transactions on Information Systems, 27(1):2:1-27, December 2008. doi:10.1145/1416950.1416952.">MZ08</a>]</span>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="../../api/lenskit.metrics.NDCG.html#lenskit.metrics.NDCG" title="lenskit.metrics.NDCG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDCG</span></code></a></p></td>
-<td><p>Compute the normalized discounted cumulative gain <span id="id3">[<a class="reference internal" href="../../references.html#id38" title="Kalervo Järvelin and Jaana Kekäläinen. Cumulated gain-based evaluation of IR techniques. ACM Transactions on Information Systems, 20(4):422–446, October 2002. doi:10.1145/582415.582418.">JarvelinKekalainen02</a>]</span>.</p></td>
+<td><p>Compute the normalized discounted cumulative gain <span id="id3">[<a class="reference internal" href="../../references.html#id41" title="Kalervo Järvelin and Jaana Kekäläinen. Cumulated gain-based evaluation of IR techniques. ACM Transactions on Information Systems, 20(4):422–446, October 2002. doi:10.1145/582415.582418.">JarvelinKekalainen02</a>]</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DCG</span></code></p></td>
+<td><p>Compute the _unnormalized_ discounted cumulative gain <span id="id4">[<a class="reference internal" href="../../references.html#id41" title="Kalervo Järvelin and Jaana Kekäläinen. Cumulated gain-based evaluation of IR techniques. ACM Transactions on Information Systems, 20(4):422–446, October 2002. doi:10.1145/582415.582418.">JarvelinKekalainen02</a>]</span>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -575,7 +621,7 @@ or graded relevance scores).</p>
 <h3>Beyond Accuracy<a class="headerlink" href="#beyond-accuracy" title="Link to this heading">#</a></h3>
 <p>These metrics measure <strong>non-accuracy</strong> properties of recommendation lists, such
 as popularity/obscurity or diversity.</p>
-<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="../../api/lenskit.metrics.MeanPopRank.html#lenskit.metrics.MeanPopRank" title="lenskit.metrics.MeanPopRank"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MeanPopRank</span></code></a></p></td>
 <td><p>Compute the _obscurity_ (mean popularity rank) of the recommendations.</p></td>
@@ -598,20 +644,20 @@ as popularity/obscurity or diversity.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="predictions.html"
+       href="index.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Evaluating Rating Predictions</p>
+        <p class="prev-next-title">Evaluating Recommender Output</p>
       </div>
     </a>
     <a class="right-next"
-       href="../documenting.html"
+       href="predictions.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Documenting Experiments</p>
+        <p class="prev-next-title">Evaluating Rating Predictions</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -644,13 +690,13 @@ as popularity/obscurity or diversity.</p>
   </nav></div>
 
   <div class="sidebar-secondary-item">
-
-  <div class="tocsection sourcelink">
-    <a href="../../_sources/guide/evaluation/rankings.rst.txt">
-      <i class="fa-solid fa-file-lines"></i> Show Source
-    </a>
-  </div>
-</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/guide/evaluation/rankings.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
 
 </div></div>
               
@@ -665,8 +711,8 @@ as popularity/obscurity or diversity.</p>
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script defer src="../../_static/scripts/bootstrap.js?digest=26a4bc78f4c0ddb94549"></script>
-<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=26a4bc78f4c0ddb94549"></script>
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -677,32 +723,28 @@ as popularity/obscurity or diversity.</p>
 
   <p class="copyright">
     
-      © Copyright 2018–2024 Drexel University, Boise State University, and collaborators.
+      © Copyright 2018–2025 Drexel University, Boise State University, and collaborators.
       <br/>
     
   </p>
 </div>
       
-        <div class="footer-item">
-
-  <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
-    <br/>
-  </p>
-</div>
+        <div class="footer-item">LensKit version 2025.3.0.</div>
       
-    </div>
-  
-  
-  
-    <div class="footer-items__end">
-      
-        <div class="footer-item">
-<p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.0.
+        <div class="footer-item"><p>
+    This material is partially based upon work supported by the National Science Foundation under
+    Grant Nos. <a href="https://md.ekstrandom.net/research/career" target="_blank">17-51278</a> and
+    24-15042. Any opinions, findings, and conclusions or recommendations expressed in this material
+    are those of the author(s) and do not necessarily reflect the views of the
+    National Science Foundation, Drexel University, or Boise State University.</p>
 </p></div>
       
+        <div class="footer-item"><script data-goatcounter="https://lenskit.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script></div>
+      
     </div>
+  
+  
   
 </div>
 
