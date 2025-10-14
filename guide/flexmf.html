@@ -14,7 +14,7 @@
 <meta property="og:description" content="Since 2025.3.0, LensKit provides a family of embedding-based scoring models called FlexMF( Flexible Matrix Factorization). These models use matrix factorization in various configurations to realize..." />
 <meta name="description" content="Since 2025.3.0, LensKit provides a family of embedding-based scoring models called FlexMF( Flexible Matrix Factorization). These models use matrix factorization in various configurations to realize..." />
 
-    <title>Flexible Matrix Factorization &#8212; LensKit 2025.3.1 documentation</title>
+    <title>Flexible Matrix Factorization &#8212; LensKit 2025.3.2 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=2225c76f"></script>
+    <script src="../_static/documentation_options.js?v=15dd4d05"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -73,7 +73,7 @@
     <link rel="prev" title="Component Conventions" href="conventions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.3.1" />
+  <meta name="docsearch:version" content="2025.3.2" />
   </head>
   
   
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.1 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.1 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.2 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.2 documentation - Home"/>
   
   
 </a></div>
@@ -583,8 +583,10 @@ scorer with logistic matrix factorization, you can do:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># recommend for user 500</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">recommend</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
-<span class="go">&lt;ItemList of 10 items with 1 fields {</span>
+<span class="go">&lt;ItemList of 10 items with 2 fields {</span>
+<span class="go">  ids: ...</span>
 <span class="go">  numbers: [...]</span>
+<span class="go">  rank: ...</span>
 <span class="go">  score: [...]</span>
 <span class="go">}&gt;</span>
 </pre></div>
@@ -645,12 +647,12 @@ selected to yield logistic matrix factorization, BPR, WARP, or others (see
 function</em> and the <em>sampling strategy</em>.</p>
 <p>Three loss functions (<code class="docutils literal notranslate"><span class="pre">loss</span></code>) are supported:</p>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&quot;logistic&quot;</span></code></dt><dd><p>Logistic loss, as used in Logistic Matrix Factorization <span id="id1">[<a class="reference internal" href="../references.html#id36" title="Christopher C Johnson. Logistic matrix factorization for implicit feedback data. Adv. Neural Inf. Process. Syst., 2014. URL: http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf.">Joh14</a>]</span>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;logistic&quot;</span></code></dt><dd><p>Logistic loss, as used in Logistic Matrix Factorization <span id="id1">[<a class="reference internal" href="../references.html#id38" title="Christopher C Johnson. Logistic matrix factorization for implicit feedback data. Adv. Neural Inf. Process. Syst., 2014. URL: http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf.">Joh14</a>]</span>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">&quot;pairwise&quot;</span></code></dt><dd><p>Pairwise rank loss, as used in Bayesian Personalized Ranking <span id="id2">[<a class="reference internal" href="../references.html#id4" title="Steffen Rendle, Christoph Freudenthaler, Zeno Gantner, and Lars Schmidt-Thieme. BPR: Bayesian personalized ranking from implicit feedback. In UAI '09, 452–461. Arlington, Virginia, United States, 2009. AUAI Press. URL: http://dl.acm.org/citation.cfm?id=1795114.1795167 (visited on 2015-10-16).">RFGSchmidtThieme09</a>]</span>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">&quot;warp&quot;</span></code></dt><dd><p>Weighted approximate rank lost, a revised version of pairwise loss used in
-WARP <span id="id3">[<a class="reference internal" href="../references.html#id65" title="Jason Weston, Hector Yee, and Ron J Weiss. Learning to rank recommendations with the k-order statistic loss. In RecSys '13, 245–248. New York, NY, USA, October 2013. Association for Computing Machinery. doi:10.1145/2507157.2507210.">WYW13</a>]</span>.  Only works with the <code class="docutils literal notranslate"><span class="pre">&quot;misranked&quot;</span></code> sampling
+WARP <span id="id3">[<a class="reference internal" href="../references.html#id68" title="Jason Weston, Hector Yee, and Ron J Weiss. Learning to rank recommendations with the k-order statistic loss. In RecSys '13, 245–248. New York, NY, USA, October 2013. Association for Computing Machinery. doi:10.1145/2507157.2507210.">WYW13</a>]</span>.  Only works with the <code class="docutils literal notranslate"><span class="pre">&quot;misranked&quot;</span></code> sampling
 strategy.</p>
 </dd>
 </dl>
@@ -669,7 +671,7 @@ loss functions as well.  It is the default (and only) strategy for WARP loss.</p
 </dl>
 <p>You can combine these to realize several designs from the literature:</p>
 <ul class="simple">
-<li><p><strong>Logistic matrix factorization</strong> <span id="id4">[<a class="reference internal" href="../references.html#id36" title="Christopher C Johnson. Logistic matrix factorization for implicit feedback data. Adv. Neural Inf. Process. Syst., 2014. URL: http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf.">Joh14</a>]</span> by using
+<li><p><strong>Logistic matrix factorization</strong> <span id="id4">[<a class="reference internal" href="../references.html#id38" title="Christopher C Johnson. Logistic matrix factorization for implicit feedback data. Adv. Neural Inf. Process. Syst., 2014. URL: http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf.">Joh14</a>]</span> by using
 <code class="docutils literal notranslate"><span class="pre">loss=&quot;logistic&quot;</span></code> with any sampling strategy.  This implementation differs
 slightly from the paper in that it uses negative sampling instead of
 training on an entire user.</p></li>
@@ -677,7 +679,7 @@ training on an entire user.</p></li>
 <code class="docutils literal notranslate"><span class="pre">loss=&quot;pairwise&quot;</span></code> with the <code class="docutils literal notranslate"><span class="pre">negative_strategy=&quot;uniform&quot;</span></code>.  The negative
 strategy can also be changed, although we have rarely seen <code class="docutils literal notranslate"><span class="pre">&quot;popular&quot;</span></code> be
 effective.</p></li>
-<li><p><strong>Weighted Approximate Rank Loss</strong> (WARP) <span id="id6">[<a class="reference internal" href="../references.html#id65" title="Jason Weston, Hector Yee, and Ron J Weiss. Learning to rank recommendations with the k-order statistic loss. In RecSys '13, 245–248. New York, NY, USA, October 2013. Association for Computing Machinery. doi:10.1145/2507157.2507210.">WYW13</a>]</span> by using
+<li><p><strong>Weighted Approximate Rank Loss</strong> (WARP) <span id="id6">[<a class="reference internal" href="../references.html#id67" title="Jason Weston, Samy Bengio, and Nicolas Usunier. WSABIE: scaling up to large vocabulary image annotation. In Proceedings of the Twenty-Second International Joint Conference on Artificial Intelligence. July 2011. URL: https://www.ijcai.org/Proceedings/11/Papers/460.pdf (visited on 2021-02-25).">WBU11</a>, <a class="reference internal" href="../references.html#id68" title="Jason Weston, Hector Yee, and Ron J Weiss. Learning to rank recommendations with the k-order statistic loss. In RecSys '13, 245–248. New York, NY, USA, October 2013. Association for Computing Machinery. doi:10.1145/2507157.2507210.">WYW13</a>]</span> by using
 <code class="docutils literal notranslate"><span class="pre">loss=&quot;warp&quot;</span></code>.</p></li>
 </ul>
 </section>
@@ -777,7 +779,7 @@ effective.</p></li>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.1.</div>
+        <div class="footer-item">LensKit version 2025.3.2.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
