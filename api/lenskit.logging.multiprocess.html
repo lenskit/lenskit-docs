@@ -12,7 +12,7 @@
 <meta property="og:url" content="api/lenskit.logging.multiprocess.html" />
 <meta property="og:site_name" content="LensKit" />
 
-    <title>lenskit.logging.multiprocess &#8212; LensKit 2025.3.3.dev25+g4f8794af documentation</title>
+    <title>lenskit.logging.multiprocess &#8212; LensKit 2025.3.3.dev36+g4fe95bff documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=6a16aff9"></script>
+    <script src="../_static/documentation_options.js?v=354fd352"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -137,8 +137,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.3.dev25+g4f8794af documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.3.dev25+g4f8794af documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.3.dev36+g4fe95bff documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.3.dev36+g4fe95bff documentation - Home"/>
   
   
 </a></div>
@@ -694,6 +694,17 @@ nor component implementations often need to interact with it.</p>
 <dd class="field-odd"><p><strong>handle_logging</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>bool</em></a>) – Whether or not to handle log messages.</p>
 </dd>
 </dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.logging.multiprocess.Monitor.await_quiesce">
+<span class="sig-name descname"><span class="pre">await_quiesce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">ms</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.multiprocess.Monitor.await_quiesce" title="Link to this definition">#</a></dt>
+<dd><p>Wait for the monitor to quiesce.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ms</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a>) – The number of milliseconds of quiet to expect for quiescence.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 <dl class="py function">
@@ -709,7 +720,7 @@ nor component implementations often need to interact with it.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.logging.multiprocess.WorkerContext">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.logging.multiprocess.</span></span><span class="sig-name descname"><span class="pre">WorkerContext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.multiprocess.WorkerContext" title="Link to this definition">#</a></dt>
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.logging.multiprocess.</span></span><span class="sig-name descname"><span class="pre">WorkerContext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">driver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zmq</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.multiprocess.WorkerContext" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Activate (and deactivate) a worker context.  This handles setup and teardown
 of logging, etc.</p>
@@ -718,16 +729,34 @@ of logging, etc.</p>
 <dt class="field-odd">Stability<span class="colon">:</span></dt>
 <dd class="field-odd">Internal (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>config</strong> (<a class="reference internal" href="lenskit.logging.worker.html#lenskit.logging.worker.WorkerLogConfig" title="lenskit.logging.multiprocess._worker.WorkerLogConfig"><em>WorkerLogConfig</em></a>)</p>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>config</strong> (<a class="reference internal" href="lenskit.logging.worker.html#lenskit.logging.worker.WorkerLogConfig" title="lenskit.logging.multiprocess._worker.WorkerLogConfig"><em>WorkerLogConfig</em></a>)</p></li>
+<li><p><strong>driver</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>zmq</strong> (<em>Context</em><em>[</em><em>Socket</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>bytes</em></a><em>]</em><em>]</em>)</p></li>
+</ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.logging.multiprocess.WorkerContext.send_progress">
 <span class="sig-name descname"><span class="pre">send_progress</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">update</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.multiprocess.WorkerContext.send_progress" title="Link to this definition">#</a></dt>
-<dd><p>Send a progrss update event.</p>
+<dd><p>Send a progress update event.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>update</strong> (<em>ProgressMessage</em>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.logging.multiprocess.WorkerContext.send_record">
+<span class="sig-name descname"><span class="pre">send_record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sink_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.multiprocess.WorkerContext.send_record" title="Link to this definition">#</a></dt>
+<dd><p>Send a record to a record sink.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sink_id</strong> (<a class="reference external" href="https://docs.python.org/3/library/uuid.html#uuid.UUID" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>UUID</em></a>)</p></li>
+<li><p><strong>record</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>Any</em></a>)</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -761,6 +790,28 @@ of logging, etc.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>from_monitor</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>bool</em></a>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.logging.multiprocess.RecordSink">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.logging.multiprocess.</span></span><span class="sig-name descname"><span class="pre">RecordSink</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.multiprocess.RecordSink" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Protocol" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Protocol</span></code></a>, <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">R</span></code>]</p>
+<p>Generic interface for record sinks.</p>
+<dl class="field-list">
+<dt class="field-odd">Stability<span class="colon">:</span></dt>
+<dd class="field-odd">Internal (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.logging.multiprocess.RecordSink.record">
+<span class="sig-name descname"><span class="pre">record</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.logging.multiprocess.RecordSink.record" title="Link to this definition">#</a></dt>
+<dd><p>Record the timings for a pipeline run.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>record</strong> (<em>R</em>)</p>
 </dd>
 </dl>
 </dd></dl>
@@ -816,15 +867,23 @@ of logging, etc.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.multiprocess.Monitor"><code class="docutils literal notranslate"><span class="pre">Monitor</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.multiprocess.Monitor"><code class="docutils literal notranslate"><span class="pre">Monitor</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.multiprocess.Monitor.await_quiesce"><code class="docutils literal notranslate"><span class="pre">Monitor.await_quiesce()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.multiprocess.get_monitor"><code class="docutils literal notranslate"><span class="pre">get_monitor()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.multiprocess.WorkerContext"><code class="docutils literal notranslate"><span class="pre">WorkerContext</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.multiprocess.WorkerContext.send_progress"><code class="docutils literal notranslate"><span class="pre">WorkerContext.send_progress()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.multiprocess.WorkerContext.send_record"><code class="docutils literal notranslate"><span class="pre">WorkerContext.send_record()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.multiprocess.WorkerContext.start"><code class="docutils literal notranslate"><span class="pre">WorkerContext.start()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.multiprocess.WorkerLogConfig"><code class="docutils literal notranslate"><span class="pre">WorkerLogConfig</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.multiprocess.WorkerLogConfig.current"><code class="docutils literal notranslate"><span class="pre">WorkerLogConfig.current()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.multiprocess.RecordSink"><code class="docutils literal notranslate"><span class="pre">RecordSink</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.logging.multiprocess.RecordSink.record"><code class="docutils literal notranslate"><span class="pre">RecordSink.record()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -870,7 +929,7 @@ of logging, etc.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.3.dev25+g4f8794af.</div>
+        <div class="footer-item">LensKit version 2025.3.3.dev36+g4fe95bff.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
