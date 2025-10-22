@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its: Batch operations using multi-process execution., Parallel model training. For most models pr..." />
 <meta name="description" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its: Batch operations using multi-process execution., Parallel model training. For most models pr..." />
 
-    <title>Parallel Processing &#8212; LensKit 2025.3.2 documentation</title>
+    <title>Parallel Processing &#8212; LensKit 2025.4.0 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=15dd4d05"></script>
+    <script src="../_static/documentation_options.js?v=0806b2b8"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -61,19 +61,19 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'guide/parallelism';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
-        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lkpy.lenskit.org/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lenskit.org/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
-    <link rel="canonical" href="https://lkpy.lenskit.org/stable/guide/parallelism.html" />
+    <link rel="canonical" href="https://lenskit.org/stable/guide/parallelism.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="LensKit CLI" href="../cli/index.html" />
     <link rel="prev" title="Logging and Progress Reporting" href="logging.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.3.2" />
+  <meta name="docsearch:version" content="2025.4.0" />
   </head>
   
   
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.2 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.2 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.4.0 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.4.0 documentation - Home"/>
   
   
 </a></div>
@@ -561,7 +561,7 @@ variable controlling its:</p>
 <li><p><a class="reference internal" href="batch.html"><span class="doc">Batch operations</span></a> using <a class="reference internal" href="#parallel-model-ops"><span class="std std-ref">multi-process execution</span></a>.</p></li>
 <li><p>Parallel model training.  For most models provided by LensKit, such
 parallelism uses Rayon in the Rust extension module or PyTorch JIT parallelism
-(<a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.jit.fork.html#torch.jit.fork" rel="noreferrer" target="_blank" title="(in PyTorch v2.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.jit.fork()</span></code></a>) in Python code.</p></li>
+(<a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.jit.fork.html#torch.jit.fork" rel="noreferrer" target="_blank" title="(in PyTorch v2.9)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.jit.fork()</span></code></a>) in Python code.</p></li>
 <li><p>Parallel inference, using Rayon in the Rust extension module.</p></li>
 <li><p>Parallel computation in the various backends (BLAS, MKL, Torch, etc.), for
 both training and inference.</p></li>
@@ -597,7 +597,7 @@ of CPUs or 4, whichever is lower.</p>
 <dd><p>The number of threads to use for LensKit’s explicit parallelism (model
 building and inference).  Defaults to the number of CPUs or 8, whichever is
 smaller.</p>
-<p>This number is passed to <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.set_num_interop_threads.html#torch.set_num_interop_threads" rel="noreferrer" target="_blank" title="(in PyTorch v2.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_interop_threads()</span></code></a> to set up the
+<p>This number is passed to <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.set_num_interop_threads.html#torch.set_num_interop_threads" rel="noreferrer" target="_blank" title="(in PyTorch v2.9)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_interop_threads()</span></code></a> to set up the
 Torch JIT thread count, and is used to configure the Rayon thread pool used
 by the Rust acceleration module.</p>
 <p>If this variable does not specify a list, worker process thread counts are
@@ -618,7 +618,7 @@ machine:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">NCPUS</span> <span class="o">//</span> <span class="n">LK_NUM_THREADS</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This is passed to <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.set_num_threads.html#torch.set_num_threads" rel="noreferrer" target="_blank" title="(in PyTorch v2.8)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_threads()</span></code></a> (to control PyTorch internal
+<p>This is passed to <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.set_num_threads.html#torch.set_num_threads" rel="noreferrer" target="_blank" title="(in PyTorch v2.9)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_threads()</span></code></a> (to control PyTorch internal
 parallelism), and to the underlying BLAS layer (via <a class="reference external" href="https://github.com/joblib/threadpoolctl" rel="noreferrer" target="_blank">threadpoolctl</a>).</p>
 <p>If this variable does not specify a list and <span class="target" id="index-3"></span><a class="reference internal" href="#envvar-LK_NUM_CHILD_THREADS"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LK_NUM_CHILD_THREADS</span></code></a>
 is not set, worker process thread counts are capped by the process count and
@@ -777,7 +777,7 @@ including parallelism configuration.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.2.</div>
+        <div class="footer-item">LensKit version 2025.4.0.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

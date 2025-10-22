@@ -12,7 +12,7 @@
 <meta property="og:url" content="api/lenskit.data.ItemListCollection.html" />
 <meta property="og:site_name" content="LensKit" />
 
-    <title>lenskit.data.ItemListCollection &#8212; LensKit 2025.3.2 documentation</title>
+    <title>lenskit.data.ItemListCollection &#8212; LensKit 2025.4.0 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=15dd4d05"></script>
+    <script src="../_static/documentation_options.js?v=0806b2b8"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -59,19 +59,19 @@
     <script>DOCUMENTATION_OPTIONS.pagename = 'api/lenskit.data.ItemListCollection';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
-        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lkpy.lenskit.org/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lenskit.org/versions.json';
         DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
-    <link rel="canonical" href="https://lkpy.lenskit.org/stable/api/lenskit.data.ItemListCollection.html" />
+    <link rel="canonical" href="https://lenskit.org/stable/api/lenskit.data.ItemListCollection.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="lenskit.data.ItemListCollector" href="lenskit.data.ItemListCollector.html" />
     <link rel="prev" title="lenskit.data.ItemList" href="lenskit.data.ItemList.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.3.2" />
+  <meta name="docsearch:version" content="2025.4.0" />
   </head>
   
   
@@ -137,8 +137,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.3.2 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.3.2 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.4.0 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.4.0 documentation - Home"/>
   
   
 </a></div>
@@ -687,7 +687,9 @@ See <a class="reference internal" href="../guide/data/item-lists.html#item-list-
 <p>An item list collection consists of a sequence of item lists with associated
 <em>keys</em> following a fixed schema.  Item list collections support iteration
 (in order) and lookup by key. They are used to represent a variety of
-things, including test data and the results of a batch run.</p>
+things, including test data and the results of a batch run. The length of an
+item list collection (accessed with <a class="reference external" href="https://docs.python.org/3/library/functions.html#len" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-func docutils literal notranslate"><span class="pre">len()</span></code></a>) is the number of item lists
+in the collection, not the total number of items in the lists.</p>
 <p>The key schema can be specified either by a list of field names, or by
 providing a named tuple class (created by either <code class="xref py py-func docutils literal notranslate"><span class="pre">namedtuple()</span></code> or
 <code class="xref py py-class docutils literal notranslate"><span class="pre">NamedTuple</span></code>) defining the key schema.  Schemas should <strong>not</strong> be
@@ -784,6 +786,9 @@ key schema.</p></li>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemListCollection.to_df" title="lenskit.data.ItemListCollection.to_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_df</span></code></a>()</p></td>
 <td><p>Convert this item list collection to a data frame.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemListCollection.total_items" title="lenskit.data.ItemListCollection.total_items"><code class="xref py py-obj docutils literal notranslate"><span class="pre">total_items</span></code></a>()</p></td>
+<td><p>Count the total number of items across all lists in this collection.</p></td>
 </tr>
 </tbody>
 </table>
@@ -1050,6 +1055,17 @@ key fields, or <code class="docutils literal notranslate"><span class="pre">None
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemListCollection.total_items">
+<span class="sig-name descname"><span class="pre">total_items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemListCollection.total_items" title="Link to this definition">#</a></dt>
+<dd><p>Count the total number of items across all lists in this collection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="lenskit.data.ItemListCollection.items">
 <em class="property"><span class="k"><span class="pre">abstractmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemListCollection.items" title="Link to this definition">#</a></dt>
 <dd><p>Iterate over item lists and keys.</p>
@@ -1150,6 +1166,7 @@ key fields, or <code class="docutils literal notranslate"><span class="pre">None
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.list_schema"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.list_schema</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.lookup"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.lookup()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.lookup_projected"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.lookup_projected()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.total_items"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.total_items()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.items"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.items()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.lists"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.lists()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemListCollection.keys"><code class="docutils literal notranslate"><span class="pre">ItemListCollection.keys()</span></code></a></li>
@@ -1198,7 +1215,7 @@ key fields, or <code class="docutils literal notranslate"><span class="pre">None
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.3.2.</div>
+        <div class="footer-item">LensKit version 2025.4.0.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
