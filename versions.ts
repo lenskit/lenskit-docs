@@ -3,7 +3,7 @@ import { parseArgs } from "@std/cli";
 
 import { getVersionList } from "./lib/versions.ts";
 
-const URL_BASE = "https://lkpy.lenskit.org";
+const URL_BASE = "https://lenskit.org";
 
 const args = parseArgs(Deno.args, {
   string: ["output"],
