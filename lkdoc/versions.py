@@ -35,6 +35,5 @@ def list_versions():
 
 
 if __name__ == "__main__":
-    from pprint import pprint
-
-    pprint(list_versions())
+    for ver in list_versions():
+        print(ver.label)
