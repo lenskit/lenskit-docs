@@ -24,18 +24,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: "🧛🏼 Set up Just"
-        uses: extractions/setup-just@v2
-      - name: "🛸 Set up Deno"
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: ~1.44
+      - name: Install mise-en-place
+        uses: jdx/mise-action@v2
 
       - name: "🌳 Fix local git branches"
-        run: just ref-branches
+        run: mise run ref-branches
 
       - name: Build site content
-        run: just build
+        run: mise run build
 
       - name: Upload site artifact
         uses: actions/upload-artifact@v4
@@ -51,6 +47,12 @@ jobs:
       name: publish
       url: 'https://lkpy.lenskit.org'
     steps:
+      - name: Fetch site artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: lenskit-site
+          path: .
+
       - name: "🕸️ Deploy to Netlify"
         id: deployment
         uses: netlify/actions/cli@master
