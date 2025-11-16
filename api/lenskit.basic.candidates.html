@@ -14,7 +14,7 @@
 <meta property="og:description" content="Classes" />
 <meta name="description" content="Classes" />
 
-    <title>lenskit.basic.candidates &#8212; LensKit 2025.5.0 documentation</title>
+    <title>lenskit.basic.candidates &#8212; LensKit 2025.6.0 documentation</title>
   
   
   
@@ -48,7 +48,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=79d3f8e1"></script>
+    <script src="../_static/documentation_options.js?v=ebac260a"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -73,7 +73,7 @@
     <link rel="prev" title="lenskit.basic.bias" href="lenskit.basic.bias.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.5.0" />
+  <meta name="docsearch:version" content="2025.6.0" />
   </head>
   
   
@@ -139,8 +139,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.5.0 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.5.0 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.6.0 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.6.0 documentation - Home"/>
   
   
 </a></div>
@@ -457,6 +457,8 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.from_interactions_df.html">lenskit.data.from_interactions_df</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_movielens.html">lenskit.data.load_movielens</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_movielens_df.html">lenskit.data.load_movielens_df</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_amazon_ratings.html">lenskit.data.load_amazon_ratings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_ms_web.html">lenskit.data.load_ms_web</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.ItemList.html">lenskit.data.ItemList</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.ItemListCollection.html">lenskit.data.ItemListCollection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.ItemListCollector.html">lenskit.data.ItemListCollector</a></li>
@@ -688,8 +690,14 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.basic.candidates.TrainingCandidateSelectorBase" title="lenskit.basic.candidates.TrainingCandidateSelectorBase"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingCandidateSelectorBase</span></code></a>([config])</p></td>
 <td><p>Base class for candidate selectors using the training data.</p></td>
 </tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.basic.candidates.TrainingItemsCandidateConfig" title="lenskit.basic.candidates.TrainingItemsCandidateConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingItemsCandidateConfig</span></code></a>([exclude])</p></td>
+<td><p>Configuration for <a class="reference internal" href="#lenskit.basic.candidates.TrainingItemsCandidateSelector" title="lenskit.basic.candidates.TrainingItemsCandidateSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainingItemsCandidateSelector</span></code></a>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.basic.candidates.TrainingItemsCandidateSelector" title="lenskit.basic.candidates.TrainingItemsCandidateSelector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TrainingItemsCandidateSelector</span></code></a>([config])</p></td>
+<td><p>Candidate selector that selects all known items from the training data, optionally excluding certain items from the query (i.e., the request user's history).</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.basic.candidates.UnratedTrainingItemsCandidateSelector" title="lenskit.basic.candidates.UnratedTrainingItemsCandidateSelector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">UnratedTrainingItemsCandidateSelector</span></code></a>([config])</p></td>
-<td><p>Candidate selector that selects all known items from the training data that do not appear in the request user's history (<code class="xref py py-attr docutils literal notranslate"><span class="pre">RecQuery.user_items</span></code>).</p></td>
+<td><p>Candidate selector that selects all known items from the training data that do not appear in the request user's history (<code class="xref py py-attr docutils literal notranslate"><span class="pre">RecQuery.history_items</span></code>).</p></td>
 </tr>
 </tbody>
 </table>
@@ -736,6 +744,10 @@
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.basic.candidates.</span></span><span class="sig-name descname"><span class="pre">AllTrainingItemsCandidateSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.candidates.AllTrainingItemsCandidateSelector" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#lenskit.basic.candidates.TrainingCandidateSelectorBase" title="lenskit.basic.candidates.TrainingCandidateSelectorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainingCandidateSelectorBase</span></code></a></p>
 <p>Candidate selector that selects all known items from the training data.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 2025.6: </span>Use <a class="reference internal" href="#lenskit.basic.candidates.TrainingItemsCandidateSelector" title="lenskit.basic.candidates.TrainingItemsCandidateSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainingItemsCandidateSelector</span></code></a> with <code class="docutils literal notranslate"><span class="pre">None</span></code>
+for <a class="reference internal" href="#lenskit.basic.candidates.TrainingItemsCandidateConfig.exclude" title="lenskit.basic.candidates.TrainingItemsCandidateConfig.exclude"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TrainingItemsCandidateConfig.exclude</span></code></a> instead.</p>
+</div>
 <dl class="field-list">
 <dt class="field-odd">Stability<span class="colon">:</span></dt>
 <dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
@@ -753,8 +765,63 @@
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.basic.candidates.</span></span><span class="sig-name descname"><span class="pre">UnratedTrainingItemsCandidateSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.candidates.UnratedTrainingItemsCandidateSelector" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#lenskit.basic.candidates.TrainingCandidateSelectorBase" title="lenskit.basic.candidates.TrainingCandidateSelectorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainingCandidateSelectorBase</span></code></a></p>
 <p>Candidate selector that selects all known items from the training data that
-do not appear in the request user’s history (<code class="xref py py-attr docutils literal notranslate"><span class="pre">RecQuery.user_items</span></code>).
-If no item history is available, then all training items are returned.</p>
+do not appear in the request user’s history
+(<code class="xref py py-attr docutils literal notranslate"><span class="pre">RecQuery.history_items</span></code>). If no item history is available, then all
+training items are returned.</p>
+<p>In order to look up the user’s history in the training data, this needs to
+be combined with a component like
+<a class="reference internal" href="lenskit.basic.history.html#lenskit.basic.history.UserTrainingHistoryLookup" title="lenskit.basic.history.UserTrainingHistoryLookup"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserTrainingHistoryLookup</span></code></a>.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 2025.6: </span>Use <a class="reference internal" href="#lenskit.basic.candidates.TrainingItemsCandidateSelector" title="lenskit.basic.candidates.TrainingItemsCandidateSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainingItemsCandidateSelector</span></code></a> with default settings or the
+<code class="docutils literal notranslate"><span class="pre">&quot;history&quot;</span></code> option for <a class="reference internal" href="#lenskit.basic.candidates.TrainingItemsCandidateConfig.exclude" title="lenskit.basic.candidates.TrainingItemsCandidateConfig.exclude"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TrainingItemsCandidateConfig.exclude</span></code></a> instead.</p>
+</div>
+<dl class="field-list">
+<dt class="field-odd">Stability<span class="colon">:</span></dt>
+<dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>config</strong> (<em>None</em>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.basic.candidates.TrainingItemsCandidateConfig">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.basic.candidates.</span></span><span class="sig-name descname"><span class="pre">TrainingItemsCandidateConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exclude</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'query'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.candidates.TrainingItemsCandidateConfig" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Configuration for <a class="reference internal" href="#lenskit.basic.candidates.TrainingItemsCandidateSelector" title="lenskit.basic.candidates.TrainingItemsCandidateSelector"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainingItemsCandidateSelector</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>exclude</strong> (<em>None</em><em> | </em><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>Literal</em></a><em>[</em><em>'query'</em><em>, </em><em>'all'</em><em>, </em><em>'history'</em><em>, </em><em>'session'</em><em>, </em><em>'context'</em><em>] </em><em>| </em><em>~collections.abc.Sequence</em><em>[</em><em>~typing.Literal</em><em>[</em><em>'history'</em><em>, </em><em>'session'</em><em>, </em><em>'context'</em><em>]</em><em>]</em>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.basic.candidates.TrainingItemsCandidateConfig.exclude">
+<span class="sig-name descname"><span class="pre">exclude</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'query'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'all'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'history'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'session'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'context'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sequence" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">Sequence</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">Literal</span></a><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'history'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'session'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'context'</span></span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'query'</span></em><a class="headerlink" href="#lenskit.basic.candidates.TrainingItemsCandidateConfig.exclude" title="Link to this definition">#</a></dt>
+<dd><p>Specify the items from the query to exclude from the candidates.</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">None</span></code></dt><dd><p>Exclude no items from the request.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;query&quot;</span></code></dt><dd><p>Excludes the <em>query items</em> (<code class="xref py py-attr docutils literal notranslate"><span class="pre">RecQuery.query_items</span></code>) from the request.
+This is the default.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;all&quot;</span></code></dt><dd><p>Exclude all mentioned items from the request.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;history&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;session&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;context&quot;</span></code></dt><dd><p>Exclude the specified items from the request.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.basic.candidates.TrainingItemsCandidateSelector">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.basic.candidates.</span></span><span class="sig-name descname"><span class="pre">TrainingItemsCandidateSelector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.basic.candidates.TrainingItemsCandidateSelector" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#lenskit.basic.candidates.TrainingCandidateSelectorBase" title="lenskit.basic.candidates.TrainingCandidateSelectorBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainingCandidateSelectorBase</span></code></a></p>
+<p>Candidate selector that selects all known items from the training data, optionally
+excluding certain items from the query (i.e., the request user’s history).</p>
 <p>In order to look up the user’s history in the training data, this needs to
 be combined with a component like
 <a class="reference internal" href="lenskit.basic.history.html#lenskit.basic.history.UserTrainingHistoryLookup" title="lenskit.basic.history.UserTrainingHistoryLookup"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserTrainingHistoryLookup</span></code></a>.</p>
@@ -763,7 +830,7 @@ be combined with a component like
 <dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>config</strong> (<em>None</em>)</p></li>
+<li><p><strong>config</strong> (<a class="reference internal" href="#lenskit.basic.candidates.TrainingItemsCandidateConfig" title="lenskit.basic.candidates.TrainingItemsCandidateConfig"><em>TrainingItemsCandidateConfig</em></a>)</p></li>
 <li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
@@ -826,6 +893,11 @@ be combined with a component like
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.candidates.AllTrainingItemsCandidateSelector"><code class="docutils literal notranslate"><span class="pre">AllTrainingItemsCandidateSelector</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.candidates.UnratedTrainingItemsCandidateSelector"><code class="docutils literal notranslate"><span class="pre">UnratedTrainingItemsCandidateSelector</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.candidates.TrainingItemsCandidateConfig"><code class="docutils literal notranslate"><span class="pre">TrainingItemsCandidateConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.candidates.TrainingItemsCandidateConfig.exclude"><code class="docutils literal notranslate"><span class="pre">TrainingItemsCandidateConfig.exclude</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.basic.candidates.TrainingItemsCandidateSelector"><code class="docutils literal notranslate"><span class="pre">TrainingItemsCandidateSelector</span></code></a></li>
 </ul>
   </nav></div>
 
@@ -869,7 +941,7 @@ be combined with a component like
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.5.0.</div>
+        <div class="footer-item">LensKit version 2025.6.0.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

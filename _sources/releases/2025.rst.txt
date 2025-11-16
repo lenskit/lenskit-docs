@@ -9,6 +9,60 @@ information on how to upgrade your code.
 
 .. _SPEC0: https://scientific-python.org/specs/spec-0000/
 
+.. _2025.6.0:
+
+2025.6.0
+~~~~~~~~
+
+Bug Fixes
+---------
+
+- Disabled parallel scoring in :class:`~lenskit.knn.ItemKNNScorer` to fix
+  problems with nondeterministic results (:pr:`922`).
+
+New Features
+------------
+
+- Add new :meth:`~lenskit.data.ItemList.concat` and
+  :meth:`~lenskit.data.ItemList.update` methods to
+  :class:`~lenskit.data.ItemList` to make it easier to extend and update item
+  lists (:pr:`927`).
+- Initial support for session-based recommendation, through additional methods
+  on :class:`~lenskit.data.RecQuery` (:pr:`929`).  Item KNN and the ALS
+  recommenders now support session-based recommendation as well.  The changes to
+  support this also add support for related-item recommendation through “context
+  items” in query. See :ref:`session-queries` for further information.
+- Add :class:`~lenskit.basic.TrainingItemCandidateSelector` to replace the
+  Unrated and All candidate selectors with better configuration.
+- New function :func:`~lenskit.metrics.ranking.rank_biased_precision` to expose
+  the inner computations of RBP.
+- Add new method :meth:`~lenskit.data.RelationshipSet.co_occurrences` to count
+  entity co-occurrences in a dataset.
+
+Deprecations
+------------
+
+- :class:`~lenskit.basic.UnratedTrainingItemsCandidateSelector` is deprecated in
+  favor of :class:`~lenskit.basic.TrainingItemCandidateSelector` with default
+  configuration.
+- :class:`~lenskit.basic.AllTrainingItemsCandidateSelector` is deprecated in
+  favor of :class:`~lenskit.basic.TrainingItemCandidateSelector` with suitable
+  configuration.
+- :attr:`lenskit.data.RecQuery.user_items` is deprecated in favor of
+  :class:`~lenskit.data.RecQuery.history_items`.
+- Removed fixed defaults for ``row_entity`` and ``col_entity`` on
+  :meth:`~lenskit.dataset.RelationshipSet.matrix`, now defaulting to the first
+  and last entities involved in the relationship.  This does not change anything
+  for code working on standard interactions.
+
+Platform and Build Support
+--------------------------
+
+- Add and test support for Python 3.14.
+- Adjust dependencies to allow PyArrow 22 (but not 21, due to miscompiled
+  Windows wheels).
+- Various improvements to the test suite to reduce testing overhead.
+
 .. _2025.5.0:
 
 2025.5.0

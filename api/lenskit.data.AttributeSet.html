@@ -12,7 +12,7 @@
 <meta property="og:url" content="api/lenskit.data.AttributeSet.html" />
 <meta property="og:site_name" content="LensKit" />
 
-    <title>lenskit.data.AttributeSet &#8212; LensKit 2025.5.0 documentation</title>
+    <title>lenskit.data.AttributeSet &#8212; LensKit 2025.6.0 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=79d3f8e1"></script>
+    <script src="../_static/documentation_options.js?v=ebac260a"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="prev" title="lenskit.data.EntitySet" href="lenskit.data.EntitySet.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.5.0" />
+  <meta name="docsearch:version" content="2025.6.0" />
   </head>
   
   
@@ -137,8 +137,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.5.0 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.5.0 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.6.0 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.6.0 documentation - Home"/>
   
   
 </a></div>
@@ -455,6 +455,8 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.from_interactions_df.html">lenskit.data.from_interactions_df</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_movielens.html">lenskit.data.load_movielens</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_movielens_df.html">lenskit.data.load_movielens_df</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_amazon_ratings.html">lenskit.data.load_amazon_ratings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_ms_web.html">lenskit.data.load_ms_web</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.ItemList.html">lenskit.data.ItemList</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.ItemListCollection.html">lenskit.data.ItemListCollection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.ItemListCollector.html">lenskit.data.ItemListCollector</a></li>
@@ -680,7 +682,7 @@
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.data.AttributeSet">
 <em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.data.</span></span><span class="sig-name descname"><span class="pre">AttributeSet</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">table</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocab</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rows</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.AttributeSet" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/abc.html#abc.ABC" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></a></p>
 <p>Base class for attributes associated with entities.</p>
 <p>This is the general interface for attribute sets.  Not all access methods
 are supported for all layouts.</p>
@@ -722,28 +724,31 @@ are supported for all layouts.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.arrow" title="lenskit.data.AttributeSet.arrow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">arrow</span></code></a>()</p></td>
 <td><p>Get the attribute values as an Arrow array.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.drop_null" title="lenskit.data.AttributeSet.drop_null"><code class="xref py py-obj docutils literal notranslate"><span class="pre">drop_null</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.cat_matrix" title="lenskit.data.AttributeSet.cat_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cat_matrix</span></code></a>(*[, normalize])</p></td>
+<td><p>Compute a categorical matrix representation of the attribute.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.drop_null" title="lenskit.data.AttributeSet.drop_null"><code class="xref py py-obj docutils literal notranslate"><span class="pre">drop_null</span></code></a>()</p></td>
 <td><p>Subset this attribute set to only entities for which it is defined.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.id_index" title="lenskit.data.AttributeSet.id_index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">id_index</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.id_index" title="lenskit.data.AttributeSet.id_index"><code class="xref py py-obj docutils literal notranslate"><span class="pre">id_index</span></code></a>()</p></td>
 <td><p>Get the entity IDs as a Pandas index.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.ids" title="lenskit.data.AttributeSet.ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ids</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.ids" title="lenskit.data.AttributeSet.ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ids</span></code></a>()</p></td>
 <td><p>Get the entity IDs for the rows in this attribute's values.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.numbers" title="lenskit.data.AttributeSet.numbers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numbers</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.numbers" title="lenskit.data.AttributeSet.numbers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numbers</span></code></a>()</p></td>
 <td><p>Get the entity numbers for the rows in this attribute's values.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.numpy" title="lenskit.data.AttributeSet.numpy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.numpy" title="lenskit.data.AttributeSet.numpy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy</span></code></a>()</p></td>
 <td><p>Get the attribute values as a NumPy array.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas</span></code>(*[, missing])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas</span></code>(*[, missing])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.scipy" title="lenskit.data.AttributeSet.scipy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.scipy" title="lenskit.data.AttributeSet.scipy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scipy</span></code></a>()</p></td>
 <td><p>Get this attribute as a SciPy sparse array (if it is sparse), or a NumPy array if it is dense.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">torch</span></code>()</p></td>
 <td><p></p></td>
 </tr>
 </tbody>
@@ -752,23 +757,29 @@ are supported for all layouts.</p>
 <p class="rubric">Attributes</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.dim_names" title="lenskit.data.AttributeSet.dim_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dim_names</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.data_type" title="lenskit.data.AttributeSet.data_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">data_type</span></code></a></p></td>
+<td><p>Get the data type of this attribute set.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.dim_names" title="lenskit.data.AttributeSet.dim_names"><code class="xref py py-obj docutils literal notranslate"><span class="pre">dim_names</span></code></a></p></td>
 <td><p>Get the names attached to this attribute's dimensions.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.is_list" title="lenskit.data.AttributeSet.is_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_list</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.is_list" title="lenskit.data.AttributeSet.is_list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_list</span></code></a></p></td>
 <td><p>Query whether this attribute is a list.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.is_scalar" title="lenskit.data.AttributeSet.is_scalar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_scalar</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.is_scalar" title="lenskit.data.AttributeSet.is_scalar"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_scalar</span></code></a></p></td>
 <td><p>Query whether this attribute is scalar.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.is_sparse" title="lenskit.data.AttributeSet.is_sparse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_sparse</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.is_sparse" title="lenskit.data.AttributeSet.is_sparse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_sparse</span></code></a></p></td>
 <td><p>Query whether this attribute is a sparse vector.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.is_vector" title="lenskit.data.AttributeSet.is_vector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_vector</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.is_vector" title="lenskit.data.AttributeSet.is_vector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_vector</span></code></a></p></td>
 <td><p>Query whether this attribute is a dense vector.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.name" title="lenskit.data.AttributeSet.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.name" title="lenskit.data.AttributeSet.name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">name</span></code></a></p></td>
 <td><p>The name of the attribute.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.AttributeSet.layout" title="lenskit.data.AttributeSet.layout"><code class="xref py py-obj docutils literal notranslate"><span class="pre">layout</span></code></a></p></td>
+<td><p>The attribute layout.</p></td>
 </tr>
 </tbody>
 </table>
@@ -777,6 +788,18 @@ are supported for all layouts.</p>
 <dt class="sig sig-object py" id="lenskit.data.AttributeSet.name">
 <span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">str</span></a></em><a class="headerlink" href="#lenskit.data.AttributeSet.name" title="Link to this definition">#</a></dt>
 <dd><p>The name of the attribute.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.data.AttributeSet.layout">
+<span class="sig-name descname"><span class="pre">layout</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="lenskit.data.schema.html#lenskit.data.schema.AttrLayout" title="lenskit.data.schema.AttrLayout"><span class="pre">AttrLayout</span></a></em><a class="headerlink" href="#lenskit.data.AttributeSet.layout" title="Link to this definition">#</a></dt>
+<dd><p>The attribute layout.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.data.AttributeSet.data_type">
+<em class="property"><span class="k"><span class="pre">abstract</span></span><span class="w"> </span><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">data_type</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.DataType.html#pyarrow.DataType" rel="noreferrer" target="_blank" title="(in Apache Arrow v22.0.0)"><span class="pre">DataType</span></a></em><a class="headerlink" href="#lenskit.data.AttributeSet.data_type" title="Link to this definition">#</a></dt>
+<dd><p>Get the data type of this attribute set.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -808,6 +831,30 @@ are supported for all layouts.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" rel="noreferrer" target="_blank" title="(in NumPy v2.3)"><em>ndarray</em></a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" rel="noreferrer" target="_blank" title="(in Python v3.14)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)">int</a>], <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" rel="noreferrer" target="_blank" title="(in NumPy v2.3)"><em>dtype</em></a>[<em>int32</em>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.AttributeSet.cat_matrix">
+<span class="sig-name descname"><span class="pre">cat_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">normalize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.AttributeSet.cat_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Compute a categorical matrix representation of the attribute.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>normalize</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>Literal</em></a><em>[</em><em>'unit'</em><em>, </em><em>'distribution'</em><em>] </em><em>| </em><em>None</em>) – Optional normalization method.
+“unit”: Normalize each row to unit length.
+“distribution”: Normalize each row so elements sum to 1</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A tuple containing:</dt><dd><p>matrix (numpy.ndarray or scipy.sparse.csr_array): The categorical matrix.
+vocab (Vocabulary or None): The vocabulary associated with the categories.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" rel="noreferrer" target="_blank" title="(in Python v3.14)">tuple</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -945,9 +992,12 @@ array if it is dense.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.AttributeSet"><code class="docutils literal notranslate"><span class="pre">AttributeSet</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.AttributeSet.__init__"><code class="docutils literal notranslate"><span class="pre">AttributeSet.__init__()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.AttributeSet.name"><code class="docutils literal notranslate"><span class="pre">AttributeSet.name</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.AttributeSet.layout"><code class="docutils literal notranslate"><span class="pre">AttributeSet.layout</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.AttributeSet.data_type"><code class="docutils literal notranslate"><span class="pre">AttributeSet.data_type</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.AttributeSet.ids"><code class="docutils literal notranslate"><span class="pre">AttributeSet.ids()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.AttributeSet.id_index"><code class="docutils literal notranslate"><span class="pre">AttributeSet.id_index()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.AttributeSet.numbers"><code class="docutils literal notranslate"><span class="pre">AttributeSet.numbers()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.AttributeSet.cat_matrix"><code class="docutils literal notranslate"><span class="pre">AttributeSet.cat_matrix()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.AttributeSet.dim_names"><code class="docutils literal notranslate"><span class="pre">AttributeSet.dim_names</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.AttributeSet.is_scalar"><code class="docutils literal notranslate"><span class="pre">AttributeSet.is_scalar</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.AttributeSet.is_list"><code class="docutils literal notranslate"><span class="pre">AttributeSet.is_list</span></code></a></li>
@@ -1002,7 +1052,7 @@ array if it is dense.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.5.0.</div>
+        <div class="footer-item">LensKit version 2025.6.0.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

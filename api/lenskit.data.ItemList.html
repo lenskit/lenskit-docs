@@ -12,7 +12,7 @@
 <meta property="og:url" content="api/lenskit.data.ItemList.html" />
 <meta property="og:site_name" content="LensKit" />
 
-    <title>lenskit.data.ItemList &#8212; LensKit 2025.5.0 documentation</title>
+    <title>lenskit.data.ItemList &#8212; LensKit 2025.6.0 documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=79d3f8e1"></script>
+    <script src="../_static/documentation_options.js?v=ebac260a"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -68,10 +68,10 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="lenskit.data.ItemListCollection" href="lenskit.data.ItemListCollection.html" />
-    <link rel="prev" title="lenskit.data.load_movielens_df" href="lenskit.data.load_movielens_df.html" />
+    <link rel="prev" title="lenskit.data.load_ms_web" href="lenskit.data.load_ms_web.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.5.0" />
+  <meta name="docsearch:version" content="2025.6.0" />
   </head>
   
   
@@ -137,8 +137,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.5.0 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.5.0 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.6.0 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.6.0 documentation - Home"/>
   
   
 </a></div>
@@ -455,6 +455,8 @@
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.from_interactions_df.html">lenskit.data.from_interactions_df</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_movielens.html">lenskit.data.load_movielens</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_movielens_df.html">lenskit.data.load_movielens_df</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_amazon_ratings.html">lenskit.data.load_amazon_ratings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.data.load_ms_web.html">lenskit.data.load_ms_web</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">lenskit.data.ItemList</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.ItemListCollection.html">lenskit.data.ItemListCollection</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.data.ItemListCollector.html">lenskit.data.ItemListCollector</a></li>
@@ -784,50 +786,56 @@ from a source list.</p></li>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.__init__" title="lenskit.data.ItemList.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([source, ordered, vocabulary, ...])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.arrow_types" title="lenskit.data.ItemList.arrow_types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">arrow_types</span></code></a>(*[, ids, numbers])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.arrow_types" title="lenskit.data.ItemList.arrow_types"><code class="xref py py-obj docutils literal notranslate"><span class="pre">arrow_types</span></code></a>(*[, ids, numbers, ranks])</p></td>
 <td><p>Get the Arrow data types for this item list.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.clone" title="lenskit.data.ItemList.clone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">clone</span></code></a>()</p></td>
 <td><p>Make a shallow copy of the item list.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">field</span></code>(name[, format, index])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.concat" title="lenskit.data.ItemList.concat"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concat</span></code></a>(other)</p></td>
+<td><p>Concatenate this item list with another.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">field</span></code>(name[, format, index])</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.from_arrow" title="lenskit.data.ItemList.from_arrow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_arrow</span></code></a>(tbl, *[, vocabulary])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.from_arrow" title="lenskit.data.ItemList.from_arrow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_arrow</span></code></a>(tbl, *[, vocabulary])</p></td>
 <td><p>Create a item list from a Pandas table or structured array.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.from_df" title="lenskit.data.ItemList.from_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_df</span></code></a>(df, *[, vocabulary, keep_user])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.from_df" title="lenskit.data.ItemList.from_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_df</span></code></a>(df, *[, vocabulary, keep_user])</p></td>
 <td><p>Create a item list from a Pandas data frame.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_vocabulary</span></code>(vocab)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">from_vocabulary</span></code>(vocab)</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.ids" title="lenskit.data.ItemList.ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ids</span></code></a>(*[, format])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.ids" title="lenskit.data.ItemList.ids"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ids</span></code></a>(*[, format])</p></td>
 <td><p>Get the item IDs.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.isin" title="lenskit.data.ItemList.isin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isin</span></code></a>(other)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.isin" title="lenskit.data.ItemList.isin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isin</span></code></a>(other)</p></td>
 <td><p>Return a boolean mask identifying the items of this list that are in the other list.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.numbers" title="lenskit.data.ItemList.numbers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numbers</span></code></a>([format, vocabulary, missing])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.numbers" title="lenskit.data.ItemList.numbers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">numbers</span></code></a>([format, vocabulary, missing])</p></td>
 <td><p>Get the item numbers.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.ranks" title="lenskit.data.ItemList.ranks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ranks</span></code></a>([format])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.ranks" title="lenskit.data.ItemList.ranks"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ranks</span></code></a>([format])</p></td>
 <td><p>Get an array of ranks for the items in this list, if it is ordered.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.remove" title="lenskit.data.ItemList.remove"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove</span></code></a>(*[, ids, numbers])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.remove" title="lenskit.data.ItemList.remove"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove</span></code></a>(*[, ids, numbers])</p></td>
 <td><p>Return an item list with the specified items removed.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.scores" title="lenskit.data.ItemList.scores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scores</span></code></a>([format])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.scores" title="lenskit.data.ItemList.scores"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scores</span></code></a>([format])</p></td>
 <td><p>Get the item scores (if available).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.to_arrow" title="lenskit.data.ItemList.to_arrow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_arrow</span></code></a>(*[, ids, numbers, type, columns])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.to_arrow" title="lenskit.data.ItemList.to_arrow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_arrow</span></code></a>(*[, ids, numbers, ranks, type, columns])</p></td>
 <td><p>Convert the item list to a Pandas table.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.to_df" title="lenskit.data.ItemList.to_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_df</span></code></a>(*[, ids, numbers])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.to_df" title="lenskit.data.ItemList.to_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_df</span></code></a>(*[, ids, numbers])</p></td>
 <td><p>Convert this item list to a Pandas data frame.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.top_n" title="lenskit.data.ItemList.top_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">top_n</span></code></a>([n, scores])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.ItemList.top_n" title="lenskit.data.ItemList.top_n"><code class="xref py py-obj docutils literal notranslate"><span class="pre">top_n</span></code></a>([n, scores])</p></td>
 <td><p>Get the top _N_ items in this list, sorted in decreasing order.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.ItemList.update" title="lenskit.data.ItemList.update"><code class="xref py py-obj docutils literal notranslate"><span class="pre">update</span></code></a>(other)</p></td>
+<td><p>Create a copy of the item list, updated with new data from another list.</p></td>
 </tr>
 </tbody>
 </table>
@@ -938,7 +946,7 @@ are dropped by default.</p>
 <li><p><strong>vocabulary</strong> (<a class="reference internal" href="lenskit.data.Vocabulary.html#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><em>Vocabulary</em></a><em> | </em><em>None</em>) – A alternate vocabulary for mapping IDs to numbers.  If provided,
 then the item list must have IDs (either stored, or through a
 vocabulary).</p></li>
-<li><p><strong>missing</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>Literal</em></a><em>[</em><em>'error'</em><em>, </em><em>'negative'</em><em>]</em>)</p></li>
+<li><p><strong>missing</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>Literal</em></a><em>[</em><em>'error'</em><em>, </em><em>'negative'</em><em>, </em><em>'null'</em><em>]</em>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1034,13 +1042,14 @@ is much more efficient in many cases.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.data.ItemList.to_arrow">
-<span class="sig-name descname"><span class="pre">to_arrow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'table'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.to_arrow" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">to_arrow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'table'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">columns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.to_arrow" title="Link to this definition">#</a></dt>
 <dd><p>Convert the item list to a Pandas table.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>numbers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>ranks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>type</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Literal" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>Literal</em></a><em>[</em><em>'table'</em><em>, </em><em>'array'</em><em>]</em>)</p></li>
 <li><p><strong>columns</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.DataType.html#pyarrow.DataType" rel="noreferrer" target="_blank" title="(in Apache Arrow v22.0.0)"><em>DataType</em></a><em>] </em><em>| </em><em>None</em>)</p></li>
 </ul>
@@ -1050,13 +1059,14 @@ is much more efficient in many cases.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.data.ItemList.arrow_types">
-<span class="sig-name descname"><span class="pre">arrow_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.arrow_types" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">arrow_types</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ranks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.arrow_types" title="Link to this definition">#</a></dt>
 <dd><p>Get the Arrow data types for this item list.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ids</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 <li><p><strong>numbers</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
+<li><p><strong>ranks</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>bool</em></a>)</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
@@ -1082,6 +1092,64 @@ scores are used.</p></li>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>An ordered item list containing the top <code class="docutils literal notranslate"><span class="pre">n</span></code> items.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemList.concat">
+<span class="sig-name descname"><span class="pre">concat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.concat" title="Link to this definition">#</a></dt>
+<dd><p>Concatenate this item list with another.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">self</span></code> has a vocabulary that accomodates the item IDs in <code class="docutils literal notranslate"><span class="pre">other</span></code>,
+the returned item list will share the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a>)</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemList.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.update" title="Link to this definition">#</a></dt>
+<dd><p>Create a copy of the item list, updated with new data from another list.</p>
+<p>This creates a new item list with the same items as <code class="docutils literal notranslate"><span class="pre">self</span></code>, but with
+new or modified fields from <code class="docutils literal notranslate"><span class="pre">other</span></code>.  For any item in both <code class="docutils literal notranslate"><span class="pre">self</span></code>
+and <code class="docutils literal notranslate"><span class="pre">other</span></code>, and each field present in <code class="docutils literal notranslate"><span class="pre">other</span></code>, the values of that
+field in <code class="docutils literal notranslate"><span class="pre">other</span></code> are used instead of <code class="docutils literal notranslate"><span class="pre">self</span></code>.  That is:</p>
+<ul class="simple">
+<li><p>If a field is only present in <code class="docutils literal notranslate"><span class="pre">self</span></code>, it is used unchanged.</p></li>
+<li><p>If a field is only present in <code class="docutils literal notranslate"><span class="pre">other</span></code>, its values are used for the
+items that appear in both sets, and items only in <code class="docutils literal notranslate"><span class="pre">self</span></code> have an
+unset / null value for the field (<code class="docutils literal notranslate"><span class="pre">NaN</span></code> for foating arrays).</p></li>
+<li><p>If a field is present in both lists, then its values from <code class="docutils literal notranslate"><span class="pre">other</span></code>
+are used for items appearing in <code class="docutils literal notranslate"><span class="pre">other</span></code>, and the values from
+<code class="docutils literal notranslate"><span class="pre">self</span></code> are used for items that appear only in <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p></li>
+<li><p>Items that appear only in <code class="docutils literal notranslate"><span class="pre">other</span></code> are ignored.</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Only the <em>presence or absence</em> of an item in <code class="docutils literal notranslate"><span class="pre">self</span></code> and <code class="docutils literal notranslate"><span class="pre">other</span></code>
+is considered, not the nullity of individual field values.  If a
+field appears in both <code class="docutils literal notranslate"><span class="pre">self</span></code> and <code class="docutils literal notranslate"><span class="pre">other</span></code>, and some of its values
+in <code class="docutils literal notranslate"><span class="pre">other</span></code> are null or <code class="docutils literal notranslate"><span class="pre">NaN</span></code>, then they will be null or <code class="docutils literal notranslate"><span class="pre">NaN</span></code>
+in the resulting item list, regardless of the value of that field
+for those items on <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p>
+<p>That is, this method does not do item-level coalescing of null field
+values.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>other</strong> (<a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a>) – The item list to merge into this one.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The updated item list.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><em>ItemList</em></a></p>
@@ -1122,12 +1190,12 @@ scores are used.</p></li>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="lenskit.data.load_movielens_df.html"
+       href="lenskit.data.load_ms_web.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">lenskit.data.load_movielens_df</p>
+        <p class="prev-next-title">lenskit.data.load_ms_web</p>
       </div>
     </a>
     <a class="right-next"
@@ -1174,6 +1242,8 @@ scores are used.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.to_arrow"><code class="docutils literal notranslate"><span class="pre">ItemList.to_arrow()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.arrow_types"><code class="docutils literal notranslate"><span class="pre">ItemList.arrow_types()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.top_n"><code class="docutils literal notranslate"><span class="pre">ItemList.top_n()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.concat"><code class="docutils literal notranslate"><span class="pre">ItemList.concat()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.update"><code class="docutils literal notranslate"><span class="pre">ItemList.update()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.remove"><code class="docutils literal notranslate"><span class="pre">ItemList.remove()</span></code></a></li>
 </ul>
 </li>
@@ -1220,7 +1290,7 @@ scores are used.</p></li>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.5.0.</div>
+        <div class="footer-item">LensKit version 2025.6.0.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
