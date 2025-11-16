@@ -12,7 +12,7 @@
 <meta property="og:url" content="api/lenskit.data.RelationshipSet.html" />
 <meta property="og:site_name" content="LensKit" />
 
-    <title>lenskit.data.RelationshipSet &#8212; LensKit 2025.6.0.dev146+g2c649fc3 documentation</title>
+    <title>lenskit.data.RelationshipSet &#8212; LensKit 2025.6.0.dev151+g38e8ac7b documentation</title>
   
   
   
@@ -46,7 +46,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=6389521d"></script>
+    <script src="../_static/documentation_options.js?v=a223c49d"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -137,8 +137,8 @@
       
     
     
-    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.6.0.dev146+g2c649fc3 documentation - Home"/>
-    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.6.0.dev146+g2c649fc3 documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.6.0.dev151+g38e8ac7b documentation - Home"/>
+    <img src="../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.6.0.dev151+g38e8ac7b documentation - Home"/>
   
   
 </a></div>
@@ -734,16 +734,19 @@ a dataset’s <a class="reference internal" href="lenskit.data.Dataset.html#lens
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.RelationshipSet.arrow" title="lenskit.data.RelationshipSet.arrow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">arrow</span></code></a>(*[, attributes, ids])</p></td>
 <td><p>Get these relationships and their attributes as a PyArrow table.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">count</span></code>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.RelationshipSet.co_occurrences" title="lenskit.data.RelationshipSet.co_occurrences"><code class="xref py py-obj docutils literal notranslate"><span class="pre">co_occurrences</span></code></a>(entity, *[, group, order])</p></td>
+<td><p>Count co-occurrences of the specified entity.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">count</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.RelationshipSet.item_lists" title="lenskit.data.RelationshipSet.item_lists"><code class="xref py py-obj docutils literal notranslate"><span class="pre">item_lists</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.RelationshipSet.item_lists" title="lenskit.data.RelationshipSet.item_lists"><code class="xref py py-obj docutils literal notranslate"><span class="pre">item_lists</span></code></a>()</p></td>
 <td><p>Get a view of this relationship set as an item list collection.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.RelationshipSet.matrix" title="lenskit.data.RelationshipSet.matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrix</span></code></a>(*[, row_entity, col_entity])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.RelationshipSet.matrix" title="lenskit.data.RelationshipSet.matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">matrix</span></code></a>(*[, row_entity, col_entity])</p></td>
 <td><p>Convert this relationship set into a matrix, coalescing duplicate observations.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.data.RelationshipSet.pandas" title="lenskit.data.RelationshipSet.pandas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas</span></code></a>(*[, attributes, ids])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.data.RelationshipSet.pandas" title="lenskit.data.RelationshipSet.pandas"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pandas</span></code></a>(*[, attributes, ids])</p></td>
 <td><p>Get these relationship and their attributes as a PyArrow table.</p></td>
 </tr>
 </tbody>
@@ -791,6 +794,50 @@ a dataset’s <a class="reference internal" href="lenskit.data.Dataset.html#lens
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="lenskit.data.ItemListCollection.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection">ItemListCollection</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.RelationshipSet.co_occurrences">
+<span class="sig-name descname"><span class="pre">co_occurrences</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.RelationshipSet.co_occurrences" title="Link to this definition">#</a></dt>
+<dd><p>Count co-occurrences of the specified entity.  This is useful for
+counting item co-occurrences for association rules and probabilties, but
+also has other uses as well.</p>
+<p>This method supports both <strong>ordered</strong> and <strong>unordered</strong> co-occurrences.
+Unordered co-occurrences just count the number of times the two items
+appear together, and the resulting matrix is symmetric.</p>
+<p>For ordered co-occurrences, the interactions are ordered by the
+attribute specified by <code class="docutils literal notranslate"><span class="pre">order</span></code>, and the resulting matrix <code class="docutils literal notranslate"><span class="pre">M</span></code> may not
+be symmetric.  <code class="docutils literal notranslate"><span class="pre">M[i,j]</span></code> counts the number of times item <code class="docutils literal notranslate"><span class="pre">j</span></code> has
+appeared <strong>after</strong> item <code class="docutils literal notranslate"><span class="pre">i</span></code>.  The order does not need to be global —
+an attribute recording order <em>within</em> a group is sufficient.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">group</span></code> is specified, it controls the grouping for counting
+co-occurrences. For example, if a relationship connects the <code class="docutils literal notranslate"><span class="pre">user</span></code>,
+<code class="docutils literal notranslate"><span class="pre">session</span></code>, and <code class="docutils literal notranslate"><span class="pre">item</span></code> classes, then:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">rs.co_occurrances(&quot;item&quot;)</span></code> counts the number of times each pair of
+items appear together in a session.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">rs.co_occurrances(&quot;item&quot;,</span> <span class="pre">group=&quot;user&quot;)</span></code> counts the number of times
+each pair of items were interacted with by the same user, regardless
+of session.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entity</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>str</em></a>) – The name of the entity to count.</p></li>
+<li><p><strong>group</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>str</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>str</em></a><em>] </em><em>| </em><em>None</em>) – The names of grouping entity classes for counting
+co-occurrences. The default is to use all entities that are not
+being counted.</p></li>
+<li><p><strong>order</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>str</em></a><em> | </em><em>None</em>) – The name of an attribute to use for ordering interactions to
+compute sequential co-occurrences.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A sparse matrix with the co-occurrence counts.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.coo_array.html#scipy.sparse.coo_array" rel="noreferrer" target="_blank" title="(in SciPy v1.16.2)"><em>coo_array</em></a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -910,6 +957,7 @@ entity in the relationship’s list of involved entities.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.RelationshipSet.name"><code class="docutils literal notranslate"><span class="pre">RelationshipSet.name</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.RelationshipSet.is_interaction"><code class="docutils literal notranslate"><span class="pre">RelationshipSet.is_interaction</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.RelationshipSet.item_lists"><code class="docutils literal notranslate"><span class="pre">RelationshipSet.item_lists()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.RelationshipSet.co_occurrences"><code class="docutils literal notranslate"><span class="pre">RelationshipSet.co_occurrences()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.RelationshipSet.arrow"><code class="docutils literal notranslate"><span class="pre">RelationshipSet.arrow()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.RelationshipSet.pandas"><code class="docutils literal notranslate"><span class="pre">RelationshipSet.pandas()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.RelationshipSet.matrix"><code class="docutils literal notranslate"><span class="pre">RelationshipSet.matrix()</span></code></a></li>
@@ -958,7 +1006,7 @@ entity in the relationship’s list of involved entities.</p></li>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.6.0.dev146+g2c649fc3.</div>
+        <div class="footer-item">LensKit version 2025.6.0.dev151+g38e8ac7b.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
