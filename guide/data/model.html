@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit defines holistic data model for recommender training (and evaluation) data. The model is graph-structured, but the interfaces and definitions center tabular (data frame) views of that data ..." />
 <meta name="description" content="LensKit defines holistic data model for recommender training (and evaluation) data. The model is graph-structured, but the interfaces and definitions center tabular (data frame) views of that data ..." />
 
-    <title>Data Model &#8212; LensKit 2025.6.2.dev6+g35fef09a documentation</title>
+    <title>Data Model &#8212; LensKit 2025.6.2.dev10+g8c3df132 documentation</title>
   
   
   
@@ -38,6 +38,7 @@
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
     <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=9d9b0268" />
@@ -48,7 +49,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=4d1b7d84"></script>
+    <script src="../../_static/documentation_options.js?v=cdfcbfbb"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -67,6 +68,7 @@
             true;
         </script>
     <link rel="canonical" href="https://lenskit.org/latest/guide/data/model.html" />
+    <link rel="icon" href="../../_static/lenskit-icon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Item Lists and Collections" href="item-lists.html" />
@@ -139,8 +141,8 @@
       
     
     
-    <img src="../../_static/LKLogo2.png" class="logo__image only-light" alt="LensKit 2025.6.2.dev6+g35fef09a documentation - Home"/>
-    <img src="../../_static/LKLogo2.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.6.2.dev6+g35fef09a documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2025.6.2.dev10+g8c3df132 documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.6.2.dev10+g8c3df132 documentation - Home"/>
   
   
 </a></div>
@@ -575,6 +577,45 @@ as <a class="reference internal" href="../../api/lenskit.data.load_movielens.htm
 packages like PyTorch-Geometric is not difficult, and will be directly
 supported in an upcoming backwards-compatible revision.</p>
 </div>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
+<p>To warm up, here is a simple version of how a MovieLens rating dataset is
+represented in the LensKit data model, in <a class="reference external" href="https://en.wikipedia.org/wiki/Entity%E2%80%93relationship_model" rel="noreferrer" target="_blank">Chen’s entity-relationship notation</a>:</p>
+graph G {
+    rankdir=&quot;LR&quot;
+    node [shape=box, fontname=&quot;Sans-Serif&quot;, style=filled, fillcolor=&quot;#3fb1c5&quot;]
+    U [label=&quot;user&quot;]
+    I [label=&quot;item&quot;]
+
+    node [shape=oval, fillcolor=&quot;#f3cf95&quot;, style=&quot;filled,dashed&quot;]
+    Uid [label=&lt;&lt;u&gt;user_id&lt;/u&gt;&gt;]
+    Iid [label=&lt;&lt;u&gt;item_id&lt;/u&gt;&gt;]
+    node [style=&quot;filled&quot;]
+    It [label=&quot;title&quot;]
+
+    subgraph R {
+        rank=&quot;same&quot;
+        node [shape=diamond, fillcolor=&quot;#e47fd7&quot;]
+        R [label=&quot;rating&quot;]
+
+        node[shape=oval, fillcolor=&quot;#f3cf95&quot;]
+        Rv [label=&quot;rating&quot;]
+        Rt [label=&quot;timestamp&quot;]
+
+        Rt -- R;
+        R -- Rv;
+    }
+
+    U -- R;
+    R -- I;
+
+    Uid -- U;
+    I -- Iid;
+    I -- It;
+}<p>This model shows two <a class="reference internal" href="#term-Entity"><span class="xref std std-term">entities</span></a>, <strong>user</strong> and <strong>item</strong>, connected
+by a <a class="reference internal" href="#term-Relationship"><span class="xref std std-term">relationship</span></a> <strong>rating</strong>.  Users, items, and ratings have various
+<a class="reference internal" href="#term-Attribute"><span class="xref std std-term">attributes</span></a> further describing them.</p>
+</section>
 <section id="core-concepts">
 <h2>Core Concepts<a class="headerlink" href="#core-concepts" title="Link to this heading">#</a></h2>
 <p>The LensKit data model has several core concepts, derived from
@@ -838,6 +879,7 @@ containing the identifiers and attribute values. For entity classes,
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-concepts">Core Concepts</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entities">Entities</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a><ul class="nav section-nav flex-column">
@@ -893,7 +935,7 @@ containing the identifiers and attribute values. For entity classes,
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.6.2.dev6+g35fef09a.</div>
+        <div class="footer-item">LensKit version 2025.6.2.dev10+g8c3df132.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
