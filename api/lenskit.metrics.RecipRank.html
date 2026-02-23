@@ -12,7 +12,7 @@
 <meta property="og:url" content="api/lenskit.metrics.RecipRank.html" />
 <meta property="og:site_name" content="LensKit" />
 
-    <title>lenskit.metrics.RecipRank &#8212; LensKit 2026.0.0.dev156+gd64593dd documentation</title>
+    <title>lenskit.metrics.RecipRank &#8212; LensKit 2026.0.0.dev192+gf20b7c3e documentation</title>
   
   
   
@@ -47,7 +47,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=520abe8f"></script>
+    <script src="../_static/documentation_options.js?v=ac81642c"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -140,8 +140,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev156+gd64593dd documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev156+gd64593dd documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev192+gf20b7c3e documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev192+gf20b7c3e documentation - Home"/>
   
   
 </a></div>
@@ -514,6 +514,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="lenskit.stochastic.html">lenskit.stochastic</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="lenskit.knn.html">lenskit.knn</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.knn.ease.html">lenskit.knn.ease</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.knn.item.html">lenskit.knn.item</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.knn.user.html">lenskit.knn.user</a></li>
 </ul>
@@ -686,14 +687,14 @@
 <dt class="sig sig-object py" id="lenskit.metrics.RecipRank">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.metrics.</span></span><span class="sig-name descname"><span class="pre">RecipRank</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.RecipRank" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="lenskit.metrics.ListMetric.html#lenskit.metrics.ListMetric" title="lenskit.metrics._base.ListMetric"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListMetric</span></code></a>, <a class="reference internal" href="lenskit.metrics.RankingMetricBase.html#lenskit.metrics.RankingMetricBase" title="lenskit.metrics.ranking._base.RankingMetricBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">RankingMetricBase</span></code></a></p>
-<p>Compute the reciprocal rank <span id="id1">[<a class="reference internal" href="../references.html#id61" title="Paul B Kantor and Ellen Voorhees. Report on the TREC-5 Confusion Track. In The Fifth Text REtrieval Conference (TREC-5). October 1997. URL: http://trec.nist.gov/pubs/trec5/t5_proceedings.html.">KV97</a>]</span> of the first relevant
+<p>Compute the reciprocal rank <span id="id1">[<a class="reference internal" href="../references.html#id65" title="Paul B Kantor and Ellen Voorhees. Report on the TREC-5 Confusion Track. In The Fifth Text REtrieval Conference (TREC-5). October 1997. URL: http://trec.nist.gov/pubs/trec5/t5_proceedings.html.">KV97</a>]</span> of the first relevant
 item in a list of recommendations.  Taking the mean of this metric over the
 recommendation lists in a run yields the MRR (mean reciprocal rank).</p>
 <p>Let <span class="math notranslate nohighlight">\(\kappa\)</span> denote the 1-based rank of the first relevant item in
 <span class="math notranslate nohighlight">\(L\)</span>, with <span class="math notranslate nohighlight">\(\kappa=\infty\)</span> if none of the first <span class="math notranslate nohighlight">\(k\)</span> items
 in <span class="math notranslate nohighlight">\(L\)</span> are relevant; then the reciprocal rank is <span class="math notranslate nohighlight">\(1 / \kappa\)</span>.
 If no elements are relevant, the reciprocal rank is therefore 0.
-<span id="id2">Deshpande and Karypis [<a class="reference internal" href="../references.html#id9" title="Mukund Deshpande and George Karypis. Item-based top-N Recommendation Algorithms. ACM Trans. Inf. Syst., 22(1):143–177, January 2004. doi:10.1145/963770.963776.">DK04</a>]</span> call this the “reciprocal hit rate”.</p>
+<span id="id2">Deshpande and Karypis [<a class="reference internal" href="../references.html#id10" title="Mukund Deshpande and George Karypis. Item-based top-N Recommendation Algorithms. ACM Trans. Inf. Syst., 22(1):143–177, January 2004. doi:10.1145/963770.963776.">DK04</a>]</span> call this the “reciprocal hit rate”.</p>
 <dl class="field-list">
 <dt class="field-odd">Stability<span class="colon">:</span></dt>
 <dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
@@ -884,7 +885,7 @@ The base implementation returns the class name by default.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev156+gd64593dd.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev192+gf20b7c3e.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
