@@ -12,14 +12,9 @@
 <meta property="og:url" content="api/lenskit.knn.html" />
 <meta property="og:site_name" content="LensKit" />
 <meta property="og:description" content="k-NN recommender models. Modules" />
-<meta property="og:image:width" content="1146" />
-<meta property="og:image:height" content="600" />
-<meta property="og:image" content="_images/social_previews/summary_api_lenskit.knn_951190a7.png" />
-<meta property="og:image:alt" content="k-NN recommender models. Modules" />
 <meta name="description" content="k-NN recommender models. Modules" />
-<meta name="twitter:card" content="summary_large_image" />
 
-    <title>lenskit.knn &#8212; LensKit 2025.6.3 documentation</title>
+    <title>lenskit.knn &#8212; LensKit 2025.7.0b1 documentation</title>
   
   
   
@@ -54,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=dc54ac60"></script>
+    <script src="../_static/documentation_options.js?v=7360bdc3"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -77,11 +72,11 @@
     <link rel="icon" href="../_static/lenskit-icon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="lenskit.knn.item" href="lenskit.knn.item.html" />
+    <link rel="next" title="lenskit.knn.ease" href="lenskit.knn.ease.html" />
     <link rel="prev" title="lenskit.stochastic" href="lenskit.stochastic.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.6.3" />
+  <meta name="docsearch:version" content="2025.7.0" />
   </head>
   
   
@@ -147,8 +142,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2025.6.3 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.6.3 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2025.7.0b1 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.7.0b1 documentation - Home"/>
   
   
 </a></div>
@@ -521,6 +516,7 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="lenskit.stochastic.html">lenskit.stochastic</a></li>
 <li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">lenskit.knn</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="lenskit.knn.ease.html">lenskit.knn.ease</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.knn.item.html">lenskit.knn.item</a></li>
 <li class="toctree-l2"><a class="reference internal" href="lenskit.knn.user.html">lenskit.knn.user</a></li>
 </ul>
@@ -622,7 +618,6 @@
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="lenskit.random.html">lenskit.random</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lenskit.stats.html">lenskit.stats</a></li>
-<li class="toctree-l1"><a class="reference internal" href="lenskit.testing.html">lenskit.testing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lenskit.torch.html">lenskit.torch</a></li>
 <li class="toctree-l1"><a class="reference internal" href="lenskit._accel.html">lenskit._accel</a></li>
 </ul>
@@ -689,70 +684,84 @@
 <span id="lenskit-knn"></span><h1>lenskit.knn<a class="headerlink" href="#module-lenskit.knn" title="Link to this heading">#</a></h1>
 <p>k-NN recommender models.</p>
 <dl class="py class">
-<dt class="sig sig-object py" id="lenskit.knn.ItemKNNScorer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.knn.</span></span><span class="sig-name descname"><span class="pre">ItemKNNScorer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.knn.ItemKNNScorer" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="lenskit.knn.EASEConfig">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.knn.</span></span><span class="sig-name descname"><span class="pre">EASEConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">regularization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.knn.EASEConfig" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.pydantic.dev/latest/api/base_model/#pydantic.BaseModel" rel="noreferrer" target="_blank" title="(in Pydantic Validation v0.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseModel</span></code></a></p>
+<p>Configuration for <a class="reference internal" href="#lenskit.knn.EASEScorer" title="lenskit.knn.EASEScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">EASEScorer</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>regularization</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>Annotated</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>Gt</em><em>(</em><em>gt=0</em><em>)</em><em>]</em>)</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.knn.EASEConfig.model_config">
+<span class="sig-name descname"><span class="pre">model_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ClassVar</span><span class="p"><span class="pre">[</span></span><span class="pre">ConfigDict</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{}</span></em><a class="headerlink" href="#lenskit.knn.EASEConfig.model_config" title="Link to this definition">#</a></dt>
+<dd><p>Configuration for the model, should be a dictionary conforming to [<cite>ConfigDict</cite>][pydantic.config.ConfigDict].</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.knn.EASEConfig.regularization">
+<span class="sig-name descname"><span class="pre">regularization</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Annotated" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">Annotated</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Gt</span><span class="p"><span class="pre">(</span></span><span class="n"><span class="pre">gt</span></span><span class="o"><span class="pre">=</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.knn.EASEConfig.regularization" title="Link to this definition">#</a></dt>
+<dd><p>Regularization term for EASE.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.knn.EASEScorer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.knn.</span></span><span class="sig-name descname"><span class="pre">EASEScorer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.knn.EASEScorer" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>[<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>, …], <a class="reference internal" href="training.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a></p>
-<p>Item-item nearest-neighbor collaborative filtering feedback. This item-item
-implementation is based on the description of item-based CF by
-<span id="id1">Deshpande and Karypis [<a class="reference internal" href="../references.html#id9" title="Mukund Deshpande and George Karypis. Item-based top-N Recommendation Algorithms. ACM Trans. Inf. Syst., 22(1):143–177, January 2004. doi:10.1145/963770.963776.">DK04</a>]</span> and hard-codes several design decisions found to
-work well in the previous Java-based LensKit code <span id="id2">[<a class="reference internal" href="../references.html#id35" title="Michael Ekstrand, Michael Ludwig, Joseph A. Konstan, and John Riedl. Rethinking the recommender research ecosystem: reproducibility, openness, and LensKit. In Proceedings of the 5th ACM Conference on Recommender Systems, 133–140. ACM, 2011. doi:10.1145/2043932.2043958.">ELKR11</a>]</span>. In
-explicit-feedback mode, its output is equivalent to that of the Java
-version.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>This component must be used with queries containing the user’s history,
-either directly in the input or by wiring its query input to the output of a
-user history component (e.g., <a class="reference internal" href="lenskit.basic.html#lenskit.basic.UserTrainingHistoryLookup" title="lenskit.basic.UserTrainingHistoryLookup"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserTrainingHistoryLookup</span></code></a>).</p>
-</div>
-<dl class="field-list">
-<dt class="field-odd">Stability<span class="colon">:</span></dt>
-<dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>config</strong> (<a class="reference internal" href="lenskit.knn.item.html#lenskit.knn.item.ItemKNNConfig" title="lenskit.knn.item.ItemKNNConfig"><em>ItemKNNConfig</em></a>)</p></li>
+<p>Embarrassingly shallow autoencoder
+<span id="id1">[<a class="reference internal" href="../references.html#id61" title="Harald Steck. Embarrassingly Shallow Autoencoders for Sparse Data. In The World Wide Web Conference, WWW '19, 3251–3257. New York, NY, USA, May 2019. Association for Computing Machinery. doi:10.1145/3308558.3313710.">Ste19</a>]</span>.</p>
+<p>In addition to its configuation, this component also uses a training
+environment variable:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>config</strong> (<a class="reference internal" href="lenskit.knn.ease.html#lenskit.knn.ease.EASEConfig" title="lenskit.knn.ease.EASEConfig"><em>EASEConfig</em></a>)</p></li>
 <li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="std envvar">
+<dt class="sig sig-object std" id="envvar-LK_EASE_SOLVER">
+<span class="sig-name descname"><span class="pre">LK_EASE_SOLVER</span></span><a class="headerlink" href="#envvar-LK_EASE_SOLVER" title="Link to this definition">#</a></dt>
+<dd><p>Specify the solver to use to invert the Gram-matrix for EASE.  Can be
+either <code class="docutils literal notranslate"><span class="pre">&quot;torch&quot;</span></code> (works on both CPU and CUDA, and is faster on CPU
+than SciPy) or <code class="docutils literal notranslate"><span class="pre">&quot;scipy&quot;</span></code> (uses LAPACK, and may take less memory).</p>
+<p>The default behavior is to first try to allocate enough memory to train
+with PyTorch, and to fall back to SciPy with in-place solving if the
+Torch allocation fails.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This component requires SciPy 1.17 or later.</p>
+</div>
 <dl class="py method">
-<dt class="sig sig-object py" id="lenskit.knn.ItemKNNScorer.train">
-<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">TrainingOptions(retrain=True,</span> <span class="pre">device=None,</span> <span class="pre">rng=None)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.knn.ItemKNNScorer.train" title="Link to this definition">#</a></dt>
-<dd><p>Train a model.</p>
-<p>The model-training process depends on <code class="docutils literal notranslate"><span class="pre">save_nbrs</span></code> and <code class="docutils literal notranslate"><span class="pre">min_sim</span></code>, but <em>not</em> on other
-algorithm parameters.</p>
+<dt class="sig sig-object py" id="lenskit.knn.EASEScorer.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.knn.EASEScorer.train" title="Link to this definition">#</a></dt>
+<dd><p>Train the model to learn its parameters from a training dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ratings</strong> – (user,item,rating) data for computing item similarities.</p></li>
-<li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>)</p></li>
-<li><p><strong>options</strong> (<a class="reference internal" href="training.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><em>TrainingOptions</em></a>)</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>) – The training dataset.</p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="training.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><em>TrainingOptions</em></a><em> | </em><em>None</em>) – The training options.</p></li>
 </ul>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="lenskit.knn.ItemKNNScorer.items">
-<span class="sig-name descname"><span class="pre">items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="lenskit.data.Vocabulary.html#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><span class="pre">Vocabulary</span></a></em><a class="headerlink" href="#lenskit.knn.ItemKNNScorer.items" title="Link to this definition">#</a></dt>
-<dd><p>Vocabulary of item IDs.</p>
+<dt class="sig sig-object py" id="lenskit.knn.EASEScorer.items">
+<span class="sig-name descname"><span class="pre">items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="lenskit.data.Vocabulary.html#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><span class="pre">Vocabulary</span></a></em><a class="headerlink" href="#lenskit.knn.EASEScorer.items" title="Link to this definition">#</a></dt>
+<dd><p>Items known at training time.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="lenskit.knn.ItemKNNScorer.item_means">
-<span class="sig-name descname"><span class="pre">item_means</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" rel="noreferrer" target="_blank" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" rel="noreferrer" target="_blank" title="(in NumPy v2.4)"><span class="pre">dtype</span></a><span class="p"><span class="pre">[</span></span><span class="pre">float32</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#lenskit.knn.ItemKNNScorer.item_means" title="Link to this definition">#</a></dt>
-<dd><p>Mean rating for each known item.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="lenskit.knn.ItemKNNScorer.item_counts">
-<span class="sig-name descname"><span class="pre">item_counts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" rel="noreferrer" target="_blank" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" rel="noreferrer" target="_blank" title="(in NumPy v2.4)"><span class="pre">dtype</span></a><span class="p"><span class="pre">[</span></span><span class="pre">int32</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.knn.ItemKNNScorer.item_counts" title="Link to this definition">#</a></dt>
-<dd><p>Number of saved neighbors for each item.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="lenskit.knn.ItemKNNScorer.sim_matrix">
-<span class="sig-name descname"><span class="pre">sim_matrix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="lenskit.data.matrix.SparseRowArray.html#lenskit.data.matrix.SparseRowArray" title="lenskit.data.matrix.SparseRowArray"><span class="pre">SparseRowArray</span></a></em><a class="headerlink" href="#lenskit.knn.ItemKNNScorer.sim_matrix" title="Link to this definition">#</a></dt>
-<dd><p>Similarity matrix (sparse CSR tensor).</p>
+<dt class="sig sig-object py" id="lenskit.knn.EASEScorer.weights">
+<span class="sig-name descname"><span class="pre">weights</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" rel="noreferrer" target="_blank" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" rel="noreferrer" target="_blank" title="(in NumPy v2.4)"><span class="pre">dtype</span></a><span class="p"><span class="pre">[</span></span><span class="pre">float32</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.knn.EASEScorer.weights" title="Link to this definition">#</a></dt>
+<dd><p>Item interpolation weight matrix.</p>
 </dd></dl>
 
 </dd></dl>
@@ -830,12 +839,15 @@ affects performance, not behavior.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="lenskit.knn.UserKNNScorer">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.knn.</span></span><span class="sig-name descname"><span class="pre">UserKNNScorer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.knn.UserKNNScorer" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py" id="lenskit.knn.ItemKNNScorer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.knn.</span></span><span class="sig-name descname"><span class="pre">ItemKNNScorer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.knn.ItemKNNScorer" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>[<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>, …], <a class="reference internal" href="training.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a></p>
-<p>User-user nearest-neighbor collaborative filtering with ratings. This
-user-user implementation is not terribly configurable; it hard-codes design
-decisions found to work well in the previous Java-based LensKit code.</p>
+<p>Item-item nearest-neighbor collaborative filtering feedback. This item-item
+implementation is based on the description of item-based CF by
+<span id="id2">Deshpande and Karypis [<a class="reference internal" href="../references.html#id10" title="Mukund Deshpande and George Karypis. Item-based top-N Recommendation Algorithms. ACM Trans. Inf. Syst., 22(1):143–177, January 2004. doi:10.1145/963770.963776.">DK04</a>]</span> and hard-codes several design decisions found to
+work well in the previous Java-based LensKit code <span id="id3">[<a class="reference internal" href="../references.html#id36" title="Michael Ekstrand, Michael Ludwig, Joseph A. Konstan, and John Riedl. Rethinking the recommender research ecosystem: reproducibility, openness, and LensKit. In Proceedings of the 5th ACM Conference on Recommender Systems, 133–140. ACM, 2011. doi:10.1145/2043932.2043958.">ELKR11</a>]</span>. In
+explicit-feedback mode, its output is equivalent to that of the Java
+version.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>This component must be used with queries containing the user’s history,
@@ -847,20 +859,21 @@ user history component (e.g., <a class="reference internal" href="lenskit.basic.
 <dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><strong>config</strong> (<a class="reference internal" href="lenskit.knn.user.html#lenskit.knn.user.UserKNNConfig" title="lenskit.knn.user.UserKNNConfig"><em>UserKNNConfig</em></a>)</p></li>
+<li><p><strong>config</strong> (<a class="reference internal" href="lenskit.knn.item.html#lenskit.knn.item.ItemKNNConfig" title="lenskit.knn.item.ItemKNNConfig"><em>ItemKNNConfig</em></a>)</p></li>
 <li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="lenskit.knn.UserKNNScorer.train">
-<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">TrainingOptions(retrain=True,</span> <span class="pre">device=None,</span> <span class="pre">rng=None)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.knn.UserKNNScorer.train" title="Link to this definition">#</a></dt>
-<dd><p>“Train” a user-user CF model.  This memorizes the rating data in a format that is usable
-for future computations.</p>
+<dt class="sig sig-object py" id="lenskit.knn.ItemKNNScorer.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">TrainingOptions(retrain=True,</span> <span class="pre">device=None,</span> <span class="pre">rng=None,</span> <span class="pre">environment={})</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.knn.ItemKNNScorer.train" title="Link to this definition">#</a></dt>
+<dd><p>Train a model.</p>
+<p>The model-training process depends on <code class="docutils literal notranslate"><span class="pre">save_nbrs</span></code> and <code class="docutils literal notranslate"><span class="pre">min_sim</span></code>, but <em>not</em> on other
+algorithm parameters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" rel="noreferrer" target="_blank" title="(in pandas v3.0.0)"><em>pandas.DataFrame</em></a>) – (user, item, rating) data for collaborative filtering.</p></li>
+<li><p><strong>ratings</strong> – (user,item,rating) data for computing item similarities.</p></li>
 <li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>)</p></li>
 <li><p><strong>options</strong> (<a class="reference internal" href="training.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><em>TrainingOptions</em></a>)</p></li>
 </ul>
@@ -869,33 +882,27 @@ for future computations.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="lenskit.knn.UserKNNScorer.users">
-<span class="sig-name descname"><span class="pre">users</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="lenskit.data.Vocabulary.html#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><span class="pre">Vocabulary</span></a></em><a class="headerlink" href="#lenskit.knn.UserKNNScorer.users" title="Link to this definition">#</a></dt>
-<dd><p>The index of user IDs.</p>
+<dt class="sig sig-object py" id="lenskit.knn.ItemKNNScorer.items">
+<span class="sig-name descname"><span class="pre">items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="lenskit.data.Vocabulary.html#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><span class="pre">Vocabulary</span></a></em><a class="headerlink" href="#lenskit.knn.ItemKNNScorer.items" title="Link to this definition">#</a></dt>
+<dd><p>Vocabulary of item IDs.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="lenskit.knn.UserKNNScorer.items">
-<span class="sig-name descname"><span class="pre">items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="lenskit.data.Vocabulary.html#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><span class="pre">Vocabulary</span></a></em><a class="headerlink" href="#lenskit.knn.UserKNNScorer.items" title="Link to this definition">#</a></dt>
-<dd><p>The index of item IDs.</p>
+<dt class="sig sig-object py" id="lenskit.knn.ItemKNNScorer.item_means">
+<span class="sig-name descname"><span class="pre">item_means</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" rel="noreferrer" target="_blank" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" rel="noreferrer" target="_blank" title="(in NumPy v2.4)"><span class="pre">dtype</span></a><span class="p"><span class="pre">[</span></span><span class="pre">float32</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#lenskit.knn.ItemKNNScorer.item_means" title="Link to this definition">#</a></dt>
+<dd><p>Mean rating for each known item.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="lenskit.knn.UserKNNScorer.user_means">
-<span class="sig-name descname"><span class="pre">user_means</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" rel="noreferrer" target="_blank" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" rel="noreferrer" target="_blank" title="(in NumPy v2.4)"><span class="pre">dtype</span></a><span class="p"><span class="pre">[</span></span><span class="pre">float32</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#lenskit.knn.UserKNNScorer.user_means" title="Link to this definition">#</a></dt>
-<dd><p>Mean rating for each known user.</p>
+<dt class="sig sig-object py" id="lenskit.knn.ItemKNNScorer.item_counts">
+<span class="sig-name descname"><span class="pre">item_counts</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" rel="noreferrer" target="_blank" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" rel="noreferrer" target="_blank" title="(in NumPy v2.4)"><span class="pre">dtype</span></a><span class="p"><span class="pre">[</span></span><span class="pre">int32</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#lenskit.knn.ItemKNNScorer.item_counts" title="Link to this definition">#</a></dt>
+<dd><p>Number of saved neighbors for each item.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="lenskit.knn.UserKNNScorer.user_vectors">
-<span class="sig-name descname"><span class="pre">user_vectors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_array.html#scipy.sparse.csr_array" rel="noreferrer" target="_blank" title="(in SciPy v1.17.0)"><span class="pre">csr_array</span></a></em><a class="headerlink" href="#lenskit.knn.UserKNNScorer.user_vectors" title="Link to this definition">#</a></dt>
-<dd><p>Normalized rating matrix (CSR) to find neighbors at prediction time.</p>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="lenskit.knn.UserKNNScorer.user_ratings">
-<span class="sig-name descname"><span class="pre">user_ratings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="lenskit.data.matrix.SparseRowArray.html#lenskit.data.matrix.SparseRowArray" title="lenskit.data.matrix.SparseRowArray"><span class="pre">SparseRowArray</span></a></em><a class="headerlink" href="#lenskit.knn.UserKNNScorer.user_ratings" title="Link to this definition">#</a></dt>
-<dd><p>Centered but un-normalized rating matrix (COO) to find neighbor ratings.</p>
+<dt class="sig sig-object py" id="lenskit.knn.ItemKNNScorer.sim_matrix">
+<span class="sig-name descname"><span class="pre">sim_matrix</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="lenskit.data.matrix.SparseRowArray.html#lenskit.data.matrix.SparseRowArray" title="lenskit.data.matrix.SparseRowArray"><span class="pre">SparseRowArray</span></a></em><a class="headerlink" href="#lenskit.knn.ItemKNNScorer.sim_matrix" title="Link to this definition">#</a></dt>
+<dd><p>Similarity matrix (sparse CSR tensor).</p>
 </dd></dl>
 
 </dd></dl>
@@ -956,13 +963,87 @@ pre-processing and aggregation.</p>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.knn.UserKNNScorer">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">lenskit.knn.</span></span><span class="sig-name descname"><span class="pre">UserKNNScorer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.knn.UserKNNScorer" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.components.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>[<a class="reference internal" href="lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.items.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>, …], <a class="reference internal" href="training.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a></p>
+<p>User-user nearest-neighbor collaborative filtering with ratings. This
+user-user implementation is not terribly configurable; it hard-codes design
+decisions found to work well in the previous Java-based LensKit code.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This component must be used with queries containing the user’s history,
+either directly in the input or by wiring its query input to the output of a
+user history component (e.g., <a class="reference internal" href="lenskit.basic.html#lenskit.basic.UserTrainingHistoryLookup" title="lenskit.basic.UserTrainingHistoryLookup"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserTrainingHistoryLookup</span></code></a>).</p>
+</div>
+<dl class="field-list">
+<dt class="field-odd">Stability<span class="colon">:</span></dt>
+<dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>config</strong> (<a class="reference internal" href="lenskit.knn.user.html#lenskit.knn.user.UserKNNConfig" title="lenskit.knn.user.UserKNNConfig"><em>UserKNNConfig</em></a>)</p></li>
+<li><p><strong>kwargs</strong> (<em>Any</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.knn.UserKNNScorer.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">TrainingOptions(retrain=True,</span> <span class="pre">device=None,</span> <span class="pre">rng=None,</span> <span class="pre">environment={})</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.knn.UserKNNScorer.train" title="Link to this definition">#</a></dt>
+<dd><p>“Train” a user-user CF model.  This memorizes the rating data in a format that is usable
+for future computations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ratings</strong> (<a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" rel="noreferrer" target="_blank" title="(in pandas v3.0.1)"><em>pandas.DataFrame</em></a>) – (user, item, rating) data for collaborative filtering.</p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.dataset.Dataset"><em>Dataset</em></a>)</p></li>
+<li><p><strong>options</strong> (<a class="reference internal" href="training.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><em>TrainingOptions</em></a>)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.knn.UserKNNScorer.users">
+<span class="sig-name descname"><span class="pre">users</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="lenskit.data.Vocabulary.html#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><span class="pre">Vocabulary</span></a></em><a class="headerlink" href="#lenskit.knn.UserKNNScorer.users" title="Link to this definition">#</a></dt>
+<dd><p>The index of user IDs.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.knn.UserKNNScorer.items">
+<span class="sig-name descname"><span class="pre">items</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="lenskit.data.Vocabulary.html#lenskit.data.Vocabulary" title="lenskit.data.vocab.Vocabulary"><span class="pre">Vocabulary</span></a></em><a class="headerlink" href="#lenskit.knn.UserKNNScorer.items" title="Link to this definition">#</a></dt>
+<dd><p>The index of item IDs.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.knn.UserKNNScorer.user_means">
+<span class="sig-name descname"><span class="pre">user_means</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" rel="noreferrer" target="_blank" title="(in NumPy v2.4)"><span class="pre">ndarray</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.dtype.html#numpy.dtype" rel="noreferrer" target="_blank" title="(in NumPy v2.4)"><span class="pre">dtype</span></a><span class="p"><span class="pre">[</span></span><span class="pre">float32</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></em><a class="headerlink" href="#lenskit.knn.UserKNNScorer.user_means" title="Link to this definition">#</a></dt>
+<dd><p>Mean rating for each known user.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.knn.UserKNNScorer.user_vectors">
+<span class="sig-name descname"><span class="pre">user_vectors</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.sparse.csr_array.html#scipy.sparse.csr_array" rel="noreferrer" target="_blank" title="(in SciPy v1.17.0)"><span class="pre">csr_array</span></a></em><a class="headerlink" href="#lenskit.knn.UserKNNScorer.user_vectors" title="Link to this definition">#</a></dt>
+<dd><p>Normalized rating matrix (CSR) to find neighbors at prediction time.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.knn.UserKNNScorer.user_ratings">
+<span class="sig-name descname"><span class="pre">user_ratings</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="lenskit.data.matrix.SparseRowArray.html#lenskit.data.matrix.SparseRowArray" title="lenskit.data.matrix.SparseRowArray"><span class="pre">SparseRowArray</span></a></em><a class="headerlink" href="#lenskit.knn.UserKNNScorer.user_ratings" title="Link to this definition">#</a></dt>
+<dd><p>Centered but un-normalized rating matrix (COO) to find neighbor ratings.</p>
+</dd></dl>
+
+</dd></dl>
+
 <p class="rubric">Modules</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="lenskit.knn.item.html#module-lenskit.knn.item" title="lenskit.knn.item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">item</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="lenskit.knn.ease.html#module-lenskit.knn.ease" title="lenskit.knn.ease"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ease</span></code></a></p></td>
+<td><p>EASE scoring model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="lenskit.knn.item.html#module-lenskit.knn.item" title="lenskit.knn.item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">item</span></code></a></p></td>
 <td><p>Item-based k-NN collaborative filtering.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="lenskit.knn.user.html#module-lenskit.knn.user" title="lenskit.knn.user"><code class="xref py py-obj docutils literal notranslate"><span class="pre">user</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="lenskit.knn.user.html#module-lenskit.knn.user" title="lenskit.knn.user"><code class="xref py py-obj docutils literal notranslate"><span class="pre">user</span></code></a></p></td>
 <td><p>User-based k-NN collaborative filtering.</p></td>
 </tr>
 </tbody>
@@ -990,11 +1071,11 @@ pre-processing and aggregation.</p>
       </div>
     </a>
     <a class="right-next"
-       href="lenskit.knn.item.html"
+       href="lenskit.knn.ease.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">lenskit.knn.item</p>
+        <p class="prev-next-title">lenskit.knn.ease</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1017,12 +1098,15 @@ pre-processing and aggregation.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.ItemKNNScorer"><code class="docutils literal notranslate"><span class="pre">ItemKNNScorer</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.ItemKNNScorer.train"><code class="docutils literal notranslate"><span class="pre">ItemKNNScorer.train()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.ItemKNNScorer.items"><code class="docutils literal notranslate"><span class="pre">ItemKNNScorer.items</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.ItemKNNScorer.item_means"><code class="docutils literal notranslate"><span class="pre">ItemKNNScorer.item_means</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.ItemKNNScorer.item_counts"><code class="docutils literal notranslate"><span class="pre">ItemKNNScorer.item_counts</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.ItemKNNScorer.sim_matrix"><code class="docutils literal notranslate"><span class="pre">ItemKNNScorer.sim_matrix</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.EASEConfig"><code class="docutils literal notranslate"><span class="pre">EASEConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.EASEConfig.model_config"><code class="docutils literal notranslate"><span class="pre">EASEConfig.model_config</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.EASEConfig.regularization"><code class="docutils literal notranslate"><span class="pre">EASEConfig.regularization</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.EASEScorer"><code class="docutils literal notranslate"><span class="pre">EASEScorer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.EASEScorer.train"><code class="docutils literal notranslate"><span class="pre">EASEScorer.train()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.EASEScorer.items"><code class="docutils literal notranslate"><span class="pre">EASEScorer.items</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.EASEScorer.weights"><code class="docutils literal notranslate"><span class="pre">EASEScorer.weights</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.ItemKNNConfig"><code class="docutils literal notranslate"><span class="pre">ItemKNNConfig</span></code></a><ul class="nav section-nav flex-column">
@@ -1036,13 +1120,12 @@ pre-processing and aggregation.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.ItemKNNConfig.block_size"><code class="docutils literal notranslate"><span class="pre">ItemKNNConfig.block_size</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNScorer"><code class="docutils literal notranslate"><span class="pre">UserKNNScorer</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNScorer.train"><code class="docutils literal notranslate"><span class="pre">UserKNNScorer.train()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNScorer.users"><code class="docutils literal notranslate"><span class="pre">UserKNNScorer.users</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNScorer.items"><code class="docutils literal notranslate"><span class="pre">UserKNNScorer.items</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNScorer.user_means"><code class="docutils literal notranslate"><span class="pre">UserKNNScorer.user_means</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNScorer.user_vectors"><code class="docutils literal notranslate"><span class="pre">UserKNNScorer.user_vectors</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNScorer.user_ratings"><code class="docutils literal notranslate"><span class="pre">UserKNNScorer.user_ratings</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.ItemKNNScorer"><code class="docutils literal notranslate"><span class="pre">ItemKNNScorer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.ItemKNNScorer.train"><code class="docutils literal notranslate"><span class="pre">ItemKNNScorer.train()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.ItemKNNScorer.items"><code class="docutils literal notranslate"><span class="pre">ItemKNNScorer.items</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.ItemKNNScorer.item_means"><code class="docutils literal notranslate"><span class="pre">ItemKNNScorer.item_means</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.ItemKNNScorer.item_counts"><code class="docutils literal notranslate"><span class="pre">ItemKNNScorer.item_counts</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.ItemKNNScorer.sim_matrix"><code class="docutils literal notranslate"><span class="pre">ItemKNNScorer.sim_matrix</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNConfig"><code class="docutils literal notranslate"><span class="pre">UserKNNConfig</span></code></a><ul class="nav section-nav flex-column">
@@ -1052,6 +1135,15 @@ pre-processing and aggregation.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNConfig.min_nbrs"><code class="docutils literal notranslate"><span class="pre">UserKNNConfig.min_nbrs</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNConfig.min_sim"><code class="docutils literal notranslate"><span class="pre">UserKNNConfig.min_sim</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNConfig.feedback"><code class="docutils literal notranslate"><span class="pre">UserKNNConfig.feedback</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNScorer"><code class="docutils literal notranslate"><span class="pre">UserKNNScorer</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNScorer.train"><code class="docutils literal notranslate"><span class="pre">UserKNNScorer.train()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNScorer.users"><code class="docutils literal notranslate"><span class="pre">UserKNNScorer.users</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNScorer.items"><code class="docutils literal notranslate"><span class="pre">UserKNNScorer.items</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNScorer.user_means"><code class="docutils literal notranslate"><span class="pre">UserKNNScorer.user_means</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNScorer.user_vectors"><code class="docutils literal notranslate"><span class="pre">UserKNNScorer.user_vectors</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.UserKNNScorer.user_ratings"><code class="docutils literal notranslate"><span class="pre">UserKNNScorer.user_ratings</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -1097,7 +1189,7 @@ pre-processing and aggregation.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.6.3.</div>
+        <div class="footer-item">LensKit version 2025.7.0b1.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
