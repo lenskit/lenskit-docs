@@ -14,7 +14,7 @@
 <meta property="og:description" content="Functions Classes" />
 <meta name="description" content="Functions Classes" />
 
-    <title>lenskit.parallel.config &#8212; LensKit 2026.0.0.dev228+g4d04b87f documentation</title>
+    <title>lenskit.parallel.config &#8212; LensKit 2026.0.0.dev237+gf091edf8 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=c76122da"></script>
+    <script src="../_static/documentation_options.js?v=3d292883"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev228+g4d04b87f documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev228+g4d04b87f documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev237+gf091edf8 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev237+gf091edf8 documentation - Home"/>
   
   
 </a></div>
@@ -699,7 +699,10 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.parallel.config.initialize" title="lenskit.parallel.config.initialize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">initialize</span></code></a>([config, processes, threads, ...])</p></td>
 <td><p>Set up and configure LensKit parallelism.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.config.subprocess_config" title="lenskit.parallel.config.subprocess_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subprocess_config</span></code></a>([processes, threads, ...])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.config.is_free_threaded" title="lenskit.parallel.config.is_free_threaded"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_free_threaded</span></code></a>(*[, require_active])</p></td>
+<td><p>Query whether this Python supports free-threading.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.parallel.config.subprocess_config" title="lenskit.parallel.config.subprocess_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subprocess_config</span></code></a>([processes, threads, ...])</p></td>
 <td><p>Get a parallel configuration for a subprocess.</p></td>
 </tr>
 </tbody>
@@ -708,7 +711,7 @@
 <p class="rubric">Classes</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.config.ParallelConfig" title="lenskit.parallel.config.ParallelConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParallelConfig</span></code></a>(processes, threads, ...)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.config.ParallelConfig" title="lenskit.parallel.config.ParallelConfig"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ParallelConfig</span></code></a>(batch_jobs, processes, ...)</p></td>
 <td><p>Parallel processing configuration.</p></td>
 </tr>
 </tbody>
@@ -716,18 +719,25 @@
 </div>
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.parallel.config.ParallelConfig">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.parallel.config.</span></span><span class="sig-name descname"><span class="pre">ParallelConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">processes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threads</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend_threads</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.config.ParallelConfig" title="Link to this definition">#</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.parallel.config.</span></span><span class="sig-name descname"><span class="pre">ParallelConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_jobs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">processes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threads</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend_threads</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.config.ParallelConfig" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Parallel processing configuration.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
+<li><p><strong>batch_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a>)</p></li>
 <li><p><strong>processes</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em>]</em>)</p></li>
 <li><p><strong>threads</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em>]</em>)</p></li>
 <li><p><strong>backend_threads</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em>]</em>)</p></li>
 </ul>
 </dd>
 </dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="lenskit.parallel.config.ParallelConfig.batch_jobs">
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">batch_jobs</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#lenskit.parallel.config.ParallelConfig.batch_jobs" title="Link to this definition">#</a></dt>
+<dd><p>Get the number of concurrent batch inference jobs to run.</p>
+</dd></dl>
+
 <dl class="py property">
 <dt class="sig sig-object py" id="lenskit.parallel.config.ParallelConfig.processes">
 <span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">processes</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a></span><a class="headerlink" href="#lenskit.parallel.config.ParallelConfig.processes" title="Link to this definition">#</a></dt>
@@ -835,6 +845,24 @@ function before they begin training.</p>
 </dd></dl>
 
 <dl class="py function">
+<dt class="sig sig-object py" id="lenskit.parallel.config.is_free_threaded">
+<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.config.</span></span><span class="sig-name descname"><span class="pre">is_free_threaded</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">require_active</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.config.is_free_threaded" title="Link to this definition">#</a></dt>
+<dd><p>Query whether this Python supports free-threading.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>require_active</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>bool</em></a>) – Require that the GIL is actually disabled (i.e., no modules have
+re-enabled the GIL) in order to return <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Whether or not this Python supports free-threading.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
 <dt class="sig sig-object py" id="lenskit.parallel.config.subprocess_config">
 <span class="sig-prename descclassname"><span class="pre">lenskit.parallel.config.</span></span><span class="sig-name descname"><span class="pre">subprocess_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">processes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">backend_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.config.subprocess_config" title="Link to this definition">#</a></dt>
 <dd><p>Get a parallel configuration for a subprocess.</p>
@@ -918,6 +946,7 @@ function before they begin training.</p>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.config.ParallelConfig"><code class="docutils literal notranslate"><span class="pre">ParallelConfig</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.config.ParallelConfig.batch_jobs"><code class="docutils literal notranslate"><span class="pre">ParallelConfig.batch_jobs</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.config.ParallelConfig.processes"><code class="docutils literal notranslate"><span class="pre">ParallelConfig.processes</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.config.ParallelConfig.threads"><code class="docutils literal notranslate"><span class="pre">ParallelConfig.threads</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.config.ParallelConfig.backend_threads"><code class="docutils literal notranslate"><span class="pre">ParallelConfig.backend_threads</span></code></a></li>
@@ -929,6 +958,7 @@ function before they begin training.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.config.initialize"><code class="docutils literal notranslate"><span class="pre">initialize()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.config.ensure_parallel_init"><code class="docutils literal notranslate"><span class="pre">ensure_parallel_init()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.config.get_parallel_config"><code class="docutils literal notranslate"><span class="pre">get_parallel_config()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.config.is_free_threaded"><code class="docutils literal notranslate"><span class="pre">is_free_threaded()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.config.subprocess_config"><code class="docutils literal notranslate"><span class="pre">subprocess_config()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.config.effective_cpu_count"><code class="docutils literal notranslate"><span class="pre">effective_cpu_count()</span></code></a></li>
 </ul>
@@ -974,7 +1004,7 @@ function before they begin training.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev228+g4d04b87f.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev237+gf091edf8.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
