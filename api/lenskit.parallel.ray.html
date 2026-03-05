@@ -14,7 +14,7 @@
 <meta property="og:description" content="Support for parallelism with Ray. Functions Classes" />
 <meta name="description" content="Support for parallelism with Ray. Functions Classes" />
 
-    <title>lenskit.parallel.ray &#8212; LensKit 2026.0.0.dev255+g5a04c2aa documentation</title>
+    <title>lenskit.parallel.ray &#8212; LensKit 2026.0.0.dev276+ge5c0071e documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=ae560479"></script>
+    <script src="../_static/documentation_options.js?v=4fe63aff"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,8 +71,8 @@
     <link rel="icon" href="../_static/lenskit-icon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="lenskit.parallel.sequential" href="lenskit.parallel.sequential.html" />
-    <link rel="prev" title="lenskit.parallel.pool" href="lenskit.parallel.pool.html" />
+    <link rel="next" title="lenskit.random" href="lenskit.random.html" />
+    <link rel="prev" title="lenskit.parallel.config" href="lenskit.parallel.config.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="2026.0.0" />
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev255+g5a04c2aa documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev255+g5a04c2aa documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev276+ge5c0071e documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev276+ge5c0071e documentation - Home"/>
   
   
 </a></div>
@@ -607,12 +607,7 @@
 </details></li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="lenskit.parallel.html">lenskit.parallel</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.config.html">lenskit.parallel.config</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.invoker.html">lenskit.parallel.invoker</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.pool.html">lenskit.parallel.pool</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">lenskit.parallel.ray</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.sequential.html">lenskit.parallel.sequential</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.serialize.html">lenskit.parallel.serialize</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lenskit.parallel.worker.html">lenskit.parallel.worker</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1"><a class="reference internal" href="lenskit.random.html">lenskit.random</a></li>
@@ -691,32 +686,23 @@
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ensure_cluster</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">inference_worker_cpus</span></code>()</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.ray.init_cluster" title="lenskit.parallel.ray.init_cluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_cluster</span></code></a>(*[, num_cpus, proc_slots, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.parallel.ray.init_cluster" title="lenskit.parallel.ray.init_cluster"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_cluster</span></code></a>(*[, num_cpus, resources, ...])</p></td>
 <td><p>Initialize or connect to a Ray cluster, with the LensKit options.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_serializers</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_serializers</span></code>()</p></td>
 <td><p></p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.ray.init_worker" title="lenskit.parallel.ray.init_worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_worker</span></code></a>(*[, autostart])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.parallel.ray.init_worker" title="lenskit.parallel.ray.init_worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">init_worker</span></code></a>(*[, autostart])</p></td>
 <td><p>Initialize a Ray worker process.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.parallel.ray.is_ray_worker" title="lenskit.parallel.ray.is_ray_worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_ray_worker</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.ray.is_ray_worker" title="lenskit.parallel.ray.is_ray_worker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">is_ray_worker</span></code></a>()</p></td>
 <td><p>Determine whether the current process is running on a Ray worker.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.ray.ray_active" title="lenskit.parallel.ray.ray_active"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ray_active</span></code></a>()</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.parallel.ray.ray_active" title="lenskit.parallel.ray.ray_active"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ray_active</span></code></a>()</p></td>
 <td><p>Query whether Ray is active.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.parallel.ray.ray_available" title="lenskit.parallel.ray.ray_available"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ray_available</span></code></a>()</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.ray.ray_available" title="lenskit.parallel.ray.ray_available"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ray_available</span></code></a>()</p></td>
 <td><p>Check if Ray is available.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.ray.ray_supported" title="lenskit.parallel.ray.ray_supported"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ray_supported</span></code></a>()</p></td>
-<td><p>Check if this Ray setup is supported by LensKit.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">training_worker_cpus</span></code>()</p></td>
-<td><p></p></td>
 </tr>
 </tbody>
 </table>
@@ -724,10 +710,7 @@
 <p class="rubric">Classes</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.ray.RayOpInvoker" title="lenskit.parallel.ray.RayOpInvoker"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RayOpInvoker</span></code></a>(model, func, *[, limit])</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.parallel.ray.TaskLimiter" title="lenskit.parallel.ray.TaskLimiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TaskLimiter</span></code></a>([limit])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.parallel.ray.TaskLimiter" title="lenskit.parallel.ray.TaskLimiter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TaskLimiter</span></code></a>([limit])</p></td>
 <td><p>Limit task concurrency using <a class="reference external" href="https://docs.ray.io/en/latest/ray-core/api/doc/ray.wait.html#ray.wait" rel="noreferrer" target="_blank" title="(in Ray)"><code class="xref py py-func docutils literal notranslate"><span class="pre">ray.wait()</span></code></a>.</p></td>
 </tr>
 </tbody>
@@ -735,7 +718,7 @@
 </div>
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.parallel.ray.init_cluster">
-<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.ray.</span></span><span class="sig-name descname"><span class="pre">init_cluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_cpus</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proc_slots</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">worker_parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_logging</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.ray.init_cluster" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.ray.</span></span><span class="sig-name descname"><span class="pre">init_cluster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_cpus</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">global_logging</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.ray.init_cluster" title="Link to this definition">#</a></dt>
 <dd><p>Initialize or connect to a Ray cluster, with the LensKit options.</p>
 <p>The resulting cluster can be used by an invoker, or it can be used directly.
 The Ray invoker uses batching, though, so it only works well with many small
@@ -745,12 +728,10 @@ tasks.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>num_cpus</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>) – The total number of CPUs to allow. Defaults to
 <a href="#id1"><span class="problematic" id="id2">:fun:`effective_cpu_count`</span></a>.</p></li>
-<li><p><strong>proc_slots</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>) – The number of “process slots” for LensKit parallel operations.
+<li><p><strong>proc_slots</strong> – The number of “process slots” for LensKit parallel operations.
 Defaults to the LensKit process count.  These slots are recorded as
 the <code class="docutils literal notranslate"><span class="pre">lk_process</span></code> resource on the Ray cluster.</p></li>
 <li><p><strong>resources</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>dict</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>str</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>float</em></a><em>] </em><em>| </em><em>None</em>) – Additional custom resources to register in the Ray cluster.</p></li>
-<li><p><strong>worker_parallel</strong> (<a class="reference internal" href="lenskit.parallel.config.html#lenskit.parallel.config.ParallelConfig" title="lenskit.parallel.config.ParallelConfig"><em>ParallelConfig</em></a><em> | </em><em>None</em>) – Parallel processing configuration for worker processes.  If
-<code class="docutils literal notranslate"><span class="pre">None</span></code>, uses the default.</p></li>
 <li><p><strong>global_logging</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>bool</em></a>) – <code class="docutils literal notranslate"><span class="pre">True</span></code> to wire up logging in the workers at startup, instead of only
 connecting logs when a task is run.</p></li>
 <li><p><strong>kwargs</strong> – Other options to pass to <a class="reference external" href="https://docs.ray.io/en/latest/ray-core/api/doc/ray.init.html#ray.init" rel="noreferrer" target="_blank" title="(in Ray)"><code class="xref py py-func docutils literal notranslate"><span class="pre">ray.init()</span></code></a>.</p></li>
@@ -758,17 +739,6 @@ connecting logs when a task is run.</p></li>
 </dd>
 <dt class="field-even">Stability<span class="colon">:</span></dt>
 <dd class="field-even"><p>Experimental</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lenskit.parallel.ray.ray_supported">
-<span class="sig-prename descclassname"><span class="pre">lenskit.parallel.ray.</span></span><span class="sig-name descname"><span class="pre">ray_supported</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.ray.ray_supported" title="Link to this definition">#</a></dt>
-<dd><p>Check if this Ray setup is supported by LensKit.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)">bool</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -807,49 +777,6 @@ connecting logs when a task is run.</p></li>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="lenskit.parallel.ray.RayOpInvoker">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.parallel.ray.</span></span><span class="sig-name descname"><span class="pre">RayOpInvoker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.ray.RayOpInvoker" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <a class="reference internal" href="lenskit.parallel.html#lenskit.parallel.ModelOpInvoker" title="lenskit.parallel.invoker.ModelOpInvoker"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelOpInvoker</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">A</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">R</span></code>], <a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Generic" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Generic</span></code></a>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">M</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">A</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">R</span></code>]</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>model</strong> (<em>M</em>)</p></li>
-<li><p><strong>func</strong> (<em>InvokeOp</em><em>[</em><em>M</em><em>, </em><em>A</em><em>, </em><em>R</em><em>]</em>)</p></li>
-<li><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="lenskit.parallel.ray.RayOpInvoker.map">
-<span class="sig-name descname"><span class="pre">map</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tasks</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.ray.RayOpInvoker.map" title="Link to this definition">#</a></dt>
-<dd><p>Apply the configured function to the model and iterables.  This is like
-<a class="reference internal" href="#lenskit.parallel.ray.RayOpInvoker.map" title="lenskit.parallel.ray.RayOpInvoker.map"><code class="xref py py-func docutils literal notranslate"><span class="pre">map()</span></code></a>, except it supplies the invoker’s model as the first object
-to <code class="docutils literal notranslate"><span class="pre">func</span></code>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>iterables</strong> – Iterables of arguments to provide to the function.</p></li>
-<li><p><strong>tasks</strong> (<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>Iterable</em></a><em>[</em><em>A</em><em>]</em>)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An iterable of the results.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>iterable</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="lenskit.parallel.ray.RayOpInvoker.shutdown">
-<span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.ray.RayOpInvoker.shutdown" title="Link to this definition">#</a></dt>
-<dd><p>Shut down this invoker.</p>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="lenskit.parallel.ray.TaskLimiter">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.parallel.ray.</span></span><span class="sig-name descname"><span class="pre">TaskLimiter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.parallel.ray.TaskLimiter" title="Link to this definition">#</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
@@ -863,7 +790,7 @@ to <code class="docutils literal notranslate"><span class="pre">func</span></cod
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>limit</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a>) – The maximum number of pending tasks.  Defaults to the LensKit
-process count (see <a class="reference internal" href="lenskit.parallel.html#lenskit.parallel.initialize" title="lenskit.parallel.initialize"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.parallel.initialize()</span></code></a>).</p>
+process count (see <code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.parallel.initialize()</span></code>).</p>
 </dd>
 </dl>
 <dl class="py attribute">
@@ -981,20 +908,20 @@ when the caller will start and stop the context if it is new.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="lenskit.parallel.pool.html"
+       href="lenskit.parallel.config.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">lenskit.parallel.pool</p>
+        <p class="prev-next-title">lenskit.parallel.config</p>
       </div>
     </a>
     <a class="right-next"
-       href="lenskit.parallel.sequential.html"
+       href="lenskit.random.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">lenskit.parallel.sequential</p>
+        <p class="prev-next-title">lenskit.random</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1018,15 +945,9 @@ when the caller will start and stop the context if it is new.</p>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ray.init_cluster"><code class="docutils literal notranslate"><span class="pre">init_cluster()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ray.ray_supported"><code class="docutils literal notranslate"><span class="pre">ray_supported()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ray.ray_available"><code class="docutils literal notranslate"><span class="pre">ray_available()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ray.ray_active"><code class="docutils literal notranslate"><span class="pre">ray_active()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ray.is_ray_worker"><code class="docutils literal notranslate"><span class="pre">is_ray_worker()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ray.RayOpInvoker"><code class="docutils literal notranslate"><span class="pre">RayOpInvoker</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ray.RayOpInvoker.map"><code class="docutils literal notranslate"><span class="pre">RayOpInvoker.map()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ray.RayOpInvoker.shutdown"><code class="docutils literal notranslate"><span class="pre">RayOpInvoker.shutdown()</span></code></a></li>
-</ul>
-</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ray.TaskLimiter"><code class="docutils literal notranslate"><span class="pre">TaskLimiter</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ray.TaskLimiter.limit"><code class="docutils literal notranslate"><span class="pre">TaskLimiter.limit</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.parallel.ray.TaskLimiter.finished"><code class="docutils literal notranslate"><span class="pre">TaskLimiter.finished</span></code></a></li>
@@ -1082,7 +1003,7 @@ when the caller will start and stop the context if it is new.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev255+g5a04c2aa.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev276+ge5c0071e.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
