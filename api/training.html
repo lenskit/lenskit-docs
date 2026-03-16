@@ -14,7 +14,7 @@
 <meta property="og:description" content="Interfaces and support for model training." />
 <meta name="description" content="Interfaces and support for model training." />
 
-    <title>Model Training &#8212; LensKit 2026.0.0.dev326+gfdabe4f4 documentation</title>
+    <title>Model Training &#8212; LensKit 2026.0.0.dev347+g2629b5be documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=f5b208f5"></script>
+    <script src="../_static/documentation_options.js?v=7a5fa47a"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev326+gfdabe4f4 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev326+gfdabe4f4 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev347+g2629b5be documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev347+g2629b5be documentation - Home"/>
   
   
 </a></div>
@@ -698,7 +698,27 @@
 <dt class="sig sig-object py" id="lenskit.training.TrainingOptions.retrain">
 <span class="sig-name descname"><span class="pre">retrain</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">bool</span></a></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">True</span></span><a class="headerlink" href="#lenskit.training.TrainingOptions.retrain" title="Link to this definition">#</a></dt>
 <dd><p>Whether the model should retrain if it is already trained.  If <code class="docutils literal notranslate"><span class="pre">False</span></code>,
-the model should cleanly skip training if it is already trained.</p>
+the component is allowed to skip training if it is already trained.</p>
+<p>In the common case of training pipelines, this flag is examined by
+<a class="reference internal" href="lenskit.pipeline.Pipeline.html#lenskit.pipeline.Pipeline.train" title="lenskit.pipeline.Pipeline.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.pipeline.Pipeline.train()</span></code></a>: if it is <code class="docutils literal notranslate"><span class="pre">False</span></code>, that method
+skips training any components that are already trained.  Custom training
+code that wishes to avoid retraining models should check
+<a class="reference internal" href="#lenskit.training.Trainable.is_trained" title="lenskit.training.Trainable.is_trained"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Trainable.is_trained()</span></code></a> instead of assuming that individual components
+will respect this flag.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This division of responsibility is to reduce the need for repetitive
+code: since implementing components seems to be a more common activity
+than logic that directly trains components (as opposed to pipelines) in
+ordinary LensKit use, making training code responsible for skipping
+retrain instead of requiring that of every component implementation
+allows individual implementations to be slightly simpler, without
+requiring separate options classes for pipeline and component training.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 2026.1: </span>Added the <code class="xref py py-meth docutils literal notranslate"><span class="pre">is_trained()</span></code> method that implementers must now also
+provide.</p>
+</div>
 </dd></dl>
 
 <dl class="py attribute">
@@ -846,6 +866,17 @@ an appropriate <code class="docutils literal notranslate"><span class="pre">__ca
 <dd class="field-odd">Full (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="lenskit.training.Trainable.is_trained">
+<span class="sig-name descname"><span class="pre">is_trained</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.training.Trainable.is_trained" title="Link to this definition">#</a></dt>
+<dd><p>Query if this component has already been trained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)">bool</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="lenskit.training.Trainable.train">
 <span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.training.Trainable.train" title="Link to this definition">#</a></dt>
 <dd><p>Train the model to learn its parameters from a training dataset.</p>
@@ -888,6 +919,12 @@ number of epochs to train.</p>
 <dd><p>Get the number of training epochs expected to run.  The default
 implementation looks for an <code class="docutils literal notranslate"><span class="pre">epochs</span></code> attribute on the configuration
 object (<code class="docutils literal notranslate"><span class="pre">self.config</span></code>).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.training.UsesTrainer.is_trained">
+<span class="sig-name descname"><span class="pre">is_trained</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.training.UsesTrainer.is_trained" title="Link to this definition">#</a></dt>
+<dd><p>Query if this component has already been trained.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -1035,11 +1072,13 @@ and doing any finalization steps to the model.</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.Trainable"><code class="docutils literal notranslate"><span class="pre">Trainable</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.Trainable.is_trained"><code class="docutils literal notranslate"><span class="pre">Trainable.is_trained()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.Trainable.train"><code class="docutils literal notranslate"><span class="pre">Trainable.train()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.UsesTrainer"><code class="docutils literal notranslate"><span class="pre">UsesTrainer</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.UsesTrainer.expected_training_epochs"><code class="docutils literal notranslate"><span class="pre">UsesTrainer.expected_training_epochs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.UsesTrainer.is_trained"><code class="docutils literal notranslate"><span class="pre">UsesTrainer.is_trained()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.UsesTrainer.train"><code class="docutils literal notranslate"><span class="pre">UsesTrainer.train()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.training.UsesTrainer.create_trainer"><code class="docutils literal notranslate"><span class="pre">UsesTrainer.create_trainer()</span></code></a></li>
 </ul>
@@ -1092,7 +1131,7 @@ and doing any finalization steps to the model.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev326+gfdabe4f4.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev347+g2629b5be.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
