@@ -11,10 +11,10 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="guide/flexmf.html" />
 <meta property="og:site_name" content="LensKit" />
-<meta property="og:description" content="Since 2025.3.0, LensKit provides a family of embedding-based scoring models called FlexMF( Flexible Matrix Factorization). These models use matrix factorization in various configurations to realize..." />
-<meta name="description" content="Since 2025.3.0, LensKit provides a family of embedding-based scoring models called FlexMF( Flexible Matrix Factorization). These models use matrix factorization in various configurations to realize..." />
+<meta property="og:description" content="The LensKit FlexMF( Flexible Matrix Factorization) family of models use matrix factorization in various configurations to realize several scoring models from the literature in a single configurable..." />
+<meta name="description" content="The LensKit FlexMF( Flexible Matrix Factorization) family of models use matrix factorization in various configurations to realize several scoring models from the literature in a single configurable..." />
 
-    <title>Flexible Matrix Factorization &#8212; LensKit 2025.7.0b1 documentation</title>
+    <title>Flexible Matrix Factorization &#8212; LensKit 2025.7.0 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=7360bdc3"></script>
+    <script src="../_static/documentation_options.js?v=9a796c53"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2025.7.0b1 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.7.0b1 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2025.7.0 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.7.0 documentation - Home"/>
   
   
 </a></div>
@@ -567,8 +567,7 @@
 It works pretty well, but may be adjusted as we stabilize it and gain more
 experience in the next months.</p>
 </div>
-<p>Since <span class="xref std std-ref">2025.3.0</span>, LensKit provides a family of embedding-based scoring
-models called <code class="docutils literal notranslate"><span class="pre">FlexMF</span></code> (<em>Flexible Matrix Factorization</em>).  These models use
+<p>The LensKit <code class="docutils literal notranslate"><span class="pre">FlexMF</span></code> (<em>Flexible Matrix Factorization</em>) family of models use
 matrix factorization in various configurations to realize several scoring models
 from the literature in a single configurable design, implemented in PyTorch with
 support for GPU-based training.</p>
@@ -576,14 +575,14 @@ support for GPU-based training.</p>
 <section id="first-model">
 <h2>First Model<a class="headerlink" href="#first-model" title="Link to this heading">#</a></h2>
 <p>FlexMF works like any other LensKit scorer.  To train a simple implicit-feedback
-scorer with logistic matrix factorization, you can do:</p>
+scorer with logistic matrix factorization <span id="id1">[<a class="reference internal" href="../references.html#id40" title="Christopher C Johnson. Logistic matrix factorization for implicit feedback data. Adv. Neural Inf. Process. Syst., 2014. URL: http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf.">Joh14</a>]</span>, you can do:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.flexmf</span><span class="w"> </span><span class="kn">import</span> <span class="n">FlexMFImplicitScorer</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_movielens</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">lenskit</span><span class="w"> </span><span class="kn">import</span> <span class="n">topn_pipeline</span><span class="p">,</span> <span class="n">recommend</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># load movie data</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">load_movielens</span><span class="p">(</span><span class="s1">&#39;data/ml-latest-small&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># set up model</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">FlexMFImplicitScorer</span><span class="p">(</span><span class="n">embedding_size</span><span class="o">=</span><span class="s2">&quot;50&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;logistic&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">FlexMFImplicitScorer</span><span class="p">(</span><span class="n">embedding_size</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">loss</span><span class="o">=</span><span class="s2">&quot;logistic&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span> <span class="o">=</span> <span class="n">topn_pipeline</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># train the model</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">pipe</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
@@ -599,12 +598,13 @@ scorer with logistic matrix factorization, you can do:</p>
 </div>
 </section>
 <section id="common-configuration">
-<h2>Common Configuration<a class="headerlink" href="#common-configuration" title="Link to this heading">#</a></h2>
+<span id="flexmf-common-config"></span><h2>Common Configuration<a class="headerlink" href="#common-configuration" title="Link to this heading">#</a></h2>
 <p>All FlexMF models share some configuration option in common, defined by
 <a class="reference internal" href="../api/lenskit.flexmf.html#lenskit.flexmf.FlexMFConfigBase" title="lenskit.flexmf.FlexMFConfigBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlexMFConfigBase</span></code></a>:</p>
 <dl>
 <dt>Model Structure Options</dt><dd><dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">embedding_size</span></code></dt><dd><p>The dimension of the matrix factorization.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">embedding_size</span></code></dt><dd><p>The dimension of the matrix factorization.  FlexMF works best when
+this is a power of 2.</p>
 </dd>
 </dl>
 </dd>
@@ -619,6 +619,13 @@ to disable regularization.</p>
 <dt><code class="docutils literal notranslate"><span class="pre">regularization</span></code>:</dt><dd><p>The regularization weight.</p>
 </dd>
 </dl>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>Our internal experiments have generally found <code class="docutils literal notranslate"><span class="pre">AdamW</span></code> regularization to be
+more effective, and seen little to no benefit from the sparse gradients
+allowed by <code class="docutils literal notranslate"><span class="pre">L2</span></code>.  We may remove configurable regularization types before
+removing the experimental label from FlexMF.</p>
+</div>
 </dd>
 <dt>Training Options</dt><dd><dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">batch_size</span></code>:</dt><dd><p>The size for individual training batches.  The optimal batch size is usually
@@ -637,11 +644,12 @@ relatively simple.</p>
 <section id="explicit-feedback">
 <h2>Explicit Feedback<a class="headerlink" href="#explicit-feedback" title="Link to this heading">#</a></h2>
 <p>The <a class="reference internal" href="../api/lenskit.flexmf.html#lenskit.flexmf.FlexMFExplicitScorer" title="lenskit.flexmf.FlexMFExplicitScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlexMFExplicitScorer</span></code></a> class provides an explicit-feedback rating
-prediction model with biased matrix factorization.  The model itself is the same
-as that used by <a class="reference internal" href="../api/lenskit.als.html#lenskit.als.BiasedMFScorer" title="lenskit.als.BiasedMFScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiasedMFScorer</span></code></a>, but is trained using
-minibatch gradient descent in PyTorch and can train a GPU.  User and item biases
-are learned jointly with the embeddings, and are attenuated for low-information
-users and items through regularization instead of an explicit damping term.</p>
+prediction model with biased matrix factorization.  The model itself is
+mathematically identical to <a class="reference internal" href="../api/lenskit.als.html#lenskit.als.BiasedMFScorer" title="lenskit.als.BiasedMFScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiasedMFScorer</span></code></a>, but is trained
+using minibatch gradient descent in PyTorch and can use a GPU.  User and item
+biases are learned jointly with the embeddings, and are attenuated for
+low-information users and items through regularization instead of an explicit
+damping term.</p>
 </section>
 <section id="implicit-feedback">
 <h2>Implicit Feedback<a class="headerlink" href="#implicit-feedback" title="Link to this heading">#</a></h2>
@@ -649,20 +657,70 @@ users and items through regularization instead of an explicit damping term.</p>
 This scorer supports multiple loss functions and training regimes that can be
 selected to yield logistic matrix factorization, BPR, WARP, or others (see
 <a class="reference internal" href="../api/lenskit.flexmf.html#lenskit.flexmf.FlexMFImplicitConfig" title="lenskit.flexmf.FlexMFImplicitConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">FlexMFImplicitConfig</span></code></a> for full options).</p>
+<section id="presets">
+<h3>Presets<a class="headerlink" href="#presets" title="Link to this heading">#</a></h3>
+<p>For easy configuration, FlexMF provides <em>presets</em> (the
+<a class="reference internal" href="../api/lenskit.flexmf.html#lenskit.flexmf.FlexMFImplicitConfig.preset" title="lenskit.flexmf.FlexMFImplicitConfig.preset"><code class="xref py py-attr docutils literal notranslate"><span class="pre">preset</span></code></a> option) that set the defaults for other
+options to match the originally-published versions of the models FlexMF can
+realize.  Select a preset by configuring e.g. <code class="docutils literal notranslate"><span class="pre">preset=&quot;bpr&quot;</span></code>.</p>
+<p>Below are the settings controlled by each preset:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Preset</p></th>
+<th class="head"><p>bpr</p></th>
+<th class="head"><p>warp</p></th>
+<th class="head"><p>lightgcn</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>loss</p></td>
+<td><p>pairwise</p></td>
+<td><p>warp</p></td>
+<td><p>pairwise</p></td>
+</tr>
+<tr class="row-odd"><td><p>negative_strategy</p></td>
+<td><p>uniform</p></td>
+<td><p>misranked</p></td>
+<td><p>uniform</p></td>
+</tr>
+<tr class="row-even"><td><p>user_bias</p></td>
+<td><p>False</p></td>
+<td><p>False</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-odd"><td><p>item_bias</p></td>
+<td><p>False</p></td>
+<td><p>False</p></td>
+<td><p>False</p></td>
+</tr>
+<tr class="row-even"><td><p>convolution_layers</p></td>
+<td><p>0</p></td>
+<td><p>0</p></td>
+<td><p>3</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>These are only defaults — settings in <a class="reference internal" href="#flexmf-common-config"><span class="std std-ref">Common Configuration</span></a> and
+<a class="reference internal" href="#flexmf-implicit-config"><span class="std std-ref">Additional Configuration Options</span></a> will override these settings.</p>
+</section>
+<section id="additional-configuration-options">
+<span id="flexmf-implicit-config"></span><h3>Additional Configuration Options<a class="headerlink" href="#additional-configuration-options" title="Link to this heading">#</a></h3>
 <p>The two primary options that control the model’s overall behavior are the <em>loss
 function</em> and the <em>sampling strategy</em>.</p>
-<p>Three loss functions (<code class="docutils literal notranslate"><span class="pre">loss</span></code>) are supported:</p>
+<p>Three loss functions (<a class="reference internal" href="../api/lenskit.flexmf.html#lenskit.flexmf.FlexMFImplicitConfig.loss" title="lenskit.flexmf.FlexMFImplicitConfig.loss"><code class="xref py py-attr docutils literal notranslate"><span class="pre">loss</span></code></a>) are supported:</p>
 <dl class="simple">
-<dt><code class="docutils literal notranslate"><span class="pre">&quot;logistic&quot;</span></code></dt><dd><p>Logistic loss, as used in Logistic Matrix Factorization <span id="id1">[<a class="reference internal" href="../references.html#id39" title="Christopher C Johnson. Logistic matrix factorization for implicit feedback data. Adv. Neural Inf. Process. Syst., 2014. URL: http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf.">Joh14</a>]</span>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;logistic&quot;</span></code></dt><dd><p>Logistic loss, as used in Logistic Matrix Factorization <span id="id2">[<a class="reference internal" href="../references.html#id40" title="Christopher C Johnson. Logistic matrix factorization for implicit feedback data. Adv. Neural Inf. Process. Syst., 2014. URL: http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf.">Joh14</a>]</span>.</p>
 </dd>
-<dt><code class="docutils literal notranslate"><span class="pre">&quot;pairwise&quot;</span></code></dt><dd><p>Pairwise rank loss, as used in Bayesian Personalized Ranking <span id="id2">[<a class="reference internal" href="../references.html#id4" title="Steffen Rendle, Christoph Freudenthaler, Zeno Gantner, and Lars Schmidt-Thieme. BPR: Bayesian personalized ranking from implicit feedback. In UAI '09, 452–461. Arlington, Virginia, United States, 2009. AUAI Press. URL: http://dl.acm.org/citation.cfm?id=1795114.1795167 (visited on 2015-10-16).">RFGSchmidtThieme09</a>]</span>.</p>
+<dt><code class="docutils literal notranslate"><span class="pre">&quot;pairwise&quot;</span></code></dt><dd><p>Pairwise rank loss, as used in Bayesian Personalized Ranking <span id="id3">[<a class="reference internal" href="../references.html#id4" title="Steffen Rendle, Christoph Freudenthaler, Zeno Gantner, and Lars Schmidt-Thieme. BPR: Bayesian personalized ranking from implicit feedback. In UAI '09, 452–461. Arlington, Virginia, United States, 2009. AUAI Press. URL: http://dl.acm.org/citation.cfm?id=1795114.1795167 (visited on 2015-10-16).">RFGSchmidtThieme09</a>]</span>.</p>
 </dd>
 <dt><code class="docutils literal notranslate"><span class="pre">&quot;warp&quot;</span></code></dt><dd><p>Weighted approximate rank lost, a revised version of pairwise loss used in
-WARP <span id="id3">[<a class="reference internal" href="../references.html#id72" title="Jason Weston, Hector Yee, and Ron J Weiss. Learning to rank recommendations with the k-order statistic loss. In RecSys '13, 245–248. New York, NY, USA, October 2013. Association for Computing Machinery. doi:10.1145/2507157.2507210.">WYW13</a>]</span>.  Only works with the <code class="docutils literal notranslate"><span class="pre">&quot;misranked&quot;</span></code> sampling
+WARP <span id="id4">[<a class="reference internal" href="../references.html#id73" title="Jason Weston, Hector Yee, and Ron J Weiss. Learning to rank recommendations with the k-order statistic loss. In RecSys '13, 245–248. New York, NY, USA, October 2013. Association for Computing Machinery. doi:10.1145/2507157.2507210.">WYW13</a>]</span>.  Only works with the <code class="docutils literal notranslate"><span class="pre">&quot;misranked&quot;</span></code> sampling
 strategy.</p>
 </dd>
 </dl>
-<p>Three sampling strategies (<code class="docutils literal notranslate"><span class="pre">negative_strategy</span></code>) are supported:</p>
+<p>Three sampling strategies (<a class="reference internal" href="../api/lenskit.flexmf.html#lenskit.flexmf.FlexMFImplicitConfig.negative_strategy" title="lenskit.flexmf.FlexMFImplicitConfig.negative_strategy"><code class="xref py py-attr docutils literal notranslate"><span class="pre">negative_strategy</span></code></a>) are
+supported:</p>
 <dl class="simple">
 <dt><code class="docutils literal notranslate"><span class="pre">&quot;uniform&quot;</span></code></dt><dd><p>Negative items are sampled uniformly at random from the corpus.  This is the
 default for logistic and pairwise losses.</p>
@@ -675,18 +733,42 @@ for misranked items.  This strategy comes from WARP, but can be used with other
 loss functions as well.  It is the default (and only) strategy for WARP loss.</p>
 </dd>
 </dl>
-<p>You can combine these to realize several designs from the literature:</p>
+<p>Finally, neighborhood aggregation in the style of LightGCN <span id="id5">[<a class="reference internal" href="../references.html#id38" title="Xiangnan He, Kuan Deng, Xiang Wang, Yan Li, YongDong Zhang, and Meng Wang. LightGCN: Simplifying and Powering Graph Convolution Network for Recommendation. In Proceedings of the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval, 639–648. Virtual Event China, July 2020. ACM. doi:10.1145/3397271.3401063.">HDW+20</a>]</span> can
+be enabled with the <a class="reference internal" href="../api/lenskit.flexmf.html#lenskit.flexmf.FlexMFImplicitConfig.convolution_layers" title="lenskit.flexmf.FlexMFImplicitConfig.convolution_layers"><code class="xref py py-attr docutils literal notranslate"><span class="pre">convolution_layers</span></code></a> option.</p>
+</section>
+</section>
+<section id="relationship-to-published-models">
+<h2>Relationship to Published Models<a class="headerlink" href="#relationship-to-published-models" title="Link to this heading">#</a></h2>
+<p>FlexMF is designed to provide reasonable implementations of various designs from
+the literature in an integrated manner, differing primarily in fundamental
+design points rather than implementation details, and facilitating good code
+re-use and testing across implementations.</p>
 <ul class="simple">
-<li><p><strong>Logistic matrix factorization</strong> <span id="id4">[<a class="reference internal" href="../references.html#id39" title="Christopher C Johnson. Logistic matrix factorization for implicit feedback data. Adv. Neural Inf. Process. Syst., 2014. URL: http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf.">Joh14</a>]</span> by using
-<code class="docutils literal notranslate"><span class="pre">loss=&quot;logistic&quot;</span></code> with any sampling strategy.  This implementation differs
-slightly from the paper in that it uses negative sampling instead of
-training on an entire user.</p></li>
-<li><p>Classic <strong>Bayesian Personalized Ranking</strong> <span id="id5">[<a class="reference internal" href="../references.html#id4" title="Steffen Rendle, Christoph Freudenthaler, Zeno Gantner, and Lars Schmidt-Thieme. BPR: Bayesian personalized ranking from implicit feedback. In UAI '09, 452–461. Arlington, Virginia, United States, 2009. AUAI Press. URL: http://dl.acm.org/citation.cfm?id=1795114.1795167 (visited on 2015-10-16).">RFGSchmidtThieme09</a>]</span> by using
-<code class="docutils literal notranslate"><span class="pre">loss=&quot;pairwise&quot;</span></code> with the <code class="docutils literal notranslate"><span class="pre">negative_strategy=&quot;uniform&quot;</span></code>.  The negative
-strategy can also be changed, although we have rarely seen <code class="docutils literal notranslate"><span class="pre">&quot;popular&quot;</span></code> be
-effective.</p></li>
-<li><p><strong>Weighted Approximate Rank Loss</strong> (WARP) <span id="id6">[<a class="reference internal" href="../references.html#id71" title="Jason Weston, Samy Bengio, and Nicolas Usunier. WSABIE: scaling up to large vocabulary image annotation. In Proceedings of the Twenty-Second International Joint Conference on Artificial Intelligence. July 2011. URL: https://www.ijcai.org/Proceedings/11/Papers/460.pdf (visited on 2021-02-25).">WBU11</a>, <a class="reference internal" href="../references.html#id72" title="Jason Weston, Hector Yee, and Ron J Weiss. Learning to rank recommendations with the k-order statistic loss. In RecSys '13, 245–248. New York, NY, USA, October 2013. Association for Computing Machinery. doi:10.1145/2507157.2507210.">WYW13</a>]</span> by using
-<code class="docutils literal notranslate"><span class="pre">loss=&quot;warp&quot;</span></code>.</p></li>
+<li><p>The explicit-feedback model implements <strong>biased matrix factorization</strong> as
+described in many papers, with the core model appearing in both ALS
+<span id="id6">[<a class="reference internal" href="../references.html#id19" title="István Pilászy, Dávid Zibriczky, and Domonkos Tikk. Fast ALS-based Matrix Factorization for Explicit and Implicit Feedback Datasets. In RecSys '10, 71–78. New York, NY, USA, 2010. ACM. doi:10.1145/1864708.1864726.">PilaszyZT10</a>]</span> and FunkSVD <span id="id7">[<a class="reference internal" href="../references.html#id21" title="Simon Funk. Netflix Update: Try This at Home. December 2006. URL: http://sifter.org/~simon/journal/20061211.html (visited on 2010-04-08).">Fun06</a>]</span>. The description most
+closely aligning with this implementation is probably that of
+<span id="id8">Koren <em>et al.</em> [<a class="reference internal" href="../references.html#id34" title="Y Koren, R Bell, and C Volinsky. Matrix Factorization Techniques for Recommender Systems. Computer, 42(8):30–37, August 2009. doi:10.1109/MC.2009.263.">KBV09</a>]</span>.</p></li>
+<li><p>The default implicit settings are similar to <strong>logistic matrix
+factorization</strong> <span id="id9">[<a class="reference internal" href="../references.html#id40" title="Christopher C Johnson. Logistic matrix factorization for implicit feedback data. Adv. Neural Inf. Process. Syst., 2014. URL: http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf.">Joh14</a>]</span>.  It is not an exact implementation,
+because implicit-feedback FlexMF uses negative sampling whereas
+<span id="id10">Johnson [<a class="reference internal" href="../references.html#id40" title="Christopher C Johnson. Logistic matrix factorization for implicit feedback data. Adv. Neural Inf. Process. Syst., 2014. URL: http://web.stanford.edu/~rezab/nips2014workshop/submits/logmat.pdf.">Joh14</a>]</span> trained on entire users with different weights for
+positive and negative items.</p></li>
+<li><p><strong>Bayesian Personalized Ranking</strong> with matrix factorization (BPR-MF)
+<span id="id11">[<a class="reference internal" href="../references.html#id4" title="Steffen Rendle, Christoph Freudenthaler, Zeno Gantner, and Lars Schmidt-Thieme. BPR: Bayesian personalized ranking from implicit feedback. In UAI '09, 452–461. Arlington, Virginia, United States, 2009. AUAI Press. URL: http://dl.acm.org/citation.cfm?id=1795114.1795167 (visited on 2015-10-16).">RFGSchmidtThieme09</a>]</span> uses the pairwise loss and uniform negative sampling; these
+are the default with the <code class="docutils literal notranslate"><span class="pre">&quot;bpr&quot;</span></code> preset.</p></li>
+<li><p><strong>Weighted Approximate Rank Loss</strong> (WARP) <span id="id12">[<a class="reference internal" href="../references.html#id72" title="Jason Weston, Samy Bengio, and Nicolas Usunier. WSABIE: scaling up to large vocabulary image annotation. In Proceedings of the Twenty-Second International Joint Conference on Artificial Intelligence. July 2011. URL: https://www.ijcai.org/Proceedings/11/Papers/460.pdf (visited on 2021-02-25).">WBU11</a>, <a class="reference internal" href="../references.html#id73" title="Jason Weston, Hector Yee, and Ron J Weiss. Learning to rank recommendations with the k-order statistic loss. In RecSys '13, 245–248. New York, NY, USA, October 2013. Association for Computing Machinery. doi:10.1145/2507157.2507210.">WYW13</a>]</span> uses
+<em>misranked</em> negative sampling and WARP loss.  These are the default with the
+<code class="docutils literal notranslate"><span class="pre">&quot;warp&quot;</span></code> preset.</p></li>
+<li><p><strong>Light Graph Convolutional Networks</strong> (LightGCN) <span id="id13">[<a class="reference internal" href="../references.html#id38" title="Xiangnan He, Kuan Deng, Xiang Wang, Yan Li, YongDong Zhang, and Meng Wang. LightGCN: Simplifying and Powering Graph Convolution Network for Recommendation. In Proceedings of the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval, 639–648. Virtual Event China, July 2020. ACM. doi:10.1145/3397271.3401063.">HDW+20</a>]</span>
+modifies the model, not the loss, by adding multiple layers of aggregated
+neighbor embeddings; it can be used with any supported loss or negative
+strategy.  LightGCN is enabled by the
+<a class="reference internal" href="../api/lenskit.flexmf.html#lenskit.flexmf.FlexMFImplicitConfig.convolution_layers" title="lenskit.flexmf.FlexMFImplicitConfig.convolution_layers"><code class="xref py py-attr docutils literal notranslate"><span class="pre">convolution_layers</span></code></a> setting, where a positive
+number of layers puts the model into LightGCN mode.  The <code class="docutils literal notranslate"><span class="pre">&quot;lightgcn&quot;</span></code>
+preset defaults to 2 layers with pairwise loss.  The mixing coefficients are
+not currently configurable, as <span id="id14">He <em>et al.</em> [<a class="reference internal" href="../references.html#id38" title="Xiangnan He, Kuan Deng, Xiang Wang, Yan Li, YongDong Zhang, and Meng Wang. LightGCN: Simplifying and Powering Graph Convolution Network for Recommendation. In Proceedings of the 43rd International ACM SIGIR Conference on Research and Development in Information Retrieval, 639–648. Virtual Event China, July 2020. ACM. doi:10.1145/3397271.3401063.">HDW+20</a>]</span> found that just averaging
+the embedding layers worked pretty well.</p></li>
 </ul>
 </section>
 </section>
@@ -741,7 +823,12 @@ effective.</p></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#first-model">First Model</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#common-configuration">Common Configuration</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#explicit-feedback">Explicit Feedback</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-feedback">Implicit Feedback</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implicit-feedback">Implicit Feedback</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#presets">Presets</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-configuration-options">Additional Configuration Options</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relationship-to-published-models">Relationship to Published Models</a></li>
 </ul>
   </nav></div>
 
@@ -785,7 +872,7 @@ effective.</p></li>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.7.0b1.</div>
+        <div class="footer-item">LensKit version 2025.7.0.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

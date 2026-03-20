@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit is particularly designed to excel in research and educational applications, and for that you will often need to write your own components implementing new scoring models, rankers, or other ..." />
 <meta name="description" content="LensKit is particularly designed to excel in research and educational applications, and for that you will often need to write your own components implementing new scoring models, rankers, or other ..." />
 
-    <title>Implementing Components &#8212; LensKit 2025.7.0b1 documentation</title>
+    <title>Implementing Components &#8212; LensKit 2025.7.0 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=7360bdc3"></script>
+    <script src="../_static/documentation_options.js?v=9a796c53"></script>
     <script src="../_static/doctools.js?v=9bcbadda"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2025.7.0b1 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.7.0b1 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2025.7.0 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.7.0 documentation - Home"/>
   
   
 </a></div>
@@ -776,6 +776,20 @@ will use the trainer directly to implement early stopping for tuning trials
 and dynamically find a good epoch count.</p>
 </div>
 </section>
+<section id="configuring-training">
+<span id="training-config"></span><h3>Configuring Training<a class="headerlink" href="#configuring-training" title="Link to this heading">#</a></h3>
+<p>Most options for training, such as the number of epochs or the loss function,
+should be set through the component’s configuration.</p>
+<p>Some components need options that don’t affect the semantics of the model or
+training, and may be environment-specific.  For example, <a class="reference internal" href="../api/lenskit.knn.html#lenskit.knn.EASEScorer" title="lenskit.knn.EASEScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">EASE</span></code></a> supports both PyTorch and SciPy matrix inversion
+routines.</p>
+<p>Such options can be exposed via <em>environment variables</em> (e.g.
+<span class="target" id="index-0"></span><a class="reference internal" href="../api/lenskit.knn.ease.html#envvar-LK_EASE_SOLVER"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LK_EASE_SOLVER</span></code></a>). If your component has such options, access them
+through <code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.trainer.TrainingOptions.env_var</span></code>.  This method will first
+look up the variable in the environment variable overrides specified in the
+training options, and then in the OS environment variables, allowing client code
+flexibility in how they configure your component.</p>
+</section>
 </section>
 <section id="further-reading">
 <h2>Further Reading<a class="headerlink" href="#further-reading" title="Link to this heading">#</a></h2>
@@ -835,6 +849,7 @@ and dynamically find a good epoch count.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-operation">Component Operation</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-training">Component Training</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterative-training">Iterative Training</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-training">Configuring Training</a></li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-reading">Further Reading</a></li>
@@ -881,7 +896,7 @@ and dynamically find a good epoch count.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.7.0b1.</div>
+        <div class="footer-item">LensKit version 2025.7.0.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
