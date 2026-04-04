@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit pipeline abstraction. Submodules: Attributes: Classes: Functions: Package Contents: Exported Aliases:" />
 <meta name="description" content="LensKit pipeline abstraction. Submodules: Attributes: Classes: Functions: Package Contents: Exported Aliases:" />
 
-    <title>lenskit.pipeline &#8212; LensKit 2026.0.0.dev453+gd4673acd documentation</title>
+    <title>lenskit.pipeline &#8212; LensKit 2026.0.0.dev457+g0df61933 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=d473ed34"></script>
+    <script src="../../../_static/documentation_options.js?v=e7c82574"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev453+gd4673acd documentation - Home"/>
-    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev453+gd4673acd documentation - Home"/>
+    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev457+g0df61933 documentation - Home"/>
+    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev457+g0df61933 documentation - Home"/>
   
   
 </a></div>
@@ -553,6 +553,7 @@
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Implementation Helpers</span></p>
 <ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../lazy/index.html">lenskit.lazy</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../logging/index.html">lenskit.logging</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../logging/config/index.html">lenskit.logging.config</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../logging/formats/index.html">lenskit.logging.formats</a></li>
@@ -701,9 +702,6 @@
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#lenskit.pipeline.PipelineState" title="lenskit.pipeline.PipelineState"><code class="xref py py-obj docutils literal notranslate"><span class="pre">PipelineState</span></code></a></p></td>
 <td><p>Full results of running a pipeline.  A pipeline state is a dictionary</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.pipeline.Lazy" title="lenskit.pipeline.Lazy"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Lazy</span></code></a></p></td>
-<td><p>Type for accepting lazy inputs from the pipeline runner.  If your function</p></td>
 </tr>
 </tbody>
 </table>
@@ -2109,53 +2107,6 @@ this dictionary.</p></li>
 
 </dd></dl>
 
-<dl class="py class">
-<dt class="sig sig-object py" id="lenskit.pipeline.Lazy">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.pipeline.</span></span><span class="sig-name descname"><span class="pre">Lazy</span></span><a class="headerlink" href="#lenskit.pipeline.Lazy" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">Protocol</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">Generic</span></code>[<code class="xref py py-obj docutils literal notranslate"><span class="pre">T</span></code>]</p>
-<p>Type for accepting lazy inputs from the pipeline runner.  If your function
-may or may not need one of its inputs, declare the type with this to only
-run it as needed:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">my_component</span><span class="p">(</span><span class="nb">input</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">backup</span><span class="p">:</span> <span class="n">Lazy</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="k">if</span> <span class="nb">input</span> <span class="o">==</span> <span class="s1">&#39;invalid&#39;</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">backup</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="nb">input</span>
-</pre></div>
-</div>
-<dl class="field-list">
-<dt class="field-odd">Stability<span class="colon">:</span></dt>
-<dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="lenskit.pipeline.Lazy.get">
-<span class="sig-name descname"><span class="pre">get</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.pipeline.Lazy.get" title="Link to this definition">#</a></dt>
-<dd><p>Get the value behind this lazy instance.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>As this method invokes upstream components if they have not yet been
-run, it may fail if one of the required components fails or pipeline
-data checks fail.</p>
-</div>
-<dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#Exception" rel="noreferrer" target="_blank" title="(in Python v3.14)"><strong>Exception</strong></a> – Any exception raised by the component(s) needed to supply the
-lazy value may be raised when this method is called.</p></li>
-<li><p><strong>SkipComponent</strong> – Internal exception raised to indicate that no value is available
-and the calling component should be skipped.  Components
-generally do not need to handle this directly, as it is used to
-signal the pipeline runner.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference internal" href="../data/types/index.html#lenskit.data.types.T" title="lenskit.data.types.T">T</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
 </section>
 <section id="exported-aliases">
 <h2>Exported Aliases<a class="headerlink" href="#exported-aliases" title="Link to this heading">#</a></h2>
@@ -2169,6 +2120,12 @@ signal the pipeline runner.</p></li>
 <dt class="sig sig-object py" id="lenskit.pipeline.lenskit.pipeline.PipelineWarning">
 <span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.pipeline.</span></span><span class="sig-name descname"><span class="pre">PipelineWarning</span></span><a class="headerlink" href="#lenskit.pipeline.lenskit.pipeline.PipelineWarning" title="Link to this definition">#</a></dt>
 <dd><p>Re-exported alias for <a class="reference internal" href="../diagnostics/index.html#lenskit.diagnostics.PipelineWarning" title="lenskit.diagnostics.PipelineWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">lenskit.diagnostics.PipelineWarning</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.pipeline.lenskit.pipeline.Lazy">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.pipeline.</span></span><span class="sig-name descname"><span class="pre">Lazy</span></span><a class="headerlink" href="#lenskit.pipeline.lenskit.pipeline.Lazy" title="Link to this definition">#</a></dt>
+<dd><p>Re-exported alias for <a class="reference internal" href="../lazy/index.html#lenskit.lazy.Lazy" title="lenskit.lazy.Lazy"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.lazy.Lazy</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py class">
@@ -2358,15 +2315,12 @@ signal the pipeline runner.</p></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.PipelineState.__repr__"><code class="docutils literal notranslate"><span class="pre">PipelineState.__repr__()</span></code></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Lazy"><code class="docutils literal notranslate"><span class="pre">Lazy</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.Lazy.get"><code class="docutils literal notranslate"><span class="pre">Lazy.get()</span></code></a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exported-aliases">Exported Aliases</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.lenskit.pipeline.PipelineError"><code class="docutils literal notranslate"><span class="pre">lenskit.pipeline.PipelineError</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.lenskit.pipeline.PipelineWarning"><code class="docutils literal notranslate"><span class="pre">lenskit.pipeline.PipelineWarning</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.lenskit.pipeline.Lazy"><code class="docutils literal notranslate"><span class="pre">lenskit.pipeline.Lazy</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.lenskit.pipeline.Component"><code class="docutils literal notranslate"><span class="pre">lenskit.pipeline.Component</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.lenskit.pipeline.ComponentConstructor"><code class="docutils literal notranslate"><span class="pre">lenskit.pipeline.ComponentConstructor</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.pipeline.lenskit.pipeline.PipelineFunction"><code class="docutils literal notranslate"><span class="pre">lenskit.pipeline.PipelineFunction</span></code></a></li>
@@ -2417,7 +2371,7 @@ signal the pipeline runner.</p></li>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev453+gd4673acd.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev457+g0df61933.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

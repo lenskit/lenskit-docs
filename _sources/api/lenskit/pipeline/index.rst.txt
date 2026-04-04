@@ -47,7 +47,6 @@ Classes
    lenskit.pipeline.PipelineProfiler
    lenskit.pipeline.ProfileSink
    lenskit.pipeline.PipelineState
-   lenskit.pipeline.Lazy
 
 
 Functions
@@ -966,46 +965,6 @@ Package Contents
    .. py:method:: __repr__()
 
 
-.. py:class:: Lazy
-   :canonical: lenskit.pipeline._types.Lazy
-
-   Bases: :py:obj:`Protocol`, :py:obj:`Generic`\ [\ :py:obj:`T`\ ]
-
-
-   Type for accepting lazy inputs from the pipeline runner.  If your function
-   may or may not need one of its inputs, declare the type with this to only
-   run it as needed:
-
-   .. code:: python
-
-       def my_component(input: str, backup: Lazy[str]) -> str:
-           if input == 'invalid':
-               return backup.get()
-           else:
-               return input
-
-   :Stability: Caller
-
-
-   .. py:method:: get()
-
-      Get the value behind this lazy instance.
-
-      .. note::
-
-          As this method invokes upstream components if they have not yet been
-          run, it may fail if one of the required components fails or pipeline
-          data checks fail.
-
-      :raises Exception: Any exception raised by the component(s) needed to supply the
-          lazy value may be raised when this method is called.
-      :raises SkipComponent: Internal exception raised to indicate that no value is available
-          and the calling component should be skipped.  Components
-          generally do not need to handle this directly, as it is used to
-          signal the pipeline runner.
-
-
-
 
 Exported Aliases
 ----------------
@@ -1017,6 +976,10 @@ Exported Aliases
 .. py:exception:: lenskit.pipeline.PipelineWarning
 
     Re-exported alias for :py:exc:`lenskit.diagnostics.PipelineWarning`.
+
+.. py:class:: lenskit.pipeline.Lazy
+
+    Re-exported alias for :py:class:`lenskit.lazy.Lazy`.
 
 .. py:class:: lenskit.pipeline.Component
 
