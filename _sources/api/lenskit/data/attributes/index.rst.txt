@@ -1,0 +1,457 @@
+lenskit.data.attributes
+=======================
+
+.. py:module:: lenskit.data.attributes
+
+.. autoapi-nested-parse::
+
+   Data attribute accessors.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.data.attributes.AttributeSet
+   lenskit.data.attributes.ScalarAttributeSet
+   lenskit.data.attributes.ListAttributeSet
+   lenskit.data.attributes.VectorAttributeSet
+   lenskit.data.attributes.SparseAttributeSet
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.data.attributes.attr_set
+
+
+
+Module Contents
+---------------
+
+.. py:function:: attr_set(name, spec, table, vocab, rows)
+
+.. py:class:: AttributeSet(name, spec, table, vocab, rows)
+   
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   Base class for attributes associated with entities.
+
+   This is the general interface for attribute sets.  Not all access methods
+   are supported for all layouts.
+
+   :Stability: caller
+
+
+   .. py:attribute:: name
+      :type:  str
+
+      The name of the attribute.
+
+
+   .. py:attribute:: layout
+      :type:  lenskit.data.schema.AttrLayout
+
+      The attribute layout.
+
+
+   .. py:property:: data_type
+      :type: pyarrow.DataType
+
+      :abstractmethod:
+
+
+      Get the data type of this attribute set.
+
+
+   .. py:method:: ids()
+
+      Get the entity IDs for the rows in this attribute's values.
+
+
+
+   .. py:method:: id_index()
+
+      Get the entity IDs as a Pandas index.
+
+
+
+   .. py:method:: numbers()
+
+      Get the entity numbers for the rows in this attribute's values.
+
+
+
+   .. py:method:: cat_matrix(*, normalize = None)
+      :abstractmethod:
+
+
+      Compute a categorical matrix representation of the attribute.
+
+      :param normalize: Optional normalization method.
+                        "unit": Normalize each row to unit length.
+                        "distribution": Normalize each row so elements sum to 1
+
+      :returns:
+
+                A tuple containing:
+                    matrix (numpy.ndarray or scipy.sparse.csr_array): The categorical matrix.
+                    vocab (Vocabulary or None): The vocabulary associated with the categories.
+      :rtype: tuple
+
+
+
+   .. py:property:: dim_names
+      :type: list[str] | None
+
+
+      Get the names attached to this attribute's dimensions.
+
+      .. note::
+
+          Only applicable to vector and sparse attributes.
+
+
+   .. py:property:: is_scalar
+      :type: bool
+
+
+      Query whether this attribute is scalar.
+
+
+   .. py:property:: is_list
+      :type: bool
+
+
+      Query whether this attribute is a list.
+
+
+   .. py:property:: is_vector
+      :type: bool
+
+
+      Query whether this attribute is a dense vector.
+
+
+   .. py:property:: is_sparse
+      :type: bool
+
+
+      Query whether this attribute is a sparse vector.
+
+
+   .. py:method:: pandas(*, missing = 'null')
+      :abstractmethod:
+
+
+
+   .. py:method:: numpy()
+
+      Get the attribute values as a NumPy array.
+
+      .. note::
+          Undefined attribute values may have undefined contents; they will
+          _usually_ be ``NaN`` or similar, but this is not fully guaranteed.
+
+
+
+   .. py:method:: arrow()
+
+      Get the attribute values as an Arrow array.
+
+
+
+   .. py:method:: scipy()
+
+      Get this attribute as a SciPy sparse array (if it is sparse), or a NumPy
+      array if it is dense.
+
+
+
+   .. py:method:: torch()
+
+
+   .. py:method:: drop_null()
+
+      Subset this attribute set to only entities for which it is defined.
+
+
+
+   .. py:method:: __len__()
+
+
+.. py:class:: ScalarAttributeSet(name, spec, table, vocab, rows)
+   
+
+   Bases: :py:obj:`AttributeSet`
+
+
+   Base class for attributes associated with entities.
+
+   This is the general interface for attribute sets.  Not all access methods
+   are supported for all layouts.
+
+   :Stability: caller
+
+
+   .. py:property:: data_type
+      :type: pyarrow.DataType
+
+
+      Get the data type of this attribute set.
+
+
+   .. py:method:: pandas(*, missing = 'null')
+
+
+   .. py:method:: cat_matrix(*, normalize = None)
+
+      Create item * category sparse matrix for scalar attributes.
+
+      :returns: Tuple of (sparse matrix, vocabulary of categories)
+
+
+
+   .. py:method:: __str__()
+
+
+   .. py:method:: __repr__()
+
+
+.. py:class:: ListAttributeSet(name, spec, table, vocab, rows)
+   
+
+   Bases: :py:obj:`AttributeSet`
+
+
+   Base class for attributes associated with entities.
+
+   This is the general interface for attribute sets.  Not all access methods
+   are supported for all layouts.
+
+   :Stability: caller
+
+
+   .. py:property:: data_type
+      :type: pyarrow.DataType
+
+
+      Get the data type of this attribute set.
+
+
+   .. py:method:: pandas(*, missing = 'null')
+
+
+   .. py:method:: cat_matrix(*, normalize = None)
+
+      Create item * category matrix for list attributes.
+
+      :returns: Tuple of (sparse matrix, vocabulary of categories)
+
+
+
+   .. py:method:: __str__()
+
+
+   .. py:method:: __repr__()
+
+
+.. py:class:: VectorAttributeSet(name, spec, table, vocab, rows)
+   
+
+   Bases: :py:obj:`AttributeSet`
+
+
+   Base class for attributes associated with entities.
+
+   This is the general interface for attribute sets.  Not all access methods
+   are supported for all layouts.
+
+   :Stability: caller
+
+
+   .. py:property:: data_type
+      :type: pyarrow.DataType
+
+
+      Get the data type of this attribute set.
+
+
+   .. py:property:: dim_names
+      :type: list[str] | None
+
+
+      Get the names of the dimensions of this vector.  I.e., if the vector
+      is storing weights attached to tags, the dimension names will be the
+      tags.
+
+
+   .. py:property:: vector_size
+      :type: int
+
+
+      Get the size (dimensionality) of this vector attribute.
+
+
+   .. py:method:: arrow()
+
+      Get the attribute values as an Arrow array.
+
+
+
+   .. py:method:: numpy()
+
+      Get the attribute values as a NumPy array.
+
+      .. note::
+          Undefined attribute values may have undefined contents; they will
+          _usually_ be ``NaN`` or similar, but this is not fully guaranteed.
+
+
+
+   .. py:method:: pandas(*, missing = 'null')
+
+
+   .. py:method:: cat_matrix(*, normalize = None)
+
+      Create item * category matrix for list attributes.
+
+      :returns: dense matrix, vocabulary if present
+
+
+
+   .. py:method:: __str__()
+
+
+   .. py:method:: __repr__()
+
+
+.. py:class:: SparseAttributeSet(name, spec, table, vocab, rows)
+   
+
+   Bases: :py:obj:`AttributeSet`
+
+
+   Base class for attributes associated with entities.
+
+   This is the general interface for attribute sets.  Not all access methods
+   are supported for all layouts.
+
+   :Stability: caller
+
+
+   .. py:property:: data_type
+      :type: pyarrow.DataType | None
+
+
+      Get the data type of this attribute set.
+
+
+   .. py:property:: dim_names
+      :type: list[str] | None
+
+
+      Get the names of the dimensions of this vector.  I.e., if the vector
+      is storing weights attached to tags, the dimension names will be the
+      tags.
+
+
+   .. py:property:: vector_size
+      :type: int
+
+
+      Get the size (dimensionality) of this vector attribute.
+
+
+   .. py:method:: arrow()
+
+      Get the attribute values as an Arrow array.
+
+
+
+   .. py:method:: numpy()
+      :abstractmethod:
+
+
+      Get the attribute values as a NumPy array.
+
+      .. note::
+          Undefined attribute values may have undefined contents; they will
+          _usually_ be ``NaN`` or similar, but this is not fully guaranteed.
+
+
+
+   .. py:method:: scipy()
+
+      Get this attribute as a SciPy sparse array (if it is sparse), or a NumPy
+      array if it is dense.
+
+
+
+   .. py:method:: torch()
+
+
+   .. py:method:: cat_matrix(*, normalize = None)
+
+      Create item * category matrix for list attributes.
+
+      :returns: sparse matrix, vocabulary if present
+
+
+
+   .. py:method:: __str__()
+
+
+   .. py:method:: __repr__()
+
+
+
+Exported Aliases
+----------------
+
+.. py:function:: lenskit.data.attributes.safe_tensor
+
+    Re-exported alias for :py:func:`lenskit.torch.safe_tensor`.
+
+.. py:class:: lenskit.data.attributes.SparseIndexListType
+
+    Re-exported alias for :py:class:`lenskit.data.matrix.SparseIndexListType`.
+
+.. py:class:: lenskit.data.attributes.SparseRowArray
+
+    Re-exported alias for :py:class:`lenskit.data.matrix.SparseRowArray`.
+
+.. py:class:: lenskit.data.attributes.SparseRowType
+
+    Re-exported alias for :py:class:`lenskit.data.matrix.SparseRowType`.
+
+.. py:function:: lenskit.data.attributes.normalize_matrix
+
+    Re-exported alias for :py:func:`lenskit.data.matrix.normalize_matrix`.
+
+.. py:function:: lenskit.data.attributes.object_repr
+
+    Re-exported alias for :py:func:`lenskit.data.repr.object_repr`.
+
+.. py:class:: lenskit.data.attributes.AttrLayout
+
+    Re-exported alias for :py:class:`lenskit.data.schema.AttrLayout`.
+
+.. py:class:: lenskit.data.attributes.ColumnSpec
+
+    Re-exported alias for :py:class:`lenskit.data.schema.ColumnSpec`.
+
+.. py:data:: lenskit.data.attributes.IDArray
+
+    Re-exported alias for :py:data:`lenskit.data.types.IDArray`.
+
+.. py:class:: lenskit.data.attributes.Vocabulary
+
+    Re-exported alias for :py:class:`lenskit.data.vocab.Vocabulary`.
+

@@ -1,0 +1,148 @@
+lenskit.logging
+===============
+
+.. py:module:: lenskit.logging
+
+.. autoapi-nested-parse::
+
+   Logging, progress, and resource records.
+
+
+
+Submodules
+----------
+
+.. autoapisummary::
+
+   lenskit.logging.config
+   lenskit.logging.formats
+   lenskit.logging.monitor
+   lenskit.logging.multiprocess
+   lenskit.logging.processors
+   lenskit.logging.progress
+   lenskit.logging.resource
+   lenskit.logging.stopwatch
+   lenskit.logging.tasks
+   lenskit.logging.tracing
+   lenskit.logging.worker
+
+.. toctree::
+    :hidden:
+    :maxdepth: 1
+
+    /api/lenskit/logging/config/index
+    /api/lenskit/logging/formats/index
+    /api/lenskit/logging/monitor/index
+    /api/lenskit/logging/multiprocess/index
+    /api/lenskit/logging/processors/index
+    /api/lenskit/logging/progress/index
+    /api/lenskit/logging/resource/index
+    /api/lenskit/logging/stopwatch/index
+    /api/lenskit/logging/tasks/index
+    /api/lenskit/logging/tracing/index
+    /api/lenskit/logging/worker/index
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.logging.console
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.logging.stdout_console
+   lenskit.logging.get_logger
+
+
+
+Package Contents
+----------------
+
+.. py:data:: console
+
+.. py:function:: stdout_console()
+
+   Get a console attached to ``stdout``.
+
+
+.. py:function:: get_logger(name, *, remove_private = True, **init_als)
+
+   Get a logger.  This works like :func:`structlog.stdlib.get_logger`, except
+   the returned proxy logger is quiet (only WARN and higher messages) if
+   structlog has not been configured. LensKit code should use this instead of
+   obtaining loggers from Structlog directly.
+
+   It also suppresses private module name components of the logger name, so
+   e.g. ``lenskit.pipeline._impl`` becomes ``lenskit.pipeline`.
+
+   Params:
+       name:
+           The logger name.
+       remove_private:
+           Set to ``False`` to keep private module components of the logger
+           name instead of removing them.
+       init_vals:
+           Initial values to bind into the logger when crated.
+   :returns: A lazy proxy logger.  The returned logger is type-compatible with
+             :class:`structlib.stdlib.BoundLogger`, but is actually an instance of an
+             internal proxy that provies more sensible defaults and handles LensKit's
+             TRACE-level logging support.
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.logging.LoggingConfig
+
+    Re-exported alias for :py:class:`lenskit.logging.config.LoggingConfig`.
+
+.. py:function:: lenskit.logging.basic_logging
+
+    Re-exported alias for :py:func:`lenskit.logging.config.basic_logging`.
+
+.. py:function:: lenskit.logging.notebook_logging
+
+    Re-exported alias for :py:func:`lenskit.logging.config.notebook_logging`.
+
+.. py:function:: lenskit.logging.friendly_duration
+
+    Re-exported alias for :py:func:`lenskit.logging.formats.friendly_duration`.
+
+.. py:class:: lenskit.logging.Progress
+
+    Re-exported alias for :py:class:`lenskit.logging.progress.Progress`.
+
+.. py:function:: lenskit.logging.item_progress
+
+    Re-exported alias for :py:func:`lenskit.logging.progress.item_progress`.
+
+.. py:function:: lenskit.logging.set_progress_impl
+
+    Re-exported alias for :py:func:`lenskit.logging.progress.set_progress_impl`.
+
+.. py:class:: lenskit.logging.Stopwatch
+
+    Re-exported alias for :py:class:`lenskit.logging.stopwatch.Stopwatch`.
+
+.. py:class:: lenskit.logging.Task
+
+    Re-exported alias for :py:class:`lenskit.logging.tasks.Task`.
+
+.. py:class:: lenskit.logging.Tracer
+
+    Re-exported alias for :py:class:`lenskit.logging.tracing.Tracer`.
+
+.. py:function:: lenskit.logging.get_tracer
+
+    Re-exported alias for :py:func:`lenskit.logging.tracing.get_tracer`.
+
+.. py:function:: lenskit.logging.trace
+
+    Re-exported alias for :py:func:`lenskit.logging.tracing.trace`.
+

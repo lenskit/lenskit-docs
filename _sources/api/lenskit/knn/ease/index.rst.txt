@@ -1,0 +1,155 @@
+lenskit.knn.ease
+================
+
+.. py:module:: lenskit.knn.ease
+
+.. autoapi-nested-parse::
+
+   EASE scoring model.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.knn.ease.EASEConfig
+   lenskit.knn.ease.EASEScorer
+
+
+
+Module Contents
+---------------
+
+.. py:class:: EASEConfig
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Configuration for :class:`EASEScorer`.
+
+
+   .. py:attribute:: regularization
+      :type:  pydantic.PositiveFloat
+      :value: 1
+
+
+      Regularization term for EASE.
+
+
+.. py:class:: EASEScorer(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ], :py:obj:`lenskit.training.Trainable`
+
+
+   Embarrassingly shallow autoencoder
+   :cite:p:`steckEmbarrassinglyShallowAutoencoders2019`.
+
+   In addition to its configuation, this component also uses a :ref:`training
+   environment variable <training-config>` :envvar:`LK_EASE_SOLVER`.
+
+   .. envvar:: LK_EASE_SOLVER
+
+       Specify the solver to use to invert the Gram-matrix for EASE.  Can be
+       either ``"torch"`` (works on both CPU and CUDA, and is faster on CPU
+       than SciPy) or ``"scipy"`` (uses LAPACK, and may take less memory).
+
+       The default behavior is to first try to allocate enough memory to train
+       with PyTorch, and to fall back to SciPy with in-place solving if the
+       Torch allocation fails.
+
+   .. note::
+       This component requires SciPy 1.17 or later.
+
+
+   .. py:attribute:: config
+      :type:  EASEConfig
+
+      EASE configuration.
+
+
+   .. py:attribute:: items
+      :type:  lenskit.data.Vocabulary
+
+      Items known at training time.
+
+
+   .. py:attribute:: weights
+      :type:  lenskit.data.types.NPMatrix[numpy.float32]
+
+      Item interpolation weight matrix.
+
+
+   .. py:method:: is_trained()
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options = None)
+
+      Train the model to learn its parameters from a training dataset.
+
+      :param data: The training dataset.
+      :param options: The training options.
+
+
+
+   .. py:method:: __call__(query, items)
+
+      Run the pipeline's operation and produce a result.  This is the key
+      method for components to implement.
+
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.knn.ease.Dataset
+
+    Re-exported alias for :py:class:`lenskit.data.Dataset`.
+
+.. py:class:: lenskit.knn.ease.ItemList
+
+    Re-exported alias for :py:class:`lenskit.data.ItemList`.
+
+.. py:class:: lenskit.knn.ease.RecQuery
+
+    Re-exported alias for :py:class:`lenskit.data.RecQuery`.
+
+.. py:class:: lenskit.knn.ease.Vocabulary
+
+    Re-exported alias for :py:class:`lenskit.data.Vocabulary`.
+
+.. py:data:: lenskit.knn.ease.NPMatrix
+
+    Re-exported alias for :py:data:`lenskit.data.types.NPMatrix`.
+
+.. py:class:: lenskit.knn.ease.Stopwatch
+
+    Re-exported alias for :py:class:`lenskit.logging.Stopwatch`.
+
+.. py:function:: lenskit.knn.ease.get_logger
+
+    Re-exported alias for :py:func:`lenskit.logging.get_logger`.
+
+.. py:function:: lenskit.knn.ease.ensure_parallel_init
+
+    Re-exported alias for :py:func:`lenskit.parallel.ensure_parallel_init`.
+
+.. py:class:: lenskit.knn.ease.Component
+
+    Re-exported alias for :py:class:`lenskit.pipeline.Component`.
+
+.. py:class:: lenskit.knn.ease.Trainable
+
+    Re-exported alias for :py:class:`lenskit.training.Trainable`.
+
+.. py:class:: lenskit.knn.ease.TrainingOptions
+
+    Re-exported alias for :py:class:`lenskit.training.TrainingOptions`.
+

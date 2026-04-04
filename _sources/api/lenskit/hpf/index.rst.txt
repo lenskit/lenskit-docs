@@ -1,0 +1,159 @@
+lenskit.hpf
+===========
+
+.. py:module:: lenskit.hpf
+
+.. autoapi-nested-parse::
+
+   Hierarchical Poisson factorization from ``hpfrec``.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.hpf.HPFConfig
+   lenskit.hpf.HPFScorer
+
+
+
+Module Contents
+---------------
+
+.. py:class:: HPFConfig
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Configuration class for :class:`HPFScorer`.
+
+   Only a couple of configuration options are directly defined here.  Other
+   options are taken from the :class:`hpfrec.HPF` constructor's keyword
+   arguments.
+
+
+   .. py:attribute:: __pydantic_extra__
+      :type:  dict[str, pydantic.JsonValue]
+
+
+   .. py:attribute:: count_attribute
+      :type:  str | None
+      :value: 'count'
+
+
+      The attribute from which to get user-item interaction counts.  If ``None``,
+      uses indicator variables as a count of 1.
+
+
+   .. py:attribute:: embedding_size
+      :type:  int
+
+      The dimension of user and item embeddings (number of latent features to
+      learn).
+
+
+.. py:class:: HPFScorer(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ], :py:obj:`lenskit.training.Trainable`
+
+
+   Hierarchical Poisson factorization, provided by `hpfrec`_
+
+   .. _hpfrec: https://hpfrec.readthedocs.io/en/latest/
+
+   .. todo::
+       Right now, this uses the 'rating' as a count. Actually use counts (:issue:`656`).
+
+   :Stability: Experimental
+
+   :param features: the number of features
+   :param kwargs: additional arguments to pass to :class:`hpfrec.HPF`.
+
+
+   .. py:attribute:: config
+      :type:  HPFConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: users
+      :type:  lenskit.data.Vocabulary
+
+
+   .. py:attribute:: user_features
+      :type:  numpy.ndarray[tuple[int, int], numpy.dtype[numpy.float64]]
+
+
+   .. py:attribute:: items
+      :type:  lenskit.data.Vocabulary
+
+
+   .. py:attribute:: item_features
+      :type:  numpy.ndarray[tuple[int, int], numpy.dtype[numpy.float64]]
+
+
+   .. py:method:: is_trained()
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options = TrainingOptions())
+
+      Train the model to learn its parameters from a training dataset.
+
+      :param data: The training dataset.
+      :param options: The training options.
+
+
+
+   .. py:method:: __call__(query, items)
+
+      Run the pipeline's operation and produce a result.  This is the key
+      method for components to implement.
+
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.hpf.Dataset
+
+    Re-exported alias for :py:class:`lenskit.data.Dataset`.
+
+.. py:class:: lenskit.hpf.ItemList
+
+    Re-exported alias for :py:class:`lenskit.data.ItemList`.
+
+.. py:data:: lenskit.hpf.QueryInput
+
+    Re-exported alias for :py:data:`lenskit.data.QueryInput`.
+
+.. py:class:: lenskit.hpf.RecQuery
+
+    Re-exported alias for :py:class:`lenskit.data.RecQuery`.
+
+.. py:class:: lenskit.hpf.Vocabulary
+
+    Re-exported alias for :py:class:`lenskit.data.Vocabulary`.
+
+.. py:class:: lenskit.hpf.Component
+
+    Re-exported alias for :py:class:`lenskit.pipeline.Component`.
+
+.. py:class:: lenskit.hpf.Trainable
+
+    Re-exported alias for :py:class:`lenskit.training.Trainable`.
+
+.. py:class:: lenskit.hpf.TrainingOptions
+
+    Re-exported alias for :py:class:`lenskit.training.TrainingOptions`.
+

@@ -1,0 +1,262 @@
+lenskit.funksvd
+===============
+
+.. py:module:: lenskit.funksvd
+
+.. autoapi-nested-parse::
+
+   FunkSVD (biased MF).
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.funksvd.INITIAL_VALUE
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.funksvd.FunkSVDConfig
+   lenskit.funksvd.FunkSVDTrainingParams
+   lenskit.funksvd.FunkSVDTrainingData
+   lenskit.funksvd.FunkSVDScorer
+
+
+
+Module Contents
+---------------
+
+.. py:data:: INITIAL_VALUE
+   :value: 0.1
+
+
+.. py:class:: FunkSVDConfig
+   
+
+   Bases: :py:obj:`lenskit.config.common.EmbeddingSizeMixin`, :py:obj:`pydantic.BaseModel`
+
+
+   Configuration for :class:`FunkSVDScorer`.
+
+
+   .. py:attribute:: embedding_size
+      :type:  pydantic.PositiveInt
+
+      Number of latent features.
+
+
+   .. py:attribute:: epochs
+      :type:  pydantic.PositiveInt
+      :value: 100
+
+
+      Number of training epochs (per feature).
+
+
+   .. py:attribute:: learning_rate
+      :type:  pydantic.PositiveFloat
+      :value: 0.001
+
+
+      Gradient descent learning rate.
+
+
+   .. py:attribute:: regularization
+      :type:  pydantic.NonNegativeFloat
+      :value: 0.015
+
+
+      Parameter regularization.
+
+
+   .. py:attribute:: damping
+      :type:  lenskit.basic.Damping
+      :value: 5.0
+
+
+      Bias damping term.
+
+
+   .. py:attribute:: range
+      :type:  tuple[float, float] | None
+      :value: None
+
+
+      Min/max range of ratings to clamp output.
+
+
+.. py:class:: FunkSVDTrainingParams
+   
+
+   .. py:attribute:: learning_rate
+      :type:  float
+
+
+   .. py:attribute:: regularization
+      :type:  float
+
+
+   .. py:attribute:: rating_min
+      :type:  float
+
+
+   .. py:attribute:: rating_max
+      :type:  float
+
+
+.. py:class:: FunkSVDTrainingData
+   
+
+   .. py:attribute:: users
+      :type:  pyarrow.Int32Array
+
+
+   .. py:attribute:: items
+      :type:  pyarrow.Int32Array
+
+
+   .. py:attribute:: ratings
+      :type:  pyarrow.FloatArray
+
+
+.. py:class:: FunkSVDScorer(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.training.Trainable`, :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ]
+
+
+   FunkSVD explicit-feedback matrix factoriation.  FunkSVD is a regularized
+   biased matrix factorization technique trained with featurewise stochastic
+   gradient descent.
+
+   See the base class :class:`.MFPredictor` for documentation on the estimated
+   parameters you can extract from a trained model.
+
+   .. deprecated:: LKPY
+
+       This scorer is kept around for historical comparability, but ALS
+       :class:`~lenskit.als.BiasedMF` is usually a better option.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: config
+      :type:  FunkSVDConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: bias
+      :type:  lenskit.basic.BiasModel
+
+
+   .. py:attribute:: users
+      :type:  lenskit.data.Vocabulary
+
+
+   .. py:attribute:: user_embeddings
+      :type:  lenskit.data.types.NPMatrix
+
+
+   .. py:attribute:: items
+      :type:  lenskit.data.Vocabulary
+
+
+   .. py:attribute:: item_embeddings
+      :type:  lenskit.data.types.NPMatrix
+
+
+   .. py:method:: is_trained()
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options = TrainingOptions())
+
+      Train a FunkSVD model.
+
+      :param ratings: the ratings data frame.
+
+
+
+   .. py:method:: __call__(query, items)
+
+      Run the pipeline's operation and produce a result.  This is the key
+      method for components to implement.
+
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.funksvd.BiasModel
+
+    Re-exported alias for :py:class:`lenskit.basic.BiasModel`.
+
+.. py:data:: lenskit.funksvd.Damping
+
+    Re-exported alias for :py:data:`lenskit.basic.Damping`.
+
+.. py:class:: lenskit.funksvd.EmbeddingSizeMixin
+
+    Re-exported alias for :py:class:`lenskit.config.common.EmbeddingSizeMixin`.
+
+.. py:class:: lenskit.funksvd.Dataset
+
+    Re-exported alias for :py:class:`lenskit.data.Dataset`.
+
+.. py:class:: lenskit.funksvd.ItemList
+
+    Re-exported alias for :py:class:`lenskit.data.ItemList`.
+
+.. py:data:: lenskit.funksvd.QueryInput
+
+    Re-exported alias for :py:data:`lenskit.data.QueryInput`.
+
+.. py:class:: lenskit.funksvd.RecQuery
+
+    Re-exported alias for :py:class:`lenskit.data.RecQuery`.
+
+.. py:class:: lenskit.funksvd.Vocabulary
+
+    Re-exported alias for :py:class:`lenskit.data.Vocabulary`.
+
+.. py:data:: lenskit.funksvd.NPMatrix
+
+    Re-exported alias for :py:data:`lenskit.data.types.NPMatrix`.
+
+.. py:class:: lenskit.funksvd.Stopwatch
+
+    Re-exported alias for :py:class:`lenskit.logging.Stopwatch`.
+
+.. py:function:: lenskit.funksvd.get_logger
+
+    Re-exported alias for :py:func:`lenskit.logging.get_logger`.
+
+.. py:function:: lenskit.funksvd.item_progress
+
+    Re-exported alias for :py:func:`lenskit.logging.progress._dispatch.item_progress`.
+
+.. py:class:: lenskit.funksvd.Component
+
+    Re-exported alias for :py:class:`lenskit.pipeline.Component`.
+
+.. py:class:: lenskit.funksvd.Trainable
+
+    Re-exported alias for :py:class:`lenskit.training.Trainable`.
+
+.. py:class:: lenskit.funksvd.TrainingOptions
+
+    Re-exported alias for :py:class:`lenskit.training.TrainingOptions`.
+

@@ -1,0 +1,377 @@
+lenskit.graphs.lightgcn
+=======================
+
+.. py:module:: lenskit.graphs.lightgcn
+
+.. autoapi-nested-parse::
+
+   LightGCN recommendation.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.graphs.lightgcn.LightGCNConfig
+   lenskit.graphs.lightgcn.LightGCNScorer
+   lenskit.graphs.lightgcn.LightGCNTrainer
+   lenskit.graphs.lightgcn.LogisticLightGCNTrainer
+   lenskit.graphs.lightgcn.PairwiseLightGCNTrainer
+
+
+
+Module Contents
+---------------
+
+.. py:class:: LightGCNConfig
+   
+
+   Bases: :py:obj:`lenskit.config.common.EmbeddingSizeMixin`, :py:obj:`pydantic.BaseModel`
+
+
+   Configuration for :class:`LightGCNScorer`.
+
+   :Stability: Experimental
+
+
+   .. py:attribute:: embedding_size
+      :type:  pydantic.PositiveInt
+      :value: 16
+
+
+      The dimension of the embedding space (number of latent features).  Seems
+      to work best as a power of 2.
+
+
+   .. py:attribute:: layer_count
+      :type:  pydantic.PositiveInt
+      :value: 2
+
+
+      The number of layers to use.
+
+
+   .. py:attribute:: layer_blend
+      :type:  pydantic.PositiveFloat | list[pydantic.PositiveFloat] | None
+      :value: None
+
+
+      The blending coefficient(s) for layer blending.  This is equivalent to
+      ``alpha`` in :class:`LightGCN`.
+
+
+   .. py:attribute:: batch_size
+      :type:  pydantic.PositiveInt
+      :value: 4096
+
+
+      The training batch size.
+
+
+   .. py:attribute:: learning_rate
+      :type:  pydantic.PositiveFloat
+      :value: 0.01
+
+
+      The learning rate for training.
+
+
+   .. py:attribute:: epochs
+      :type:  pydantic.PositiveInt
+      :value: 10
+
+
+      The number of training epochs.
+
+
+   .. py:attribute:: regularization
+      :type:  pydantic.PositiveFloat | None
+      :value: 0.01
+
+
+      The regularization strength.
+
+
+   .. py:attribute:: loss
+      :type:  Literal['logistic', 'pairwise']
+      :value: 'pairwise'
+
+
+      The loss to use for model training.
+
+      ``pairwise``
+          BPR pairwise ranking loss, using :meth:`LightGCN.recommend_loss`.
+
+      ``logistic``
+          Logistic link prediction loss, using :meth:`LightGCN.link_pred_loss`.
+
+
+   .. py:method:: check_layer_blending()
+
+
+.. py:class:: LightGCNScorer(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.training.UsesTrainer`, :py:obj:`lenskit.pipeline.components.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ]
+
+
+   Scorer using :class:`LightGCN` :cite:p:`heLightGCNSimplifyingPowering2020`.
+
+   :Stability: Experimental
+
+
+   .. py:attribute:: config
+      :type:  LightGCNConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: users
+      :type:  lenskit.data.Vocabulary
+
+
+   .. py:attribute:: items
+      :type:  lenskit.data.Vocabulary
+
+
+   .. py:attribute:: model
+      :type:  torch_geometric.nn.LightGCN
+
+
+   .. py:method:: to(device)
+
+      Move the model to a different device.
+
+
+
+   .. py:method:: __call__(query, items)
+
+      Generate item scores for a user.
+
+      Note that user and items are both user and item IDs, not positions.
+
+
+
+   .. py:method:: create_trainer(data, options)
+
+      Create a model trainer to train this model.
+
+
+
+.. py:class:: LightGCNTrainer(scorer, data, options)
+   
+
+   Bases: :py:obj:`lenskit.training.ModelTrainer`
+
+
+   Protocol implemented by iterative trainers for models.  Models that
+   implement :class:`UsesTrainer` will return an object implementing this
+   protocol from their :meth:`~UsesTrainer.create_trainer` method.
+
+   ..
+
+       This protocol only defines the core aspects of training a model. Trainers
+       should also implement :class:`~lenskit.state.ParameterContainer` to allow
+       training to be checkpointed and resumed.
+
+       It is also a good idea for the trainer to be pickleable, but the parameter
+       container interface is the primary mechanism for checkpointing.
+
+   :Stability: Full
+
+
+   .. py:attribute:: scorer
+      :type:  LightGCNScorer
+
+
+   .. py:attribute:: data
+      :type:  lenskit.data.Dataset
+
+
+   .. py:attribute:: options
+      :type:  lenskit.training.TrainingOptions
+
+
+   .. py:attribute:: log
+      :type:  structlog.stdlib.BoundLogger
+
+
+   .. py:attribute:: rng
+      :type:  numpy.random.Generator
+
+
+   .. py:attribute:: device
+      :type:  str
+
+
+   .. py:attribute:: model
+      :type:  torch_geometric.nn.LightGCN
+
+
+   .. py:attribute:: matrix
+      :type:  lenskit.data.relationships.MatrixRelationshipSet
+
+
+   .. py:attribute:: coo
+      :type:  lenskit.data.matrix.COOStructure
+
+
+   .. py:attribute:: user_base
+      :type:  int
+
+
+   .. py:attribute:: edges
+      :type:  torch.Tensor
+
+
+   .. py:attribute:: optimizer
+      :type:  torch.optim.Optimizer
+
+
+   .. py:attribute:: epochs_trained
+      :type:  int
+      :value: 0
+
+
+
+   .. py:method:: train_epoch()
+
+      Perform one epoch of the training process, optionally returning metrics
+      on the training behavior.  After each training iteration, the mmodel
+      must be usable.
+
+
+
+   .. py:method:: finalize()
+
+      Finish the training process, cleaning up any unneeded data structures
+      and doing any finalization steps to the model.
+
+      The default implementation does nothing.
+
+
+
+   .. py:method:: batch_loss(mb_edges, scores)
+      :abstractmethod:
+
+
+
+.. py:class:: LogisticLightGCNTrainer(scorer, data, options)
+   
+
+   Bases: :py:obj:`LightGCNTrainer`
+
+
+   Protocol implemented by iterative trainers for models.  Models that
+   implement :class:`UsesTrainer` will return an object implementing this
+   protocol from their :meth:`~UsesTrainer.create_trainer` method.
+
+   ..
+
+       This protocol only defines the core aspects of training a model. Trainers
+       should also implement :class:`~lenskit.state.ParameterContainer` to allow
+       training to be checkpointed and resumed.
+
+       It is also a good idea for the trainer to be pickleable, but the parameter
+       container interface is the primary mechanism for checkpointing.
+
+   :Stability: Full
+
+
+   .. py:method:: batch_loss(mb_edges, scores)
+
+
+.. py:class:: PairwiseLightGCNTrainer(scorer, data, options)
+   
+
+   Bases: :py:obj:`LightGCNTrainer`
+
+
+   Protocol implemented by iterative trainers for models.  Models that
+   implement :class:`UsesTrainer` will return an object implementing this
+   protocol from their :meth:`~UsesTrainer.create_trainer` method.
+
+   ..
+
+       This protocol only defines the core aspects of training a model. Trainers
+       should also implement :class:`~lenskit.state.ParameterContainer` to allow
+       training to be checkpointed and resumed.
+
+       It is also a good idea for the trainer to be pickleable, but the parameter
+       container interface is the primary mechanism for checkpointing.
+
+   :Stability: Full
+
+
+   .. py:method:: batch_loss(mb_edges, scores)
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.graphs.lightgcn.EmbeddingSizeMixin
+
+    Re-exported alias for :py:class:`lenskit.config.common.EmbeddingSizeMixin`.
+
+.. py:class:: lenskit.graphs.lightgcn.BatchIter
+
+    Re-exported alias for :py:class:`lenskit.data.BatchIter`.
+
+.. py:class:: lenskit.graphs.lightgcn.Dataset
+
+    Re-exported alias for :py:class:`lenskit.data.Dataset`.
+
+.. py:class:: lenskit.graphs.lightgcn.ItemList
+
+    Re-exported alias for :py:class:`lenskit.data.ItemList`.
+
+.. py:data:: lenskit.graphs.lightgcn.QueryInput
+
+    Re-exported alias for :py:data:`lenskit.data.QueryInput`.
+
+.. py:class:: lenskit.graphs.lightgcn.RecQuery
+
+    Re-exported alias for :py:class:`lenskit.data.RecQuery`.
+
+.. py:class:: lenskit.graphs.lightgcn.Vocabulary
+
+    Re-exported alias for :py:class:`lenskit.data.Vocabulary`.
+
+.. py:class:: lenskit.graphs.lightgcn.COOStructure
+
+    Re-exported alias for :py:class:`lenskit.data.matrix.COOStructure`.
+
+.. py:class:: lenskit.graphs.lightgcn.MatrixRelationshipSet
+
+    Re-exported alias for :py:class:`lenskit.data.relationships.MatrixRelationshipSet`.
+
+.. py:function:: lenskit.graphs.lightgcn.item_progress
+
+    Re-exported alias for :py:func:`lenskit.logging.progress._dispatch.item_progress`.
+
+.. py:class:: lenskit.graphs.lightgcn.Component
+
+    Re-exported alias for :py:class:`lenskit.pipeline.components.Component`.
+
+.. py:function:: lenskit.graphs.lightgcn.inference_mode
+
+    Re-exported alias for :py:func:`lenskit.torch.inference_mode`.
+
+.. py:class:: lenskit.graphs.lightgcn.ModelTrainer
+
+    Re-exported alias for :py:class:`lenskit.training.ModelTrainer`.
+
+.. py:class:: lenskit.graphs.lightgcn.TrainingOptions
+
+    Re-exported alias for :py:class:`lenskit.training.TrainingOptions`.
+
+.. py:class:: lenskit.graphs.lightgcn.UsesTrainer
+
+    Re-exported alias for :py:class:`lenskit.training.UsesTrainer`.
+

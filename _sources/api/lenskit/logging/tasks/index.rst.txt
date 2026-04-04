@@ -1,0 +1,332 @@
+lenskit.logging.tasks
+=====================
+
+.. py:module:: lenskit.logging.tasks
+
+.. autoapi-nested-parse::
+
+   Abstraction for recording tasks.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.logging.tasks.TaskStatus
+   lenskit.logging.tasks.Task
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.logging.tasks.measure_power
+
+
+
+Module Contents
+---------------
+
+.. py:class:: TaskStatus
+   
+
+   Bases: :py:obj:`str`, :py:obj:`enum.Enum`
+
+
+   Statuses for task records.
+
+
+   .. py:attribute:: PENDING
+      :value: 'pending'
+
+
+
+   .. py:attribute:: RUNNING
+      :value: 'running'
+
+
+
+   .. py:attribute:: FINISHED
+      :value: 'finished'
+
+
+
+   .. py:attribute:: FAILED
+      :value: 'failed'
+
+
+
+   .. py:attribute:: CANCELLED
+      :value: 'cancelled'
+
+
+
+.. py:class:: Task(label, *, file = None, parent = None, reset_hwm = None, **data)
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   A task for logging and resource measurement.
+
+   A task may be *top-level* (have no parent), or it may be a *subtask*.  By
+   default, new tasks have the current active task as their parent.  Tasks are
+   not active until they are started (using a task as a context manager
+   automatically does this, which is the recommended process).
+
+   The task-tracking mechanism is currently designed to support large tasks,
+   like training a model or running batch inference; it is not yet designed for
+   fine-grained spans like you would see in OpenTelemetry or Eliot.
+
+   .. note::
+
+       The notion of the “active task” does not yet support multi-threaded
+       tasks.
+
+   :Stability: Caller
+
+   :param file: A file to save the task when it is finished.
+   :param parent: The parent task.  If unspecified, uses the currently-active task.
+   :param reset_hwm: Whether to reset the system resource high-water-marks at the start
+                     of this task.  Only effective on Linux, but allows for measurement
+                     of the peak memory use of this task specifically.  If unspecified,
+                     it resets the HWM if there is no parent.
+
+
+   .. py:attribute:: task_id
+      :type:  uuid.UUID
+
+      The task ID.
+
+
+   .. py:attribute:: parent_id
+      :type:  uuid.UUID | None
+      :value: None
+
+
+      The parent task ID.
+
+
+   .. py:attribute:: subprocess
+      :type:  bool
+      :value: False
+
+
+      Whether this task is a subprocess of its parent.  Subprocess task CPU times
+      are *not* included in the parent task times.
+
+
+   .. py:attribute:: label
+      :type:  str
+
+      Human-readable task label.
+
+
+   .. py:attribute:: hostname
+      :type:  str
+
+      The hostname on which the task was run.
+
+
+   .. py:attribute:: machine
+      :type:  str | None
+
+      The machine on which the task was run.
+
+      Machines are project-meaningful labels for compute machines or clusters,
+      primarily for understanding resource consumption.  See :ref:`settings`.
+
+
+   .. py:attribute:: status
+      :type:  TaskStatus
+
+      The task's current status.
+
+
+   .. py:attribute:: start_time
+      :type:  float | None
+      :value: None
+
+
+      The task start time (UNIX timestamp).
+
+
+   .. py:attribute:: finish_time
+      :type:  float | None
+      :value: None
+
+
+      The task completion time (UNIX timestamp).
+
+
+   .. py:attribute:: duration
+      :type:  float | None
+      :value: None
+
+
+      Task duration in seconds.  Measured using :func:`time.perf_counter`, so it
+      may disagree slightly with the difference in start and finish times.
+
+
+   .. py:attribute:: cpu_time
+      :type:  float | None
+      :value: None
+
+
+      CPU time consumed in seconds.
+
+
+   .. py:attribute:: peak_memory
+      :type:  int | None
+      :value: None
+
+
+      Peak memory usage (max RSS) in bytes.  Only available on Unix; individual
+      task peak memory use is only reliable on Linux (MacOS will report the max
+      memory used since the process was started).
+
+
+   .. py:attribute:: peak_gpu_memory
+      :type:  int | None
+      :value: None
+
+
+      Peak PyTorch GPU memory usage in bytes.
+
+
+   .. py:attribute:: system_power
+      :type:  float | None
+
+      Estimated total system power consumption (in Joules).
+
+
+   .. py:attribute:: cpu_power
+      :type:  float | None
+      :value: None
+
+
+      Estimated CPU power consumption (in Joules).
+
+
+   .. py:attribute:: gpu_power
+      :type:  float | None
+      :value: None
+
+
+      Estimated GPU power consumption (in Joules).
+
+
+   .. py:attribute:: subtasks
+      :type:  Annotated[list[pydantic.SerializeAsAny[Task]], BeforeValidator(_dict_extract_values)]
+
+      This task's subtasks.
+
+
+   .. py:method:: current()
+      :staticmethod:
+
+
+      Get the currently-active task.
+
+
+
+   .. py:method:: root()
+      :staticmethod:
+
+
+      Get the root task.
+
+
+
+   .. py:method:: total_cpu()
+
+      Compute the total CPU time (including subprocesses).
+
+
+
+   .. py:property:: friendly_duration
+      :type: str | None
+
+
+
+   .. py:method:: save_to_file(path, monitor = True)
+
+      Save this task to a file, and re-save it when finished.
+
+
+
+   .. py:method:: start()
+
+      Start the task.
+
+
+
+   .. py:method:: finish(status = TaskStatus.FINISHED)
+
+      Finish the task.
+
+
+
+   .. py:method:: update()
+
+      Update the task's resource measurements and save the file (if one is set).
+
+
+
+   .. py:method:: monitor_refresh()
+
+      Refresh method called by the monitor backend.
+
+
+
+   .. py:method:: add_subtask(task)
+
+      Add or update a subtask.
+
+
+
+   .. py:method:: update_resources()
+
+      Update the resource measurements.  Returns the current measurement.
+
+      This method is called by :meth:`update`, with an exclusive lock held.
+
+
+
+   .. py:method:: __enter__()
+
+
+   .. py:method:: __exit__(exc_type, exc_value, traceback)
+
+
+   .. py:method:: __reduce__()
+
+
+   .. py:method:: __str__()
+
+
+.. py:function:: measure_power(scope, duration)
+
+
+Exported Aliases
+----------------
+
+.. py:function:: lenskit.logging.tasks.get_logger
+
+    Re-exported alias for :py:func:`lenskit.logging._proxy.get_logger`.
+
+.. py:function:: lenskit.logging.tasks.friendly_duration
+
+    Re-exported alias for :py:func:`lenskit.logging.formats.friendly_duration`.
+
+.. py:class:: lenskit.logging.tasks.ResourceMeasurement
+
+    Re-exported alias for :py:class:`lenskit.logging.resource.ResourceMeasurement`.
+
+.. py:function:: lenskit.logging.tasks.reset_linux_hwm
+
+    Re-exported alias for :py:func:`lenskit.logging.resource.reset_linux_hwm`.
+

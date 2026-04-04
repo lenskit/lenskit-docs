@@ -1,0 +1,186 @@
+lenskit.sklearn.nmf
+===================
+
+.. py:module:: lenskit.sklearn.nmf
+
+.. autoapi-nested-parse::
+
+   Nonnegative matrix factorization for implicit feedback.
+
+   This module contains a non-negative factorization implicit-feedback scorer built on
+   :func:`sklearn.decomposition.non_negative_factorization`.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.sklearn.nmf.NMFConfig
+   lenskit.sklearn.nmf.NMFScorer
+
+
+
+Module Contents
+---------------
+
+.. py:class:: NMFConfig
+   
+
+   Bases: :py:obj:`lenskit.config.common.EmbeddingSizeMixin`, :py:obj:`pydantic.BaseModel`
+
+
+   Configuration for :class:`NMFScorer`.
+   See the documentation for :func:`sklearn.decomposition.non_negative_factorization`
+   for the configuration options.
+
+
+
+   .. py:attribute:: beta_loss
+      :type:  Literal['frobenius', 'kullback-leibler', 'itakura-saito']
+      :value: 'frobenius'
+
+
+
+   .. py:attribute:: max_iter
+      :type:  pydantic.PositiveInt
+
+
+   .. py:attribute:: embedding_size
+      :type:  pydantic.PositiveInt | None
+
+      The dimension of user and item embeddings (number of latent features to
+      learn).
+
+
+   .. py:attribute:: alpha_W
+      :type:  float
+      :value: 0.0
+
+
+
+   .. py:attribute:: alpha_H
+      :type:  float | Literal['same']
+      :value: 'same'
+
+
+
+   .. py:attribute:: l1_ratio
+      :type:  float
+      :value: 0.0
+
+
+
+.. py:class:: NMFScorer(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ], :py:obj:`lenskit.training.Trainable`
+
+
+   Non-negative matrix factorization for implicit feedback using SciKit-Learn's
+   :func:`sklearn.decomposition.non_negative_factorization`. It computes the user
+   and item embedding matrices using an indicator matrix as the input.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: config
+      :type:  NMFConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: users
+      :type:  lenskit.data.vocab.Vocabulary
+
+
+   .. py:attribute:: items
+      :type:  lenskit.data.vocab.Vocabulary
+
+
+   .. py:attribute:: user_components
+      :type:  lenskit.data.types.NPMatrix
+
+
+   .. py:attribute:: item_components
+      :type:  lenskit.data.types.NPMatrix
+
+
+   .. py:method:: is_trained()
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options = TrainingOptions())
+
+      Train the model to learn its parameters from a training dataset.
+
+      :param data: The training dataset.
+      :param options: The training options.
+
+
+
+   .. py:method:: __call__(query, items)
+
+      Run the pipeline's operation and produce a result.  This is the key
+      method for components to implement.
+
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.sklearn.nmf.EmbeddingSizeMixin
+
+    Re-exported alias for :py:class:`lenskit.config.common.EmbeddingSizeMixin`.
+
+.. py:class:: lenskit.sklearn.nmf.Dataset
+
+    Re-exported alias for :py:class:`lenskit.data.Dataset`.
+
+.. py:class:: lenskit.sklearn.nmf.ItemList
+
+    Re-exported alias for :py:class:`lenskit.data.ItemList`.
+
+.. py:data:: lenskit.sklearn.nmf.QueryInput
+
+    Re-exported alias for :py:data:`lenskit.data.QueryInput`.
+
+.. py:class:: lenskit.sklearn.nmf.RecQuery
+
+    Re-exported alias for :py:class:`lenskit.data.RecQuery`.
+
+.. py:data:: lenskit.sklearn.nmf.NPMatrix
+
+    Re-exported alias for :py:data:`lenskit.data.types.NPMatrix`.
+
+.. py:class:: lenskit.sklearn.nmf.Vocabulary
+
+    Re-exported alias for :py:class:`lenskit.data.vocab.Vocabulary`.
+
+.. py:class:: lenskit.sklearn.nmf.Stopwatch
+
+    Re-exported alias for :py:class:`lenskit.logging.Stopwatch`.
+
+.. py:function:: lenskit.sklearn.nmf.get_logger
+
+    Re-exported alias for :py:func:`lenskit.logging.get_logger`.
+
+.. py:class:: lenskit.sklearn.nmf.Component
+
+    Re-exported alias for :py:class:`lenskit.pipeline.Component`.
+
+.. py:class:: lenskit.sklearn.nmf.Trainable
+
+    Re-exported alias for :py:class:`lenskit.training.Trainable`.
+
+.. py:class:: lenskit.sklearn.nmf.TrainingOptions
+
+    Re-exported alias for :py:class:`lenskit.training.TrainingOptions`.
+

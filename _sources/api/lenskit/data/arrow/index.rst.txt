@@ -1,0 +1,94 @@
+lenskit.data.arrow
+==================
+
+.. py:module:: lenskit.data.arrow
+
+.. autoapi-nested-parse::
+
+   Arryw utility functions.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.data.arrow.A
+   lenskit.data.arrow.Selector
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.data.arrow.get_indexer
+   lenskit.data.arrow.arrow_to_format
+   lenskit.data.arrow.arrow_slice
+   lenskit.data.arrow.arrow_take
+   lenskit.data.arrow.arrow_filter
+   lenskit.data.arrow.arrow_type
+   lenskit.data.arrow.explode_column
+
+
+
+Module Contents
+---------------
+
+.. py:data:: A
+
+.. py:type:: Selector
+   :canonical: Callable[[MTArray | A | None], A | None]
+
+
+.. py:function:: get_indexer(sel)
+
+   Get a selector that will apply the specified indexer.  This allows
+   one indexer to be applied to multiple arrays.
+
+
+.. py:function:: arrow_to_format(array, format)
+
+   Convert an Arrow array into another format.
+
+   :Stability: Internal
+
+
+.. py:function:: arrow_slice(sel: slice, array: lenskit.data.mtarray.MTArray | A) -> A
+                 arrow_slice(sel: slice, array: lenskit.data.mtarray.MTArray | A | None) -> A | None
+
+   Slice an Arrow array.
+
+
+.. py:function:: arrow_take(sel: pyarrow.Int32Array, array: lenskit.data.mtarray.MTArray | A) -> A
+                 arrow_take(sel: pyarrow.Int32Array, array: lenskit.data.mtarray.MTArray | A | None) -> A | None
+
+   Select from an Arrow array by integer indices.
+
+
+.. py:function:: arrow_filter(sel: pyarrow.BooleanArray, array: lenskit.data.mtarray.MTArray | A) -> A
+                 arrow_filter(sel: pyarrow.BooleanArray, array: lenskit.data.mtarray.MTArray | A | None) -> A | None
+
+   Select from an Arrow array by integer indices.
+
+
+.. py:function:: arrow_type(dtype)
+
+   Resolve a NumPy data type to an Arrow data type, assuming objects store
+   strings.
+
+
+.. py:function:: explode_column(tbl, column, *, out_col = None)
+
+   “Explode” a list column to yield one row per list element.
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.data.arrow.MTArray
+
+    Re-exported alias for :py:class:`lenskit.data.mtarray.MTArray`.
+

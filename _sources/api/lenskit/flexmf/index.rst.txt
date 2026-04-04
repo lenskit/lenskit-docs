@@ -1,0 +1,403 @@
+lenskit.flexmf
+==============
+
+.. py:module:: lenskit.flexmf
+
+.. autoapi-nested-parse::
+
+   Flexible PyTorch matrix factorization models for LensKit.
+
+   The components in this package implement several matrix factorization models for
+   LensKit, and also serve as an example for practical PyTorch recommender
+   training.
+
+   .. stability:: internal
+
+       FlexMF is provided as a preview release, and may change in the next months
+       as we gain more experience with it.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.flexmf.FlexMFConfigBase
+   lenskit.flexmf.FlexMFScorerBase
+   lenskit.flexmf.FlexMFExplicitConfig
+   lenskit.flexmf.FlexMFExplicitScorer
+   lenskit.flexmf.FlexMFImplicitConfig
+   lenskit.flexmf.FlexMFImplicitScorer
+
+
+
+Package Contents
+----------------
+
+.. py:class:: FlexMFConfigBase
+   :canonical: lenskit.flexmf._base.FlexMFConfigBase
+
+   Bases: :py:obj:`lenskit.config.common.EmbeddingSizeMixin`, :py:obj:`pydantic.BaseModel`
+
+
+   Common configuration for all FlexMF scoring components.
+
+   :Stability: Experimental
+
+
+   .. py:attribute:: embedding_size
+      :type:  pydantic.PositiveInt
+      :value: 64
+
+
+      The dimension of user and item embeddings (number of latent features to
+      learn).
+
+
+   .. py:attribute:: batch_size
+      :type:  int
+      :value: 8192
+
+
+      The training batch size.
+
+
+   .. py:attribute:: learning_rate
+      :type:  float
+      :value: 0.01
+
+
+      The learning rate for training.
+
+
+   .. py:attribute:: epochs
+      :type:  int
+      :value: 10
+
+
+      The number of training epochs.
+
+
+   .. py:attribute:: regularization
+      :type:  float
+      :value: 0.01
+
+
+      The regularization strength.
+
+      .. note::
+          The explicit-feedback model uses a different default strength.
+
+
+   .. py:attribute:: reg_method
+      :type:  Literal['AdamW', 'L2'] | None
+      :value: 'AdamW'
+
+
+      The regularization method to use.
+
+      With the default AdamW regularization, training will use the
+      :class:`~torch.optim.AdamW` optimizer with weight decay. With L2
+      regularization, training will use sparse gradients and the
+      :class:`torch.optim.SparseAdam` optimizer.
+
+      .. note::
+          The explicit-feedback model defaults this setting to ``"L2"``.
+
+      ``None``
+          Use no regularization.
+
+      ``"L2"``
+          Use L2 regularization on the parameters used in each training batch. The
+          strength is applied to the _mean_ norms in a batch, so that the
+          regularization term scale is not dependent on the batch size.
+
+      ``"AdamW"``
+          Use :class:`torch.optim.AdamW` with the specified regularization
+          strength.  This configuration does *not* use sparse gradients, but
+          training time is often comparable.
+
+      .. note::
+          Regularization values do not necessarily have the same range or meaning
+          for the different regularization methods.
+
+
+.. py:class:: FlexMFScorerBase(config = None, **kwargs)
+   :canonical: lenskit.flexmf._base.FlexMFScorerBase
+
+   Bases: :py:obj:`lenskit.training.UsesTrainer`, :py:obj:`lenskit.pipeline.Component`
+
+
+   Base class for the FlexMF scorers, providing common Torch support.
+
+   :Stability: Experimental
+
+
+   .. py:attribute:: config
+      :type:  FlexMFConfigBase
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: users
+      :type:  lenskit.data.Vocabulary
+
+
+   .. py:attribute:: items
+      :type:  lenskit.data.Vocabulary
+
+
+   .. py:attribute:: model
+      :type:  lenskit.flexmf._model.FlexMFModel
+
+
+   .. py:method:: to(device)
+
+      Move the model to a different device.
+
+
+
+   .. py:method:: __call__(query, items)
+
+      Generate item scores for a user.
+
+      Note that user and items are both user and item IDs, not positions.
+
+
+
+   .. py:method:: score_items(users, items)
+
+      Score for users and items, after resolivng them and limiting to known
+      users and items.
+
+
+
+.. py:class:: FlexMFExplicitConfig
+   :canonical: lenskit.flexmf._explicit.FlexMFExplicitConfig
+
+   Bases: :py:obj:`lenskit.flexmf._base.FlexMFConfigBase`
+
+
+   Configuration for :class:`FlexMFExplicitScorer`.  This class overrides
+   certain base class defaults for better explicit-feedback performance.
+
+   :Stability: Experimental
+
+
+   .. py:attribute:: regularization
+      :type:  float
+      :value: 0.1
+
+
+      The regularization strength.
+
+      .. note::
+          The explicit-feedback model uses a different default strength.
+
+
+   .. py:attribute:: reg_method
+      :type:  Literal['AdamW', 'L2'] | None
+      :value: 'L2'
+
+
+      The regularization method to use.
+
+      With the default AdamW regularization, training will use the
+      :class:`~torch.optim.AdamW` optimizer with weight decay. With L2
+      regularization, training will use sparse gradients and the
+      :class:`torch.optim.SparseAdam` optimizer.
+
+      .. note::
+          The explicit-feedback model defaults this setting to ``"L2"``.
+
+      ``None``
+          Use no regularization.
+
+      ``"L2"``
+          Use L2 regularization on the parameters used in each training batch. The
+          strength is applied to the _mean_ norms in a batch, so that the
+          regularization term scale is not dependent on the batch size.
+
+      ``"AdamW"``
+          Use :class:`torch.optim.AdamW` with the specified regularization
+          strength.  This configuration does *not* use sparse gradients, but
+          training time is often comparable.
+
+      .. note::
+          Regularization values do not necessarily have the same range or meaning
+          for the different regularization methods.
+
+
+.. py:class:: FlexMFExplicitScorer(config = None, **kwargs)
+   :canonical: lenskit.flexmf._explicit.FlexMFExplicitScorer
+
+   Bases: :py:obj:`lenskit.flexmf._base.FlexMFScorerBase`
+
+
+   Explicit-feedback rating prediction with FlexMF.  This realizes a biased
+   matrix factorization model (similar to :class:`lenskit.als.BiasedMF`)
+   trained with PyTorch.
+
+   :Stability: Experimental
+
+
+   .. py:attribute:: global_bias
+      :type:  float
+
+
+   .. py:attribute:: config
+      :type:  FlexMFExplicitConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:method:: create_trainer(data, options)
+
+      Create a model trainer to train this model.
+
+
+
+   .. py:method:: score_items(users, items)
+
+      Score for users and items, after resolivng them and limiting to known
+      users and items.
+
+
+
+.. py:class:: FlexMFImplicitConfig
+   :canonical: lenskit.flexmf._implicit.FlexMFImplicitConfig
+
+   Bases: :py:obj:`lenskit.flexmf._base.FlexMFConfigBase`
+
+
+   Configuration for :class:`FlexMFImplicitScorer`.  It inherits base model
+   options from :class:`FlexMFConfigBase`.
+
+   :Stability: Experimental
+
+
+   .. py:attribute:: preset
+      :type:  Literal['bpr', 'warp', 'lightgcn'] | None
+      :value: None
+
+
+      Select preset defaults to mimic a particular model's original presentation.
+
+
+   .. py:attribute:: loss
+      :type:  ImplicitLoss
+      :value: 'logistic'
+
+
+      The loss to use for model training.
+
+
+   .. py:attribute:: negative_strategy
+      :type:  NegativeStrategy | None
+      :value: None
+
+
+      The negative sampling strategy.  The default is ``"misranked"`` for WARP
+      loss and ``"uniform"`` for other losses.
+
+
+   .. py:attribute:: negative_count
+      :type:  pydantic.PositiveInt
+      :value: 1
+
+
+      The number of negative items to sample for each positive item in the
+      training data.  With BPR loss, the positive item is compared to each
+      negative item; with logistic loss, the positive item is treated once per
+      learning round, so this setting effectively makes the model learn on _n_
+      negatives per positive, rather than giving positive and negative examples
+      equal weight.
+
+
+   .. py:attribute:: positive_weight
+      :type:  pydantic.PositiveFloat
+      :value: 1.0
+
+
+      A weighting multiplier to apply to the positive item's loss, to adjust the
+      relative importance of positive and negative classifications.  Only applies
+      to logistic loss.
+
+
+   .. py:attribute:: user_bias
+      :type:  bool | None
+      :value: None
+
+
+      Whether to learn a user bias term.  If unspecified, the default depends on
+      the loss function (``False`` for pairwise and ``True`` for logistic).
+
+
+   .. py:attribute:: item_bias
+      :type:  bool
+      :value: True
+
+
+      Whether to learn an item bias term.
+
+
+   .. py:attribute:: convolution_layers
+      :type:  pydantic.NonNegativeInt
+      :value: 0
+
+
+      The number of LightGCN convolution layers to use.  0 (the default)
+      configures for standard matrix factorization.
+
+
+   .. py:method:: selected_negative_strategy()
+
+
+   .. py:method:: apply_preset(data)
+      :classmethod:
+
+
+
+   .. py:method:: check_strategies()
+
+
+.. py:class:: FlexMFImplicitScorer(config = None, **kwargs)
+   :canonical: lenskit.flexmf._implicit.FlexMFImplicitScorer
+
+   Bases: :py:obj:`lenskit.flexmf._base.FlexMFScorerBase`
+
+
+   Implicit-feedback rating prediction with FlexMF.  This is capable of
+   realizing multiple models, including:
+
+   - BPR-MF (Bayesian personalized ranking) :cite:p:`BPR` (with ``"pairwise"`` loss)
+   - Logistic matrix factorization :cite:p:`LogisticMF` (with ``"logistic"`` loss)
+
+   All use configurable negative sampling, including the sampling approach from WARP.
+
+   :Stability: Experimental
+
+
+   .. py:attribute:: config
+      :type:  FlexMFImplicitConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:method:: create_trainer(data, options)
+
+      Create a model trainer to train this model.
+
+
+
+

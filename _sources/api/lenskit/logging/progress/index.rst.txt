@@ -1,0 +1,95 @@
+lenskit.logging.progress
+========================
+
+.. py:module:: lenskit.logging.progress
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.logging.progress.Progress
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.logging.progress.item_progress
+   lenskit.logging.progress.set_progress_impl
+   lenskit.logging.progress.item_progress_handle
+   lenskit.logging.progress.pbh_update
+
+
+
+Package Contents
+----------------
+
+.. py:class:: Progress(*args, uuid = None, total = None, **kwargs)
+   :canonical: lenskit.logging.progress._base.Progress
+
+   Base class for progress reporting.  The default implementations do nothing.
+
+
+   .. py:attribute:: uuid
+      :type:  uuid.UUID
+
+
+   .. py:attribute:: total
+      :type:  int | float | None
+
+
+   .. py:method:: handle_message(update)
+      :classmethod:
+
+
+
+   .. py:method:: update(advance = 1, completed = None, total = None, **kwargs)
+
+      Update the progress bar.
+
+      :param advance: The amount to advance by.
+      :param completed: The number completed; this overrides ``advance``.
+      :param total: A new total, to update the progress bar total.
+
+
+
+   .. py:method:: finish()
+
+      Finish and clean up this progress bar.  If the progresss bar is used as
+      a context manager, this is automatically called on context exit.
+
+
+
+   .. py:method:: __enter__()
+
+
+   .. py:method:: __exit__(*args)
+
+
+.. py:function:: item_progress(label, total = None, fields = None)
+
+   Create a progress bar for distinct, counted items.
+
+   :param label: The progress bar label.
+   :param total: The total number of items.
+   :param fields: Additional fields to report with the progress bar (such as a current
+                  loss).  These are specified as a dictionary mapping field names to
+                  format strings (the pieces inside ``{...}`` in :meth:`str.format`),
+                  and the values come from extra kwargs to :meth:`Progress.update`;
+                  mapping to ``None`` use default ``str`` formatting.
+
+
+.. py:function:: set_progress_impl(name: Literal['rich', 'notebook', 'none'] | None) -> None
+                 set_progress_impl(backend: ProgressBackend, /) -> None
+
+   Set the progress bar implementation.
+
+
+.. py:function:: item_progress_handle(*args, **kwargs)
+
+.. py:function:: pbh_update(h, incr = 1)
+
+

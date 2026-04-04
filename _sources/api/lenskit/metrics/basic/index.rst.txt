@@ -1,0 +1,97 @@
+lenskit.metrics.basic
+=====================
+
+.. py:module:: lenskit.metrics.basic
+
+.. autoapi-nested-parse::
+
+   Basic set statistics.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.metrics.basic.ListLength
+   lenskit.metrics.basic.TestItemCount
+
+
+
+Module Contents
+---------------
+
+.. py:class:: ListLength
+   
+
+   Bases: :py:obj:`lenskit.metrics._base.ListMetric`
+
+
+   Report the length of the output (recommendation list or predictions).
+
+   :Stability: Caller
+
+
+   .. py:attribute:: label
+      :value: 'N'
+
+
+      The metric's default label in output.
+      The base implementation returns the class name by default.
+
+
+   .. py:method:: measure_list(recs, test)
+
+      Compute the metric value for a single result list.
+
+      Individual metric classes need to implement this method.
+
+
+
+   .. py:method:: summarize(values)
+
+      Summarize per-list metric values
+
+      :returns: A dictionary containing mean, median, and std.
+
+
+
+.. py:class:: TestItemCount
+   
+
+   Bases: :py:obj:`lenskit.metrics._base.Metric`
+
+
+   Report the number of test items.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: label
+      :value: 'TestItemCount'
+
+
+      The metric's default label in output.
+      The base implementation returns the class name by default.
+
+
+   .. py:method:: __call__(recs, test)
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.metrics.basic.ItemList
+
+    Re-exported alias for :py:class:`lenskit.data.items.ItemList`.
+
+.. py:class:: lenskit.metrics.basic.ListMetric
+
+    Re-exported alias for :py:class:`lenskit.metrics._base.ListMetric`.
+
+.. py:class:: lenskit.metrics.basic.Metric
+
+    Re-exported alias for :py:class:`lenskit.metrics._base.Metric`.
+

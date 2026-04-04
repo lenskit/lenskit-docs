@@ -1,0 +1,72 @@
+lenskit.splitting.temporal
+==========================
+
+.. py:module:: lenskit.splitting.temporal
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.splitting.temporal.split_global_time
+   lenskit.splitting.temporal.split_temporal_fraction
+
+
+
+Module Contents
+---------------
+
+.. py:function:: split_global_time(data: lenskit.data.Dataset, time: int | float | str | datetime.datetime, end: int | float | str | datetime.datetime | None = None, filter_test_users: bool | int | None = False) -> lenskit.splitting.split.TTSplit
+                 split_global_time(data: lenskit.data.Dataset, time: Sequence[int | float | str | datetime.datetime], end: int | float | str | datetime.datetime | None = None, filter_test_users: bool | int | None = False) -> list[lenskit.splitting.split.TTSplit]
+
+   Global temporal train-test split.  This splits a data set into train/test
+   pairs using a single global timestamp.  When given multiple timestamps, it
+   will return multiple splits, where split :math:`i` has training data from
+   before :math:`t_i` and testing data on or after :math:`t_i` and before
+   :math:`t_{i+1}` (the last split has no upper bound on the testing data).
+
+   :Stability: Caller
+
+   :param data: The dataset to split.
+   :param time: Time or sequence of times at which to split.  Strings must be in ISO
+                format.
+   :param end: A final cutoff time for the testing data.
+   :param filter_test_users: Limit test data to only have users who had item in the training data.
+
+   :returns: The data splits.
+
+
+.. py:function:: split_temporal_fraction(data, test_fraction, filter_test_users = False)
+
+   Do a global temporal split of a data set based on a test set size.
+
+   :param data: The dataset to split.
+   :param test_fraction: The fraction of the interactions to put in the testing data.
+   :param filter_test_users: Limit test data to only have users who had item in the training data.
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.splitting.temporal.Dataset
+
+    Re-exported alias for :py:class:`lenskit.data.Dataset`.
+
+.. py:class:: lenskit.splitting.temporal.DatasetBuilder
+
+    Re-exported alias for :py:class:`lenskit.data.DatasetBuilder`.
+
+.. py:class:: lenskit.splitting.temporal.ItemListCollection
+
+    Re-exported alias for :py:class:`lenskit.data.ItemListCollection`.
+
+.. py:function:: lenskit.splitting.temporal.get_logger
+
+    Re-exported alias for :py:func:`lenskit.logging.get_logger`.
+
+.. py:class:: lenskit.splitting.temporal.TTSplit
+
+    Re-exported alias for :py:class:`lenskit.splitting.split.TTSplit`.
+

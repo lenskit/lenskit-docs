@@ -1,0 +1,412 @@
+lenskit.data.relationships
+==========================
+
+.. py:module:: lenskit.data.relationships
+
+.. autoapi-nested-parse::
+
+   Relationship accessors for Dataset.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.data.relationships.RelationshipSet
+   lenskit.data.relationships.MatrixRelationshipSet
+
+
+
+Module Contents
+---------------
+
+.. py:class:: RelationshipSet(name, vocabularies, schema, table)
+   
+
+   Representation for a set of relationship records.  This is the class for
+   accessing general relationships, with arbitrarily many entity classes
+   involved and repeated relationships allowed.
+
+   For two-entity relationships without duplicates (including relationships
+   formed by coalescing repeated relationships or interactions),
+   :class:`MatrixRelationshipSet` extends this with additional capabilities.
+
+   Relationship sets can be pickled or serialized, and will not save the entire
+   dataset with them.  They are therefore safe to save as component elements
+   during training processes.
+
+   .. note::
+
+       Client code does not need to construct this class; obtain instances from
+       a dataset's :meth:`~lenskit.data.Dataset.relationships` or
+       :meth:`~lenskit.data.Dataset.interactions` method.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: name
+      :type:  str
+
+      The name of the relationship class for these relationships.
+
+
+   .. py:attribute:: schema
+      :type:  lenskit.data.schema.RelationshipSchema
+
+
+   .. py:method:: __getstate__()
+
+
+   .. py:method:: __setstate__(state)
+
+
+   .. py:property:: is_interaction
+      :type: bool
+
+
+      Query whether these relationships represent interactions.
+
+
+   .. py:property:: entities
+      :type: list[str]
+
+
+
+   .. py:property:: attribute_names
+      :type: list[str]
+
+
+
+   .. py:method:: item_lists()
+      :abstractmethod:
+
+
+      Get a view of this relationship set as an item list collection.
+
+      Currently only implemented for :class:`MatrixRelationshipSet`, call
+      :meth:`matrix` first.
+
+
+
+   .. py:method:: count()
+
+
+   .. py:method:: co_occurrences(entity: str, *, group: str | list[str] | None = None, order: str | None = None, include_self: bool = False, dense: Literal[True]) -> lenskit.data.types.NPMatrix[numpy.float32]
+                  co_occurrences(entity: str, *, group: str | list[str] | None = None, order: str | None = None, include_self: bool = False, dense: Literal[False] = False) -> scipy.sparse.coo_array
+
+      Count co-occurrences of the specified entity.  This is useful for
+      counting item co-occurrences for association rules and probabilties, but
+      also has other uses as well.
+
+      This method supports both **ordered** and **unordered** co-occurrences.
+      Unordered co-occurrences just count the number of times the two items
+      appear together, and the resulting matrix is symmetric.
+
+      For ordered co-occurrences, the interactions are ordered by the
+      attribute specified by ``order``, and the resulting matrix ``M`` may not
+      be symmetric.  ``M[i,j]`` counts the number of times item ``j`` has
+      appeared **after** item ``i``.  The order does not need to be global —
+      an attribute recording order *within* a group is sufficient.
+
+      If ``group`` is specified, it controls the grouping for counting
+      co-occurrences. For example, if a relationship connects the ``user``,
+      ``session``, and ``item`` classes, then:
+
+      - ``rs.co_occurrances("item")`` counts the number of times each pair of
+        items appear together in a session.
+      - ``rs.co_occurrances("item", group="user")`` counts the number of times
+        each pair of items were interacted with by the same user, regardless
+        of session.
+
+      :param entity: The name of the entity to count.
+      :param group: The names of grouping entity classes for counting
+                    co-occurrences. The default is to use all entities that are not
+                    being counted.
+      :param order: The name of an attribute to use for ordering interactions to
+                    compute sequential co-occurrences.
+      :param include_self: Include self co-occurrences (interaction counts on the diagonal
+                           of the co-occurrence matrix).
+      :param dense: Pass ``True`` to return a dense co-occurrence matrix.
+
+      :returns: A sparse matrix with the co-occurrence counts.
+
+
+
+   .. py:method:: arrow(*, attributes = None, ids=False)
+
+      Get these relationships and their attributes as a PyArrow table.
+
+      :param attributes: The attributes to select.
+      :param ids: If ``True``, include ID columns for the entities, instead of
+                  just the number columns.
+
+
+
+   .. py:method:: pandas(*, attributes = None, ids=False)
+
+      Get these relationship and their attributes as a PyArrow table.
+
+      :param attributes: The attributes to include in the resulting table.
+      :param ids: If ``True``, include ID columns for the entities, instead of
+                  just the number columns.
+
+
+
+   .. py:method:: matrix(*, row_entity = None, col_entity = None)
+
+      Convert this relationship set into a matrix, coalescing duplicate
+      observations.
+
+      .. versionchanged:: 2025.6
+
+          Removed the fixed defaults for ``row_entity`` and ``col_entity``.
+
+      :param row_entity: The specified row entity of the matrix.  Defaults to the first
+                         entity in the relationship's list of involved entities.
+      :param col_entity: The specified column entity of the matrix. Defaults to the last
+                         entity in the relationship's list of involved entities.
+
+
+
+.. py:class:: MatrixRelationshipSet(name, vocabularies, schema, table)
+   
+
+   Bases: :py:obj:`RelationshipSet`
+
+
+   Two-entity relationships without duplicates, accessible in matrix form.
+
+   .. note::
+
+       Client code does not need to construct this class; obtain instances from
+       a relationship set's :meth:`~RelationshipSet.matrix` method.
+
+
+   .. py:attribute:: row_type
+      :type:  str
+
+
+   .. py:attribute:: col_type
+      :type:  str
+
+
+   .. py:method:: __getstate__()
+
+
+   .. py:method:: __setstate__(state)
+
+
+   .. py:property:: row_vocabulary
+
+      The vocabulary for row entities.
+
+
+   .. py:property:: col_vocabulary
+
+      The vocabulary for column entities.
+
+
+   .. py:property:: n_rows
+
+
+   .. py:property:: n_cols
+      :type: int
+
+
+
+   .. py:method:: matrix(*, row_entity = None, col_entity = None)
+
+      Convert this relationship set into a matrix, coalescing duplicate
+      observations.
+
+      .. versionchanged:: 2025.6
+
+          Removed the fixed defaults for ``row_entity`` and ``col_entity``.
+
+      :param row_entity: The specified row entity of the matrix.  Defaults to the first
+                         entity in the relationship's list of involved entities.
+      :param col_entity: The specified column entity of the matrix. Defaults to the last
+                         entity in the relationship's list of involved entities.
+
+
+
+   .. py:method:: csr_structure(*, format: Literal['numpy'] = 'numpy') -> lenskit.data.matrix.CSRStructure
+                  csr_structure(*, format: Literal['arrow']) -> lenskit.data.matrix.SparseRowArray
+
+      Get the compressed sparse row structure of this relationship matrix.
+
+
+
+   .. py:method:: coo_structure()
+
+      Get the compressed sparse row structure of this relationship matrix.
+
+
+
+   .. py:method:: scipy(attribute: str | None = None, *, layout: Literal['coo'], legacy: Literal[True]) -> scipy.sparse.coo_matrix
+                  scipy(attribute: str | None = None, *, layout: Literal['coo'], legacy: Literal[False] = False) -> scipy.sparse.coo_array[Any, tuple[int, int]]
+                  scipy(attribute: str | None = None, *, layout: Literal['csr'] = 'csr', legacy: Literal[True]) -> scipy.sparse.csr_matrix
+                  scipy(attribute: str | None = None, *, layout: Literal['csr'] = 'csr', legacy: Literal[False] = False) -> scipy.sparse.csr_array[Any, tuple[int, int]]
+                  scipy(attribute: str | None = None, *, layout: lenskit.data.types.LAYOUT = 'csr', legacy: bool = False) -> scipy.sparse.sparray | scipy.sparse.spmatrix
+
+      Get this relationship matrix as a SciPy sparse matrix.
+
+      .. note::
+          If the selected attribute has missing values, they are *omitted* from the
+          returned matrix.
+
+      :param attribute: The attribute to return, or ``None`` to return an indicator-only
+                        sparse matrix (all observed values are 1).
+      :param layout: The matrix layout to return.
+
+      :returns: The sparse matrix.
+
+
+
+   .. py:method:: torch(attribute: str | None = None, *, layout: Literal['csr'] = 'csr') -> torch.Tensor
+                  torch(attribute: str | None = None, *, layout: Literal['coo']) -> torch.Tensor
+
+      Get this relationship matrix as a PyTorch sparse tensor.
+
+      .. note::
+          If the selected attribute has missing values, they are *omitted* from the
+          returned matrix.
+
+      :param attribute: The attribute to return, or ``None`` to return an indicator-only
+                        sparse matrix (all observed values are 1).
+      :param layout: The matrix layout to return.
+
+      :returns: The sparse matrix.
+
+
+
+   .. py:method:: sample_negatives(rows, *, weighting = 'uniform', n = None, verify = True, max_attempts = 10, rng = None)
+
+      Sample negative columns (columns with no observation recorded) for an
+      array of rows. On a normal interaction matrix, this samples negative
+      items for users.
+
+      :param rows: The row numbers.  Duplicates are allowed, and negative columns
+                   are sampled independently for each row. Must be a 1D array or
+                   tensor.
+      :param weighting: The weighting for sampled negatives; ``uniform`` samples them
+                        uniformly at random, while ``popularity`` samples them
+                        proportional to their popularity (number of occurrences).
+      :param n: The number of negatives to sample for each user.  If ``None``,
+                a single-dimensional vector is returned.
+      :param verify: Whether to verify that the negative items are actually negative.
+                     Unverified sampling is much faster but can return false
+                     negatives.
+      :param max_attempts: When verification is on, the maximum attempts before giving up
+                           and returning a possible false negative.
+      :param rng: A random number generator to use.
+
+
+
+   .. py:method:: row_table(id: lenskit.data.types.ID) -> pyarrow.Table | None
+                  row_table(*, number: int) -> pyarrow.Table
+
+      Get a single row of this interaction matrix as a table.
+
+
+
+   .. py:method:: row_items(id: lenskit.data.types.ID) -> lenskit.data.items.ItemList | None
+                  row_items(*, number: int) -> lenskit.data.items.ItemList
+
+      Get a single row of this interaction matrix as an item list.  Only valid
+      when the column entity class is ``item''.
+
+
+
+   .. py:method:: to_ilc()
+
+      Get the rows as an item list collection.
+
+      .. deprecated:: 2025.6
+
+          Deprecated alias for :meth:`item_lists`.
+
+
+
+   .. py:method:: item_lists()
+
+      Get the rows as an item list collection.
+
+
+
+   .. py:method:: row_stats()
+
+
+   .. py:method:: col_stats()
+
+
+
+Exported Aliases
+----------------
+
+.. py:exception:: lenskit.data.relationships.FieldError
+
+    Re-exported alias for :py:exc:`lenskit.diagnostics.FieldError`.
+
+.. py:function:: lenskit.data.relationships.get_logger
+
+    Re-exported alias for :py:func:`lenskit.logging.get_logger`.
+
+.. py:function:: lenskit.data.relationships.item_progress
+
+    Re-exported alias for :py:func:`lenskit.logging.item_progress`.
+
+.. py:function:: lenskit.data.relationships.random_generator
+
+    Re-exported alias for :py:func:`lenskit.random.random_generator`.
+
+.. py:class:: lenskit.data.relationships.ItemList
+
+    Re-exported alias for :py:class:`lenskit.data.items.ItemList`.
+
+.. py:class:: lenskit.data.relationships.COOStructure
+
+    Re-exported alias for :py:class:`lenskit.data.matrix.COOStructure`.
+
+.. py:class:: lenskit.data.relationships.CSRStructure
+
+    Re-exported alias for :py:class:`lenskit.data.matrix.CSRStructure`.
+
+.. py:class:: lenskit.data.relationships.SparseRowArray
+
+    Re-exported alias for :py:class:`lenskit.data.matrix.SparseRowArray`.
+
+.. py:function:: lenskit.data.relationships.fast_col_cooc
+
+    Re-exported alias for :py:func:`lenskit.data.matrix.fast_col_cooc`.
+
+.. py:class:: lenskit.data.relationships.RelationshipSchema
+
+    Re-exported alias for :py:class:`lenskit.data.schema.RelationshipSchema`.
+
+.. py:function:: lenskit.data.relationships.id_col_name
+
+    Re-exported alias for :py:func:`lenskit.data.schema.id_col_name`.
+
+.. py:function:: lenskit.data.relationships.num_col_name
+
+    Re-exported alias for :py:func:`lenskit.data.schema.num_col_name`.
+
+.. py:data:: lenskit.data.relationships.ID
+
+    Re-exported alias for :py:data:`lenskit.data.types.ID`.
+
+.. py:data:: lenskit.data.relationships.LAYOUT
+
+    Re-exported alias for :py:data:`lenskit.data.types.LAYOUT`.
+
+.. py:data:: lenskit.data.relationships.NPMatrix
+
+    Re-exported alias for :py:data:`lenskit.data.types.NPMatrix`.
+
+.. py:class:: lenskit.data.relationships.Vocabulary
+
+    Re-exported alias for :py:class:`lenskit.data.vocab.Vocabulary`.
+

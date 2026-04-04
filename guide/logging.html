@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit provides support code for logging and progress reporting. This code lives in the lenskit.logging package and provides several capabilities: Logger acquisition functions with useful defaults..." />
 <meta name="description" content="LensKit provides support code for logging and progress reporting. This code lives in the lenskit.logging package and provides several capabilities: Logger acquisition functions with useful defaults..." />
 
-    <title>Logging and Progress Reporting &#8212; LensKit 2026.0.0.dev437+g910766a9 documentation</title>
+    <title>Logging and Progress Reporting &#8212; LensKit 2026.0.0.dev453+gd4673acd documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=18c62455"></script>
+    <script src="../_static/documentation_options.js?v=d473ed34"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev437+g910766a9 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev437+g910766a9 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev453+gd4673acd documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev453+gd4673acd documentation - Home"/>
   
   
 </a></div>
@@ -562,7 +562,7 @@
   <section id="logging-and-progress-reporting">
 <h1>Logging and Progress Reporting<a class="headerlink" href="#logging-and-progress-reporting" title="Link to this heading">#</a></h1>
 <p>LensKit provides support code for logging and progress reporting.  This code
-lives in the <a class="reference internal" href="../api/lenskit.logging.html#module-lenskit.logging" title="lenskit.logging"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.logging</span></code></a> package and provides several
+lives in the <a class="reference internal" href="../api/lenskit/logging/index.html#module-lenskit.logging" title="lenskit.logging"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.logging</span></code></a> package and provides several
 capabilities:</p>
 <ul class="simple">
 <li><p>Logger acquisition functions with useful defaults.</p></li>
@@ -571,13 +571,13 @@ capabilities:</p>
 <li><p>Easy logging configuration for recommender scripts, supporting log files and
 verbosity options, along with environment variables for logging levels.</p></li>
 <li><p>Integration between <a class="reference external" href="https://www.structlog.org/en/stable/api.html#module-structlog" rel="noreferrer" target="_blank" title="(in structlog v25.5)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">structlog</span></code></a> and Python <a class="reference external" href="https://docs.python.org/3/library/logging.html#module-logging" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code></a>.</p></li>
-<li><p>Tracking resource consumption for recommender experiment tasks (via <a class="reference internal" href="../api/lenskit.logging.html#lenskit.logging.Task" title="lenskit.logging.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a>).</p></li>
+<li><p>Tracking resource consumption for recommender experiment tasks (via <code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code>).</p></li>
 <li><p>Collecting log output from subprocesses in process-based parallel computation.</p></li>
 </ul>
 <section id="logging-configuration">
 <h2>Logging Configuration<a class="headerlink" href="#logging-configuration" title="Link to this heading">#</a></h2>
 <p>When writing code that uses LensKit, such as experiment runners, the
-<a class="reference internal" href="../api/lenskit.logging.html#lenskit.logging.LoggingConfig" title="lenskit.logging.LoggingConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">LoggingConfig</span></code></a> class provides an easy way to set up logging for
+<code class="xref py py-class docutils literal notranslate"><span class="pre">LoggingConfig</span></code> class provides an easy way to set up logging for
 common command-line scenarios.  Common usage looks like this (where <code class="docutils literal notranslate"><span class="pre">options</span></code>
 is a variable of command-line options from <a class="reference external" href="https://docs.python.org/3/library/argparse.html#module-argparse" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code></a> or similar):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">lc</span> <span class="o">=</span> <span class="n">LoggingConfig</span><span class="p">()</span>
@@ -591,19 +591,19 @@ is a variable of command-line options from <a class="reference external" href="h
 <span class="n">lc</span><span class="o">.</span><span class="n">apply</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Calling <a class="reference internal" href="../api/lenskit.logging.html#lenskit.logging.LoggingConfig.apply" title="lenskit.logging.LoggingConfig.apply"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoggingConfig.apply()</span></code></a> configures both Python standard library
+<p>Calling <code class="xref py py-meth docutils literal notranslate"><span class="pre">LoggingConfig.apply()</span></code> configures both Python standard library
 <a class="reference external" href="https://docs.python.org/3/library/logging.html#module-logging" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code></a> and <a class="reference external" href="https://www.structlog.org/en/stable/api.html#module-structlog" rel="noreferrer" target="_blank" title="(in structlog v25.5)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">structlog</span></code></a> to log in a consistent format to <code class="docutils literal notranslate"><span class="pre">stderr</span></code>
 (and to the log file, if configured), sets up progress bars, routes Python
 warnings to the log system, and generally makes sure that LensKit and other code
 emitting logs (including your code) will send them to useful places.</p>
 <p>For setup with even less code, but less flexibility, you can use the
-<a class="reference internal" href="../api/lenskit.logging.html#lenskit.logging.basic_logging" title="lenskit.logging.basic_logging"><code class="xref py py-func docutils literal notranslate"><span class="pre">basic_logging()</span></code></a> function.</p>
+<code class="xref py py-func docutils literal notranslate"><span class="pre">basic_logging()</span></code> function.</p>
 <section id="environment-variables-and-defaults">
 <h3>Environment Variables and Defaults<a class="headerlink" href="#environment-variables-and-defaults" title="Link to this heading">#</a></h3>
-<p><a class="reference internal" href="../api/lenskit.logging.html#lenskit.logging.LoggingConfig.apply" title="lenskit.logging.LoggingConfig.apply"><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoggingConfig.apply()</span></code></a> looks for settings in the following places, in
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">LoggingConfig.apply()</span></code> looks for settings in the following places, in
 decreasing order of priority:</p>
 <ol class="arabic simple">
-<li><p>The explicitly-called methods (e.g. <a class="reference internal" href="../api/lenskit.logging.html#lenskit.logging.LoggingConfig.set_verbose" title="lenskit.logging.LoggingConfig.set_verbose"><code class="xref py py-meth docutils literal notranslate"><span class="pre">set_verbose()</span></code></a>).</p></li>
+<li><p>The explicitly-called methods (e.g. <code class="xref py py-meth docutils literal notranslate"><span class="pre">set_verbose()</span></code>).</p></li>
 <li><p>Environment variables (see below).</p></li>
 <li><p>Built-in default: print INFO and higher-level messages to the console.</p></li>
 </ol>
@@ -635,7 +635,7 @@ level; this allows you to send <code class="docutils literal notranslate"><span 
 <section id="emitting-log-messages">
 <h2>Emitting Log Messages<a class="headerlink" href="#emitting-log-messages" title="Link to this heading">#</a></h2>
 <p>When writing LensKit code that needs to emit log messages, use LensKit’s
-<a class="reference internal" href="../api/lenskit.logging.html#lenskit.logging.get_logger" title="lenskit.logging.get_logger"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_logger()</span></code></a> function.  This wraps Structopt’s
+<a class="reference internal" href="../api/lenskit/logging/index.html#lenskit.logging.get_logger" title="lenskit.logging.get_logger"><code class="xref py py-func docutils literal notranslate"><span class="pre">get_logger()</span></code></a> function.  This wraps Structopt’s
 <code class="docutils literal notranslate"><span class="pre">get_logger</span></code> in a proxy that has more useful LensKit defaults (only emitting
 warnings and errors when logging has not been configured).  The resulting logger
 can be used like any other Structlog or standard library logger.</p>
@@ -648,9 +648,9 @@ fine-grained logging messages.</p>
 <section id="progress-reporting">
 <h2>Progress Reporting<a class="headerlink" href="#progress-reporting" title="Link to this heading">#</a></h2>
 <p>LensKit provides a simple progress bar façade for reporting progress in batch
-inference, model training, etc.  See the <a class="reference internal" href="../api/lenskit.logging.progress.html#module-lenskit.logging.progress" title="lenskit.logging.progress"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.logging.progress</span></code></a> modules
+inference, model training, etc.  See the <a class="reference internal" href="../api/lenskit/logging/progress/index.html#module-lenskit.logging.progress" title="lenskit.logging.progress"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.logging.progress</span></code></a> modules
 for details, if you are implementing components from which you want to report
-progress.  The key entry point is to call <a class="reference internal" href="../api/lenskit.logging.html#lenskit.logging.item_progress" title="lenskit.logging.item_progress"><code class="xref py py-func docutils literal notranslate"><span class="pre">item_progress()</span></code></a> to create a
+progress.  The key entry point is to call <code class="xref py py-func docutils literal notranslate"><span class="pre">item_progress()</span></code> to create a
 progress bar.  LensKit automatically handles routing progress to the appropriate
 backend.</p>
 </section>
@@ -703,7 +703,7 @@ backend.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logging-configuration">Logging Configuration</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logging-configuration">Logging Configuration</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#environment-variables-and-defaults">Environment Variables and Defaults</a></li>
 </ul>
 </li>
@@ -752,7 +752,7 @@ backend.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev437+g910766a9.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev453+gd4673acd.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

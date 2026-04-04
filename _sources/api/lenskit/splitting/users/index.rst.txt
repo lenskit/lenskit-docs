@@ -1,0 +1,100 @@
+lenskit.splitting.users
+=======================
+
+.. py:module:: lenskit.splitting.users
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.splitting.users.crossfold_users
+   lenskit.splitting.users.sample_users
+
+
+
+Module Contents
+---------------
+
+.. py:function:: crossfold_users(data, partitions, method, *, test_only = False, rng = None)
+
+   Partition a dataset user-by-user for user-based cross-validation.
+
+   :Stability: Caller
+
+   :param data: The dataset to partition.
+   :param partitions: The number of partitions to produce.
+   :param method: The method for selecting test rows for each user.
+   :param test_only: If ``True``, returns splits with only testing data.
+   :param rng: The random number generator or seed (see :ref:`rng`).
+
+   Returns
+       The train-test pairs.
+
+
+.. py:function:: sample_users(data: lenskit.data.Dataset, size: int, method: lenskit.splitting.holdout.HoldoutMethod, *, repeats: int, disjoint: bool = True, test_only: bool = False, rng: lenskit.random.RNGInput = None) -> Iterator[lenskit.splitting.split.TTSplit]
+                 sample_users(data: lenskit.data.Dataset, size: int, method: lenskit.splitting.holdout.HoldoutMethod, *, disjoint: bool = True, rng: lenskit.random.RNGInput = None, test_only: bool = False, repeats: None = None) -> lenskit.splitting.split.TTSplit
+
+   Create train-test splits by sampling users.  When ``repeats`` is None,
+   returns a single train-test split; otherwise, it returns an iterator over
+   multiple splits. If ``repeats=1``, this function returns an iterator that
+   yields a single train-test pair.
+
+   :Stability: Caller
+
+   :param data: The data set to sample.
+   :param size: The sample size.
+   :param method: The method for obtaining user test ratings.
+   :param repeats: The number of samples to produce.
+   :param test_only: If ``True``, returns splits with empty training sets (useful when
+                     you just want to save the test data).
+   :param rng: The random number generator or seed (see :ref:`rng`).
+
+   :returns: The train-test pair(s).
+
+
+
+Exported Aliases
+----------------
+
+.. py:data:: lenskit.splitting.users.NPID
+
+    Re-exported alias for :py:data:`lenskit.data.NPID`.
+
+.. py:class:: lenskit.splitting.users.Dataset
+
+    Re-exported alias for :py:class:`lenskit.data.Dataset`.
+
+.. py:class:: lenskit.splitting.users.DatasetBuilder
+
+    Re-exported alias for :py:class:`lenskit.data.DatasetBuilder`.
+
+.. py:class:: lenskit.splitting.users.ItemListCollection
+
+    Re-exported alias for :py:class:`lenskit.data.ItemListCollection`.
+
+.. py:class:: lenskit.splitting.users.UserIDKey
+
+    Re-exported alias for :py:class:`lenskit.data.UserIDKey`.
+
+.. py:function:: lenskit.splitting.users.item_progress
+
+    Re-exported alias for :py:func:`lenskit.logging.item_progress`.
+
+.. py:data:: lenskit.splitting.users.RNGInput
+
+    Re-exported alias for :py:data:`lenskit.random.RNGInput`.
+
+.. py:function:: lenskit.splitting.users.random_generator
+
+    Re-exported alias for :py:func:`lenskit.random.random_generator`.
+
+.. py:class:: lenskit.splitting.users.HoldoutMethod
+
+    Re-exported alias for :py:class:`lenskit.splitting.holdout.HoldoutMethod`.
+
+.. py:class:: lenskit.splitting.users.TTSplit
+
+    Re-exported alias for :py:class:`lenskit.splitting.split.TTSplit`.
+

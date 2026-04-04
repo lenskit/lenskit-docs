@@ -1,0 +1,251 @@
+lenskit.knn.item
+================
+
+.. py:module:: lenskit.knn.item
+
+.. autoapi-nested-parse::
+
+   Item-based k-NN collaborative filtering.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.knn.item.ItemKNNConfig
+   lenskit.knn.item.ItemKNNScorer
+
+
+
+Module Contents
+---------------
+
+.. py:class:: ItemKNNConfig
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Configuration for :class:`ItemKNNScorer`.
+
+
+   .. py:attribute:: max_nbrs
+      :type:  pydantic.PositiveInt
+
+      The maximum number of neighbors for scoring each item.
+
+
+   .. py:attribute:: min_nbrs
+      :type:  pydantic.PositiveInt
+      :value: 1
+
+
+      The minimum number of neighbors for scoring each item.
+
+
+   .. py:attribute:: min_sim
+      :type:  pydantic.PositiveFloat
+      :value: 1e-06
+
+
+      Minimum similarity threshold for considering a neighbor.  Must be positive;
+      if less than the smallest 32-bit normal (:math:`1.175 \times 10^{-38}`), is
+      clamped to that value.
+
+
+   .. py:attribute:: save_nbrs
+      :type:  pydantic.PositiveInt | None
+      :value: None
+
+
+      The number of neighbors to save per item in the trained model (``None`` for
+      unlimited).
+
+
+   .. py:attribute:: feedback
+      :type:  lenskit.data.FeedbackType
+      :value: 'explicit'
+
+
+      The type of input data to use (explicit or implicit).  This affects data
+      pre-processing and aggregation.
+
+
+   .. py:attribute:: block_size
+      :type:  int
+      :value: 250
+
+
+      The block size for computing item similarity blocks in parallel.  Only
+      affects performance, not behavior.
+
+
+   .. py:method:: clamp_min_sim(sim)
+      :staticmethod:
+
+
+
+   .. py:property:: explicit
+      :type: bool
+
+
+      Query whether this is in explicit-feedback mode.
+
+
+.. py:class:: ItemKNNScorer(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ], :py:obj:`lenskit.training.Trainable`
+
+
+   Item-item nearest-neighbor collaborative filtering feedback. This item-item
+   implementation is based on the description of item-based CF by
+   :cite:t:`deshpande:iknn` and hard-codes several design decisions found to
+   work well in the previous Java-based LensKit code :cite:p:`lenskit-java`. In
+   explicit-feedback mode, its output is equivalent to that of the Java
+   version.
+
+   .. note::
+
+       This component must be used with queries containing the user's history,
+       either directly in the input or by wiring its query input to the output of a
+       user history component (e.g., :class:`~lenskit.basic.UserTrainingHistoryLookup`).
+
+   :Stability: Caller
+
+
+   .. py:attribute:: config
+      :type:  ItemKNNConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: items
+      :type:  lenskit.data.Vocabulary
+
+      Vocabulary of item IDs.
+
+
+   .. py:attribute:: item_means
+      :type:  numpy.ndarray[tuple[int], numpy.dtype[numpy.float32]] | None
+
+      Mean rating for each known item.
+
+
+   .. py:attribute:: item_counts
+      :type:  numpy.ndarray[tuple[int], numpy.dtype[numpy.int32]]
+
+      Number of saved neighbors for each item.
+
+
+   .. py:attribute:: sim_matrix
+      :type:  lenskit.data.matrix.SparseRowArray
+
+      Similarity matrix (sparse CSR tensor).
+
+
+   .. py:method:: is_trained()
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options = TrainingOptions())
+
+      Train a model.
+
+      The model-training process depends on ``save_nbrs`` and ``min_sim``, but *not* on other
+      algorithm parameters.
+
+      :param ratings: (user,item,rating) data for computing item similarities.
+
+
+
+   .. py:method:: __call__(query, items)
+
+      Run the pipeline's operation and produce a result.  This is the key
+      method for components to implement.
+
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.knn.item.Dataset
+
+    Re-exported alias for :py:class:`lenskit.data.Dataset`.
+
+.. py:data:: lenskit.knn.item.FeedbackType
+
+    Re-exported alias for :py:data:`lenskit.data.FeedbackType`.
+
+.. py:class:: lenskit.knn.item.ItemList
+
+    Re-exported alias for :py:class:`lenskit.data.ItemList`.
+
+.. py:data:: lenskit.knn.item.QueryInput
+
+    Re-exported alias for :py:data:`lenskit.data.QueryInput`.
+
+.. py:class:: lenskit.knn.item.RecQuery
+
+    Re-exported alias for :py:class:`lenskit.data.RecQuery`.
+
+.. py:class:: lenskit.knn.item.Vocabulary
+
+    Re-exported alias for :py:class:`lenskit.data.Vocabulary`.
+
+.. py:class:: lenskit.knn.item.SparseRowArray
+
+    Re-exported alias for :py:class:`lenskit.data.matrix.SparseRowArray`.
+
+.. py:exception:: lenskit.knn.item.DataWarning
+
+    Re-exported alias for :py:exc:`lenskit.diagnostics.DataWarning`.
+
+.. py:class:: lenskit.knn.item.Stopwatch
+
+    Re-exported alias for :py:class:`lenskit.logging.Stopwatch`.
+
+.. py:function:: lenskit.knn.item.get_logger
+
+    Re-exported alias for :py:func:`lenskit.logging.get_logger`.
+
+.. py:function:: lenskit.knn.item.item_progress
+
+    Re-exported alias for :py:func:`lenskit.logging.item_progress`.
+
+.. py:function:: lenskit.knn.item.trace
+
+    Re-exported alias for :py:func:`lenskit.logging.trace`.
+
+.. py:function:: lenskit.knn.item.cur_memory
+
+    Re-exported alias for :py:func:`lenskit.logging.resource.cur_memory`.
+
+.. py:function:: lenskit.knn.item.max_memory
+
+    Re-exported alias for :py:func:`lenskit.logging.resource.max_memory`.
+
+.. py:function:: lenskit.knn.item.ensure_parallel_init
+
+    Re-exported alias for :py:func:`lenskit.parallel.ensure_parallel_init`.
+
+.. py:class:: lenskit.knn.item.Component
+
+    Re-exported alias for :py:class:`lenskit.pipeline.Component`.
+
+.. py:class:: lenskit.knn.item.Trainable
+
+    Re-exported alias for :py:class:`lenskit.training.Trainable`.
+
+.. py:class:: lenskit.knn.item.TrainingOptions
+
+    Re-exported alias for :py:class:`lenskit.training.TrainingOptions`.
+

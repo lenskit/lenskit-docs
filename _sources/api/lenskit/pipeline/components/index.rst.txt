@@ -1,0 +1,277 @@
+lenskit.pipeline.components
+===========================
+
+.. py:module:: lenskit.pipeline.components
+
+.. autoapi-nested-parse::
+
+   Definition of the component interfaces.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.pipeline.components.P
+   lenskit.pipeline.components.T
+   lenskit.pipeline.components.CFG
+   lenskit.pipeline.components.CArgs
+   lenskit.pipeline.components.COut
+   lenskit.pipeline.components.PipelineFunction
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.pipeline.components.ComponentInput
+   lenskit.pipeline.components.ComponentConstructor
+   lenskit.pipeline.components.Component
+   lenskit.pipeline.components.PlaceholderConfig
+   lenskit.pipeline.components.Placeholder
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.pipeline.components.component_inputs
+   lenskit.pipeline.components.component_return_type
+   lenskit.pipeline.components.fallback_on_none
+
+
+
+Module Contents
+---------------
+
+.. py:data:: P
+
+.. py:data:: T
+
+.. py:data:: CFG
+
+.. py:data:: CArgs
+
+   Argument type for a component.  It is difficult to actually specify this, but
+   using this default parameter spec allows :class:`Component` subclasses to
+   typecheck by declaring the base class :meth:`~Component.__call__` to have
+   unknown parameters.
+
+.. py:data:: COut
+
+   Return type for a component.
+
+.. py:type:: PipelineFunction
+   :canonical: Callable[..., COut]
+
+
+   Pure-function interface for pipeline functions.
+
+.. py:class:: ComponentInput
+   
+
+   Representation of a component input slot.
+
+
+   .. py:attribute:: name
+      :type:  str
+
+
+   .. py:attribute:: type
+      :type:  ComponentInput.type | None
+      :value: None
+
+
+
+   .. py:attribute:: is_lazy
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: accepts_none
+      :type:  bool
+      :value: False
+
+
+
+   .. py:attribute:: has_default
+      :type:  bool
+      :value: False
+
+
+
+.. py:class:: ComponentConstructor
+   
+
+   Bases: :py:obj:`Protocol`, :py:obj:`Generic`\ [\ :py:obj:`CFG`\ , :py:obj:`COut`\ ]
+
+
+   Protocol for component constructors.
+
+
+   .. py:method:: __call__(config = None)
+
+
+   .. py:method:: config_class()
+
+
+   .. py:method:: validate_config(data = None)
+
+
+.. py:class:: Component(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`abc.ABC`, :py:obj:`Generic`\ [\ :py:obj:`COut`\ , :py:obj:`CArgs`\ ]
+
+
+   Base class for pipeline component objects.  Any component that is not just a
+   function should extend this class.
+
+   Pipeline components support configuration (e.g., hyperparameters or random
+   seeds) through Pydantic models or Python dataclasses; see
+   :ref:`component-config` for further details.  If the pipeline's
+   configuration class is ``C``, it has the following:
+
+   1. The configuration is exposed through an instance variable ``config``.
+   2. The constructor accepts the configuration object as its first parameter,
+      also named ``config``, and saves this in the member variable.
+
+   The base class constructor handles both of these, so long as you declare the
+   type of the ``config`` member::
+
+       class MyComponent(Component):
+           config: MyComponentConfig
+
+           ...
+
+   If you do not declare a ``config`` attribute, the base class will assume the
+   pipeline uses no configuration.
+
+   To work as components, derived classes also need to implement a ``__call__``
+   method to perform their operations.
+
+   :param config: The configuration object.  If ``None``, the configuration class will
+                  be instantiated with ``kwargs``.
+
+   :Stability: Full
+
+
+   .. py:attribute:: config
+      :type:  Any
+      :value: None
+
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:method:: __init_subclass__(**kwargs)
+      :classmethod:
+
+
+
+   .. py:method:: config_class(return_any = False)
+      :classmethod:
+
+
+
+   .. py:method:: dump_config()
+
+      Dump the configuration to JSON-serializable format.
+
+
+
+   .. py:method:: validate_config(data = None)
+      :classmethod:
+
+
+      Validate and return a configuration object for this component.
+
+
+
+   .. py:method:: __call__(*args, **kwargs)
+      :abstractmethod:
+
+
+      Run the pipeline's operation and produce a result.  This is the key
+      method for components to implement.
+
+
+
+   .. py:method:: __repr__()
+
+
+.. py:class:: PlaceholderConfig
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Configuration for the placeholder component.
+
+
+.. py:class:: Placeholder(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`Component`\ [\ :py:obj:`Any`\ ]
+
+
+   Simple no-op component to use as a placeholder in partial pipelines.
+
+
+   .. py:attribute:: config
+      :type:  PlaceholderConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:method:: __call__(**kwargs)
+      :abstractmethod:
+
+
+      Run the pipeline's operation and produce a result.  This is the key
+      method for components to implement.
+
+
+
+.. py:function:: component_inputs(component, *, warn_on_missing = True, _warn_level = 1)
+
+.. py:function:: component_return_type(component)
+
+.. py:function:: fallback_on_none(primary, fallback)
+
+   Fallback to a second component if the primary input is `None`.
+
+   :Stability: Caller
+
+
+
+Exported Aliases
+----------------
+
+.. py:exception:: lenskit.pipeline.components.PipelineWarning
+
+    Re-exported alias for :py:exc:`lenskit.diagnostics.PipelineWarning`.
+
+.. py:class:: lenskit.pipeline.components.Lazy
+
+    Re-exported alias for :py:class:`lenskit.pipeline._types.Lazy`.
+
+.. py:exception:: lenskit.pipeline.components.TypecheckWarning
+
+    Re-exported alias for :py:exc:`lenskit.pipeline._types.TypecheckWarning`.
+
+.. py:function:: lenskit.pipeline.components.is_compatible_data
+
+    Re-exported alias for :py:func:`lenskit.pipeline._types.is_compatible_data`.
+

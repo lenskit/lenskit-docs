@@ -1,0 +1,111 @@
+lenskit.logging.resource
+========================
+
+.. py:module:: lenskit.logging.resource
+
+.. autoapi-nested-parse::
+
+   Measure resource consumption.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.logging.resource.ResourceMeasurement
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.logging.resource.reset_linux_hwm
+   lenskit.logging.resource.max_memory
+   lenskit.logging.resource.cur_memory
+
+
+
+Module Contents
+---------------
+
+.. py:class:: ResourceMeasurement
+   
+
+   Single measurement of resources.  Two measurements can be subtracted to
+   compute the time resources consumed in an interval (memory resources are
+   left unchanged).
+
+   :Stability: Internal
+
+
+   .. py:attribute:: wall_time
+      :type:  float
+
+
+   .. py:attribute:: perf_time
+      :type:  float
+
+
+   .. py:attribute:: user_time
+      :type:  float
+
+
+   .. py:attribute:: system_time
+      :type:  float
+
+
+   .. py:attribute:: max_rss
+      :type:  int | None
+      :value: None
+
+
+      Maximum RSS usage (in bytes).
+
+
+   .. py:attribute:: max_gpu
+      :type:  int | None
+      :value: None
+
+
+
+   .. py:method:: current()
+      :classmethod:
+
+
+      Get the current resource measurements.
+
+
+
+   .. py:property:: cpu_time
+      :type: float
+
+
+      Total CPU time (user + system).
+
+
+   .. py:method:: __sub__(other)
+
+
+.. py:function:: reset_linux_hwm()
+
+.. py:function:: max_memory()
+
+   Get the maximum memory use for this process
+
+
+.. py:function:: cur_memory()
+
+   Get the current memory use for this process
+
+
+
+Exported Aliases
+----------------
+
+.. py:function:: lenskit.logging.resource.get_logger
+
+    Re-exported alias for :py:func:`lenskit.logging._proxy.get_logger`.
+

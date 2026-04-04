@@ -1,0 +1,270 @@
+lenskit.batch
+=============
+
+.. py:module:: lenskit.batch
+
+.. autoapi-nested-parse::
+
+   Batch-run recommendation pipelines for evaluation.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.batch.BatchResults
+   lenskit.batch.BatchPipelineRunner
+   lenskit.batch.InvocationSpec
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.batch.predict
+   lenskit.batch.recommend
+
+
+
+Package Contents
+----------------
+
+.. py:class:: BatchResults(key)
+   :canonical: lenskit.batch._results.BatchResults
+
+   Results from a batch recommendation run.  Results consist of the outputs of
+   various pipeline components for each of the test users.  Results may be
+   ``None``, if the pipeline produced no output for that query.
+
+   :Stability: Caller
+
+
+   .. py:property:: outputs
+      :type: list[str]
+
+
+      Get the list of output names in these results.
+
+
+   .. py:method:: output(name)
+
+      Get the item lists for a particular output component.
+
+      :param name: The output name. This may or may not be the same as the
+                   component name.
+
+
+
+   .. py:method:: add_result(name, key, result)
+
+      Add a single result for one of the outputs.
+
+      :param name: The output name in which to save this result.
+      :param user: The user identifier for this result.
+      :param result: The result object to save.
+
+
+
+.. py:class:: BatchPipelineRunner(*, n_jobs = None, use_ray = None, profiler = None, batch_size = None)
+   :canonical: lenskit.batch._runner.BatchPipelineRunner
+
+   Apply a pipeline to a collection of test users.
+
+   :Stability: Caller
+
+   Argss:
+       pipeline:
+           The pipeline to evaluate.
+       n_jobs:
+           The number of parallel threads to use, or ``None`` for default
+           defined by LensKit configuration and environment variables (see
+           :ref:`parallel-config`).
+       use_ray:
+           Use Ray instead of threads to parallelize batch inference,
+           overriding any option set in an environment variable or
+           :file:`lenskit.toml`.
+       batch_size:
+           The batch size for multiprocess execution.  If ``None``, a batch
+           size based on the number of inputs is used, with a maximum batch
+           size of 1000.
+
+
+   .. py:attribute:: n_jobs
+      :type:  int
+
+
+   .. py:attribute:: use_ray
+      :type:  bool
+
+
+   .. py:attribute:: batch_size
+      :type:  int | None
+      :value: None
+
+
+
+   .. py:attribute:: profiler
+      :type:  lenskit.pipeline.PipelineProfiler | None
+
+
+   .. py:attribute:: invocations
+      :type:  list[InvocationSpec]
+
+
+   .. py:method:: add_invocation(inv)
+
+
+   .. py:method:: score(component = 'scorer', *, output = 'scores')
+
+      Request the batch run to generate test item scores.
+
+      :param component: The name of the rating predictor component to run.
+      :param output: The name of the results in the output dictionary.
+
+
+
+   .. py:method:: predict(component = 'rating-predictor', *, output = 'predictions')
+
+      Request the batch run to generate test item rating predictions.  It is identical
+      to :meth:`score` but with different defaults.
+
+      :param component: The name of the rating predictor component to run.
+      :param output: The name of the results in the output dictionary.
+
+
+
+   .. py:method:: recommend(component = 'recommender', *, output = 'recommendations', **extra)
+
+      Request the batch run to generate recomendations.
+
+      :param component: The name of the recommender component to run.
+      :param output: The name of the results in the output dictionary.
+      :param extra: Extra inputs to the recommender. A common option is ``n``, the
+                    number of recommendations to return (a default may be baked into
+                    the pipeline).
+
+
+
+   .. py:method:: run(pipeline: lenskit.pipeline.Pipeline, queries: collections.abc.Iterable[lenskit.data.RecQuery] | collections.abc.Iterable[tuple[lenskit.data.RecQuery, lenskit.data.ItemList]] | collections.abc.Iterable[lenskit.data.ID | lenskit.data.GenericKey] | lenskit.data.ItemListCollection[lenskit.data.GenericKey] | Mapping[lenskit.data.ID, lenskit.data.ItemList] | pandas.DataFrame) -> lenskit.batch._results.BatchResults
+                  run(pipeline: lenskit.pipeline.Pipeline, *, test_data: collections.abc.Iterable[lenskit.data.ID | lenskit.data.GenericKey] | lenskit.data.ItemListCollection[lenskit.data.GenericKey] | Mapping[lenskit.data.ID, lenskit.data.ItemList] | pandas.DataFrame) -> lenskit.batch._results.BatchResults
+
+      Run the pipeline and return its results.
+
+      .. note::
+
+          The runner does **not** guarantee that results are in the same order
+          as the original inputs.
+
+      :param pipeline: The pipeline to run.
+      :param queries: The collection of test queries use.  See :ref:`batch-queries`
+                      for details on the various input formats.
+
+      :returns: The results, as a nested dictionary.  The outer dictionary maps
+                component output names to inner dictionaries of result data.
+
+
+
+.. py:class:: InvocationSpec
+   :canonical: lenskit.batch._runner.InvocationSpec
+
+   Specification for a single pipeline invocation, to record one or more
+   pipeline component outputs for a test user.
+
+
+   .. py:attribute:: name
+      :type:  str
+
+      A name for this invocation.
+
+
+   .. py:attribute:: components
+      :type:  dict[str, str]
+
+      The names of pipeline components to measure and return, mapped to their output names.
+
+
+   .. py:attribute:: items
+      :type:  ItemSource
+      :value: None
+
+
+      The target or candidate items (if any) to provide to the recommender.
+
+
+   .. py:attribute:: extra_inputs
+      :type:  dict[str, Any]
+
+      Additional inputs to pass to the pipeline.
+
+
+.. py:function:: predict(pipeline, test, *, n_jobs = None, use_ray = None)
+
+   Convenience function to batch-generate rating predictions (or other per-item
+   scores) from a pipeline.  This is a batch version of
+   :func:`lenskit.predict`, and is a convenience wrapper around using a
+   :meth:`BatchPipelineRunner` to generate predictions.
+
+   .. note::
+
+       If ``test`` is just a sequence of IDs, this method will still work, but
+       it will score _all candidate items_ for each of the IDs.
+
+   :Stability: Caller
+
+
+.. py:function:: recommend(pipeline, queries, n = None, *, n_jobs = None, use_ray = None, profiler = None, users=None)
+
+   Convenience function to batch-generate recommendations from a pipeline. This
+   is a batch version of :func:`lenskit.recommend`, and is a convenience
+   wrapper around using a :meth:`BatchPipelineRunner` to generate
+   recommendations.
+
+   .. seealso::
+
+       :meth:`BatchPipelineRunner.run` for details on the arguments, and
+       :ref:`batch-queries` for details on the valid inputs for ``queries``.
+
+   :param queries: The request queries.
+
+   :Stability: Caller
+
+
+
+Exported Aliases
+----------------
+
+.. py:data:: lenskit.batch.ID
+
+    Re-exported alias for :py:data:`lenskit.data.ID`.
+
+.. py:data:: lenskit.batch.GenericKey
+
+    Re-exported alias for :py:data:`lenskit.data.GenericKey`.
+
+.. py:class:: lenskit.batch.ItemList
+
+    Re-exported alias for :py:class:`lenskit.data.ItemList`.
+
+.. py:class:: lenskit.batch.ItemListCollection
+
+    Re-exported alias for :py:class:`lenskit.data.ItemListCollection`.
+
+.. py:class:: lenskit.batch.RecQuery
+
+    Re-exported alias for :py:class:`lenskit.data.RecQuery`.
+
+.. py:class:: lenskit.batch.UserIDKey
+
+    Re-exported alias for :py:class:`lenskit.data.UserIDKey`.
+
+.. py:class:: lenskit.batch.Pipeline
+
+    Re-exported alias for :py:class:`lenskit.pipeline.Pipeline`.
+
+.. py:class:: lenskit.batch.PipelineProfiler
+
+    Re-exported alias for :py:class:`lenskit.pipeline.PipelineProfiler`.
+

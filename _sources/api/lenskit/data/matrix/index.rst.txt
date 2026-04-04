@@ -1,0 +1,440 @@
+lenskit.data.matrix
+===================
+
+.. py:module:: lenskit.data.matrix
+
+.. autoapi-nested-parse::
+
+   Matrix layouts.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.data.matrix.t
+   lenskit.data.matrix.M
+   lenskit.data.matrix.SPARSE_IDX_EXT_NAME
+   lenskit.data.matrix.SPARSE_IDX_LIST_EXT_NAME
+   lenskit.data.matrix.SPARSE_ROW_EXT_NAME
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.data.matrix.CSRStructure
+   lenskit.data.matrix.COOStructure
+   lenskit.data.matrix.SparseIndexType
+   lenskit.data.matrix.SparseIndexListType
+   lenskit.data.matrix.SparseRowType
+   lenskit.data.matrix.SparseRowArray
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.data.matrix.fast_col_cooc
+   lenskit.data.matrix.normalize_matrix
+
+
+
+Module Contents
+---------------
+
+.. py:data:: t
+
+.. py:data:: M
+
+.. py:data:: SPARSE_IDX_EXT_NAME
+   :value: 'lenskit.sparse_index'
+
+
+.. py:data:: SPARSE_IDX_LIST_EXT_NAME
+   :value: 'lenskit.sparse_index_list'
+
+
+.. py:data:: SPARSE_ROW_EXT_NAME
+   :value: 'lenskit.sparse_row'
+
+
+.. py:class:: CSRStructure
+   
+
+   Bases: :py:obj:`NamedTuple`
+
+
+   Representation of the compressed sparse row structure of a sparse matrix,
+   without any data values.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: rowptrs
+      :type:  numpy.ndarray
+
+
+   .. py:attribute:: colinds
+      :type:  numpy.ndarray
+
+
+   .. py:attribute:: shape
+      :type:  tuple[int, int]
+
+
+   .. py:property:: nrows
+
+
+   .. py:property:: ncols
+
+
+   .. py:property:: nnz
+
+
+   .. py:property:: row_nnzs
+      :type: lenskit.data.types.NPVector[numpy.int32]
+
+
+      Array of row sizes (number of nonzeros in each row).
+
+
+   .. py:method:: extent(row)
+
+
+   .. py:method:: row_cs(row)
+
+
+.. py:class:: COOStructure
+   
+
+   Bases: :py:obj:`NamedTuple`
+
+
+   Representation of the coordinate structure of a sparse matrix, without any
+   data values.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: row_numbers
+      :type:  numpy.ndarray
+
+
+   .. py:attribute:: col_numbers
+      :type:  numpy.ndarray
+
+
+   .. py:attribute:: shape
+      :type:  tuple[int, int]
+
+
+   .. py:property:: nrows
+
+
+   .. py:property:: ncols
+
+
+   .. py:property:: nnz
+
+
+.. py:class:: SparseIndexType(dimension)
+   
+
+   Bases: :py:obj:`pyarrow.ExtensionType`
+
+
+   Data type for the index field of a sparse row.  Indexes are just stored as
+   ``int32``s; the extension type attaches the row's dimensionality to the index
+   field (making it easier to pass it to/from Rust, since we often pass arrays
+   and not entire fields).
+
+   .. stability:: internal
+
+
+   .. py:attribute:: dimension
+      :type:  int
+
+
+   .. py:method:: check_dimension(expected)
+
+      Check that this index type has the expected dimension.
+
+      :returns: The dimension of the index type.
+
+      :raises ValueError: If the type's dimension does not match the expected dimension.
+
+
+
+   .. py:method:: __arrow_ext_serialize__()
+
+
+   .. py:method:: __arrow_ext_deserialize__(storage_type, serialized)
+      :classmethod:
+
+
+
+.. py:class:: SparseIndexListType(dimension, large = False)
+   
+
+   Bases: :py:obj:`pyarrow.ExtensionType`
+
+
+   Sparse index lists.  These are the row type for structure-only sparse
+   matrices.
+
+
+   .. py:attribute:: value_type
+      :type:  None
+      :value: None
+
+
+
+   .. py:attribute:: index_type
+      :type:  SparseIndexType
+
+
+   .. py:method:: from_type(data_type, dimension = None)
+      :classmethod:
+
+
+      Create a sparse index list type from an Arrow data type, handling legacy struct
+      layouts without the extension types.
+
+      :param data_type: The Arrow data type to interpret as a row type.
+      :param dimension: The row dimension, if known from an external source.  If
+                        provided and the data type also includes the dimensionality,
+                        both dimensions must match.
+
+      :raises TypeError: If the data type is not a valid sparse row type.
+      :raises ValueError: If there is another error, such as mismatched dimensions.
+
+
+
+   .. py:property:: dimension
+      :type: int
+
+
+
+   .. py:method:: __arrow_ext_serialize__()
+
+
+   .. py:method:: __arrow_ext_deserialize__(storage_type, serialized)
+      :classmethod:
+
+
+
+   .. py:method:: __arrow_ext_class__()
+
+
+.. py:class:: SparseRowType(dimension, value_type = pa.float32(), large = False)
+   
+
+   Bases: :py:obj:`pyarrow.ExtensionType`
+
+
+   Data type for sparse rows stored in Arrow.  Sparse rows are stored as lists
+   of structs with ``index`` and ``column`` fields.
+
+   .. stability:: internal
+
+
+   .. py:attribute:: value_type
+      :type:  pyarrow.DataType | None
+
+
+   .. py:attribute:: index_type
+      :type:  SparseIndexType
+
+
+   .. py:method:: from_type(data_type, dimension = None)
+      :classmethod:
+
+
+      Create a sparse row type from an Arrow data type, handling legacy struct
+      layouts without the extension types.
+
+      :param data_type: The Arrow data type to interpret as a row type.
+      :param dimension: The row dimension, if known from an external source.  If
+                        provided and the data type also includes the dimensionality,
+                        both dimensions must match.
+
+      :raises TypeError: If the data type is not a valid sparse row type.
+      :raises ValueError: If there is another error, such as mismatched dimensions.
+
+
+
+   .. py:property:: dimension
+      :type: int
+
+
+
+   .. py:method:: __arrow_ext_serialize__()
+
+
+   .. py:method:: __arrow_ext_deserialize__(storage_type, serialized)
+      :classmethod:
+
+
+
+   .. py:method:: __arrow_ext_class__()
+
+
+.. py:class:: SparseRowArray
+   
+
+   Bases: :py:obj:`pyarrow.ExtensionArray`
+
+
+   An array of sparse rows (a compressed sparse row matrix).
+
+   .. stability:: internal
+
+
+   .. py:attribute:: type
+      :type:  SparseRowType | SparseIndexListType
+
+
+   .. py:method:: from_arrays(offsets, indices, values = None, *, shape = None)
+      :classmethod:
+
+
+
+   .. py:method:: from_array(array, dimension = None)
+      :classmethod:
+
+
+      Interpret an Arrow array as a sparse row array, if possible.  Handles
+      legacy layouts without the extension types.
+
+      :param array: The array to convert.
+      :param dimension: The dimensionality of the sparse rows, if known from an external source.
+
+
+
+   .. py:method:: from_scipy(matrix, *, values = True, large = None)
+      :classmethod:
+
+
+      Create a sparse row array from a SciPy sparse matrix.
+
+      :param csr: The SciPy sparse matrix (in CSR format).
+      :param values: Whether to include the values or create a structure-only array.
+      :param large: ``True`` to force creation of a :class:`pa.LargeListArray`.
+
+      :returns: The sparse row array.
+
+
+
+   .. py:method:: to_scipy()
+
+      Convert this sparse row array to a SciPy sparse array.
+
+
+
+   .. py:method:: to_torch()
+
+      Convert this sparse row array to a Torch sparse tensor.
+
+
+
+   .. py:method:: to_coo()
+
+      Convert this array to table representing the array in COO format.
+
+
+
+   .. py:property:: dimension
+      :type: int
+
+
+      Get the number of columns in the sparse matrix.
+
+
+   .. py:property:: shape
+      :type: tuple[int, int]
+
+
+
+   .. py:property:: has_values
+      :type: bool
+
+
+
+   .. py:property:: offsets
+      :type: pyarrow.Int32Array
+
+
+
+   .. py:property:: indices
+      :type: pyarrow.Int32Array
+
+
+
+   .. py:property:: values
+      :type: pyarrow.Array | None
+
+
+
+   .. py:property:: nnz
+      :type: int
+
+
+
+   .. py:method:: structure()
+
+      Get the structure of this matrix (without values).
+
+
+
+   .. py:method:: transpose()
+
+      Get the transpose of this sparse matrix.
+
+
+
+   .. py:method:: row_extent(row)
+
+      Get the start and end of a row.
+
+
+
+   .. py:method:: row_indices(row)
+
+      Get the index array for a compressed sparse row.
+
+
+
+.. py:function:: fast_col_cooc(rows: lenskit.data.types.NPVector[numpy.int32] | pyarrow.Int32Array, cols: lenskit.data.types.NPVector[numpy.int32] | pyarrow.Int32Array, shape: tuple[int, int], *, progress: lenskit.logging.Progress | None = None, include_diagonal: bool = True, ordered: bool = False, dense: Literal[True]) -> numpy.ndarray[tuple[int, int], numpy.dtype[numpy.float32]]
+                 fast_col_cooc(rows: lenskit.data.types.NPVector[numpy.int32] | pyarrow.Int32Array, cols: lenskit.data.types.NPVector[numpy.int32] | pyarrow.Int32Array, shape: tuple[int, int], *, progress: lenskit.logging.Progress | None = None, include_diagonal: bool = True, ordered: bool = False, dense: Literal[False] = False) -> scipy.sparse.coo_array
+                 fast_col_cooc(rows: lenskit.data.types.NPVector[numpy.int32] | pyarrow.Int32Array, cols: lenskit.data.types.NPVector[numpy.int32] | pyarrow.Int32Array, shape: tuple[int, int], *, progress: lenskit.logging.Progress | None = None, include_diagonal: bool = True, ordered: bool = False, dense: bool = False) -> Any
+
+   Compute column co-occurrances (:math:`M^{\mathrm{T}}M`) efficiently.
+
+
+.. py:function:: normalize_matrix(matrix, normalize)
+
+   Normalize rows of a matrix.
+
+   :param matrix: Sparse or dense matrix to normalize
+   :param normalize: Normalization mode ("unit" for L2, "distribution" for L1)
+
+   :returns: Normalized matrix
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.data.matrix.Progress
+
+    Re-exported alias for :py:class:`lenskit.logging.Progress`.
+
+.. py:data:: lenskit.data.matrix.NPVector
+
+    Re-exported alias for :py:data:`lenskit.data.types.NPVector`.
+

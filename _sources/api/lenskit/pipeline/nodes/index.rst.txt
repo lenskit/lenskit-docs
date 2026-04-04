@@ -1,0 +1,204 @@
+lenskit.pipeline.nodes
+======================
+
+.. py:module:: lenskit.pipeline.nodes
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.pipeline.nodes.ND
+   lenskit.pipeline.nodes.CFG
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.pipeline.nodes.Node
+   lenskit.pipeline.nodes.InputNode
+   lenskit.pipeline.nodes.LiteralNode
+   lenskit.pipeline.nodes.ComponentNode
+   lenskit.pipeline.nodes.ComponentConstructorNode
+   lenskit.pipeline.nodes.ComponentInstanceNode
+
+
+
+Module Contents
+---------------
+
+.. py:data:: ND
+
+.. py:data:: CFG
+
+.. py:class:: Node(name, *, types = None)
+   
+
+   Bases: :py:obj:`Generic`\ [\ :py:obj:`ND`\ ]
+
+
+   Representation of a single node in a :class:`Pipeline`.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: __match_args__
+      :value: ('name',)
+
+
+
+   .. py:attribute:: name
+      :type:  str
+
+      The name of this node.
+
+
+   .. py:attribute:: types
+      :type:  set[type] | None
+
+      The set of valid data types of this node, or None for no typechecking.
+
+
+   .. py:method:: __str__()
+
+
+.. py:class:: InputNode(name, *, types = None)
+   
+
+   Bases: :py:obj:`Node`\ [\ :py:obj:`ND`\ ], :py:obj:`Generic`\ [\ :py:obj:`ND`\ ]
+
+
+   An input node.
+
+   :Stability: Internal
+
+
+.. py:class:: LiteralNode(name, value, *, types = None)
+   
+
+   Bases: :py:obj:`Node`\ [\ :py:obj:`ND`\ ], :py:obj:`Generic`\ [\ :py:obj:`ND`\ ]
+
+
+   A node storing a literal value.
+
+   :Stability: Internal
+
+
+   .. py:attribute:: __match_args__
+      :value: ('name', 'value')
+
+
+
+   .. py:attribute:: value
+      :type:  ND
+
+      The value associated with this node
+
+
+.. py:class:: ComponentNode(name)
+   
+
+   Bases: :py:obj:`Node`\ [\ :py:obj:`ND`\ ], :py:obj:`Generic`\ [\ :py:obj:`ND`\ ]
+
+
+   A node storing a component.  This is an abstract node class; see subclasses
+   :class:`ComponentConstructorNode` and `ComponentInstanceNode`.
+
+   :Stability: Internal
+
+
+   .. py:method:: create(name, comp, config = None)
+      :staticmethod:
+
+
+
+   .. py:property:: inputs
+      :type: dict[str, lenskit.pipeline.components.ComponentInput]
+
+      :abstractmethod:
+
+
+
+.. py:class:: ComponentConstructorNode(name, constructor, config)
+   
+
+   Bases: :py:obj:`ComponentNode`\ [\ :py:obj:`ND`\ ], :py:obj:`Generic`\ [\ :py:obj:`ND`\ ]
+
+
+   A node storing a component.  This is an abstract node class; see subclasses
+   :class:`ComponentConstructorNode` and `ComponentInstanceNode`.
+
+   :Stability: Internal
+
+
+   .. py:attribute:: __match_args__
+      :value: ('name', 'constructor', 'config')
+
+
+
+   .. py:attribute:: constructor
+      :type:  lenskit.pipeline.components.ComponentConstructor[Any, ND]
+
+
+   .. py:attribute:: config
+      :type:  object | None
+
+
+   .. py:property:: inputs
+
+
+.. py:class:: ComponentInstanceNode(name, component)
+   
+
+   Bases: :py:obj:`ComponentNode`\ [\ :py:obj:`ND`\ ], :py:obj:`Generic`\ [\ :py:obj:`ND`\ ]
+
+
+   A node storing a component.  This is an abstract node class; see subclasses
+   :class:`ComponentConstructorNode` and `ComponentInstanceNode`.
+
+   :Stability: Internal
+
+
+   .. py:attribute:: __match_args__
+      :value: ('name', 'component')
+
+
+
+   .. py:attribute:: component
+      :type:  lenskit.pipeline.components.Component[ND] | lenskit.pipeline.components.PipelineFunction[ND]
+
+
+   .. py:property:: inputs
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.pipeline.nodes.Component
+
+    Re-exported alias for :py:class:`lenskit.pipeline.components.Component`.
+
+.. py:class:: lenskit.pipeline.nodes.ComponentConstructor
+
+    Re-exported alias for :py:class:`lenskit.pipeline.components.ComponentConstructor`.
+
+.. py:class:: lenskit.pipeline.nodes.ComponentInput
+
+    Re-exported alias for :py:class:`lenskit.pipeline.components.ComponentInput`.
+
+.. py:data:: lenskit.pipeline.nodes.PipelineFunction
+
+    Re-exported alias for :py:data:`lenskit.pipeline.components.PipelineFunction`.
+
+.. py:function:: lenskit.pipeline.nodes.component_inputs
+
+    Re-exported alias for :py:func:`lenskit.pipeline.components.component_inputs`.
+
+.. py:function:: lenskit.pipeline.nodes.component_return_type
+
+    Re-exported alias for :py:func:`lenskit.pipeline.components.component_return_type`.
+

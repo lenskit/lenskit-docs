@@ -1,0 +1,183 @@
+lenskit.metrics.predict
+=======================
+
+.. py:module:: lenskit.metrics.predict
+
+.. autoapi-nested-parse::
+
+   Prediction accuracy metrics.  See :ref:`eval-predict-accuracy` for an overview
+   and instructions on using these metrics.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.metrics.predict.MissingDisposition
+   lenskit.metrics.predict.ScoreArray
+   lenskit.metrics.predict.PredMetric
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.metrics.predict.PredictMetric
+   lenskit.metrics.predict.RMSE
+   lenskit.metrics.predict.MAE
+
+
+
+Module Contents
+---------------
+
+.. py:type:: MissingDisposition
+   :canonical: Literal['error', 'ignore']
+
+
+.. py:type:: ScoreArray
+   :canonical: NDArray[np.floating] | pd.Series
+
+
+.. py:type:: PredMetric
+   :canonical: Callable[[ScoreArray, ScoreArray], float]
+
+
+.. py:class:: PredictMetric(missing_scores = 'error', missing_truth = 'error')
+   
+
+   Bases: :py:obj:`lenskit.metrics._base.Metric`
+
+
+   Extension to the metric function interface for prediction metrics.
+
+   In addition to the general metric interface, predict metrics can be called
+   with a single item list (or item list collection) that has both ``scores``
+   and a ``rating`` field.
+
+   :param missing_scores: The action to take when a test item has not been scored.  The
+                          default throws an exception, avoiding situations where non-scored
+                          items are silently excluded from overall statistics.
+   :param missing_truth: The action to take when no test items are available for a scored
+                         item. The default is to also to fail; if you are scoring a superset
+                         of the test items for computational efficiency, set this to
+                         ``"ignore"``.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: default
+      :value: None
+
+
+
+   .. py:attribute:: missing_scores
+      :type:  MissingDisposition
+
+
+   .. py:attribute:: missing_truth
+      :type:  MissingDisposition
+
+
+   .. py:method:: align_scores(predictions, truth = None)
+
+      Align prediction scores and rating values, applying the configured
+      missing dispositions.  The result is two Pandas series, predictions and
+      truth, that are aligned and checked for missing data in accordance with
+      the configured options.
+
+
+
+.. py:class:: RMSE(missing_scores = 'error', missing_truth = 'error')
+   
+
+   Bases: :py:obj:`PredictMetric`, :py:obj:`lenskit.metrics._base.ListMetric`
+
+
+   Compute RMSE (root mean squared error).  This is computed as:
+
+   .. math::
+       \sum_{r_{ui} \in R} \left(r_{ui} - s(i|u)\right)^2
+
+   This metric does not do any fallbacks; if you want to compute RMSE with
+   fallback predictions (e.g. usign a bias model when a collaborative filter
+   cannot predict), generate predictions with
+   :class:`~lenskit.basic.FallbackScorer`.
+
+   :Stability: Caller
+
+
+   .. py:method:: measure_list(predictions, test = None, /)
+
+      Compute measurements for a single list.
+
+      :returns:
+
+                - A float for simple metrics
+                - Intermediate data for decomposed metrics
+                - A dict mapping metric names to values for multi-metric classes
+
+
+
+.. py:class:: MAE(missing_scores = 'error', missing_truth = 'error')
+   
+
+   Bases: :py:obj:`PredictMetric`, :py:obj:`lenskit.metrics._base.ListMetric`
+
+
+   Compute MAE (mean absolute error).  This is computed as:
+
+   .. math::
+       \sum_{r_{ui} \in R} \left|r_{ui} - s(i|u)\right|
+
+   This metric does not do any fallbacks; if you want to compute MAE with
+   fallback predictions (e.g. usign a bias model when a collaborative filter
+   cannot predict), generate predictions with
+   :class:`~lenskit.basic.FallbackScorer`.
+
+   :Stability: Caller
+
+
+   .. py:method:: measure_list(predictions, test = None, /)
+
+      Compute measurements for a single list.
+
+      :returns:
+
+                - A float for simple metrics
+                - Intermediate data for decomposed metrics
+                - A dict mapping metric names to values for multi-metric classes
+
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.metrics.predict.ItemList
+
+    Re-exported alias for :py:class:`lenskit.data.ItemList`.
+
+.. py:data:: lenskit.metrics.predict.ITEM_COMPAT_COLUMN
+
+    Re-exported alias for :py:data:`lenskit.data.adapt.ITEM_COMPAT_COLUMN`.
+
+.. py:function:: lenskit.metrics.predict.normalize_columns
+
+    Re-exported alias for :py:func:`lenskit.data.adapt.normalize_columns`.
+
+.. py:class:: lenskit.metrics.predict.AliasedColumn
+
+    Re-exported alias for :py:class:`lenskit.data.types.AliasedColumn`.
+
+.. py:class:: lenskit.metrics.predict.ListMetric
+
+    Re-exported alias for :py:class:`lenskit.metrics._base.ListMetric`.
+
+.. py:class:: lenskit.metrics.predict.Metric
+
+    Re-exported alias for :py:class:`lenskit.metrics._base.Metric`.
+

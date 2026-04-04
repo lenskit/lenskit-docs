@@ -1,0 +1,371 @@
+lenskit.data.dataset
+====================
+
+.. py:module:: lenskit.data.dataset
+
+.. autoapi-nested-parse::
+
+   LensKit dataset abstraction.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.data.dataset.ACTION_FIELDS
+   lenskit.data.dataset.K
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.data.dataset.DatasetState
+   lenskit.data.dataset.Dataset
+
+
+
+Module Contents
+---------------
+
+.. py:type:: ACTION_FIELDS
+   :canonical: Literal['ratings', 'timestamps'] | str
+
+
+.. py:data:: K
+
+.. py:class:: DatasetState
+   
+
+   Bases: :py:obj:`TypedDict`
+
+
+   dict() -> new empty dictionary
+   dict(mapping) -> new dictionary initialized from a mapping object's
+       (key, value) pairs
+   dict(iterable) -> new dictionary initialized as if via:
+       d = {}
+       for k, v in iterable:
+           d[k] = v
+   dict(**kwargs) -> new dictionary initialized with the name=value pairs
+       in the keyword argument list.  For example:  dict(one=1, two=2)
+
+
+   .. py:attribute:: data
+      :type:  lenskit.data.container.DataContainer
+
+
+.. py:class:: Dataset(data)
+   
+
+   Representation of a data set for LensKit training, evaluation, etc. Data can
+   be accessed in a variety of formats depending on the needs of a component.
+   See :ref:`data-model` for details of the LensKit data model.
+
+   Dataset objects should not be directly constructed; instead, use a
+   :class:`DatasetBuilder`, :meth:`load`, or :func:`from_interactions_df`.
+
+   .. note::
+
+       Zero-copy conversions are used whenever possible, so client code **must
+       not** modify returned data in-place.
+
+   :param data: The container for this dataset's data, or a function that will
+                return such a container to create a lazy-loaded dataset.
+
+   .. stability:: caller
+
+
+   .. py:method:: load(path)
+      :classmethod:
+
+
+      Load a dataset in the LensKit native format.
+
+      :param path: The path to the dataset to load.
+
+      :returns: The loaded dataset.
+
+
+
+   .. py:method:: save(path)
+
+      Save the data set in the LensKit native format.
+
+      :param path: The path in which to save the data set (will be created as a
+                   directory).
+
+
+
+   .. py:property:: name
+      :type: str | None
+
+
+      Get the dataset's name.
+
+
+   .. py:property:: schema
+      :type: lenskit.data.schema.DataSchema
+
+
+      Get the schema of this dataset.
+
+
+   .. py:property:: items
+      :type: lenskit.data.vocab.Vocabulary
+
+
+      The items known by this dataset.
+
+
+   .. py:property:: users
+      :type: lenskit.data.vocab.Vocabulary
+
+
+      The users known by this dataset.
+
+
+   .. py:property:: item_count
+      :type: int
+
+
+
+   .. py:property:: user_count
+      :type: int
+
+
+
+   .. py:method:: entities(name)
+
+      Get the entities of a particular type / class.
+
+
+
+   .. py:method:: relationships(name)
+
+      Get the relationship records of a particular type / class.
+
+
+
+   .. py:method:: interactions(name = None)
+
+      Get the interaction records of a particular class.  If no class is
+      specified, returns the default interaction class.
+
+
+
+   .. py:method:: default_interaction_class()
+
+
+   .. py:property:: interaction_count
+      :type: int
+
+
+      Count the total number of interactions of the default class, taking into
+      account any ``count`` attribute.
+
+
+   .. py:method:: interaction_table(*, format: Literal['pandas'], fields: str | list[str] | None = None, original_ids: bool = False) -> pandas.DataFrame
+                  interaction_table(*, format: Literal['numpy'], fields: str | list[str] | None = None) -> dict[str, numpy.typing.NDArray[Any]]
+                  interaction_table(*, format: Literal['arrow'], fields: str | list[str] | None = None) -> pyarrow.Table
+      :abstractmethod:
+
+
+      Get the user-item interactions as a table in the requested format. The
+      table is not in a specified order.  Interactions may be repeated (e.g.
+      the same user may listen to a song multiple times).  For a non-repeated
+      “ratings matrix” view of the data, see :meth:`interaction_matrix`.
+
+      This is a convenince wrapper on top of :meth:`interactions` and the
+      methods of :class:`RelationshipSet`.
+
+      .. warning::
+          Client code **must not** perform in-place modifications on the table
+          returned from this method.  Whenever possible, it will be a shallow
+          view on top of the underlying storage, and modifications may corrupt
+          data for other code.
+
+      :param format: The desired data format.  Currently-supported formats are:
+
+                     * ``"pandas"`` — returns a :class:`pandas.DataFrame`.  The index
+                       is not meaningful.
+                     * ``"arrow"`` — returns a PyArrow :class:`~pa.Table`.  The index
+                       is not meaningful.
+                     * ``"numpy"`` — returns a dictionary mapping names to arrays.
+      :param fields: Which fields (attributes) to include, or ``None`` to include all
+                     fields. Commonly-available fields include ``"rating"`` and
+                     ``"timestamp"``.
+      :param original_ids: If ``True``, return user and item IDs as represented in the
+                           original source data in columns named ``user_id`` and
+                           ``item_id``, instead of the user and item numbers typically
+                           returned.
+
+      :returns: The user-item interaction log in the specified format.
+
+
+
+   .. py:method:: interaction_matrix(*, format: Literal['pandas'], field: str | None = None, original_ids: bool = False) -> pandas.DataFrame
+                  interaction_matrix(*, format: Literal['torch'], layout: Literal['csr', 'coo'] = 'csr', field: str | None = None) -> torch.Tensor
+                  interaction_matrix(*, format: Literal['scipy'], layout: Literal['coo'], field: str | None = None) -> scipy.sparse.coo_array
+                  interaction_matrix(*, format: Literal['scipy'], layout: Literal['csr'] = 'csr', field: str | None = None) -> scipy.sparse.csr_array
+                  interaction_matrix(*, format: Literal['structure'], layout: Literal['csr'] = 'csr') -> lenskit.data.matrix.CSRStructure
+      :abstractmethod:
+
+
+      Get the user-item interactions as “ratings” matrix from the default
+      interaction class.  Interactions are not repeated, and are coalesced
+      with the default coalescing strategy for each attribute.
+
+      The matrix may be returned in “coordinate” format, in which case it is
+      comparable to :meth:`interaction_table` but without repeated
+      interactions, or it may be in a compressed sparse row format.
+
+      This is a convenince wrapper on top of :meth:`interactions` and the
+      methods of :class:`MatrixRelationshipSet`.
+
+      .. warning::
+
+          Client code **must not** perform in-place modifications on the
+          matrix returned from this method.  Whenever possible, it will be a
+          shallow view on top of the underlying storage, and modifications may
+          corrupt data for other code.
+
+      :param format: The desired data format.  Currently-supported formats are:
+
+                     * ``"pandas"`` — returns a :class:`pandas.DataFrame`.
+                     * ``"torch"`` — returns a sparse :class:`torch.Tensor` (see
+                       :mod:`torch.sparse`).
+                     * ``"scipy"`` — returns a sparse array from :mod:`scipy.sparse`.
+                     * ``"structure"`` — returns a :class:`~matrix.CSRStructure`
+                       containing only the user and item numbers in compressed sparse
+                       row format.
+      :param field: Which field to return in the matrix.  Common fields include
+                    ``"rating"`` and ``"timestamp"``.
+
+                    If unspecified (``None``), this will yield an implicit-feedback
+                    indicator matrix, with 1s for observed items, except for the
+                    ``"pandas"`` format, which will return all attributes.  Specify
+                    an empty list to return a Pandas data frame with only the user
+                    and item attributes.
+      :param layout: The layout for a sparse matrix.  Can be either ``csr`` or
+                     ``coo``, or ``None`` to use the default for the specified
+                     format.  Ignored for the Pandas format.
+      :param original_ids: ``True`` to return user and item IDs instead of numbers in a
+                           ``pandas``-format matrix.
+
+
+
+   .. py:method:: user_row(user_id: lenskit.data.types.ID) -> lenskit.data.items.ItemList | None
+                  user_row(*, user_num: int) -> lenskit.data.items.ItemList
+      :abstractmethod:
+
+
+      Get a user's row from the interaction matrix for the default interaction
+      class, using :ref:`default coalsecing <coalescing-defaults>` for
+      repeated interactions.  Available fields are returned as fields. If the
+      dataset has ratings, these are provided as a ``rating`` field, **not**
+      as the item scores.  The item list is unordered, but items are returned
+      in order by item number.
+
+      :param user_id: The ID of the user to retrieve.
+      :param user_num: The number of the user to retrieve.
+
+      :returns: The user's interaction matrix row, or ``None`` if no user with that
+                ID exists.
+
+
+
+   .. py:method:: item_stats()
+
+      Get item statistics from the default interaction class.
+
+      :returns: A data frame indexed by item ID with the interaction statistics. See
+                :ref:`interaction-stats` for a description of the columns returned.
+
+                The index is aligned with the vocabulary, so ``iloc`` works with item
+                numbers.
+
+
+
+   .. py:method:: user_stats()
+
+      Get user statistics from the default interaction class.
+
+      :returns: A data frame indexed by user ID with the interaction statistics. See
+                :ref:`interaction-stats` for a description of the columns returned.
+
+                The index is the vocabulary, so ``iloc`` works with user numbers.
+
+
+
+   .. py:method:: __getstate__()
+
+
+   .. py:method:: __setstate__(state)
+
+
+   .. py:method:: __str__()
+
+
+   .. py:method:: __repr__()
+
+
+
+Exported Aliases
+----------------
+
+.. py:exception:: lenskit.data.dataset.DataError
+
+    Re-exported alias for :py:exc:`lenskit.diagnostics.DataError`.
+
+.. py:function:: lenskit.data.dataset.get_logger
+
+    Re-exported alias for :py:func:`lenskit.logging.get_logger`.
+
+.. py:class:: lenskit.data.dataset.DataContainer
+
+    Re-exported alias for :py:class:`lenskit.data.container.DataContainer`.
+
+.. py:class:: lenskit.data.dataset.EntitySet
+
+    Re-exported alias for :py:class:`lenskit.data.entities.EntitySet`.
+
+.. py:class:: lenskit.data.dataset.ItemList
+
+    Re-exported alias for :py:class:`lenskit.data.items.ItemList`.
+
+.. py:class:: lenskit.data.dataset.CSRStructure
+
+    Re-exported alias for :py:class:`lenskit.data.matrix.CSRStructure`.
+
+.. py:class:: lenskit.data.dataset.MatrixRelationshipSet
+
+    Re-exported alias for :py:class:`lenskit.data.relationships.MatrixRelationshipSet`.
+
+.. py:class:: lenskit.data.dataset.RelationshipSet
+
+    Re-exported alias for :py:class:`lenskit.data.relationships.RelationshipSet`.
+
+.. py:class:: lenskit.data.dataset.DataSchema
+
+    Re-exported alias for :py:class:`lenskit.data.schema.DataSchema`.
+
+.. py:function:: lenskit.data.dataset.id_col_name
+
+    Re-exported alias for :py:func:`lenskit.data.schema.id_col_name`.
+
+.. py:data:: lenskit.data.dataset.ID
+
+    Re-exported alias for :py:data:`lenskit.data.types.ID`.
+
+.. py:data:: lenskit.data.dataset.LAYOUT
+
+    Re-exported alias for :py:data:`lenskit.data.types.LAYOUT`.
+
+.. py:class:: lenskit.data.dataset.Vocabulary
+
+    Re-exported alias for :py:class:`lenskit.data.vocab.Vocabulary`.
+

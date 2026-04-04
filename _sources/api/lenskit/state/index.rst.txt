@@ -1,0 +1,72 @@
+lenskit.state
+=============
+
+.. py:module:: lenskit.state
+
+.. autoapi-nested-parse::
+
+   Support code for managing model state.
+
+   Many LensKit components are built on machine learning models of various forms.
+   While :mod:`lenskit.training` provides support for training those models,
+   this module provides support for managing their learned state and weights.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.state.ParameterContainer
+
+
+
+Package Contents
+----------------
+
+.. py:class:: ParameterContainer
+   :canonical: lenskit.state._container.ParameterContainer
+
+   Bases: :py:obj:`Protocol`
+
+
+   Protocol for components with learned parameters to enable saving, reloading,
+   checkpointing, etc.
+
+   Components that learn parameters from training data should implement this
+   protocol, and also work when pickled or pickled.  Pickling is sometimes used
+   for convenience, but parameter / state dictionaries allow serializing wtih
+   tools like ``safetensors`` or ``zarr``.
+
+   Initializing a component with the same configuration as a trained component,
+   and loading its parameters with :meth:`load_parameters`, should result in a
+   component that is functionally equivalent to the original trained component.
+
+   :Stability: Experimental
+
+
+   .. py:method:: get_parameters()
+      :abstractmethod:
+
+
+      Get the component's parameters.
+
+      :returns: The model's parameters, as a dictionary from names to parameter data
+                (usually arrays, tensors, etc.).
+
+
+
+   .. py:method:: load_parameters(state)
+      :abstractmethod:
+
+
+      Reload model state from parameters saved via :meth:`get_parameters`.
+
+      :param params: The model parameters, as a dictionary from names to parameter
+                     data (arrays, tensors, etc.), as returned from
+                     :meth:`get_parameters`.
+
+
+
+

@@ -14,7 +14,7 @@
 <meta property="og:description" content="The splitting module splits data sets for offline evaluation using cross-validation and other strategies. The various splitters are implemented as functions that operate on a Dataset and return one..." />
 <meta name="description" content="The splitting module splits data sets for offline evaluation using cross-validation and other strategies. The various splitters are implemented as functions that operate on a Dataset and return one..." />
 
-    <title>Splitting Data &#8212; LensKit 2026.0.0.dev437+g910766a9 documentation</title>
+    <title>Splitting Data &#8212; LensKit 2026.0.0.dev453+gd4673acd documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=18c62455"></script>
+    <script src="../_static/documentation_options.js?v=d473ed34"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev437+g910766a9 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev437+g910766a9 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev453+gd4673acd documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev453+gd4673acd documentation - Home"/>
   
   
 </a></div>
@@ -561,12 +561,12 @@
                   
   <section id="splitting-data">
 <span id="splitting"></span><h1>Splitting Data<a class="headerlink" href="#splitting-data" title="Link to this heading">#</a></h1>
-<p>The <a class="reference internal" href="../api/splitting.html#module-lenskit.splitting" title="lenskit.splitting"><code class="xref py py-mod docutils literal notranslate"><span class="pre">splitting</span></code></a> module splits data sets for offline evaluation
+<p>The <a class="reference internal" href="../api/lenskit/splitting/index.html#module-lenskit.splitting" title="lenskit.splitting"><code class="xref py py-mod docutils literal notranslate"><span class="pre">splitting</span></code></a> module splits data sets for offline evaluation
 using cross-validation and other strategies.  The various splitters are
-implemented as functions that operate on a <a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> and
-return one or more train-test splits (as <a class="reference internal" href="../api/lenskit.splitting.TTSplit.html#lenskit.splitting.TTSplit" title="lenskit.splitting.TTSplit"><code class="xref py py-class docutils literal notranslate"><span class="pre">TTSplit</span></code></a> objects).</p>
+implemented as functions that operate on a <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code> and
+return one or more train-test splits (as <a class="reference internal" href="../api/lenskit/index.html#lenskit.lenskit.TTSplit" title="lenskit.lenskit.TTSplit"><code class="xref py py-class docutils literal notranslate"><span class="pre">TTSplit</span></code></a> objects).</p>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 2025.1: </span>Data splitting was moved from <code class="docutils literal notranslate"><span class="pre">lenskit.crossfold</span></code> to the <a class="reference internal" href="../api/splitting.html#module-lenskit.splitting" title="lenskit.splitting"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.splitting</span></code></a>
+<p><span class="versionmodified changed">Changed in version 2025.1: </span>Data splitting was moved from <code class="docutils literal notranslate"><span class="pre">lenskit.crossfold</span></code> to the <a class="reference internal" href="../api/lenskit/splitting/index.html#module-lenskit.splitting" title="lenskit.splitting"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.splitting</span></code></a>
 module and functions were renamed and had their interfaces revised.</p>
 </div>
 <p>Experiment code should generally use these functions to prepare train-test files
@@ -585,20 +585,20 @@ LensKit:</p>
 <section id="temporal-splitting">
 <h2>Temporal Splitting<a class="headerlink" href="#temporal-splitting" title="Link to this heading">#</a></h2>
 <p>Global temporal splitting partitions data into train/test splits based on a
-partitioning timestamp.  The <a class="reference internal" href="../api/lenskit.splitting.split_global_time.html#lenskit.splitting.split_global_time" title="lenskit.splitting.split_global_time"><code class="xref py py-func docutils literal notranslate"><span class="pre">split_global_time()</span></code></a> function takes a data
+partitioning timestamp.  The <a class="reference internal" href="../api/lenskit/splitting/index.html#lenskit.splitting.lenskit.splitting.split_global_time" title="lenskit.splitting.lenskit.splitting.split_global_time"><code class="xref py py-func docutils literal notranslate"><span class="pre">split_global_time()</span></code></a> function takes a data
 set and a partition timestamp and splits the data.  It can also take a list of
 partition timestamps for multiple splits, e.g. for train/valid/test split.</p>
 </section>
 <section id="record-based-random-splitting">
 <h2>Record-based Random Splitting<a class="headerlink" href="#record-based-random-splitting" title="Link to this heading">#</a></h2>
 <p>The simplest preparation methods sample or partition the records in the input
-data. A 5-fold <a class="reference internal" href="../api/lenskit.splitting.crossfold_records.html#lenskit.splitting.crossfold_records" title="lenskit.splitting.crossfold_records"><code class="xref py py-func docutils literal notranslate"><span class="pre">crossfold_records()</span></code></a> split will result in 5 splits, each of
+data. A 5-fold <a class="reference internal" href="../api/lenskit/splitting/index.html#lenskit.splitting.lenskit.splitting.crossfold_records" title="lenskit.splitting.lenskit.splitting.crossfold_records"><code class="xref py py-func docutils literal notranslate"><span class="pre">crossfold_records()</span></code></a> split will result in 5 splits, each of
 which extracts 20% of the user-item interaction records for testing and leaves
 80% for training.  There are two record-based random splitting functions:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="../api/lenskit.splitting.crossfold_records.html#lenskit.splitting.crossfold_records" title="lenskit.splitting.crossfold_records"><code class="xref py py-func docutils literal notranslate"><span class="pre">crossfold_records()</span></code></a> partitions ratings or interactions into 5
+<li><p><a class="reference internal" href="../api/lenskit/splitting/index.html#lenskit.splitting.lenskit.splitting.crossfold_records" title="lenskit.splitting.lenskit.splitting.crossfold_records"><code class="xref py py-func docutils literal notranslate"><span class="pre">crossfold_records()</span></code></a> partitions ratings or interactions into 5
 equal-sized splits.</p></li>
-<li><p><a class="reference internal" href="../api/lenskit.splitting.sample_records.html#lenskit.splitting.sample_records" title="lenskit.splitting.sample_records"><code class="xref py py-func docutils literal notranslate"><span class="pre">sample_records()</span></code></a> produces 1 or more disjoint samples of the ratings for
+<li><p><a class="reference internal" href="../api/lenskit/splitting/index.html#lenskit.splitting.lenskit.splitting.sample_records" title="lenskit.splitting.lenskit.splitting.sample_records"><code class="xref py py-func docutils literal notranslate"><span class="pre">sample_records()</span></code></a> produces 1 or more disjoint samples of the ratings for
 testing.</p></li>
 </ul>
 <div class="admonition note">
@@ -606,7 +606,7 @@ testing.</p></li>
 <p>When a dataset has repeated interactions, these functions operate only on
 the <em>matrix</em> view of the data (user-item observations are deduplicated).
 Specifically, they operate on the results of calling
-<a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset.interaction_matrix" title="lenskit.data.Dataset.interaction_matrix"><code class="xref py py-meth docutils literal notranslate"><span class="pre">interaction_matrix()</span></code></a> with <code class="docutils literal notranslate"><span class="pre">format=&quot;pandas&quot;</span></code>
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">interaction_matrix()</span></code> with <code class="docutils literal notranslate"><span class="pre">format=&quot;pandas&quot;</span></code>
 and <code class="docutils literal notranslate"><span class="pre">field=&quot;all&quot;</span></code>.</p>
 </div>
 </section>
@@ -629,8 +629,8 @@ user.</p></li>
 users into disjoint sets) and sampling (compute one or more disjoint sets of
 test users).</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="../api/lenskit.splitting.crossfold_users.html#lenskit.splitting.crossfold_users" title="lenskit.splitting.crossfold_users"><code class="xref py py-func docutils literal notranslate"><span class="pre">crossfold_users()</span></code></a></p></li>
-<li><p><a class="reference internal" href="../api/lenskit.splitting.sample_users.html#lenskit.splitting.sample_users" title="lenskit.splitting.sample_users"><code class="xref py py-func docutils literal notranslate"><span class="pre">sample_users()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/lenskit/splitting/index.html#lenskit.splitting.lenskit.splitting.crossfold_users" title="lenskit.splitting.lenskit.splitting.crossfold_users"><code class="xref py py-func docutils literal notranslate"><span class="pre">crossfold_users()</span></code></a></p></li>
+<li><p><a class="reference internal" href="../api/lenskit/splitting/index.html#lenskit.splitting.lenskit.splitting.sample_users" title="lenskit.splitting.lenskit.splitting.sample_users"><code class="xref py py-func docutils literal notranslate"><span class="pre">sample_users()</span></code></a></p></li>
 </ul>
 <section id="selecting-user-holdout-rows">
 <h3>Selecting user holdout rows<a class="headerlink" href="#selecting-user-holdout-rows" title="Link to this heading">#</a></h3>
@@ -644,16 +644,16 @@ the holdout’s configuration (e.g. the number of test ratings per user) and
 return callable objects to do the holdout:</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="../api/lenskit.splitting.SampleN.html#lenskit.splitting.SampleN" title="lenskit.splitting.SampleN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SampleN</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/lenskit/splitting/index.html#lenskit.splitting.lenskit.splitting.SampleN" title="lenskit.splitting.lenskit.splitting.SampleN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SampleN</span></code></a></p></td>
 <td><p>Randomly select a fixed number of test rows per user/item.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../api/lenskit.splitting.SampleFrac.html#lenskit.splitting.SampleFrac" title="lenskit.splitting.SampleFrac"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SampleFrac</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/lenskit/splitting/index.html#lenskit.splitting.lenskit.splitting.SampleFrac" title="lenskit.splitting.lenskit.splitting.SampleFrac"><code class="xref py py-obj docutils literal notranslate"><span class="pre">SampleFrac</span></code></a></p></td>
 <td><p>Randomly select a fraction of test rows per user/item.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="../api/lenskit.splitting.LastN.html#lenskit.splitting.LastN" title="lenskit.splitting.LastN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LastN</span></code></a></p></td>
-<td><p>Select a fixed number of test rows per user/item, based on ordering by a field.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../api/lenskit/splitting/index.html#lenskit.splitting.lenskit.splitting.LastN" title="lenskit.splitting.lenskit.splitting.LastN"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LastN</span></code></a></p></td>
+<td><p>Select a fixed number of test rows per user/item, based on ordering by a</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="../api/lenskit.splitting.LastFrac.html#lenskit.splitting.LastFrac" title="lenskit.splitting.LastFrac"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LastFrac</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../api/lenskit/splitting/index.html#lenskit.splitting.lenskit.splitting.LastFrac" title="lenskit.splitting.lenskit.splitting.LastFrac"><code class="xref py py-obj docutils literal notranslate"><span class="pre">LastFrac</span></code></a></p></td>
 <td><p>Select a fraction of test rows per user/item.</p></td>
 </tr>
 </tbody>
@@ -712,7 +712,7 @@ return callable objects to do the holdout:</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#temporal-splitting">Temporal Splitting</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#record-based-random-splitting">Record-based Random Splitting</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-based-splitting">User-based Splitting</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#user-based-splitting">User-based Splitting</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#selecting-user-holdout-rows">Selecting user holdout rows</a></li>
 </ul>
 </li>
@@ -759,7 +759,7 @@ return callable objects to do the holdout:</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev437+g910766a9.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev453+gd4673acd.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

@@ -1,0 +1,232 @@
+lenskit.data.movielens
+======================
+
+.. py:module:: lenskit.data.movielens
+
+.. autoapi-nested-parse::
+
+   Code to import MovieLens data sets into LensKit.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.data.movielens.LOC
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.data.movielens.MLData
+   lenskit.data.movielens.ML100KLoader
+   lenskit.data.movielens.MLMLoader
+   lenskit.data.movielens.MLModernLoader
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.data.movielens.load_movielens
+   lenskit.data.movielens.load_movielens_df
+
+
+
+Module Contents
+---------------
+
+.. py:type:: LOC
+   :canonical: Path | tuple[ZipFile, str]
+
+
+.. py:class:: MLData(version, source, prefix = '')
+   
+
+   Internal class representing an open ML data set.
+
+   .. stability:: internal
+
+
+   .. py:attribute:: version
+      :type:  str
+
+
+   .. py:attribute:: source
+      :type:  pathlib.Path | zipfile.ZipFile
+
+
+   .. py:attribute:: prefix
+      :type:  str
+      :value: ''
+
+
+
+   .. py:method:: version_impl(version)
+      :staticmethod:
+
+
+
+   .. py:method:: __enter__()
+
+
+   .. py:method:: __exit__(*args)
+
+
+   .. py:method:: open_file(name, encoding = 'utf8')
+
+
+   .. py:method:: dataset()
+      :abstractmethod:
+
+
+      Load the full dataset.
+
+
+
+   .. py:method:: ratings_df()
+      :abstractmethod:
+
+
+      Load the ratings data frame.
+
+
+
+.. py:class:: ML100KLoader(version, source, prefix = '')
+   
+
+   Bases: :py:obj:`MLData`
+
+
+   Loader for the ML100K data set.
+
+
+   .. py:method:: dataset()
+
+      Load the full dataset.
+
+
+
+   .. py:method:: genres()
+
+
+   .. py:method:: movies_df(genres = None)
+
+
+   .. py:method:: users_df()
+
+
+   .. py:method:: ratings_df()
+
+      Load the ratings data frame.
+
+
+
+.. py:class:: MLMLoader(version, source, prefix = '')
+   
+
+   Bases: :py:obj:`MLData`
+
+
+   Loader for the ML 1M and 10M data sets.
+
+
+   .. py:method:: dataset()
+
+      Load the full dataset.
+
+
+
+   .. py:method:: movies_df()
+
+
+   .. py:method:: users_df()
+
+
+   .. py:method:: ratings_df()
+
+      Load the ratings data frame.
+
+
+
+   .. py:method:: tagging_df()
+
+
+.. py:class:: MLModernLoader(version, source, prefix = '')
+   
+
+   Bases: :py:obj:`MLData`
+
+
+   Loader for modern MovieLens data sets (20M and later).
+
+
+   .. py:method:: dataset()
+
+      Load the full dataset.
+
+
+
+   .. py:method:: movies_df()
+
+
+   .. py:method:: tagging_df()
+
+
+   .. py:method:: genome_df()
+
+
+   .. py:method:: ratings_df()
+
+      Load the ratings data frame.
+
+
+
+.. py:function:: load_movielens(path)
+
+   Load a MovieLens dataset.  The appropriate MovieLens format is detected
+   based on the file contents.
+
+   :Stability: Caller
+
+   :param path: The path to the dataset, either as an unpacked directory or a zip
+                file.
+
+   :returns: The dataset.
+
+
+.. py:function:: load_movielens_df(path)
+
+   Load the ratings from a MovieLens dataset as a raw data frame.  The
+   appropriate MovieLens format is detected based on the file contents.
+
+   :Stability: Caller
+
+   :param path: The path to the dataset, either as an unpacked directory or a zip
+                file.
+
+   :returns: The ratings, with columns ``user_id``, ``item_id``, ``rating``, and
+             ``timestamp``.
+
+
+
+Exported Aliases
+----------------
+
+.. py:function:: lenskit.data.movielens.get_logger
+
+    Re-exported alias for :py:func:`lenskit.logging.get_logger`.
+
+.. py:class:: lenskit.data.movielens.DatasetBuilder
+
+    Re-exported alias for :py:class:`lenskit.data.builder.DatasetBuilder`.
+
+.. py:class:: lenskit.data.movielens.Dataset
+
+    Re-exported alias for :py:class:`lenskit.data.dataset.Dataset`.
+

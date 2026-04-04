@@ -1,0 +1,361 @@
+lenskit.pipeline.config
+=======================
+
+.. py:module:: lenskit.pipeline.config
+
+.. autoapi-nested-parse::
+
+   Pydantic models for pipeline configuration and serialization support.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.pipeline.config.PipelineHook
+   lenskit.pipeline.config.PipelineHooks
+   lenskit.pipeline.config.PipelineOptions
+   lenskit.pipeline.config.PipelineConfig
+   lenskit.pipeline.config.PipelineMeta
+   lenskit.pipeline.config.PipelineInput
+   lenskit.pipeline.config.PipelineComponent
+   lenskit.pipeline.config.PipelineLiteral
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.pipeline.config.hash_config
+
+
+
+Module Contents
+---------------
+
+.. py:class:: PipelineHook
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   A single entry in a pipeline's hook configuration.
+
+
+   .. py:attribute:: function
+      :type:  str
+
+
+   .. py:attribute:: priority
+      :type:  Annotated[int, Predicate(lambda x: x != 0)]
+      :value: 1
+
+
+
+   .. py:method:: from_entry(hook)
+      :classmethod:
+
+
+
+.. py:class:: PipelineHooks
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Hook specifications for a pipeline.
+
+
+   .. py:attribute:: run
+      :type:  dict[str, list[PipelineHook]]
+
+
+.. py:class:: PipelineOptions
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Options used for pipeline assembly, particularly for extending pipelines.
+
+
+   .. py:attribute:: base
+      :type:  str | None
+      :value: None
+
+
+      Apply this configuration to a base pipeline.
+
+
+   .. py:attribute:: default_length
+      :type:  int | None
+
+      For top-*N* base pipelines, the default ranking length to configure.
+
+
+   .. py:attribute:: fallback_predictor
+      :type:  bool | None
+      :value: None
+
+
+      For rating prediction pipelines, enable or disable the default fallback
+      predictor.
+
+
+.. py:class:: PipelineConfig
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Root type for serialized pipeline configuration.  A pipeline config contains
+   the full configuration, components, and wiring for the pipeline, but does
+   not contain the learned parameters.
+
+   :Stability: Full
+
+
+   .. py:attribute:: options
+      :type:  PipelineOptions | None
+      :value: None
+
+
+      Options for assembling the final pipeline.
+
+
+   .. py:attribute:: meta
+      :type:  PipelineMeta
+
+      Pipeline metadata.
+
+
+   .. py:attribute:: inputs
+      :type:  list[PipelineInput]
+      :value: []
+
+
+      Pipeline inputs.
+
+
+   .. py:attribute:: components
+      :type:  collections.OrderedDict[str, PipelineComponent]
+
+      Pipeline components, with their configurations and wiring.
+
+
+   .. py:attribute:: aliases
+      :type:  dict[str, str]
+
+      Pipeline node aliases.
+
+
+   .. py:attribute:: default
+      :type:  str | None
+      :value: None
+
+
+      The default node for running this pipeline.
+
+
+   .. py:attribute:: literals
+      :type:  dict[str, PipelineLiteral]
+
+      Literals
+
+
+   .. py:attribute:: hooks
+      :type:  PipelineHooks
+
+      The hooks configured for the pipeline.
+
+
+   .. py:method:: merge_component_configs(configs)
+
+      Merge component configuration options into the pipeline configuration.
+
+      This returns a modified copy of the pipeline with the applied
+      configurations, and does not modify the configuration in-place.
+
+
+
+.. py:class:: PipelineMeta
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Pipeline metadata.
+
+   :Stability: Full
+
+
+   .. py:attribute:: name
+      :type:  str | None
+      :value: None
+
+
+      The pipeline name.
+
+
+   .. py:attribute:: version
+      :type:  str | None
+      :value: None
+
+
+      The pipeline version.
+
+
+   .. py:attribute:: hash
+      :type:  str | None
+      :value: None
+
+
+      The pipeline configuration hash.  This is optional, particularly when
+      hand-crafting pipeline configuration files.
+
+
+.. py:class:: PipelineInput
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Spcification of a pipeline input.
+
+   :Stability: Full
+
+
+   .. py:attribute:: name
+      :type:  str
+
+      The name for this input.
+
+
+   .. py:attribute:: types
+      :type:  set[str] | None
+
+      The list of types for this input.
+
+
+   .. py:method:: from_node(node)
+      :classmethod:
+
+
+
+.. py:class:: PipelineComponent
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Specification of a pipeline component.
+
+
+   .. py:attribute:: code
+      :type:  str
+
+      The path to the component's implementation, either a class or a function.
+      This is a Python qualified path of the form ``module:name``.
+
+
+   .. py:attribute:: config
+      :type:  Mapping[str, pydantic.JsonValue] | None
+      :value: None
+
+
+      The component configuration.  If not provided, the component will be created
+      with its default constructor parameters.
+
+
+   .. py:attribute:: inputs
+      :type:  dict[str, str]
+
+      The component's input wirings, mapping input names to node names.  For
+      certain meta-nodes, it is specified as a list instead of a dict.
+
+
+   .. py:method:: from_node(node)
+      :classmethod:
+
+
+
+.. py:class:: PipelineLiteral
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Literal nodes represented in the pipeline.
+
+   :Stability: Full
+
+
+   .. py:attribute:: encoding
+      :type:  Literal['json', 'base85']
+
+
+   .. py:attribute:: value
+      :type:  pydantic.JsonValue
+
+
+   .. py:method:: represent(data)
+      :classmethod:
+
+
+
+   .. py:method:: decode()
+
+      Decode the represented literal.
+
+
+
+.. py:function:: hash_config(config)
+
+   Compute the hash of a configuration model.
+
+   :Stability: Internal
+
+
+
+Exported Aliases
+----------------
+
+.. py:exception:: lenskit.pipeline.config.PipelineError
+
+    Re-exported alias for :py:exc:`lenskit.diagnostics.PipelineError`.
+
+.. py:exception:: lenskit.pipeline.config.PipelineWarning
+
+    Re-exported alias for :py:exc:`lenskit.diagnostics.PipelineWarning`.
+
+.. py:class:: lenskit.pipeline.config.HookEntry
+
+    Re-exported alias for :py:class:`lenskit.pipeline._hooks.HookEntry`.
+
+.. py:function:: lenskit.pipeline.config.make_importable_path
+
+    Re-exported alias for :py:func:`lenskit.pipeline._types.make_importable_path`.
+
+.. py:class:: lenskit.pipeline.config.Component
+
+    Re-exported alias for :py:class:`lenskit.pipeline.components.Component`.
+
+.. py:class:: lenskit.pipeline.config.ComponentConstructorNode
+
+    Re-exported alias for :py:class:`lenskit.pipeline.nodes.ComponentConstructorNode`.
+
+.. py:class:: lenskit.pipeline.config.ComponentInstanceNode
+
+    Re-exported alias for :py:class:`lenskit.pipeline.nodes.ComponentInstanceNode`.
+
+.. py:class:: lenskit.pipeline.config.ComponentNode
+
+    Re-exported alias for :py:class:`lenskit.pipeline.nodes.ComponentNode`.
+
+.. py:class:: lenskit.pipeline.config.InputNode
+
+    Re-exported alias for :py:class:`lenskit.pipeline.nodes.InputNode`.
+

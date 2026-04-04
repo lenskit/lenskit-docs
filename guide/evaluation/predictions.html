@@ -14,7 +14,7 @@
 <meta property="og:description" content="While rating prediction is no longer a widely-studied recommendation task, LensKit provides support for evaluating predictions for completeness and reproducing or comparing against historical resea..." />
 <meta name="description" content="While rating prediction is no longer a widely-studied recommendation task, LensKit provides support for evaluating predictions for completeness and reproducing or comparing against historical resea..." />
 
-    <title>Evaluating Rating Predictions &#8212; LensKit 2026.0.0.dev437+g910766a9 documentation</title>
+    <title>Evaluating Rating Predictions &#8212; LensKit 2026.0.0.dev453+gd4673acd documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=18c62455"></script>
+    <script src="../../_static/documentation_options.js?v=d473ed34"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev437+g910766a9 documentation - Home"/>
-    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev437+g910766a9 documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev453+gd4673acd documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev453+gd4673acd documentation - Home"/>
   
   
 </a></div>
@@ -567,8 +567,8 @@
 <p id="eval-predict-accuracy">While rating prediction is no longer a widely-studied recommendation task,
 LensKit provides support for evaluating predictions for completeness and
 reproducing or comparing against historical research.</p>
-<p>LensKit provides two <a class="reference internal" href="../../api/metrics.html#metrics-predict"><span class="std std-ref">prediction accuracy metrics</span></a>:
-<a class="reference internal" href="../../api/lenskit.metrics.RMSE.html#lenskit.metrics.RMSE" title="lenskit.metrics.predict.RMSE"><code class="xref py py-func docutils literal notranslate"><span class="pre">RMSE()</span></code></a> and <a class="reference internal" href="../../api/lenskit.metrics.MAE.html#lenskit.metrics.MAE" title="lenskit.metrics.predict.MAE"><code class="xref py py-func docutils literal notranslate"><span class="pre">MAE()</span></code></a>.  They support both global (micro-averaged)
+<p>LensKit provides two <span class="xref std std-ref">prediction accuracy metrics</span>:
+<a class="reference internal" href="../../api/lenskit/metrics/predict/index.html#lenskit.metrics.predict.RMSE" title="lenskit.metrics.predict.RMSE"><code class="xref py py-func docutils literal notranslate"><span class="pre">RMSE()</span></code></a> and <a class="reference internal" href="../../api/lenskit/metrics/predict/index.html#lenskit.metrics.predict.MAE" title="lenskit.metrics.predict.MAE"><code class="xref py py-func docutils literal notranslate"><span class="pre">MAE()</span></code></a>.  They support both global (micro-averaged)
 and per-user (macro-averaged) computation.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 2025.1: </span>The prediction accuracy metric interface has changed to use item lists.</p>
@@ -582,7 +582,7 @@ and per-user (macro-averaged) computation.</p>
 ground-truth ratings as a <code class="docutils literal notranslate"><span class="pre">rating</span></code> field.</p></li>
 <li><p>Pass a single item list with scores and a <code class="docutils literal notranslate"><span class="pre">rating</span></code> field.</p></li>
 </ul>
-<p>For evaluation, you will usually want to use <a class="reference internal" href="../../api/lenskit.metrics.RunAnalysis.html#lenskit.metrics.RunAnalysis" title="lenskit.metrics.RunAnalysis"><code class="xref py py-class docutils literal notranslate"><span class="pre">RunAnalysis</span></code></a>,
+<p>For evaluation, you will usually want to use <code class="xref py py-class docutils literal notranslate"><span class="pre">RunAnalysis</span></code>,
 which takes care of calling the prediction metric for you.</p>
 </section>
 <section id="missing-data">
@@ -596,17 +596,17 @@ rating).</p></li>
 </ul>
 <p>By default, LensKit throws an error in both of these cases, to help you catch
 bad configurations.  We recommend using a fallback predictor, such setting up
-<a class="reference internal" href="../../api/lenskit.basic.html#lenskit.basic.FallbackScorer" title="lenskit.basic.FallbackScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">FallbackScorer</span></code></a> with
-<a class="reference internal" href="../../api/lenskit.basic.html#lenskit.basic.BiasScorer" title="lenskit.basic.BiasScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiasScorer</span></code></a>, when measuring rating predictions to
+<code class="xref py py-class docutils literal notranslate"><span class="pre">FallbackScorer</span></code> with
+<code class="xref py py-class docutils literal notranslate"><span class="pre">BiasScorer</span></code>, when measuring rating predictions to
 ensure that all items are scored.  The alternative design — ignoring missing
 predictions — means that different scorers may be evaluated on different items,
 and a scorer perform exceptionally well by only scoring items with high
 confidence.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>Both <a class="reference internal" href="../../api/lenskit.pipeline.topn_pipeline.html#lenskit.pipeline.topn_pipeline" title="lenskit.pipeline.topn_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">topn_pipeline()</span></code></a> and
-<a class="reference internal" href="../../api/lenskit.pipeline.predict_pipeline.html#lenskit.pipeline.predict_pipeline" title="lenskit.pipeline.predict_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">predict_pipeline()</span></code></a> default to using a
-<a class="reference internal" href="../../api/lenskit.basic.html#lenskit.basic.BiasScorer" title="lenskit.basic.BiasScorer"><code class="xref py py-func docutils literal notranslate"><span class="pre">BiasScorer()</span></code></a> as a fallback when rating prediction is
+<p>Both <a class="reference internal" href="../../api/lenskit/pipeline/index.html#lenskit.pipeline.topn_pipeline" title="lenskit.pipeline.topn_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">topn_pipeline()</span></code></a> and
+<a class="reference internal" href="../../api/lenskit/pipeline/index.html#lenskit.pipeline.predict_pipeline" title="lenskit.pipeline.predict_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">predict_pipeline()</span></code></a> default to using a
+<code class="xref py py-func docutils literal notranslate"><span class="pre">BiasScorer()</span></code> as a fallback when rating prediction is
 enabled.</p>
 </div>
 <p>If you want to skip missing predictions, pass <code class="docutils literal notranslate"><span class="pre">missing_scores=&quot;ignore&quot;</span></code> to the
@@ -713,7 +713,7 @@ the items to score).</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev437+g910766a9.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev453+gd4673acd.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

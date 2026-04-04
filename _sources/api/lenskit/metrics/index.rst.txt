@@ -1,0 +1,397 @@
+lenskit.metrics
+===============
+
+.. py:module:: lenskit.metrics
+
+.. autoapi-nested-parse::
+
+   Metrics for evaluating recommender outputs.
+
+
+
+Submodules
+----------
+
+.. autoapisummary::
+
+   lenskit.metrics.basic
+   lenskit.metrics.bulk
+   lenskit.metrics.predict
+   lenskit.metrics.ranking
+   lenskit.metrics.reranking
+
+.. toctree::
+    :hidden:
+    :maxdepth: 1
+
+    /api/lenskit/metrics/basic/index
+    /api/lenskit/metrics/bulk/index
+    /api/lenskit/metrics/predict/index
+    /api/lenskit/metrics/ranking/index
+    /api/lenskit/metrics/reranking/index
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.metrics.GlobalMetric
+   lenskit.metrics.ListMetric
+   lenskit.metrics.Metric
+   lenskit.metrics.MetricFunction
+   lenskit.metrics.MeasurementCollector
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.metrics.quick_measure_model
+
+
+
+Package Contents
+----------------
+
+.. py:class:: GlobalMetric
+   :canonical: lenskit.metrics._base.GlobalMetric
+
+   Base class for metrics that measure entire runs at a time.
+
+   For prediction metrics, this is *micro-averaging*.
+
+   :Stability: Full
+
+
+   .. py:method:: measure_run(output, test, /)
+      :abstractmethod:
+
+
+      Compute a metric value for an entire run.
+
+      Individual metric classes need to implement this method.
+
+
+
+.. py:class:: ListMetric
+   :canonical: lenskit.metrics._base.ListMetric
+
+   Bases: :py:obj:`Metric`
+
+
+   Base class for metrics that measure individual recommendation (or
+   prediction) lists, and whose results may be aggregated to compute overall
+   metrics.
+
+   For prediction metrics, this is *macro-averaging*.
+
+   Default behavior:
+       Implements `summarize()` by averaging per-list results (mean, ignoring NaNs).
+
+   This class implements the Metric interface in terms of the measure_list method.
+
+   :Stability: Full
+
+
+   .. py:attribute:: default
+      :type:  ClassVar[float | None]
+      :value: 0.0
+
+
+
+   .. py:method:: measure_list(output, test, /)
+      :abstractmethod:
+
+
+      Compute the metric value for a single result list.
+
+      Individual metric classes need to implement this method.
+
+
+
+   .. py:method:: extract_list_metrics(data, /)
+
+      Return the given per-list metric result.
+
+
+
+   .. py:method:: summarize(values, /)
+
+      Summarize per-list metric values
+
+      :returns: A dictionary containing mean, median, and std.
+
+
+
+.. py:class:: Metric
+   :canonical: lenskit.metrics._base.Metric
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   Base class for LensKit metrics.  Individual metrics need to implement a
+   sub-interface, such as :class:`ListMetric` and/or :class:`GlobalMetric`.
+
+   This class defines the interface for metrics. Subclasses should implement
+   the `measure_list` method to compute metric values.
+
+   The `summarize()` method has a default implementation that computes the
+   mean of the per-list metric values, but subclasses can override it to provide
+   more appropriate summary statistics.
+
+   :Stability: Full
+
+   .. note::
+
+       For simplicity in the analysis code, you cannot simply implement the
+       properties of this class on an arbitrary class in order to implement a
+       metric with all available behavior such as labeling and defaults;
+       you must actually extend this class. This requirement may be relaxed
+       in the future.
+
+   The default value to impute when computing statistics over missing values.
+   If ``None``, no imputation is done (necessary for metrics like RMSE, where
+   the missing value is theoretically infinite).
+
+
+   .. py:property:: label
+      :type: str
+
+
+      The metric's default label in output.
+      The base implementation returns the class name by default.
+
+
+   .. py:method:: __str__()
+
+
+   .. py:method:: measure_list(output, test, /)
+      :abstractmethod:
+
+
+      Compute measurements for a single list.
+
+      :returns:
+
+                - A float for simple metrics
+                - Intermediate data for decomposed metrics
+                - A dict mapping metric names to values for multi-metric classes
+
+
+
+   .. py:method:: extract_list_metrics(data, /)
+
+      Extract per-list metric(s) from intermediate measurement data.
+
+      :returns:
+
+                - A float for simple metrics
+                - A dict mapping metric names to values for multi-metric classes
+                - None if no per-list metrics are available
+
+
+
+   .. py:method:: summarize(values, /)
+      :abstractmethod:
+
+
+      Aggregate intermediate values into summary statistics.
+
+      :returns: A dictionary of summary statistics.
+
+
+
+.. py:class:: MetricFunction
+   :canonical: lenskit.metrics._base.MetricFunction
+
+   Bases: :py:obj:`Protocol`
+
+
+   Interface for per-list metrics implemented as simple functions.
+
+
+   .. py:method:: __call__(output, test, /)
+      :abstractmethod:
+
+
+
+.. py:class:: MeasurementCollector
+   :canonical: lenskit.metrics._collect.MeasurementCollector
+
+   Collect metric measurements over multiple recommendation lists.
+
+   This class separates metric collection and aggregation from the main
+   evaluation loop.
+
+   .. versionchanged:: 2025.5
+       This class was renamed from ``MetricAccumulator``.  ``MetricAccumulator``
+       is preserved as a deprecated alias for ``MeasurementCollector``.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: metrics
+      :type:  list[MetricWrapper]
+      :value: []
+
+
+
+   .. py:method:: add_metric(metric, label = None, default = None)
+
+      Add a metric to this accumulator.
+
+      :param metric: The metric to add.
+      :param label: The label to use for the metric's results. If unset, obtains
+                    from the metric.
+      :param default: The default value to use when a user does not have
+                      recommendations. If unset, obtains from the metric's ``default``
+                      attribute (if specified).
+
+
+
+   .. py:method:: measure_list(output, test, **keys)
+
+      Measure a single list and accumulate the intermediate results.
+
+      :param output: The recommendation list to measure.
+      :param test: The ground truth test data.
+      :param \*\*keys: Identifying keys for this list (e.g., user_id).
+
+
+
+   .. py:method:: list_metrics(fill_missing = True)
+
+      Get the per-list metric results as a DataFrame.
+
+      :param fill_missing: If True, fill missing values with metric defaults.
+
+      :returns: DataFrame with one row per list and one column per metric.
+
+
+
+   .. py:method:: summary_metrics()
+
+      Compute summary statistics by calling each metric's summarize() method.
+
+      :returns: A dictionary with flattened metric results.
+
+
+
+.. py:function:: quick_measure_model(model, data, *, predicts_ratings = False, n_jobs = 1, rng = None)
+
+   Do a quick-and-dirty model measurement with a default pipeline setup, split,
+   and metrics. This is mostly to make tests easy to write, you usually don't
+   want to use it for actual recommender evaluation.
+
+   :Stability: Caller
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.metrics.ItemList
+
+    Re-exported alias for :py:class:`lenskit.data.ItemList`.
+
+.. py:class:: lenskit.metrics.ListLength
+
+    Re-exported alias for :py:class:`lenskit.metrics.basic.ListLength`.
+
+.. py:class:: lenskit.metrics.TestItemCount
+
+    Re-exported alias for :py:class:`lenskit.metrics.basic.TestItemCount`.
+
+.. py:class:: lenskit.metrics.RunAnalysis
+
+    Re-exported alias for :py:class:`lenskit.metrics.bulk.RunAnalysis`.
+
+.. py:class:: lenskit.metrics.RunAnalysisResult
+
+    Re-exported alias for :py:class:`lenskit.metrics.bulk.RunAnalysisResult`.
+
+.. py:class:: lenskit.metrics.MAE
+
+    Re-exported alias for :py:class:`lenskit.metrics.predict.MAE`.
+
+.. py:class:: lenskit.metrics.RMSE
+
+    Re-exported alias for :py:class:`lenskit.metrics.predict.RMSE`.
+
+.. py:class:: lenskit.metrics.DCG
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.DCG`.
+
+.. py:class:: lenskit.metrics.ILS
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.ILS`.
+
+.. py:class:: lenskit.metrics.NDCG
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.NDCG`.
+
+.. py:class:: lenskit.metrics.RBP
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.RBP`.
+
+.. py:class:: lenskit.metrics.Entropy
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.Entropy`.
+
+.. py:class:: lenskit.metrics.ExposureGini
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.ExposureGini`.
+
+.. py:class:: lenskit.metrics.GeometricRankWeight
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.GeometricRankWeight`.
+
+.. py:class:: lenskit.metrics.Hit
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.Hit`.
+
+.. py:class:: lenskit.metrics.ListGini
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.ListGini`.
+
+.. py:class:: lenskit.metrics.LogRankWeight
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.LogRankWeight`.
+
+.. py:class:: lenskit.metrics.MeanPopRank
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.MeanPopRank`.
+
+.. py:class:: lenskit.metrics.Precision
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.Precision`.
+
+.. py:class:: lenskit.metrics.RankBiasedEntropy
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.RankBiasedEntropy`.
+
+.. py:class:: lenskit.metrics.RankingMetricBase
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.RankingMetricBase`.
+
+.. py:class:: lenskit.metrics.RankWeight
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.RankWeight`.
+
+.. py:class:: lenskit.metrics.Recall
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.Recall`.
+
+.. py:class:: lenskit.metrics.RecipRank
+
+    Re-exported alias for :py:class:`lenskit.metrics.ranking.RecipRank`.
+
+.. py:function:: lenskit.metrics.least_item_promoted
+
+    Re-exported alias for :py:func:`lenskit.metrics.reranking.least_item_promoted`.
+
+.. py:function:: lenskit.metrics.rank_biased_overlap
+
+    Re-exported alias for :py:func:`lenskit.metrics.reranking.rank_biased_overlap`.
+

@@ -1,0 +1,158 @@
+lenskit.data.repr
+=================
+
+.. py:module:: lenskit.data.repr
+
+.. autoapi-nested-parse::
+
+   Utility functions for implementing ``__str__`` and ``__repr__`` methods
+   with consistent syntax.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.data.repr.HasObjectRepr
+   lenskit.data.repr.ReprWriter
+   lenskit.data.repr.ReprIndenter
+   lenskit.data.repr.ObjectRepr
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.data.repr.object_repr
+
+
+
+Module Contents
+---------------
+
+.. py:class:: HasObjectRepr
+   
+
+   Bases: :py:obj:`Protocol`
+
+
+   Base class for protocol classes.
+
+   Protocol classes are defined as::
+
+       class Proto(Protocol):
+           def meth(self) -> int:
+               ...
+
+   Such classes are primarily used with static type checkers that recognize
+   structural subtyping (static duck-typing).
+
+   For example::
+
+       class C:
+           def meth(self) -> int:
+               return 0
+
+       def func(x: Proto) -> int:
+           return x.meth()
+
+       func(C())  # Passes static type check
+
+   See PEP 544 for details. Protocol classes decorated with
+   @typing.runtime_checkable act as simple-minded runtime protocols that check
+   only the presence of given attributes, ignoring their type signatures.
+   Protocol classes can be generic, they are defined as::
+
+       class GenProto[T](Protocol):
+           def meth(self) -> T:
+               ...
+
+
+.. py:class:: ReprWriter
+   
+
+   .. py:attribute:: out
+      :type:  io.StringIO
+
+
+   .. py:attribute:: current_indent
+      :type:  int
+      :value: 0
+
+
+
+   .. py:attribute:: newline
+      :type:  bool
+      :value: True
+
+
+
+   .. py:method:: write(text)
+
+
+   .. py:method:: writeln(text = '')
+
+
+   .. py:method:: string()
+
+
+   .. py:method:: indent(*, size = 2)
+
+
+.. py:class:: ReprIndenter(writer, size)
+   
+
+   .. py:attribute:: writer
+      :type:  ReprWriter
+
+
+   .. py:attribute:: size
+      :type:  int
+
+
+   .. py:method:: __enter__()
+
+
+   .. py:method:: __exit__(exc_type, exc_val, exc_tb)
+
+
+.. py:class:: ObjectRepr
+   
+
+   .. py:attribute:: tag
+      :type:  str
+
+
+   .. py:attribute:: words
+      :type:  collections.abc.Sequence[str]
+      :value: ()
+
+
+
+   .. py:attribute:: comment
+      :type:  str | None
+      :value: None
+
+
+
+   .. py:attribute:: attrs
+      :type:  collections.abc.Mapping[str, Any] | None
+      :value: None
+
+
+
+   .. py:method:: write(writer)
+
+
+   .. py:method:: string()
+
+
+.. py:function:: object_repr(tag, *words, comment = None, **attrs)
+
+   Construct string "object" representations.
+
+
+

@@ -1,0 +1,203 @@
+lenskit.basic.history
+=====================
+
+.. py:module:: lenskit.basic.history
+
+.. autoapi-nested-parse::
+
+   Components that look up user history from the training data.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.basic.history.LookupConfig
+   lenskit.basic.history.UserTrainingHistoryLookup
+   lenskit.basic.history.KnownRatingConfig
+   lenskit.basic.history.KnownRatingScorer
+
+
+
+Module Contents
+---------------
+
+.. py:class:: LookupConfig
+   
+
+   .. py:attribute:: interaction_class
+      :type:  str | None
+      :value: None
+
+
+      The name of the interaction class to use.  Leave ``None`` to use the
+      dataset's default interaction class.
+
+
+.. py:class:: UserTrainingHistoryLookup(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ], :py:obj:`lenskit.training.Trainable`
+
+
+   Look up a user's history from the training data.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: config
+      :type:  LookupConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: interactions
+      :type:  lenskit.data.dataset.MatrixRelationshipSet | None
+
+
+   .. py:method:: is_trained()
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options = TrainingOptions())
+
+      Train the model to learn its parameters from a training dataset.
+
+      :param data: The training dataset.
+      :param options: The training options.
+
+
+
+   .. py:method:: __call__(query)
+
+      Look up the user's data from the training history (if needed), and
+      ensure a fully-populated :class:`RecQuery`.
+
+
+
+.. py:class:: KnownRatingConfig
+   
+
+   Bases: :py:obj:`LookupConfig`
+
+
+   .. py:attribute:: score
+      :type:  Literal['rating', 'indicator'] | None
+      :value: None
+
+
+      The field name to use to score items, or ``"indicator"`` to score with 0/1
+      based on presence in the training data.  The default, ``None``, uses ratings
+      if available, and otherwise scores with ` for interacted items and leaves
+      un-interacted items unscored.
+
+
+   .. py:attribute:: source
+      :type:  Literal['training', 'query']
+      :value: 'training'
+
+
+      Whether to get the known ratings from the training data or from the query.
+
+
+.. py:class:: KnownRatingScorer(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ], :py:obj:`lenskit.training.Trainable`
+
+
+   Score items by returning their values from the training data.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: config
+      :type:  KnownRatingConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: interactions
+      :type:  lenskit.data.dataset.MatrixRelationshipSet
+
+
+   .. py:method:: is_trained()
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options = TrainingOptions())
+
+      Train the model to learn its parameters from a training dataset.
+
+      :param data: The training dataset.
+      :param options: The training options.
+
+
+
+   .. py:method:: __call__(query, items)
+
+      Run the pipeline's operation and produce a result.  This is the key
+      method for components to implement.
+
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.basic.history.Dataset
+
+    Re-exported alias for :py:class:`lenskit.data.Dataset`.
+
+.. py:class:: lenskit.basic.history.ItemList
+
+    Re-exported alias for :py:class:`lenskit.data.ItemList`.
+
+.. py:data:: lenskit.basic.history.QueryInput
+
+    Re-exported alias for :py:data:`lenskit.data.QueryInput`.
+
+.. py:class:: lenskit.basic.history.RecQuery
+
+    Re-exported alias for :py:class:`lenskit.data.RecQuery`.
+
+.. py:class:: lenskit.basic.history.MatrixRelationshipSet
+
+    Re-exported alias for :py:class:`lenskit.data.dataset.MatrixRelationshipSet`.
+
+.. py:exception:: lenskit.basic.history.DataError
+
+    Re-exported alias for :py:exc:`lenskit.diagnostics.DataError`.
+
+.. py:function:: lenskit.basic.history.get_logger
+
+    Re-exported alias for :py:func:`lenskit.logging.get_logger`.
+
+.. py:function:: lenskit.basic.history.trace
+
+    Re-exported alias for :py:func:`lenskit.logging.trace`.
+
+.. py:class:: lenskit.basic.history.Component
+
+    Re-exported alias for :py:class:`lenskit.pipeline.Component`.
+
+.. py:class:: lenskit.basic.history.Trainable
+
+    Re-exported alias for :py:class:`lenskit.training.Trainable`.
+
+.. py:class:: lenskit.basic.history.TrainingOptions
+
+    Re-exported alias for :py:class:`lenskit.training.TrainingOptions`.
+

@@ -1,0 +1,305 @@
+lenskit.basic.bias
+==================
+
+.. py:module:: lenskit.basic.bias
+
+.. autoapi-nested-parse::
+
+   Bias scoring model.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.basic.bias.BiasEntity
+   lenskit.basic.bias.Damping
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.basic.bias.BiasModel
+   lenskit.basic.bias.BiasConfig
+   lenskit.basic.bias.BiasScorer
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.basic.bias.entity_damping
+
+
+
+Module Contents
+---------------
+
+.. py:type:: BiasEntity
+   :canonical: Literal['user', 'item']
+
+
+.. py:type:: Damping
+   :canonical: float | dict[BiasEntity, float]
+
+
+.. py:class:: BiasModel
+   
+
+   User-item bias models learned from rating data.  The :class:`BiasScorer`
+   class uses this model to score items in a pipeline; the model is reusable
+   in other components that need user-item bias models.
+
+   This implements the following model:
+
+   .. math::
+      b_{ui} = b_g + b_i + b_u
+
+   where :math:`b_g` is the global bias (global mean rating), :math:`b_i` is
+   item bias, and :math:`b_u` is the user bias.  With the provided damping
+   values :math:`\beta_{\mathrm{u}}` and :math:`\beta_{\mathrm{i}}`, they
+   are computed as follows:
+
+   .. math::
+      \begin{align*}
+      b_g & = \frac{\sum_{r_{ui} \in R} r_{ui}}{|R|} &
+      b_i & = \frac{\sum_{r_{ui} \in R_i} (r_{ui} - b_g)}{|R_i| + \beta_{\mathrm{i}}} &
+      b_u & = \frac{\sum_{r_{ui} \in R_u} (r_{ui} - b_g - b_i)}{|R_u| + \beta_{\mathrm{u}}}
+      \end{align*}
+
+   The damping values can be interpreted as the number of default (mean)
+   ratings to assume *a priori* for each user or item, damping low-information
+   users and items towards a mean instead of permitting them to take on extreme
+   values based on few ratings.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: damping
+      :type:  Damping
+
+      The mean damping terms.
+
+
+   .. py:attribute:: global_bias
+      :type:  float
+
+      The global bias term.
+
+
+   .. py:attribute:: items
+      :type:  lenskit.data.Vocabulary | None
+      :value: None
+
+
+      Vocabulary of items.
+
+
+   .. py:attribute:: item_biases
+      :type:  numpy.ndarray[tuple[int], numpy.dtype[numpy.float32]] | None
+      :value: None
+
+
+      The item offsets (:math:`b_i` values).
+
+
+   .. py:attribute:: users
+      :type:  lenskit.data.Vocabulary | None
+      :value: None
+
+
+      Vocabulary of users.
+
+
+   .. py:attribute:: user_biases
+      :type:  numpy.ndarray[tuple[int], numpy.dtype[numpy.float32]] | None
+      :value: None
+
+
+      The user offsets (:math:`b_u` values).
+
+
+   .. py:method:: learn(data, damping = 0.0, *, entities = frozenset({'user', 'item'}))
+      :classmethod:
+
+
+      Learn a bias model and its parameters from a dataset.
+
+      :param data: The dataset from which to learn the bias model.
+      :param damping: Bayesian damping to apply to computed biases.  Either a number, to
+                      damp both user and item biases the same amount, or a (user,item)
+                      tuple providing separate damping values.
+      :param items: Whether to compute item biases
+      :param users: Whether to compute user biases
+
+
+
+   .. py:method:: compute_for_items(items: lenskit.data.ItemList, user_id: lenskit.data.ID | None = None, user_items: lenskit.data.ItemList | None = None) -> tuple[numpy.ndarray[tuple[int], numpy.dtype[numpy.float32]], float]
+                  compute_for_items(items: lenskit.data.ItemList, *, bias: float) -> numpy.ndarray[tuple[int], numpy.dtype[numpy.float32]]
+
+      Compute the personalized biases for a set of itemsm and optionally a
+      user.  The user can be specified either by their identifier or by a list
+      of ratings.
+
+      :param items: The items to score.
+      :param user: The user identifier.
+      :param user_items: The user's items, with ratings (takes precedence over ``user``
+                         if both are supplied).  If the supplied list does not have a
+                         ``rating`` field, it is ignored.
+      :param bias: A pre-computed user bias.
+
+      :returns: A tuple of the overall bias scores for the specified items and user,
+                and the user's bias (needed to de-normalize scores efficiently
+                later).  If a user bias is provided instead of user information,
+                only the composite bias scores are returned.
+
+
+
+   .. py:method:: transform_matrix(matrix: scipy.sparse.coo_array) -> scipy.sparse.coo_array
+                  transform_matrix(matrix: torch.Tensor) -> torch.Tensor
+
+      Transform a sparse ratings matrix by subtracting biases.
+
+      :param matrix: The matrix to transform.
+
+
+
+.. py:class:: BiasConfig
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Configuration for :class:`BiasScorer`.
+
+
+   .. py:attribute:: entities
+      :type:  Annotated[set[Literal['user', 'item']], PlainSerializer(lambda s: sorted(s), return_type=list[str])]
+
+      The entities to compute biases for, in addition to global bais.  Defaults to
+      users and items.
+
+
+   .. py:attribute:: damping
+      :type:  pydantic.NonNegativeFloat | dict[Literal['user', 'item'], pydantic.NonNegativeFloat]
+      :value: 0.0
+
+
+
+   .. py:method:: entity_damping(entity)
+
+      Look up the damping for a particular entity type.
+
+
+
+.. py:class:: BiasScorer(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.pipeline.components.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ], :py:obj:`lenskit.training.Trainable`
+
+
+   A user-item bias rating prediction model.  This component uses
+   :class:`BiasModel` to predict ratings for users and items.
+
+   :param config: The component configuration.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: config
+      :type:  BiasConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: model
+      :type:  BiasModel
+
+
+   .. py:method:: is_trained()
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options = TrainingOptions())
+
+      Train the bias model on some rating data.
+
+      :param ratings: The training data (must have ratings).
+
+      :returns: The trained bias object.
+
+
+
+   .. py:method:: __call__(query, items)
+
+      Compute predictions for a user and items.  Unknown users and items are
+      assumed to have zero bias.
+
+      :param query: The recommendation query.  If the query has an item list with
+                    ratings, those ratings are used to compute a new bias instead of
+                    using the user's recorded bias.
+      :param items: The items to score.
+
+      :returns: Scores for `items`.
+
+
+
+.. py:function:: entity_damping(damping, entity)
+
+   Look up the damping for a particular entity type.
+
+
+
+Exported Aliases
+----------------
+
+.. py:data:: lenskit.basic.bias.ID
+
+    Re-exported alias for :py:data:`lenskit.data.ID`.
+
+.. py:class:: lenskit.basic.bias.Dataset
+
+    Re-exported alias for :py:class:`lenskit.data.Dataset`.
+
+.. py:class:: lenskit.basic.bias.ItemList
+
+    Re-exported alias for :py:class:`lenskit.data.ItemList`.
+
+.. py:data:: lenskit.basic.bias.QueryInput
+
+    Re-exported alias for :py:data:`lenskit.data.QueryInput`.
+
+.. py:class:: lenskit.basic.bias.RecQuery
+
+    Re-exported alias for :py:class:`lenskit.data.RecQuery`.
+
+.. py:class:: lenskit.basic.bias.Vocabulary
+
+    Re-exported alias for :py:class:`lenskit.data.Vocabulary`.
+
+.. py:class:: lenskit.basic.bias.Component
+
+    Re-exported alias for :py:class:`lenskit.pipeline.components.Component`.
+
+.. py:function:: lenskit.basic.bias.safe_tensor
+
+    Re-exported alias for :py:func:`lenskit.torch.safe_tensor`.
+
+.. py:class:: lenskit.basic.bias.Trainable
+
+    Re-exported alias for :py:class:`lenskit.training.Trainable`.
+
+.. py:class:: lenskit.basic.bias.TrainingOptions
+
+    Re-exported alias for :py:class:`lenskit.training.TrainingOptions`.
+

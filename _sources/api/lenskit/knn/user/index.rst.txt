@@ -1,0 +1,228 @@
+lenskit.knn.user
+================
+
+.. py:module:: lenskit.knn.user
+
+.. autoapi-nested-parse::
+
+   User-based k-NN collaborative filtering.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.knn.user.UserKNNConfig
+   lenskit.knn.user.UserKNNScorer
+
+
+
+Module Contents
+---------------
+
+.. py:class:: UserKNNConfig
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Configuration for :class:`ItemKNNScorer`.
+
+
+   .. py:attribute:: max_nbrs
+      :type:  pydantic.PositiveInt
+
+      The maximum number of neighbors for scoring each item.
+
+
+   .. py:attribute:: min_nbrs
+      :type:  pydantic.PositiveInt
+      :value: 1
+
+
+      The minimum number of neighbors for scoring each item.
+
+
+   .. py:attribute:: min_sim
+      :type:  pydantic.PositiveFloat
+      :value: 1e-06
+
+
+      Minimum similarity threshold for considering a neighbor.  Must be positive;
+      if less than the smallest 32-bit normal (:math:`1.175 \times 10^{-38}`), is
+      clamped to that value.
+
+
+   .. py:attribute:: feedback
+      :type:  lenskit.data.FeedbackType
+      :value: 'explicit'
+
+
+      The type of input data to use (explicit or implicit).  This affects data
+      pre-processing and aggregation.
+
+
+   .. py:method:: clamp_min_sim(sim)
+      :staticmethod:
+
+
+
+   .. py:property:: explicit
+      :type: bool
+
+
+      Query whether this is in explicit-feedback mode.
+
+
+.. py:class:: UserKNNScorer(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ], :py:obj:`lenskit.training.Trainable`
+
+
+   User-user nearest-neighbor collaborative filtering with ratings. This
+   user-user implementation is not terribly configurable; it hard-codes design
+   decisions found to work well in the previous Java-based LensKit code.
+
+   .. note::
+
+       This component must be used with queries containing the user's history,
+       either directly in the input or by wiring its query input to the output of a
+       user history component (e.g., :class:`~lenskit.basic.UserTrainingHistoryLookup`).
+
+   :Stability: Caller
+
+
+   .. py:attribute:: config
+      :type:  UserKNNConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: users
+      :type:  lenskit.data.vocab.Vocabulary
+
+      The index of user IDs.
+
+
+   .. py:attribute:: items
+      :type:  lenskit.data.vocab.Vocabulary
+
+      The index of item IDs.
+
+
+   .. py:attribute:: user_means
+      :type:  numpy.ndarray[tuple[int], numpy.dtype[numpy.float32]] | None
+
+      Mean rating for each known user.
+
+
+   .. py:attribute:: user_vectors
+      :type:  scipy.sparse.csr_array
+
+      Normalized rating matrix (CSR) to find neighbors at prediction time.
+
+
+   .. py:attribute:: user_ratings
+      :type:  lenskit.data.matrix.SparseRowArray
+
+      Centered but un-normalized rating matrix (COO) to find neighbor ratings.
+
+
+   .. py:method:: is_trained()
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options = TrainingOptions())
+
+      "Train" a user-user CF model.  This memorizes the rating data in a format that is usable
+      for future computations.
+
+      :param ratings: (user, item, rating) data for collaborative filtering.
+      :type ratings: pandas.DataFrame
+
+
+
+   .. py:method:: __call__(query, items)
+
+      Compute predictions for a user and items.
+
+      :param user: the user ID
+      :param items: the items to predict
+      :type items: array-like
+      :param ratings: the user's ratings (indexed by item id); if provided, will be used to
+                      recompute the user's bias at prediction time.
+      :type ratings: pandas.Series
+
+      :returns: scores for the items, indexed by item id.
+      :rtype: pandas.Series
+
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.knn.user.Dataset
+
+    Re-exported alias for :py:class:`lenskit.data.Dataset`.
+
+.. py:data:: lenskit.knn.user.FeedbackType
+
+    Re-exported alias for :py:data:`lenskit.data.FeedbackType`.
+
+.. py:class:: lenskit.knn.user.ItemList
+
+    Re-exported alias for :py:class:`lenskit.data.ItemList`.
+
+.. py:data:: lenskit.knn.user.QueryInput
+
+    Re-exported alias for :py:data:`lenskit.data.QueryInput`.
+
+.. py:class:: lenskit.knn.user.RecQuery
+
+    Re-exported alias for :py:class:`lenskit.data.RecQuery`.
+
+.. py:class:: lenskit.knn.user.SparseRowArray
+
+    Re-exported alias for :py:class:`lenskit.data.matrix.SparseRowArray`.
+
+.. py:class:: lenskit.knn.user.Vocabulary
+
+    Re-exported alias for :py:class:`lenskit.data.vocab.Vocabulary`.
+
+.. py:exception:: lenskit.knn.user.DataWarning
+
+    Re-exported alias for :py:exc:`lenskit.diagnostics.DataWarning`.
+
+.. py:class:: lenskit.knn.user.Stopwatch
+
+    Re-exported alias for :py:class:`lenskit.logging.Stopwatch`.
+
+.. py:function:: lenskit.knn.user.get_logger
+
+    Re-exported alias for :py:func:`lenskit.logging.get_logger`.
+
+.. py:function:: lenskit.knn.user.ensure_parallel_init
+
+    Re-exported alias for :py:func:`lenskit.parallel.config.ensure_parallel_init`.
+
+.. py:class:: lenskit.knn.user.Component
+
+    Re-exported alias for :py:class:`lenskit.pipeline.Component`.
+
+.. py:class:: lenskit.knn.user.Trainable
+
+    Re-exported alias for :py:class:`lenskit.training.Trainable`.
+
+.. py:class:: lenskit.knn.user.TrainingOptions
+
+    Re-exported alias for :py:class:`lenskit.training.TrainingOptions`.
+
