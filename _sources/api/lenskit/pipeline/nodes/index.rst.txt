@@ -3,14 +3,13 @@ lenskit.pipeline.nodes
 
 .. py:module:: lenskit.pipeline.nodes
 
+.. autoapi-nested-parse::
 
-Attributes
-----------
+   Node objects used to represent pipelines internally.  It is very rare
+   for client code to need to work with the types in this module.
 
-.. autoapisummary::
+   :Stability: Internal
 
-   lenskit.pipeline.nodes.ND
-   lenskit.pipeline.nodes.CFG
 
 
 Classes
@@ -30,15 +29,8 @@ Classes
 Module Contents
 ---------------
 
-.. py:data:: ND
-
-.. py:data:: CFG
-
-.. py:class:: Node(name, *, types = None)
+.. py:class:: Node[T](name, *, types = None)
    
-
-   Bases: :py:obj:`Generic`\ [\ :py:obj:`ND`\ ]
-
 
    Representation of a single node in a :class:`Pipeline`.
 
@@ -65,10 +57,10 @@ Module Contents
    .. py:method:: __str__()
 
 
-.. py:class:: InputNode(name, *, types = None)
+.. py:class:: InputNode[T](name, *, types = None)
    
 
-   Bases: :py:obj:`Node`\ [\ :py:obj:`ND`\ ], :py:obj:`Generic`\ [\ :py:obj:`ND`\ ]
+   Bases: :py:obj:`Node`\ [\ :py:obj:`T`\ ]
 
 
    An input node.
@@ -76,10 +68,10 @@ Module Contents
    :Stability: Internal
 
 
-.. py:class:: LiteralNode(name, value, *, types = None)
+.. py:class:: LiteralNode[T](name, value, *, types = None)
    
 
-   Bases: :py:obj:`Node`\ [\ :py:obj:`ND`\ ], :py:obj:`Generic`\ [\ :py:obj:`ND`\ ]
+   Bases: :py:obj:`Node`\ [\ :py:obj:`T`\ ]
 
 
    A node storing a literal value.
@@ -93,15 +85,15 @@ Module Contents
 
 
    .. py:attribute:: value
-      :type:  ND
+      :type:  T
 
       The value associated with this node
 
 
-.. py:class:: ComponentNode(name)
+.. py:class:: ComponentNode[T](name)
    
 
-   Bases: :py:obj:`Node`\ [\ :py:obj:`ND`\ ], :py:obj:`Generic`\ [\ :py:obj:`ND`\ ]
+   Bases: :py:obj:`Node`\ [\ :py:obj:`T`\ ]
 
 
    A node storing a component.  This is an abstract node class; see subclasses
@@ -110,7 +102,7 @@ Module Contents
    :Stability: Internal
 
 
-   .. py:method:: create(name, comp, config = None)
+   .. py:method:: create[CFG](name, comp, config = None)
       :staticmethod:
 
 
@@ -122,10 +114,10 @@ Module Contents
 
 
 
-.. py:class:: ComponentConstructorNode(name, constructor, config)
+.. py:class:: ComponentConstructorNode[T](name, constructor, config)
    
 
-   Bases: :py:obj:`ComponentNode`\ [\ :py:obj:`ND`\ ], :py:obj:`Generic`\ [\ :py:obj:`ND`\ ]
+   Bases: :py:obj:`ComponentNode`\ [\ :py:obj:`T`\ ]
 
 
    A node storing a component.  This is an abstract node class; see subclasses
@@ -140,7 +132,7 @@ Module Contents
 
 
    .. py:attribute:: constructor
-      :type:  lenskit.pipeline.components.ComponentConstructor[Any, ND]
+      :type:  lenskit.pipeline.components.ComponentConstructor[Any, T]
 
 
    .. py:attribute:: config
@@ -150,10 +142,10 @@ Module Contents
    .. py:property:: inputs
 
 
-.. py:class:: ComponentInstanceNode(name, component)
+.. py:class:: ComponentInstanceNode[T](name, component)
    
 
-   Bases: :py:obj:`ComponentNode`\ [\ :py:obj:`ND`\ ], :py:obj:`Generic`\ [\ :py:obj:`ND`\ ]
+   Bases: :py:obj:`ComponentNode`\ [\ :py:obj:`T`\ ]
 
 
    A node storing a component.  This is an abstract node class; see subclasses
@@ -168,7 +160,7 @@ Module Contents
 
 
    .. py:attribute:: component
-      :type:  lenskit.pipeline.components.Component[ND] | lenskit.pipeline.components.PipelineFunction[ND]
+      :type:  lenskit.pipeline.components.Component[T] | lenskit.pipeline.components.PipelineFunction[T]
 
 
    .. py:property:: inputs

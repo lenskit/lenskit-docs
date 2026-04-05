@@ -14,11 +14,6 @@ Attributes
 
 .. autoapisummary::
 
-   lenskit.pipeline.components.P
-   lenskit.pipeline.components.T
-   lenskit.pipeline.components.CFG
-   lenskit.pipeline.components.CArgs
-   lenskit.pipeline.components.COut
    lenskit.pipeline.components.PipelineFunction
 
 
@@ -42,28 +37,12 @@ Functions
    lenskit.pipeline.components.component_inputs
    lenskit.pipeline.components.component_return_type
    lenskit.pipeline.components.fallback_on_none
+   lenskit.pipeline.components.is_component_class
 
 
 
 Module Contents
 ---------------
-
-.. py:data:: P
-
-.. py:data:: T
-
-.. py:data:: CFG
-
-.. py:data:: CArgs
-
-   Argument type for a component.  It is difficult to actually specify this, but
-   using this default parameter spec allows :class:`Component` subclasses to
-   typecheck by declaring the base class :meth:`~Component.__call__` to have
-   unknown parameters.
-
-.. py:data:: COut
-
-   Return type for a component.
 
 .. py:type:: PipelineFunction
    :canonical: Callable[..., COut]
@@ -105,10 +84,10 @@ Module Contents
 
 
 
-.. py:class:: ComponentConstructor
+.. py:class:: ComponentConstructor[CFG, COut]
    
 
-   Bases: :py:obj:`Protocol`, :py:obj:`Generic`\ [\ :py:obj:`CFG`\ , :py:obj:`COut`\ ]
+   Bases: :py:obj:`Protocol`
 
 
    Protocol for component constructors.
@@ -123,10 +102,10 @@ Module Contents
    .. py:method:: validate_config(data = None)
 
 
-.. py:class:: Component(config = None, **kwargs)
+.. py:class:: Component[COut](config = None, **kwargs)
    
 
-   Bases: :py:obj:`abc.ABC`, :py:obj:`Generic`\ [\ :py:obj:`COut`\ , :py:obj:`CArgs`\ ]
+   Bases: :py:obj:`abc.ABC`
 
 
    Base class for pipeline component objects.  Any component that is not just a
@@ -244,15 +223,20 @@ Module Contents
 
 
 
-.. py:function:: component_inputs(component, *, warn_on_missing = True, _warn_level = 1)
+.. py:function:: component_inputs[COut](component, *, warn_on_missing = True, _warn_level = 1)
 
-.. py:function:: component_return_type(component)
+.. py:function:: component_return_type[COut](component)
 
-.. py:function:: fallback_on_none(primary, fallback)
+.. py:function:: fallback_on_none[T](primary, fallback)
 
    Fallback to a second component if the primary input is `None`.
 
    :Stability: Caller
+
+
+.. py:function:: is_component_class(obj)
+
+   Check if the provided object is a component class.
 
 
 
