@@ -14,7 +14,7 @@
 <meta property="og:description" content="This notebook gets you started with a brief nDCG evaluation with LensKit for Python. This notebook is also available on Google Collaboratory and nbviewer. Setup: We first import the LensKit compone..." />
 <meta name="description" content="This notebook gets you started with a brief nDCG evaluation with LensKit for Python. This notebook is also available on Google Collaboratory and nbviewer. Setup: We first import the LensKit compone..." />
 
-    <title>Getting Started &#8212; LensKit 2026.0.0.dev475+g4c506fa9 documentation</title>
+    <title>Getting Started &#8212; LensKit 2026.0.0.dev495+gb148ed08 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=afc4f1c8"></script>
+    <script src="../_static/documentation_options.js?v=bb40fcba"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -144,8 +144,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev475+g4c506fa9 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev475+g4c506fa9 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
   
   
 </a></div>
@@ -575,7 +575,7 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.batch</span><span class="w"> </span><span class="kn">import</span> <span class="n">recommend</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">ItemListCollection</span><span class="p">,</span> <span class="n">UserIDKey</span><span class="p">,</span> <span class="n">load_movielens</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.knn</span><span class="w"> </span><span class="kn">import</span> <span class="n">ItemKNNScorer</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDCG</span><span class="p">,</span> <span class="n">RBP</span><span class="p">,</span> <span class="n">RecipRank</span><span class="p">,</span> <span class="n">RunAnalysis</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">NDCG</span><span class="p">,</span> <span class="n">RBP</span><span class="p">,</span> <span class="n">MeasurementCollector</span><span class="p">,</span> <span class="n">RecipRank</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">topn_pipeline</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.splitting</span><span class="w"> </span><span class="kn">import</span> <span class="n">SampleFrac</span><span class="p">,</span> <span class="n">crossfold_users</span>
 </pre></div>
@@ -611,6 +611,12 @@
 </div>
 </div>
 <div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/mde48/LensKit/lkpy/src/lenskit/data/movielens.py:143: ParserWarning: Falling back to the &#39;python&#39; engine because the &#39;c&#39; engine does not support regex separators (separators &gt; 1 char and different from &#39;\s+&#39; are interpreted as regex); you can avoid this warning by specifying engine=&#39;python&#39;.
+  return pd.read_csv(
+/Users/mde48/LensKit/lkpy/src/lenskit/data/movielens.py:157: ParserWarning: Falling back to the &#39;python&#39; engine because the &#39;c&#39; engine does not support regex separators (separators &gt; 1 char and different from &#39;\s+&#39; are interpreted as regex); you can avoid this warning by specifying engine=&#39;python&#39;.
+  return pd.read_csv(
+</pre></div>
+</div>
 <div class="output text_html"><div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -641,35 +647,35 @@
       <td>1</td>
       <td>1</td>
       <td>5.0</td>
-      <td>874965758</td>
+      <td>1997-09-22 22:02:38</td>
     </tr>
     <tr>
       <th>1</th>
       <td>1</td>
       <td>2</td>
       <td>3.0</td>
-      <td>876893171</td>
+      <td>1997-10-15 05:26:11</td>
     </tr>
     <tr>
       <th>2</th>
       <td>1</td>
       <td>3</td>
       <td>4.0</td>
-      <td>878542960</td>
+      <td>1997-11-03 07:42:40</td>
     </tr>
     <tr>
       <th>3</th>
       <td>1</td>
       <td>4</td>
       <td>3.0</td>
-      <td>876893119</td>
+      <td>1997-10-15 05:25:19</td>
     </tr>
     <tr>
       <th>4</th>
       <td>1</td>
       <td>5</td>
       <td>3.0</td>
-      <td>889751712</td>
+      <td>1998-03-13 01:15:12</td>
     </tr>
   </tbody>
 </table>
@@ -732,12 +738,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/mde48/LensKit/lkpy/lenskit/lenskit/als/_explicit.py:59: UserWarning: Sparse CSR tensor support is in beta state. If you miss a functionality in the sparse tensor support, please submit a feature request to https://github.com/pytorch/pytorch/issues. (Triggered internally at /Users/runner/miniforge3/conda-bld/libtorch_1733624403138/work/aten/src/ATen/SparseCsrTensorImpl.cpp:55.)
-  rmat = rmat.to_sparse_csr()
-</pre></div>
-</div>
-</div>
 </div>
 </section>
 <section id="measuring-recommendations">
@@ -745,11 +745,12 @@
 <p>We analyze our recommendation lists with a <code class="xref py py-class docutils literal notranslate"><span class="pre">RunAnalysis</span></code> and some metrics.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ran</span> <span class="o">=</span> <span class="n">RunAnalysis</span><span class="p">()</span>
-<span class="n">ran</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">NDCG</span><span class="p">())</span>
-<span class="n">ran</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RBP</span><span class="p">())</span>
-<span class="n">ran</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RecipRank</span><span class="p">())</span>
-<span class="n">results</span> <span class="o">=</span> <span class="n">ran</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">all_recs</span><span class="p">,</span> <span class="n">all_test</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span> <span class="o">=</span> <span class="n">MeasurementCollector</span><span class="p">()</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">NDCG</span><span class="p">())</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RBP</span><span class="p">())</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RecipRank</span><span class="p">())</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">measure_collection</span><span class="p">(</span><span class="n">all_recs</span><span class="p">,</span> <span class="n">all_test</span><span class="p">)</span>
+<span class="n">list_metrics</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">list_metrics</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -757,7 +758,7 @@
 <p>Now we have nDCG values, along with some other metrics! We can start computing and plotting.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">results</span><span class="o">.</span><span class="n">list_metrics</span><span class="p">()</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">list_metrics</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -794,15 +795,15 @@
   <tbody>
     <tr>
       <th>ALS</th>
-      <td>0.125894</td>
-      <td>0.088839</td>
-      <td>0.19244</td>
+      <td>0.126339</td>
+      <td>0.077297</td>
+      <td>0.203852</td>
     </tr>
     <tr>
       <th>II</th>
-      <td>0.095334</td>
-      <td>0.036945</td>
-      <td>0.10837</td>
+      <td>0.094060</td>
+      <td>0.043014</td>
+      <td>0.107132</td>
     </tr>
   </tbody>
 </table>
@@ -810,13 +811,13 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">list_metrics</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;NDCG&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">list_metrics</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;NDCG&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/c3f4a21f0227228c76e2d6e166bc218f021f66d8f1a0c9c0ebe5eda045a64e7a.png" src="../_images/c3f4a21f0227228c76e2d6e166bc218f021f66d8f1a0c9c0ebe5eda045a64e7a.png" />
+<img alt="../_images/27c37e88b8b214eb1a30e7812b914e531fd8c7e719f5ead68371f8dd71874a38.png" src="../_images/27c37e88b8b214eb1a30e7812b914e531fd8c7e719f5ead68371f8dd71874a38.png" />
 </div>
 </div>
 </section>
@@ -917,7 +918,7 @@
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev475+g4c506fa9.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev495+gb148ed08.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

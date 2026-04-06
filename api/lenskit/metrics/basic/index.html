@@ -14,7 +14,7 @@
 <meta property="og:description" content="Basic set statistics. Classes: Module Contents: Exported Aliases:" />
 <meta name="description" content="Basic set statistics. Classes: Module Contents: Exported Aliases:" />
 
-    <title>lenskit.metrics.basic &#8212; LensKit 2026.0.0.dev475+g4c506fa9 documentation</title>
+    <title>lenskit.metrics.basic &#8212; LensKit 2026.0.0.dev495+gb148ed08 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../../_static/documentation_options.js?v=afc4f1c8"></script>
+    <script src="../../../../_static/documentation_options.js?v=bb40fcba"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../../../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev475+g4c506fa9 documentation - Home"/>
-    <img src="../../../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev475+g4c506fa9 documentation - Home"/>
+    <img src="../../../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
+    <img src="../../../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
   
   
 </a></div>
@@ -449,6 +449,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">lenskit</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../data/index.html">lenskit.data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../data/accum/index.html">lenskit.data.accum</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../data/adapt/index.html">lenskit.data.adapt</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../data/amazon/index.html">lenskit.data.amazon</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../data/arrow/index.html">lenskit.data.arrow</a></li>
@@ -683,28 +684,24 @@ The base implementation returns the class name by default.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.basic.ListLength.measure_list">
 <span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.basic.ListLength.measure_list" title="Link to this definition">#</a></dt>
-<dd><p>Compute the metric value for a single result list.</p>
-<p>Individual metric classes need to implement this method.</p>
+<dd><p>Compute measurements for a single list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>recs</strong> (<a class="reference internal" href="../../data/items/index.html#lenskit.data.items.ItemList" title="lenskit.data.items.ItemList"><em>lenskit.data.items.ItemList</em></a>)</p></li>
 <li><p><strong>test</strong> (<a class="reference internal" href="../../data/items/index.html#lenskit.data.items.ItemList" title="lenskit.data.items.ItemList"><em>lenskit.data.items.ItemList</em></a>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="lenskit.metrics.basic.ListLength.summarize">
-<span class="sig-name descname"><span class="pre">summarize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.basic.ListLength.summarize" title="Link to this definition">#</a></dt>
-<dd><p>Summarize per-list metric values</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary containing mean, median, and std.</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -728,17 +725,26 @@ The base implementation returns the class name by default.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="lenskit.metrics.basic.TestItemCount.__call__">
-<span class="sig-name descname"><span class="pre">__call__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.basic.TestItemCount.__call__" title="Link to this definition">#</a></dt>
-<dd><dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="sig sig-object py" id="lenskit.metrics.basic.TestItemCount.measure_list">
+<span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.basic.TestItemCount.measure_list" title="Link to this definition">#</a></dt>
+<dd><p>Compute measurements for a single list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>recs</strong> (<a class="reference internal" href="../../data/items/index.html#lenskit.data.items.ItemList" title="lenskit.data.items.ItemList"><em>lenskit.data.items.ItemList</em></a>)</p></li>
 <li><p><strong>test</strong> (<a class="reference internal" href="../../data/items/index.html#lenskit.data.items.ItemList" title="lenskit.data.items.ItemList"><em>lenskit.data.items.ItemList</em></a>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -821,12 +827,11 @@ The base implementation returns the class name by default.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.basic.ListLength"><code class="docutils literal notranslate"><span class="pre">ListLength</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.basic.ListLength.label"><code class="docutils literal notranslate"><span class="pre">ListLength.label</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.basic.ListLength.measure_list"><code class="docutils literal notranslate"><span class="pre">ListLength.measure_list()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.basic.ListLength.summarize"><code class="docutils literal notranslate"><span class="pre">ListLength.summarize()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.basic.TestItemCount"><code class="docutils literal notranslate"><span class="pre">TestItemCount</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.basic.TestItemCount.label"><code class="docutils literal notranslate"><span class="pre">TestItemCount.label</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.basic.TestItemCount.__call__"><code class="docutils literal notranslate"><span class="pre">TestItemCount.__call__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.basic.TestItemCount.measure_list"><code class="docutils literal notranslate"><span class="pre">TestItemCount.measure_list()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -880,7 +885,7 @@ The base implementation returns the class name by default.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev475+g4c506fa9.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev495+gb148ed08.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

@@ -28,6 +28,7 @@ Classes
    lenskit.metrics.predict.PredictMetric
    lenskit.metrics.predict.RMSE
    lenskit.metrics.predict.MAE
+   lenskit.metrics.predict.AvgErrorAccumulator
 
 
 
@@ -94,7 +95,7 @@ Module Contents
 .. py:class:: RMSE(missing_scores = 'error', missing_truth = 'error')
    
 
-   Bases: :py:obj:`PredictMetric`, :py:obj:`lenskit.metrics._base.ListMetric`
+   Bases: :py:obj:`PredictMetric`
 
 
    Compute RMSE (root mean squared error).  This is computed as:
@@ -122,10 +123,32 @@ Module Contents
 
 
 
+   .. py:method:: extract_list_metrics(data)
+
+      Extract per-list metric(s) from intermediate measurement data.
+
+      :returns:
+
+                - A float for simple metrics
+                - A dict mapping metric names to values for multi-metric classes
+                - None if no per-list metrics are available
+
+
+
+   .. py:method:: create_accumulator()
+
+      Creaet an accumulator to aggregate per-list measurements into summary
+      metrics.
+
+      Each result from :meth:`measure_list` is passed to
+      :meth:`Accumulator.add`.
+
+
+
 .. py:class:: MAE(missing_scores = 'error', missing_truth = 'error')
    
 
-   Bases: :py:obj:`PredictMetric`, :py:obj:`lenskit.metrics._base.ListMetric`
+   Bases: :py:obj:`PredictMetric`
 
 
    Compute MAE (mean absolute error).  This is computed as:
@@ -153,6 +176,37 @@ Module Contents
 
 
 
+   .. py:method:: extract_list_metrics(data)
+
+      Extract per-list metric(s) from intermediate measurement data.
+
+      :returns:
+
+                - A float for simple metrics
+                - A dict mapping metric names to values for multi-metric classes
+                - None if no per-list metrics are available
+
+
+
+   .. py:method:: create_accumulator()
+
+      Creaet an accumulator to aggregate per-list measurements into summary
+      metrics.
+
+      Each result from :meth:`measure_list` is passed to
+      :meth:`Accumulator.add`.
+
+
+
+.. py:class:: AvgErrorAccumulator(root = False)
+   
+
+   .. py:method:: add(value)
+
+
+   .. py:method:: accumulate()
+
+
 
 Exported Aliases
 ----------------
@@ -160,6 +214,10 @@ Exported Aliases
 .. py:class:: lenskit.metrics.predict.ItemList
 
     Re-exported alias for :py:class:`lenskit.data.ItemList`.
+
+.. py:class:: lenskit.metrics.predict.ValueStatAccumulator
+
+    Re-exported alias for :py:class:`lenskit.data.accum.ValueStatAccumulator`.
 
 .. py:data:: lenskit.metrics.predict.ITEM_COMPAT_COLUMN
 
@@ -172,10 +230,6 @@ Exported Aliases
 .. py:class:: lenskit.metrics.predict.AliasedColumn
 
     Re-exported alias for :py:class:`lenskit.data.types.AliasedColumn`.
-
-.. py:class:: lenskit.metrics.predict.ListMetric
-
-    Re-exported alias for :py:class:`lenskit.metrics._base.ListMetric`.
 
 .. py:class:: lenskit.metrics.predict.Metric
 

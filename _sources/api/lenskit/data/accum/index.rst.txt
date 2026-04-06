@@ -1,0 +1,148 @@
+lenskit.data.accum
+==================
+
+.. py:module:: lenskit.data.accum
+
+.. autoapi-nested-parse::
+
+   Data accumulation support
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.data.accum.Accumulator
+   lenskit.data.accum.AccumulatorFactory
+   lenskit.data.accum.ValueStatAccumulator
+   lenskit.data.accum.ValueStatistics
+
+
+
+Package Contents
+----------------
+
+.. py:class:: Accumulator[X, R]
+   :canonical: lenskit.data.accum._proto.Accumulator
+
+   Bases: :py:obj:`Protocol`
+
+
+   Protocol implemented by data accumulators.
+
+
+   .. py:method:: add(value)
+
+      Add a single value to this accumulator.
+
+
+
+   .. py:method:: accumulate()
+
+      Compute the accumulated value from this accumulator.
+
+
+
+.. py:class:: AccumulatorFactory[X, R]
+   :canonical: lenskit.data.accum._proto.AccumulatorFactory
+
+   Bases: :py:obj:`Protocol`
+
+
+   Base class for protocol classes.
+
+   Protocol classes are defined as::
+
+       class Proto(Protocol):
+           def meth(self) -> int:
+               ...
+
+   Such classes are primarily used with static type checkers that recognize
+   structural subtyping (static duck-typing).
+
+   For example::
+
+       class C:
+           def meth(self) -> int:
+               return 0
+
+       def func(x: Proto) -> int:
+           return x.meth()
+
+       func(C())  # Passes static type check
+
+   See PEP 544 for details. Protocol classes decorated with
+   @typing.runtime_checkable act as simple-minded runtime protocols that check
+   only the presence of given attributes, ignoring their type signatures.
+   Protocol classes can be generic, they are defined as::
+
+       class GenProto[T](Protocol):
+           def meth(self) -> T:
+               ...
+
+
+   .. py:method:: create_accumulator()
+
+      Create an accumulator for the results of this object.
+
+      :returns: An accumulator.
+
+
+
+.. py:class:: ValueStatAccumulator
+   :canonical: lenskit.data.accum._value.ValueStatAccumulator
+
+   Bases: :py:obj:`lenskit.data.accum._proto.Accumulator`\ [\ :py:obj:`float | None`\ , :py:obj:`ValueStatistics`\ ]
+
+
+   An accumulator for single real values, computing basic statistics.
+
+
+   .. py:property:: values
+      :type: numpy.ndarray[tuple[int], numpy.dtype[numpy.float64]]
+
+
+
+   .. py:method:: __len__()
+
+
+   .. py:method:: add(value)
+
+      Add a single value to this accumulator.
+
+
+
+   .. py:method:: accumulate()
+
+      Compute the accumulated value from this accumulator.
+
+
+
+.. py:class:: ValueStatistics
+   :canonical: lenskit.data.accum._value.ValueStatistics
+
+   Bases: :py:obj:`TypedDict`
+
+
+   Collected statitsics from :class:`ValueAccumulator`.
+
+
+   .. py:attribute:: n
+      :type:  int
+
+
+   .. py:attribute:: mean
+      :type:  float
+
+
+   .. py:attribute:: median
+      :type:  float
+
+
+   .. py:attribute:: std
+      :type:  float
+
+
+

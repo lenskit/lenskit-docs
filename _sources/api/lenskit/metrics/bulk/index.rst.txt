@@ -35,6 +35,11 @@ Module Contents
 
    Results of a bulk metric computation.
 
+   .. deprecated:: 2026.1
+
+       This class is deprecated in favor of directly using
+       :class:`~lenskit.metrics.MeasurementCollector`.
+
    :Stability: Caller
 
 
@@ -93,10 +98,26 @@ Module Contents
    This class now uses :class:`MetricAccumulator` internally to separate
    accumulation from looping, while maintaining the same external interface.
 
+   .. versionchanged:: 2026.1
+
+       Global metric outputs from this class have changed column names in some
+       cases, to simplify logic.
+
+   .. deprecated:: 2026.1
+
+       This class is deprecated in favor of directly using
+       :class:`~lenskit.metrics.MeasurementCollector`.
+
    :param metrics: A list of metrics; you can also add them with :meth:`add_metric`,
                    which provides more flexibility.
 
    :Stability: Caller
+
+
+   .. py:attribute:: collector
+      :type:  lenskit.metrics.MeasurementCollector
+
+      The measurement collector for this analysis.
 
 
    .. py:method:: add_metric(metric, label = None, default = None)
@@ -110,16 +131,6 @@ Module Contents
                       recommendations. If unset, obtains from the metric's ``default``
                       attribute (if specified).
 
-
-
-   .. py:property:: metrics
-      :type: list
-
-
-      The list of metrics to compute.
-
-      .. deprecated:: 2025.4
-          Access metrics through the accumulator interface instead.
 
 
    .. py:method:: compute(outputs, test)
@@ -141,10 +152,6 @@ Module Contents
 Exported Aliases
 ----------------
 
-.. py:class:: lenskit.metrics.bulk.ItemList
-
-    Re-exported alias for :py:class:`lenskit.data.ItemList`.
-
 .. py:class:: lenskit.metrics.bulk.ItemListCollection
 
     Re-exported alias for :py:class:`lenskit.data.ItemListCollection`.
@@ -152,10 +159,6 @@ Exported Aliases
 .. py:exception:: lenskit.metrics.bulk.DataWarning
 
     Re-exported alias for :py:exc:`lenskit.diagnostics.DataWarning`.
-
-.. py:function:: lenskit.metrics.bulk.item_progress
-
-    Re-exported alias for :py:func:`lenskit.logging.item_progress`.
 
 .. py:class:: lenskit.metrics.bulk.Metric
 

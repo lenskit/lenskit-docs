@@ -14,7 +14,7 @@
 <meta property="og:description" content="Offline recommendation experiments require batch-running a pipeline over a set of test users, sessions, or other recommendation requests. LensKit supports this through the facilities in the lenskit..." />
 <meta name="description" content="Offline recommendation experiments require batch-running a pipeline over a set of test users, sessions, or other recommendation requests. LensKit supports this through the facilities in the lenskit..." />
 
-    <title>Batch-Running Pipelines &#8212; LensKit 2026.0.0.dev475+g4c506fa9 documentation</title>
+    <title>Batch-Running Pipelines &#8212; LensKit 2026.0.0.dev495+gb148ed08 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=afc4f1c8"></script>
+    <script src="../_static/documentation_options.js?v=bb40fcba"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev475+g4c506fa9 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev475+g4c506fa9 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
   
   
 </a></div>
@@ -582,7 +582,7 @@ of test users, you can do this with the <a class="reference internal" href="../a
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.batch</span><span class="w"> </span><span class="kn">import</span> <span class="n">recommend</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_movielens</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.splitting</span><span class="w"> </span><span class="kn">import</span> <span class="n">sample_users</span><span class="p">,</span> <span class="n">SampleN</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunAnalysis</span><span class="p">,</span> <span class="n">RBP</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.metrics</span><span class="w"> </span><span class="kn">import</span> <span class="n">MeasurementCollector</span><span class="p">,</span> <span class="n">RBP</span>
 </pre></div>
 </div>
 <p>Load and split some data:</p>
@@ -597,7 +597,7 @@ of test users, you can do this with the <a class="reference internal" href="../a
 </pre></div>
 </div>
 <p>Generate recommendations:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">recs</span> <span class="o">=</span> <span class="n">recommend</span><span class="p">(</span><span class="n">pop_pipe</span><span class="p">,</span> <span class="n">split</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">n_jobs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">recs</span> <span class="o">=</span> <span class="n">recommend</span><span class="p">(</span><span class="n">pop_pipe</span><span class="p">,</span> <span class="n">split</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">recs</span><span class="o">.</span><span class="n">to_df</span><span class="p">()</span>
 <span class="go">          user_id  item_id     score  rank</span>
 <span class="go">0 ...                                    1</span>
@@ -606,13 +606,11 @@ of test users, you can do this with the <a class="reference internal" href="../a
 </pre></div>
 </div>
 <p>And measure their results:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ra</span> <span class="o">=</span> <span class="n">RunAnalysis</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ra</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RBP</span><span class="p">())</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">scores</span> <span class="o">=</span> <span class="n">ra</span><span class="o">.</span><span class="n">measure</span><span class="p">(</span><span class="n">recs</span><span class="p">,</span> <span class="n">split</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">scores</span><span class="o">.</span><span class="n">list_summary</span><span class="p">()</span>
-<span class="go">          mean    median     std</span>
-<span class="go">metric</span>
-<span class="go">RBP    0.06...   0.02... 0.07...</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">collect</span> <span class="o">=</span> <span class="n">MeasurementCollector</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">collect</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RBP</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">collect</span><span class="o">.</span><span class="n">measure_collection</span><span class="p">(</span><span class="n">recs</span><span class="p">,</span> <span class="n">split</span><span class="o">.</span><span class="n">test</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">collect</span><span class="o">.</span><span class="n">summary_metrics</span><span class="p">()</span>
+<span class="go">{... &#39;RBP.mean&#39;: 0.06..., ...}</span>
 </pre></div>
 </div>
 <p>The <a class="reference internal" href="../api/lenskit/batch/index.html#lenskit.batch.predict" title="lenskit.batch.predict"><code class="xref py py-func docutils literal notranslate"><span class="pre">predict()</span></code></a> function works similarly, but for rating predictions.
@@ -748,7 +746,7 @@ list collection; the IDs are taken to be user IDs.</p></li>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev475+g4c506fa9.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev495+gb148ed08.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

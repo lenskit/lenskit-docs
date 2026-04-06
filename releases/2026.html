@@ -14,7 +14,7 @@
 <meta property="og:description" content="2026 builds on the foundation of 2025 to improve the ergonomics of data access, querying, and metrics, and clean up some APIs that seemed good at the time, while making it even easier to use LensKi..." />
 <meta name="description" content="2026 builds on the foundation of 2025 to improve the ergonomics of data access, querying, and metrics, and clean up some APIs that seemed good at the time, while making it even easier to use LensKi..." />
 
-    <title>2026 Releases &#8212; LensKit 2026.0.0.dev475+g4c506fa9 documentation</title>
+    <title>2026 Releases &#8212; LensKit 2026.0.0.dev495+gb148ed08 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=afc4f1c8"></script>
+    <script src="../_static/documentation_options.js?v=bb40fcba"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev475+g4c506fa9 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev475+g4c506fa9 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
   
   
 </a></div>
@@ -547,7 +547,16 @@ newer, and SciPy 1.13 or newer (see <a class="reference internal" href="index.ht
 is now decomposed. All metrics based on listwise measurements or intermediate
 results should directly extend from <code class="docutils literal notranslate"><span class="pre">Metric</span></code> or <a class="reference internal" href="../api/lenskit/metrics/index.html#lenskit.metrics.ListMetric" title="lenskit.metrics.ListMetric"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListMetric</span></code></a>.
 (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/983" rel="noreferrer" target="_blank">⛙ 983</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">GlobalMetric</span></code> no longer inherits from <code class="docutils literal notranslate"><span class="pre">Metric</span></code>, and may be removed in a future release.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GlobalMetric</span></code> has been removed. Code needing to compute global metrics
+should directly compute over item lists.</p></li>
+<li><p><a class="reference internal" href="../api/lenskit/metrics/index.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a> no longer supports defaults
+when adding metrics.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RunAnalysis</span></code> is deprecated, and no longer supports
+explicit defaults or global metrics.  Use
+<a class="reference internal" href="../api/lenskit/metrics/index.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a> instead.  Its global metric
+columns have also changed in some cases.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ListGini</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">ExposureGini</span></code>
+now require an item vocabulary or dataset as input.</p></li>
 <li><p>Stopped providing wheels for macOS on Intel.  Users who still need to run
 LensKit on Intel-based Macs should use the Conda packages (available in conda-forge and
 <a class="reference external" href="https://prefix.dev/channels/lenskit/" rel="noreferrer" target="_blank">prefix.dev</a>).</p></li>
@@ -592,6 +601,9 @@ parallel computation, at the expense of increased memory use in the symmetric
 <section id="minor-changes">
 <h3>Minor Changes<a class="headerlink" href="#minor-changes" title="Link to this heading">#</a></h3>
 <ul class="simple">
+<li><p><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.metrics.call_metric()</span></code> has been renamed to
+<code class="xref py py-func docutils literal notranslate"><span class="pre">measure_list()</span></code>, and the old name preserved as a
+deprecated alias.</p></li>
 <li><p>Pipeline type-checking for <cite>ArrayLike</cite> component inputs no longer works, due to
 a breaking change in NumPy 2.4.  No LensKit components used <cite>ArrayLike</cite> as an
 input or output data type.</p></li>
@@ -703,7 +715,7 @@ locks out of the work path (<a class="extlink-pr reference external" href="https
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev475+g4c506fa9.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev495+gb148ed08.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit ranking (and list) metrics. Classes: Functions: Package Contents:" />
 <meta name="description" content="LensKit ranking (and list) metrics. Classes: Functions: Package Contents:" />
 
-    <title>lenskit.metrics.ranking &#8212; LensKit 2026.0.0.dev475+g4c506fa9 documentation</title>
+    <title>lenskit.metrics.ranking &#8212; LensKit 2026.0.0.dev495+gb148ed08 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../../_static/documentation_options.js?v=afc4f1c8"></script>
+    <script src="../../../../_static/documentation_options.js?v=bb40fcba"></script>
     <script src="../../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -142,8 +142,8 @@
       
     
     
-    <img src="../../../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev475+g4c506fa9 documentation - Home"/>
-    <img src="../../../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev475+g4c506fa9 documentation - Home"/>
+    <img src="../../../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
+    <img src="../../../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
   
   
 </a></div>
@@ -450,6 +450,7 @@
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../../index.html">lenskit</a></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../data/index.html">lenskit.data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../data/accum/index.html">lenskit.data.accum</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../data/adapt/index.html">lenskit.data.adapt</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../data/amazon/index.html">lenskit.data.amazon</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../../data/arrow/index.html">lenskit.data.arrow</a></li>
@@ -829,17 +830,24 @@ The base implementation returns the class name by default.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.ranking.DCG.measure_list">
 <span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.DCG.measure_list" title="Link to this definition">#</a></dt>
-<dd><p>Compute the metric value for a single result list.</p>
-<p>Individual metric classes need to implement this method.</p>
+<dd><p>Compute measurements for a single list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>recs</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p></li>
 <li><p><strong>test</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -907,17 +915,24 @@ The base implementation returns the class name by default.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.ranking.NDCG.measure_list">
 <span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.NDCG.measure_list" title="Link to this definition">#</a></dt>
-<dd><p>Compute the metric value for a single result list.</p>
-<p>Individual metric classes need to implement this method.</p>
+<dd><p>Compute measurements for a single list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>recs</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p></li>
 <li><p><strong>test</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -957,17 +972,24 @@ The base implementation returns the class name by default.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.ranking.Entropy.measure_list">
 <span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.Entropy.measure_list" title="Link to this definition">#</a></dt>
-<dd><p>Compute the metric value for a single result list.</p>
-<p>Individual metric classes need to implement this method.</p>
+<dd><p>Compute measurements for a single list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>recs</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p></li>
 <li><p><strong>test</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1014,17 +1036,24 @@ The base implementation returns the class name by default.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.ranking.RankBiasedEntropy.measure_list">
 <span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.RankBiasedEntropy.measure_list" title="Link to this definition">#</a></dt>
-<dd><p>Compute the metric value for a single result list.</p>
-<p>Individual metric classes need to implement this method.</p>
+<dd><p>Compute measurements for a single list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>recs</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p></li>
 <li><p><strong>test</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1042,10 +1071,7 @@ and computes the Gini coefficient of the total exposure.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>) – The maximum recommendation list length.</p></li>
-<li><p><strong>items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" rel="noreferrer" target="_blank" title="(in pandas v3.0.2)"><em>pandas.Series</em></a><em> | </em><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" rel="noreferrer" target="_blank" title="(in pandas v3.0.2)"><em>pandas.DataFrame</em></a><em> | </em><a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.Dataset" title="lenskit.data.lenskit.data.Dataset"><em>lenskit.data.Dataset</em></a>) – The total number of items, a data frame or series of item data, or a
-dataset. If a frame or series is provided, its length will be used
-as the number of items.  If a dataset is provided, its item count
-will be used.</p></li>
+<li><p><strong>items</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.Vocabulary" title="lenskit.data.lenskit.data.Vocabulary"><em>lenskit.data.Vocabulary</em></a><em> | </em><a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.Dataset" title="lenskit.data.lenskit.data.Dataset"><em>lenskit.data.Dataset</em></a>) – The item vocabulary or a dataset from which to extract the items.</p></li>
 <li><p><strong>weight</strong> (<a class="reference internal" href="#lenskit.metrics.ranking.RankWeight" title="lenskit.metrics.ranking._weighting.RankWeight"><em>lenskit.metrics.ranking._weighting.RankWeight</em></a>) – The rank weighting model to use.  Defaults to
 <a class="reference internal" href="#lenskit.metrics.ranking.GeometricRankWeight" title="lenskit.metrics.ranking.GeometricRankWeight"><code class="xref py py-class docutils literal notranslate"><span class="pre">GeometricRankWeight</span></code></a> with the specified patience parameter.</p></li>
 <li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
@@ -1075,19 +1101,8 @@ will be used.</p></li>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>output</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p>
 </dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="lenskit.metrics.ranking.ExposureGini.summarize">
-<span class="sig-name descname"><span class="pre">summarize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.ExposureGini.summarize" title="Link to this definition">#</a></dt>
-<dd><p>Aggregate intermediate values into summary statistics.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary of summary statistics.</p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>tuple</em></a><em>[</em><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.Array.html#pyarrow.Array" rel="noreferrer" target="_blank" title="(in Apache Arrow v23.0.1)"><em>pyarrow.Array</em></a><em>, </em><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.FloatArray.html#pyarrow.FloatArray" rel="noreferrer" target="_blank" title="(in Apache Arrow v23.0.1)"><em>pyarrow.FloatArray</em></a><em>]</em><em>]</em>)</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" rel="noreferrer" target="_blank" title="(in Python v3.14)">tuple</a>[numpy.typing.NDArray[numpy.int32], numpy.typing.NDArray[numpy.float64]]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1105,10 +1120,7 @@ appears in.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>) – The maximum recommendation list length.</p></li>
-<li><p><strong>items</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" rel="noreferrer" target="_blank" title="(in pandas v3.0.2)"><em>pandas.Series</em></a><em> | </em><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" rel="noreferrer" target="_blank" title="(in pandas v3.0.2)"><em>pandas.DataFrame</em></a><em> | </em><a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.Dataset" title="lenskit.data.lenskit.data.Dataset"><em>lenskit.data.Dataset</em></a>) – The total number of items, a data frame or series of item data, or a
-dataset. If a frame or series is provided, its length will be used
-as the number of items.  If a dataset is provided, its item count
-will be used.</p></li>
+<li><p><strong>items</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.Vocabulary" title="lenskit.data.lenskit.data.Vocabulary"><em>lenskit.data.Vocabulary</em></a><em> | </em><a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.Dataset" title="lenskit.data.lenskit.data.Dataset"><em>lenskit.data.Dataset</em></a>) – The item vocabulary or a dataset from which to extract the items.</p></li>
 <li><p><strong>k</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
 </ul>
 </dd>
@@ -1131,19 +1143,8 @@ will be used.</p></li>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>output</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p>
 </dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="lenskit.metrics.ranking.ListGini.summarize">
-<span class="sig-name descname"><span class="pre">summarize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">values</span></span></em>, <em class="sig-param"><span class="positional-only-separator o"><abbr title="Positional-only parameter separator (PEP 570)"><span class="pre">/</span></abbr></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.ListGini.summarize" title="Link to this definition">#</a></dt>
-<dd><p>Aggregate intermediate values into summary statistics.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns<span class="colon">:</span></dt>
-<dd class="field-odd"><p>A dictionary of summary statistics.</p>
-</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>values</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>list</em></a><em>[</em><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.Array.html#pyarrow.Array" rel="noreferrer" target="_blank" title="(in Apache Arrow v23.0.1)"><em>pyarrow.Array</em></a><em>] </em><em>| </em><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.ChunkedArray.html#pyarrow.ChunkedArray" rel="noreferrer" target="_blank" title="(in Apache Arrow v23.0.1)"><em>pyarrow.ChunkedArray</em></a>)</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" rel="noreferrer" target="_blank" title="(in Python v3.14)">tuple</a>[numpy.typing.NDArray[numpy.int32], <a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a>]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1179,17 +1180,24 @@ The base implementation returns the class name by default.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.ranking.Hit.measure_list">
 <span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.Hit.measure_list" title="Link to this definition">#</a></dt>
-<dd><p>Compute the metric value for a single result list.</p>
-<p>Individual metric classes need to implement this method.</p>
+<dd><p>Compute measurements for a single list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>recs</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p></li>
 <li><p><strong>test</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1230,17 +1238,24 @@ The base implementation returns the class name by default.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.ranking.ILS.measure_list">
 <span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.ILS.measure_list" title="Link to this definition">#</a></dt>
-<dd><p>Compute the metric value for a single result list.</p>
-<p>Individual metric classes need to implement this method.</p>
+<dd><p>Compute measurements for a single list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>recs</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p></li>
 <li><p><strong>test</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1271,17 +1286,24 @@ The base implementation returns the class name by default.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.ranking.AveragePrecision.measure_list">
 <span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.AveragePrecision.measure_list" title="Link to this definition">#</a></dt>
-<dd><p>Compute the metric value for a single result list.</p>
-<p>Individual metric classes need to implement this method.</p>
+<dd><p>Compute measurements for a single list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>recs</strong> (<a class="reference internal" href="../../data/items/index.html#lenskit.data.items.ItemList" title="lenskit.data.items.ItemList"><em>lenskit.data.items.ItemList</em></a>)</p></li>
 <li><p><strong>test</strong> (<a class="reference internal" href="../../data/items/index.html#lenskit.data.items.ItemList" title="lenskit.data.items.ItemList"><em>lenskit.data.items.ItemList</em></a>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1329,17 +1351,24 @@ metric of <span id="id14">Vargas and Castells [<a class="reference internal" hre
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.ranking.MeanPopRank.measure_list">
 <span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.MeanPopRank.measure_list" title="Link to this definition">#</a></dt>
-<dd><p>Compute the metric value for a single result list.</p>
-<p>Individual metric classes need to implement this method.</p>
+<dd><p>Compute measurements for a single list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>recs</strong> (<a class="reference internal" href="../../data/items/index.html#lenskit.data.items.ItemList" title="lenskit.data.items.ItemList"><em>lenskit.data.items.ItemList</em></a>)</p></li>
 <li><p><strong>test</strong> (<a class="reference internal" href="../../data/items/index.html#lenskit.data.items.ItemList" title="lenskit.data.items.ItemList"><em>lenskit.data.items.ItemList</em></a>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1375,17 +1404,24 @@ The base implementation returns the class name by default.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.ranking.Precision.measure_list">
 <span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.Precision.measure_list" title="Link to this definition">#</a></dt>
-<dd><p>Compute the metric value for a single result list.</p>
-<p>Individual metric classes need to implement this method.</p>
+<dd><p>Compute measurements for a single list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>recs</strong> (<a class="reference internal" href="../../data/items/index.html#lenskit.data.items.ItemList" title="lenskit.data.items.ItemList"><em>lenskit.data.items.ItemList</em></a>)</p></li>
 <li><p><strong>test</strong> (<a class="reference internal" href="../../data/items/index.html#lenskit.data.items.ItemList" title="lenskit.data.items.ItemList"><em>lenskit.data.items.ItemList</em></a>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1417,17 +1453,24 @@ The base implementation returns the class name by default.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.ranking.Recall.measure_list">
 <span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.Recall.measure_list" title="Link to this definition">#</a></dt>
-<dd><p>Compute the metric value for a single result list.</p>
-<p>Individual metric classes need to implement this method.</p>
+<dd><p>Compute measurements for a single list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>recs</strong> (<a class="reference internal" href="../../data/items/index.html#lenskit.data.items.ItemList" title="lenskit.data.items.ItemList"><em>lenskit.data.items.ItemList</em></a>)</p></li>
 <li><p><strong>test</strong> (<a class="reference internal" href="../../data/items/index.html#lenskit.data.items.ItemList" title="lenskit.data.items.ItemList"><em>lenskit.data.items.ItemList</em></a>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1517,17 +1560,24 @@ The base implementation returns the class name by default.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.ranking.RBP.measure_list">
 <span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.RBP.measure_list" title="Link to this definition">#</a></dt>
-<dd><p>Compute the metric value for a single result list.</p>
-<p>Individual metric classes need to implement this method.</p>
+<dd><p>Compute measurements for a single list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>recs</strong> (<a class="reference internal" href="../../data/items/index.html#lenskit.data.items.ItemList" title="lenskit.data.items.ItemList"><em>lenskit.data.items.ItemList</em></a>)</p></li>
 <li><p><strong>test</strong> (<a class="reference internal" href="../../data/items/index.html#lenskit.data.items.ItemList" title="lenskit.data.items.ItemList"><em>lenskit.data.items.ItemList</em></a>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1587,17 +1637,24 @@ The base implementation returns the class name by default.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.metrics.ranking.RecipRank.measure_list">
 <span class="sig-name descname"><span class="pre">measure_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">recs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.metrics.ranking.RecipRank.measure_list" title="Link to this definition">#</a></dt>
-<dd><p>Compute the metric value for a single result list.</p>
-<p>Individual metric classes need to implement this method.</p>
+<dd><p>Compute measurements for a single list.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><ul class="simple">
+<li><p>A float for simple metrics</p></li>
+<li><p>Intermediate data for decomposed metrics</p></li>
+<li><p>A dict mapping metric names to values for multi-metric classes</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
 <li><p><strong>recs</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p></li>
 <li><p><strong>test</strong> (<a class="reference internal" href="../../data/index.html#lenskit.data.lenskit.data.ItemList" title="lenskit.data.lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a>)</p></li>
 </ul>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" rel="noreferrer" target="_blank" title="(in Python v3.14)">float</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1851,12 +1908,10 @@ normalize their measurements.</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.ExposureGini"><code class="docutils literal notranslate"><span class="pre">ExposureGini</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.ExposureGini.weight"><code class="docutils literal notranslate"><span class="pre">ExposureGini.weight</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.ExposureGini.measure_list"><code class="docutils literal notranslate"><span class="pre">ExposureGini.measure_list()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.ExposureGini.summarize"><code class="docutils literal notranslate"><span class="pre">ExposureGini.summarize()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.ListGini"><code class="docutils literal notranslate"><span class="pre">ListGini</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.ListGini.measure_list"><code class="docutils literal notranslate"><span class="pre">ListGini.measure_list()</span></code></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.ListGini.summarize"><code class="docutils literal notranslate"><span class="pre">ListGini.summarize()</span></code></a></li>
 </ul>
 </li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.metrics.ranking.Hit"><code class="docutils literal notranslate"><span class="pre">Hit</span></code></a><ul class="nav section-nav flex-column">
@@ -1969,7 +2024,7 @@ normalize their measurements.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev475+g4c506fa9.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev495+gb148ed08.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
