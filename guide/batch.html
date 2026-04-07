@@ -14,7 +14,7 @@
 <meta property="og:description" content="Offline recommendation experiments require batch-running a pipeline over a set of test users, sessions, or other recommendation requests. LensKit supports this through the facilities in the lenskit..." />
 <meta name="description" content="Offline recommendation experiments require batch-running a pipeline over a set of test users, sessions, or other recommendation requests. LensKit supports this through the facilities in the lenskit..." />
 
-    <title>Batch-Running Pipelines &#8212; LensKit 2026.0.0.dev495+gb148ed08 documentation</title>
+    <title>Batch-Running Pipelines &#8212; LensKit 2026.0.0.dev532+g788839af documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=bb40fcba"></script>
+    <script src="../_static/documentation_options.js?v=2318be33"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev532+g788839af documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev532+g788839af documentation - Home"/>
   
   
 </a></div>
@@ -615,7 +615,7 @@ of test users, you can do this with the <a class="reference internal" href="../a
 </div>
 <p>The <a class="reference internal" href="../api/lenskit/batch/index.html#lenskit.batch.predict" title="lenskit.batch.predict"><code class="xref py py-func docutils literal notranslate"><span class="pre">predict()</span></code></a> function works similarly, but for rating predictions.
 Instead of a simple list of user IDs, it takes a dictionary mapping user IDs to
-lists of test items (as <code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code>).</p>
+lists of test items (as <a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>).</p>
 </section>
 <section id="general-batch-pipeline-runs">
 <h2>General Batch Pipeline Runs<a class="headerlink" href="#general-batch-pipeline-runs" title="Link to this heading">#</a></h2>
@@ -628,18 +628,18 @@ wrappers around a more general facility, the <a class="reference internal" href=
 <a class="reference internal" href="../api/lenskit/batch/index.html#lenskit.batch.BatchPipelineRunner.run" title="lenskit.batch.BatchPipelineRunner.run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">run()</span></code></a>, etc.) accept multiple types of
 input to specify the set of users or test items.</p>
 <ul class="simple">
-<li><p>An iterable (e.g. list) of recommendation queries (as <code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code>
-objects).  The queries must have at least one of <code class="xref py py-attr docutils literal notranslate"><span class="pre">RecQuery.query_id</span></code> and
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">RecQuery.user_id</span></code> set, so that the output can be properly indexed.
+<li><p>An iterable (e.g. list) of recommendation queries (as <a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a>
+objects).  The queries must have at least one of <a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.RecQuery.query_id" title="lenskit.data.RecQuery.query_id"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RecQuery.query_id</span></code></a> and
+<a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.RecQuery.user_id" title="lenskit.data.RecQuery.user_id"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RecQuery.user_id</span></code></a> set, so that the output can be properly indexed.
 Queries should all have the identification method (i.e., all queries have a
 <code class="docutils literal notranslate"><span class="pre">query_id</span></code>, or all queries have only a <code class="docutils literal notranslate"><span class="pre">user_id</span></code>).</p></li>
 <li><p>An iterable of 2-element <code class="docutils literal notranslate"><span class="pre">(query,</span> <span class="pre">items)</span></code> tuples.  The query is a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code> as in the previous method, and the items is an <code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code>
+<a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a> as in the previous method, and the items is an <a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>
 containing the candidate items (for recommendation) or the items to score (for
 prediction and scoring).  This is the most general form of input.</p></li>
 <li><p>An iterable (e.g. list) of user IDs.  These are passed as
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">RecQuery.user_id</span></code>, and the resulting outputs are mapped to  ID.</p></li>
-<li><p>An <code class="xref py py-class docutils literal notranslate"><span class="pre">ItemListCollection</span></code>.  At least one field of the collection key
+<a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.RecQuery.user_id" title="lenskit.data.RecQuery.user_id"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RecQuery.user_id</span></code></a>, and the resulting outputs are mapped to  ID.</p></li>
+<li><p>An <a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemListCollection</span></code></a>.  At least one field of the collection key
 should be <code class="docutils literal notranslate"><span class="pre">user_id</span></code>, and these user IDs are used as the query user IDs. The
 item lists themselves are used as in the tuple method above. Results are
 indexed by the entire key.</p></li>
@@ -746,7 +746,7 @@ list collection; the IDs are taken to be user IDs.</p></li>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev495+gb148ed08.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev532+g788839af.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

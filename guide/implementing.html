@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit is particularly designed to excel in research and educational applications, and for that you will often need to write your own components implementing new scoring models, rankers, or other ..." />
 <meta name="description" content="LensKit is particularly designed to excel in research and educational applications, and for that you will often need to write your own components implementing new scoring models, rankers, or other ..." />
 
-    <title>Implementing Components &#8212; LensKit 2026.0.0.dev495+gb148ed08 documentation</title>
+    <title>Implementing Components &#8212; LensKit 2026.0.0.dev532+g788839af documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=bb40fcba"></script>
+    <script src="../_static/documentation_options.js?v=2318be33"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev532+g788839af documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev532+g788839af documentation - Home"/>
   
   
 </a></div>
@@ -672,7 +672,7 @@ configuration conventions.</p>
 <p>The heart of the component interface is the <code class="docutils literal notranslate"><span class="pre">__call__</span></code> method (components are
 just callable objects).  This method takes the component inputs as parameters,
 and returns the component’s result.</p>
-<p>Most components return an <code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code>.  Scoring components usually
+<p>Most components return an <a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>.  Scoring components usually
 have the following signature:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">QueryInput</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ItemList</span><span class="p">:</span>
     <span class="o">...</span>
@@ -683,7 +683,7 @@ input; the <code class="docutils literal notranslate"><span class="pre">items</s
 candidate items for recommendation).  The scorer then returns a list of scored
 items.</p>
 <p>Most component begin by converting the query to a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code>:</p>
+<a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a>:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">QueryInput</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ItemList</span><span class="p">:</span>
     <span class="n">query</span> <span class="o">=</span> <span class="n">RecQuery</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
     <span class="o">...</span>
@@ -702,7 +702,7 @@ can simply return a list with no scores:</p>
 </div>
 <p>Components do need to be able to handle items in <code class="docutils literal notranslate"><span class="pre">items</span></code> that were not seen
 at training time.  If the component has saved the training item vocabulary, the
-easiest way to do this is to use <code class="xref py py-meth docutils literal notranslate"><span class="pre">numbers()</span></code>: with
+easiest way to do this is to use <a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.ItemList.numbers" title="lenskit.data.ItemList.numbers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">numbers()</span></code></a>: with
 <code class="docutils literal notranslate"><span class="pre">missing=&quot;negative&quot;</span></code>:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">i_nums</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="n">numbers</span><span class="p">(</span><span class="n">vocabulary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="s2">&quot;negative&quot;</span><span class="p">)</span>
 <span class="n">scorable_mask</span> <span class="o">=</span> <span class="n">i_nums</span> <span class="o">&gt;=</span> <span class="mi">0</span>
@@ -716,7 +716,7 @@ easiest way to do this is to use <code class="xref py py-meth docutils literal n
 helper implementation like <a class="reference internal" href="../api/lenskit/training/index.html#lenskit.training.UsesTrainer" title="lenskit.training.UsesTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UsesTrainer</span></code></a>.  The
 core of the <code class="docutils literal notranslate"><span class="pre">Trainable</span></code> protocol is the
 <a class="reference internal" href="../api/lenskit/training/index.html#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a> method, which takes a
-<code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code> and <a class="reference internal" href="../api/lenskit/training/index.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainingOptions</span></code></a>
+<a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> and <a class="reference internal" href="../api/lenskit/training/index.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainingOptions</span></code></a>
 and trains the model.</p>
 <p>The details of training will vary significantly from model to model.  Typically,
 though, it follows the following steps:</p>
@@ -898,7 +898,7 @@ flexibility in how they configure your component.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev495+gb148ed08.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev532+g788839af.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

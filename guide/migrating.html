@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit 2025.1 brings the largest changes to LensKit’s APIs and operation since moving to Python. These changes are a result of years of experience using and teaching the current Python APIs, talki..." />
 <meta name="description" content="LensKit 2025.1 brings the largest changes to LensKit’s APIs and operation since moving to Python. These changes are a result of years of experience using and teaching the current Python APIs, talki..." />
 
-    <title>Migrating from LensKit 0.x &#8212; LensKit 2026.0.0.dev495+gb148ed08 documentation</title>
+    <title>Migrating from LensKit 0.x &#8212; LensKit 2026.0.0.dev532+g788839af documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=bb40fcba"></script>
+    <script src="../_static/documentation_options.js?v=2318be33"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev495+gb148ed08 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev532+g788839af documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev532+g788839af documentation - Home"/>
   
   
 </a></div>
@@ -583,8 +583,8 @@ recommendation.</p>
 fall into the following categories:</p>
 <ul>
 <li><p><strong>Data structures</strong> — LensKit now uses recommender-oriented data abstractions,
-such as <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code> (see <a class="reference internal" href="data/index.html#datasets"><span class="std std-ref">Datasets</span></a>) and
-<code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code>, instead of storing everything directly in
+such as <a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> (see <a class="reference internal" href="data/index.html#datasets"><span class="std std-ref">Datasets</span></a>) and
+<a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>, instead of storing everything directly in
 Pandas data frames.  All data structures support round-tripping with data
 frames (and often other structures); the default user and item column names
 have changed (to <code class="docutils literal notranslate"><span class="pre">user_id</span></code> and <code class="docutils literal notranslate"><span class="pre">item_id</span></code>).</p></li>
@@ -600,7 +600,7 @@ generation support (see <a class="reference internal" href="conventions.html#rng
 <a class="reference internal" href="pipeline.html#pipeline"><span class="std std-ref">Recommendation Pipelines</span></a>) consisting of individual <em>components</em>, such as scoring models
 and rankers.</p></li>
 <li><p><strong>Queries</strong> — requests for recommendations are now encapsulated in a “query”
-(implemented by <code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code>) containing the different
+(implemented by <a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a>) containing the different
 features to identify and describe a recommendation request, such as a user
 identifier, historical ratings, or session information (see <a class="reference internal" href="queries.html#queries"><span class="std std-ref">Queries and Operations</span></a>).</p></li>
 <li><p><strong>Reorganization</strong> — the <code class="docutils literal notranslate"><span class="pre">lenskit.algorithms</span></code> package is gone, and
@@ -626,10 +626,10 @@ than previous versions of LensKit.</p>
 </section>
 <section id="loading-data">
 <h2>Loading Data<a class="headerlink" href="#loading-data" title="Link to this heading">#</a></h2>
-<p>New code should use <code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.data.from_interactions_df()</span></code> to convert a
-Pandas data frame into a <code class="xref py py-func docutils literal notranslate"><span class="pre">Dataset()</span></code>, or one of the
+<p>New code should use <a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.from_interactions_df" title="lenskit.data.from_interactions_df"><code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.data.from_interactions_df()</span></code></a> to convert a
+Pandas data frame into a <a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-func docutils literal notranslate"><span class="pre">Dataset()</span></code></a>, or one of the
 standard loaders such as <code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.data.load_movielens()</span></code>.
-<code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetBuilder</span></code> provides more fine-grained control over
+<a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.DatasetBuilder" title="lenskit.data.DatasetBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetBuilder</span></code></a> provides more fine-grained control over
 building datasets, including addition entity and interaction attributes in
 the new <a class="reference internal" href="data/model.html#data-model"><span class="std std-ref">Data Model</span></a>.</p>
 <p>While most LensKit data frame code still recognizes the legacy <code class="docutils literal notranslate"><span class="pre">user</span></code> and
@@ -657,14 +657,14 @@ primary data structures for interfacing with components, LensKit 2025 introduces
 new data abstractions specifically for handling recommender data, but that support
 conversion to and from data frames.  The core ones are:</p>
 <ul class="simple">
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code> represents a list of items, optionally with
+<li><p><a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a> represents a list of items, optionally with
 scores or other fields (e.g. ratings).  Item lists can convert between item
 IDs and item numbers, using a vocabulary, and can be converted to and from
 Pandas data frames.  Their fields (including the item numbers) can also be
 retrieved in multiple formats, including NumPy arrays (the default), Pandas
 <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" rel="noreferrer" target="_blank" title="(in pandas v3.0.2)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Series</span></code></a>, and PyTorch tensors.  Format conversions are
 zero-copy whenever possible.</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code> represents a collection of item or user IDs
+<li><p><a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.Vocabulary" title="lenskit.data.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a> represents a collection of item or user IDs
 (or other ID-like things, such as tags), and supports bidirectional mapping
 between such IDs and contiguous 0-based indices (numbers) for indexing into
 arrays and matrices.  This was not used as a part of an API in LensKit before,
@@ -675,7 +675,7 @@ so much across the codebase and to enable multiple models trained on the same
 data to share the same index.  If you are implementing a model component that
 needs to store vectors or matrices of user or item data, consider using the
 vocabulary to associate those with user and item IDs.</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemListCollection</span></code> represents a collection of item
+<li><p><a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemListCollection</span></code></a> represents a collection of item
 lists indexed by keys, such as the test items for users a test data split, or
 the recommendation lists for users in an experiment.  It supports conversion
 to and from Pandas data frames.  Future releases will support additional
@@ -764,9 +764,9 @@ component called <code class="docutils literal notranslate"><span class="pre">re
 <span class="n">recs</span> <span class="o">=</span> <span class="n">recommend</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="n">user_id</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This method returns an <code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code> containing the
+<p>This method returns an <a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a> containing the
 recommended items. You can optionally specify candidate items with an <code class="docutils literal notranslate"><span class="pre">items=</span></code>
-parameter to <code class="docutils literal notranslate"><span class="pre">run</span></code> (it takes an <code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code>), or a list
+parameter to <code class="docutils literal notranslate"><span class="pre">run</span></code> (it takes an <a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>), or a list
 length with <code class="docutils literal notranslate"><span class="pre">n=</span></code> (you can also bake a default list length into the pipeline
 when you call <a class="reference internal" href="../api/lenskit/pipeline/index.html#lenskit.pipeline.topn_pipeline" title="lenskit.pipeline.topn_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">topn_pipeline()</span></code></a>).</p>
 <div class="admonition important">
@@ -781,7 +781,7 @@ as context-based or session-based recommendation.</p>
 <p>The <a class="reference internal" href="../api/lenskit/batch/index.html#lenskit.batch.recommend" title="lenskit.batch.recommend"><code class="xref py py-func docutils literal notranslate"><span class="pre">recommend()</span></code></a> and <a class="reference internal" href="../api/lenskit/batch/index.html#lenskit.batch.predict" title="lenskit.batch.predict"><code class="xref py py-func docutils literal notranslate"><span class="pre">predict()</span></code></a>
 functions still exist, and now work on pipelines instead of “algorithms”. They
 no longer return data frames; instead, they return an
-<code class="xref py py-class docutils literal notranslate"><span class="pre">ItemListCollection</span></code> containing the item lists produced
+<a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemListCollection</span></code></a> containing the item lists produced
 by the recommender or predictor / scorer components.</p>
 <p>You can also use the more flexible
 <a class="reference internal" href="../api/lenskit/batch/index.html#lenskit.batch.BatchPipelineRunner" title="lenskit.batch.BatchPipelineRunner"><code class="xref py py-class docutils literal notranslate"><span class="pre">BatchPipelineRunner</span></code></a> to do things like extract
@@ -790,7 +790,7 @@ top-<em>N</em> recommendations, or rankings before and after a reranking stage).
 <p>All batch inference interfaces support parallel processing over users, and the
 same parallel configuration (see <a class="reference internal" href="parallelism.html#parallelism"><span class="std std-ref">Parallel Processing</span></a>).  The resulting item list
 collections can be converted to data frames
-(<code class="xref py py-meth docutils literal notranslate"><span class="pre">to_df()</span></code>) to be saved in any format
+(<a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.ItemListCollection.to_df" title="lenskit.data.ItemListCollection.to_df"><code class="xref py py-meth docutils literal notranslate"><span class="pre">to_df()</span></code></a>) to be saved in any format
 supported by Pandas; future LensKit versions will add support for directly
 storing them in other formats such as DuckDB, and loading them from such
 formats.</p>
@@ -960,7 +960,7 @@ accepted as an input alias).</p></li>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev495+gb148ed08.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev532+g788839af.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

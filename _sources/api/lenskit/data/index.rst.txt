@@ -15,58 +15,2359 @@ Submodules
 .. autoapisummary::
 
    lenskit.data.accum
-   lenskit.data.adapt
    lenskit.data.amazon
-   lenskit.data.arrow
-   lenskit.data.attributes
-   lenskit.data.batches
-   lenskit.data.builder
-   lenskit.data.checks
-   lenskit.data.collection
-   lenskit.data.container
-   lenskit.data.dataset
-   lenskit.data.entities
-   lenskit.data.items
    lenskit.data.matrix
    lenskit.data.movielens
    lenskit.data.msweb
-   lenskit.data.mtarray
-   lenskit.data.query
-   lenskit.data.relationships
    lenskit.data.repr
    lenskit.data.schema
-   lenskit.data.summary
    lenskit.data.types
-   lenskit.data.vocab
 
 .. toctree::
     :hidden:
     :maxdepth: 1
 
     /api/lenskit/data/accum/index
-    /api/lenskit/data/adapt/index
     /api/lenskit/data/amazon/index
-    /api/lenskit/data/arrow/index
-    /api/lenskit/data/attributes/index
-    /api/lenskit/data/batches/index
-    /api/lenskit/data/builder/index
-    /api/lenskit/data/checks/index
-    /api/lenskit/data/collection/index
-    /api/lenskit/data/container/index
-    /api/lenskit/data/dataset/index
-    /api/lenskit/data/entities/index
-    /api/lenskit/data/items/index
     /api/lenskit/data/matrix/index
     /api/lenskit/data/movielens/index
     /api/lenskit/data/msweb/index
-    /api/lenskit/data/mtarray/index
-    /api/lenskit/data/query/index
-    /api/lenskit/data/relationships/index
     /api/lenskit/data/repr/index
     /api/lenskit/data/schema/index
-    /api/lenskit/data/summary/index
     /api/lenskit/data/types/index
-    /api/lenskit/data/vocab/index
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.data.GenericKey
+   lenskit.data.QueryInput
+   lenskit.data.QueryItemSource
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.data.EntityAttribute
+   lenskit.data.BatchedRange
+   lenskit.data.DatasetBuilder
+   lenskit.data.ItemListCollection
+   lenskit.data.ItemListCollector
+   lenskit.data.ListILC
+   lenskit.data.MutableItemListCollection
+   lenskit.data.QueryIDKey
+   lenskit.data.UserIDKey
+   lenskit.data.DataContainer
+   lenskit.data.Dataset
+   lenskit.data.EntitySet
+   lenskit.data.ItemList
+   lenskit.data.RecQuery
+   lenskit.data.MatrixRelationshipSet
+   lenskit.data.RelationshipSet
+   lenskit.data.Vocabulary
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.data.from_interactions_df
+   lenskit.data.key_dict
+
+
+
+Package Contents
+----------------
+
+.. py:function:: from_interactions_df(df, *, user_col = None, item_col = None, rating_col = None, timestamp_col = None, users = None, items = None, class_name = 'rating')
+
+   Create a dataset from a data frame of ratings or other user-item
+   interactions.
+
+   :Stability: Caller
+
+   :param df: The user-item interactions (e.g. ratings).  The dataset code takes
+              ownership of this data frame and may modify it.
+   :param user_col: The name of the user ID column.  By default, looks for columns named
+                    ``user``, ``user_id``, or ``userId``, with several case variants.
+   :param item_col: The name of the item ID column.  By default, looks for columns named
+                    ``item``, ``item_id``, or ``itemId``, with several case variants.
+   :param rating_col: The name of the rating column.
+   :param timestamp_col: The name of the timestamp column.
+   :param user_ids: A vocabulary of user IDs.  The data frame is subset to this set of IDs.
+   :param item_ids: A vocabulary of item IDs.  The data frame is subset to this set of IDs.
+   :param name: The interaction class name.
+
+   :returns: The initiated data set.
+
+
+.. py:class:: EntityAttribute(name, spec, table, vocab, rows)
+   :canonical: lenskit.data._attributes.EntityAttribute
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   Base class for an attribute associated with an entity class.  This class
+   effectively represents a _column_ of a data table of entities: the attribute
+   values for one or more entities.  In that regard, it is similar to a Pandas
+   series: it records entity IDs/numbers, like an index, and associated
+   attribute values.
+
+   This is the general interface for all entity attributes.  Not all access
+   methods are supported for all layouts.
+
+   :Stability: caller
+
+
+   .. py:attribute:: name
+      :type:  str
+
+      The name of the attribute.
+
+
+   .. py:attribute:: layout
+      :type:  lenskit.data.schema.AttrLayout
+
+      The attribute layout.
+
+
+   .. py:property:: data_type
+      :type: pyarrow.DataType
+
+      :abstractmethod:
+
+
+      Get the data type of this attribute set.
+
+
+   .. py:method:: ids()
+
+      Get the entity IDs for this collection of entities.
+
+
+
+   .. py:method:: id_index()
+
+      Get the entity IDs as a Pandas index.
+
+
+
+   .. py:method:: numbers()
+
+      Get the entity numbers for the attributes
+
+
+
+   .. py:method:: cat_matrix(*, normalize = None)
+      :abstractmethod:
+
+
+      Compute a categorical matrix representation of the attribute.
+
+      :param normalize: Optional normalization method.
+                        "unit": Normalize each row to unit length.
+                        "distribution": Normalize each row so elements sum to 1
+
+      :returns:
+
+                A tuple containing:
+                    matrix (numpy.ndarray or scipy.sparse.csr_array): The categorical matrix.
+                    vocab (Vocabulary or None): The vocabulary associated with the categories.
+      :rtype: tuple
+
+
+
+   .. py:property:: dim_names
+      :type: list[str] | None
+
+
+      Get the names attached to this attribute's dimensions.
+
+      .. note::
+
+          Only applicable to vector and sparse attributes.
+
+
+   .. py:property:: is_scalar
+      :type: bool
+
+
+      Query whether this attribute is scalar.
+
+
+   .. py:property:: is_list
+      :type: bool
+
+
+      Query whether this attribute is a list.
+
+
+   .. py:property:: is_vector
+      :type: bool
+
+
+      Query whether this attribute is a dense vector.
+
+
+   .. py:property:: is_sparse
+      :type: bool
+
+
+      Query whether this attribute is a sparse vector.
+
+
+   .. py:method:: pandas(*, missing = 'null')
+      :abstractmethod:
+
+
+
+   .. py:method:: numpy()
+
+      Get the attribute values as a NumPy array.
+
+      .. note::
+          Undefined attribute values may have undefined contents; they will
+          _usually_ be ``NaN`` or similar, but this is not fully guaranteed.
+
+
+
+   .. py:method:: arrow()
+
+      Get the attribute values as an Arrow array.
+
+
+
+   .. py:method:: scipy()
+
+      Get this attribute as a SciPy sparse array (if it is sparse), or a NumPy
+      array if it is dense.
+
+
+
+   .. py:method:: torch()
+
+
+   .. py:method:: drop_null()
+
+      Subset this attribute set to only entities for which it is defined.
+
+
+
+   .. py:method:: __len__()
+
+
+.. py:class:: BatchedRange
+   :canonical: lenskit.data._batches.BatchedRange
+
+   Iterator over a range by batches.
+
+   The length of this collection is the number of batches, and iterating over
+   it yields batch extents.
+
+
+   .. py:attribute:: n
+      :type:  int
+
+      The total number of items.
+
+
+   .. py:attribute:: size
+      :type:  int
+
+      The batch size.
+
+
+   .. py:property:: batch_count
+      :type: int
+
+
+
+   .. py:method:: __len__()
+
+
+   .. py:method:: __iter__()
+
+
+.. py:class:: DatasetBuilder(name = None)
+   :canonical: lenskit.data._builder.DatasetBuilder
+
+   Construct data sets from data and tables.
+
+   :param name: The name of the new dataset, or a data container or dataset to
+                use as the basis for building a new dataset.
+
+
+   .. py:attribute:: schema
+      :type:  lenskit.data.schema.DataSchema
+
+      The data schema assembled so far.  Do not modify this schema directly.
+
+
+   .. py:property:: name
+      :type: str | None
+
+
+      Get the dataset name.
+
+
+   .. py:method:: entity_classes()
+
+      Get the entity classes defined so far.
+
+
+
+   .. py:method:: relationship_classes()
+
+      Get the relationship classes defined so far.
+
+
+
+   .. py:method:: record_count(class_name)
+
+      Get the number of records for the specified entity or relationship class.
+
+
+
+   .. py:method:: entity_id_type(name)
+
+      Get the PyArrow data type for an entity classes's identifiers.
+
+
+
+   .. py:method:: add_entity_class(name)
+
+      Add an entity class to the dataset.
+
+      :param name: The name of the entity class.
+
+
+
+   .. py:method:: add_relationship_class(name, entities, allow_repeats = True, interaction = False)
+
+      Add a relationship class to the dataset.  This usually doesn't need to
+      be called; :meth:`add_relationships` and :meth:`add_interactions` will
+      automatically add the relationship class if needed.
+
+      As noted in :ref:`data-model`, a *relationship* records a relationship
+      or interaction between two or more *entities*.  Interactions are usually
+      between users and items.  The ``entities`` option to this method defines
+      the names of the entity classes participating.
+
+      .. note::
+
+          The order of entity classes in ``entities`` matters, as the
+          relationship matrix logic
+          (:meth:`lenskit.data.RelationshipSet.matrix`) will default to using
+          the first and last entity classes as the rows and columns of the
+          matrix.
+
+      :param name: The name of the relationship class.
+      :param entities: The entity classes participating in the relationship class.
+      :param allow_repeats: Whether repeated records for the same combination of entities
+                            are allowed.
+      :param interaction: Whether this is an interaction relationship.
+
+
+
+   .. py:method:: add_entities(cls: str, ids: lenskit.data.types.IDSequence | pyarrow.Array[Any] | pyarrow.ChunkedArray[Any], /, *, duplicates: DuplicateAction = 'error') -> None
+                  add_entities(cls: str, frame: TableInput, /, *, duplicates: DuplicateAction = 'error') -> None
+
+      Add entities to the data set.
+
+      When constructed with a data frame or table, this method looks for
+      entitiy IDs in the column ``{cls}_id`` (e.g. ``item_id``).  If no such
+      column exists, and the data frame is a Pandas data frame, then item IDs
+      are taken from the data frame's index.  A warning is issued if the data
+      frame index name is not ``{cls}_id``.
+
+      :param cls: The name of the entity class (e.g. ``"item"``).
+      :param source: The input data, as an array or list of entity IDs, or a data
+                     frame of entities with attributes.
+      :param duplicates: How to handle duplicate entity IDs.
+
+      :raises DataError: When there is a fatal problem with the supplied data.
+
+      :Warns: **DataWarning** -- When the data is valid but suspect, such as a data frame with no
+              column or index named ``{cls}_id``.
+
+
+
+   .. py:method:: add_relationships(cls, data, *, entities = None, missing = 'error', allow_repeats = True, interaction = False, _warning_parent = 0, remove_repeats = False)
+
+      Add relationship records to the data set.
+
+      This method adds relationship records, provided as a Pandas data frame
+      or an Arrow table, to the data set being built.  The relationships can
+      be of a new class (in which case it will be created), or new
+      relationship records for an existing class.
+
+      For each entity ``E`` participating in the relationship, the table must
+      have a column named ``E_id`` storing the entity IDs.
+
+      :param cls: The name of the interaction class (e.g. ``rating``,
+                  ``purchase``).
+      :param data: The interaction data.
+      :param entities: The entity classes involved in this interaction class.
+      :param missing: What to do when interactions reference nonexisting entities; can
+                      be ``"error"`` or ``"insert"``.
+      :param allow_repeats: Whether repeated interactions are allowed.
+      :param interaction: Whether this is an interaction relationship or not; can be
+                          ``"default"`` to indicate this is the default interaction
+                          relationship.
+      :param remove_repeats: If ``True``, repeated interactions will be removed. If ``"exact"``,
+                             duplicated interactions will be removed.
+
+
+
+   .. py:method:: add_interactions(cls, data, *, entities = None, missing = 'error', allow_repeats = True, default = False, remove_repeats = False)
+
+      Add a interaction records to the data set.
+
+      This method adds new interaction records, provided as a Pandas data
+      frame or an Arrow table, to the data set being built.  The interactions
+      can be of a new class (in which case it will be created), or new
+      interactions for an existing class.
+
+      For each entity ``E`` participating in the interaction, the table must
+      have a column named ``E_id`` storing the entity IDs.
+
+      Interactions should usually have user as the first entity and item as
+      the last; the default interaction matrix logic uses the first and last
+      entities as the rows and columns, respectively, of the interaction
+      matrix.
+
+
+      :param cls: The name of the interaction class (e.g. ``rating``,
+                  ``purchase``).
+      :param data: The interaction data.
+      :param entities: The entity classes involved in this interaction class.
+      :param missing: What to do when interactions reference nonexisting entities; can
+                      be ``"error"`` or ``"insert"``.
+      :param allow_repeats: Whether repeated interactions are allowed.
+      :param default: If ``True``, set this as the default interaction class (if the
+                      dataset has more than one interaction class).
+      :param remove_repeats: If ``True``, repeated interactions will be removed. If ``"exact"``,
+                             duplicated interactions will be removed.
+
+
+
+   .. py:method:: filter_interactions(cls, min_time = None, max_time = None, remove = None)
+
+      Filter interactions based on timestamp or to remove particular entities.
+
+      :param cls: The interaction class to filter.
+      :param min_time: The minimum interaction time to keep (inclusive).
+      :param max_time: The maximum interaction time to keep (exclusive).
+      :param remove: Combinations of entity numbers or IDs to remove.  The entities
+                     are filtered using an anti-join with this table, so providing a
+                     single column of entity IDs or numbers will remove all
+                     interactions associated with the listed entities.
+
+
+
+   .. py:method:: binarize_ratings(cls = 'rating', min_pos_rating = 3.0, method = 'remove')
+
+      Binarize the ratings in a relationship class.
+
+      :param cls: The relationship class to binarize (default: "rating").
+      :param min_pos_rating: Minimum rating to consider as positive.
+      :param method: 'zero' to set ratings to 0/1, 'remove' to drop rows below min_rating.
+
+
+
+   .. py:method:: clear_relationships(cls)
+
+      Remove all records for a specified relationship class.
+
+
+
+   .. py:method:: add_scalar_attribute(cls: str, name: str, data: pandas.Series[Any] | TableInput, /, *, dictionary: bool = False) -> None
+                  add_scalar_attribute(cls: str, name: str, entities: lenskit.data.types.IDSequence | tuple[lenskit.data.types.IDSequence, Ellipsis], values: numpy.typing.ArrayLike, /, *, dictionary: bool = False) -> None
+
+      Add a scalar attribute to an entity class.
+
+      :param cls: The entity class name.
+      :param name: The attribute name.
+      :param entities: The IDs for the entities whose attribute should be set.
+      :param values: The attribute values.
+      :param data: A Pandas datatframe or Arrow table storing entity IDs and
+                   attribute values.
+      :param dictionary: ``True`` to dictionary-encode the attribute values (saves space
+                         for string categorical values).
+
+
+
+   .. py:method:: add_list_attribute(cls: str, name: str, data: pandas.Series[Any] | TableInput, /, *, dictionary: bool = False) -> None
+                  add_list_attribute(cls: str, name: str, entities: lenskit.data.types.IDSequence | tuple[lenskit.data.types.IDSequence, Ellipsis], values: numpy.typing.ArrayLike, /, *, dictionary: bool = False) -> None
+
+      Add a list attribute to an entity class.
+
+      :param cls: The entity class name.
+      :param name: The attribute name.
+      :param entities: The IDs for the entities whose attribute should be set.
+      :param values: The attribute values (an array or list of lists)
+      :param data: A Pandas datatframe or Arrow table storing entity IDs and
+                   attribute values.
+      :param dictionary: ``True`` to dictionary-encode the attribute values (saves space
+                         for string categorical values).
+
+
+
+   .. py:method:: add_vector_attribute(cls, name, entities, values, /, dim_names = None)
+
+      Add a vector attribute to a set of entities.
+
+      .. warning::
+
+          Dense vector attributes are stored densely, even for entities for
+          which it is not set. High-dimensional vectors can therefore take up
+          a lot of space.
+
+      :param cls: The entity class name.
+      :param name: The attribute name.
+      :param entities: The entity IDs to which the attribute should be attached.
+      :param values: The attribute values, as a fixed-length list array or a
+                     two-dimensional NumPy array (for dense vector attributes) or a
+                     SciPy sparse array (for sparse vector attributes).
+      :param dim_names: The names for the dimensions of the array.
+
+
+
+   .. py:method:: build()
+
+      Build the dataset.
+
+
+
+   .. py:method:: build_container()
+
+      Build a data container (backing store for a dataset).
+
+
+
+   .. py:method:: save(path)
+
+      Save the dataset to disk in the LensKit native format.
+
+      :param path: The path where the dataset will be saved (will be created as a
+                   directory).
+
+
+
+.. py:type:: GenericKey
+   :canonical: tuple[ID, ...]
+
+
+   A generic collection key with no bounds or type information.
+
+.. py:class:: ItemListCollection(key)
+   :canonical: lenskit.data._collection.ItemListCollection
+
+   Bases: :py:obj:`Generic`\ [\ :py:obj:`lenskit.data._collection._keys.KL`\ ], :py:obj:`abc.ABC`
+
+
+   A collection of item lists.  This protocol defines read access to the
+   collection; see :class:`ItemListCollector` for the ability to add new lists.
+   See :ref:`item-list-collections` for an introduction to using this class.
+
+   An item list collection consists of a sequence of item lists with associated
+   *keys* following a fixed schema.  Item list collections support iteration
+   (in order) and lookup by key. They are used to represent a variety of
+   things, including test data and the results of a batch run. The length of an
+   item list collection (accessed with :func:`len`) is the number of item lists
+   in the collection, not the total number of items in the lists.
+
+   The key schema can be specified either by a list of field names, or by
+   providing a named tuple class (created by either :func:`namedtuple` or
+   :class:`NamedTuple`) defining the key schema.  Schemas should **not** be
+   nested: field values must be scalars, not tuples or lists.  Keys should also
+   be hashable.
+
+   This protocol and its implementations exist, instead of using raw
+   dictionaries or lists, to consistently handle some of the nuances of
+   multi-valued keys, and different collections having different key fields.
+   For example, if a run produces item lists with both user IDs and sequence
+   numbers, but your test data is only indexed by user ID, the *projected
+   lookup* capabilities make it easy to find the test data to go with an item
+   list in the run.
+
+   Item list collections support indexing by position, like a list, returning a
+   tuple of the key and list; iterating over an item list collection similarly
+   produces ``(key, list)`` pairs (so an item list collection is a
+   :class:`~collections.abc.Sequence` of key/list pairs).
+
+   If the item list is _indexed_ (constructed with ``index=True``), it also
+   supports lookup by _key_ with :meth:`lookup`.  The key can be supplied as
+   either a tuple or an instance of the key type.  If more than one item with
+   the same key is inserted into the collection, then the _last_ one is
+   returned (just like a dictionary), but the others remain in the underlying
+   list when it is iterated.
+
+   .. note::
+
+       Constructing an item list collection yields a
+       :class:`~lenskit.data.ListILC`.
+
+   :param key: The type (a NamedTuple class) or list of field names specifying the
+               key schema.
+   :param index: Whether or not to index lists by key to facilitate fast lookups.
+
+
+   .. py:method:: empty[K: lenskit.data._collection._keys.GenericKey](key: type[K], *, index: bool = True) -> MutableItemListCollection[K]
+                  empty(key: collections.abc.Sequence[str], *, index: bool = True) -> MutableItemListCollection[lenskit.data._collection._keys.GenericKey]
+      :staticmethod:
+
+
+      Create a new empty, mutable item list collection.
+
+
+
+   .. py:method:: from_dict[K: lenskit.data._collection._keys.GenericKey](data: Mapping[lenskit.data._collection._keys.GenericKey | lenskit.data.types.ID, lenskit.data._items.ItemList], key: type[K]) -> ItemListCollection[K]
+                  from_dict(data: Mapping[lenskit.data._collection._keys.GenericKey | lenskit.data.types.ID, lenskit.data._items.ItemList], key: collections.abc.Sequence[str] | str | None = None) -> ItemListCollection[lenskit.data._collection._keys.GenericKey]
+      :staticmethod:
+
+
+      Create an item list collection from a dictionary.
+
+      .. seealso::
+          :meth:`lenskit.data.collection.ListILC.from_dict`
+
+
+
+   .. py:method:: from_df(df, key = None, *others)
+      :staticmethod:
+
+
+      Create an item list collection from a data frame.
+
+      .. seealso::
+          :meth:`lenskit.data.collection.ListILC.from_df`
+
+      .. note::
+
+          Keys with empty item lists will be silently excluded from the output
+          data.
+
+      :param df: The data frame to convert.
+      :param key: The key type or field(s).  Can be specified as a single column
+                  name (or :class:`~lenskit.data.types.AliasedColumn`).
+      :param others: Other columns to consider; primarily used to pass additional
+                     aliased columns to normalize other clumnes like the item ID.
+
+
+
+   .. py:method:: from_arrow(table)
+      :staticmethod:
+
+
+      Convert an Arrow table into an item list collection.  The table must be
+      in ``'native`'' format.
+
+
+
+   .. py:method:: to_df()
+
+      Convert this item list collection to a data frame.
+
+      .. warning::
+
+          If this item list collection has any keys with empty lists, those
+          lists will be excluded from the output.
+
+
+
+   .. py:method:: to_arrow(*, batch_size = 5000, layout = 'native')
+
+      Convert this item list collection to an Arrow table.
+
+      The resulting table has one row per item list, with the item list
+      contents an ``items`` column of a structured list type.  This preserves
+      empty item lists for higher-fidelity data storage.
+
+      :param batch_size: The Arrow record batch size.
+
+
+
+   .. py:method:: to_dataset(class_name: str = 'interaction', *, result: Literal['dataset'] = 'dataset') -> lenskit.data._dataset.Dataset
+                  to_dataset(class_name: str = 'interaction', *, result: Literal['container']) -> lenskit.data._container.DataContainer
+                  to_dataset(class_name: str = 'interaction', *, result: Literal['builder']) -> lenskit.data._builder.DatasetBuilder
+
+      Construct a dataset populated with this item list collection's data as
+      interactions.
+
+      :param cls: The interaction class name.
+      :param result: Whether to return a fully-instantiated dataset, a container,
+                     or a dataset builder.
+
+
+
+   .. py:method:: save_parquet(path, *, layout = 'native', batch_size = 5000, compression = 'zstd', mkdir = True)
+
+      Save this item list collection to a Parquet file.  This supports two
+      types of Parquet files: “native” collections store one row per list,
+      with the item list contents in a repeated structure column named
+      ``items``; this layout fully preserves the item list collection,
+      including empty item lists.  The “flat” layout is easier to work with in
+      software such as Pandas, but cannot store empty item lists.
+
+      :param layout: The table layout to use.
+      :param batch_size: The Arrow record batch size.
+      :param compression: The compression scheme to use.
+      :param mkdir: Whether to create the parent directories if they don't exist.
+
+
+
+   .. py:method:: load_parquet(path: os.PathLike[str] | list[os.PathLike[str]], *, layout: Literal['native'] = 'native') -> ItemListCollection[lenskit.data._collection._keys.GenericKey]
+                  load_parquet(path: os.PathLike[str] | list[os.PathLike[str]], key: type[K] | collections.abc.Sequence[lenskit.data.types.Column] | lenskit.data.types.Column, *, layout: Literal['flat']) -> ItemListCollection[K]
+      :classmethod:
+
+
+      Load this item list from a Parquet file.
+
+      :param path: Path to the Parquet file to load.
+      :param key: The key to use (only when loading tabular layout).
+      :param layout: The layout to use, either LensKit native layout or a flat tabular layout.
+
+
+
+   .. py:method:: record_batches(batch_size = 5000, columns = None, *, layout = 'native')
+
+      Get the item list collection as Arrow record batches (in native layout).
+
+
+
+   .. py:property:: key_fields
+      :type: tuple[str]
+
+
+      The names of the key fields.
+
+
+   .. py:property:: key_type
+      :type: type[lenskit.data._collection._keys.KL]
+
+
+      The type of collection keys.
+
+
+   .. py:property:: list_schema
+      :type: dict[str, pyarrow.DataType]
+
+      :abstractmethod:
+
+
+      Get the schema for the lists in this ILC.
+
+
+   .. py:method:: rename_key(**names)
+
+      Rename one or more keys fields in this collection.
+
+
+
+   .. py:method:: lookup(key: tuple) -> lenskit.data._items.ItemList | None
+                  lookup(*key: lenskit.data.types.ID, **kwkey: lenskit.data.types.ID) -> lenskit.data._items.ItemList | None
+
+      Look up a list by key.  If multiple lists have the same key, this
+      returns the **last** (like a dictionary).
+
+      This method can be called with the key tuple as a single argument (and
+      this can be either the actual named tuple, or an ordinary tuple of the
+      same length), or with the individual key fields as positional or named
+      arguments.
+
+      :param key: The key tuple or key tuple fields.
+
+
+
+   .. py:method:: lookup_projected(key)
+
+      Look up an item list using a *projected* key.  A projected key is a key
+      that may have additional fields beyond those defined by this collection,
+      that are ignored for the purposes of lookup.
+
+      :param key: The key.  Must be a named tuple (e.g. a key obtained from
+                  another item list collection).
+
+      :returns: The item list with the specified key, projected to this collection's
+                key fields, or ``None`` if no such list exists.
+
+
+
+   .. py:method:: total_items()
+
+      Count the total number of items across all lists in this collection.
+
+
+
+   .. py:method:: items()
+      :abstractmethod:
+
+
+      Iterate over item lists and keys.
+
+
+
+   .. py:method:: lists()
+
+      Iterate over item lists without keys.
+
+
+
+   .. py:method:: keys()
+
+      Iterate over keys.
+
+
+
+   .. py:method:: __len__()
+      :abstractmethod:
+
+
+
+   .. py:method:: __iter__()
+
+
+   .. py:method:: __getitem__(pos, /)
+      :abstractmethod:
+
+
+      Get an item list and its key by position.
+
+      :param pos: The position in the list (starting from 0).
+
+      :returns: The key and list at position ``pos``.
+
+      :raises IndexError: when ``pos`` is out-of-bounds.
+
+
+
+   .. py:method:: __str__()
+
+
+.. py:class:: ItemListCollector
+   :canonical: lenskit.data._collection.ItemListCollector
+
+   Bases: :py:obj:`Protocol`
+
+
+   Collect item lists with associated keys, as in :class:`ItemListCollection`.
+
+
+   .. py:method:: add(list, *fields, **kwfields)
+      :abstractmethod:
+
+
+      Add a single item list to this list.
+
+      :param list: The item list to add.
+      :param fields: The key fields for this list.
+      :param kwfields: The key fields for this list.
+
+
+
+   .. py:method:: add_from(other, **fields)
+      :abstractmethod:
+
+
+      Add all collection from another collection to this collection.  If field
+      values are supplied, they are used to supplement or overwrite the keys
+      in ``other``; a common use case is to add results from multiple
+      recommendation runs and save them a single field.
+
+      :param other: The item list collection to incorporate into this one.
+      :param fields: Additional key fields (must be specified by name).
+
+
+
+.. py:class:: ListILC(key, *, index = True)
+   :canonical: lenskit.data._collection.ListILC
+
+   Bases: :py:obj:`lenskit.data._collection._base.MutableItemListCollection`\ [\ :py:obj:`lenskit.data._collection._keys.K`\ ], :py:obj:`Generic`\ [\ :py:obj:`lenskit.data._collection._keys.K`\ ]
+
+
+   Mutable item list collection backed by a Python list.
+
+
+   .. py:attribute:: list_schema
+      :type:  pyarrow.Schema
+
+      Get the schema for the lists in this ILC.
+
+
+   .. py:method:: from_dict(data: collections.abc.Mapping[lenskit.data._collection._keys.GenericKey | lenskit.data._collection._keys.ID, lenskit.data._items.ItemList], key: type[lenskit.data._collection._keys.K]) -> lenskit.data._collection._base.ItemListCollection[lenskit.data._collection._keys.K]
+                  from_dict(data: collections.abc.Mapping[lenskit.data._collection._keys.GenericKey | lenskit.data._collection._keys.ID, lenskit.data._items.ItemList], key: collections.abc.Sequence[str] | str | None = None) -> lenskit.data._collection._base.ItemListCollection[lenskit.data._collection._keys.GenericKey]
+      :classmethod:
+
+
+      Create an item list collection from a dictionary.
+
+
+
+   .. py:method:: from_df(df, key = None, *others)
+      :classmethod:
+
+
+      Create an item list collection from a data frame.
+
+      .. note::
+
+          Keys with empty item lists will be silently excluded from the output
+          data.
+
+      :param df: The data frame to convert.
+      :param key: The key type or field(s).  Can be specified as a single column
+                  name (or :class:`~lenskit.data.types.AliasedColumn`).
+      :param others: Other columns to consider; primarily used to pass additional
+                     aliased columns to normalize other clumnes like the item ID.
+
+
+
+   .. py:method:: from_arrow(table)
+      :staticmethod:
+
+
+      Convert an Arrow table into an item list collection.
+
+
+
+   .. py:method:: add(list, *fields, **kwfields)
+
+      Add a single item list to this list.
+
+      :param list: The item list to add.
+      :param fields: The key fields for this list.
+      :param kwfields: The key fields for this list.
+
+
+
+   .. py:method:: add_from(other, **fields)
+
+      Add all collection from another collection to this collection.  If field
+      values are supplied, they are used to supplement or overwrite the keys
+      in ``other``; a common use case is to add results from multiple
+      recommendation runs and save them a single field.
+
+      :param other: The item list collection to incorporate into this one.
+      :param fields: Additional key fields (must be specified by name).
+
+
+
+   .. py:method:: lookup(key: tuple) -> lenskit.data._items.ItemList | None
+                  lookup(*key: lenskit.data._collection._keys.ID, **kwkey: lenskit.data._collection._keys.ID) -> lenskit.data._items.ItemList | None
+
+      Look up a list by key.  If multiple lists have the same key, this
+      returns the **last** (like a dictionary).
+
+      This method can be called with the key tuple as a single argument (and
+      this can be either the actual named tuple, or an ordinary tuple of the
+      same length), or with the individual key fields as positional or named
+      arguments.
+
+      :param key: The key tuple or key tuple fields.
+
+
+
+   .. py:method:: items()
+
+      Iterate over item lists and keys.
+
+
+
+   .. py:method:: __len__()
+
+
+   .. py:method:: __getitem__(pos, /)
+
+      Get an item list and its key by position.
+
+      :param pos: The position in the list (starting from 0).
+
+      :returns: The key and list at position ``pos``.
+
+      :raises IndexError: when ``pos`` is out-of-bounds.
+
+
+
+   .. py:method:: __repr__()
+
+
+.. py:class:: MutableItemListCollection[K: lenskit.data._collection._keys.GenericKey](key)
+   :canonical: lenskit.data._collection.MutableItemListCollection
+
+   Bases: :py:obj:`ItemListCollector`, :py:obj:`ItemListCollection`\ [\ :py:obj:`K`\ ]
+
+
+   Intersection type of :class:`ItemListCollection` and
+   :class:`ItemListCollector`.
+
+
+.. py:class:: QueryIDKey
+   :canonical: lenskit.data._collection.QueryIDKey
+
+   Bases: :py:obj:`NamedTuple`
+
+
+   Key type for query IDs.  This is used for :ref:`item list collections
+   <item-list-collections>` that are keyed by query ID, a common setup for
+   recommendation runs and test data.
+
+
+   .. py:attribute:: query_id
+      :type:  lenskit.data.types.ID
+
+
+.. py:class:: UserIDKey
+   :canonical: lenskit.data._collection.UserIDKey
+
+   Bases: :py:obj:`NamedTuple`
+
+
+   Key type for user IDs.  This is used for :ref:`item list collections
+   <item-list-collections>` that are keyed by user ID, a common setup for
+   recommendation runs and test data.
+
+
+   .. py:attribute:: user_id
+      :type:  lenskit.data.types.ID
+
+
+.. py:function:: key_dict(kt)
+
+.. py:class:: DataContainer
+   :canonical: lenskit.data._container.DataContainer
+
+   A general container for the data backing a dataset.
+
+
+   .. py:attribute:: schema
+      :type:  lenskit.data.schema.DataSchema
+
+
+   .. py:attribute:: tables
+      :type:  dict[str, pyarrow.Table]
+
+
+   .. py:method:: normalize()
+
+      Normalize data to adhere to the expectations of the most current schema.
+
+
+
+   .. py:method:: __getstate__()
+
+
+   .. py:method:: __setstate__(state)
+
+
+   .. py:method:: save(path)
+
+      Save the data to disk.
+
+
+
+   .. py:method:: load(path)
+      :classmethod:
+
+
+      Load data from disk.
+
+
+
+.. py:class:: Dataset(data)
+   :canonical: lenskit.data._dataset.Dataset
+
+   Representation of a data set for LensKit training, evaluation, etc. Data can
+   be accessed in a variety of formats depending on the needs of a component.
+   See :ref:`data-model` for details of the LensKit data model.
+
+   Dataset objects should not be directly constructed; instead, use a
+   :class:`DatasetBuilder`, :meth:`load`, or :func:`from_interactions_df`.
+
+   .. note::
+
+       Zero-copy conversions are used whenever possible, so client code **must
+       not** modify returned data in-place.
+
+   :param data: The container for this dataset's data, or a function that will
+                return such a container to create a lazy-loaded dataset.
+
+   .. stability:: caller
+
+
+   .. py:method:: load(path)
+      :classmethod:
+
+
+      Load a dataset in the LensKit native format.
+
+      :param path: The path to the dataset to load.
+
+      :returns: The loaded dataset.
+
+
+
+   .. py:method:: save(path)
+
+      Save the data set in the LensKit native format.
+
+      :param path: The path in which to save the data set (will be created as a
+                   directory).
+
+
+
+   .. py:property:: name
+      :type: str | None
+
+
+      Get the dataset's name.
+
+
+   .. py:property:: schema
+      :type: lenskit.data.schema.DataSchema
+
+
+      Get the schema of this dataset.
+
+
+   .. py:property:: items
+      :type: lenskit.data._vocab.Vocabulary
+
+
+      The items known by this dataset.
+
+
+   .. py:property:: users
+      :type: lenskit.data._vocab.Vocabulary
+
+
+      The users known by this dataset.
+
+
+   .. py:property:: item_count
+      :type: int
+
+
+
+   .. py:property:: user_count
+      :type: int
+
+
+
+   .. py:method:: entities(name)
+
+      Get the entities of a particular type / class.
+
+
+
+   .. py:method:: relationships(name)
+
+      Get the relationship records of a particular type / class.
+
+
+
+   .. py:method:: interactions(name = None)
+
+      Get the interaction records of a particular class.  If no class is
+      specified, returns the default interaction class.
+
+
+
+   .. py:method:: default_interaction_class()
+
+
+   .. py:property:: interaction_count
+      :type: int
+
+
+      Count the total number of interactions of the default class, taking into
+      account any ``count`` attribute.
+
+
+   .. py:method:: interaction_table(*, format: Literal['pandas'], fields: str | list[str] | None = None, original_ids: bool = False) -> pandas.DataFrame
+                  interaction_table(*, format: Literal['numpy'], fields: str | list[str] | None = None) -> dict[str, numpy.typing.NDArray[Any]]
+                  interaction_table(*, format: Literal['arrow'], fields: str | list[str] | None = None) -> pyarrow.Table
+      :abstractmethod:
+
+
+      Get the user-item interactions as a table in the requested format. The
+      table is not in a specified order.  Interactions may be repeated (e.g.
+      the same user may listen to a song multiple times).  For a non-repeated
+      “ratings matrix” view of the data, see :meth:`interaction_matrix`.
+
+      This is a convenince wrapper on top of :meth:`interactions` and the
+      methods of :class:`RelationshipSet`.
+
+      .. warning::
+          Client code **must not** perform in-place modifications on the table
+          returned from this method.  Whenever possible, it will be a shallow
+          view on top of the underlying storage, and modifications may corrupt
+          data for other code.
+
+      :param format: The desired data format.  Currently-supported formats are:
+
+                     * ``"pandas"`` — returns a :class:`pandas.DataFrame`.  The index
+                       is not meaningful.
+                     * ``"arrow"`` — returns a PyArrow :class:`~pa.Table`.  The index
+                       is not meaningful.
+                     * ``"numpy"`` — returns a dictionary mapping names to arrays.
+      :param fields: Which fields (attributes) to include, or ``None`` to include all
+                     fields. Commonly-available fields include ``"rating"`` and
+                     ``"timestamp"``.
+      :param original_ids: If ``True``, return user and item IDs as represented in the
+                           original source data in columns named ``user_id`` and
+                           ``item_id``, instead of the user and item numbers typically
+                           returned.
+
+      :returns: The user-item interaction log in the specified format.
+
+
+
+   .. py:method:: interaction_matrix(*, format: Literal['pandas'], field: str | None = None, original_ids: bool = False) -> pandas.DataFrame
+                  interaction_matrix(*, format: Literal['torch'], layout: Literal['csr', 'coo'] = 'csr', field: str | None = None) -> torch.Tensor
+                  interaction_matrix(*, format: Literal['scipy'], layout: Literal['coo'], field: str | None = None) -> scipy.sparse.coo_array
+                  interaction_matrix(*, format: Literal['scipy'], layout: Literal['csr'] = 'csr', field: str | None = None) -> scipy.sparse.csr_array
+                  interaction_matrix(*, format: Literal['structure'], layout: Literal['csr'] = 'csr') -> lenskit.data.matrix.CSRStructure
+      :abstractmethod:
+
+
+      Get the user-item interactions as “ratings” matrix from the default
+      interaction class.  Interactions are not repeated, and are coalesced
+      with the default coalescing strategy for each attribute.
+
+      The matrix may be returned in “coordinate” format, in which case it is
+      comparable to :meth:`interaction_table` but without repeated
+      interactions, or it may be in a compressed sparse row format.
+
+      This is a convenince wrapper on top of :meth:`interactions` and the
+      methods of :class:`MatrixRelationshipSet`.
+
+      .. warning::
+
+          Client code **must not** perform in-place modifications on the
+          matrix returned from this method.  Whenever possible, it will be a
+          shallow view on top of the underlying storage, and modifications may
+          corrupt data for other code.
+
+      :param format: The desired data format.  Currently-supported formats are:
+
+                     * ``"pandas"`` — returns a :class:`pandas.DataFrame`.
+                     * ``"torch"`` — returns a sparse :class:`torch.Tensor` (see
+                       :mod:`torch.sparse`).
+                     * ``"scipy"`` — returns a sparse array from :mod:`scipy.sparse`.
+                     * ``"structure"`` — returns a :class:`~matrix.CSRStructure`
+                       containing only the user and item numbers in compressed sparse
+                       row format.
+      :param field: Which field to return in the matrix.  Common fields include
+                    ``"rating"`` and ``"timestamp"``.
+
+                    If unspecified (``None``), this will yield an implicit-feedback
+                    indicator matrix, with 1s for observed items, except for the
+                    ``"pandas"`` format, which will return all attributes.  Specify
+                    an empty list to return a Pandas data frame with only the user
+                    and item attributes.
+      :param layout: The layout for a sparse matrix.  Can be either ``csr`` or
+                     ``coo``, or ``None`` to use the default for the specified
+                     format.  Ignored for the Pandas format.
+      :param original_ids: ``True`` to return user and item IDs instead of numbers in a
+                           ``pandas``-format matrix.
+
+
+
+   .. py:method:: user_row(user_id: lenskit.data.types.ID) -> lenskit.data._items.ItemList | None
+                  user_row(*, user_num: int) -> lenskit.data._items.ItemList
+      :abstractmethod:
+
+
+      Get a user's row from the interaction matrix for the default interaction
+      class, using :ref:`default coalsecing <coalescing-defaults>` for
+      repeated interactions.  Available fields are returned as fields. If the
+      dataset has ratings, these are provided as a ``rating`` field, **not**
+      as the item scores.  The item list is unordered, but items are returned
+      in order by item number.
+
+      :param user_id: The ID of the user to retrieve.
+      :param user_num: The number of the user to retrieve.
+
+      :returns: The user's interaction matrix row, or ``None`` if no user with that
+                ID exists.
+
+
+
+   .. py:method:: item_stats()
+
+      Get item statistics from the default interaction class.
+
+      :returns: A data frame indexed by item ID with the interaction statistics. See
+                :ref:`interaction-stats` for a description of the columns returned.
+
+                The index is aligned with the vocabulary, so ``iloc`` works with item
+                numbers.
+
+
+
+   .. py:method:: user_stats()
+
+      Get user statistics from the default interaction class.
+
+      :returns: A data frame indexed by user ID with the interaction statistics. See
+                :ref:`interaction-stats` for a description of the columns returned.
+
+                The index is the vocabulary, so ``iloc`` works with user numbers.
+
+
+
+   .. py:method:: __getstate__()
+
+
+   .. py:method:: __setstate__(state)
+
+
+   .. py:method:: __str__()
+
+
+   .. py:method:: __repr__()
+
+
+.. py:class:: EntitySet(name, schema, vocabulary, table, _sel = None)
+   :canonical: lenskit.data._entities.EntitySet
+
+   Representation of a set of entities from the dataset.  Obtained from
+   :meth:`Dataset.entities`.
+
+   Client code does not need to construct this class; obtain instances from a
+   dataset's :meth:`~lenskit.data.Dataset.entities` method.
+
+
+   .. py:attribute:: name
+      :type:  str
+
+      The name of the entity class for these entities.
+
+
+   .. py:attribute:: schema
+      :type:  lenskit.data.schema.EntitySchema
+
+
+   .. py:attribute:: vocabulary
+      :type:  lenskit.data._vocab.Vocabulary
+
+      The identifier vocabulary for this schema.
+
+
+   .. py:property:: attributes
+      :type: list[str]
+
+
+      Get the attribute names for this entity class.
+
+
+   .. py:method:: count()
+
+      Return the number of entities in this entity set.
+
+
+
+   .. py:method:: ids()
+
+      Get the identifiers of the entities in this set.  This is returned
+      directly as PyArrow array instead of NumPy.
+
+
+
+   .. py:method:: numbers()
+
+      Get the numbers (from the vocabulary) for the entities in this set.
+
+
+
+   .. py:method:: arrow()
+
+      Get these entities and their attributes as a PyArrow table.
+
+
+
+   .. py:method:: pandas()
+
+      Get the entities and their attributes as a Pandas data frame.
+
+
+
+   .. py:method:: attribute(name)
+
+      Get values of an attribute for the entites in this entity set.
+
+
+
+   .. py:method:: select(*, ids: lenskit.data.types.IDSequence | None = None) -> EntitySet
+                  select(*, numbers: numpy.ndarray[tuple[int], numpy.dtype[numpy.integer[Any]]] | pyarrow.IntegerArray[Any] | None = None) -> EntitySet
+
+      Select a subset of the entities in this set.
+
+      .. note::
+
+          The vocabulary is unchanged, so numbers in the resulting set will be
+          entity numbers in the dataset's vocabulary.  They are not rearranged
+          to be relative to this entity set.
+
+      :param ids: The entity identifiers to select.
+      :param numbers: The entity numbers to select.
+
+      :returns: The entity subset.
+
+
+
+   .. py:method:: __len__()
+
+
+.. py:class:: ItemList(source: ItemList, *, ordered: bool | None = None, vocabulary: lenskit.data._vocab.Vocabulary | None = None, scores: numpy.typing.NDArray[numpy.generic] | torch.Tensor | numpy.typing.ArrayLike | Literal[False] | numpy.floating | float | None = None, **fields: numpy.typing.NDArray[numpy.generic] | torch.Tensor | numpy.typing.ArrayLike | Literal[False])
+   :canonical: lenskit.data._items.ItemList
+              ItemList(source = None, *, item_nums = None, vocabulary = None, ordered = None, scores = None, **fields)
+              ItemList(source = None, *, item_ids = None, item_nums = None, vocabulary = None, ordered = None, scores = None, **fields)
+
+   Representation of a (usually ordered) list of items, possibly with scores
+   and other associated data; many components take and return item lists.  Item
+   lists are to be treated as **immutable** — create a new list with modified
+   data, do not do in-place modifications of the list itself or the arrays or
+   data frame it returns.
+
+   To get the length of an item list, use the standard :func:`len` function.
+
+   An item list logically a list of rows, each of which is an item with
+   multiple fields.  A designated field, ``score``, is available through the
+   :meth:`scores` method, and is always single-precision floating-point.
+
+   Item lists can be subset as an array (e.g. ``items[selector]``), where
+   integer indices (or arrays thereof), boolean arrays, and slices are allowed
+   as selectors.
+
+   When an item list is pickled, it is pickled compactly but only for CPUs: the
+   vocabulary is dropped (after ensuring both IDs and numbers are computed),
+   and all arrays are pickled as NumPy arrays.  This makes item lists compact
+   to serialize and transmit, but does mean that that serializing an item list
+   whose scores are still on the GPU will deserialize on the CPU in the
+   receiving process.  This is usually not a problem, because item lists are
+   typically used for small lists of items, not large data structures that need
+   to remain in shared memory.
+
+   In a few places, the “items” in an item list may be other entities, such as
+   users, tags, authors, etc.  This seems less confusing than calling it
+   ``EntityList``, but having a very different use case and feature set than
+   :class:`~lenskit.data.EntitySet`.
+
+   .. note::
+
+       Naming for fields and accessor methods is tricky, because the usual
+       convention for a data frame is to use singular column names (e.g.
+       “item_id”, “score”) instead of plural (“item_ids”, “scores”) — the data
+       frame, like a database table, is a list of instances, and the column
+       names are best interpreted as naming attributes of individual instances.
+
+       However, when working with a list of e.g. item IDs, it is more natural —
+       at least to this author — to use plural names: ``item_ids``.  Since this
+       class is doing somewhat double-duty, representing a list of items along
+       with associated data, as well as a data frame of columns representing
+       items, the appropriate naming is not entirely clear.  The naming
+       convention in this class is therefore as follows:
+
+       * Field names are singular (``item_id``, ``score``).
+       * Named accessor methods are plural (:meth:`item_ids`, :meth:`scores`).
+       * Both singular and plural forms are accepted for item IDs numbers, and
+         scores in the keyword arguments.  Other field names should be
+         singular.
+
+   .. todo::
+
+       Right now, selection / subsetting only happens on the CPU, and will move
+       data to the CPU for the subsetting operation.  There is no reason, in
+       principle, why we cannot subset on GPU.  Future revisions may add
+       support for this.
+
+   :param source: A source item list. If provided and an :class:`ItemList`, its fields
+                  and data are used to initialize any aspects of the item list that
+                  are not provided in the other arguments.  Otherwise, it is
+                  interpreted as ``item_ids``.
+   :param item_ids: A list or array of item identifiers. ``item_id`` is accepted as an
+                    alternate name.
+   :param item_nums: A list or array of item numbers. ``item_num`` is accepted as an
+                     alternate name.
+   :param vocabulary: A vocabulary to translate between item IDs and numbers.
+   :param ordered: Whether the list has a meaningful order.
+   :param scores: An array of scores for the items.  Pass the value ``False`` to
+                  remove the scores when copying from a source list.
+   :param fields: Additional fields, such as ``score`` or ``rating``.  Field names
+                  should generally be singular; the named keyword arguments and
+                  accessor methods are plural for readability (“get the list of item
+                  IDs”).  Pass the value ``False`` to remove the field when copying
+                  from a source list.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: ordered
+      :type:  bool
+      :value: False
+
+
+      Whether this list has a meaningful order.
+
+
+   .. py:method:: from_df(df, *, vocabulary = None, keep_user = False)
+      :classmethod:
+
+
+      Create a item list from a Pandas data frame.  The frame should have
+      ``item_num`` and/or ``item_id`` columns to identify the items; other
+      columns (e.g. ``score`` or ``rating``) are added as fields. If the data
+      frame has user columns (``user_id`` or ``user_num``), those are dropped
+      by default.
+
+      :param df: The data frame to turn into an item list.
+      :param vocabulary: The item vocabulary.
+      :param keep_user: If ``True``, keeps user ID/number columns instead of dropping them.
+
+
+
+   .. py:method:: from_arrow(tbl, *, vocabulary = None)
+      :classmethod:
+
+
+      Create a item list from a Pandas table or structured array.  The table
+      should have ``item_num`` and/or ``item_id`` columns to identify the
+      items; other columns (e.g. ``score`` or ``rating``) are added as fields.
+      If the data frame has user columns (``user_id`` or ``user_num``), those
+      are dropped by default.
+
+      :param tbl: The Arrow table or array to convert to an item list.
+      :param vocabulary: The item vocabulary.
+
+
+
+   .. py:method:: from_vocabulary(vocab)
+      :classmethod:
+
+
+
+   .. py:method:: clone()
+
+      Make a shallow copy of the item list.
+
+
+
+   .. py:property:: vocabulary
+      :type: lenskit.data._vocab.Vocabulary | None
+
+
+      Get the item list's vocabulary, if available.
+
+
+   .. py:method:: ids(*, format: Literal['numpy'] = 'numpy') -> lenskit.data.types.IDArray
+                  ids(*, format: Literal['arrow']) -> pyarrow.Array
+
+      Get the item IDs.
+
+      :returns: An array of item identifiers.
+
+      :raises RuntimeError: if the item list was not created with IDs or a :class:`Vocabulary`.
+
+
+
+   .. py:method:: numbers(format: Literal['numpy'] = 'numpy', *, vocabulary: lenskit.data._vocab.Vocabulary | None = None, missing: Literal['error', 'negative'] = 'error') -> lenskit.data.types.NPVector[numpy.int32]
+                  numbers(format: Literal['torch'], *, vocabulary: lenskit.data._vocab.Vocabulary | None = None, missing: Literal['error', 'negative'] = 'error') -> torch.Tensor
+                  numbers(format: Literal['arrow'], *, vocabulary: lenskit.data._vocab.Vocabulary | None = None, missing: Literal['error', 'negative', 'null'] = 'error') -> pyarrow.Array[pyarrow.Int32Scalar]
+                  numbers(format: LiteralString = 'numpy', *, vocabulary: lenskit.data._vocab.Vocabulary | None = None, missing: Literal['error', 'negative'] = 'error') -> numpy.typing.ArrayLike
+
+      Get the item numbers.
+
+      :param format: The array format to use.
+      :param vocabulary: A alternate vocabulary for mapping IDs to numbers.  If provided,
+                         then the item list must have IDs (either stored, or through a
+                         vocabulary).
+
+      :returns: An array of item numbers.
+
+      :raises RuntimeError: if the item list was not created with numbers or a
+      :raises Vocabulary:
+
+
+
+   .. py:method:: scores(format: Literal['numpy'] = 'numpy') -> lenskit.data.types.NPVector | None
+                  scores(format: Literal['torch']) -> torch.Tensor | None
+                  scores(format: Literal['arrow']) -> pyarrow.Array[pyarrow.FloatScalar] | None
+                  scores(format: Literal['pandas'], *, index: Literal['ids', 'numbers'] | None = None) -> pandas.Series | None
+                  scores(format: LiteralString = 'numpy') -> numpy.typing.ArrayLike | None
+
+      Get the item scores (if available).
+
+
+
+   .. py:method:: ranks(format: Literal['numpy'] = 'numpy') -> numpy.typing.NDArray[numpy.int32] | None
+                  ranks(format: Literal['torch']) -> torch.Tensor | None
+                  ranks(format: Literal['arrow']) -> pyarrow.Array[pyarrow.Int32Scalar] | None
+                  ranks(format: Literal['pandas']) -> pandas.Series[int] | None
+                  ranks(format: LiteralString = 'numpy') -> numpy.typing.ArrayLike | None
+
+      Get an array of ranks for the items in this list, if it is ordered.
+      Unordered lists have no ranks.  The ranks are based on the order in the
+      list, **not** on the score.
+
+      Item ranks start with **1**, for compatibility with common practice in
+      mathematically defining information retrieval metrics and operations.
+
+      :returns: An array of item ranks, or ``None`` if the list is unordered.
+
+
+
+   .. py:method:: field(name: str, format: Literal['numpy'] = 'numpy') -> numpy.typing.NDArray[numpy.floating] | None
+                  field(name: str, format: Literal['torch']) -> torch.Tensor | None
+                  field(name: str, format: Literal['arrow']) -> pyarrow.Array | pyarrow.Tensor | None
+                  field(name: str, format: Literal['pandas'], *, index: Literal['ids', 'numbers'] | None = None) -> pandas.Series | None
+                  field(name: str, format: Literal['multi']) -> lenskit.data._mtarray.MTArray | None
+                  field(name: str, format: LiteralString) -> numpy.typing.ArrayLike | None
+
+
+   .. py:method:: isin(other)
+
+      Return a boolean mask identifying the items of this list that are in the
+      other list.
+
+      This is equivalent to :func:`numpy.isin` applied to the ID arrays, but
+      is much more efficient in many cases.
+
+
+
+   .. py:method:: to_df(*, ids = True, numbers = True)
+
+      Convert this item list to a Pandas data frame.  It has the following columns:
+
+      * ``item_id`` — the item IDs (if available and ``ids=True``)
+      * ``item_num`` — the item numbers (if available and ``numbers=True``)
+      * ``score`` — the item scores
+      * ``rank`` — the item ranks (if the list is ordered)
+      * all other defined fields, using their field names
+
+
+
+   .. py:method:: to_arrow(*, ids: bool = True, numbers: bool = False, ranks: bool = True, type: Literal['table'] = 'table', columns: collections.abc.Sequence[str] | None = None) -> pyarrow.Table
+                  to_arrow(*, ids: bool = True, numbers: bool = False, ranks: bool = True, type: Literal['array'], columns: collections.abc.Sequence[str] | None = None) -> pyarrow.StructArray
+
+      Convert the item list to a Pandas table.
+
+
+
+   .. py:method:: arrow_schema(*, ids = True, numbers = False, ranks = True)
+
+
+   .. py:method:: arrow_types(*, ids = True, numbers = False, ranks = True)
+
+      Get the Arrow data types for this item list.
+
+
+
+   .. py:method:: top_n(n = None, *, scores = None)
+
+      Get the top _N_ items in this list, sorted in decreasing order.
+
+      If any scores are undefined (``NaN``), those items are excluded.
+
+      :param n: The number of items.  If ``None`` or negative, returns all items
+                sorted by score.
+      :param scores: The name of a field containing the scores, or a NumPy vector of
+                     scores, for selecting the top _N_.  If ``None``, the item list's
+                     scores are used.
+
+      :returns: An ordered item list containing the top ``n`` items.
+
+
+
+   .. py:method:: concat(other)
+
+      Concatenate this item list with another.
+
+      If ``self`` has a vocabulary that accomodates the item IDs in ``other``,
+      the returned item list will share the vocabulary.
+
+
+
+   .. py:method:: update(other)
+
+      Create a copy of the item list, updated with new data from another list.
+
+      This creates a new item list with the same items as ``self``, but with
+      new or modified fields from ``other``.  For any item in both ``self``
+      and ``other``, and each field present in ``other``, the values of that
+      field in ``other`` are used instead of ``self``.  That is:
+
+      - If a field is only present in ``self``, it is used unchanged.
+      - If a field is only present in ``other``, its values are used for the
+        items that appear in both sets, and items only in ``self`` have an
+        unset / null value for the field (``NaN`` for foating arrays).
+      - If a field is present in both lists, then its values from ``other``
+        are used for items appearing in ``other``, and the values from
+        ``self`` are used for items that appear only in ``self``.
+      - Items that appear only in ``other`` are ignored.
+
+      .. note::
+          Only the *presence or absence* of an item in ``self`` and ``other``
+          is considered, not the nullity of individual field values.  If a
+          field appears in both ``self`` and ``other``, and some of its values
+          in ``other`` are null or ``NaN``, then they will be null or ``NaN``
+          in the resulting item list, regardless of the value of that field
+          for those items on ``self``.
+
+          That is, this method does not do item-level coalescing of null field
+          values.
+
+
+      :param other: The item list to merge into this one.
+
+      :returns: The updated item list.
+
+
+
+   .. py:method:: remove(*, ids: lenskit.data.types.IDSequence | None = None) -> ItemList
+                  remove(*, numbers: pyarrow.Int32Array | lenskit.data.types.NPVector[numpy.integer] | pandas.Series[int] | None = None) -> ItemList
+
+      Return an item list with the specified items removed.
+
+      The items to remove are not required to be in the list.
+
+      :param ids: The item IDs to remove.
+      :param numbers: The item numbers to remove.
+
+
+
+   .. py:method:: __len__()
+
+
+   .. py:method:: __getitem__(sel)
+
+      Subset the item list.
+
+      .. todo::
+          Support on-device masking.
+
+      :param sel: The items to select. Can be either a Boolean array of the same
+                  length as the list that is ``True`` to indicate selected items,
+                  or an array of indices of the items to retain (in order in the
+                  list, starting from 0).
+
+
+
+   .. py:method:: __getstate__()
+
+
+   .. py:method:: __setstate__(state)
+
+
+   .. py:method:: __str__()
+
+
+   .. py:method:: __repr__()
+
+
+.. py:type:: QueryInput
+   :canonical: RecQuery | ID | ItemList | None
+
+
+   Types that can be converted to a query by :meth:`RecQuery.create`.
+
+.. py:type:: QueryItemSource
+   :canonical: Literal['history', 'session', 'context']
+
+
+   Valid sources for query items.
+
+.. py:class:: RecQuery
+   :canonical: lenskit.data._query.RecQuery
+
+   Representation of a the data available for a recommendation query.  This is
+   generally the available inputs for a recommendation request *except* the set
+   of candidate items.
+
+   .. todo::
+
+       Document and test methods for extending the recommendation query with arbitrary
+       data to be used by client-provided pipeline components.
+
+   .. todo::
+       When LensKit supports context-aware recommendation, this should be extended
+       to include context cues.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: user_id
+      :type:  lenskit.data.types.ID | None
+      :value: None
+
+
+      The user's identifier, if known.
+
+
+   .. py:attribute:: history_items
+      :type:  lenskit.data._items.ItemList | None
+      :value: None
+
+
+      The items from the user's interaction history, with ratings if available.  This
+      list is *deduplicated*, like :meth:`~lenskit.data.Dataset.interaction_matrix`,
+      rather than a full interaction log.  As with :meth:`~lenskit.data.Dataset.user_row`,
+      the rating is expected to be on a ``rating`` field, not ``score``.
+
+
+   .. py:attribute:: session_items
+      :type:  lenskit.data._items.ItemList | None
+      :value: None
+
+
+      Items the user has interacted with in the current session.
+
+
+   .. py:attribute:: context_items
+      :type:  lenskit.data._items.ItemList | None
+      :value: None
+
+
+      Items that form a context for the requested recommendations.  For example:
+
+      -   To recommend products related to a product the user is viewing, the
+          viewed product is a context item.
+      -   To recommend products to add to a shopping cart, the current cart
+          contents are the context items.
+
+
+   .. py:attribute:: query_source
+      :type:  QueryItemSource | set[QueryItemSource] | None
+      :value: None
+
+
+      The list of items to return from :meth:`query_items`.
+
+
+   .. py:attribute:: user_items
+      :type:  lenskit.data._items.ItemList | None
+      :value: None
+
+
+      Deprecated alias for :attr:`history_items`.
+
+      .. deprecated:: 2025.6
+
+          Use :attr:`history_items` instead.  This property will be removed in
+          LensKit 2026.1.
+
+
+   .. py:attribute:: query_id
+      :type:  lenskit.data.types.ID | None
+      :value: None
+
+
+      An identifier for this query.
+
+      Query identifiers are used for things like mapping batch recommendation
+      outputs to their inputs.
+
+
+   .. py:method:: __post_init__()
+
+
+   .. py:method:: create(data)
+      :classmethod:
+
+
+      Create a recommendation query from an input, filling in available
+      components based on the data type.
+
+      :param data: Input data to turn into a recommendation query.  If the input is
+                   already a query, it is returned *as-is* (not copied).
+
+      :returns: The recommendation query.
+
+
+
+   .. py:property:: query_items
+      :type: lenskit.data._items.ItemList | None
+
+
+      Return the items the recommender should treat as a “query”.
+
+      This property exists so that components can obtain a list of items to
+      use for generating recommendations, regardless of the precise shape of
+      recommendation problem being solved (e.g., user-personalized
+      recommendation or session-based recommendation).  This allows general
+      models such as :class:`~lenskit.knn.ItemKNNScorer` to operate across
+      recommendation tasks.
+
+      The :attr:`query_source` attribute determines which list(s) of items
+      in this query are considered the “query items”.  If unset, the first
+      of the following that is available are used as the query items:
+
+      1. :attr:`context_items`
+      2. :attr:`session_items`
+      3. :attr:`history_items`
+
+
+   .. py:property:: all_items
+      :type: lenskit.data._items.ItemList | None
+
+
+      Get a single list of all items mentioned in the query.
+
+
+   .. py:method:: combined_items(*sources)
+
+      Obtain a combined list of items from one or more sources.
+
+
+
+.. py:class:: MatrixRelationshipSet(name, vocabularies, schema, table)
+   :canonical: lenskit.data._relationships.MatrixRelationshipSet
+
+   Bases: :py:obj:`RelationshipSet`
+
+
+   Two-entity relationships without duplicates, accessible in matrix form.
+
+   .. note::
+
+       Client code does not need to construct this class; obtain instances from
+       a relationship set's :meth:`~RelationshipSet.matrix` method.
+
+
+   .. py:attribute:: row_type
+      :type:  str
+
+
+   .. py:attribute:: col_type
+      :type:  str
+
+
+   .. py:method:: __getstate__()
+
+
+   .. py:method:: __setstate__(state)
+
+
+   .. py:property:: row_vocabulary
+
+      The vocabulary for row entities.
+
+
+   .. py:property:: col_vocabulary
+
+      The vocabulary for column entities.
+
+
+   .. py:property:: n_rows
+
+
+   .. py:property:: n_cols
+      :type: int
+
+
+
+   .. py:method:: matrix(*, row_entity = None, col_entity = None)
+
+      Convert this relationship set into a matrix, coalescing duplicate
+      observations.
+
+      .. versionchanged:: 2025.6
+
+          Removed the fixed defaults for ``row_entity`` and ``col_entity``.
+
+      :param row_entity: The specified row entity of the matrix.  Defaults to the first
+                         entity in the relationship's list of involved entities.
+      :param col_entity: The specified column entity of the matrix. Defaults to the last
+                         entity in the relationship's list of involved entities.
+
+
+
+   .. py:method:: csr_structure(*, format: Literal['numpy'] = 'numpy') -> lenskit.data.matrix.CSRStructure
+                  csr_structure(*, format: Literal['arrow']) -> lenskit.data.matrix.SparseRowArray
+
+      Get the compressed sparse row structure of this relationship matrix.
+
+
+
+   .. py:method:: coo_structure()
+
+      Get the compressed sparse row structure of this relationship matrix.
+
+
+
+   .. py:method:: scipy(attribute: str | None = None, *, layout: Literal['coo'], legacy: Literal[True]) -> scipy.sparse.coo_matrix
+                  scipy(attribute: str | None = None, *, layout: Literal['coo'], legacy: Literal[False] = False) -> scipy.sparse.coo_array[Any, tuple[int, int]]
+                  scipy(attribute: str | None = None, *, layout: Literal['csr'] = 'csr', legacy: Literal[True]) -> scipy.sparse.csr_matrix
+                  scipy(attribute: str | None = None, *, layout: Literal['csr'] = 'csr', legacy: Literal[False] = False) -> scipy.sparse.csr_array[Any, tuple[int, int]]
+                  scipy(attribute: str | None = None, *, layout: lenskit.data.types.LAYOUT = 'csr', legacy: bool = False) -> scipy.sparse.sparray | scipy.sparse.spmatrix
+
+      Get this relationship matrix as a SciPy sparse matrix.
+
+      .. note::
+          If the selected attribute has missing values, they are *omitted* from the
+          returned matrix.
+
+      :param attribute: The attribute to return, or ``None`` to return an indicator-only
+                        sparse matrix (all observed values are 1).
+      :param layout: The matrix layout to return.
+
+      :returns: The sparse matrix.
+
+
+
+   .. py:method:: torch(attribute: str | None = None, *, layout: Literal['csr'] = 'csr') -> torch.Tensor
+                  torch(attribute: str | None = None, *, layout: Literal['coo']) -> torch.Tensor
+
+      Get this relationship matrix as a PyTorch sparse tensor.
+
+      .. note::
+          If the selected attribute has missing values, they are *omitted* from the
+          returned matrix.
+
+      :param attribute: The attribute to return, or ``None`` to return an indicator-only
+                        sparse matrix (all observed values are 1).
+      :param layout: The matrix layout to return.
+
+      :returns: The sparse matrix.
+
+
+
+   .. py:method:: sample_negatives(rows, *, weighting = 'uniform', n = None, verify = True, max_attempts = 10, rng = None)
+
+      Sample negative columns (columns with no observation recorded) for an
+      array of rows. On a normal interaction matrix, this samples negative
+      items for users.
+
+      :param rows: The row numbers.  Duplicates are allowed, and negative columns
+                   are sampled independently for each row. Must be a 1D array or
+                   tensor.
+      :param weighting: The weighting for sampled negatives; ``uniform`` samples them
+                        uniformly at random, while ``popularity`` samples them
+                        proportional to their popularity (number of occurrences).
+      :param n: The number of negatives to sample for each user.  If ``None``,
+                a single-dimensional vector is returned.
+      :param verify: Whether to verify that the negative items are actually negative.
+                     Unverified sampling is much faster but can return false
+                     negatives.
+      :param max_attempts: When verification is on, the maximum attempts before giving up
+                           and returning a possible false negative.
+      :param rng: A random number generator to use.
+
+
+
+   .. py:method:: row_table(id: lenskit.data.types.ID) -> pyarrow.Table | None
+                  row_table(*, number: int) -> pyarrow.Table
+
+      Get a single row of this interaction matrix as a table.
+
+
+
+   .. py:method:: row_items(id: lenskit.data.types.ID) -> lenskit.data._items.ItemList | None
+                  row_items(*, number: int) -> lenskit.data._items.ItemList
+
+      Get a single row of this interaction matrix as an item list.  Only valid
+      when the column entity class is ``item''.
+
+
+
+   .. py:method:: to_ilc()
+
+      Get the rows as an item list collection.
+
+      .. deprecated:: 2025.6
+
+          Deprecated alias for :meth:`item_lists`.
+
+
+
+   .. py:method:: item_lists()
+
+      Get the rows as an item list collection.
+
+
+
+   .. py:method:: row_stats()
+
+
+   .. py:method:: col_stats()
+
+
+.. py:class:: RelationshipSet(name, vocabularies, schema, table)
+   :canonical: lenskit.data._relationships.RelationshipSet
+
+   Representation for a set of relationship records.  This is the class for
+   accessing general relationships, with arbitrarily many entity classes
+   involved and repeated relationships allowed.
+
+   For two-entity relationships without duplicates (including relationships
+   formed by coalescing repeated relationships or interactions),
+   :class:`MatrixRelationshipSet` extends this with additional capabilities.
+
+   Relationship sets can be pickled or serialized, and will not save the entire
+   dataset with them.  They are therefore safe to save as component elements
+   during training processes.
+
+   .. note::
+
+       Client code does not need to construct this class; obtain instances from
+       a dataset's :meth:`~lenskit.data.Dataset.relationships` or
+       :meth:`~lenskit.data.Dataset.interactions` method.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: name
+      :type:  str
+
+      The name of the relationship class for these relationships.
+
+
+   .. py:attribute:: schema
+      :type:  lenskit.data.schema.RelationshipSchema
+
+
+   .. py:method:: __getstate__()
+
+
+   .. py:method:: __setstate__(state)
+
+
+   .. py:property:: is_interaction
+      :type: bool
+
+
+      Query whether these relationships represent interactions.
+
+
+   .. py:property:: entities
+      :type: list[str]
+
+
+
+   .. py:property:: attribute_names
+      :type: list[str]
+
+
+
+   .. py:method:: item_lists()
+      :abstractmethod:
+
+
+      Get a view of this relationship set as an item list collection.
+
+      Currently only implemented for :class:`MatrixRelationshipSet`, call
+      :meth:`matrix` first.
+
+
+
+   .. py:method:: count()
+
+
+   .. py:method:: co_occurrences(entity: str, *, group: str | list[str] | None = None, order: str | None = None, include_self: bool = False, dense: Literal[True]) -> lenskit.data.types.NPMatrix[numpy.float32]
+                  co_occurrences(entity: str, *, group: str | list[str] | None = None, order: str | None = None, include_self: bool = False, dense: Literal[False] = False) -> scipy.sparse.coo_array
+
+      Count co-occurrences of the specified entity.  This is useful for
+      counting item co-occurrences for association rules and probabilties, but
+      also has other uses as well.
+
+      This method supports both **ordered** and **unordered** co-occurrences.
+      Unordered co-occurrences just count the number of times the two items
+      appear together, and the resulting matrix is symmetric.
+
+      For ordered co-occurrences, the interactions are ordered by the
+      attribute specified by ``order``, and the resulting matrix ``M`` may not
+      be symmetric.  ``M[i,j]`` counts the number of times item ``j`` has
+      appeared **after** item ``i``.  The order does not need to be global —
+      an attribute recording order *within* a group is sufficient.
+
+      If ``group`` is specified, it controls the grouping for counting
+      co-occurrences. For example, if a relationship connects the ``user``,
+      ``session``, and ``item`` classes, then:
+
+      - ``rs.co_occurrances("item")`` counts the number of times each pair of
+        items appear together in a session.
+      - ``rs.co_occurrances("item", group="user")`` counts the number of times
+        each pair of items were interacted with by the same user, regardless
+        of session.
+
+      :param entity: The name of the entity to count.
+      :param group: The names of grouping entity classes for counting
+                    co-occurrences. The default is to use all entities that are not
+                    being counted.
+      :param order: The name of an attribute to use for ordering interactions to
+                    compute sequential co-occurrences.
+      :param include_self: Include self co-occurrences (interaction counts on the diagonal
+                           of the co-occurrence matrix).
+      :param dense: Pass ``True`` to return a dense co-occurrence matrix.
+
+      :returns: A sparse matrix with the co-occurrence counts.
+
+
+
+   .. py:method:: arrow(*, attributes = None, ids=False)
+
+      Get these relationships and their attributes as a PyArrow table.
+
+      :param attributes: The attributes to select.
+      :param ids: If ``True``, include ID columns for the entities, instead of
+                  just the number columns.
+
+
+
+   .. py:method:: pandas(*, attributes = None, ids=False)
+
+      Get these relationship and their attributes as a PyArrow table.
+
+      :param attributes: The attributes to include in the resulting table.
+      :param ids: If ``True``, include ID columns for the entities, instead of
+                  just the number columns.
+
+
+
+   .. py:method:: matrix(*, row_entity = None, col_entity = None)
+
+      Convert this relationship set into a matrix, coalescing duplicate
+      observations.
+
+      .. versionchanged:: 2025.6
+
+          Removed the fixed defaults for ``row_entity`` and ``col_entity``.
+
+      :param row_entity: The specified row entity of the matrix.  Defaults to the first
+                         entity in the relationship's list of involved entities.
+      :param col_entity: The specified column entity of the matrix. Defaults to the last
+                         entity in the relationship's list of involved entities.
+
+
+
+.. py:class:: Vocabulary(keys = None, name = None, *, reorder = True)
+   :canonical: lenskit.data._vocab.Vocabulary
+
+   Vocabularies of entity identifiers for the LensKit data model.
+
+   This class supports bidirectional mappings between key-like data and
+   congiguous nonnegative integer indices.  Its key use is to facilitate the
+   entity ID vocabularies in :class:`~lenskit.data.Dataset`, but it can also be
+   used for things like item tags.
+
+   IDs in a vocabulary must be unique.  Constructing a vocabulary with
+   ``reorder=True`` ensures uniqueness (and sorts the IDs), but does not
+   preserve the order of IDs in the original input.
+
+   It is currently a wrapper around :class:`pandas.Index`, but this fact is not
+   part of the stable public API.
+
+   :param keys: The IDs to put in the vocabulary.
+   :param name: The vocabulary name (i.e. the entity class it stores IDs for).
+   :param reorder: If ``True``, sort and deduplicate the IDs.  If ``False`` (the
+                   default), use the IDs as-is (assigning each to their position in the
+                   input sequence).
+
+   :Stability: Caller
+
+
+   .. py:attribute:: name
+      :type:  str | None
+
+      The name of the vocabulary (e.g. “user”, “item”).
+
+
+   .. py:property:: index
+      :type: pandas.Index
+
+
+      The vocabulary as a Pandas index.
+
+      :Stability: Internal
+
+
+   .. py:property:: size
+      :type: int
+
+
+      Current vocabulary size.
+
+
+   .. py:method:: number(term: object, missing: Literal['error'] = 'error') -> int
+                  number(term: object, missing: Literal['none'] | None) -> int | None
+
+      Look up the number for a vocabulary ID.
+
+
+
+   .. py:method:: numbers(terms: Sequence[Hashable] | numpy.typing.ArrayLike, missing: Literal['error', 'negative'] = 'error', *, format: Literal['numpy'] = 'numpy') -> numpy.typing.NDArray[numpy.int32]
+                  numbers(terms: Sequence[Hashable] | numpy.typing.ArrayLike, missing: Literal['error', 'negative', 'null'] = 'error', *, format: Literal['arrow']) -> pyarrow.Int32Array
+
+      Look up the numbers for an array of terms or IDs.
+
+
+
+   .. py:method:: term(num)
+
+      Look up the term with a particular number.  Negative indexing is **not** supported.
+
+
+
+   .. py:method:: terms(nums: list[int] | numpy.typing.NDArray[numpy.integer] | pandas.Series | None = None, *, format: Literal['numpy'] = 'numpy') -> lenskit.data.types.IDArray
+                  terms(nums: list[int] | numpy.typing.NDArray[numpy.integer] | pandas.Series | None = None, *, format: Literal['arrow']) -> pyarrow.Array
+
+      Get a list of terms, optionally for an array of term numbers.
+
+      :param nums: The numbers (indices) for of terms to retrieve.  If ``None``,
+                   returns all terms.
+
+      :returns: The terms corresponding to the specified numbers, or the full array
+                of terms (in order) if ``nums=None``.
+
+
+
+   .. py:method:: id(num)
+
+      Alias for :meth:`term`  for greater readability for entity ID vocabularies.
+
+
+
+   .. py:method:: ids(nums: list[int] | numpy.typing.NDArray[numpy.integer] | pandas.Series | None = None, *, format: Literal['numpy'] = 'numpy') -> lenskit.data.types.IDArray
+                  ids(nums: list[int] | numpy.typing.NDArray[numpy.integer] | pandas.Series | None = None, *, format: Literal['arrow']) -> pyarrow.Array
+
+      Alias for :meth:`terms` for greater readability for entity ID vocabularies.
+
+
+
+   .. py:method:: id_array()
+
+
+   .. py:method:: __eq__(other)
+
+
+   .. py:method:: __contains__(key)
+
+
+   .. py:method:: __iter__()
+
+
+   .. py:method:: __len__()
+
+
+   .. py:method:: __array__(dtype=None)
+
+
+   .. py:method:: __getstate__()
+
+
+   .. py:method:: __setstate__(state)
+
+
+   .. py:method:: __str__()
+
+
+   .. py:method:: __repr__()
+
 
 
 Exported Aliases
@@ -76,81 +2377,9 @@ Exported Aliases
 
     Re-exported alias for :py:exc:`lenskit.diagnostics.FieldError`.
 
-.. py:function:: lenskit.data.from_interactions_df
-
-    Re-exported alias for :py:func:`lenskit.data.adapt.from_interactions_df`.
-
 .. py:function:: lenskit.data.load_amazon_ratings
 
     Re-exported alias for :py:func:`lenskit.data.amazon.load_amazon_ratings`.
-
-.. py:class:: lenskit.data.AttributeSet
-
-    Re-exported alias for :py:class:`lenskit.data.attributes.AttributeSet`.
-
-.. py:class:: lenskit.data.BatchIter
-
-    Re-exported alias for :py:class:`lenskit.data.batches.BatchIter`.
-
-.. py:class:: lenskit.data.DatasetBuilder
-
-    Re-exported alias for :py:class:`lenskit.data.builder.DatasetBuilder`.
-
-.. py:data:: lenskit.data.GenericKey
-
-    Re-exported alias for :py:data:`lenskit.data.collection.GenericKey`.
-
-.. py:class:: lenskit.data.ItemListCollection
-
-    Re-exported alias for :py:class:`lenskit.data.collection.ItemListCollection`.
-
-.. py:class:: lenskit.data.ItemListCollector
-
-    Re-exported alias for :py:class:`lenskit.data.collection.ItemListCollector`.
-
-.. py:class:: lenskit.data.ListILC
-
-    Re-exported alias for :py:class:`lenskit.data.collection.ListILC`.
-
-.. py:class:: lenskit.data.MutableItemListCollection
-
-    Re-exported alias for :py:class:`lenskit.data.collection.MutableItemListCollection`.
-
-.. py:class:: lenskit.data.QueryIDKey
-
-    Re-exported alias for :py:class:`lenskit.data.collection.QueryIDKey`.
-
-.. py:class:: lenskit.data.UserIDKey
-
-    Re-exported alias for :py:class:`lenskit.data.collection.UserIDKey`.
-
-.. py:class:: lenskit.data.Dataset
-
-    Re-exported alias for :py:class:`lenskit.data.dataset.Dataset`.
-
-.. py:class:: lenskit.data.EntitySet
-
-    Re-exported alias for :py:class:`lenskit.data.dataset.EntitySet`.
-
-.. py:class:: lenskit.data.MatrixRelationshipSet
-
-    Re-exported alias for :py:class:`lenskit.data.dataset.MatrixRelationshipSet`.
-
-.. py:class:: lenskit.data.RelationshipSet
-
-    Re-exported alias for :py:class:`lenskit.data.dataset.RelationshipSet`.
-
-.. py:class:: lenskit.data.ItemList
-
-    Re-exported alias for :py:class:`lenskit.data.items.ItemList`.
-
-.. py:class:: lenskit.data.COOStructure
-
-    Re-exported alias for :py:class:`lenskit.data.matrix.COOStructure`.
-
-.. py:class:: lenskit.data.CSRStructure
-
-    Re-exported alias for :py:class:`lenskit.data.matrix.CSRStructure`.
 
 .. py:function:: lenskit.data.load_movielens
 
@@ -164,30 +2393,6 @@ Exported Aliases
 
     Re-exported alias for :py:func:`lenskit.data.msweb.load_ms_web`.
 
-.. py:class:: lenskit.data.MTArray
-
-    Re-exported alias for :py:class:`lenskit.data.mtarray.MTArray`.
-
-.. py:data:: lenskit.data.MTFloatArray
-
-    Re-exported alias for :py:data:`lenskit.data.mtarray.MTFloatArray`.
-
-.. py:data:: lenskit.data.MTGenericArray
-
-    Re-exported alias for :py:data:`lenskit.data.mtarray.MTGenericArray`.
-
-.. py:data:: lenskit.data.MTIntArray
-
-    Re-exported alias for :py:data:`lenskit.data.mtarray.MTIntArray`.
-
-.. py:data:: lenskit.data.QueryInput
-
-    Re-exported alias for :py:data:`lenskit.data.query.QueryInput`.
-
-.. py:class:: lenskit.data.RecQuery
-
-    Re-exported alias for :py:class:`lenskit.data.query.RecQuery`.
-
 .. py:data:: lenskit.data.ID
 
     Re-exported alias for :py:data:`lenskit.data.types.ID`.
@@ -199,8 +2404,4 @@ Exported Aliases
 .. py:data:: lenskit.data.FeedbackType
 
     Re-exported alias for :py:data:`lenskit.data.types.FeedbackType`.
-
-.. py:class:: lenskit.data.Vocabulary
-
-    Re-exported alias for :py:class:`lenskit.data.vocab.Vocabulary`.
 
