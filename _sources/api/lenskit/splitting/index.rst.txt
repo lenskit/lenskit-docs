@@ -9,38 +9,373 @@ lenskit.splitting
 
 
 
-Submodules
-----------
+Classes
+-------
 
 .. autoapisummary::
 
-   lenskit.splitting.holdout
-   lenskit.splitting.records
-   lenskit.splitting.split
-   lenskit.splitting.temporal
-   lenskit.splitting.users
+   lenskit.splitting.HoldoutMethod
+   lenskit.splitting.LastFrac
+   lenskit.splitting.LastN
+   lenskit.splitting.SampleFrac
+   lenskit.splitting.SampleN
+   lenskit.splitting.TTSplit
 
-.. toctree::
-    :hidden:
-    :maxdepth: 1
-
-    /api/lenskit/splitting/holdout/index
-    /api/lenskit/splitting/records/index
-    /api/lenskit/splitting/split/index
-    /api/lenskit/splitting/temporal/index
-    /api/lenskit/splitting/users/index
 
 Functions
 ---------
 
 .. autoapisummary::
 
+   lenskit.splitting.crossfold_records
+   lenskit.splitting.sample_records
+   lenskit.splitting.split_global_time
+   lenskit.splitting.split_temporal_fraction
+   lenskit.splitting.crossfold_users
+   lenskit.splitting.sample_users
    lenskit.splitting.simple_test_pair
 
 
 
 Package Contents
 ----------------
+
+.. py:class:: HoldoutMethod
+   :canonical: lenskit.splitting._holdout.HoldoutMethod
+
+   Bases: :py:obj:`Protocol`
+
+
+   Holdout methods select test rows for a user (or occasionally an item).
+   Partition methods are callable; when called with a data frame, they return
+   the test entries.
+
+   :Stability: Caller
+
+
+   .. py:method:: __call__(items)
+      :abstractmethod:
+
+
+      Subset an item list (in the uncommon case of item-based holdouts, the
+      item list actually holds user IDs).
+
+      :param udf: The item list from which holdout items should be selected.
+
+      :returns: The list of test items.
+
+
+
+.. py:class:: LastFrac(frac, field = 'timestamp')
+   :canonical: lenskit.splitting._holdout.LastFrac
+
+   Bases: :py:obj:`HoldoutMethod`
+
+
+   Select a fraction of test rows per user/item.
+
+   :Stability: Caller
+
+   :param frac: the fraction of items to select for testing.
+   :type frac: double
+
+
+   .. py:attribute:: fraction
+      :type:  float
+
+
+   .. py:attribute:: field
+      :type:  str
+
+
+   .. py:method:: __call__(items)
+
+      Subset an item list (in the uncommon case of item-based holdouts, the
+      item list actually holds user IDs).
+
+      :param udf: The item list from which holdout items should be selected.
+
+      :returns: The list of test items.
+
+
+
+.. py:class:: LastN(n, field = 'timestamp')
+   :canonical: lenskit.splitting._holdout.LastN
+
+   Bases: :py:obj:`HoldoutMethod`
+
+
+   Select a fixed number of test rows per user/item, based on ordering by a
+   field.
+
+   :Stability: Caller
+
+   :param n: The number of test items to select.
+   :param field: The field to order by.
+
+
+   .. py:attribute:: n
+      :type:  int
+
+
+   .. py:attribute:: field
+      :type:  str
+
+
+   .. py:method:: __call__(items)
+
+      Subset an item list (in the uncommon case of item-based holdouts, the
+      item list actually holds user IDs).
+
+      :param udf: The item list from which holdout items should be selected.
+
+      :returns: The list of test items.
+
+
+
+.. py:class:: SampleFrac(frac, rng = None)
+   :canonical: lenskit.splitting._holdout.SampleFrac
+
+   Bases: :py:obj:`HoldoutMethod`
+
+
+   Randomly select a fraction of test rows per user/item.
+
+   :Stability: Caller
+
+   :param frac: The fraction items to select for testing.
+   :param rng: The random number generator or seed (see :ref:`rng`).
+
+
+   .. py:attribute:: fraction
+      :type:  float
+
+
+   .. py:attribute:: rng
+      :type:  numpy.random.Generator
+
+
+   .. py:method:: __call__(items)
+
+      Subset an item list (in the uncommon case of item-based holdouts, the
+      item list actually holds user IDs).
+
+      :param udf: The item list from which holdout items should be selected.
+
+      :returns: The list of test items.
+
+
+
+.. py:class:: SampleN(n, rng = None)
+   :canonical: lenskit.splitting._holdout.SampleN
+
+   Bases: :py:obj:`HoldoutMethod`
+
+
+   Randomly select a fixed number of test rows per user/item.
+
+   :Stability: Caller
+
+   :param n: The number of test items to select.
+   :param rng: The random number generator or seed (see :ref:`rng`).
+
+
+   .. py:attribute:: n
+      :type:  int
+
+
+   .. py:attribute:: rng
+      :type:  numpy.random.Generator
+
+
+   .. py:method:: __call__(items)
+
+      Subset an item list (in the uncommon case of item-based holdouts, the
+      item list actually holds user IDs).
+
+      :param udf: The item list from which holdout items should be selected.
+
+      :returns: The list of test items.
+
+
+
+.. py:function:: crossfold_records(data, partitions, *, test_only = False, rng = None)
+
+   Partition a dataset by **records** into cross-fold partitions.  This
+   partitions the records (ratings, play counts, clicks, etc.) into *k*
+   partitions without regard to users or items.
+
+   Since record-based random cross-validation doesn't make much sense with
+   repeated interactions, this splitter only supports operating on the
+   dataset's interaction matrix.
+
+   :Stability: Caller
+
+   :param data: Ratings or other data you wish to partition.
+   :param partitions: The number of partitions to produce.
+   :param test_only: If ``True``, returns splits with empty training sets (useful when
+                     you just want to save the test data).
+   :param rng: The random number generator or seed (see :ref:`rng`).
+
+   :returns: an iterator of train-test pairs
+   :rtype: iterator
+
+
+.. py:function:: sample_records(data: lenskit.data.Dataset, size: int, *, disjoint: bool = True, test_only: bool = False, rng: lenskit.random.RNGInput = None, repeats: None = None) -> lenskit.splitting._split.TTSplit
+                 sample_records(data: lenskit.data.Dataset, size: int, *, repeats: int, disjoint: bool = True, test_only: bool = False, rng: lenskit.random.RNGInput = None) -> Iterator[lenskit.splitting._split.TTSplit]
+
+   Create a train-test split of data by randomly sampling individual
+   interactions.
+
+   We can loop over a sequence of train-test pairs::
+
+       >>> from lenskit.data import load_movielens
+       >>> movielens = load_movielens('data/ml-latest-small')
+       >>> for split in sample_records(movielens, 1000, repeats=5):
+       ...     print(sum(len(il) for il in split.test.lists()))
+       1000
+       1000
+       1000
+       1000
+       1000
+
+   Sometimes for testing, it is useful to just get a single pair::
+
+       >>> split = sample_records(movielens, 1000)
+       >>> sum(len(il) for il in split.test.lists())
+       1000
+
+   :Stability: Caller
+
+   :param data: The data set to split.
+   :param size: The size of each test sample.
+   :param repeats: The number of data splits to produce.  If ``None``, produce a
+                   _single_ train-test pair instead of an iterator or list.
+   :param disjoint: If ``True``, force test samples to be disjoint.
+   :param test_only: If ``True``, returns splits with empty training sets (useful when
+                     you just want to save the test data).
+   :param rng: The random number generator or seed (see :ref:`rng`).
+
+   :returns: A train-test pair or iterator of such pairs (depending on ``repeats``).
+
+
+.. py:class:: TTSplit
+   :canonical: lenskit.splitting._split.TTSplit
+
+   Bases: :py:obj:`Generic`\ [\ :py:obj:`TK`\ ]
+
+
+   A train-test set from splitting or other sources.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: train
+      :type:  lenskit.data.Dataset
+
+      The training data.
+
+
+   .. py:attribute:: test
+      :type:  lenskit.data.ItemListCollection[TK]
+
+      The test data.
+
+
+   .. py:attribute:: name
+      :type:  str | None
+      :value: None
+
+
+      A name for this train-test split.
+
+
+   .. py:property:: test_size
+      :type: int
+
+
+      Get the number of test pairs.
+
+
+   .. py:property:: test_df
+      :type: pandas.DataFrame
+
+
+      Get the test data as a data frame.
+
+
+   .. py:property:: train_df
+      :type: pandas.DataFrame
+
+
+      Get the training data as a data frame.
+
+
+.. py:function:: split_global_time(data: lenskit.data.Dataset, time: int | float | str | datetime.datetime, end: int | float | str | datetime.datetime | None = None, filter_test_users: bool | int | None = False) -> lenskit.splitting._split.TTSplit
+                 split_global_time(data: lenskit.data.Dataset, time: Sequence[int | float | str | datetime.datetime], end: int | float | str | datetime.datetime | None = None, filter_test_users: bool | int | None = False) -> list[lenskit.splitting._split.TTSplit]
+
+   Global temporal train-test split.  This splits a data set into train/test
+   pairs using a single global timestamp.  When given multiple timestamps, it
+   will return multiple splits, where split :math:`i` has training data from
+   before :math:`t_i` and testing data on or after :math:`t_i` and before
+   :math:`t_{i+1}` (the last split has no upper bound on the testing data).
+
+   :Stability: Caller
+
+   :param data: The dataset to split.
+   :param time: Time or sequence of times at which to split.  Strings must be in ISO
+                format.
+   :param end: A final cutoff time for the testing data.
+   :param filter_test_users: Limit test data to only have users who had item in the training data.
+
+   :returns: The data splits.
+
+
+.. py:function:: split_temporal_fraction(data, test_fraction, filter_test_users = False)
+
+   Do a global temporal split of a data set based on a test set size.
+
+   :param data: The dataset to split.
+   :param test_fraction: The fraction of the interactions to put in the testing data.
+   :param filter_test_users: Limit test data to only have users who had item in the training data.
+
+
+.. py:function:: crossfold_users(data, partitions, method, *, test_only = False, rng = None)
+
+   Partition a dataset user-by-user for user-based cross-validation.
+
+   :Stability: Caller
+
+   :param data: The dataset to partition.
+   :param partitions: The number of partitions to produce.
+   :param method: The method for selecting test rows for each user.
+   :param test_only: If ``True``, returns splits with only testing data.
+   :param rng: The random number generator or seed (see :ref:`rng`).
+
+   Returns
+       The train-test pairs.
+
+
+.. py:function:: sample_users(data: lenskit.data.Dataset, size: int, method: lenskit.splitting._holdout.HoldoutMethod, *, repeats: int, disjoint: bool = True, test_only: bool = False, rng: lenskit.random.RNGInput = None) -> Iterator[lenskit.splitting._split.TTSplit]
+                 sample_users(data: lenskit.data.Dataset, size: int, method: lenskit.splitting._holdout.HoldoutMethod, *, disjoint: bool = True, rng: lenskit.random.RNGInput = None, test_only: bool = False, repeats: None = None) -> lenskit.splitting._split.TTSplit
+
+   Create train-test splits by sampling users.  When ``repeats`` is None,
+   returns a single train-test split; otherwise, it returns an iterator over
+   multiple splits. If ``repeats=1``, this function returns an iterator that
+   yields a single train-test pair.
+
+   :Stability: Caller
+
+   :param data: The data set to sample.
+   :param size: The sample size.
+   :param method: The method for obtaining user test ratings.
+   :param repeats: The number of samples to produce.
+   :param test_only: If ``True``, returns splits with empty training sets (useful when
+                     you just want to save the test data).
+   :param rng: The random number generator or seed (see :ref:`rng`).
+
+   :returns: The train-test pair(s).
+
 
 .. py:function:: simple_test_pair(ratings, n_users=200, n_rates=5, f_rates=None, rng = None)
 
@@ -55,52 +390,4 @@ Exported Aliases
 .. py:class:: lenskit.splitting.Dataset
 
     Re-exported alias for :py:class:`lenskit.data.Dataset`.
-
-.. py:class:: lenskit.splitting.HoldoutMethod
-
-    Re-exported alias for :py:class:`lenskit.splitting.holdout.HoldoutMethod`.
-
-.. py:class:: lenskit.splitting.LastFrac
-
-    Re-exported alias for :py:class:`lenskit.splitting.holdout.LastFrac`.
-
-.. py:class:: lenskit.splitting.LastN
-
-    Re-exported alias for :py:class:`lenskit.splitting.holdout.LastN`.
-
-.. py:class:: lenskit.splitting.SampleFrac
-
-    Re-exported alias for :py:class:`lenskit.splitting.holdout.SampleFrac`.
-
-.. py:class:: lenskit.splitting.SampleN
-
-    Re-exported alias for :py:class:`lenskit.splitting.holdout.SampleN`.
-
-.. py:function:: lenskit.splitting.crossfold_records
-
-    Re-exported alias for :py:func:`lenskit.splitting.records.crossfold_records`.
-
-.. py:function:: lenskit.splitting.sample_records
-
-    Re-exported alias for :py:func:`lenskit.splitting.records.sample_records`.
-
-.. py:class:: lenskit.splitting.TTSplit
-
-    Re-exported alias for :py:class:`lenskit.splitting.split.TTSplit`.
-
-.. py:function:: lenskit.splitting.split_global_time
-
-    Re-exported alias for :py:func:`lenskit.splitting.temporal.split_global_time`.
-
-.. py:function:: lenskit.splitting.split_temporal_fraction
-
-    Re-exported alias for :py:func:`lenskit.splitting.temporal.split_temporal_fraction`.
-
-.. py:function:: lenskit.splitting.crossfold_users
-
-    Re-exported alias for :py:func:`lenskit.splitting.users.crossfold_users`.
-
-.. py:function:: lenskit.splitting.sample_users
-
-    Re-exported alias for :py:func:`lenskit.splitting.users.sample_users`.
 
