@@ -14,7 +14,7 @@
 <meta property="og:description" content="Since version 2025.1.1, LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produce predictio..." />
 <meta name="description" content="Since version 2025.1.1, LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produce predictio..." />
 
-    <title>Recommendation Pipelines &#8212; LensKit 2026.0.0.dev551+gea719392 documentation</title>
+    <title>Recommendation Pipelines &#8212; LensKit 2026.0.0.dev555+g1b2b9568 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=69af5b30"></script>
+    <script src="../_static/documentation_options.js?v=df1ca27d"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -576,8 +576,8 @@ window.addEventListener("load", load);</script>
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev551+gea719392 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev551+gea719392 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev555+g1b2b9568 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev555+g1b2b9568 documentation - Home"/>
   
   
 </a></div>
@@ -1079,8 +1079,8 @@ data value).  This is how the pipeline knows which components depend on other
 components and how to provide each component with the inputs it requires; see
 <a class="reference internal" href="#pipeline-connections"><span class="std std-ref">Connections</span></a> for details.</p></li>
 </ul>
-<p>Each node has a name that can be used to look up the node with
-<a class="reference internal" href="../api/lenskit/pipeline/index.html#lenskit.pipeline.Pipeline.node" title="lenskit.pipeline.Pipeline.node"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.node()</span></code></a> (or <a class="reference internal" href="../api/lenskit/pipeline/index.html#lenskit.pipeline.PipelineBuilder.node" title="lenskit.pipeline.PipelineBuilder.node"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PipelineBuilder.node()</span></code></a>) and appears in
+<p>Each node has a <a class="reference internal" href="#pipeline-names"><span class="std std-ref">name</span></a> that can be used to look up the
+node with <a class="reference internal" href="../api/lenskit/pipeline/index.html#lenskit.pipeline.Pipeline.node" title="lenskit.pipeline.Pipeline.node"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Pipeline.node()</span></code></a> (or <a class="reference internal" href="../api/lenskit/pipeline/index.html#lenskit.pipeline.PipelineBuilder.node" title="lenskit.pipeline.PipelineBuilder.node"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PipelineBuilder.node()</span></code></a>) and appears in
 serialization and logging situations. Names must be unique within a pipeline.</p>
 <section id="connections">
 <span id="pipeline-connections"></span><h3>Connections<a class="headerlink" href="#connections" title="Link to this heading">#</a></h3>
@@ -1196,6 +1196,13 @@ that fills in missing scores with a baseline prediction.</p></li>
 <p>These component names replace the task-specific interfaces in pre-2025 LensKit;
 a <code class="docutils literal notranslate"><span class="pre">Recommender</span></code> is now just a pipeline with <code class="docutils literal notranslate"><span class="pre">recommender</span></code> and/or <code class="docutils literal notranslate"><span class="pre">ranker</span></code>
 components.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Limits on Names</p>
+<p>Component names must consist of alphanumeric characters and the symbols
+<code class="docutils literal notranslate"><span class="pre">_-.&#64;%!*?</span></code>, and may not begin with <code class="docutils literal notranslate"><span class="pre">_</span></code>. Names beginning with <code class="docutils literal notranslate"><span class="pre">_</span></code> are
+reserved for LensKit internal use.</p>
+</div>
 </section>
 <section id="pipeline-serialization">
 <span id="id2"></span><h3>Pipeline Serialization<a class="headerlink" href="#pipeline-serialization" title="Link to this heading">#</a></h3>
@@ -1664,7 +1671,7 @@ components together.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev551+gea719392.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev555+g1b2b9568.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
