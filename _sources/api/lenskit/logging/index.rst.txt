@@ -14,33 +14,17 @@ Submodules
 
 .. autoapisummary::
 
-   lenskit.logging.config
-   lenskit.logging.formats
-   lenskit.logging.monitor
    lenskit.logging.multiprocess
-   lenskit.logging.processors
    lenskit.logging.progress
-   lenskit.logging.resource
-   lenskit.logging.stopwatch
    lenskit.logging.tasks
-   lenskit.logging.tracing
-   lenskit.logging.worker
 
 .. toctree::
     :hidden:
     :maxdepth: 1
 
-    /api/lenskit/logging/config/index
-    /api/lenskit/logging/formats/index
-    /api/lenskit/logging/monitor/index
     /api/lenskit/logging/multiprocess/index
-    /api/lenskit/logging/processors/index
     /api/lenskit/logging/progress/index
-    /api/lenskit/logging/resource/index
-    /api/lenskit/logging/stopwatch/index
     /api/lenskit/logging/tasks/index
-    /api/lenskit/logging/tracing/index
-    /api/lenskit/logging/worker/index
 
 Attributes
 ----------
@@ -50,24 +34,147 @@ Attributes
    lenskit.logging.console
 
 
+Classes
+-------
+
+.. autoapisummary::
+
+   lenskit.logging.LoggingConfig
+   lenskit.logging.ResourceMeasurement
+   lenskit.logging.Stopwatch
+   lenskit.logging.Tracer
+
+
 Functions
 ---------
 
 .. autoapisummary::
 
+   lenskit.logging.basic_logging
+   lenskit.logging.notebook_logging
    lenskit.logging.stdout_console
+   lenskit.logging.friendly_duration
    lenskit.logging.get_logger
+   lenskit.logging.get_tracer
+   lenskit.logging.trace
 
 
 
 Package Contents
 ----------------
 
+.. py:class:: LoggingConfig
+   :canonical: lenskit.logging._config.LoggingConfig
+
+   Configuration for LensKit logging.
+
+   This class is intended as a convenience for LensKit applications to set up a
+   useful logging and progress reporting configuration; if unconfigured,
+   LensKit will emit its logging messages directly to :mod:`structlog` and/or
+   :mod:`logging`, which you can configure in any way you wish.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: level
+      :type:  int
+      :value: 20
+
+
+
+   .. py:attribute:: stream
+      :type:  Literal['full', 'simple', 'json']
+      :value: 'full'
+
+
+
+   .. py:attribute:: progress_backend
+      :type:  Literal['notebook', 'rich'] | None
+      :value: None
+
+
+
+   .. py:attribute:: file
+      :type:  pathlib.Path | None
+      :value: None
+
+
+
+   .. py:attribute:: file_level
+      :type:  int | None
+      :value: None
+
+
+
+   .. py:attribute:: file_format
+      :type:  LogFormat
+      :value: 'json'
+
+
+
+   .. py:property:: effective_level
+      :type: int
+
+
+
+   .. py:method:: set_stream_mode(mode)
+
+      Configure the standard error stream mode.
+
+
+
+   .. py:method:: set_verbose(verbose = True)
+
+      Enable verbose logging.
+
+      .. note::
+
+          It is better to only call this method if your application's
+          ``verbose`` option is provided, rather than passing your verbose
+          option to it, to allow the ``LK_LOG_LEVEL`` environment variable to
+          apply in the absence of a configuration option.
+
+      :param verbose: The level of verbosity.  Values of ``True`` or ``1`` turn on
+                      ``DEBUG``-level logs, and ``2`` or greater turns on tracing.
+
+
+
+   .. py:method:: set_log_file(path, level = None, format = 'json')
+
+      Configure a log file.
+
+
+
+   .. py:method:: apply()
+
+      Apply the configuration.
+
+
+
+.. py:function:: basic_logging(level = logging.INFO)
+
+   Simple one-function logging configuration for simple command lines.
+
+   :Stability: Caller
+
+
+.. py:function:: notebook_logging(level = logging.INFO)
+
+   Simple one-function logging configuration for notebooks and similar.
+
+   :Stability: Caller
+
+
 .. py:data:: console
 
 .. py:function:: stdout_console()
 
    Get a console attached to ``stdout``.
+
+
+.. py:function:: friendly_duration(elapsed)
+
+   Short, human-friendly representation of a duration.
 
 
 .. py:function:: get_logger(name, *, remove_private = True, **init_als)
@@ -94,25 +201,188 @@ Package Contents
              TRACE-level logging support.
 
 
+.. py:class:: ResourceMeasurement
+   :canonical: lenskit.logging._resource.ResourceMeasurement
+
+   Single measurement of resources.  Two measurements can be subtracted to
+   compute the time resources consumed in an interval (memory resources are
+   left unchanged).
+
+   :Stability: Internal
+
+
+   .. py:attribute:: wall_time
+      :type:  float
+
+
+   .. py:attribute:: perf_time
+      :type:  float
+
+
+   .. py:attribute:: user_time
+      :type:  float
+
+
+   .. py:attribute:: system_time
+      :type:  float
+
+
+   .. py:attribute:: max_rss
+      :type:  int | None
+      :value: None
+
+
+      Maximum RSS usage (in bytes).
+
+
+   .. py:attribute:: max_gpu
+      :type:  int | None
+      :value: None
+
+
+
+   .. py:method:: current()
+      :classmethod:
+
+
+      Get the current resource measurements.
+
+
+
+   .. py:property:: cpu_time
+      :type: float
+
+
+      Total CPU time (user + system).
+
+
+   .. py:method:: __sub__(other)
+
+
+.. py:class:: Stopwatch(start=True)
+   :canonical: lenskit.logging._stopwatch.Stopwatch
+
+   Timer class for recording elapsed wall time in operations.
+
+
+   .. py:attribute:: acc_time
+      :type:  float | None
+      :value: None
+
+
+
+   .. py:attribute:: start_time
+      :type:  float | None
+      :value: None
+
+
+
+   .. py:attribute:: stop_time
+      :type:  float | None
+      :value: None
+
+
+
+   .. py:method:: start()
+
+
+   .. py:method:: stop()
+
+
+   .. py:method:: elapsed(*, accumulated=True)
+
+      Get the elapsed time.
+
+
+
+   .. py:method:: measure(accumulate = False)
+
+      Context manager to measure an item, optionally accumulating its time.
+
+
+
+   .. py:method:: __str__()
+
+
+   .. py:method:: __repr__()
+
+
+.. py:class:: Tracer(logger)
+   :canonical: lenskit.logging._tracing.Tracer
+
+   Logger-like thing that is only for TRACE-level events.
+
+   This class is designed to support structured tracing without the overhead of
+   creating and binding new loggers.  It is also imperative, rather than
+   functional, so we create fewer objects and so it is a little more ergonomic
+   for common tracing flows.
+
+   .. note::
+
+       Don't create instances of this class directly — use
+       :func:`~lenskit.logging.get_tracer` to create a tracer.
+
+   :Stability: Experimental
+
+
+   .. py:method:: add_bindings(**new_values)
+
+      Bind new data in the keys.
+
+      .. note::
+
+          Unlike :meth:`structlog.Logger.bind`, this method is **imperative*: it
+          updates the tracer in-place instead of returning a new tracer.  If you
+          need a new, disconnected tracer, use :meth:`split`.
+
+
+
+   .. py:method:: remove_bindings(*keys)
+
+      Unbind keys in the tracer.
+
+      .. note::
+
+          Unlike :meth:`structlog.Logger.bind`, this method is **imperative*: it
+          updates the tracer in-place instead of returning a new tracer.  If you
+          need a new, disconnected tracer, use :meth:`split`.
+
+
+
+   .. py:method:: reset()
+
+      Reset this tracer's underlying logger to the original logger.
+
+
+
+   .. py:method:: trace(event, *args, **bindings)
+
+      Emit a TRACE-level event.
+
+
+
+.. py:function:: get_tracer(logger, **initial_values)
+
+   Get a tracer for efficient low-level tracing of computations.
+
+   :Stability: Experimental
+
+
+.. py:function:: trace(logger, *args, **kwargs)
+
+   Emit a trace-level message, if LensKit tracing is enabled.  Trace-level
+   messages are more fine-grained than debug-level messages, and you usually
+   don't want them.
+
+   This function does not work on the lazy proxies returned by
+   :func:`get_logger` and similar — it only works on bound loggers.
+
+   :Stability: Caller
+
+
 
 Exported Aliases
 ----------------
-
-.. py:class:: lenskit.logging.LoggingConfig
-
-    Re-exported alias for :py:class:`lenskit.logging.config.LoggingConfig`.
-
-.. py:function:: lenskit.logging.basic_logging
-
-    Re-exported alias for :py:func:`lenskit.logging.config.basic_logging`.
-
-.. py:function:: lenskit.logging.notebook_logging
-
-    Re-exported alias for :py:func:`lenskit.logging.config.notebook_logging`.
-
-.. py:function:: lenskit.logging.friendly_duration
-
-    Re-exported alias for :py:func:`lenskit.logging.formats.friendly_duration`.
 
 .. py:class:: lenskit.logging.Progress
 
@@ -126,23 +396,7 @@ Exported Aliases
 
     Re-exported alias for :py:func:`lenskit.logging.progress.set_progress_impl`.
 
-.. py:class:: lenskit.logging.Stopwatch
-
-    Re-exported alias for :py:class:`lenskit.logging.stopwatch.Stopwatch`.
-
 .. py:class:: lenskit.logging.Task
 
     Re-exported alias for :py:class:`lenskit.logging.tasks.Task`.
-
-.. py:class:: lenskit.logging.Tracer
-
-    Re-exported alias for :py:class:`lenskit.logging.tracing.Tracer`.
-
-.. py:function:: lenskit.logging.get_tracer
-
-    Re-exported alias for :py:func:`lenskit.logging.tracing.get_tracer`.
-
-.. py:function:: lenskit.logging.trace
-
-    Re-exported alias for :py:func:`lenskit.logging.tracing.trace`.
 
