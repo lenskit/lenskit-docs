@@ -29,10 +29,14 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Node[T](name, *, types = None)
+.. py:class:: Node[T](name)
    
 
    Representation of a single node in a :class:`Pipeline`.
+
+   .. versionchanged:: 2026.1
+
+       Removed the ``types`` attribute.
 
    :Stability: Caller
 
@@ -48,16 +52,10 @@ Module Contents
       The name of this node.
 
 
-   .. py:attribute:: types
-      :type:  set[type] | None
-
-      The set of valid data types of this node, or None for no typechecking.
-
-
    .. py:method:: __str__()
 
 
-.. py:class:: InputNode[T](name, *, types = None)
+.. py:class:: InputNode[T](name, *, type = None)
    
 
    Bases: :py:obj:`Node`\ [\ :py:obj:`T`\ ]
@@ -68,7 +66,13 @@ Module Contents
    :Stability: Internal
 
 
-.. py:class:: LiteralNode[T](name, value, *, types = None)
+   .. py:attribute:: type
+      :type:  InputNode.type[T] | types.UnionType
+
+      The data type of this input.
+
+
+.. py:class:: LiteralNode[T](name, value)
    
 
    Bases: :py:obj:`Node`\ [\ :py:obj:`T`\ ]
@@ -189,8 +193,4 @@ Exported Aliases
 .. py:function:: lenskit.pipeline.nodes.component_inputs
 
     Re-exported alias for :py:func:`lenskit.pipeline.components.component_inputs`.
-
-.. py:function:: lenskit.pipeline.nodes.component_return_type
-
-    Re-exported alias for :py:func:`lenskit.pipeline.components.component_return_type`.
 
