@@ -14,7 +14,7 @@
 <meta property="og:description" content="This notebook gets you started with a brief nDCG evaluation with LensKit for Python. This notebook is also available on Google Collaboratory and nbviewer. Setup: We first import the LensKit compone..." />
 <meta name="description" content="This notebook gets you started with a brief nDCG evaluation with LensKit for Python. This notebook is also available on Google Collaboratory and nbviewer. Setup: We first import the LensKit compone..." />
 
-    <title>Getting Started &#8212; LensKit 2026.1.0b1.dev585+gfdd70d80 documentation</title>
+    <title>Getting Started &#8212; LensKit 2026.1.0b1.dev3+g5301a029 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=0fcd74a6"></script>
+    <script src="../_static/documentation_options.js?v=4917173d"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -144,8 +144,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.1.0b1.dev585+gfdd70d80 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.1.0b1.dev585+gfdd70d80 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.1.0b1.dev3+g5301a029 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.1.0b1.dev3+g5301a029 documentation - Home"/>
   
   
 </a></div>
@@ -491,6 +491,7 @@
 <li class="toctree-l2"><a class="reference internal" href="evaluation/predictions.html">Evaluating Rating Predictions</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation/collection.html">Collecting and Aggregating Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="documenting.html">Documenting Experiments</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Utilities and Diagnostics</span></p>
@@ -586,6 +587,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
 </pre></div>
 </div>
@@ -717,7 +719,9 @@
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># test data is organized by user</span>
 <span class="n">all_test</span> <span class="o">=</span> <span class="n">ItemListCollection</span><span class="p">(</span><span class="n">UserIDKey</span><span class="p">)</span>
 <span class="c1"># recommendations will be organized by model and user ID</span>
-<span class="n">all_recs</span> <span class="o">=</span> <span class="n">ItemListCollection</span><span class="p">([</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="s2">&quot;user_id&quot;</span><span class="p">])</span>
+<span class="c1"># create a new empty list for each recommender</span>
+<span class="n">als_recs</span> <span class="o">=</span> <span class="n">ItemListCollection</span><span class="p">(</span><span class="n">UserIDKey</span><span class="p">)</span>
+<span class="n">iknn_recs</span> <span class="o">=</span> <span class="n">ItemListCollection</span><span class="p">(</span><span class="n">UserIDKey</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">split</span> <span class="ow">in</span> <span class="n">crossfold_users</span><span class="p">(</span><span class="n">ml100k</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">SampleFrac</span><span class="p">(</span><span class="mf">0.2</span><span class="p">)):</span>
     <span class="c1"># collect the test data</span>
@@ -727,14 +731,14 @@
     <span class="n">fit_als</span> <span class="o">=</span> <span class="n">pipe_als</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
     <span class="n">fit_als</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">split</span><span class="o">.</span><span class="n">train</span><span class="p">)</span>
     <span class="c1"># generate recs</span>
-    <span class="n">als_recs</span> <span class="o">=</span> <span class="n">recommend</span><span class="p">(</span><span class="n">fit_als</span><span class="p">,</span> <span class="n">split</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
-    <span class="n">all_recs</span><span class="o">.</span><span class="n">add_from</span><span class="p">(</span><span class="n">als_recs</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;ALS&quot;</span><span class="p">)</span>
+    <span class="n">recs</span> <span class="o">=</span> <span class="n">recommend</span><span class="p">(</span><span class="n">fit_als</span><span class="p">,</span> <span class="n">split</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">als_recs</span><span class="o">.</span><span class="n">add_from</span><span class="p">(</span><span class="n">recs</span><span class="p">)</span>
 
     <span class="c1"># do the same for item-item</span>
     <span class="n">fit_ii</span> <span class="o">=</span> <span class="n">pipe_ii</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span>
     <span class="n">fit_ii</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">split</span><span class="o">.</span><span class="n">train</span><span class="p">)</span>
-    <span class="n">ii_recs</span> <span class="o">=</span> <span class="n">recommend</span><span class="p">(</span><span class="n">fit_ii</span><span class="p">,</span> <span class="n">split</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
-    <span class="n">all_recs</span><span class="o">.</span><span class="n">add_from</span><span class="p">(</span><span class="n">ii_recs</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;II&quot;</span><span class="p">)</span>
+    <span class="n">recs</span> <span class="o">=</span> <span class="n">recommend</span><span class="p">(</span><span class="n">fit_ii</span><span class="p">,</span> <span class="n">split</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="n">iknn_recs</span><span class="o">.</span><span class="n">add_from</span><span class="p">(</span><span class="n">recs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -743,22 +747,47 @@
 <section id="measuring-recommendations">
 <h2>Measuring Recommendations<a class="headerlink" href="#measuring-recommendations" title="Link to this heading">#</a></h2>
 <p>We analyze our recommendation lists with a <code class="xref py py-class docutils literal notranslate"><span class="pre">RunAnalysis</span></code> and some metrics.</p>
+<p>First we set up a collector:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mc</span> <span class="o">=</span> <span class="n">MeasurementCollector</span><span class="p">()</span>
-<span class="n">mc</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">NDCG</span><span class="p">())</span>
-<span class="n">mc</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RBP</span><span class="p">())</span>
-<span class="n">mc</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RecipRank</span><span class="p">())</span>
-<span class="n">mc</span><span class="o">.</span><span class="n">measure_collection</span><span class="p">(</span><span class="n">all_recs</span><span class="p">,</span> <span class="n">all_test</span><span class="p">)</span>
-<span class="n">list_metrics</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">list_metrics</span><span class="p">()</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">NDCG</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RBP</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
+<span class="n">mc</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RecipRank</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>Now we have nDCG values, along with some other metrics! We can start computing and plotting.</p>
+<p>Then we measure each of the recommendation sets:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">list_metrics</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">als_mc</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">empty_copy</span><span class="p">()</span>
+<span class="n">als_mc</span><span class="o">.</span><span class="n">measure_collection</span><span class="p">(</span><span class="n">als_recs</span><span class="p">,</span> <span class="n">all_test</span><span class="p">)</span>
+<span class="n">als_metrics</span> <span class="o">=</span> <span class="n">als_mc</span><span class="o">.</span><span class="n">list_metrics</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">iknn_mc</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">empty_copy</span><span class="p">()</span>
+<span class="n">iknn_mc</span><span class="o">.</span><span class="n">measure_collection</span><span class="p">(</span><span class="n">iknn_recs</span><span class="p">,</span> <span class="n">all_test</span><span class="p">)</span>
+<span class="n">iknn_metrics</span> <span class="o">=</span> <span class="n">iknn_mc</span><span class="o">.</span><span class="n">list_metrics</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Now we have nDCG values, along with some other metrics! We can combine them and start computing and plotting.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">list_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;ALS&quot;</span><span class="p">:</span> <span class="n">als_metrics</span><span class="p">,</span>
+        <span class="s2">&quot;IKNN&quot;</span><span class="p">:</span> <span class="n">iknn_metrics</span><span class="p">,</span>
+    <span class="p">},</span>
+    <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">list_metrics</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -781,9 +810,9 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>NDCG</th>
-      <th>RBP</th>
-      <th>RecipRank</th>
+      <th>NDCG@100</th>
+      <th>RBP@100</th>
+      <th>RecipRank@100</th>
     </tr>
     <tr>
       <th>model</th>
@@ -795,15 +824,15 @@
   <tbody>
     <tr>
       <th>ALS</th>
-      <td>0.126339</td>
-      <td>0.077297</td>
-      <td>0.203852</td>
+      <td>0.128064</td>
+      <td>0.083101</td>
+      <td>0.213430</td>
     </tr>
     <tr>
-      <th>II</th>
-      <td>0.094060</td>
-      <td>0.043014</td>
-      <td>0.107132</td>
+      <th>IKNN</th>
+      <td>0.094535</td>
+      <td>0.044154</td>
+      <td>0.110067</td>
     </tr>
   </tbody>
 </table>
@@ -811,13 +840,13 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">list_metrics</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;NDCG&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">list_metrics</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;NDCG@100&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/27c37e88b8b214eb1a30e7812b914e531fd8c7e719f5ead68371f8dd71874a38.png" src="../_images/27c37e88b8b214eb1a30e7812b914e531fd8c7e719f5ead68371f8dd71874a38.png" />
+<img alt="../_images/ac49423f50ddd41b2d98e836f723d9fcffc4e1b3f3814ef9d725225f4726c49d.png" src="../_images/ac49423f50ddd41b2d98e836f723d9fcffc4e1b3f3814ef9d725225f4726c49d.png" />
 </div>
 </div>
 </section>
@@ -918,7 +947,7 @@
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.1.0b1.dev585+gfdd70d80.</div>
+        <div class="footer-item">LensKit version 2026.1.0b1.dev3+g5301a029.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
