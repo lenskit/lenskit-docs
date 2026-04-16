@@ -562,7 +562,9 @@ Package Contents
    :canonical: tuple[ID, ...]
 
 
-   A generic collection key with no bounds or type information.
+   A generic collection key with no bounds or type information.  Key types must
+   also be *named* tuples (the Python type system does not allow us to express
+   this).
 
 .. py:class:: ItemListCollection(key)
    :canonical: lenskit.data._collection.ItemListCollection
@@ -1849,21 +1851,8 @@ Package Contents
       The list of items to return from :meth:`query_items`.
 
 
-   .. py:attribute:: user_items
-      :type:  lenskit.data._items.ItemList | None
-      :value: None
-
-
-      Deprecated alias for :attr:`history_items`.
-
-      .. deprecated:: 2025.6
-
-          Use :attr:`history_items` instead.  This property will be removed in
-          LensKit 2026.1.
-
-
    .. py:attribute:: query_id
-      :type:  lenskit.data.types.ID | None
+      :type:  lenskit.data.types.ID | tuple[lenskit.data.types.ID, Ellipsis] | None
       :value: None
 
 
@@ -1871,9 +1860,6 @@ Package Contents
 
       Query identifiers are used for things like mapping batch recommendation
       outputs to their inputs.
-
-
-   .. py:method:: __post_init__()
 
 
    .. py:method:: create(data)

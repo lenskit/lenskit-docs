@@ -9,11 +9,21 @@ lenskit.batch
 
 
 
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.batch.BatchInput
+
+
 Classes
 -------
 
 .. autoapisummary::
 
+   lenskit.batch.BatchRecRequest
+   lenskit.batch.TestRequestAdapter
    lenskit.batch.BatchResults
    lenskit.batch.BatchPipelineRunner
    lenskit.batch.InvocationSpec
@@ -31,6 +41,117 @@ Functions
 
 Package Contents
 ----------------
+
+.. py:type:: BatchInput
+   :canonical: Iterable[BatchRecRequest] | Iterable[RecQuery] | Iterable[ID | GenericKey] | ItemListCollection[GenericKey]
+
+
+   Allowed input types for batch inference routines.
+
+.. py:class:: BatchRecRequest
+   :canonical: lenskit.batch._queries.BatchRecRequest
+
+   Bases: :py:obj:`TypedDict`
+
+
+   Full recommendation request for batch inference, including candidate items.
+
+   :Stability: Full
+
+
+   .. py:attribute:: query
+      :type:  lenskit.data.RecQuery
+
+      Recommendation query.
+
+
+   .. py:attribute:: user_id
+      :type:  lenskit.data.ID
+
+      User ID (ignored if :attr:`query` is specified).
+
+
+   .. py:attribute:: query_id
+      :type:  lenskit.data.ID | lenskit.data.GenericKey
+
+      Query ID (ignored if :attr:`query` is specified, defaults to user ID).
+
+
+   .. py:attribute:: items
+      :type:  lenskit.data.ItemList
+
+      The items to score or possibly recommend. It is usually better to supply
+      :attr:`candidates` and/or :attr:`test_items`.
+
+
+   .. py:attribute:: candidates
+      :type:  lenskit.data.ItemList
+
+      Candidate items for the recommendations.  Overrides :attr:`items` for
+      top-*N* recommendation.
+
+
+   .. py:attribute:: test_items
+      :type:  lenskit.data.ItemList
+
+      Test items for the recommendation query.  Overrides :attr:`items` for
+      scoring or rating prediction.
+
+
+.. py:class:: TestRequestAdapter(lists, *, items_as = 'test')
+   :canonical: lenskit.batch._queries.TestRequestAdapter
+
+   Bases: :py:obj:`collections.abc.Iterable`\ [\ :py:obj:`BatchRecRequest`\ ], :py:obj:`collections.abc.Sized`
+
+
+   Wrapper for an item list collection that interprets it as a collection of
+   test requests.  Iterating over this collection will yield the requests in
+   the same order they are in the underlying item list collection.
+
+   The ``user_id`` and ``query_id`` key fields, if present are used to
+   construct the recommendation queries.  If there is no ``query_id`` field,
+   then the entire key is used as a query ID.  The item lists themselves are
+   interpreted as  directed by the ``items_as`` option:
+
+   ``test``
+       Items are used as test items (e.g., the items for which to predict
+       ratings), but **not** candidates.
+
+   ``candidates``
+       Items are used as candidate lists.
+
+   ``both``
+       Items are used as both test items and candidates.
+
+   ``None``
+       Items are excluded.
+
+   .. seealso::
+
+       :ref:`batch-queries`, :class:`~lenskit.batch.BatchRecRequest`
+
+   :param lists: The item list collection.
+   :param items_as: Where to put the item lists in the request.
+
+   :Warns: **DataWarning** -- If the item list collection cannot be used to construct usable
+           requests.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: lists
+      :type:  lenskit.data.ItemListCollection
+
+
+   .. py:attribute:: item_use
+      :type:  Literal['test', 'candidates', 'both'] | None
+
+
+   .. py:method:: __len__()
+
+
+   .. py:method:: __iter__()
+
 
 .. py:class:: BatchResults(key)
    :canonical: lenskit.batch._results.BatchResults
@@ -148,8 +269,7 @@ Package Contents
 
 
 
-   .. py:method:: run(pipeline: lenskit.pipeline.Pipeline, queries: collections.abc.Iterable[lenskit.data.RecQuery] | collections.abc.Iterable[tuple[lenskit.data.RecQuery, lenskit.data.ItemList]] | collections.abc.Iterable[lenskit.data.ID | lenskit.data.GenericKey] | lenskit.data.ItemListCollection[lenskit.data.GenericKey] | Mapping[lenskit.data.ID, lenskit.data.ItemList] | pandas.DataFrame) -> lenskit.batch._results.BatchResults
-                  run(pipeline: lenskit.pipeline.Pipeline, *, test_data: collections.abc.Iterable[lenskit.data.ID | lenskit.data.GenericKey] | lenskit.data.ItemListCollection[lenskit.data.GenericKey] | Mapping[lenskit.data.ID, lenskit.data.ItemList] | pandas.DataFrame) -> lenskit.batch._results.BatchResults
+   .. py:method:: run(pipeline, queries)
 
       Run the pipeline and return its results.
 
@@ -162,8 +282,8 @@ Package Contents
       :param queries: The collection of test queries use.  See :ref:`batch-queries`
                       for details on the various input formats.
 
-      :returns: The results, as a nested dictionary.  The outer dictionary maps
-                component output names to inner dictionaries of result data.
+      :returns: The batch results, mapping output names to item list collections of
+                outputs.
 
 
 
@@ -183,7 +303,8 @@ Package Contents
    .. py:attribute:: components
       :type:  dict[str, str]
 
-      The names of pipeline components to measure and return, mapped to their output names.
+      The names of pipeline components to measure and return, mapped to their
+      output names.
 
 
    .. py:attribute:: items
@@ -191,7 +312,8 @@ Package Contents
       :value: None
 
 
-      The target or candidate items (if any) to provide to the recommender.
+      The target or candidate items (if any) to provide to the recommender (as the
+      ``items`` input).
 
 
    .. py:attribute:: extra_inputs
@@ -200,7 +322,8 @@ Package Contents
       Additional inputs to pass to the pipeline.
 
 
-.. py:function:: predict(pipeline, test, *, n_jobs = None, use_ray = None)
+.. py:function:: predict[K: lenskit.data.GenericKey](pipeline: lenskit.pipeline.Pipeline, test: lenskit.data.ItemListCollection[K], *, n_jobs: int | None = None, use_ray: bool | None = None) -> lenskit.data.ItemListCollection[K]
+                 predict(pipeline: lenskit.pipeline.Pipeline, test: _queries.BatchInput, *, n_jobs: int | None = None, use_ray: bool | None = None) -> lenskit.data.ItemListCollection[lenskit.data.GenericKey]
 
    Convenience function to batch-generate rating predictions (or other per-item
    scores) from a pipeline.  This is a batch version of
@@ -215,7 +338,8 @@ Package Contents
    :Stability: Caller
 
 
-.. py:function:: recommend(pipeline, queries, n = None, *, n_jobs = None, use_ray = None, profiler = None, users=None)
+.. py:function:: recommend[K: lenskit.data.GenericKey](pipeline: lenskit.pipeline.Pipeline, queries: lenskit.data.ItemListCollection[K], n: int | None = None, *, n_jobs: int | None = None, use_ray: bool | None = None, profiler: lenskit.pipeline.PipelineProfiler | None = None, users=None) -> lenskit.data.ItemListCollection[K]
+                 recommend(pipeline: lenskit.pipeline.Pipeline, queries: _queries.BatchInput, n: int | None = None, *, n_jobs: int | None = None, use_ray: bool | None = None, profiler: lenskit.pipeline.PipelineProfiler | None = None, users=None) -> lenskit.data.ItemListCollection[lenskit.data.GenericKey]
 
    Convenience function to batch-generate recommendations from a pipeline. This
    is a batch version of :func:`lenskit.recommend`, and is a convenience
@@ -236,29 +360,13 @@ Package Contents
 Exported Aliases
 ----------------
 
-.. py:data:: lenskit.batch.ID
-
-    Re-exported alias for :py:data:`lenskit.data.ID`.
-
 .. py:data:: lenskit.batch.GenericKey
 
     Re-exported alias for :py:data:`lenskit.data.GenericKey`.
 
-.. py:class:: lenskit.batch.ItemList
-
-    Re-exported alias for :py:class:`lenskit.data.ItemList`.
-
 .. py:class:: lenskit.batch.ItemListCollection
 
     Re-exported alias for :py:class:`lenskit.data.ItemListCollection`.
-
-.. py:class:: lenskit.batch.RecQuery
-
-    Re-exported alias for :py:class:`lenskit.data.RecQuery`.
-
-.. py:class:: lenskit.batch.UserIDKey
-
-    Re-exported alias for :py:class:`lenskit.data.UserIDKey`.
 
 .. py:class:: lenskit.batch.Pipeline
 

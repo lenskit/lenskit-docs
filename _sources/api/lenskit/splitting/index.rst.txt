@@ -262,10 +262,11 @@ Package Contents
 .. py:class:: TTSplit
    :canonical: lenskit.splitting._split.TTSplit
 
-   Bases: :py:obj:`Generic`\ [\ :py:obj:`TK`\ ]
-
-
    A train-test set from splitting or other sources.
+
+   .. versionchanged:: 2026.1
+
+       Added the :attr:`test_requests` property.
 
    :Stability: Caller
 
@@ -277,7 +278,7 @@ Package Contents
 
 
    .. py:attribute:: test
-      :type:  lenskit.data.ItemListCollection[TK]
+      :type:  lenskit.data.ItemListCollection
 
       The test data.
 
@@ -309,6 +310,20 @@ Package Contents
 
 
       Get the training data as a data frame.
+
+
+   .. py:property:: test_requests
+      :type: lenskit.batch.TestRequestAdapter
+
+
+      Get the test data as a sequence of batch recommendation requests.
+
+      .. seealso::
+
+          :ref:`batch-queries`
+
+      :returns: An collection that iterates over recommendation requests derived
+                from the test data.
 
 
 .. py:function:: split_global_time(data: lenskit.data.Dataset, time: int | float | str | datetime.datetime, end: int | float | str | datetime.datetime | None = None, filter_test_users: bool | int | None = False) -> lenskit.splitting._split.TTSplit

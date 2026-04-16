@@ -11,10 +11,10 @@
 <meta property="og:type" content="website" />
 <meta property="og:url" content="api/lenskit/batch/index.html" />
 <meta property="og:site_name" content="LensKit" />
-<meta property="og:description" content="Batch-run recommendation pipelines for evaluation. Classes: Functions: Package Contents: Exported Aliases:" />
-<meta name="description" content="Batch-run recommendation pipelines for evaluation. Classes: Functions: Package Contents: Exported Aliases:" />
+<meta property="og:description" content="Batch-run recommendation pipelines for evaluation. Attributes: Classes: Functions: Package Contents: Exported Aliases:" />
+<meta name="description" content="Batch-run recommendation pipelines for evaluation. Attributes: Classes: Functions: Package Contents: Exported Aliases:" />
 
-    <title>lenskit.batch &#8212; LensKit 2026.0.0.dev557+g8e46d2f2 documentation</title>
+    <title>lenskit.batch &#8212; LensKit 2026.0.0.dev577+g8ae69e92 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=9b01f33f"></script>
+    <script src="../../../_static/documentation_options.js?v=0e215e7e"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev557+g8e46d2f2 documentation - Home"/>
-    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev557+g8e46d2f2 documentation - Home"/>
+    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.0.0.dev577+g8ae69e92 documentation - Home"/>
+    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.0.0.dev577+g8ae69e92 documentation - Home"/>
   
   
 </a></div>
@@ -615,10 +615,27 @@
   <section id="module-lenskit.batch">
 <span id="lenskit-batch"></span><h1>lenskit.batch<a class="headerlink" href="#module-lenskit.batch" title="Link to this heading">#</a></h1>
 <p>Batch-run recommendation pipelines for evaluation.</p>
+<section id="attributes">
+<h2>Attributes<a class="headerlink" href="#attributes" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.batch.BatchInput" title="lenskit.batch.BatchInput"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchInput</span></code></a></p></td>
+<td><p>Allowed input types for batch inference routines.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 <section id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.batch.BatchRecRequest" title="lenskit.batch.BatchRecRequest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchRecRequest</span></code></a></p></td>
+<td><p>Full recommendation request for batch inference, including candidate items.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.batch.TestRequestAdapter" title="lenskit.batch.TestRequestAdapter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">TestRequestAdapter</span></code></a></p></td>
+<td><p>Wrapper for an item list collection that interprets it as a collection of</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.batch.BatchResults" title="lenskit.batch.BatchResults"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchResults</span></code></a></p></td>
 <td><p>Results from a batch recommendation run.  Results consist of the outputs of</p></td>
 </tr>
@@ -636,10 +653,10 @@
 <h2>Functions<a class="headerlink" href="#functions" title="Link to this heading">#</a></h2>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.batch.predict" title="lenskit.batch.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(pipeline, test, *[, n_jobs, use_ray])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.batch.predict" title="lenskit.batch.predict"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predict</span></code></a>(…)</p></td>
 <td><p>Convenience function to batch-generate rating predictions (or other per-item</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.batch.recommend" title="lenskit.batch.recommend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">recommend</span></code></a>(pipeline, queries[, n, n_jobs, use_ray, ...])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.batch.recommend" title="lenskit.batch.recommend"><code class="xref py py-obj docutils literal notranslate"><span class="pre">recommend</span></code></a>(…)</p></td>
 <td><p>Convenience function to batch-generate recommendations from a pipeline. This</p></td>
 </tr>
 </tbody>
@@ -648,6 +665,129 @@
 </section>
 <section id="package-contents">
 <h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading">#</a></h2>
+<dl class="py type">
+<dt class="sig sig-object py" id="lenskit.batch.BatchInput">
+<span class="property"><span class="k"><span class="pre">type</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">BatchInput</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#lenskit.batch.BatchRecRequest" title="lenskit.batch.BatchRecRequest"><span class="pre">BatchRecRequest</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../basic/bias/index.html#lenskit.basic.bias.lenskit.basic.bias.RecQuery" title="lenskit.basic.bias.lenskit.basic.bias.RecQuery"><span class="pre">RecQuery</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Iterable</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../data/types/index.html#lenskit.data.types.ID" title="lenskit.data.types.ID"><span class="pre">ID</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey"><span class="pre">GenericKey</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="#lenskit.batch.lenskit.batch.ItemListCollection" title="lenskit.batch.lenskit.batch.ItemListCollection"><span class="pre">ItemListCollection</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey"><span class="pre">GenericKey</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#lenskit.batch.BatchInput" title="Link to this definition">#</a></dt>
+<dd><p>Allowed input types for batch inference routines.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.batch.BatchRecRequest">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">BatchRecRequest</span></span><a class="headerlink" href="#lenskit.batch.BatchRecRequest" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>Full recommendation request for batch inference, including candidate items.</p>
+<dl class="field-list">
+<dt class="field-odd">Stability<span class="colon">:</span></dt>
+<dd class="field-odd">Full (see <span><a class="reference internal" href="../../../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.batch.BatchRecRequest.query">
+<span class="sig-name descname"><span class="pre">query</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><span class="pre">lenskit.data.RecQuery</span></a></span><a class="headerlink" href="#lenskit.batch.BatchRecRequest.query" title="Link to this definition">#</a></dt>
+<dd><p>Recommendation query.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.batch.BatchRecRequest.user_id">
+<span class="sig-name descname"><span class="pre">user_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.lenskit.data.ID" title="lenskit.data.lenskit.data.ID"><span class="pre">lenskit.data.ID</span></a></span><a class="headerlink" href="#lenskit.batch.BatchRecRequest.user_id" title="Link to this definition">#</a></dt>
+<dd><p>User ID (ignored if <a class="reference internal" href="#lenskit.batch.BatchRecRequest.query" title="lenskit.batch.BatchRecRequest.query"><code class="xref py py-attr docutils literal notranslate"><span class="pre">query</span></code></a> is specified).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.batch.BatchRecRequest.query_id">
+<span class="sig-name descname"><span class="pre">query_id</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.lenskit.data.ID" title="lenskit.data.lenskit.data.ID"><span class="pre">lenskit.data.ID</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey"><span class="pre">lenskit.data.GenericKey</span></a></span><a class="headerlink" href="#lenskit.batch.BatchRecRequest.query_id" title="Link to this definition">#</a></dt>
+<dd><p>Query ID (ignored if <a class="reference internal" href="#lenskit.batch.BatchRecRequest.query" title="lenskit.batch.BatchRecRequest.query"><code class="xref py py-attr docutils literal notranslate"><span class="pre">query</span></code></a> is specified, defaults to user ID).</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.batch.BatchRecRequest.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><span class="pre">lenskit.data.ItemList</span></a></span><a class="headerlink" href="#lenskit.batch.BatchRecRequest.items" title="Link to this definition">#</a></dt>
+<dd><p>The items to score or possibly recommend. It is usually better to supply
+<a class="reference internal" href="#lenskit.batch.BatchRecRequest.candidates" title="lenskit.batch.BatchRecRequest.candidates"><code class="xref py py-attr docutils literal notranslate"><span class="pre">candidates</span></code></a> and/or <a class="reference internal" href="#lenskit.batch.BatchRecRequest.test_items" title="lenskit.batch.BatchRecRequest.test_items"><code class="xref py py-attr docutils literal notranslate"><span class="pre">test_items</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.batch.BatchRecRequest.candidates">
+<span class="sig-name descname"><span class="pre">candidates</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><span class="pre">lenskit.data.ItemList</span></a></span><a class="headerlink" href="#lenskit.batch.BatchRecRequest.candidates" title="Link to this definition">#</a></dt>
+<dd><p>Candidate items for the recommendations.  Overrides <a class="reference internal" href="#lenskit.batch.BatchRecRequest.items" title="lenskit.batch.BatchRecRequest.items"><code class="xref py py-attr docutils literal notranslate"><span class="pre">items</span></code></a> for
+top-<em>N</em> recommendation.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.batch.BatchRecRequest.test_items">
+<span class="sig-name descname"><span class="pre">test_items</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><span class="pre">lenskit.data.ItemList</span></a></span><a class="headerlink" href="#lenskit.batch.BatchRecRequest.test_items" title="Link to this definition">#</a></dt>
+<dd><p>Test items for the recommendation query.  Overrides <a class="reference internal" href="#lenskit.batch.BatchRecRequest.items" title="lenskit.batch.BatchRecRequest.items"><code class="xref py py-attr docutils literal notranslate"><span class="pre">items</span></code></a> for
+scoring or rating prediction.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.batch.TestRequestAdapter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">TestRequestAdapter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lists</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">items_as</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'test'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.TestRequestAdapter" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">collections.abc.Iterable</span></code></a>[<a class="reference internal" href="#lenskit.batch.BatchRecRequest" title="lenskit.batch.BatchRecRequest"><code class="xref py py-obj docutils literal notranslate"><span class="pre">BatchRecRequest</span></code></a>], <a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Sized" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-obj docutils literal notranslate"><span class="pre">collections.abc.Sized</span></code></a></p>
+<p>Wrapper for an item list collection that interprets it as a collection of
+test requests.  Iterating over this collection will yield the requests in
+the same order they are in the underlying item list collection.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">user_id</span></code> and <code class="docutils literal notranslate"><span class="pre">query_id</span></code> key fields, if present are used to
+construct the recommendation queries.  If there is no <code class="docutils literal notranslate"><span class="pre">query_id</span></code> field,
+then the entire key is used as a query ID.  The item lists themselves are
+interpreted as  directed by the <code class="docutils literal notranslate"><span class="pre">items_as</span></code> option:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">test</span></code></dt><dd><p>Items are used as test items (e.g., the items for which to predict
+ratings), but <strong>not</strong> candidates.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">candidates</span></code></dt><dd><p>Items are used as candidate lists.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">both</span></code></dt><dd><p>Items are used as both test items and candidates.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">None</span></code></dt><dd><p>Items are excluded.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="../../../guide/batch.html#batch-queries"><span class="std std-ref">Batch Queries</span></a>, <a class="reference internal" href="#lenskit.batch.BatchRecRequest" title="lenskit.batch.BatchRecRequest"><code class="xref py py-class docutils literal notranslate"><span class="pre">BatchRecRequest</span></code></a></p>
+</div>
+<dl class="field-list">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>lists</strong> (<a class="reference internal" href="../data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><em>lenskit.data.ItemListCollection</em></a>) – The item list collection.</p></li>
+<li><p><strong>items_as</strong> (<em>Literal</em><em>[</em><em>'test'</em><em>, </em><em>'candidates'</em><em>, </em><em>'both'</em><em>] </em><em>| </em><em>None</em>) – Where to put the item lists in the request.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Warns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>DataWarning</strong> – If the item list collection cannot be used to construct usable
+requests.</p>
+</dd>
+<dt class="field-odd">Stability<span class="colon">:</span></dt>
+<dd class="field-odd">Caller (see <span><a class="reference internal" href="../../../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.batch.TestRequestAdapter.lists">
+<span class="sig-name descname"><span class="pre">lists</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><span class="pre">lenskit.data.ItemListCollection</span></a></span><a class="headerlink" href="#lenskit.batch.TestRequestAdapter.lists" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="lenskit.batch.TestRequestAdapter.item_use">
+<span class="sig-name descname"><span class="pre">item_use</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Literal</span><span class="p"><span class="pre">[</span></span><span class="s"><span class="pre">'test'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'candidates'</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="s"><span class="pre">'both'</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></span><a class="headerlink" href="#lenskit.batch.TestRequestAdapter.item_use" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.batch.TestRequestAdapter.__len__">
+<span class="sig-name descname"><span class="pre">__len__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.TestRequestAdapter.__len__" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.batch.TestRequestAdapter.__iter__">
+<span class="sig-name descname"><span class="pre">__iter__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.TestRequestAdapter.__iter__" title="Link to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterator" rel="noreferrer" target="_blank" title="(in Python v3.14)">collections.abc.Iterator</a>[<a class="reference internal" href="#lenskit.batch.BatchRecRequest" title="lenskit.batch.BatchRecRequest">BatchRecRequest</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="lenskit.batch.BatchResults">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">BatchResults</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.BatchResults" title="Link to this definition">#</a></dt>
@@ -656,7 +796,7 @@ various pipeline components for each of the test users.  Results may be
 <code class="docutils literal notranslate"><span class="pre">None</span></code>, if the pipeline produced no output for that query.</p>
 <dl class="field-list">
 <dt class="field-odd">Stability<span class="colon">:</span></dt>
-<dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
+<dd class="field-odd">Caller (see <span><a class="reference internal" href="../../../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>key</strong> (<a class="reference internal" href="../data/matrix/index.html#lenskit.data.matrix.SparseRowArray.type" title="lenskit.data.matrix.SparseRowArray.type"><em>type</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>tuple</em></a><em>] </em><em>| </em><em>Sequence</em><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>str</em></a><em>]</em>)</p>
 </dd>
@@ -711,7 +851,7 @@ component name.</p>
 <dd><p>Apply a pipeline to a collection of test users.</p>
 <dl class="field-list">
 <dt class="field-odd">Stability<span class="colon">:</span></dt>
-<dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
+<dd class="field-odd">Caller (see <span><a class="reference internal" href="../../../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
 <li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
@@ -823,9 +963,7 @@ the pipeline).</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.batch.BatchPipelineRunner.run">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../pipeline/index.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><span class="pre">lenskit.pipeline.Pipeline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">queries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">collections.abc.Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../data/index.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><span class="pre">lenskit.data.RecQuery</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">collections.abc.Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../data/index.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><span class="pre">lenskit.data.RecQuery</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><span class="pre">lenskit.data.ItemList</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">collections.abc.Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../data/index.html#lenskit.data.lenskit.data.ID" title="lenskit.data.lenskit.data.ID"><span class="pre">lenskit.data.ID</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey"><span class="pre">lenskit.data.GenericKey</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><span class="pre">lenskit.data.ItemListCollection</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey"><span class="pre">lenskit.data.GenericKey</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../data/index.html#lenskit.data.lenskit.data.ID" title="lenskit.data.lenskit.data.ID"><span class="pre">lenskit.data.ID</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><span class="pre">lenskit.data.ItemList</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" rel="noreferrer" target="_blank" title="(in pandas v3.0.2)"><span class="pre">pandas.DataFrame</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#lenskit.batch.BatchResults" title="lenskit.batch._results.BatchResults"><span class="pre">lenskit.batch._results.BatchResults</span></a></span></span><a class="headerlink" href="#lenskit.batch.BatchPipelineRunner.run" title="Link to this definition">#</a></dt>
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../pipeline/index.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><span class="pre">lenskit.pipeline.Pipeline</span></a></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">collections.abc.Iterable</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../data/index.html#lenskit.data.lenskit.data.ID" title="lenskit.data.lenskit.data.ID"><span class="pre">lenskit.data.ID</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey"><span class="pre">lenskit.data.GenericKey</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><span class="pre">lenskit.data.ItemListCollection</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey"><span class="pre">lenskit.data.GenericKey</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Mapping</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../data/index.html#lenskit.data.lenskit.data.ID" title="lenskit.data.lenskit.data.ID"><span class="pre">lenskit.data.ID</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="../data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><span class="pre">lenskit.data.ItemList</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" rel="noreferrer" target="_blank" title="(in pandas v3.0.2)"><span class="pre">pandas.DataFrame</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#lenskit.batch.BatchResults" title="lenskit.batch._results.BatchResults"><span class="pre">lenskit.batch._results.BatchResults</span></a></span></span></dt>
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queries</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.BatchPipelineRunner.run" title="Link to this definition">#</a></dt>
 <dd><p>Run the pipeline and return its results.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -835,14 +973,17 @@ as the original inputs.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>pipeline</strong> – The pipeline to run.</p></li>
-<li><p><strong>queries</strong> – The collection of test queries use.  See <a class="reference internal" href="../../../guide/batch.html#batch-queries"><span class="std std-ref">Batch Queries</span></a>
+<li><p><strong>pipeline</strong> (<a class="reference internal" href="../pipeline/index.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><em>lenskit.pipeline.Pipeline</em></a>) – The pipeline to run.</p></li>
+<li><p><strong>queries</strong> (<em>lenskit.batch._queries.BatchInput</em>) – The collection of test queries use.  See <a class="reference internal" href="../../../guide/batch.html#batch-queries"><span class="std std-ref">Batch Queries</span></a>
 for details on the various input formats.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The results, as a nested dictionary.  The outer dictionary maps
-component output names to inner dictionaries of result data.</p>
+<dd class="field-even"><p>The batch results, mapping output names to item list collections of
+outputs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#lenskit.batch.BatchResults" title="lenskit.batch._results.BatchResults">lenskit.batch._results.BatchResults</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -863,13 +1004,15 @@ pipeline component outputs for a test user.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.batch.InvocationSpec.components">
 <span class="sig-name descname"><span class="pre">components</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span><a class="headerlink" href="#lenskit.batch.InvocationSpec.components" title="Link to this definition">#</a></dt>
-<dd><p>The names of pipeline components to measure and return, mapped to their output names.</p>
+<dd><p>The names of pipeline components to measure and return, mapped to their
+output names.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="lenskit.batch.InvocationSpec.items">
 <span class="sig-name descname"><span class="pre">items</span></span><span class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">ItemSource</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></span><a class="headerlink" href="#lenskit.batch.InvocationSpec.items" title="Link to this definition">#</a></dt>
-<dd><p>The target or candidate items (if any) to provide to the recommender.</p>
+<dd><p>The target or candidate items (if any) to provide to the recommender (as the
+<code class="docutils literal notranslate"><span class="pre">items</span></code> input).</p>
 </dd></dl>
 
 <dl class="py attribute">
@@ -882,7 +1025,9 @@ pipeline component outputs for a test user.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.batch.predict">
-<span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ray</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.predict" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">[</span><em class="sig-param"><span class="n"><span class="pre">K</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey"><span class="pre">lenskit.data.GenericKey</span></a></span></em><span class="sig-paren">]</span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../pipeline/index.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><span class="pre">lenskit.pipeline.Pipeline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><span class="pre">lenskit.data.ItemListCollection</span></a><span class="p"><span class="pre">[</span></span><span class="pre">K</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ray</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><span class="pre">lenskit.data.ItemListCollection</span></a><span class="p"><span class="pre">[</span></span><span class="pre">K</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#lenskit.batch.predict" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../pipeline/index.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><span class="pre">lenskit.pipeline.Pipeline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">test</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_queries.BatchInput</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ray</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><span class="pre">lenskit.data.ItemListCollection</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey"><span class="pre">lenskit.data.GenericKey</span></a><span class="p"><span class="pre">]</span></span></span></span></dt>
 <dd><p>Convenience function to batch-generate rating predictions (or other per-item
 scores) from a pipeline.  This is a batch version of
 <code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.predict()</span></code>, and is a convenience wrapper around using a
@@ -894,24 +1039,15 @@ it will score _all candidate <a href="#id1"><span class="problematic" id="id2">i
 </div>
 <dl class="field-list">
 <dt class="field-odd">Stability<span class="colon">:</span></dt>
-<dd class="field-odd">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
-<dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><ul class="simple">
-<li><p><strong>pipeline</strong> (<a class="reference internal" href="../pipeline/index.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><em>lenskit.pipeline.Pipeline</em></a>)</p></li>
-<li><p><strong>test</strong> (<a class="reference internal" href="../data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><em>lenskit.data.ItemListCollection</em></a><em>[</em><a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey"><em>lenskit.data.GenericKey</em></a><em>] </em><em>| </em><em>Mapping</em><em>[</em><a class="reference internal" href="../data/index.html#lenskit.data.lenskit.data.ID" title="lenskit.data.lenskit.data.ID"><em>lenskit.data.ID</em></a><em>, </em><a class="reference internal" href="../data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a><em>] </em><em>| </em><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" rel="noreferrer" target="_blank" title="(in pandas v3.0.2)"><em>pandas.DataFrame</em></a>)</p></li>
-<li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
-<li><p><strong>use_ray</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>bool</em></a><em> | </em><em>None</em>)</p></li>
-</ul>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection">lenskit.data.ItemListCollection</a>[<a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey">lenskit.data.GenericKey</a>]</p>
-</dd>
+<dd class="field-odd">Caller (see <span><a class="reference internal" href="../../../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="lenskit.batch.recommend">
-<span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">recommend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queries</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ray</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profiler</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">users</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.batch.recommend" title="Link to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">recommend</span></span><span class="sig-paren">[</span><em class="sig-param"><span class="n"><span class="pre">K</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey"><span class="pre">lenskit.data.GenericKey</span></a></span></em><span class="sig-paren">]</span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../pipeline/index.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><span class="pre">lenskit.pipeline.Pipeline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">queries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><span class="pre">lenskit.data.ItemListCollection</span></a><span class="p"><span class="pre">[</span></span><span class="pre">K</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ray</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profiler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../pipeline/index.html#lenskit.pipeline.PipelineProfiler" title="lenskit.pipeline.PipelineProfiler"><span class="pre">lenskit.pipeline.PipelineProfiler</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">users</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><span class="pre">lenskit.data.ItemListCollection</span></a><span class="p"><span class="pre">[</span></span><span class="pre">K</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#lenskit.batch.recommend" title="Link to this definition">#</a></dt>
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">recommend</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pipeline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../pipeline/index.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><span class="pre">lenskit.pipeline.Pipeline</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">queries</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">_queries.BatchInput</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_jobs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_ray</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">bool</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profiler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="../pipeline/index.html#lenskit.pipeline.PipelineProfiler" title="lenskit.pipeline.PipelineProfiler"><span class="pre">lenskit.pipeline.PipelineProfiler</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.14)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">users</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><span class="pre">lenskit.data.ItemListCollection</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey"><span class="pre">lenskit.data.GenericKey</span></a><span class="p"><span class="pre">]</span></span></span></span></dt>
 <dd><p>Convenience function to batch-generate recommendations from a pipeline. This
 is a batch version of <code class="xref py py-func docutils literal notranslate"><span class="pre">lenskit.recommend()</span></code>, and is a convenience
 wrapper around using a <a class="reference internal" href="#lenskit.batch.BatchPipelineRunner" title="lenskit.batch.BatchPipelineRunner"><code class="xref py py-meth docutils literal notranslate"><span class="pre">BatchPipelineRunner()</span></code></a> to generate
@@ -923,20 +1059,10 @@ recommendations.</p>
 </div>
 <dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>queries</strong> (<a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>collections.abc.Iterable</em></a><em>[</em><a class="reference internal" href="../data/index.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><em>lenskit.data.RecQuery</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>collections.abc.Iterable</em></a><em>[</em><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>tuple</em></a><em>[</em><a class="reference internal" href="../data/index.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><em>lenskit.data.RecQuery</em></a><em>, </em><a class="reference internal" href="../data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a><em>]</em><em>] </em><em>| </em><a class="reference external" href="https://docs.python.org/3/library/collections.abc.html#collections.abc.Iterable" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>collections.abc.Iterable</em></a><em>[</em><a class="reference internal" href="../data/index.html#lenskit.data.lenskit.data.ID" title="lenskit.data.lenskit.data.ID"><em>lenskit.data.ID</em></a><em> | </em><a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey"><em>lenskit.data.GenericKey</em></a><em>] </em><em>| </em><a class="reference internal" href="../data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><em>lenskit.data.ItemListCollection</em></a><em>[</em><a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey"><em>lenskit.data.GenericKey</em></a><em>] </em><em>| </em><em>Mapping</em><em>[</em><a class="reference internal" href="../data/index.html#lenskit.data.lenskit.data.ID" title="lenskit.data.lenskit.data.ID"><em>lenskit.data.ID</em></a><em>, </em><a class="reference internal" href="../data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><em>lenskit.data.ItemList</em></a><em>] </em><em>| </em><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" rel="noreferrer" target="_blank" title="(in pandas v3.0.2)"><em>pandas.DataFrame</em></a>) – The request queries.</p></li>
-<li><p><strong>pipeline</strong> (<a class="reference internal" href="../pipeline/index.html#lenskit.pipeline.Pipeline" title="lenskit.pipeline.Pipeline"><em>lenskit.pipeline.Pipeline</em></a>)</p></li>
-<li><p><strong>n</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
-<li><p><strong>n_jobs</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a><em> | </em><em>None</em>)</p></li>
-<li><p><strong>use_ray</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>bool</em></a><em> | </em><em>None</em>)</p></li>
-<li><p><strong>profiler</strong> (<a class="reference internal" href="../pipeline/index.html#lenskit.pipeline.PipelineProfiler" title="lenskit.pipeline.PipelineProfiler"><em>lenskit.pipeline.PipelineProfiler</em></a><em> | </em><em>None</em>)</p></li>
-</ul>
+<dd class="field-odd"><p><strong>queries</strong> – The request queries.</p>
 </dd>
 <dt class="field-even">Stability<span class="colon">:</span></dt>
-<dd class="field-even">Caller (see <span><a class="reference internal" href="../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="../data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection">lenskit.data.ItemListCollection</a>[<a class="reference internal" href="../data/index.html#lenskit.data.UserIDKey" title="lenskit.data.UserIDKey">lenskit.data.UserIDKey</a>]</p>
-</dd>
+<dd class="field-even">Caller (see <span><a class="reference internal" href="../../../releases/index.html#stability-levels"><span class="std std-ref">Stability Levels</span></a></span>).</dd>
 </dl>
 </dd></dl>
 
@@ -944,39 +1070,15 @@ recommendations.</p>
 <section id="exported-aliases">
 <h2>Exported Aliases<a class="headerlink" href="#exported-aliases" title="Link to this heading">#</a></h2>
 <dl class="py data">
-<dt class="sig sig-object py" id="lenskit.batch.lenskit.batch.ID">
-<span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">ID</span></span><a class="headerlink" href="#lenskit.batch.lenskit.batch.ID" title="Link to this definition">#</a></dt>
-<dd><p>Re-exported alias for <code class="xref py py-data docutils literal notranslate"><span class="pre">lenskit.data.ID</span></code>.</p>
-</dd></dl>
-
-<dl class="py data">
 <dt class="sig sig-object py" id="lenskit.batch.lenskit.batch.GenericKey">
 <span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">GenericKey</span></span><a class="headerlink" href="#lenskit.batch.lenskit.batch.GenericKey" title="Link to this definition">#</a></dt>
 <dd><p>Re-exported alias for <a class="reference internal" href="../data/index.html#lenskit.data.GenericKey" title="lenskit.data.GenericKey"><code class="xref py py-data docutils literal notranslate"><span class="pre">lenskit.data.GenericKey</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="lenskit.batch.lenskit.batch.ItemList">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">ItemList</span></span><a class="headerlink" href="#lenskit.batch.lenskit.batch.ItemList" title="Link to this definition">#</a></dt>
-<dd><p>Re-exported alias for <a class="reference internal" href="../data/index.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.data.ItemList</span></code></a>.</p>
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="lenskit.batch.lenskit.batch.ItemListCollection">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">ItemListCollection</span></span><a class="headerlink" href="#lenskit.batch.lenskit.batch.ItemListCollection" title="Link to this definition">#</a></dt>
 <dd><p>Re-exported alias for <a class="reference internal" href="../data/index.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.data.ItemListCollection</span></code></a>.</p>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="lenskit.batch.lenskit.batch.RecQuery">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">RecQuery</span></span><a class="headerlink" href="#lenskit.batch.lenskit.batch.RecQuery" title="Link to this definition">#</a></dt>
-<dd><p>Re-exported alias for <a class="reference internal" href="../data/index.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.data.RecQuery</span></code></a>.</p>
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="lenskit.batch.lenskit.batch.UserIDKey">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.batch.</span></span><span class="sig-name descname"><span class="pre">UserIDKey</span></span><a class="headerlink" href="#lenskit.batch.lenskit.batch.UserIDKey" title="Link to this definition">#</a></dt>
-<dd><p>Re-exported alias for <a class="reference internal" href="../data/index.html#lenskit.data.UserIDKey" title="lenskit.data.UserIDKey"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.data.UserIDKey</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py class">
@@ -1041,9 +1143,27 @@ recommendations.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classes">Classes</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#package-contents">Package Contents</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.BatchInput"><code class="docutils literal notranslate"><span class="pre">BatchInput</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.BatchRecRequest"><code class="docutils literal notranslate"><span class="pre">BatchRecRequest</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.BatchRecRequest.query"><code class="docutils literal notranslate"><span class="pre">BatchRecRequest.query</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.BatchRecRequest.user_id"><code class="docutils literal notranslate"><span class="pre">BatchRecRequest.user_id</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.BatchRecRequest.query_id"><code class="docutils literal notranslate"><span class="pre">BatchRecRequest.query_id</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.BatchRecRequest.items"><code class="docutils literal notranslate"><span class="pre">BatchRecRequest.items</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.BatchRecRequest.candidates"><code class="docutils literal notranslate"><span class="pre">BatchRecRequest.candidates</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.BatchRecRequest.test_items"><code class="docutils literal notranslate"><span class="pre">BatchRecRequest.test_items</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.TestRequestAdapter"><code class="docutils literal notranslate"><span class="pre">TestRequestAdapter</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.TestRequestAdapter.lists"><code class="docutils literal notranslate"><span class="pre">TestRequestAdapter.lists</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.TestRequestAdapter.item_use"><code class="docutils literal notranslate"><span class="pre">TestRequestAdapter.item_use</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.TestRequestAdapter.__len__"><code class="docutils literal notranslate"><span class="pre">TestRequestAdapter.__len__()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.TestRequestAdapter.__iter__"><code class="docutils literal notranslate"><span class="pre">TestRequestAdapter.__iter__()</span></code></a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.BatchResults"><code class="docutils literal notranslate"><span class="pre">BatchResults</span></code></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.BatchResults.outputs"><code class="docutils literal notranslate"><span class="pre">BatchResults.outputs</span></code></a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.BatchResults.output"><code class="docutils literal notranslate"><span class="pre">BatchResults.output()</span></code></a></li>
@@ -1075,12 +1195,8 @@ recommendations.</p>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exported-aliases">Exported Aliases</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.lenskit.batch.ID"><code class="docutils literal notranslate"><span class="pre">lenskit.batch.ID</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.lenskit.batch.GenericKey"><code class="docutils literal notranslate"><span class="pre">lenskit.batch.GenericKey</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.lenskit.batch.ItemList"><code class="docutils literal notranslate"><span class="pre">lenskit.batch.ItemList</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.lenskit.batch.ItemListCollection"><code class="docutils literal notranslate"><span class="pre">lenskit.batch.ItemListCollection</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.lenskit.batch.RecQuery"><code class="docutils literal notranslate"><span class="pre">lenskit.batch.RecQuery</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.lenskit.batch.UserIDKey"><code class="docutils literal notranslate"><span class="pre">lenskit.batch.UserIDKey</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.lenskit.batch.Pipeline"><code class="docutils literal notranslate"><span class="pre">lenskit.batch.Pipeline</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.batch.lenskit.batch.PipelineProfiler"><code class="docutils literal notranslate"><span class="pre">lenskit.batch.PipelineProfiler</span></code></a></li>
 </ul>
@@ -1128,7 +1244,7 @@ recommendations.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.0.0.dev557+g8e46d2f2.</div>
+        <div class="footer-item">LensKit version 2026.0.0.dev577+g8ae69e92.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
