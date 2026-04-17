@@ -1791,6 +1791,10 @@ Package Contents
    generally the available inputs for a recommendation request *except* the set
    of candidate items.
 
+   .. versionchanged:: 2026.1
+
+       Made arguments keyword-only, and removed the historical ``user_items`` attribute.
+
    .. todo::
 
        Document and test methods for extending the recommendation query with arbitrary
@@ -1801,6 +1805,31 @@ Package Contents
        to include context cues.
 
    :Stability: Caller
+
+
+   .. py:attribute:: query_id
+      :type:  lenskit.data.types.ID | tuple[lenskit.data.types.ID, Ellipsis] | None
+      :value: None
+
+
+      An identifier for this query.
+
+      Query identifiers are used for things like mapping batch recommendation
+      outputs to their inputs.
+
+
+   .. py:attribute:: query_time
+      :type:  datetime.datetime | None
+      :value: None
+
+
+      The time at which the query is issued.
+
+      .. note::
+
+          No LensKit models or data processing code currently makes use of this,
+          but it is included for to support future time-aware modeling and replays
+          of historical data.
 
 
    .. py:attribute:: user_id
@@ -1849,17 +1878,6 @@ Package Contents
 
 
       The list of items to return from :meth:`query_items`.
-
-
-   .. py:attribute:: query_id
-      :type:  lenskit.data.types.ID | tuple[lenskit.data.types.ID, Ellipsis] | None
-      :value: None
-
-
-      An identifier for this query.
-
-      Query identifiers are used for things like mapping batch recommendation
-      outputs to their inputs.
 
 
    .. py:method:: create(data)
