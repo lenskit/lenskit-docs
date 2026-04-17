@@ -1,0 +1,100 @@
+lenskit.graphs.lightgcn.LightGCNTrainer
+=======================================
+
+.. py:class:: lenskit.graphs.lightgcn.LightGCNTrainer(scorer, data, options)
+   
+
+   Bases: :py:obj:`lenskit.training.ModelTrainer`
+
+
+   Protocol implemented by iterative trainers for models.  Models that
+   implement :class:`UsesTrainer` will return an object implementing this
+   protocol from their :meth:`~UsesTrainer.create_trainer` method.
+
+   ..
+
+       This protocol only defines the core aspects of training a model. Trainers
+       should also implement :class:`~lenskit.state.ParameterContainer` to allow
+       training to be checkpointed and resumed.
+
+       It is also a good idea for the trainer to be pickleable, but the parameter
+       container interface is the primary mechanism for checkpointing.
+
+   :Stability: Full
+
+
+   .. py:attribute:: scorer
+      :type:  LightGCNScorer
+
+
+   .. py:attribute:: data
+      :type:  lenskit.data.Dataset
+
+
+   .. py:attribute:: options
+      :type:  lenskit.training.TrainingOptions
+
+
+   .. py:attribute:: log
+      :type:  structlog.stdlib.BoundLogger
+
+
+   .. py:attribute:: rng
+      :type:  numpy.random.Generator
+
+
+   .. py:attribute:: device
+      :type:  str
+
+
+   .. py:attribute:: model
+      :type:  torch_geometric.nn.LightGCN
+
+
+   .. py:attribute:: matrix
+      :type:  lenskit.data.MatrixRelationshipSet
+
+
+   .. py:attribute:: coo
+      :type:  lenskit.data.matrix.COOStructure
+
+
+   .. py:attribute:: user_base
+      :type:  int
+
+
+   .. py:attribute:: edges
+      :type:  torch.Tensor
+
+
+   .. py:attribute:: optimizer
+      :type:  torch.optim.Optimizer
+
+
+   .. py:attribute:: epochs_trained
+      :type:  int
+      :value: 0
+
+
+
+   .. py:method:: train_epoch()
+
+      Perform one epoch of the training process, optionally returning metrics
+      on the training behavior.  After each training iteration, the mmodel
+      must be usable.
+
+
+
+   .. py:method:: finalize()
+
+      Finish the training process, cleaning up any unneeded data structures
+      and doing any finalization steps to the model.
+
+      The default implementation does nothing.
+
+
+
+   .. py:method:: batch_loss(mb_edges, scores)
+      :abstractmethod:
+
+

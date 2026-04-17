@@ -15,6 +15,14 @@ lenskit.logging.multiprocess
 Classes
 -------
 
+.. toctree::
+   :hidden:
+
+   /api/lenskit/logging/multiprocess/Monitor
+   /api/lenskit/logging/multiprocess/RecordSink
+   /api/lenskit/logging/multiprocess/WorkerContext
+   /api/lenskit/logging/multiprocess/WorkerLogConfig
+
 .. autoapisummary::
 
    lenskit.logging.multiprocess.Monitor
@@ -36,172 +44,9 @@ Functions
 Package Contents
 ----------------
 
-.. py:class:: Monitor(handle_logging = True)
-   :canonical: lenskit.logging.multiprocess._monitor.Monitor
-
-   LensKit monitor controller.
-
-   The monitor does several things:
-
-   * Receive and re-inject log messages from worker processes.
-   * Track work in progress and periodically write work logs.
-
-   The monitor is managed and used internally, and neither LensKit client code
-   nor component implementations often need to interact with it.
-
-   :param handle_logging: Whether or not to handle log messages.
-
-
-   .. py:attribute:: zmq
-      :type:  Monitor.zmq[Monitor.zmq[bytes]]
-
-
-   .. py:attribute:: log_address
-      :type:  str | None
-
-
-   .. py:attribute:: refreshables
-      :type:  dict[uuid.UUID, MonitorRefreshable]
-
-
-   .. py:attribute:: record_sinks
-      :type:  dict[uuid.UUID, lenskit.logging.multiprocess._records.RecordSink[Any]]
-
-
-   .. py:attribute:: lock
-      :type:  threading.Lock
-
-
-   .. py:method:: add_refreshable(obj)
-
-
-   .. py:method:: remove_refreshable(uuid)
-
-
-   .. py:method:: add_record_sink(sink)
-
-
-   .. py:method:: remove_record_sink(sink)
-
-
-   .. py:method:: await_quiesce(*, ms = 100)
-
-      Wait for the monitor to quiesce.
-
-      :param ms: The number of milliseconds of quiet to expect for quiescence.
-
-
-
-   .. py:method:: shutdown()
-
-
 .. py:function:: get_monitor()
 
    Get the monitor, starting it if it is not yet running.
-
-
-.. py:class:: RecordSink
-   :canonical: lenskit.logging.multiprocess._records.RecordSink
-
-   Bases: :py:obj:`Protocol`, :py:obj:`Generic`\ [\ :py:obj:`R`\ ]
-
-
-   Generic interface for record sinks.
-
-   :Stability: Internal
-
-
-   .. py:attribute:: sink_id
-      :type:  uuid.UUID
-
-
-   .. py:method:: record(record, /)
-
-      Record the timings for a pipeline run.
-
-
-
-.. py:class:: WorkerContext(config, *, driver = False, zmq = None)
-   :canonical: lenskit.logging.multiprocess._worker.WorkerContext
-
-   Activate (and deactivate) a worker context.  This handles setup and teardown
-   of logging, etc.
-
-   Only one worker context can be active, regardless of how many threads are active.
-
-   :Stability: internal
-
-
-   .. py:attribute:: config
-      :type:  WorkerLogConfig
-
-
-   .. py:attribute:: zmq
-      :type:  WorkerContext.zmq[WorkerContext.zmq[bytes]]
-
-
-   .. py:method:: active()
-      :staticmethod:
-
-
-
-   .. py:method:: start()
-
-      Start the logging context.
-
-
-
-   .. py:method:: shutdown()
-
-
-   .. py:method:: send_task(task)
-
-
-   .. py:method:: send_progress(update)
-
-      Send a progress update event.
-
-
-
-   .. py:method:: send_record(sink_id, record)
-
-      Send a record to a record sink.
-
-
-
-   .. py:method:: __enter__()
-
-
-   .. py:method:: __exit__(*args)
-
-
-.. py:class:: WorkerLogConfig
-   :canonical: lenskit.logging.multiprocess._worker.WorkerLogConfig
-
-   Configuration for worker logging.
-
-
-   .. py:attribute:: address
-      :type:  str
-
-
-   .. py:attribute:: level
-      :type:  int
-
-
-   .. py:attribute:: authkey
-      :type:  bytes | None
-      :value: None
-
-
-
-   .. py:method:: current() -> Self
-                  current(*, from_monitor: bool = True) -> Self | None
-      :classmethod:
-
-
-      Get the current worker logging configuration.
-
 
 
 .. py:function:: send_task(task)

@@ -1,0 +1,88 @@
+lenskit.graphs.lightgcn.LightGCNConfig
+======================================
+
+.. py:class:: lenskit.graphs.lightgcn.LightGCNConfig
+   
+
+   Bases: :py:obj:`lenskit.config.common.EmbeddingSizeMixin`, :py:obj:`pydantic.BaseModel`
+
+
+   Configuration for :class:`LightGCNScorer`.
+
+   :Stability: Experimental
+
+
+   .. py:attribute:: embedding_size
+      :type:  pydantic.PositiveInt
+      :value: 16
+
+
+      The dimension of the embedding space (number of latent features).  Seems
+      to work best as a power of 2.
+
+
+   .. py:attribute:: layer_count
+      :type:  pydantic.PositiveInt
+      :value: 2
+
+
+      The number of layers to use.
+
+
+   .. py:attribute:: layer_blend
+      :type:  pydantic.PositiveFloat | list[pydantic.PositiveFloat] | None
+      :value: None
+
+
+      The blending coefficient(s) for layer blending.  This is equivalent to
+      ``alpha`` in :class:`LightGCN`.
+
+
+   .. py:attribute:: batch_size
+      :type:  pydantic.PositiveInt
+      :value: 4096
+
+
+      The training batch size.
+
+
+   .. py:attribute:: learning_rate
+      :type:  pydantic.PositiveFloat
+      :value: 0.01
+
+
+      The learning rate for training.
+
+
+   .. py:attribute:: epochs
+      :type:  pydantic.PositiveInt
+      :value: 10
+
+
+      The number of training epochs.
+
+
+   .. py:attribute:: regularization
+      :type:  pydantic.PositiveFloat | None
+      :value: 0.01
+
+
+      The regularization strength.
+
+
+   .. py:attribute:: loss
+      :type:  Literal['logistic', 'pairwise']
+      :value: 'pairwise'
+
+
+      The loss to use for model training.
+
+      ``pairwise``
+          BPR pairwise ranking loss, using :meth:`LightGCN.recommend_loss`.
+
+      ``logistic``
+          Logistic link prediction loss, using :meth:`LightGCN.link_pred_loss`.
+
+
+   .. py:method:: check_layer_blending()
+

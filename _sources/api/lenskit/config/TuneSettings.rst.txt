@@ -1,0 +1,39 @@
+lenskit.config.TuneSettings
+===========================
+
+.. py:class:: lenskit.config.TuneSettings
+   :canonical: lenskit.config._schema.TuneSettings
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   LensKit hyperparameter tuning settings.
+
+
+   .. py:attribute:: jobs
+      :type:  int | None
+      :value: None
+
+
+      Number of allowed hyperparameter tuning jobs.
+
+
+   .. py:attribute:: gpu_mult
+      :type:  Annotated[float, Gt(0), Le(1.0)]
+      :value: 1.0
+
+
+      Multiplier for tuning job GPU requirements.  This is to coarsely adapt GPU
+      requirements from configuration files to the local machine.  If a tuning
+      specificataion requires 1 GPU, but your machine has enough capacity to run
+      two jobs in parallel on a single GPU, you can set this to 0.5 to modify the
+      tuning jobs to require 0.5 GPUs each.
+
+
+   .. py:attribute:: max_points
+      :type:  int | None
+      :value: None
+
+
+      Maximum number of search points for hyperparameter tuning.
+

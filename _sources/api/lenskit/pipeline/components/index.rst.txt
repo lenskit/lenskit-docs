@@ -20,6 +20,15 @@ Attributes
 Classes
 -------
 
+.. toctree::
+   :hidden:
+
+   /api/lenskit/pipeline/components/ComponentInput
+   /api/lenskit/pipeline/components/ComponentConstructor
+   /api/lenskit/pipeline/components/Component
+   /api/lenskit/pipeline/components/PlaceholderConfig
+   /api/lenskit/pipeline/components/Placeholder
+
 .. autoapisummary::
 
    lenskit.pipeline.components.ComponentInput
@@ -49,179 +58,6 @@ Module Contents
 
 
    Pure-function interface for pipeline functions.
-
-.. py:class:: ComponentInput
-   
-
-   Representation of a component input slot.
-
-
-   .. py:attribute:: name
-      :type:  str
-
-
-   .. py:attribute:: type
-      :type:  ComponentInput.type | None
-      :value: None
-
-
-
-   .. py:attribute:: is_lazy
-      :type:  bool
-      :value: False
-
-
-
-   .. py:attribute:: accepts_none
-      :type:  bool
-      :value: False
-
-
-
-   .. py:attribute:: has_default
-      :type:  bool
-      :value: False
-
-
-
-.. py:class:: ComponentConstructor[CFG, COut]
-   
-
-   Bases: :py:obj:`Protocol`
-
-
-   Protocol for component constructors.
-
-
-   .. py:method:: __call__(config = None)
-
-
-   .. py:method:: config_class()
-
-
-   .. py:method:: validate_config(data = None)
-
-
-.. py:class:: Component[COut](config = None, **kwargs)
-   
-
-   Bases: :py:obj:`abc.ABC`
-
-
-   Base class for pipeline component objects.  Any component that is not just a
-   function should extend this class.
-
-   Pipeline components support configuration (e.g., hyperparameters or random
-   seeds) through Pydantic models or Python dataclasses; see
-   :ref:`component-config` for further details.  If the pipeline's
-   configuration class is ``C``, it has the following:
-
-   1. The configuration is exposed through an instance variable ``config``.
-   2. The constructor accepts the configuration object as its first parameter,
-      also named ``config``, and saves this in the member variable.
-
-   The base class constructor handles both of these, so long as you declare the
-   type of the ``config`` member::
-
-       class MyComponent(Component):
-           config: MyComponentConfig
-
-           ...
-
-   If you do not declare a ``config`` attribute, the base class will assume the
-   pipeline uses no configuration.
-
-   To work as components, derived classes also need to implement a ``__call__``
-   method to perform their operations.
-
-   :param config: The configuration object.  If ``None``, the configuration class will
-                  be instantiated with ``kwargs``.
-
-   :Stability: Full
-
-
-   .. py:attribute:: config
-      :type:  Any
-      :value: None
-
-
-      The component configuration object.  Component classes that support
-      configuration **must** redefine this attribute with their specific
-      configuration class type, which can be a Python dataclass or a Pydantic
-      model class.
-
-
-   .. py:method:: __init_subclass__(**kwargs)
-      :classmethod:
-
-
-
-   .. py:method:: config_class(return_any = False)
-      :classmethod:
-
-
-
-   .. py:method:: dump_config()
-
-      Dump the configuration to JSON-serializable format.
-
-
-
-   .. py:method:: validate_config(data = None)
-      :classmethod:
-
-
-      Validate and return a configuration object for this component.
-
-
-
-   .. py:method:: __call__(*args, **kwargs)
-      :abstractmethod:
-
-
-      Run the pipeline's operation and produce a result.  This is the key
-      method for components to implement.
-
-
-
-   .. py:method:: __repr__()
-
-
-.. py:class:: PlaceholderConfig
-   
-
-   Bases: :py:obj:`pydantic.BaseModel`
-
-
-   Configuration for the placeholder component.
-
-
-.. py:class:: Placeholder(config = None, **kwargs)
-   
-
-   Bases: :py:obj:`Component`\ [\ :py:obj:`Any`\ ]
-
-
-   Simple no-op component to use as a placeholder in partial pipelines.
-
-
-   .. py:attribute:: config
-      :type:  PlaceholderConfig
-
-      The component configuration object.  Component classes that support
-      configuration **must** redefine this attribute with their specific
-      configuration class type, which can be a Python dataclass or a Pydantic
-      model class.
-
-
-   .. py:method:: __call__(**kwargs)
-      :abstractmethod:
-
-
-      Run the pipeline's operation and produce a result.  This is the key
-      method for components to implement.
-
-
 
 .. py:function:: component_inputs[COut](component, *, warn_on_missing = True, _warn_level = 1)
 

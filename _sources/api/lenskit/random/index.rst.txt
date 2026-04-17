@@ -25,6 +25,13 @@ Attributes
 Classes
 -------
 
+.. toctree::
+   :hidden:
+
+   /api/lenskit/random/RNGFactory
+   /api/lenskit/random/FixedRNG
+   /api/lenskit/random/DerivingRNG
+
 .. autoapisummary::
 
    lenskit.random.RNGFactory
@@ -138,58 +145,6 @@ Module Contents
 .. py:function:: make_seed(*keys)
 
    Make an RNG seed from an input key, allowing strings as seed material.
-
-
-.. py:class:: RNGFactory
-   
-
-   Bases: :py:obj:`Protocol`
-
-
-   Protocol for RNG factories that can do dynamic (e.g. per-user) seeding.
-
-
-   .. py:method:: __call__(query)
-      :abstractmethod:
-
-
-
-.. py:class:: FixedRNG(rng)
-   
-
-   Bases: :py:obj:`RNGFactory`
-
-
-   RNG provider that always provides the same RNG
-
-
-   .. py:attribute:: rng
-      :type:  numpy.random.Generator
-
-
-   .. py:method:: __call__(query = None)
-
-
-   .. py:method:: __str__()
-
-
-.. py:class:: DerivingRNG(seed)
-   
-
-   Bases: :py:obj:`RNGFactory`
-
-
-   RNG provider that derives new RNGs from the key
-
-
-   .. py:attribute:: seed
-      :type:  numpy.random.SeedSequence
-
-
-   .. py:method:: __call__(query = None)
-
-
-   .. py:method:: __str__()
 
 
 .. py:function:: derivable_rng(spec)

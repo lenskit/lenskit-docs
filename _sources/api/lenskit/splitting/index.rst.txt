@@ -12,6 +12,16 @@ lenskit.splitting
 Classes
 -------
 
+.. toctree::
+   :hidden:
+
+   /api/lenskit/splitting/HoldoutMethod
+   /api/lenskit/splitting/LastFrac
+   /api/lenskit/splitting/LastN
+   /api/lenskit/splitting/SampleFrac
+   /api/lenskit/splitting/SampleN
+   /api/lenskit/splitting/TTSplit
+
 .. autoapisummary::
 
    lenskit.splitting.HoldoutMethod
@@ -39,165 +49,6 @@ Functions
 
 Package Contents
 ----------------
-
-.. py:class:: HoldoutMethod
-   :canonical: lenskit.splitting._holdout.HoldoutMethod
-
-   Bases: :py:obj:`Protocol`
-
-
-   Holdout methods select test rows for a user (or occasionally an item).
-   Partition methods are callable; when called with a data frame, they return
-   the test entries.
-
-   :Stability: Caller
-
-
-   .. py:method:: __call__(items)
-      :abstractmethod:
-
-
-      Subset an item list (in the uncommon case of item-based holdouts, the
-      item list actually holds user IDs).
-
-      :param udf: The item list from which holdout items should be selected.
-
-      :returns: The list of test items.
-
-
-
-.. py:class:: LastFrac(frac, field = 'timestamp')
-   :canonical: lenskit.splitting._holdout.LastFrac
-
-   Bases: :py:obj:`HoldoutMethod`
-
-
-   Select a fraction of test rows per user/item.
-
-   :Stability: Caller
-
-   :param frac: the fraction of items to select for testing.
-   :type frac: double
-
-
-   .. py:attribute:: fraction
-      :type:  float
-
-
-   .. py:attribute:: field
-      :type:  str
-
-
-   .. py:method:: __call__(items)
-
-      Subset an item list (in the uncommon case of item-based holdouts, the
-      item list actually holds user IDs).
-
-      :param udf: The item list from which holdout items should be selected.
-
-      :returns: The list of test items.
-
-
-
-.. py:class:: LastN(n, field = 'timestamp')
-   :canonical: lenskit.splitting._holdout.LastN
-
-   Bases: :py:obj:`HoldoutMethod`
-
-
-   Select a fixed number of test rows per user/item, based on ordering by a
-   field.
-
-   :Stability: Caller
-
-   :param n: The number of test items to select.
-   :param field: The field to order by.
-
-
-   .. py:attribute:: n
-      :type:  int
-
-
-   .. py:attribute:: field
-      :type:  str
-
-
-   .. py:method:: __call__(items)
-
-      Subset an item list (in the uncommon case of item-based holdouts, the
-      item list actually holds user IDs).
-
-      :param udf: The item list from which holdout items should be selected.
-
-      :returns: The list of test items.
-
-
-
-.. py:class:: SampleFrac(frac, rng = None)
-   :canonical: lenskit.splitting._holdout.SampleFrac
-
-   Bases: :py:obj:`HoldoutMethod`
-
-
-   Randomly select a fraction of test rows per user/item.
-
-   :Stability: Caller
-
-   :param frac: The fraction items to select for testing.
-   :param rng: The random number generator or seed (see :ref:`rng`).
-
-
-   .. py:attribute:: fraction
-      :type:  float
-
-
-   .. py:attribute:: rng
-      :type:  numpy.random.Generator
-
-
-   .. py:method:: __call__(items)
-
-      Subset an item list (in the uncommon case of item-based holdouts, the
-      item list actually holds user IDs).
-
-      :param udf: The item list from which holdout items should be selected.
-
-      :returns: The list of test items.
-
-
-
-.. py:class:: SampleN(n, rng = None)
-   :canonical: lenskit.splitting._holdout.SampleN
-
-   Bases: :py:obj:`HoldoutMethod`
-
-
-   Randomly select a fixed number of test rows per user/item.
-
-   :Stability: Caller
-
-   :param n: The number of test items to select.
-   :param rng: The random number generator or seed (see :ref:`rng`).
-
-
-   .. py:attribute:: n
-      :type:  int
-
-
-   .. py:attribute:: rng
-      :type:  numpy.random.Generator
-
-
-   .. py:method:: __call__(items)
-
-      Subset an item list (in the uncommon case of item-based holdouts, the
-      item list actually holds user IDs).
-
-      :param udf: The item list from which holdout items should be selected.
-
-      :returns: The list of test items.
-
-
 
 .. py:function:: crossfold_records(data, partitions, *, test_only = False, rng = None)
 
@@ -257,73 +108,6 @@ Package Contents
    :param rng: The random number generator or seed (see :ref:`rng`).
 
    :returns: A train-test pair or iterator of such pairs (depending on ``repeats``).
-
-
-.. py:class:: TTSplit
-   :canonical: lenskit.splitting._split.TTSplit
-
-   A train-test set from splitting or other sources.
-
-   .. versionchanged:: 2026.1
-
-       Added the :attr:`test_requests` property.
-
-   :Stability: Caller
-
-
-   .. py:attribute:: train
-      :type:  lenskit.data.Dataset
-
-      The training data.
-
-
-   .. py:attribute:: test
-      :type:  lenskit.data.ItemListCollection
-
-      The test data.
-
-
-   .. py:attribute:: name
-      :type:  str | None
-      :value: None
-
-
-      A name for this train-test split.
-
-
-   .. py:property:: test_size
-      :type: int
-
-
-      Get the number of test pairs.
-
-
-   .. py:property:: test_df
-      :type: pandas.DataFrame
-
-
-      Get the test data as a data frame.
-
-
-   .. py:property:: train_df
-      :type: pandas.DataFrame
-
-
-      Get the training data as a data frame.
-
-
-   .. py:property:: test_requests
-      :type: lenskit.batch.TestRequestAdapter
-
-
-      Get the test data as a sequence of batch recommendation requests.
-
-      .. seealso::
-
-          :ref:`batch-queries`
-
-      :returns: An collection that iterates over recommendation requests derived
-                from the test data.
 
 
 .. py:function:: split_global_time(data: lenskit.data.Dataset, time: int | float | str | datetime.datetime, end: int | float | str | datetime.datetime | None = None, filter_test_users: bool | int | None = False) -> lenskit.splitting._split.TTSplit

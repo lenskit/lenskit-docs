@@ -1,0 +1,44 @@
+lenskit.training.Trainable
+==========================
+
+.. py:class:: lenskit.training.Trainable
+   
+
+   Bases: :py:obj:`Protocol`
+
+
+   Interface for components and objects that can learn parameters from training
+   data. It supports training and checking if a component has already been
+   trained.  This protocol only captures the concept of trainability; most
+   trainable components should have other properties and behaviors as well:
+
+   -   They are usually components (:class:`~lenskit.pipeline.Component`), with
+       an appropriate ``__call__`` method.
+   -   They should be pickleable.
+
+   ..
+       -   They should also usually implement
+           :class:`~lenskit.state.ParameterContainer`, to allow the learned
+           parameters to be serialized and deserialized without pickling.
+
+   :Stability: Full
+
+
+   .. py:method:: is_trained()
+      :abstractmethod:
+
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options)
+      :abstractmethod:
+
+
+      Train the model to learn its parameters from a training dataset.
+
+      :param data: The training dataset.
+      :param options: The training options.
+
+

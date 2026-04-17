@@ -12,63 +12,16 @@ lenskit.basic.topn
 Classes
 -------
 
+.. toctree::
+   :hidden:
+
+   /api/lenskit/basic/topn/TopNConfig
+   /api/lenskit/basic/topn/TopNRanker
+
 .. autoapisummary::
 
    lenskit.basic.topn.TopNConfig
    lenskit.basic.topn.TopNRanker
-
-
-
-Module Contents
----------------
-
-.. py:class:: TopNConfig
-   
-
-   Bases: :py:obj:`pydantic.BaseModel`
-
-
-   Configuration for top-N ranking.
-
-
-   .. py:attribute:: n
-      :type:  int | None
-      :value: None
-
-
-      The number of items to return. -1 or ``None`` to return all scored items.
-
-
-.. py:class:: TopNRanker(config = None, **kwargs)
-   
-
-   Bases: :py:obj:`lenskit.pipeline.components.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ]
-
-
-   Rank scored items by their score and take the top *N*.  The ranking length
-   can be passed either at runtime or at component instantiation time, with the
-   latter taking precedence.
-
-   :Stability: Caller
-
-
-   .. py:attribute:: config
-      :type:  TopNConfig
-
-      Configuration object.
-
-
-   .. py:method:: __call__(*, items, n = None)
-
-      Rank the items.
-
-      :param items: The items to rank, with scores.  Items with missing scores are
-                    not included in the final ranking.
-      :param n: The number of items to return, or -1 to return all scored items.
-                If ``None``, the length configured at construction time is used.
-
-      :returns: An ordered list of items, with scores and all other attributes
-                preserved.
 
 
 

@@ -1,0 +1,39 @@
+lenskit.stochastic.StochasticTopNRanker
+=======================================
+
+.. py:class:: lenskit.stochastic.StochasticTopNRanker(config = None, **kwargs)
+   :canonical: lenskit.stochastic._ranker.StochasticTopNRanker
+
+   Bases: :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ]
+
+
+   Stochastic top-N ranking with optional weight transformation.
+
+   This uses the exponential sampling method, a more efficient approximation of
+   Plackett-Luce sampling than even the Gumbell trick, as documented by `Tim
+   Vieira`_.  It expects a scored list of input items, and samples ``n`` items,
+   with selection probabilities proportional to their scores.  Scores can be
+   optionally rescaled (inverse temperature) and transformed (e.g. softmax).
+
+   .. note::
+
+       When no transformation is used, negative scores are still clamped to
+       (approximately) zero.
+
+   .. _Tim Vieira: https://timvieira.github.io/blog/post/2019/09/16/algorithms-for-sampling-without-replacement/
+
+   :Stability: Caller
+
+
+   .. py:attribute:: config
+      :type:  StochasticTopNConfig
+
+      Stochastic ranker configuration.
+
+
+   .. py:method:: __call__(items, query = None, n = None, *, include_weights = False)
+
+      Run the pipeline's operation and produce a result.  This is the key
+      method for components to implement.
+
+

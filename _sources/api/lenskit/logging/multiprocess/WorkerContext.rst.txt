@@ -1,0 +1,56 @@
+lenskit.logging.multiprocess.WorkerContext
+==========================================
+
+.. py:class:: lenskit.logging.multiprocess.WorkerContext(config, *, driver = False, zmq = None)
+   :canonical: lenskit.logging.multiprocess._worker.WorkerContext
+
+   Activate (and deactivate) a worker context.  This handles setup and teardown
+   of logging, etc.
+
+   Only one worker context can be active, regardless of how many threads are active.
+
+   :Stability: internal
+
+
+   .. py:attribute:: config
+      :type:  WorkerLogConfig
+
+
+   .. py:attribute:: zmq
+      :type:  WorkerContext.zmq[WorkerContext.zmq[bytes]]
+
+
+   .. py:method:: active()
+      :staticmethod:
+
+
+
+   .. py:method:: start()
+
+      Start the logging context.
+
+
+
+   .. py:method:: shutdown()
+
+
+   .. py:method:: send_task(task)
+
+
+   .. py:method:: send_progress(update)
+
+      Send a progress update event.
+
+
+
+   .. py:method:: send_record(sink_id, record)
+
+      Send a record to a record sink.
+
+
+
+   .. py:method:: __enter__()
+
+
+   .. py:method:: __exit__(*args)
+

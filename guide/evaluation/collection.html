@@ -14,7 +14,7 @@
 <meta property="og:description" content="Computing metrics over individual lists isn’t enough for evaluating a recommender system — we usually want to compute metrics for pipelines over entire test sets. For simple metrics, it is possible..." />
 <meta name="description" content="Computing metrics over individual lists isn’t enough for evaluating a recommender system — we usually want to compute metrics for pipelines over entire test sets. For simple metrics, it is possible..." />
 
-    <title>Collecting and Aggregating Metrics &#8212; LensKit 2026.1.0b2.dev17+gbd190f59 documentation</title>
+    <title>Collecting and Aggregating Metrics &#8212; LensKit 2026.1.0b2.dev18+g7c96dbfe documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=85b47cfa"></script>
+    <script src="../../_static/documentation_options.js?v=31d53caa"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.1.0b2.dev17+gbd190f59 documentation - Home"/>
-    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.1.0b2.dev17+gbd190f59 documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.1.0b2.dev18+g7c96dbfe documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.1.0b2.dev18+g7c96dbfe documentation - Home"/>
   
   
 </a></div>
@@ -470,11 +470,11 @@
 </ul>
 </details></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Components and Models</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../conventions.html">Component Conventions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../flexmf.html">Flexible Matrix Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../scorers.html">Scoring Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../flexmf.html">Flexible Matrix Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rankers.html">Ranking Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other-components.html">Other Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../implementing.html">Implementing Components</a></li>
@@ -577,11 +577,11 @@ total number of unique recommended items across all recommendation lists,
 requires your code to have knowledge of the specific requirements and
 structure of each metric.</p></li>
 </ul>
-<p>LensKit provides the <a class="reference internal" href="../../api/lenskit/metrics/index.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a> to help with all of this, and
+<p>LensKit provides the <a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a> to help with all of this, and
 to provide a unified way to collect metric measurements across all lists in a
 recommendation run.</p>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 2026.1: </span><a class="reference internal" href="../../api/lenskit/metrics/index.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a> was introduced in LensKit <a class="reference internal" href="../../releases/2025.html#id11"><span class="std std-ref">2025.5.0</span></a>, and
+<p><span class="versionmodified changed">Changed in version 2026.1: </span><a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a> was introduced in LensKit <a class="reference internal" href="../../releases/2025.html#id11"><span class="std std-ref">2025.5.0</span></a>, and
 replaced <code class="xref py py-class docutils literal notranslate"><span class="pre">RunAnalysis</span></code> as the primary metric analysis tool in LensKit
 <a class="reference internal" href="../../releases/2026.html#id1"><span class="std std-ref">2026.1.0</span></a>.</p>
 </div>
@@ -591,22 +591,22 @@ replaced <code class="xref py py-class docutils literal notranslate"><span class
 <strong>single run</strong>: evaluating one pipeline on one test set.  The basic use pattern
 is as follows:</p>
 <ol class="arabic simple">
-<li><p>Create a <a class="reference internal" href="../../api/lenskit/metrics/index.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a>.</p></li>
-<li><p>Add metrics to collector with <a class="reference internal" href="../../api/lenskit/metrics/index.html#lenskit.metrics.MeasurementCollector.add_metric" title="lenskit.metrics.MeasurementCollector.add_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_metric()</span></code></a>.</p></li>
+<li><p>Create a <a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a>.</p></li>
+<li><p>Add metrics to collector with <a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector.add_metric" title="lenskit.metrics.MeasurementCollector.add_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_metric()</span></code></a>.</p></li>
 <li><p>Measure individual lists and their corresponding truth with
-<a class="reference internal" href="../../api/lenskit/metrics/index.html#lenskit.metrics.MeasurementCollector.measure_list" title="lenskit.metrics.MeasurementCollector.measure_list"><code class="xref py py-meth docutils literal notranslate"><span class="pre">measure_list()</span></code></a> or an entire collection of
-recommendations with <a class="reference internal" href="../../api/lenskit/metrics/index.html#lenskit.metrics.MeasurementCollector.measure_collection" title="lenskit.metrics.MeasurementCollector.measure_collection"><code class="xref py py-meth docutils literal notranslate"><span class="pre">measure_collection()</span></code></a>.</p></li>
+<a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector.measure_list" title="lenskit.metrics.MeasurementCollector.measure_list"><code class="xref py py-meth docutils literal notranslate"><span class="pre">measure_list()</span></code></a> or an entire collection of
+recommendations with <a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector.measure_collection" title="lenskit.metrics.MeasurementCollector.measure_collection"><code class="xref py py-meth docutils literal notranslate"><span class="pre">measure_collection()</span></code></a>.</p></li>
 <li><p>Obtain individual list metrics with
-<a class="reference internal" href="../../api/lenskit/metrics/index.html#lenskit.metrics.MeasurementCollector.list_metrics" title="lenskit.metrics.MeasurementCollector.list_metrics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">list_metrics()</span></code></a> (returning data frame with one
+<a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector.list_metrics" title="lenskit.metrics.MeasurementCollector.list_metrics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">list_metrics()</span></code></a> (returning data frame with one
 row per list), or aggregate metrics and summary statistics with
-<a class="reference internal" href="../../api/lenskit/metrics/index.html#lenskit.metrics.MeasurementCollector.summary_metrics" title="lenskit.metrics.MeasurementCollector.summary_metrics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">summary_metrics()</span></code></a>.</p></li>
+<a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector.summary_metrics" title="lenskit.metrics.MeasurementCollector.summary_metrics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">summary_metrics()</span></code></a>.</p></li>
 </ol>
 <p>To measure multiple runs (e.g., the results of different recommendation
 pipelines), there are three ways:</p>
 <ul class="simple">
-<li><p>Create a fresh <a class="reference internal" href="../../api/lenskit/metrics/index.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a> for each pipeline.</p></li>
-<li><p>Create an empty copy of a base collector with <a class="reference internal" href="../../api/lenskit/metrics/index.html#lenskit.metrics.MeasurementCollector.empty_copy" title="lenskit.metrics.MeasurementCollector.empty_copy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">empty_copy()</span></code></a>.</p></li>
-<li><p>Reset the collector with <a class="reference internal" href="../../api/lenskit/metrics/index.html#lenskit.metrics.MeasurementCollector.reset" title="lenskit.metrics.MeasurementCollector.reset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">reset()</span></code></a>.</p></li>
+<li><p>Create a fresh <a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a> for each pipeline.</p></li>
+<li><p>Create an empty copy of a base collector with <a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector.empty_copy" title="lenskit.metrics.MeasurementCollector.empty_copy"><code class="xref py py-meth docutils literal notranslate"><span class="pre">empty_copy()</span></code></a>.</p></li>
+<li><p>Reset the collector with <a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector.reset" title="lenskit.metrics.MeasurementCollector.reset"><code class="xref py py-meth docutils literal notranslate"><span class="pre">reset()</span></code></a>.</p></li>
 </ul>
 <p>The empty copy method is usually the easiest: create the measurement collector,
 and then create a copy for each run to measure. <a class="reference internal" href="../GettingStarted.html#getting-started"><span class="std std-ref">Getting Started</span></a> provides
@@ -742,7 +742,7 @@ measure them with:</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.1.0b2.dev17+gbd190f59.</div>
+        <div class="footer-item">LensKit version 2026.1.0b2.dev18+g7c96dbfe.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

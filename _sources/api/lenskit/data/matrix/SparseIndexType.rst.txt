@@ -1,0 +1,38 @@
+lenskit.data.matrix.SparseIndexType
+===================================
+
+.. py:class:: lenskit.data.matrix.SparseIndexType(dimension)
+   
+
+   Bases: :py:obj:`pyarrow.ExtensionType`
+
+
+   Data type for the index field of a sparse row.  Indexes are just stored as
+   ``int32``s; the extension type attaches the row's dimensionality to the index
+   field (making it easier to pass it to/from Rust, since we often pass arrays
+   and not entire fields).
+
+   .. stability:: internal
+
+
+   .. py:attribute:: dimension
+      :type:  int
+
+
+   .. py:method:: check_dimension(expected)
+
+      Check that this index type has the expected dimension.
+
+      :returns: The dimension of the index type.
+
+      :raises ValueError: If the type's dimension does not match the expected dimension.
+
+
+
+   .. py:method:: __arrow_ext_serialize__()
+
+
+   .. py:method:: __arrow_ext_deserialize__(storage_type, serialized)
+      :classmethod:
+
+

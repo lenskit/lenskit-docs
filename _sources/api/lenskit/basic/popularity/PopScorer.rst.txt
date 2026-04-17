@@ -1,0 +1,57 @@
+lenskit.basic.popularity.PopScorer
+==================================
+
+.. py:class:: lenskit.basic.popularity.PopScorer(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ], :py:obj:`lenskit.training.Trainable`
+
+
+   Score items by their popularity.  Use with :py:class:`TopN` to get a
+   most-popular-items recommender.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: config
+      :type:  PopConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: items
+      :type:  lenskit.data.Vocabulary
+
+      Vocabulary of known items at training time.
+
+
+   .. py:attribute:: item_scores
+      :type:  numpy.ndarray[tuple[int], numpy.dtype[numpy.float32]]
+
+      Array of per-item popularity scores.
+
+
+   .. py:method:: is_trained()
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options = TrainingOptions())
+
+      Train the model to learn its parameters from a training dataset.
+
+      :param data: The training dataset.
+      :param options: The training options.
+
+
+
+   .. py:method:: __call__(items)
+
+      Run the pipeline's operation and produce a result.  This is the key
+      method for components to implement.
+
+

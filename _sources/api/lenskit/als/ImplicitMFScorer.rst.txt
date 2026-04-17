@@ -1,0 +1,60 @@
+lenskit.als.ImplicitMFScorer
+============================
+
+.. py:class:: lenskit.als.ImplicitMFScorer(config = None, **kwargs)
+   :canonical: lenskit.als._implicit.ImplicitMFScorer
+
+   Bases: :py:obj:`lenskit.als._common.ALSBase`
+
+
+   Implicit matrix factorization trained with alternating least squares
+   :cite:p:`hu:implicit-mf`.  This algorithm outputs 'predictions', but they
+   are not on a meaningful scale.  If its input data contains ``rating``
+   values, these will be used as the 'confidence' values; otherwise, confidence
+   will be 1 for every rated item.
+
+   With weight :math:`w`, this function decomposes the matrix
+   :math:`\mathbb{1}^* + Rw`, where :math:`\mathbb{1}^*` is an :math:`m
+   \times n` matrix of all 1s.
+
+   See the base class :class:`ALSBase` for documentation on the estimated
+   parameters you can extract from a trained model. See
+   :class:`ImplicitMFConfig` and :class:`ALSConfig` for the configuration
+   options for this component.
+
+   .. versionchanged:: 2025.1
+       ``ImplicitMFScorer`` no longer supports multiple training methods. It always uses
+       Cholesky decomposition now.
+
+   .. versionchanged:: 0.14
+       By default, ``ImplicitMF`` ignores a ``rating`` column if one is present in the training
+       data.  This can be changed through the ``use_ratings`` option.
+
+   .. versionchanged:: 0.13
+       In versions prior to 0.13, ``ImplicitMF`` used the rating column if it was present.
+       In 0.13, we added an option to control whether or not the rating column is used; it
+       initially defaulted to ``True``, but with a warning.  In 0.14 it defaults to ``False``.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: config
+      :type:  ImplicitMFConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:method:: create_trainer(data, options)
+
+      Create a model trainer to train this model.
+
+
+
+   .. py:method:: new_user_embedding(user_num, user_items)
+
+      Generate an embedding for a user given their current ratings.
+
+

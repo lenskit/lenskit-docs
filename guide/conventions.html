@@ -14,7 +14,7 @@
 <meta property="og:description" content="The components shipped with LensKit follow certain conventions to make their configuration and operation consistent and predictable. We encourage you to follow these conventions in your own code as..." />
 <meta name="description" content="The components shipped with LensKit follow certain conventions to make their configuration and operation consistent and predictable. We encourage you to follow these conventions in your own code as..." />
 
-    <title>Component Conventions &#8212; LensKit 2026.1.0b2.dev17+gbd190f59 documentation</title>
+    <title>Component Conventions &#8212; LensKit 2026.1.0b2.dev18+g7c96dbfe documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=85b47cfa"></script>
+    <script src="../_static/documentation_options.js?v=31d53caa"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -71,7 +71,7 @@
     <link rel="icon" href="../_static/lenskit-icon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Flexible Matrix Factorization" href="flexmf.html" />
+    <link rel="next" title="Scoring Models" href="scorers.html" />
     <link rel="prev" title="Amazon Data" href="data/amazon.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.1.0b2.dev17+gbd190f59 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.1.0b2.dev17+gbd190f59 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.1.0b2.dev18+g7c96dbfe documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.1.0b2.dev18+g7c96dbfe documentation - Home"/>
   
   
 </a></div>
@@ -470,11 +470,11 @@
 </ul>
 </details></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Components and Models</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Component Conventions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flexmf.html">Flexible Matrix Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scorers.html">Scoring Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flexmf.html">Flexible Matrix Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rankers.html">Ranking Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="other-components.html">Other Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="implementing.html">Implementing Components</a></li>
@@ -574,7 +574,7 @@ allows list length to be baked into a pipeline configuration, and also allows
 that length to be specified or overridden at runtime.  If both lengths are
 specified, the runtime length takes precedence.</p>
 <p>See <code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.basic.TopNRanker</span></code> or
-<a class="reference internal" href="../api/lenskit/stochastic/index.html#lenskit.stochastic.StochasticTopNRanker" title="lenskit.stochastic.StochasticTopNRanker"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.stochastic.StochasticTopNRanker</span></code></a> for examples.</p>
+<a class="reference internal" href="../api/lenskit/stochastic/StochasticTopNRanker.html#lenskit.stochastic.StochasticTopNRanker" title="lenskit.stochastic.StochasticTopNRanker"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.stochastic.StochasticTopNRanker</span></code></a> for examples.</p>
 <section id="configuration-conventions">
 <span id="config-conventions"></span><h3>Configuration Conventions<a class="headerlink" href="#configuration-conventions" title="Link to this heading">#</a></h3>
 <p>We strive for consistency in configuration across LensKit components.  To that end,
@@ -607,7 +607,7 @@ the configuration (see the source code in <a class="reference internal" href="..
 examples).</p>
 <p>Components that use randomization at <strong>training time</strong> (e.g. to shuffle data or
 to initialize parameter values) should obtain their generator or seed from the
-<a class="reference internal" href="../api/lenskit/training/index.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TrainingOptions</span></code></a>.  This makes it easy to configure a
+<a class="reference internal" href="../api/lenskit/training/TrainingOptions.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><code class="xref py py-attr docutils literal notranslate"><span class="pre">TrainingOptions</span></code></a>.  This makes it easy to configure a
 seed for the training process without needing to configure each component.  For
 consistent configurability, it’s best for components using other frameworks such
 as PyTorch to use NumPy to initialize the parameter values and then convert the
@@ -674,11 +674,11 @@ those users are processed.</p>
       </div>
     </a>
     <a class="right-next"
-       href="flexmf.html"
+       href="scorers.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Flexible Matrix Factorization</p>
+        <p class="prev-next-title">Scoring Models</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -752,7 +752,7 @@ those users are processed.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.1.0b2.dev17+gbd190f59.</div>
+        <div class="footer-item">LensKit version 2026.1.0b2.dev18+g7c96dbfe.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

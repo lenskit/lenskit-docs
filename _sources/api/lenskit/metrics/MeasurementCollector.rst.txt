@@ -1,0 +1,94 @@
+lenskit.metrics.MeasurementCollector
+====================================
+
+.. py:class:: lenskit.metrics.MeasurementCollector
+   :canonical: lenskit.metrics._collect.MeasurementCollector
+
+   Collect metric measurements over multiple recommendation lists.
+
+   This class automates collecting metric values and translating accumulated
+   summaries into data frames.  See :ref:`eval-collection` for a more detailed
+   discussion of how to use this class.
+
+   .. versionchanged:: 2026.1
+
+       ``metrics`` is no longer publicly exposed as a list of wrappers.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: key_fields
+      :type:  list[str]
+
+      Columns naming the keys of measured lists.
+
+
+   .. py:method:: empty_copy()
+
+      Create a copy of this measurement collector with no collected data.
+
+
+
+   .. py:method:: reset()
+
+      Remove all collected data from this collector.
+
+
+
+   .. py:property:: metric_names
+      :type: list[str]
+
+
+      Get the list of metric names.
+
+
+   .. py:method:: add_metric(metric, label = None)
+
+      Add a metric to this accumulator.
+
+      :param metric: The metric to add.
+      :param label: The label to use for the metric's results. If unset, obtains
+                    from the metric.
+
+
+
+   .. py:method:: measure_list(output, test, **keys)
+
+      Measure a single list and accumulate the intermediate results.
+
+      :param output: The recommendation list to measure.
+      :param test: The ground truth test data.
+      :param \*\*keys: Identifying keys for this list (e.g., user_id).
+
+
+
+   .. py:method:: measure_collection(outputs, test, **keys)
+
+      Measure a collection of item lists against truth data.
+
+      :param outputs: The item lists to measure.
+      :param test: Test data item lists.
+      :param keys: Additional keys to label measurements from these lists.
+
+
+
+   .. py:method:: list_metrics()
+
+      Get the per-list metric results as a DataFrame.
+
+      :returns: DataFrame with one row per list and one column per metric.
+
+
+
+   .. py:method:: summary_metrics()
+
+      Compute summary statistics by calling each metric's summarize() method.
+
+      .. note::
+
+          This returns *overall* summaries — summaries are not collected
+          separately for different calls to :meth:`measure_collection`.
+
+      :returns: A dictionary with flattened metric results.
+
+

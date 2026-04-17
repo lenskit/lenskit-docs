@@ -23,6 +23,14 @@ Attributes
 Classes
 -------
 
+.. toctree::
+   :hidden:
+
+   /api/lenskit/metrics/predict/PredictMetric
+   /api/lenskit/metrics/predict/RMSE
+   /api/lenskit/metrics/predict/MAE
+   /api/lenskit/metrics/predict/AvgErrorAccumulator
+
 .. autoapisummary::
 
    lenskit.metrics.predict.PredictMetric
@@ -45,166 +53,6 @@ Module Contents
 
 .. py:type:: PredMetric
    :canonical: Callable[[ScoreArray, ScoreArray], float]
-
-
-.. py:class:: PredictMetric(missing_scores = 'error', missing_truth = 'error')
-   
-
-   Bases: :py:obj:`lenskit.metrics._base.Metric`
-
-
-   Extension to the metric function interface for prediction metrics.
-
-   In addition to the general metric interface, predict metrics can be called
-   with a single item list (or item list collection) that has both ``scores``
-   and a ``rating`` field.
-
-   :param missing_scores: The action to take when a test item has not been scored.  The
-                          default throws an exception, avoiding situations where non-scored
-                          items are silently excluded from overall statistics.
-   :param missing_truth: The action to take when no test items are available for a scored
-                         item. The default is to also to fail; if you are scoring a superset
-                         of the test items for computational efficiency, set this to
-                         ``"ignore"``.
-
-   :Stability: Caller
-
-
-   .. py:attribute:: default
-      :value: None
-
-
-
-   .. py:attribute:: missing_scores
-      :type:  MissingDisposition
-
-
-   .. py:attribute:: missing_truth
-      :type:  MissingDisposition
-
-
-   .. py:method:: align_scores(predictions, truth = None)
-
-      Align prediction scores and rating values, applying the configured
-      missing dispositions.  The result is two Pandas series, predictions and
-      truth, that are aligned and checked for missing data in accordance with
-      the configured options.
-
-
-
-.. py:class:: RMSE(missing_scores = 'error', missing_truth = 'error')
-   
-
-   Bases: :py:obj:`PredictMetric`
-
-
-   Compute RMSE (root mean squared error).  This is computed as:
-
-   .. math::
-       \sum_{r_{ui} \in R} \left(r_{ui} - s(i|u)\right)^2
-
-   This metric does not do any fallbacks; if you want to compute RMSE with
-   fallback predictions (e.g. usign a bias model when a collaborative filter
-   cannot predict), generate predictions with
-   :class:`~lenskit.basic.FallbackScorer`.
-
-   :Stability: Caller
-
-
-   .. py:method:: measure_list(predictions, test = None, /)
-
-      Compute measurements for a single list.
-
-      :returns:
-
-                - A float for simple metrics
-                - Intermediate data for decomposed metrics
-                - A dict mapping metric names to values for multi-metric classes
-
-
-
-   .. py:method:: extract_list_metrics(data)
-
-      Extract per-list metric(s) from intermediate measurement data.
-
-      :returns:
-
-                - A float for simple metrics
-                - A dict mapping metric names to values for multi-metric classes
-                - None if no per-list metrics are available
-
-
-
-   .. py:method:: create_accumulator()
-
-      Creaet an accumulator to aggregate per-list measurements into summary
-      metrics.
-
-      Each result from :meth:`measure_list` is passed to
-      :meth:`Accumulator.add`.
-
-
-
-.. py:class:: MAE(missing_scores = 'error', missing_truth = 'error')
-   
-
-   Bases: :py:obj:`PredictMetric`
-
-
-   Compute MAE (mean absolute error).  This is computed as:
-
-   .. math::
-       \sum_{r_{ui} \in R} \left|r_{ui} - s(i|u)\right|
-
-   This metric does not do any fallbacks; if you want to compute MAE with
-   fallback predictions (e.g. usign a bias model when a collaborative filter
-   cannot predict), generate predictions with
-   :class:`~lenskit.basic.FallbackScorer`.
-
-   :Stability: Caller
-
-
-   .. py:method:: measure_list(predictions, test = None, /)
-
-      Compute measurements for a single list.
-
-      :returns:
-
-                - A float for simple metrics
-                - Intermediate data for decomposed metrics
-                - A dict mapping metric names to values for multi-metric classes
-
-
-
-   .. py:method:: extract_list_metrics(data)
-
-      Extract per-list metric(s) from intermediate measurement data.
-
-      :returns:
-
-                - A float for simple metrics
-                - A dict mapping metric names to values for multi-metric classes
-                - None if no per-list metrics are available
-
-
-
-   .. py:method:: create_accumulator()
-
-      Creaet an accumulator to aggregate per-list measurements into summary
-      metrics.
-
-      Each result from :meth:`measure_list` is passed to
-      :meth:`Accumulator.add`.
-
-
-
-.. py:class:: AvgErrorAccumulator(root = False)
-   
-
-   .. py:method:: add(value)
-
-
-   .. py:method:: accumulate()
 
 
 

@@ -12,123 +12,19 @@ lenskit.implicit
 Classes
 -------
 
+.. toctree::
+   :hidden:
+
+   /api/lenskit/implicit/BaseRec
+   /api/lenskit/implicit/ALS
+   /api/lenskit/implicit/BPR
+
 .. autoapisummary::
 
    lenskit.implicit.BaseRec
    lenskit.implicit.ALS
    lenskit.implicit.BPR
 
-
-
-Module Contents
----------------
-
-.. py:class:: BaseRec(config = None, **kwargs)
-   
-
-   Bases: :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ], :py:obj:`lenskit.training.Trainable`
-
-
-   Base class for Implicit-backed recommenders.
-
-   :Stability: Caller
-
-
-   .. py:attribute:: config
-      :type:  ImplicitConfig
-
-      The component configuration object.  Component classes that support
-      configuration **must** redefine this attribute with their specific
-      configuration class type, which can be a Python dataclass or a Pydantic
-      model class.
-
-
-   .. py:attribute:: weight
-      :type:  float
-      :value: 1.0
-
-
-
-   .. py:attribute:: matrix
-      :type:  scipy.sparse.csr_matrix
-
-      The user-item rating matrix from training.
-
-
-   .. py:attribute:: users
-      :type:  lenskit.data.Vocabulary
-
-      The user ID mapping from training.
-
-
-   .. py:attribute:: items
-      :type:  lenskit.data.Vocabulary
-
-      The item ID mapping from training.
-
-
-   .. py:attribute:: user_embeddings
-      :type:  numpy.typing.NDArray[numpy.float32]
-
-
-   .. py:attribute:: item_embeddings
-      :type:  numpy.typing.NDArray[numpy.float32]
-
-
-   .. py:method:: is_trained()
-
-      Query if this component has already been trained.
-
-
-
-   .. py:method:: train(data, options = TrainingOptions())
-
-      Train the model to learn its parameters from a training dataset.
-
-      :param data: The training dataset.
-      :param options: The training options.
-
-
-
-   .. py:method:: __call__(query, items)
-
-      Run the pipeline's operation and produce a result.  This is the key
-      method for components to implement.
-
-
-
-.. py:class:: ALS(config = None, **kwargs)
-   
-
-   Bases: :py:obj:`BaseRec`
-
-
-   LensKit interface to :py:mod:`implicit.cpu.als` (or GPU version).
-
-   :Stability: Caller
-
-
-   .. py:attribute:: config
-      :type:  ImplicitALSConfig
-
-      The component configuration object.  Component classes that support
-      configuration **must** redefine this attribute with their specific
-      configuration class type, which can be a Python dataclass or a Pydantic
-      model class.
-
-
-   .. py:property:: weight
-
-
-.. py:class:: BPR(config = None, **kwargs)
-   
-
-   Bases: :py:obj:`BaseRec`
-
-
-   LensKit interface to :py:mod:`implicit.cpu.bpr` (or GPU version).
-
-   :Stability: Caller
 
 
 

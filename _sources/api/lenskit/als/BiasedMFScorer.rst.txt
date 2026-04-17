@@ -1,0 +1,52 @@
+lenskit.als.BiasedMFScorer
+==========================
+
+.. py:class:: lenskit.als.BiasedMFScorer(config = None, **kwargs)
+   :canonical: lenskit.als._explicit.BiasedMFScorer
+
+   Bases: :py:obj:`lenskit.als._common.ALSBase`
+
+
+   Biased matrix factorization trained with alternating least squares
+   :cite:p:`NetflixALS,ExplicitALS`.  This is a prediction-oriented algorithm
+   suitable for explicit feedback data, using the alternating least squares
+   approach to compute :math:`P` and :math:`Q` to minimize the regularized
+   squared reconstruction error of the ratings matrix.
+
+   See the base class :class:`ALSBase` for documentation on the estimated
+   parameters you can extract from a trained model. See :class:`BiasedMFConfig`
+   and :class:`ALSConfig` for the configuration options for this component.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: config
+      :type:  BiasedMFConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: bias
+      :type:  lenskit.basic.BiasModel
+
+
+   .. py:method:: create_trainer(data, options)
+
+      Create a model trainer to train this model.
+
+
+
+   .. py:method:: new_user_embedding(user_num, items)
+
+      Generate an embedding for a user given their current ratings.
+
+
+
+   .. py:method:: finalize_scores(user_num, items, user_bias)
+
+      Perform any final transformation of scores prior to returning them.
+
+

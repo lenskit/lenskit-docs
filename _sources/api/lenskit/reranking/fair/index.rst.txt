@@ -12,110 +12,16 @@ lenskit.reranking.fair
 Classes
 -------
 
+.. toctree::
+   :hidden:
+
+   /api/lenskit/reranking/fair/FAIRRerankerConfig
+   /api/lenskit/reranking/fair/FAIRReranker
+
 .. autoapisummary::
 
    lenskit.reranking.fair.FAIRRerankerConfig
    lenskit.reranking.fair.FAIRReranker
-
-
-
-Module Contents
----------------
-
-.. py:class:: FAIRRerankerConfig
-   
-
-   Bases: :py:obj:`pydantic.BaseModel`
-
-
-   Configuration for :class:`FAIRReranker`.
-
-
-   .. py:attribute:: n
-      :type:  pydantic.PositiveInt
-
-      Size of the top-N subset to rerank. If ``None``, the entire
-      candidate list is reranked.
-
-
-   .. py:attribute:: p
-      :type:  pydantic.PositiveFloat
-
-      The target proportion of protected items in the list (0.0 ≤ p ≤ 1.0).
-      The default value is 0.5.
-
-
-   .. py:attribute:: alpha
-      :type:  pydantic.PositiveFloat
-
-      The probability threshold for Type I error across prefixes.
-      The default value is 0.1.
-
-
-   .. py:attribute:: protected_attribute
-      :type:  str
-
-      The item attribute name that marks whether an item is protected.
-      The default name is 'protected'.
-
-
-.. py:class:: FAIRReranker(config = None, **kwargs)
-   
-
-   Bases: :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ], :py:obj:`lenskit.training.Trainable`
-
-
-   FA*IR top-N re-ranking algorithm.
-
-   Re-ranks a sorted candidate list to satisfy binomial lower-bound constraints
-   for a binary protected/unprotected attribute at every prefix (1..N). It expects
-   a sorted list of items, the target proportion of protected items ``p`` and
-   significance level ``alpha``.
-
-   For details, see `Zehlike et al. (2017)`_.
-
-   .. _Zehlike et al. (2017): https://doi.org/10.1145/3132847.3132938
-
-   :Stability: Caller
-
-
-   .. py:attribute:: config
-      :type:  FAIRRerankerConfig
-
-      FA*IR reranker configuration.
-
-
-   .. py:attribute:: alpha_c
-      :type:  float
-
-
-   .. py:attribute:: m_list
-      :type:  list[int]
-
-
-   .. py:method:: is_trained()
-
-      Query if this component has already been trained.
-
-
-
-   .. py:method:: train(data, options = TrainingOptions())
-
-      Precompute adjusted alpha and m-table for the configured (n,p,alpha)
-
-      Training computes the (multiple-tests–corrected) prefix requirements m[i]
-      so that every prefix of size i has at least m[i] protected items with
-      significance α (after correction).
-
-      :param protected attributes: The item entity table must have a scalar attribute ``protected`` that is ``True``
-                                   if the item is in the protected group and ``False`` otherwise.
-
-
-
-   .. py:method:: __call__(items, n = None)
-
-      Run the pipeline's operation and produce a result.  This is the key
-      method for components to implement.
 
 
 

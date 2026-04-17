@@ -1,0 +1,87 @@
+lenskit.pipeline.components.Component
+=====================================
+
+.. py:class:: lenskit.pipeline.components.Component[COut](config = None, **kwargs)
+   
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   Base class for pipeline component objects.  Any component that is not just a
+   function should extend this class.
+
+   Pipeline components support configuration (e.g., hyperparameters or random
+   seeds) through Pydantic models or Python dataclasses; see
+   :ref:`component-config` for further details.  If the pipeline's
+   configuration class is ``C``, it has the following:
+
+   1. The configuration is exposed through an instance variable ``config``.
+   2. The constructor accepts the configuration object as its first parameter,
+      also named ``config``, and saves this in the member variable.
+
+   The base class constructor handles both of these, so long as you declare the
+   type of the ``config`` member::
+
+       class MyComponent(Component):
+           config: MyComponentConfig
+
+           ...
+
+   If you do not declare a ``config`` attribute, the base class will assume the
+   pipeline uses no configuration.
+
+   To work as components, derived classes also need to implement a ``__call__``
+   method to perform their operations.
+
+   :param config: The configuration object.  If ``None``, the configuration class will
+                  be instantiated with ``kwargs``.
+
+   :Stability: Full
+
+
+   .. py:attribute:: config
+      :type:  Any
+      :value: None
+
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:method:: __init_subclass__(**kwargs)
+      :classmethod:
+
+
+
+   .. py:method:: config_class(return_any = False)
+      :classmethod:
+
+
+
+   .. py:method:: dump_config()
+
+      Dump the configuration to JSON-serializable format.
+
+
+
+   .. py:method:: validate_config(data = None)
+      :classmethod:
+
+
+      Validate and return a configuration object for this component.
+
+
+
+   .. py:method:: __call__(*args, **kwargs)
+      :abstractmethod:
+
+
+      Run the pipeline's operation and produce a result.  This is the key
+      method for components to implement.
+
+
+
+   .. py:method:: __repr__()
+

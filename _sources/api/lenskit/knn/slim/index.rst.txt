@@ -12,126 +12,16 @@ lenskit.knn.slim
 Classes
 -------
 
+.. toctree::
+   :hidden:
+
+   /api/lenskit/knn/slim/SLIMConfig
+   /api/lenskit/knn/slim/SLIMScorer
+
 .. autoapisummary::
 
    lenskit.knn.slim.SLIMConfig
    lenskit.knn.slim.SLIMScorer
-
-
-
-Module Contents
----------------
-
-.. py:class:: SLIMConfig
-   
-
-   Bases: :py:obj:`pydantic.BaseModel`
-
-
-   Hyperparameters for SLIM/fsSLIM (:class:`SlimScorer`).
-
-
-   .. py:attribute:: l1_reg
-      :type:  pydantic.PositiveFloat
-      :value: 1.0
-
-
-      L₁ regularization strength for SLIM.
-
-
-   .. py:attribute:: l2_reg
-      :type:  pydantic.PositiveFloat
-      :value: 1.0
-
-
-      L₂ regularization strength for SLIM.
-
-
-   .. py:attribute:: max_iters
-      :type:  pydantic.PositiveInt
-      :value: 100
-
-
-      Maximum coordinate descent iterations per column.
-
-
-   .. py:attribute:: max_nbrs
-      :type:  pydantic.PositiveInt | None
-      :value: None
-
-
-      Maximum neighbors (features) for each item.  Setting this to a positive
-      integer enables fsSLIM (with item cosine selection).
-
-
-.. py:class:: SLIMScorer(config = None, **kwargs)
-   
-
-   Bases: :py:obj:`lenskit.pipeline.components.Component`, :py:obj:`lenskit.training.Trainable`
-
-
-   Item scorer using Sparse LInear Methods (SLIM).  SLIM was described for
-   recommendation by :cite:t`ningSLIMSparseLinear2011`.  This scorer supports
-   both SLIM and fsSLIM variants (by setting :attr:`SLIMConfig.max_nbrs`).
-
-   SLIM operates by learning an elastic-net regression for each item,
-   predicting whether the user will interact with that item based on the other
-   items they have interacted with.
-
-   This implementation closely follows the paper with some reference to
-   `libslim`_ for computational details.  It uses coodrinate descent with soft
-   thresholding :cite:p:`friedmanRegularizationPathsGeneralized2010` to
-   estimate the SLIM weight matrix.
-
-   .. note::
-
-       The coordinate descent method of
-       :cite:t:`friedmanRegularizationPathsGeneralized2010` operates on
-       standardized predictor variables, with a hint that standardization can
-       be inlined to the optimization logic for sparse problems.  However, they
-       do not provide details for how to do that inlining, and the original
-       SLIM implementation from the Karypis lab does not appear to center the
-       predictors.  Therefore, this implementation also does not center them.
-
-   .. _libslim: https://github.com/KarypisLab/SLIM/tree/master/src/libslim
-
-
-   .. py:attribute:: config
-      :type:  SLIMConfig
-
-      The component configuration object.  Component classes that support
-      configuration **must** redefine this attribute with their specific
-      configuration class type, which can be a Python dataclass or a Pydantic
-      model class.
-
-
-   .. py:attribute:: weights
-      :type:  scipy.sparse.csr_array
-
-
-   .. py:attribute:: items
-      :type:  lenskit.data.Vocabulary
-
-
-   .. py:method:: is_trained()
-
-      Query if this component has already been trained.
-
-
-
-   .. py:method:: train(data, options)
-
-      Train the model to learn its parameters from a training dataset.
-
-      :param data: The training dataset.
-      :param options: The training options.
-
-
-
-   .. py:method:: __call__(query, items)
-
-      Run the pipeline's operation and produce a result.  This is the key
-      method for components to implement.
 
 
 

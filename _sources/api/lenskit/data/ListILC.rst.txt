@@ -1,0 +1,114 @@
+lenskit.data.ListILC
+====================
+
+.. py:class:: lenskit.data.ListILC(key, *, index = True)
+   :canonical: lenskit.data._collection.ListILC
+
+   Bases: :py:obj:`lenskit.data._collection._base.MutableItemListCollection`\ [\ :py:obj:`lenskit.data._collection._keys.K`\ ], :py:obj:`Generic`\ [\ :py:obj:`lenskit.data._collection._keys.K`\ ]
+
+
+   Mutable item list collection backed by a Python list.
+
+
+   .. py:attribute:: list_schema
+      :type:  pyarrow.Schema
+
+      Get the schema for the lists in this ILC.
+
+
+   .. py:method:: from_dict(data: collections.abc.Mapping[lenskit.data._collection._keys.GenericKey | lenskit.data._collection._keys.ID, lenskit.data._items.ItemList], key: type[lenskit.data._collection._keys.K]) -> lenskit.data._collection._base.ItemListCollection[lenskit.data._collection._keys.K]
+                  from_dict(data: collections.abc.Mapping[lenskit.data._collection._keys.GenericKey | lenskit.data._collection._keys.ID, lenskit.data._items.ItemList], key: collections.abc.Sequence[str] | str | None = None) -> lenskit.data._collection._base.ItemListCollection[lenskit.data._collection._keys.GenericKey]
+      :classmethod:
+
+
+      Create an item list collection from a dictionary.
+
+
+
+   .. py:method:: from_df(df, key = None, *others)
+      :classmethod:
+
+
+      Create an item list collection from a data frame.
+
+      .. note::
+
+          Keys with empty item lists will be silently excluded from the output
+          data.
+
+      :param df: The data frame to convert.
+      :param key: The key type or field(s).  Can be specified as a single column
+                  name (or :class:`~lenskit.data.types.AliasedColumn`).
+      :param others: Other columns to consider; primarily used to pass additional
+                     aliased columns to normalize other clumnes like the item ID.
+
+
+
+   .. py:method:: from_arrow(table)
+      :staticmethod:
+
+
+      Convert an Arrow table into an item list collection.
+
+
+
+   .. py:method:: add(list, *fields, **kwfields)
+
+      Add a single item list to this list.
+
+      :param list: The item list to add.
+      :param fields: The key fields for this list.
+      :param kwfields: The key fields for this list.
+
+
+
+   .. py:method:: add_from(other, **fields)
+
+      Add all collection from another collection to this collection.  If field
+      values are supplied, they are used to supplement or overwrite the keys
+      in ``other``; a common use case is to add results from multiple
+      recommendation runs and save them a single field.
+
+      :param other: The item list collection to incorporate into this one.
+      :param fields: Additional key fields (must be specified by name).
+
+
+
+   .. py:method:: lookup(key: tuple) -> lenskit.data._items.ItemList | None
+                  lookup(*key: lenskit.data._collection._keys.ID, **kwkey: lenskit.data._collection._keys.ID) -> lenskit.data._items.ItemList | None
+
+      Look up a list by key.  If multiple lists have the same key, this
+      returns the **last** (like a dictionary).
+
+      This method can be called with the key tuple as a single argument (and
+      this can be either the actual named tuple, or an ordinary tuple of the
+      same length), or with the individual key fields as positional or named
+      arguments.
+
+      :param key: The key tuple or key tuple fields.
+
+
+
+   .. py:method:: items()
+
+      Iterate over item lists and keys.
+
+
+
+   .. py:method:: __len__()
+
+
+   .. py:method:: __getitem__(pos, /)
+
+      Get an item list and its key by position.
+
+      :param pos: The position in the list (starting from 0).
+
+      :returns: The key and list at position ``pos``.
+
+      :raises IndexError: when ``pos`` is out-of-bounds.
+
+
+
+   .. py:method:: __repr__()
+

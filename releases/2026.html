@@ -14,7 +14,7 @@
 <meta property="og:description" content="2026 builds on the foundation of 2025 to improve the ergonomics of data access, querying, and metrics, and clean up some APIs that seemed good at the time, while making it even easier to use LensKi..." />
 <meta name="description" content="2026 builds on the foundation of 2025 to improve the ergonomics of data access, querying, and metrics, and clean up some APIs that seemed good at the time, while making it even easier to use LensKi..." />
 
-    <title>2026 Releases &#8212; LensKit 2026.1.0b2.dev17+gbd190f59 documentation</title>
+    <title>2026 Releases &#8212; LensKit 2026.1.0b2.dev18+g7c96dbfe documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=85b47cfa"></script>
+    <script src="../_static/documentation_options.js?v=31d53caa"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.1.0b2.dev17+gbd190f59 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.1.0b2.dev17+gbd190f59 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.1.0b2.dev18+g7c96dbfe documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.1.0b2.dev18+g7c96dbfe documentation - Home"/>
   
   
 </a></div>
@@ -520,82 +520,116 @@ components work as they do in the 2025 series, but with more features, some
 rough corners polished off the interfaces, and hopefully fewer bugs.</p>
 <section id="id1">
 <span id="id2"></span><h2>2026.1.0<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>This is the first major feature and update release of the 2026 series!  Key
+highlights:</p>
+<ul class="simple">
+<li><p>The <a class="reference internal" href="../api/lenskit/training/Trainable.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a> protocol now has a method to query
+whether a model has been trained, instead of relying on every trainable to
+correctly implement skip-on-retrain logic.</p></li>
+<li><p>Batch inference inputs are simplified and more explicit.</p></li>
+<li><p>Cleanup of several deprecated interfaces, and simplifying the public module
+hierarchy.</p></li>
+<li><p>Dependency updates with SPEC0.</p></li>
+<li><p>FlexMF is nearing stability, and will be stabilized in an upcoming 2026.x
+point release.  It also supports LightGCN.</p></li>
+<li><p>Updated default embedding sizes to a power of 2 (64) throughout LensKit.</p></li>
+<li><p>Improved metric interface to better support complex metric aggregations. Some
+automatic aggregation and analysis is no longer supported or will soon be
+removed (<code class="xref py py-class docutils literal notranslate"><span class="pre">RunAnalysis</span></code> is deprecated), in favor of
+clear metric collection within a single run and letting the user aggregate
+and summarize in whatever tool they prefer.</p></li>
+</ul>
 <section id="breaking-changes">
 <h3>Breaking Changes<a class="headerlink" href="#breaking-changes" title="Link to this heading">#</a></h3>
+<section id="major-breaking-changes">
+<h4>Major Breaking Changes<a class="headerlink" href="#major-breaking-changes" title="Link to this heading">#</a></h4>
+<p>These are the major changes that will affect users who are writing code to
+generate recommendations with LensKit, or implementing recommendation
+components.</p>
 <ul>
-<li><p>The <a class="reference internal" href="../api/lenskit/training/index.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a> protocol now has a separate method
-<a class="reference internal" href="../api/lenskit/training/index.html#lenskit.training.Trainable.is_trained" title="lenskit.training.Trainable.is_trained"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_trained()</span></code></a> to query if a component has
+<li><p>Many submodules (such as most modules under <a class="reference internal" href="../api/lenskit/pipeline/index.html#module-lenskit.pipeline" title="lenskit.pipeline"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.pipeline</span></code></a>) have been
+renamed to be private modules.  Code importing from their original locations
+will need to be updated to import from the higher-level module (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/947" rel="noreferrer" target="_blank">🐞 947</a>).</p></li>
+<li><p>The <a class="reference internal" href="../api/lenskit/training/Trainable.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a> protocol now has a separate method
+<a class="reference internal" href="../api/lenskit/training/Trainable.html#lenskit.training.Trainable.is_trained" title="lenskit.training.Trainable.is_trained"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_trained()</span></code></a> to query if a component has
 been trained, and responsibility for skipping retraining of already-trained
-components when <a class="reference internal" href="../api/lenskit/training/index.html#lenskit.training.TrainingOptions.retrain" title="lenskit.training.TrainingOptions.retrain"><code class="xref py py-attr docutils literal notranslate"><span class="pre">retrain</span></code></a> is <code class="docutils literal notranslate"><span class="pre">False</span></code>
+components when <a class="reference internal" href="../api/lenskit/training/TrainingOptions.html#lenskit.training.TrainingOptions.retrain" title="lenskit.training.TrainingOptions.retrain"><code class="xref py py-attr docutils literal notranslate"><span class="pre">retrain</span></code></a> is <code class="docutils literal notranslate"><span class="pre">False</span></code>
 has been moved from individual components to
-<a class="reference internal" href="../api/lenskit/pipeline/index.html#lenskit.pipeline.Pipeline.train" title="lenskit.pipeline.Pipeline.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.pipeline.Pipeline.train()</span></code></a> (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/1042" rel="noreferrer" target="_blank">🐞 1042</a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1044" rel="noreferrer" target="_blank">⛙ 1044</a>).</p>
+<a class="reference internal" href="../api/lenskit/pipeline/Pipeline.html#lenskit.pipeline.Pipeline.train" title="lenskit.pipeline.Pipeline.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.pipeline.Pipeline.train()</span></code></a> (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/1042" rel="noreferrer" target="_blank">🐞 1042</a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1044" rel="noreferrer" target="_blank">⛙ 1044</a>).
+Components that implement <a class="reference internal" href="../api/lenskit/training/Trainable.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a> need to
+implement the new method as well.</p>
 <p>The pipeline builder will issue a warning if a component implements
-<a class="reference internal" href="../api/lenskit/training/index.html#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a> but not
-<a class="reference internal" href="../api/lenskit/training/index.html#lenskit.training.Trainable.is_trained" title="lenskit.training.Trainable.is_trained"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_trained()</span></code></a>.</p>
+<a class="reference internal" href="../api/lenskit/training/Trainable.html#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a> but not
+<a class="reference internal" href="../api/lenskit/training/Trainable.html#lenskit.training.Trainable.is_trained" title="lenskit.training.Trainable.is_trained"><code class="xref py py-meth docutils literal notranslate"><span class="pre">is_trained()</span></code></a>.</p>
 </li>
-<li><p>Pipeline components and inputs now have restrictions on their names, and cannot
-have names beginning with <code class="docutils literal notranslate"><span class="pre">_</span></code>.  See <a class="reference internal" href="../guide/pipeline.html#pipeline-names"><span class="std std-ref">Component Names</span></a> for details.</p></li>
 <li><p>Default embedding sizes for all embedding-based models (matrix factorizers,
 etc.) have changed to be 64 instead of 50, with the exception of
 <a class="reference internal" href="../api/lenskit/implicit/index.html#module-lenskit.implicit" title="lenskit.implicit"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.implicit</span></code></a>, which continues to default to Implicit’s defaults
 (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/846" rel="noreferrer" target="_blank">🐞 846</a>).</p></li>
-<li><p>Pipeline configurations serialized with previous versions <strong>cannot</strong> be
-re-loaded in LensKit 2026, due to moves of module paths.  Import path
-canonicalization (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/948" rel="noreferrer" target="_blank">🐞 948</a>) reduces the risk of such breakage in future
-releases.  Handwritten configurations will often still work.</p></li>
-<li><p>Many submodules (such as most modules under <a class="reference internal" href="../api/lenskit/pipeline/index.html#module-lenskit.pipeline" title="lenskit.pipeline"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.pipeline</span></code></a>) have been
-renamed to be private modules.  Code importing from their original locations
-will need to be updated to import from the higher-level module (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/947" rel="noreferrer" target="_blank">🐞 947</a>).</p></li>
-<li><p>The <code class="docutils literal notranslate"><span class="pre">AttributeSet</span></code> class has been renamed to
-<a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.EntityAttribute" title="lenskit.data.EntityAttribute"><code class="xref py py-class docutils literal notranslate"><span class="pre">EntityAttribute</span></code></a> (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/946" rel="noreferrer" target="_blank">🐞 946</a>), to better clarify its
-design and role.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RunAnalysis</span></code> is deprecated, and no longer supports
+explicit defaults or global metrics.  Use
+<a class="reference internal" href="../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a> instead.  Its global metric
+columns have also changed in some cases.</p></li>
 <li><p>LensKit now requires Python 3.12.5 or newer, along with NumPy 2.x, Pandas 2.3
 or newer, and SciPy 1.13 or newer (see <a class="reference internal" href="index.html#dep-policy"><span class="std std-ref">Dependency Versioning</span></a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/954" rel="noreferrer" target="_blank">⛙ 954</a>).  Earlier
 versions of Python 3.12 have a bug in the standard library that affects
 LensKit.</p></li>
-<li><p>We no longer publish 32-bit binary wheels.</p></li>
-<li><p>Removed <code class="docutils literal notranslate"><span class="pre">DecomposedMetric</span></code>, as the <a class="reference internal" href="../api/lenskit/metrics/index.html#lenskit.metrics.Metric" title="lenskit.metrics.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a> interface
-is now decomposed. All metrics based on listwise measurements or intermediate
-results should directly extend from <code class="docutils literal notranslate"><span class="pre">Metric</span></code> or <a class="reference internal" href="../api/lenskit/metrics/index.html#lenskit.metrics.ListMetric" title="lenskit.metrics.ListMetric"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListMetric</span></code></a>.
-(<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/983" rel="noreferrer" target="_blank">⛙ 983</a>)</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">GlobalMetric</span></code> has been removed. Code needing to compute global metrics
-should directly compute over item lists.</p></li>
-<li><p><a class="reference internal" href="../api/lenskit/metrics/index.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a> no longer supports defaults
-when adding metrics.</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">RunAnalysis</span></code> is deprecated, and no longer supports
-explicit defaults or global metrics.  Use
-<a class="reference internal" href="../api/lenskit/metrics/index.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a> instead.  Its global metric
-columns have also changed in some cases.</p></li>
-<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ListGini</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">ExposureGini</span></code>
-now require an item vocabulary or dataset as input.</p></li>
 <li><p>Stopped providing wheels for macOS on Intel.  Users who still need to run
-LensKit on Intel-based Macs should use the Conda packages (available in conda-forge and
-<a class="reference external" href="https://prefix.dev/channels/lenskit/" rel="noreferrer" target="_blank">prefix.dev</a>).</p></li>
-<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">lenskit.training.IterativeTraining</span></code> base class in
-favor of <a class="reference internal" href="../api/lenskit/training/index.html#lenskit.training.UsesTrainer" title="lenskit.training.UsesTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.training.UsesTrainer</span></code></a>.</p></li>
-<li><p>Component class members have been renamed to no longer use the Scikit-Learn
-pattern of trailing <code class="docutils literal notranslate"><span class="pre">_</span></code> in their names.</p></li>
-<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">lenskit.stats.argtopn</span></code> function (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/833" rel="noreferrer" target="_blank">🐞 833</a>).
-<a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.ItemList.top_n" title="lenskit.data.ItemList.top_n"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.data.ItemList.top_n()</span></code></a> now uses a Rust-accelerated top-<em>N</em>
-implementation (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1049" rel="noreferrer" target="_blank">⛙ 1049</a>).</p></li>
-<li><p><a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.ItemList.to_arrow" title="lenskit.data.ItemList.to_arrow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.data.ItemList.to_arrow()</span></code></a> no longer accepts mappings for its
-optional <code class="docutils literal notranslate"><span class="pre">columns</span></code> argument, sequences of names are used instead
-(<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1052" rel="noreferrer" target="_blank">⛙ 1052</a>).</p></li>
-<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">n</span></code> option to <a class="reference internal" href="../api/lenskit/pipeline/index.html#lenskit.pipeline.predict_pipeline" title="lenskit.pipeline.predict_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">predict_pipeline()</span></code></a>
-(<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/835" rel="noreferrer" target="_blank">🐞 835</a>).</p></li>
+LensKit on Intel-based Macs should use the Conda packages (available in
+conda-forge and <a class="reference external" href="https://prefix.dev/channels/lenskit/" rel="noreferrer" target="_blank">prefix.dev</a>).</p></li>
 <li><p>Removed the deprecated unrated and all-items candidate selectors, in favor of
 <code class="xref py py-class docutils literal notranslate"><span class="pre">TrainingItemsCandidateSelector</span></code> (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/935" rel="noreferrer" target="_blank">🐞 935</a>).</p></li>
 <li><p>Several input types to batch inference are no longer supported, to reduce
 ambiguity and implicit behavior (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/958" rel="noreferrer" target="_blank">🐞 958</a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1074" rel="noreferrer" target="_blank">⛙ 1074</a>).</p></li>
-<li><p>Revised <a class="reference internal" href="../api/lenskit/data/index.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a> to only accept keyword arguments, and
+</ul>
+</section>
+<section id="other-breaking-changes">
+<h4>Other Breaking Changes<a class="headerlink" href="#other-breaking-changes" title="Link to this heading">#</a></h4>
+<p>These changes are more minor, and won’t directly affect most users who are using
+LensKit components and metrics as-is.</p>
+<ul class="simple">
+<li><p>Pipeline components and inputs now have restrictions on their names, and cannot
+have names beginning with <code class="docutils literal notranslate"><span class="pre">_</span></code>.  See <a class="reference internal" href="../guide/pipeline.html#pipeline-names"><span class="std std-ref">Component Names</span></a> for details.</p></li>
+<li><p>Pipeline configurations serialized with previous versions <strong>cannot</strong> be
+re-loaded in LensKit 2026, due to moves of module paths.  Import path
+canonicalization (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/948" rel="noreferrer" target="_blank">🐞 948</a>) reduces the risk of such breakage in future
+releases.  Handwritten configurations will often still work.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">AttributeSet</span></code> class has been renamed to
+<a class="reference internal" href="../api/lenskit/data/EntityAttribute.html#lenskit.data.EntityAttribute" title="lenskit.data.EntityAttribute"><code class="xref py py-class docutils literal notranslate"><span class="pre">EntityAttribute</span></code></a> (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/946" rel="noreferrer" target="_blank">🐞 946</a>), to better clarify its
+design and role.</p></li>
+<li><p>We no longer publish 32-bit binary wheels.</p></li>
+<li><p>Removed <code class="docutils literal notranslate"><span class="pre">DecomposedMetric</span></code>, as the <a class="reference internal" href="../api/lenskit/metrics/Metric.html#lenskit.metrics.Metric" title="lenskit.metrics.Metric"><code class="xref py py-class docutils literal notranslate"><span class="pre">Metric</span></code></a> interface
+is now decomposed. All metrics based on listwise measurements or intermediate
+results should directly extend from <code class="docutils literal notranslate"><span class="pre">Metric</span></code> or <a class="reference internal" href="../api/lenskit/metrics/ListMetric.html#lenskit.metrics.ListMetric" title="lenskit.metrics.ListMetric"><code class="xref py py-class docutils literal notranslate"><span class="pre">ListMetric</span></code></a>.
+(<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/983" rel="noreferrer" target="_blank">⛙ 983</a>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">GlobalMetric</span></code> has been removed. Code needing to compute global metrics
+should directly compute over item lists.</p></li>
+<li><p><a class="reference internal" href="../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a> no longer supports defaults
+when adding metrics.</p></li>
+<li><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ListGini</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">ExposureGini</span></code>
+now require an item vocabulary or dataset as input.</p></li>
+<li><p>Removed the deprecated <code class="docutils literal notranslate"><span class="pre">lenskit.training.IterativeTraining</span></code> base class in
+favor of <a class="reference internal" href="../api/lenskit/training/UsesTrainer.html#lenskit.training.UsesTrainer" title="lenskit.training.UsesTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.training.UsesTrainer</span></code></a>.</p></li>
+<li><p>Component class members have been renamed to no longer use the Scikit-Learn
+pattern of trailing <code class="docutils literal notranslate"><span class="pre">_</span></code> in their names.</p></li>
+<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">lenskit.stats.argtopn</span></code> function (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/833" rel="noreferrer" target="_blank">🐞 833</a>).
+<a class="reference internal" href="../api/lenskit/data/ItemList.html#lenskit.data.ItemList.top_n" title="lenskit.data.ItemList.top_n"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.data.ItemList.top_n()</span></code></a> now uses a Rust-accelerated top-<em>N</em>
+implementation (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1049" rel="noreferrer" target="_blank">⛙ 1049</a>).</p></li>
+<li><p><a class="reference internal" href="../api/lenskit/data/ItemList.html#lenskit.data.ItemList.to_arrow" title="lenskit.data.ItemList.to_arrow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.data.ItemList.to_arrow()</span></code></a> no longer accepts mappings for its
+optional <code class="docutils literal notranslate"><span class="pre">columns</span></code> argument, sequences of names are used instead
+(<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1052" rel="noreferrer" target="_blank">⛙ 1052</a>).</p></li>
+<li><p>Removed the <code class="docutils literal notranslate"><span class="pre">n</span></code> option to <a class="reference internal" href="../api/lenskit/pipeline/index.html#lenskit.pipeline.predict_pipeline" title="lenskit.pipeline.predict_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">predict_pipeline()</span></code></a>
+(<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/835" rel="noreferrer" target="_blank">🐞 835</a>).</p></li>
+<li><p>Revised <a class="reference internal" href="../api/lenskit/data/RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a> to only accept keyword arguments, and
 removed the legacy <code class="docutils literal notranslate"><span class="pre">user_items</span></code> attribute.</p></li>
 </ul>
+</section>
 </section>
 <section id="new-features">
 <h3>New Features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h3>
 <ul class="simple">
-<li><p>Added environment variables to <a class="reference internal" href="../api/lenskit/training/index.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainingOptions</span></code></a>, along with the
-<a class="reference internal" href="../api/lenskit/training/index.html#lenskit.training.TrainingOptions.env_var" title="lenskit.training.TrainingOptions.env_var"><code class="xref py py-meth docutils literal notranslate"><span class="pre">env_var()</span></code></a> method to query them.  This allows for
+<li><p>Added environment variables to <a class="reference internal" href="../api/lenskit/training/TrainingOptions.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainingOptions</span></code></a>, along with the
+<a class="reference internal" href="../api/lenskit/training/TrainingOptions.html#lenskit.training.TrainingOptions.env_var" title="lenskit.training.TrainingOptions.env_var"><code class="xref py py-meth docutils literal notranslate"><span class="pre">env_var()</span></code></a> method to query them.  This allows for
 open-ended configuration of training processes.</p></li>
 <li><p>Added support for free-threaded Python, including binary distributions for
 Python 3.14t on Linux and macOS (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/916" rel="noreferrer" target="_blank">🐞 916</a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1022" rel="noreferrer" target="_blank">⛙ 1022</a>).</p></li>
@@ -681,7 +715,11 @@ locks out of the work path (<a class="extlink-pr reference external" href="https
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2026.1.0</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking Changes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking Changes</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#major-breaking-changes">Major Breaking Changes</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#other-breaking-changes">Other Breaking Changes</a></li>
+</ul>
+</li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New Features</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#performance-changes">Performance Changes</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#minor-changes">Minor Changes</a></li>
@@ -730,7 +768,7 @@ locks out of the work path (<a class="extlink-pr reference external" href="https
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.1.0b2.dev17+gbd190f59.</div>
+        <div class="footer-item">LensKit version 2026.1.0b2.dev18+g7c96dbfe.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

@@ -20,6 +20,14 @@ Attributes
 Classes
 -------
 
+.. toctree::
+   :hidden:
+
+   /api/lenskit/data/movielens/MLData
+   /api/lenskit/data/movielens/ML100KLoader
+   /api/lenskit/data/movielens/MLMLoader
+   /api/lenskit/data/movielens/MLModernLoader
+
 .. autoapisummary::
 
    lenskit.data.movielens.MLData
@@ -43,148 +51,6 @@ Module Contents
 
 .. py:type:: LOC
    :canonical: Path | tuple[ZipFile, str]
-
-
-.. py:class:: MLData(version, source, prefix = '')
-   
-
-   Internal class representing an open ML data set.
-
-   .. stability:: internal
-
-
-   .. py:attribute:: version
-      :type:  str
-
-
-   .. py:attribute:: source
-      :type:  pathlib.Path | zipfile.ZipFile
-
-
-   .. py:attribute:: prefix
-      :type:  str
-      :value: ''
-
-
-
-   .. py:method:: version_impl(version)
-      :staticmethod:
-
-
-
-   .. py:method:: __enter__()
-
-
-   .. py:method:: __exit__(*args)
-
-
-   .. py:method:: open_file(name, encoding = 'utf8')
-
-
-   .. py:method:: dataset()
-      :abstractmethod:
-
-
-      Load the full dataset.
-
-
-
-   .. py:method:: ratings_df()
-      :abstractmethod:
-
-
-      Load the ratings data frame.
-
-
-
-.. py:class:: ML100KLoader(version, source, prefix = '')
-   
-
-   Bases: :py:obj:`MLData`
-
-
-   Loader for the ML100K data set.
-
-
-   .. py:method:: dataset()
-
-      Load the full dataset.
-
-
-
-   .. py:method:: genres()
-
-
-   .. py:method:: movies_df(genres = None)
-
-
-   .. py:method:: users_df()
-
-
-   .. py:method:: ratings_df()
-
-      Load the ratings data frame.
-
-
-
-.. py:class:: MLMLoader(version, source, prefix = '')
-   
-
-   Bases: :py:obj:`MLData`
-
-
-   Loader for the ML 1M and 10M data sets.
-
-
-   .. py:method:: dataset()
-
-      Load the full dataset.
-
-
-
-   .. py:method:: movies_df()
-
-
-   .. py:method:: users_df()
-
-
-   .. py:method:: ratings_df()
-
-      Load the ratings data frame.
-
-
-
-   .. py:method:: tagging_df()
-
-
-.. py:class:: MLModernLoader(version, source, prefix = '')
-   
-
-   Bases: :py:obj:`MLData`
-
-
-   Loader for modern MovieLens data sets (20M and later).
-
-
-   .. py:method:: dataset()
-
-      Load the full dataset.
-
-
-
-   .. py:method:: movies_df()
-
-
-   .. py:method:: tagging_df()
-
-
-   .. py:method:: genome_df()
-
-
-   .. py:method:: ratings_df()
-
-      Load the ratings data frame.
-
 
 
 .. py:function:: load_movielens(path)

@@ -15,6 +15,16 @@ lenskit.pipeline.nodes
 Classes
 -------
 
+.. toctree::
+   :hidden:
+
+   /api/lenskit/pipeline/nodes/Node
+   /api/lenskit/pipeline/nodes/InputNode
+   /api/lenskit/pipeline/nodes/LiteralNode
+   /api/lenskit/pipeline/nodes/ComponentNode
+   /api/lenskit/pipeline/nodes/ComponentConstructorNode
+   /api/lenskit/pipeline/nodes/ComponentInstanceNode
+
 .. autoapisummary::
 
    lenskit.pipeline.nodes.Node
@@ -24,150 +34,6 @@ Classes
    lenskit.pipeline.nodes.ComponentConstructorNode
    lenskit.pipeline.nodes.ComponentInstanceNode
 
-
-
-Module Contents
----------------
-
-.. py:class:: Node[T](name)
-   
-
-   Representation of a single node in a :class:`Pipeline`.
-
-   .. versionchanged:: 2026.1
-
-       Removed the ``types`` attribute.
-
-   :Stability: Caller
-
-
-   .. py:attribute:: __match_args__
-      :value: ('name',)
-
-
-
-   .. py:attribute:: name
-      :type:  str
-
-      The name of this node.
-
-
-   .. py:method:: __str__()
-
-
-.. py:class:: InputNode[T](name, *, type = None)
-   
-
-   Bases: :py:obj:`Node`\ [\ :py:obj:`T`\ ]
-
-
-   An input node.
-
-   :Stability: Internal
-
-
-   .. py:attribute:: type
-      :type:  InputNode.type[T] | types.UnionType
-
-      The data type of this input.
-
-
-.. py:class:: LiteralNode[T](name, value)
-   
-
-   Bases: :py:obj:`Node`\ [\ :py:obj:`T`\ ]
-
-
-   A node storing a literal value.
-
-   :Stability: Internal
-
-
-   .. py:attribute:: __match_args__
-      :value: ('name', 'value')
-
-
-
-   .. py:attribute:: value
-      :type:  T
-
-      The value associated with this node
-
-
-.. py:class:: ComponentNode[T](name)
-   
-
-   Bases: :py:obj:`Node`\ [\ :py:obj:`T`\ ]
-
-
-   A node storing a component.  This is an abstract node class; see subclasses
-   :class:`ComponentConstructorNode` and `ComponentInstanceNode`.
-
-   :Stability: Internal
-
-
-   .. py:method:: create[CFG](name, comp, config = None)
-      :staticmethod:
-
-
-
-   .. py:property:: inputs
-      :type: dict[str, lenskit.pipeline.components.ComponentInput]
-
-      :abstractmethod:
-
-
-
-.. py:class:: ComponentConstructorNode[T](name, constructor, config)
-   
-
-   Bases: :py:obj:`ComponentNode`\ [\ :py:obj:`T`\ ]
-
-
-   A node storing a component.  This is an abstract node class; see subclasses
-   :class:`ComponentConstructorNode` and `ComponentInstanceNode`.
-
-   :Stability: Internal
-
-
-   .. py:attribute:: __match_args__
-      :value: ('name', 'constructor', 'config')
-
-
-
-   .. py:attribute:: constructor
-      :type:  lenskit.pipeline.components.ComponentConstructor[Any, T]
-
-
-   .. py:attribute:: config
-      :type:  object | None
-
-
-   .. py:property:: inputs
-
-
-.. py:class:: ComponentInstanceNode[T](name, component)
-   
-
-   Bases: :py:obj:`ComponentNode`\ [\ :py:obj:`T`\ ]
-
-
-   A node storing a component.  This is an abstract node class; see subclasses
-   :class:`ComponentConstructorNode` and `ComponentInstanceNode`.
-
-   :Stability: Internal
-
-
-   .. py:attribute:: __match_args__
-      :value: ('name', 'component')
-
-
-
-   .. py:attribute:: component
-      :type:  lenskit.pipeline.components.Component[T] | lenskit.pipeline.components.PipelineFunction[T]
-
-
-   .. py:property:: inputs
 
 
 

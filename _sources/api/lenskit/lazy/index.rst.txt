@@ -12,6 +12,11 @@ lenskit.lazy
 Classes
 -------
 
+.. toctree::
+   :hidden:
+
+   /api/lenskit/lazy/Lazy
+
 .. autoapisummary::
 
    lenskit.lazy.Lazy
@@ -29,50 +34,6 @@ Functions
 
 Module Contents
 ---------------
-
-.. py:class:: Lazy[T]
-   
-
-   Bases: :py:obj:`Protocol`
-
-
-   Type for lazily-computed values.
-
-   This is frequently used in pipeline components.  If a pipeline component
-   may or may not need one of its inputs, declare the type with this to only
-   run it as needed:
-
-   .. code:: python
-
-       def my_component(input: str, backup: Lazy[str]) -> str:
-           if input == 'invalid':
-               return backup.get()
-           else:
-               return input
-
-   :Stability: Caller
-
-
-   .. py:method:: get()
-
-      Get the value behind this lazy instance.
-
-      .. note::
-
-          When used as a pipeline input this method invokes upstream
-          components if they have not yet been run.  Therefore, it may fail if
-          one of the required components fails or pipeline data checks fail.
-
-      :raises Exception: Exceptions raised by sources of the lazy data (e.g. a thunk, or
-          upstream components) may be raised when this method is called.
-      :raises SkipComponent: Internal exception raised to indicate that no value is available
-          and the calling component should be skipped.  Components
-          generally do not need to handle this directly, as it is used to
-          signal the pipeline runner.
-          
-          Only raised when used as a pipeline input.
-
-
 
 .. py:function:: lazy_value[T](value)
 

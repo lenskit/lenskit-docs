@@ -1,0 +1,62 @@
+lenskit.sklearn.nmf.NMFScorer
+=============================
+
+.. py:class:: lenskit.sklearn.nmf.NMFScorer(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ], :py:obj:`lenskit.training.Trainable`
+
+
+   Non-negative matrix factorization for implicit feedback using SciKit-Learn's
+   :func:`sklearn.decomposition.non_negative_factorization`. It computes the user
+   and item embedding matrices using an indicator matrix as the input.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: config
+      :type:  NMFConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: users
+      :type:  lenskit.data.Vocabulary
+
+
+   .. py:attribute:: items
+      :type:  lenskit.data.Vocabulary
+
+
+   .. py:attribute:: user_components
+      :type:  lenskit.data.types.NPMatrix
+
+
+   .. py:attribute:: item_components
+      :type:  lenskit.data.types.NPMatrix
+
+
+   .. py:method:: is_trained()
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options = TrainingOptions())
+
+      Train the model to learn its parameters from a training dataset.
+
+      :param data: The training dataset.
+      :param options: The training options.
+
+
+
+   .. py:method:: __call__(query, items)
+
+      Run the pipeline's operation and produce a result.  This is the key
+      method for components to implement.
+
+
