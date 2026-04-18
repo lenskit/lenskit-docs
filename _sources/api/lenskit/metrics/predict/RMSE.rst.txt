@@ -1,0 +1,55 @@
+lenskit.metrics.predict.RMSE
+============================
+
+.. py:class:: lenskit.metrics.predict.RMSE(missing_scores = 'error', missing_truth = 'error')
+   
+
+   Bases: :py:obj:`PredictMetric`
+
+
+   Compute RMSE (root mean squared error).  This is computed as:
+
+   .. math::
+       \sum_{r_{ui} \in R} \left(r_{ui} - s(i|u)\right)^2
+
+   This metric does not do any fallbacks; if you want to compute RMSE with
+   fallback predictions (e.g. usign a bias model when a collaborative filter
+   cannot predict), generate predictions with
+   :class:`~lenskit.basic.FallbackScorer`.
+
+   :Stability: Caller
+
+
+   .. py:method:: measure_list(predictions, test = None, /)
+
+      Compute measurements for a single list.
+
+      :returns:
+
+                - A float for simple metrics
+                - Intermediate data for decomposed metrics
+                - A dict mapping metric names to values for multi-metric classes
+
+
+
+   .. py:method:: extract_list_metrics(data)
+
+      Extract per-list metric(s) from intermediate measurement data.
+
+      :returns:
+
+                - A float for simple metrics
+                - A dict mapping metric names to values for multi-metric classes
+                - None if no per-list metrics are available
+
+
+
+   .. py:method:: create_accumulator()
+
+      Creaet an accumulator to aggregate per-list measurements into summary
+      metrics.
+
+      Each result from :meth:`measure_list` is passed to
+      :meth:`Accumulator.add`.
+
+

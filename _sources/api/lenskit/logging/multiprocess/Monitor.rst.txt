@@ -1,0 +1,61 @@
+lenskit.logging.multiprocess.Monitor
+====================================
+
+.. py:class:: lenskit.logging.multiprocess.Monitor(handle_logging = True)
+   :canonical: lenskit.logging.multiprocess._monitor.Monitor
+
+   LensKit monitor controller.
+
+   The monitor does several things:
+
+   * Receive and re-inject log messages from worker processes.
+   * Track work in progress and periodically write work logs.
+
+   The monitor is managed and used internally, and neither LensKit client code
+   nor component implementations often need to interact with it.
+
+   :param handle_logging: Whether or not to handle log messages.
+
+
+   .. py:attribute:: zmq
+      :type:  Monitor.zmq[Monitor.zmq[bytes]]
+
+
+   .. py:attribute:: log_address
+      :type:  str | None
+
+
+   .. py:attribute:: refreshables
+      :type:  dict[uuid.UUID, MonitorRefreshable]
+
+
+   .. py:attribute:: record_sinks
+      :type:  dict[uuid.UUID, lenskit.logging.multiprocess._records.RecordSink[Any]]
+
+
+   .. py:attribute:: lock
+      :type:  threading.Lock
+
+
+   .. py:method:: add_refreshable(obj)
+
+
+   .. py:method:: remove_refreshable(uuid)
+
+
+   .. py:method:: add_record_sink(sink)
+
+
+   .. py:method:: remove_record_sink(sink)
+
+
+   .. py:method:: await_quiesce(*, ms = 100)
+
+      Wait for the monitor to quiesce.
+
+      :param ms: The number of milliseconds of quiet to expect for quiescence.
+
+
+
+   .. py:method:: shutdown()
+

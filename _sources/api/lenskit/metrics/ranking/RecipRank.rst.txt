@@ -1,0 +1,39 @@
+lenskit.metrics.ranking.RecipRank
+=================================
+
+.. py:class:: lenskit.metrics.ranking.RecipRank(n = None, *, k = None)
+   :canonical: lenskit.metrics.ranking._recip.RecipRank
+
+   Bases: :py:obj:`lenskit.metrics.ranking._base.ListMetric`, :py:obj:`lenskit.metrics.ranking._base.RankingMetricBase`
+
+
+   Compute the reciprocal rank :cite:p:`trec5-confusion` of the first relevant
+   item in a list of recommendations.  Taking the mean of this metric over the
+   recommendation lists in a run yields the MRR (mean reciprocal rank).
+
+   Let :math:`\kappa` denote the 1-based rank of the first relevant item in
+   :math:`L`, with :math:`\kappa=\infty` if none of the first :math:`k` items
+   in :math:`L` are relevant; then the reciprocal rank is :math:`1 / \kappa`.
+   If no elements are relevant, the reciprocal rank is therefore 0.
+   :cite:t:`deshpande:iknn` call this the “reciprocal hit rate”.
+
+   :Stability: Caller
+
+
+   .. py:property:: label
+
+      The metric's default label in output.
+      The base implementation returns the class name by default.
+
+
+   .. py:method:: measure_list(recs, test)
+
+      Compute measurements for a single list.
+
+      :returns:
+
+                - A float for simple metrics
+                - Intermediate data for decomposed metrics
+                - A dict mapping metric names to values for multi-metric classes
+
+

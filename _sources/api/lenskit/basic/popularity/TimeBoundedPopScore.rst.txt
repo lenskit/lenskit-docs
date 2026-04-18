@@ -1,0 +1,37 @@
+lenskit.basic.popularity.TimeBoundedPopScore
+============================================
+
+.. py:class:: lenskit.basic.popularity.TimeBoundedPopScore(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`PopScorer`
+
+
+   Score items by their time-bounded popularity, i.e., the popularity in the
+   most recent `time_window` period.  Use with :py:class:`TopN` to get a
+   most-popular-recent-items recommender.
+
+   .. attribute:: item_scores_
+
+      Time-bounded item popularity scores.
+
+      :type: pandas.Series
+
+
+   .. py:attribute:: config
+      :type:  TimeBoundedPopConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:method:: train(data, options = TrainingOptions())
+
+      Train the model to learn its parameters from a training dataset.
+
+      :param data: The training dataset.
+      :param options: The training options.
+
+

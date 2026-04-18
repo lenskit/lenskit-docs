@@ -1,0 +1,40 @@
+lenskit.metrics.ranking.LogRankWeight
+=====================================
+
+.. py:class:: lenskit.metrics.ranking.LogRankWeight(*, base = 2, offset = 0)
+   :canonical: lenskit.metrics.ranking._weighting.LogRankWeight
+
+   Bases: :py:obj:`RankWeight`
+
+
+   Logarithmic weighting for result ranks, as used in NDCG.
+
+   This is the ranking model typically used for DCG and NDCG.
+
+   Since :math:`\operatorname{lg} 1 = 0`, simply taking the log will result in
+   division by 0 when weights are applied.  The correction for this in the
+   original NDCG paper :cite:p:`ndcg` is to clip the ranks, so that both of the
+   first two positions have discount :math:`\operatorname{lg} 2`.  A different
+   correction somtimes seen is to compute :math:`\operatorname{lg} (k+1)`. This
+   discount supports both; the default is to clip, but if the ``offset`` option
+   is set to a positive number, it is added to the ranks instead.
+
+   :param base: The log base to use.
+   :param offset: An offset to add to ranks before computing logs.
+
+
+   .. py:attribute:: base
+      :type:  float
+
+
+   .. py:attribute:: offset
+      :type:  int
+
+
+   .. py:method:: weight(ranks)
+
+      Compute the discount for the specified ranks.
+
+      Ranks must start with 1.
+
+

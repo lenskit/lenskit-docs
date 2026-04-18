@@ -1,0 +1,150 @@
+lenskit.data.RelationshipSet
+============================
+
+.. py:class:: lenskit.data.RelationshipSet(name, vocabularies, schema, table)
+   :canonical: lenskit.data._relationships.RelationshipSet
+
+   Representation for a set of relationship records.  This is the class for
+   accessing general relationships, with arbitrarily many entity classes
+   involved and repeated relationships allowed.
+
+   For two-entity relationships without duplicates (including relationships
+   formed by coalescing repeated relationships or interactions),
+   :class:`MatrixRelationshipSet` extends this with additional capabilities.
+
+   Relationship sets can be pickled or serialized, and will not save the entire
+   dataset with them.  They are therefore safe to save as component elements
+   during training processes.
+
+   .. note::
+
+       Client code does not need to construct this class; obtain instances from
+       a dataset's :meth:`~lenskit.data.Dataset.relationships` or
+       :meth:`~lenskit.data.Dataset.interactions` method.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: name
+      :type:  str
+
+      The name of the relationship class for these relationships.
+
+
+   .. py:attribute:: schema
+      :type:  lenskit.data.schema.RelationshipSchema
+
+
+   .. py:method:: __getstate__()
+
+
+   .. py:method:: __setstate__(state)
+
+
+   .. py:property:: is_interaction
+      :type: bool
+
+
+      Query whether these relationships represent interactions.
+
+
+   .. py:property:: entities
+      :type: list[str]
+
+
+
+   .. py:property:: attribute_names
+      :type: list[str]
+
+
+
+   .. py:method:: item_lists()
+      :abstractmethod:
+
+
+      Get a view of this relationship set as an item list collection.
+
+      Currently only implemented for :class:`MatrixRelationshipSet`, call
+      :meth:`matrix` first.
+
+
+
+   .. py:method:: count()
+
+
+   .. py:method:: co_occurrences(entity: str, *, group: str | list[str] | None = None, order: str | None = None, include_self: bool = False, dense: Literal[True]) -> lenskit.data.types.NPMatrix[numpy.float32]
+                  co_occurrences(entity: str, *, group: str | list[str] | None = None, order: str | None = None, include_self: bool = False, dense: Literal[False] = False) -> scipy.sparse.coo_array
+
+      Count co-occurrences of the specified entity.  This is useful for
+      counting item co-occurrences for association rules and probabilties, but
+      also has other uses as well.
+
+      This method supports both **ordered** and **unordered** co-occurrences.
+      Unordered co-occurrences just count the number of times the two items
+      appear together, and the resulting matrix is symmetric.
+
+      For ordered co-occurrences, the interactions are ordered by the
+      attribute specified by ``order``, and the resulting matrix ``M`` may not
+      be symmetric.  ``M[i,j]`` counts the number of times item ``j`` has
+      appeared **after** item ``i``.  The order does not need to be global —
+      an attribute recording order *within* a group is sufficient.
+
+      If ``group`` is specified, it controls the grouping for counting
+      co-occurrences. For example, if a relationship connects the ``user``,
+      ``session``, and ``item`` classes, then:
+
+      - ``rs.co_occurrances("item")`` counts the number of times each pair of
+        items appear together in a session.
+      - ``rs.co_occurrances("item", group="user")`` counts the number of times
+        each pair of items were interacted with by the same user, regardless
+        of session.
+
+      :param entity: The name of the entity to count.
+      :param group: The names of grouping entity classes for counting
+                    co-occurrences. The default is to use all entities that are not
+                    being counted.
+      :param order: The name of an attribute to use for ordering interactions to
+                    compute sequential co-occurrences.
+      :param include_self: Include self co-occurrences (interaction counts on the diagonal
+                           of the co-occurrence matrix).
+      :param dense: Pass ``True`` to return a dense co-occurrence matrix.
+
+      :returns: A sparse matrix with the co-occurrence counts.
+
+
+
+   .. py:method:: arrow(*, attributes = None, ids=False)
+
+      Get these relationships and their attributes as a PyArrow table.
+
+      :param attributes: The attributes to select.
+      :param ids: If ``True``, include ID columns for the entities, instead of
+                  just the number columns.
+
+
+
+   .. py:method:: pandas(*, attributes = None, ids=False)
+
+      Get these relationship and their attributes as a PyArrow table.
+
+      :param attributes: The attributes to include in the resulting table.
+      :param ids: If ``True``, include ID columns for the entities, instead of
+                  just the number columns.
+
+
+
+   .. py:method:: matrix(*, row_entity = None, col_entity = None)
+
+      Convert this relationship set into a matrix, coalescing duplicate
+      observations.
+
+      .. versionchanged:: 2025.6
+
+          Removed the fixed defaults for ``row_entity`` and ``col_entity``.
+
+      :param row_entity: The specified row entity of the matrix.  Defaults to the first
+                         entity in the relationship's list of involved entities.
+      :param col_entity: The specified column entity of the matrix. Defaults to the last
+                         entity in the relationship's list of involved entities.
+
+

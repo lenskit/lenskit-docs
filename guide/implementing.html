@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit is particularly designed to excel in research and educational applications, and for that you will often need to write your own components implementing new scoring models, rankers, or other ..." />
 <meta name="description" content="LensKit is particularly designed to excel in research and educational applications, and for that you will often need to write your own components implementing new scoring models, rankers, or other ..." />
 
-    <title>Implementing Components &#8212; LensKit 2025.8.0 documentation</title>
+    <title>Implementing Components &#8212; LensKit 2026.1.0 documentation</title>
   
   
   
@@ -37,9 +37,9 @@
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=9d9b0268" />
   
@@ -49,15 +49,15 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=2c6ac3d7"></script>
-    <script src="../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/documentation_options.js?v=b916904f"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'guide/implementing';</script>
     <script>
@@ -75,7 +75,7 @@
     <link rel="prev" title="Other Components" href="other-components.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.8.0" />
+  <meta name="docsearch:version" content="2026.1.0" />
   </head>
   
   
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2025.8.0 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.8.0 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.1.0 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.1.0 documentation - Home"/>
   
   
 </a></div>
@@ -470,11 +470,11 @@
 </ul>
 </details></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Components and Models</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="conventions.html">Component Conventions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="flexmf.html">Flexible Matrix Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="scorers.html">Scoring Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flexmf.html">Flexible Matrix Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="rankers.html">Ranking Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="other-components.html">Other Components</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Implementing Components</a></li>
@@ -488,6 +488,7 @@
 <li class="toctree-l2"><a class="reference internal" href="evaluation/predictions.html">Evaluating Rating Predictions</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation/collection.html">Collecting and Aggregating Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="documenting.html">Documenting Experiments</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Utilities and Diagnostics</span></p>
@@ -577,15 +578,15 @@ implement your training and scoring logic, and let LensKit do the rest.</p>
 <li><p>Defining a <code class="docutils literal notranslate"><span class="pre">__call__</span></code> method for the component class that performs the
 component’s actual computation.</p></li>
 <li><p>If the component supports training, implementing the
-<a class="reference internal" href="../api/training.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a> protocol by defining a
-<a class="reference internal" href="../api/training.html#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a> method, or implement
+<a class="reference internal" href="../api/lenskit/training/Trainable.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a> protocol by defining a
+<a class="reference internal" href="../api/lenskit/training/Trainable.html#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a> method, or implement
 <a class="reference internal" href="#iterative-training"><span class="std std-ref">Iterative Training</span></a>.</p></li>
 </ol>
 <p>A simple example component that computes a linear weighted blend of the scores
 from two other components could look like this:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># This file is part of LensKit.</span>
 <span class="c1"># Copyright (C) 2018-2023 Boise State University.</span>
-<span class="c1"># Copyright (C) 2023-2025 Drexel University.</span>
+<span class="c1"># Copyright (C) 2023-2026 Drexel University.</span>
 <span class="c1"># Licensed under the MIT license, see LICENSE.md for details.</span>
 <span class="c1"># SPDX-License-Identifier: MIT</span>
 
@@ -672,7 +673,7 @@ configuration conventions.</p>
 <p>The heart of the component interface is the <code class="docutils literal notranslate"><span class="pre">__call__</span></code> method (components are
 just callable objects).  This method takes the component inputs as parameters,
 and returns the component’s result.</p>
-<p>Most components return an <a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>.  Scoring components usually
+<p>Most components return an <a class="reference internal" href="../api/lenskit/data/ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a>.  Scoring components usually
 have the following signature:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">QueryInput</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ItemList</span><span class="p">:</span>
     <span class="o">...</span>
@@ -683,7 +684,7 @@ input; the <code class="docutils literal notranslate"><span class="pre">items</s
 candidate items for recommendation).  The scorer then returns a list of scored
 items.</p>
 <p>Most component begin by converting the query to a
-<a class="reference internal" href="../api/lenskit.data.RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a>:</p>
+<a class="reference internal" href="../api/lenskit/data/RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a>:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">:</span> <span class="n">QueryInput</span><span class="p">,</span> <span class="n">items</span><span class="p">:</span> <span class="n">ItemList</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ItemList</span><span class="p">:</span>
     <span class="n">query</span> <span class="o">=</span> <span class="n">RecQuery</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
     <span class="o">...</span>
@@ -702,7 +703,7 @@ can simply return a list with no scores:</p>
 </div>
 <p>Components do need to be able to handle items in <code class="docutils literal notranslate"><span class="pre">items</span></code> that were not seen
 at training time.  If the component has saved the training item vocabulary, the
-easiest way to do this is to use <a class="reference internal" href="../api/lenskit.data.ItemList.html#lenskit.data.ItemList.numbers" title="lenskit.data.ItemList.numbers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">numbers()</span></code></a>: with
+easiest way to do this is to use <a class="reference internal" href="../api/lenskit/data/ItemList.html#lenskit.data.ItemList.numbers" title="lenskit.data.ItemList.numbers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">numbers()</span></code></a>: with
 <code class="docutils literal notranslate"><span class="pre">missing=&quot;negative&quot;</span></code>:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">i_nums</span> <span class="o">=</span> <span class="n">items</span><span class="o">.</span><span class="n">numbers</span><span class="p">(</span><span class="n">vocabulary</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">items</span><span class="p">,</span> <span class="n">missing</span><span class="o">=</span><span class="s2">&quot;negative&quot;</span><span class="p">)</span>
 <span class="n">scorable_mask</span> <span class="o">=</span> <span class="n">i_nums</span> <span class="o">&gt;=</span> <span class="mi">0</span>
@@ -712,19 +713,19 @@ easiest way to do this is to use <a class="reference internal" href="../api/lens
 <section id="component-training">
 <h2>Component Training<a class="headerlink" href="#component-training" title="Link to this heading">#</a></h2>
 <p>Components that need to train models on training data must implement the
-<a class="reference internal" href="../api/training.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a> protocol, either directly or through a
-helper implementation like <a class="reference internal" href="../api/training.html#lenskit.training.UsesTrainer" title="lenskit.training.UsesTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UsesTrainer</span></code></a>.  The
+<a class="reference internal" href="../api/lenskit/training/Trainable.html#lenskit.training.Trainable" title="lenskit.training.Trainable"><code class="xref py py-class docutils literal notranslate"><span class="pre">Trainable</span></code></a> protocol, either directly or through a
+helper implementation like <a class="reference internal" href="../api/lenskit/training/UsesTrainer.html#lenskit.training.UsesTrainer" title="lenskit.training.UsesTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UsesTrainer</span></code></a>.  The
 core of the <code class="docutils literal notranslate"><span class="pre">Trainable</span></code> protocol is the
-<a class="reference internal" href="../api/training.html#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a> method, which takes a
-<a class="reference internal" href="../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> and <a class="reference internal" href="../api/training.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainingOptions</span></code></a>
+<a class="reference internal" href="../api/lenskit/training/Trainable.html#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a> method, which takes a
+<a class="reference internal" href="../api/lenskit/data/Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> and <a class="reference internal" href="../api/lenskit/training/TrainingOptions.html#lenskit.training.TrainingOptions" title="lenskit.training.TrainingOptions"><code class="xref py py-class docutils literal notranslate"><span class="pre">TrainingOptions</span></code></a>
 and trains the model.</p>
 <p>The details of training will vary significantly from model to model.  Typically,
 though, it follows the following steps:</p>
 <ol class="arabic simple">
 <li><p>Extract, prepare, and preprocess training data as needed for the model.</p></li>
 <li><p>Compute the model’s parameters, either directly (i.e.
-<a class="reference internal" href="../api/lenskit.basic.html#lenskit.basic.BiasScorer" title="lenskit.basic.BiasScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BiasScorer</span></code></a>) or through an optimization method (i.e.
-<a class="reference internal" href="../api/lenskit.als.html#lenskit.als.ImplicitMFScorer" title="lenskit.als.ImplicitMFScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImplicitMFScorer</span></code></a>).</p></li>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">BiasScorer</span></code>) or through an optimization method (i.e.
+<a class="reference internal" href="../api/lenskit/als/ImplicitMFScorer.html#lenskit.als.ImplicitMFScorer" title="lenskit.als.ImplicitMFScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ImplicitMFScorer</span></code></a>).</p></li>
 <li><p>Finalize the model parameters and clean up any temporary data.</p></li>
 </ol>
 <p>Learned model parameters are then stored as attributes on the component class,
@@ -733,35 +734,35 @@ either directly or in a container object (such as a PyTorch
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If the model is already trained and the
-<a class="reference internal" href="../api/training.html#lenskit.training.TrainingOptions.retrain" title="lenskit.training.TrainingOptions.retrain"><code class="xref py py-attr docutils literal notranslate"><span class="pre">retrain</span></code></a> is <code class="docutils literal notranslate"><span class="pre">False</span></code>, then the
+<a class="reference internal" href="../api/lenskit/training/TrainingOptions.html#lenskit.training.TrainingOptions.retrain" title="lenskit.training.TrainingOptions.retrain"><code class="xref py py-attr docutils literal notranslate"><span class="pre">retrain</span></code></a> is <code class="docutils literal notranslate"><span class="pre">False</span></code>, then the
 <code class="docutils literal notranslate"><span class="pre">train</span></code> method should return without any training.
-<a class="reference internal" href="../api/training.html#lenskit.training.UsesTrainer" title="lenskit.training.UsesTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UsesTrainer</span></code></a> handles this automatically.</p>
+<a class="reference internal" href="../api/lenskit/training/UsesTrainer.html#lenskit.training.UsesTrainer" title="lenskit.training.UsesTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UsesTrainer</span></code></a> handles this automatically.</p>
 </div>
 <section id="iterative-training">
 <span id="id1"></span><h3>Iterative Training<a class="headerlink" href="#iterative-training" title="Link to this heading">#</a></h3>
-<p>The <a class="reference internal" href="../api/training.html#lenskit.training.UsesTrainer" title="lenskit.training.UsesTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.training.UsesTrainer</span></code></a> class and its companion
-<a class="reference internal" href="../api/training.html#lenskit.training.ModelTrainer" title="lenskit.training.ModelTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelTrainer</span></code></a> provide a standardized interface and
+<p>The <a class="reference internal" href="../api/lenskit/training/UsesTrainer.html#lenskit.training.UsesTrainer" title="lenskit.training.UsesTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.training.UsesTrainer</span></code></a> class and its companion
+<a class="reference internal" href="../api/lenskit/training/ModelTrainer.html#lenskit.training.ModelTrainer" title="lenskit.training.ModelTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelTrainer</span></code></a> provide a standardized interface and
 outer training loop for training models with iterative methods that pass through
 the training data in multiple <em>epochs</em>.  Modeling components that use this
-support extend <a class="reference internal" href="../api/training.html#lenskit.training.UsesTrainer" title="lenskit.training.UsesTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UsesTrainer</span></code></a> in addition to
-<a class="reference internal" href="../api/lenskit.pipeline.Component.html#lenskit.pipeline.Component" title="lenskit.pipeline.Component"><code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code></a>, and implement the
-<a class="reference internal" href="../api/training.html#lenskit.training.UsesTrainer.create_trainer" title="lenskit.training.UsesTrainer.create_trainer"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_trainer()</span></code></a> method instead of
-<a class="reference internal" href="../api/training.html#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a>.  Iteratively-trainable components
+support extend <a class="reference internal" href="../api/lenskit/training/UsesTrainer.html#lenskit.training.UsesTrainer" title="lenskit.training.UsesTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UsesTrainer</span></code></a> in addition to
+<code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code>, and implement the
+<a class="reference internal" href="../api/lenskit/training/UsesTrainer.html#lenskit.training.UsesTrainer.create_trainer" title="lenskit.training.UsesTrainer.create_trainer"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_trainer()</span></code></a> method instead of
+<a class="reference internal" href="../api/lenskit/training/Trainable.html#lenskit.training.Trainable.train" title="lenskit.training.Trainable.train"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train()</span></code></a>.  Iteratively-trainable components
 should also have an <code class="docutils literal notranslate"><span class="pre">epochs</span></code> setting on their configuration class that
 specifies the number of training epochs to run.</p>
 <p>Training itself is handled by a separate <em>trainer class</em> that extends
-<a class="reference internal" href="../api/training.html#lenskit.training.ModelTrainer" title="lenskit.training.ModelTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelTrainer</span></code></a>, an instance of which is created by
-<a class="reference internal" href="../api/training.html#lenskit.training.UsesTrainer.create_trainer" title="lenskit.training.UsesTrainer.create_trainer"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_trainer()</span></code></a>.</p>
+<a class="reference internal" href="../api/lenskit/training/ModelTrainer.html#lenskit.training.ModelTrainer" title="lenskit.training.ModelTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ModelTrainer</span></code></a>, an instance of which is created by
+<a class="reference internal" href="../api/lenskit/training/UsesTrainer.html#lenskit.training.UsesTrainer.create_trainer" title="lenskit.training.UsesTrainer.create_trainer"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_trainer()</span></code></a>.</p>
 <p>Model training with an iterative trainer happens in three steps:</p>
 <ol class="arabic simple">
 <li><p>Set up initial data structures, preparation, etc. needed for model training.  This can
-be implemented either directly in <a class="reference internal" href="../api/training.html#lenskit.training.UsesTrainer.create_trainer" title="lenskit.training.UsesTrainer.create_trainer"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_trainer()</span></code></a>, or
+be implemented either directly in <a class="reference internal" href="../api/lenskit/training/UsesTrainer.html#lenskit.training.UsesTrainer.create_trainer" title="lenskit.training.UsesTrainer.create_trainer"><code class="xref py py-meth docutils literal notranslate"><span class="pre">create_trainer()</span></code></a>, or
 in the model trainer’s constructor (<code class="docutils literal notranslate"><span class="pre">__init__</span></code> method).</p></li>
 <li><p>Train the model for a single epoch through the training data, in the
-<a class="reference internal" href="../api/training.html#lenskit.training.ModelTrainer.train_epoch" title="lenskit.training.ModelTrainer.train_epoch"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train_epoch()</span></code></a> method implemented on the
+<a class="reference internal" href="../api/lenskit/training/ModelTrainer.html#lenskit.training.ModelTrainer.train_epoch" title="lenskit.training.ModelTrainer.train_epoch"><code class="xref py py-meth docutils literal notranslate"><span class="pre">train_epoch()</span></code></a> method implemented on the
 model trainer subclass.</p></li>
 <li><p>Perform any final steps and training data cleanup in
-<a class="reference internal" href="../api/training.html#lenskit.training.ModelTrainer.finalize" title="lenskit.training.ModelTrainer.finalize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">finalize()</span></code></a>, if necessary.  Placing a
+<a class="reference internal" href="../api/lenskit/training/ModelTrainer.html#lenskit.training.ModelTrainer.finalize" title="lenskit.training.ModelTrainer.finalize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">finalize()</span></code></a>, if necessary.  Placing a
 PyTorch module back in evaluation mode is an example of something that would
 go here.</p></li>
 </ol>
@@ -771,7 +772,7 @@ validation data (used by the hyperparameter tuner).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>If a component implements iterative training through
-<a class="reference internal" href="../api/training.html#lenskit.training.UsesTrainer" title="lenskit.training.UsesTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UsesTrainer</span></code></a>, the LensKit hyperparameter tuner
+<a class="reference internal" href="../api/lenskit/training/UsesTrainer.html#lenskit.training.UsesTrainer" title="lenskit.training.UsesTrainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UsesTrainer</span></code></a>, the LensKit hyperparameter tuner
 will use the trainer directly to implement early stopping for tuning trials
 and dynamically find a good epoch count.</p>
 </div>
@@ -780,11 +781,13 @@ and dynamically find a good epoch count.</p>
 <span id="training-config"></span><h3>Configuring Training<a class="headerlink" href="#configuring-training" title="Link to this heading">#</a></h3>
 <p>Most options for training, such as the number of epochs or the loss function,
 should be set through the component’s configuration.</p>
-<p>Some components need options that don’t affect the semantics of the model or
-training, and may be environment-specific.  For example, <a class="reference internal" href="../api/lenskit.knn.html#lenskit.knn.EASEScorer" title="lenskit.knn.EASEScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">EASE</span></code></a> supports both PyTorch and SciPy matrix inversion
-routines.</p>
+<p>Some components support additional options that don’t affect the semantics of
+the model or training, and may be environment-specific.  For example,
+<code class="xref py py-class docutils literal notranslate"><span class="pre">EASE</span></code> supports both PyTorch and SciPy matrix
+inversion routines, with the ideal option depending both on the data set and
+whether the system has a GPU.</p>
 <p>Such options can be exposed via <em>environment variables</em> (e.g.
-<span class="target" id="index-0"></span><a class="reference internal" href="../api/lenskit.knn.ease.html#envvar-LK_EASE_SOLVER"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LK_EASE_SOLVER</span></code></a>). If your component has such options, access them
+<span class="target" id="index-0"></span><a class="reference internal" href="../api/lenskit/knn/ease/EASEScorer.html#envvar-LK_EASE_SOLVER"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LK_EASE_SOLVER</span></code></a>). If your component has such options, access them
 through <code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.trainer.TrainingOptions.env_var</span></code>.  This method will first
 look up the variable in the environment variable overrides specified in the
 training options, and then in the OS environment variables, allowing client code
@@ -847,7 +850,7 @@ flexibility in how they configure your component.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics">Basics</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-configuration">Component Configuration</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-operation">Component Operation</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-training">Component Training</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#component-training">Component Training</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#iterative-training">Iterative Training</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#configuring-training">Configuring Training</a></li>
 </ul>
@@ -896,7 +899,7 @@ flexibility in how they configure your component.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.8.0.</div>
+        <div class="footer-item">LensKit version 2026.1.0.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

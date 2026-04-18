@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Python Module Index &#8212; LensKit 2025.8.0 documentation</title>
+    <title>Python Module Index &#8212; LensKit 2026.1.0 documentation</title>
   
   
   
@@ -30,9 +30,9 @@
 <link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
-    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="_static/css/custom.css?v=9d9b0268" />
   
@@ -42,53 +42,452 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=2c6ac3d7"></script>
-    <script src="_static/doctools.js?v=9bcbadda"></script>
-    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/documentation_options.js?v=b916904f"></script>
+    <script src="_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs"></script>
-    <script type="module" src="https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs"></script>
-    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";import elkLayouts from "https://cdn.jsdelivr.net/npm/@mermaid-js/layout-elk@0.1.4/dist/mermaid-layout-elk.esm.min.mjs";mermaid.registerLayoutLoaders(elkLayouts);mermaid.initialize({startOnLoad:false});</script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
-    <script type="module">
-import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.2.0/dist/mermaid.esm.min.mjs";
-const load = async () => {
-    await mermaid.run();
-    const all_mermaids = document.querySelectorAll(".mermaid");
-    const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
-    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
-    if(mermaids_to_add_zoom > 0) {
-        var svgs = d3.selectAll(".mermaid svg");
-        if(all_mermaids.length !== mermaids_processed.length) {
-            // try again in a sec, wait for mermaids to load
-            setTimeout(load, 200);
-            return;
-        } else if(svgs.size() !== mermaids_to_add_zoom) {
-            // try again in a sec, wait for mermaids to load
-            setTimeout(load, 200);
-            return;
-        } else {
-            svgs.each(function() {
-                var svg = d3.select(this);
-                svg.html("<g class='wrapper'>" + svg.html() + "</g>");
-                var inner = svg.select("g");
-                var zoom = d3.zoom().on("zoom", function(event) {
-                    inner.attr("transform", event.transform);
-                });
-                svg.call(zoom);
-            });
-        }
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}`;
+    document.head.appendChild(defaultStyle);
+
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+    document.head.appendChild(fullscreenStyle);
+}
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
     }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
+        return brightness < 128;
+    }
+    // console.log("No dark or light theme detected, defaulting to light theme");
+    return false;
 };
 
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
+
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        all_mermaids.forEach((el) => {
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+        await mermaid.run();
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
+    const mermaids_processed = document.querySelectorAll(".mermaid[data-processed='true']");
+
+    if ("True" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? all_mermaids.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll(".mermaid svg");
+            if(all_mermaids.length !== mermaids_processed.length) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            } else if(svgs.size() !== mermaids_to_add_zoom) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            } else {
+                svgs.each(function() {
+                    var svg = d3.select(this);
+                    svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+                    var inner = svg.select("g");
+                    var zoom = d3.zoom().on("zoom", function(event) {
+                        inner.attr("transform", event.transform);
+                    });
+                    svg.call(zoom);
+                });
+            }
+        }
+    } else if(all_mermaids.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(() => runMermaid(false), 200);
+        return;
+    }
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("True" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        container.appendChild(fullscreenBtn);
+    });
+};
+
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
 window.addEventListener("load", load);
-</script>
+window.runMermaid = runMermaid;</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'py-modindex';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
@@ -104,7 +503,7 @@ window.addEventListener("load", load);
 
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.8.0" />
+  <meta name="docsearch:version" content="2026.1.0" />
 
 
   </head>
@@ -172,8 +571,8 @@ window.addEventListener("load", load);
       
     
     
-    <img src="_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2025.8.0 documentation - Home"/>
-    <img src="_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.8.0 documentation - Home"/>
+    <img src="_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.1.0 documentation - Home"/>
+    <img src="_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.1.0 documentation - Home"/>
   
   
 </a></div>
@@ -512,317 +911,357 @@ window.addEventListener("load", load);
        <td><img src="_static/minus.png" class="toggler"
               id="toggle-1" style="display: none" alt="-" /></td>
        <td>
-       <code class="xref">lenskit</code></td><td>
+       <a href="api/lenskit/index.html#module-lenskit"><code class="xref">lenskit</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit._accel.html#module-lenskit._accel"><code class="xref">lenskit._accel</code></a></td><td>
+       <a href="api/lenskit/als/index.html#module-lenskit.als"><code class="xref">lenskit.als</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.als.html#module-lenskit.als"><code class="xref">lenskit.als</code></a></td><td>
+       <a href="api/lenskit/basic/index.html#module-lenskit.basic"><code class="xref">lenskit.basic</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.basic.html#module-lenskit.basic"><code class="xref">lenskit.basic</code></a></td><td>
+       <a href="api/lenskit/basic/bias/index.html#module-lenskit.basic.bias"><code class="xref">lenskit.basic.bias</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.basic.bias.html#module-lenskit.basic.bias"><code class="xref">lenskit.basic.bias</code></a></td><td>
+       <a href="api/lenskit/basic/candidates/index.html#module-lenskit.basic.candidates"><code class="xref">lenskit.basic.candidates</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.basic.candidates.html#module-lenskit.basic.candidates"><code class="xref">lenskit.basic.candidates</code></a></td><td>
+       <a href="api/lenskit/basic/composite/index.html#module-lenskit.basic.composite"><code class="xref">lenskit.basic.composite</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.basic.composite.html#module-lenskit.basic.composite"><code class="xref">lenskit.basic.composite</code></a></td><td>
+       <a href="api/lenskit/basic/history/index.html#module-lenskit.basic.history"><code class="xref">lenskit.basic.history</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.basic.history.html#module-lenskit.basic.history"><code class="xref">lenskit.basic.history</code></a></td><td>
+       <a href="api/lenskit/basic/popularity/index.html#module-lenskit.basic.popularity"><code class="xref">lenskit.basic.popularity</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.basic.popularity.html#module-lenskit.basic.popularity"><code class="xref">lenskit.basic.popularity</code></a></td><td>
+       <a href="api/lenskit/basic/random/index.html#module-lenskit.basic.random"><code class="xref">lenskit.basic.random</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.basic.random.html#module-lenskit.basic.random"><code class="xref">lenskit.basic.random</code></a></td><td>
+       <a href="api/lenskit/basic/topn/index.html#module-lenskit.basic.topn"><code class="xref">lenskit.basic.topn</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.basic.topn.html#module-lenskit.basic.topn"><code class="xref">lenskit.basic.topn</code></a></td><td>
+       <a href="api/lenskit/batch/index.html#module-lenskit.batch"><code class="xref">lenskit.batch</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/batch.html#module-lenskit.batch"><code class="xref">lenskit.batch</code></a></td><td>
+       <a href="api/lenskit/config/index.html#module-lenskit.config"><code class="xref">lenskit.config</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/config.html#module-lenskit.config"><code class="xref">lenskit.config</code></a></td><td>
+       <a href="api/lenskit/config/common/index.html#module-lenskit.config.common"><code class="xref">lenskit.config.common</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/data.html#module-lenskit.data"><code class="xref">lenskit.data</code></a></td><td>
+       <a href="api/lenskit/data/index.html#module-lenskit.data"><code class="xref">lenskit.data</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.data.schema.html#module-lenskit.data.schema"><code class="xref">lenskit.data.schema</code></a></td><td>
+       <a href="api/lenskit/data/accum/index.html#module-lenskit.data.accum"><code class="xref">lenskit.data.accum</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/data-types.html#module-lenskit.data.types"><code class="xref">lenskit.data.types</code></a></td><td>
+       <a href="api/lenskit/data/amazon/index.html#module-lenskit.data.amazon"><code class="xref">lenskit.data.amazon</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/diagnostics.html#module-lenskit.diagnostics"><code class="xref">lenskit.diagnostics</code></a></td><td>
+       <a href="api/lenskit/data/matrix/index.html#module-lenskit.data.matrix"><code class="xref">lenskit.data.matrix</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.flexmf.html#module-lenskit.flexmf"><code class="xref">lenskit.flexmf</code></a></td><td>
+       <a href="api/lenskit/data/movielens/index.html#module-lenskit.data.movielens"><code class="xref">lenskit.data.movielens</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.funksvd.html#module-lenskit.funksvd"><code class="xref">lenskit.funksvd</code></a></td><td>
+       <a href="api/lenskit/data/msweb/index.html#module-lenskit.data.msweb"><code class="xref">lenskit.data.msweb</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.graphs.html#module-lenskit.graphs"><code class="xref">lenskit.graphs</code></a></td><td>
+       <a href="api/lenskit/data/repr/index.html#module-lenskit.data.repr"><code class="xref">lenskit.data.repr</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.graphs.lightgcn.html#module-lenskit.graphs.lightgcn"><code class="xref">lenskit.graphs.lightgcn</code></a></td><td>
+       <a href="api/lenskit/data/schema/index.html#module-lenskit.data.schema"><code class="xref">lenskit.data.schema</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.hpf.html#module-lenskit.hpf"><code class="xref">lenskit.hpf</code></a></td><td>
+       <a href="api/lenskit/data/types/index.html#module-lenskit.data.types"><code class="xref">lenskit.data.types</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.implicit.html#module-lenskit.implicit"><code class="xref">lenskit.implicit</code></a></td><td>
+       <a href="api/lenskit/diagnostics/index.html#module-lenskit.diagnostics"><code class="xref">lenskit.diagnostics</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.knn.html#module-lenskit.knn"><code class="xref">lenskit.knn</code></a></td><td>
+       <a href="api/lenskit/flexmf/index.html#module-lenskit.flexmf"><code class="xref">lenskit.flexmf</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.knn.ease.html#module-lenskit.knn.ease"><code class="xref">lenskit.knn.ease</code></a></td><td>
+       <a href="api/lenskit/funksvd/index.html#module-lenskit.funksvd"><code class="xref">lenskit.funksvd</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.knn.item.html#module-lenskit.knn.item"><code class="xref">lenskit.knn.item</code></a></td><td>
+       <a href="api/lenskit/graphs/index.html#module-lenskit.graphs"><code class="xref">lenskit.graphs</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.knn.slim.html#module-lenskit.knn.slim"><code class="xref">lenskit.knn.slim</code></a></td><td>
+       <a href="api/lenskit/graphs/lightgcn/index.html#module-lenskit.graphs.lightgcn"><code class="xref">lenskit.graphs.lightgcn</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.knn.user.html#module-lenskit.knn.user"><code class="xref">lenskit.knn.user</code></a></td><td>
+       <a href="api/lenskit/hpf/index.html#module-lenskit.hpf"><code class="xref">lenskit.hpf</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.logging.html#module-lenskit.logging"><code class="xref">lenskit.logging</code></a></td><td>
+       <a href="api/lenskit/implicit/index.html#module-lenskit.implicit"><code class="xref">lenskit.implicit</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.logging.config.html#module-lenskit.logging.config"><code class="xref">lenskit.logging.config</code></a></td><td>
+       <a href="api/lenskit/knn/index.html#module-lenskit.knn"><code class="xref">lenskit.knn</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.logging.formats.html#module-lenskit.logging.formats"><code class="xref">lenskit.logging.formats</code></a></td><td>
+       <a href="api/lenskit/knn/ease/index.html#module-lenskit.knn.ease"><code class="xref">lenskit.knn.ease</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.logging.monitor.html#module-lenskit.logging.monitor"><code class="xref">lenskit.logging.monitor</code></a></td><td>
+       <a href="api/lenskit/knn/item/index.html#module-lenskit.knn.item"><code class="xref">lenskit.knn.item</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.logging.multiprocess.html#module-lenskit.logging.multiprocess"><code class="xref">lenskit.logging.multiprocess</code></a></td><td>
+       <a href="api/lenskit/knn/slim/index.html#module-lenskit.knn.slim"><code class="xref">lenskit.knn.slim</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.logging.processors.html#module-lenskit.logging.processors"><code class="xref">lenskit.logging.processors</code></a></td><td>
+       <a href="api/lenskit/knn/user/index.html#module-lenskit.knn.user"><code class="xref">lenskit.knn.user</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.logging.progress.html#module-lenskit.logging.progress"><code class="xref">lenskit.logging.progress</code></a></td><td>
+       <a href="api/lenskit/lazy/index.html#module-lenskit.lazy"><code class="xref">lenskit.lazy</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.logging.resource.html#module-lenskit.logging.resource"><code class="xref">lenskit.logging.resource</code></a></td><td>
+       <a href="api/lenskit/logging/index.html#module-lenskit.logging"><code class="xref">lenskit.logging</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.logging.stopwatch.html#module-lenskit.logging.stopwatch"><code class="xref">lenskit.logging.stopwatch</code></a></td><td>
+       <a href="api/lenskit/logging/multiprocess/index.html#module-lenskit.logging.multiprocess"><code class="xref">lenskit.logging.multiprocess</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.logging.tasks.html#module-lenskit.logging.tasks"><code class="xref">lenskit.logging.tasks</code></a></td><td>
+       <a href="api/lenskit/logging/progress/index.html#module-lenskit.logging.progress"><code class="xref">lenskit.logging.progress</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.logging.tracing.html#module-lenskit.logging.tracing"><code class="xref">lenskit.logging.tracing</code></a></td><td>
+       <a href="api/lenskit/logging/tasks/index.html#module-lenskit.logging.tasks"><code class="xref">lenskit.logging.tasks</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.logging.worker.html#module-lenskit.logging.worker"><code class="xref">lenskit.logging.worker</code></a></td><td>
+       <a href="api/lenskit/math/index.html#module-lenskit.math"><code class="xref">lenskit.math</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.math.html#module-lenskit.math"><code class="xref">lenskit.math</code></a></td><td>
+       <a href="api/lenskit/math/solve/index.html#module-lenskit.math.solve"><code class="xref">lenskit.math.solve</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.math.solve.html#module-lenskit.math.solve"><code class="xref">lenskit.math.solve</code></a></td><td>
+       <a href="api/lenskit/math/sparse/index.html#module-lenskit.math.sparse"><code class="xref">lenskit.math.sparse</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.math.sparse.html#module-lenskit.math.sparse"><code class="xref">lenskit.math.sparse</code></a></td><td>
+       <a href="api/lenskit/metrics/index.html#module-lenskit.metrics"><code class="xref">lenskit.metrics</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/metrics.html#module-lenskit.metrics"><code class="xref">lenskit.metrics</code></a></td><td>
+       <a href="api/lenskit/metrics/basic/index.html#module-lenskit.metrics.basic"><code class="xref">lenskit.metrics.basic</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/operations.html#module-lenskit.operations"><code class="xref">lenskit.operations</code></a></td><td>
+       <a href="api/lenskit/metrics/bulk/index.html#module-lenskit.metrics.bulk"><code class="xref">lenskit.metrics.bulk</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.parallel.html#module-lenskit.parallel"><code class="xref">lenskit.parallel</code></a></td><td>
+       <a href="api/lenskit/metrics/predict/index.html#module-lenskit.metrics.predict"><code class="xref">lenskit.metrics.predict</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.parallel.config.html#module-lenskit.parallel.config"><code class="xref">lenskit.parallel.config</code></a></td><td>
+       <a href="api/lenskit/metrics/ranking/index.html#module-lenskit.metrics.ranking"><code class="xref">lenskit.metrics.ranking</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.parallel.pool.html#module-lenskit.parallel.pool"><code class="xref">lenskit.parallel.pool</code></a></td><td>
+       <a href="api/lenskit/metrics/reranking/index.html#module-lenskit.metrics.reranking"><code class="xref">lenskit.metrics.reranking</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.parallel.ray.html#module-lenskit.parallel.ray"><code class="xref">lenskit.parallel.ray</code></a></td><td>
+       <a href="api/lenskit/operations/index.html#module-lenskit.operations"><code class="xref">lenskit.operations</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.parallel.sequential.html#module-lenskit.parallel.sequential"><code class="xref">lenskit.parallel.sequential</code></a></td><td>
+       <a href="api/lenskit/parallel/index.html#module-lenskit.parallel"><code class="xref">lenskit.parallel</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.parallel.serialize.html#module-lenskit.parallel.serialize"><code class="xref">lenskit.parallel.serialize</code></a></td><td>
+       <a href="api/lenskit/parallel/config/index.html#module-lenskit.parallel.config"><code class="xref">lenskit.parallel.config</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.parallel.worker.html#module-lenskit.parallel.worker"><code class="xref">lenskit.parallel.worker</code></a></td><td>
+       <a href="api/lenskit/parallel/ray/index.html#module-lenskit.parallel.ray"><code class="xref">lenskit.parallel.ray</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/pipeline.html#module-lenskit.pipeline"><code class="xref">lenskit.pipeline</code></a></td><td>
+       <a href="api/lenskit/pipeline/index.html#module-lenskit.pipeline"><code class="xref">lenskit.pipeline</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.random.html#module-lenskit.random"><code class="xref">lenskit.random</code></a></td><td>
+       <a href="api/lenskit/pipeline/components/index.html#module-lenskit.pipeline.components"><code class="xref">lenskit.pipeline.components</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.sklearn.html#module-lenskit.sklearn"><code class="xref">lenskit.sklearn</code></a></td><td>
+       <a href="api/lenskit/pipeline/config/index.html#module-lenskit.pipeline.config"><code class="xref">lenskit.pipeline.config</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.sklearn.nmf.html#module-lenskit.sklearn.nmf"><code class="xref">lenskit.sklearn.nmf</code></a></td><td>
+       <a href="api/lenskit/pipeline/nodes/index.html#module-lenskit.pipeline.nodes"><code class="xref">lenskit.pipeline.nodes</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.sklearn.svd.html#module-lenskit.sklearn.svd"><code class="xref">lenskit.sklearn.svd</code></a></td><td>
+       <a href="api/lenskit/random/index.html#module-lenskit.random"><code class="xref">lenskit.random</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/splitting.html#module-lenskit.splitting"><code class="xref">lenskit.splitting</code></a></td><td>
+       <a href="api/lenskit/reranking/index.html#module-lenskit.reranking"><code class="xref">lenskit.reranking</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/state.html#module-lenskit.state"><code class="xref">lenskit.state</code></a></td><td>
+       <a href="api/lenskit/reranking/fair/index.html#module-lenskit.reranking.fair"><code class="xref">lenskit.reranking.fair</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.stats.html#module-lenskit.stats"><code class="xref">lenskit.stats</code></a></td><td>
+       <a href="api/lenskit/sklearn/index.html#module-lenskit.sklearn"><code class="xref">lenskit.sklearn</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.stochastic.html#module-lenskit.stochastic"><code class="xref">lenskit.stochastic</code></a></td><td>
+       <a href="api/lenskit/sklearn/nmf/index.html#module-lenskit.sklearn.nmf"><code class="xref">lenskit.sklearn.nmf</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/lenskit.torch.html#module-lenskit.torch"><code class="xref">lenskit.torch</code></a></td><td>
+       <a href="api/lenskit/sklearn/svd/index.html#module-lenskit.sklearn.svd"><code class="xref">lenskit.sklearn.svd</code></a></td><td>
        <em></em></td></tr>
      <tr class="cg-1">
        <td></td>
        <td>&#160;&#160;&#160;
-       <a href="api/training.html#module-lenskit.training"><code class="xref">lenskit.training</code></a></td><td>
+       <a href="api/lenskit/splitting/index.html#module-lenskit.splitting"><code class="xref">lenskit.splitting</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="api/lenskit/state/index.html#module-lenskit.state"><code class="xref">lenskit.state</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="api/lenskit/stats/index.html#module-lenskit.stats"><code class="xref">lenskit.stats</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="api/lenskit/stochastic/index.html#module-lenskit.stochastic"><code class="xref">lenskit.stochastic</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="api/lenskit/testing/index.html#module-lenskit.testing"><code class="xref">lenskit.testing</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="api/lenskit/torch/index.html#module-lenskit.torch"><code class="xref">lenskit.torch</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="api/lenskit/training/index.html#module-lenskit.training"><code class="xref">lenskit.training</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="api/lenskit/tuning/index.html#module-lenskit.tuning"><code class="xref">lenskit.tuning</code></a></td><td>
+       <em></em></td></tr>
+     <tr class="cg-1">
+       <td></td>
+       <td>&#160;&#160;&#160;
+       <a href="api/lenskit/tuning/spec/index.html#module-lenskit.tuning.spec"><code class="xref">lenskit.tuning.spec</code></a></td><td>
        <em></em></td></tr>
    </table>
 
@@ -872,7 +1311,7 @@ window.addEventListener("load", load);
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.8.0.</div>
+        <div class="footer-item">LensKit version 2026.1.0.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

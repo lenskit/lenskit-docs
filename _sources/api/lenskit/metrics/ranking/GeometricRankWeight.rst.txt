@@ -1,0 +1,48 @@
+lenskit.metrics.ranking.GeometricRankWeight
+===========================================
+
+.. py:class:: lenskit.metrics.ranking.GeometricRankWeight(patience = 0.85)
+   :canonical: lenskit.metrics.ranking._weighting.GeometricRankWeight
+
+   Bases: :py:obj:`RankWeight`
+
+
+   Geometric cascade weighting for result ranks.
+
+   This is the ranking model used by RBP :cite:p:`rbp`.
+
+   For patience :math:`p`, the discount is given by :math:`p^{k-1}`.  The sum
+   of this infinite series is :math:`\frac{1}{1 - p}`.
+
+   :param patience: The patience parameter :math:`p`.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: patience
+      :type:  float
+
+
+   .. py:method:: weight(ranks)
+
+      Compute the discount for the specified ranks.
+
+      Ranks must start with 1.
+
+
+
+   .. py:method:: log_weight(ranks)
+
+      Compute the (natural) log of the discount for the specified ranks.
+
+      Ranks must start with 1.
+
+
+
+   .. py:method:: series_sum()
+
+      Get the sum of the infinite series of this discount function, if known.
+      Some metrics (e.g. :func:`~lenskit.metrics.RBP`) will use this to
+      normalize their measurements.
+
+

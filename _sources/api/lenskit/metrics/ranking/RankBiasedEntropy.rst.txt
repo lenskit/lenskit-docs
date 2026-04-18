@@ -1,0 +1,48 @@
+lenskit.metrics.ranking.RankBiasedEntropy
+=========================================
+
+.. py:class:: lenskit.metrics.ranking.RankBiasedEntropy(dataset, attribute, n = None, *, weight = None)
+   :canonical: lenskit.metrics.ranking._entropy.RankBiasedEntropy
+
+   Bases: :py:obj:`lenskit.metrics.ranking._base.ListMetric`, :py:obj:`lenskit.metrics.ranking._base.RankingMetricBase`
+
+
+   Evaluate diversity using rank-biased Shannon entropy over item categories.
+
+   This metric measures the diversity of categories in recommendation list
+   with rank-based weighting, giving more importance to items at the top
+   of the recommendation list.
+
+   :param dataset: The LensKit dataset containing item entities and their attributes.
+   :param attribute: Name of the attribute to use for categories (e.g., 'genre', 'tag')
+   :param n: Recommendation list length to evaluate
+   :param weight: Rank weighting model. Defaults to GeometricRankWeight(0.85)
+
+   :Stability: Caller
+
+
+   .. py:attribute:: attribute
+      :type:  str
+
+
+   .. py:attribute:: weight
+      :type:  lenskit.metrics.ranking._weighting.RankWeight
+
+
+   .. py:property:: label
+
+      The metric's default label in output.
+      The base implementation returns the class name by default.
+
+
+   .. py:method:: measure_list(recs, test)
+
+      Compute measurements for a single list.
+
+      :returns:
+
+                - A float for simple metrics
+                - Intermediate data for decomposed metrics
+                - A dict mapping metric names to values for multi-metric classes
+
+

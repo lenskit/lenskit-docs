@@ -1,0 +1,104 @@
+lenskit.data.matrix
+===================
+
+.. py:module:: lenskit.data.matrix
+
+.. autoapi-nested-parse::
+
+   Classes for working with matrix data.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.data.matrix.t
+   lenskit.data.matrix.M
+   lenskit.data.matrix.SPARSE_IDX_EXT_NAME
+   lenskit.data.matrix.SPARSE_IDX_LIST_EXT_NAME
+   lenskit.data.matrix.SPARSE_ROW_EXT_NAME
+
+
+Classes
+-------
+
+.. toctree::
+   :hidden:
+
+   /api/lenskit/data/matrix/CSRStructure
+   /api/lenskit/data/matrix/COOStructure
+   /api/lenskit/data/matrix/SparseIndexType
+   /api/lenskit/data/matrix/SparseIndexListType
+   /api/lenskit/data/matrix/SparseRowType
+   /api/lenskit/data/matrix/SparseRowArray
+
+.. autoapisummary::
+
+   lenskit.data.matrix.CSRStructure
+   lenskit.data.matrix.COOStructure
+   lenskit.data.matrix.SparseIndexType
+   lenskit.data.matrix.SparseIndexListType
+   lenskit.data.matrix.SparseRowType
+   lenskit.data.matrix.SparseRowArray
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.data.matrix.fast_col_cooc
+   lenskit.data.matrix.normalize_matrix
+
+
+
+Module Contents
+---------------
+
+.. py:data:: t
+
+.. py:data:: M
+
+.. py:data:: SPARSE_IDX_EXT_NAME
+   :value: 'lenskit.sparse_index'
+
+
+.. py:data:: SPARSE_IDX_LIST_EXT_NAME
+   :value: 'lenskit.sparse_index_list'
+
+
+.. py:data:: SPARSE_ROW_EXT_NAME
+   :value: 'lenskit.sparse_row'
+
+
+.. py:function:: fast_col_cooc(rows: lenskit.data.types.NPVector[numpy.int32] | pyarrow.Int32Array, cols: lenskit.data.types.NPVector[numpy.int32] | pyarrow.Int32Array, shape: tuple[int, int], *, progress: lenskit.logging.Progress | None = None, include_diagonal: bool = True, ordered: bool = False, dense: Literal[True]) -> numpy.ndarray[tuple[int, int], numpy.dtype[numpy.float32]]
+                 fast_col_cooc(rows: lenskit.data.types.NPVector[numpy.int32] | pyarrow.Int32Array, cols: lenskit.data.types.NPVector[numpy.int32] | pyarrow.Int32Array, shape: tuple[int, int], *, progress: lenskit.logging.Progress | None = None, include_diagonal: bool = True, ordered: bool = False, dense: Literal[False] = False) -> scipy.sparse.coo_array
+                 fast_col_cooc(rows: lenskit.data.types.NPVector[numpy.int32] | pyarrow.Int32Array, cols: lenskit.data.types.NPVector[numpy.int32] | pyarrow.Int32Array, shape: tuple[int, int], *, progress: lenskit.logging.Progress | None = None, include_diagonal: bool = True, ordered: bool = False, dense: bool = False) -> Any
+
+   Compute column co-occurrances (:math:`M^{\mathrm{T}}M`) efficiently.
+
+
+.. py:function:: normalize_matrix(matrix, normalize)
+
+   Normalize rows of a matrix.
+
+   :param matrix: Sparse or dense matrix to normalize
+   :param normalize: Normalization mode ("unit" for L2, "distribution" for L1)
+
+   :returns: Normalized matrix
+
+
+
+Exported Aliases
+----------------
+
+.. py:class:: lenskit.data.matrix.Progress
+
+    Re-exported alias for :py:class:`lenskit.logging.Progress`.
+
+.. py:data:: lenskit.data.matrix.NPVector
+
+    Re-exported alias for :py:data:`lenskit.data.types.NPVector`.
+

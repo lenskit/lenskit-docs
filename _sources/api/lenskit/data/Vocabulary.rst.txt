@@ -1,0 +1,126 @@
+lenskit.data.Vocabulary
+=======================
+
+.. py:class:: lenskit.data.Vocabulary(keys = None, name = None, *, reorder = True)
+   :canonical: lenskit.data._vocab.Vocabulary
+
+   Vocabularies of entity identifiers for the LensKit data model.
+
+   This class supports bidirectional mappings between key-like data and
+   congiguous nonnegative integer indices.  Its key use is to facilitate the
+   entity ID vocabularies in :class:`~lenskit.data.Dataset`, but it can also be
+   used for things like item tags.
+
+   IDs in a vocabulary must be unique.  Constructing a vocabulary with
+   ``reorder=True`` ensures uniqueness (and sorts the IDs), but does not
+   preserve the order of IDs in the original input.
+
+   It is currently a wrapper around :class:`pandas.Index`, but this fact is not
+   part of the stable public API.
+
+   :param keys: The IDs to put in the vocabulary.
+   :param name: The vocabulary name (i.e. the entity class it stores IDs for).
+   :param reorder: If ``True``, sort and deduplicate the IDs.  If ``False`` (the
+                   default), use the IDs as-is (assigning each to their position in the
+                   input sequence).
+
+   :Stability: Caller
+
+
+   .. py:attribute:: name
+      :type:  str | None
+
+      The name of the vocabulary (e.g. “user”, “item”).
+
+
+   .. py:property:: index
+      :type: pandas.Index
+
+
+      The vocabulary as a Pandas index.
+
+      :Stability: Internal
+
+
+   .. py:property:: size
+      :type: int
+
+
+      Current vocabulary size.
+
+
+   .. py:method:: number(term: object, missing: Literal['error'] = 'error') -> int
+                  number(term: object, missing: Literal['none'] | None) -> int | None
+
+      Look up the number for a vocabulary ID.
+
+
+
+   .. py:method:: numbers(terms: Sequence[Hashable] | numpy.typing.ArrayLike, missing: Literal['error', 'negative'] = 'error', *, format: Literal['numpy'] = 'numpy') -> numpy.typing.NDArray[numpy.int32]
+                  numbers(terms: Sequence[Hashable] | numpy.typing.ArrayLike, missing: Literal['error', 'negative', 'null'] = 'error', *, format: Literal['arrow']) -> pyarrow.Int32Array
+
+      Look up the numbers for an array of terms or IDs.
+
+
+
+   .. py:method:: term(num)
+
+      Look up the term with a particular number.  Negative indexing is **not** supported.
+
+
+
+   .. py:method:: terms(nums: list[int] | numpy.typing.NDArray[numpy.integer] | pandas.Series | None = None, *, format: Literal['numpy'] = 'numpy') -> lenskit.data.types.IDArray
+                  terms(nums: list[int] | numpy.typing.NDArray[numpy.integer] | pandas.Series | None = None, *, format: Literal['arrow']) -> pyarrow.Array
+
+      Get a list of terms, optionally for an array of term numbers.
+
+      :param nums: The numbers (indices) for of terms to retrieve.  If ``None``,
+                   returns all terms.
+
+      :returns: The terms corresponding to the specified numbers, or the full array
+                of terms (in order) if ``nums=None``.
+
+
+
+   .. py:method:: id(num)
+
+      Alias for :meth:`term`  for greater readability for entity ID vocabularies.
+
+
+
+   .. py:method:: ids(nums: list[int] | numpy.typing.NDArray[numpy.integer] | pandas.Series | None = None, *, format: Literal['numpy'] = 'numpy') -> lenskit.data.types.IDArray
+                  ids(nums: list[int] | numpy.typing.NDArray[numpy.integer] | pandas.Series | None = None, *, format: Literal['arrow']) -> pyarrow.Array
+
+      Alias for :meth:`terms` for greater readability for entity ID vocabularies.
+
+
+
+   .. py:method:: id_array()
+
+
+   .. py:method:: __eq__(other)
+
+
+   .. py:method:: __contains__(key)
+
+
+   .. py:method:: __iter__()
+
+
+   .. py:method:: __len__()
+
+
+   .. py:method:: __array__(dtype=None)
+
+
+   .. py:method:: __getstate__()
+
+
+   .. py:method:: __setstate__(state)
+
+
+   .. py:method:: __str__()
+
+
+   .. py:method:: __repr__()
+

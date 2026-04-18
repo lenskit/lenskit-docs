@@ -1,0 +1,57 @@
+lenskit.data.schema.DataSchema
+==============================
+
+.. py:class:: lenskit.data.schema.DataSchema
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Description of the entities and layout of a dataset.
+
+
+   .. py:attribute:: version
+      :type:  str
+      :value: '2025.3'
+
+
+      The data layout version.
+
+      .. note::
+
+          When a new schema model is created, this defaults to the current version
+          instead of the oldest version.
+
+
+   .. py:attribute:: name
+      :type:  str | None
+      :value: None
+
+
+      The dataset name.
+
+
+   .. py:attribute:: default_interaction
+      :type:  Name | None
+      :value: None
+
+
+      The default interaction type.
+
+
+   .. py:attribute:: entities
+      :type:  dict[Name, EntitySchema]
+
+      Entity classes defined for this dataset.
+
+
+   .. py:attribute:: relationships
+      :type:  dict[Name, RelationshipSchema]
+
+      Relationship classes defined for this dataset.
+
+
+   .. py:method:: model_validate_json(json_data, *, context = None, **kwargs)
+      :classmethod:
+
+

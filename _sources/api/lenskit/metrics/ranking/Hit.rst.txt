@@ -1,0 +1,35 @@
+lenskit.metrics.ranking.Hit
+===========================
+
+.. py:class:: lenskit.metrics.ranking.Hit(n = None, *, k = None)
+   :canonical: lenskit.metrics.ranking._hit.Hit
+
+   Bases: :py:obj:`lenskit.metrics.ranking._base.ListMetric`, :py:obj:`lenskit.metrics.ranking._base.RankingMetricBase`
+
+
+   Compute whether or not a list is a hit; any list with at least one
+   relevant item in the first :math:`k` positions (:math:`L_{\le k} \cap
+   I_u^{\mathrm{test}} \ne \emptyset`) is scored as 1, and lists with no
+   relevant items as 0.  When averaged over the recommendation lists, this
+   computes the *hit rate* :cite:p:`deshpande:iknn`.
+
+   :Stability: Caller
+
+
+   .. py:property:: label
+
+      The metric's default label in output.
+      The base implementation returns the class name by default.
+
+
+   .. py:method:: measure_list(recs, test)
+
+      Compute measurements for a single list.
+
+      :returns:
+
+                - A float for simple metrics
+                - Intermediate data for decomposed metrics
+                - A dict mapping metric names to values for multi-metric classes
+
+

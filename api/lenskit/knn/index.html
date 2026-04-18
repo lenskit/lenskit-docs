@@ -1,0 +1,1121 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="lenskit.knn" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="api/lenskit/knn/index.html" />
+<meta property="og:site_name" content="LensKit" />
+<meta property="og:description" content="k-nearest-neighbor models. Submodules: Exported Aliases:" />
+<meta name="description" content="k-nearest-neighbor models. Submodules: Exported Aliases:" />
+
+    <title>lenskit.knn &#8212; LensKit 2026.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/css/custom.css?v=9d9b0268" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=b916904f"></script>
+    <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/lenskit/knn/index';</script>
+    <script>
+        DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
+        DOCUMENTATION_OPTIONS.theme_switcher_json_url = 'https://lenskit.org/versions.json';
+        DOCUMENTATION_OPTIONS.theme_switcher_version_match = '2024.0dev';
+        DOCUMENTATION_OPTIONS.show_version_warning_banner =
+            true;
+        </script>
+    <link rel="canonical" href="https://lenskit.org/stable/api/lenskit/knn/index.html" />
+    <link rel="icon" href="../../../_static/lenskit-icon.png"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="lenskit.knn.ease" href="ease/index.html" />
+    <link rel="prev" title="lenskit.funksvd.FunkSVDScorer" href="../funksvd/FunkSVDScorer.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="2026.1.0" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.1.0 documentation - Home"/>
+    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.1.0 documentation - Home"/>
+  
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../research/index.html">
+    Research
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-2"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-2"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-2"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-2">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="../../index.html">
+    API Reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../releases/index.html">
+    Release Notes
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../research/index.html">
+    Research
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../catalogs.html">
+    Indices
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<div class="version-switcher__container dropdown pst-js-only">
+  <button id="pst-version-switcher-button-3"
+    type="button"
+    class="version-switcher__button btn btn-sm dropdown-toggle"
+    data-bs-toggle="dropdown"
+    aria-haspopup="listbox"
+    aria-controls="pst-version-switcher-list-3"
+    aria-label="Version switcher list"
+  >
+    Choose version  <!-- this text may get changed later by javascript -->
+    <span class="caret"></span>
+  </button>
+  <div id="pst-version-switcher-list-3"
+    class="version-switcher__menu dropdown-menu list-group-flush py-0"
+    role="listbox" aria-labelledby="pst-version-switcher-button-3">
+    <!-- dropdown will be populated by javascript on page load -->
+  </div>
+</div></div>
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/lenskit/lkpy" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://recsys.social/@LensKit" title="Mastodon" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-mastodon fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">Mastodon</span></a>
+        </li>
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://bsky.app/profile/lenskit.org" title="BlueSky" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-bluesky fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">BlueSky</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><p aria-level="2" class="caption" role="heading"><span class="caption-text">Core</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../index.html">lenskit</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../data/index.html">lenskit.data</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data/accum/index.html">lenskit.data.accum</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data/accum/Accumulator.html">lenskit.data.accum.Accumulator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/accum/AccumulatorFactory.html">lenskit.data.accum.AccumulatorFactory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/accum/ValueStatAccumulator.html">lenskit.data.accum.ValueStatAccumulator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/accum/ValueStatistics.html">lenskit.data.accum.ValueStatistics</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/amazon/index.html">lenskit.data.amazon</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data/matrix/index.html">lenskit.data.matrix</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data/matrix/CSRStructure.html">lenskit.data.matrix.CSRStructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/matrix/COOStructure.html">lenskit.data.matrix.COOStructure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/matrix/SparseIndexType.html">lenskit.data.matrix.SparseIndexType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/matrix/SparseIndexListType.html">lenskit.data.matrix.SparseIndexListType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/matrix/SparseRowType.html">lenskit.data.matrix.SparseRowType</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/matrix/SparseRowArray.html">lenskit.data.matrix.SparseRowArray</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data/movielens/index.html">lenskit.data.movielens</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data/movielens/MLData.html">lenskit.data.movielens.MLData</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/movielens/ML100KLoader.html">lenskit.data.movielens.ML100KLoader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/movielens/MLMLoader.html">lenskit.data.movielens.MLMLoader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/movielens/MLModernLoader.html">lenskit.data.movielens.MLModernLoader</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/msweb/index.html">lenskit.data.msweb</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data/repr/index.html">lenskit.data.repr</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data/repr/HasObjectRepr.html">lenskit.data.repr.HasObjectRepr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/repr/ReprWriter.html">lenskit.data.repr.ReprWriter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/repr/ReprIndenter.html">lenskit.data.repr.ReprIndenter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/repr/ObjectRepr.html">lenskit.data.repr.ObjectRepr</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data/schema/index.html">lenskit.data.schema</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data/schema/AllowableTroolean.html">lenskit.data.schema.AllowableTroolean</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/schema/AttrLayout.html">lenskit.data.schema.AttrLayout</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/schema/DataSchema.html">lenskit.data.schema.DataSchema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/schema/EntitySchema.html">lenskit.data.schema.EntitySchema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/schema/RelationshipSchema.html">lenskit.data.schema.RelationshipSchema</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/schema/ColumnSpec.html">lenskit.data.schema.ColumnSpec</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../data/types/index.html">lenskit.data.types</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../data/types/AliasedColumn.html">lenskit.data.types.AliasedColumn</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/types/UIPair.html">lenskit.data.types.UIPair</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../data/types/Extent.html">lenskit.data.types.Extent</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/EntityAttribute.html">lenskit.data.EntityAttribute</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/BatchedRange.html">lenskit.data.BatchedRange</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/DatasetBuilder.html">lenskit.data.DatasetBuilder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/ItemListCollection.html">lenskit.data.ItemListCollection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/ItemListCollector.html">lenskit.data.ItemListCollector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/ListILC.html">lenskit.data.ListILC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/MutableItemListCollection.html">lenskit.data.MutableItemListCollection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/QueryIDKey.html">lenskit.data.QueryIDKey</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/UserIDKey.html">lenskit.data.UserIDKey</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/DataContainer.html">lenskit.data.DataContainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/Dataset.html">lenskit.data.Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/EntitySet.html">lenskit.data.EntitySet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/ItemList.html">lenskit.data.ItemList</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/RecQuery.html">lenskit.data.RecQuery</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/MatrixRelationshipSet.html">lenskit.data.MatrixRelationshipSet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/RelationshipSet.html">lenskit.data.RelationshipSet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../data/Vocabulary.html">lenskit.data.Vocabulary</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../pipeline/index.html">lenskit.pipeline</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../pipeline/components/index.html">lenskit.pipeline.components</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/components/ComponentInput.html">lenskit.pipeline.components.ComponentInput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/components/ComponentConstructor.html">lenskit.pipeline.components.ComponentConstructor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/components/Component.html">lenskit.pipeline.components.Component</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/components/PlaceholderConfig.html">lenskit.pipeline.components.PlaceholderConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/components/Placeholder.html">lenskit.pipeline.components.Placeholder</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../pipeline/config/index.html">lenskit.pipeline.config</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/config/PipelineHook.html">lenskit.pipeline.config.PipelineHook</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/config/PipelineHooks.html">lenskit.pipeline.config.PipelineHooks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/config/PipelineOptions.html">lenskit.pipeline.config.PipelineOptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/config/PipelineConfig.html">lenskit.pipeline.config.PipelineConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/config/PipelineMeta.html">lenskit.pipeline.config.PipelineMeta</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/config/PipelineInput.html">lenskit.pipeline.config.PipelineInput</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/config/PipelineComponent.html">lenskit.pipeline.config.PipelineComponent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/config/PipelineLiteral.html">lenskit.pipeline.config.PipelineLiteral</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../pipeline/nodes/index.html">lenskit.pipeline.nodes</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/nodes/Node.html">lenskit.pipeline.nodes.Node</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/nodes/InputNode.html">lenskit.pipeline.nodes.InputNode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/nodes/LiteralNode.html">lenskit.pipeline.nodes.LiteralNode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/nodes/ComponentNode.html">lenskit.pipeline.nodes.ComponentNode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/nodes/ComponentConstructorNode.html">lenskit.pipeline.nodes.ComponentConstructorNode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../pipeline/nodes/ComponentInstanceNode.html">lenskit.pipeline.nodes.ComponentInstanceNode</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/PipelineBuilder.html">lenskit.pipeline.PipelineBuilder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/PipelineCache.html">lenskit.pipeline.PipelineCache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/RecPipelineBuilder.html">lenskit.pipeline.RecPipelineBuilder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/ComponentInputHook.html">lenskit.pipeline.ComponentInputHook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/Pipeline.html">lenskit.pipeline.Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/PipelineProfiler.html">lenskit.pipeline.PipelineProfiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/ProfileSink.html">lenskit.pipeline.ProfileSink</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../pipeline/PipelineState.html">lenskit.pipeline.PipelineState</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../operations/index.html">lenskit.operations</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../diagnostics/index.html">lenskit.diagnostics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../diagnostics/DataWarning.html">lenskit.diagnostics.DataWarning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../diagnostics/DataError.html">lenskit.diagnostics.DataError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../diagnostics/FieldError.html">lenskit.diagnostics.FieldError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../diagnostics/ConfigWarning.html">lenskit.diagnostics.ConfigWarning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../diagnostics/TypecheckWarning.html">lenskit.diagnostics.TypecheckWarning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../diagnostics/PipelineError.html">lenskit.diagnostics.PipelineError</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../diagnostics/PipelineWarning.html">lenskit.diagnostics.PipelineWarning</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../training/index.html">lenskit.training</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../training/TrainingOptions.html">lenskit.training.TrainingOptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../training/Trainable.html">lenskit.training.Trainable</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../training/UsesTrainer.html">lenskit.training.UsesTrainer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../training/ModelTrainer.html">lenskit.training.ModelTrainer</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../config/index.html">lenskit.config</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../config/common/index.html">lenskit.config.common</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../config/common/EmbeddingSizeMixin.html">lenskit.config.common.EmbeddingSizeMixin</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../config/LenskitSettings.html">lenskit.config.LenskitSettings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../config/MachineSettings.html">lenskit.config.MachineSettings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../config/ParallelSettings.html">lenskit.config.ParallelSettings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../config/PowerQueries.html">lenskit.config.PowerQueries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../config/PrometheusSettings.html">lenskit.config.PrometheusSettings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../config/RandomSettings.html">lenskit.config.RandomSettings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../config/TuneSettings.html">lenskit.config.TuneSettings</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../als/index.html">lenskit.als</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../als/ALSBase.html">lenskit.als.ALSBase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../als/ALSConfig.html">lenskit.als.ALSConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../als/BiasedMFConfig.html">lenskit.als.BiasedMFConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../als/BiasedMFScorer.html">lenskit.als.BiasedMFScorer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../als/ImplicitMFConfig.html">lenskit.als.ImplicitMFConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../als/ImplicitMFScorer.html">lenskit.als.ImplicitMFScorer</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../basic/index.html">lenskit.basic</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../basic/bias/index.html">lenskit.basic.bias</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basic/bias/BiasModel.html">lenskit.basic.bias.BiasModel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basic/bias/BiasConfig.html">lenskit.basic.bias.BiasConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basic/bias/BiasScorer.html">lenskit.basic.bias.BiasScorer</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../basic/candidates/index.html">lenskit.basic.candidates</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basic/candidates/TrainingItemsCandidateConfig.html">lenskit.basic.candidates.TrainingItemsCandidateConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basic/candidates/TrainingItemsCandidateSelector.html">lenskit.basic.candidates.TrainingItemsCandidateSelector</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../basic/composite/index.html">lenskit.basic.composite</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basic/composite/FallbackScorer.html">lenskit.basic.composite.FallbackScorer</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../basic/history/index.html">lenskit.basic.history</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basic/history/LookupConfig.html">lenskit.basic.history.LookupConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basic/history/UserTrainingHistoryLookup.html">lenskit.basic.history.UserTrainingHistoryLookup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basic/history/KnownRatingConfig.html">lenskit.basic.history.KnownRatingConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basic/history/KnownRatingScorer.html">lenskit.basic.history.KnownRatingScorer</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../basic/popularity/index.html">lenskit.basic.popularity</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basic/popularity/PopConfig.html">lenskit.basic.popularity.PopConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basic/popularity/PopScorer.html">lenskit.basic.popularity.PopScorer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basic/popularity/TimeBoundedPopConfig.html">lenskit.basic.popularity.TimeBoundedPopConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basic/popularity/TimeBoundedPopScore.html">lenskit.basic.popularity.TimeBoundedPopScore</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../basic/random/index.html">lenskit.basic.random</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basic/random/RandomConfig.html">lenskit.basic.random.RandomConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basic/random/RandomSelector.html">lenskit.basic.random.RandomSelector</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../basic/topn/index.html">lenskit.basic.topn</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basic/topn/TopNConfig.html">lenskit.basic.topn.TopNConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basic/topn/TopNRanker.html">lenskit.basic.topn.TopNRanker</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../flexmf/index.html">lenskit.flexmf</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../flexmf/FlexMFConfigBase.html">lenskit.flexmf.FlexMFConfigBase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flexmf/FlexMFScorerBase.html">lenskit.flexmf.FlexMFScorerBase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flexmf/FlexMFExplicitConfig.html">lenskit.flexmf.FlexMFExplicitConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flexmf/FlexMFExplicitScorer.html">lenskit.flexmf.FlexMFExplicitScorer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flexmf/FlexMFImplicitConfig.html">lenskit.flexmf.FlexMFImplicitConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../flexmf/FlexMFImplicitScorer.html">lenskit.flexmf.FlexMFImplicitScorer</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../funksvd/index.html">lenskit.funksvd</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../funksvd/FunkSVDConfig.html">lenskit.funksvd.FunkSVDConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../funksvd/FunkSVDTrainingParams.html">lenskit.funksvd.FunkSVDTrainingParams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../funksvd/FunkSVDTrainingData.html">lenskit.funksvd.FunkSVDTrainingData</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../funksvd/FunkSVDScorer.html">lenskit.funksvd.FunkSVDScorer</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">lenskit.knn</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="ease/index.html">lenskit.knn.ease</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="ease/EASEConfig.html">lenskit.knn.ease.EASEConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ease/EASEScorer.html">lenskit.knn.ease.EASEScorer</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="item/index.html">lenskit.knn.item</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="item/ItemKNNConfig.html">lenskit.knn.item.ItemKNNConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="item/ItemKNNScorer.html">lenskit.knn.item.ItemKNNScorer</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="slim/index.html">lenskit.knn.slim</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="slim/SLIMConfig.html">lenskit.knn.slim.SLIMConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="slim/SLIMScorer.html">lenskit.knn.slim.SLIMScorer</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="user/index.html">lenskit.knn.user</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="user/UserKNNConfig.html">lenskit.knn.user.UserKNNConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user/UserKNNScorer.html">lenskit.knn.user.UserKNNScorer</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../sklearn/index.html">lenskit.sklearn</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sklearn/nmf/index.html">lenskit.sklearn.nmf</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sklearn/nmf/NMFConfig.html">lenskit.sklearn.nmf.NMFConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sklearn/nmf/NMFScorer.html">lenskit.sklearn.nmf.NMFScorer</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../sklearn/svd/index.html">lenskit.sklearn.svd</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../sklearn/svd/BiasedSVDConfig.html">lenskit.sklearn.svd.BiasedSVDConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../sklearn/svd/BiasedSVDScorer.html">lenskit.sklearn.svd.BiasedSVDScorer</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../stochastic/index.html">lenskit.stochastic</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../stochastic/StochasticTopNConfig.html">lenskit.stochastic.StochasticTopNConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../stochastic/StochasticTopNRanker.html">lenskit.stochastic.StochasticTopNRanker</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Evaluation</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../batch/index.html">lenskit.batch</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../batch/BatchRecRequest.html">lenskit.batch.BatchRecRequest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../batch/TestRequestAdapter.html">lenskit.batch.TestRequestAdapter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../batch/BatchResults.html">lenskit.batch.BatchResults</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../batch/BatchPipelineRunner.html">lenskit.batch.BatchPipelineRunner</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../batch/InvocationSpec.html">lenskit.batch.InvocationSpec</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../metrics/index.html">lenskit.metrics</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../metrics/basic/index.html">lenskit.metrics.basic</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/basic/ListLength.html">lenskit.metrics.basic.ListLength</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/basic/TestItemCount.html">lenskit.metrics.basic.TestItemCount</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../metrics/bulk/index.html">lenskit.metrics.bulk</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/bulk/RunAnalysisResult.html">lenskit.metrics.bulk.RunAnalysisResult</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/bulk/RunAnalysis.html">lenskit.metrics.bulk.RunAnalysis</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../metrics/predict/index.html">lenskit.metrics.predict</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/predict/PredictMetric.html">lenskit.metrics.predict.PredictMetric</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/predict/RMSE.html">lenskit.metrics.predict.RMSE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/predict/MAE.html">lenskit.metrics.predict.MAE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/predict/AvgErrorAccumulator.html">lenskit.metrics.predict.AvgErrorAccumulator</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../metrics/ranking/index.html">lenskit.metrics.ranking</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/RankingMetricBase.html">lenskit.metrics.ranking.RankingMetricBase</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/DCG.html">lenskit.metrics.ranking.DCG</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/NDCG.html">lenskit.metrics.ranking.NDCG</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/Entropy.html">lenskit.metrics.ranking.Entropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/RankBiasedEntropy.html">lenskit.metrics.ranking.RankBiasedEntropy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/ExposureGini.html">lenskit.metrics.ranking.ExposureGini</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/ListGini.html">lenskit.metrics.ranking.ListGini</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/Hit.html">lenskit.metrics.ranking.Hit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/ILS.html">lenskit.metrics.ranking.ILS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/AveragePrecision.html">lenskit.metrics.ranking.AveragePrecision</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/MeanPopRank.html">lenskit.metrics.ranking.MeanPopRank</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/Precision.html">lenskit.metrics.ranking.Precision</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/Recall.html">lenskit.metrics.ranking.Recall</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/RBP.html">lenskit.metrics.ranking.RBP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/RecipRank.html">lenskit.metrics.ranking.RecipRank</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/GeometricRankWeight.html">lenskit.metrics.ranking.GeometricRankWeight</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/LogRankWeight.html">lenskit.metrics.ranking.LogRankWeight</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../metrics/ranking/RankWeight.html">lenskit.metrics.ranking.RankWeight</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/reranking/index.html">lenskit.metrics.reranking</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/ListMetric.html">lenskit.metrics.ListMetric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/Metric.html">lenskit.metrics.Metric</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/MetricFunction.html">lenskit.metrics.MetricFunction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/MeasurementCollector.html">lenskit.metrics.MeasurementCollector</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../metrics/RunMetrics.html">lenskit.metrics.RunMetrics</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../splitting/index.html">lenskit.splitting</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../splitting/HoldoutMethod.html">lenskit.splitting.HoldoutMethod</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../splitting/LastFrac.html">lenskit.splitting.LastFrac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../splitting/LastN.html">lenskit.splitting.LastN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../splitting/SampleFrac.html">lenskit.splitting.SampleFrac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../splitting/SampleN.html">lenskit.splitting.SampleN</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../splitting/TTSplit.html">lenskit.splitting.TTSplit</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../tuning/index.html">lenskit.tuning</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../tuning/spec/index.html">lenskit.tuning.spec</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../tuning/spec/SearchConfig.html">lenskit.tuning.spec.SearchConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tuning/spec/TuningSpec.html">lenskit.tuning.spec.TuningSpec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tuning/spec/PipelineFile.html">lenskit.tuning.spec.PipelineFile</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../tuning/spec/SearchParam.html">lenskit.tuning.spec.SearchParam</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../tuning/PipelineTuner.html">lenskit.tuning.PipelineTuner</a></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Add-Ons</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../implicit/index.html">lenskit.implicit</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../implicit/BaseRec.html">lenskit.implicit.BaseRec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../implicit/ALS.html">lenskit.implicit.ALS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../implicit/BPR.html">lenskit.implicit.BPR</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../hpf/index.html">lenskit.hpf</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../hpf/HPFConfig.html">lenskit.hpf.HPFConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../hpf/HPFScorer.html">lenskit.hpf.HPFScorer</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../graphs/index.html">lenskit.graphs</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../graphs/lightgcn/index.html">lenskit.graphs.lightgcn</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../graphs/lightgcn/LightGCNConfig.html">lenskit.graphs.lightgcn.LightGCNConfig</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../graphs/lightgcn/LightGCNScorer.html">lenskit.graphs.lightgcn.LightGCNScorer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../graphs/lightgcn/LightGCNTrainer.html">lenskit.graphs.lightgcn.LightGCNTrainer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../graphs/lightgcn/LogisticLightGCNTrainer.html">lenskit.graphs.lightgcn.LogisticLightGCNTrainer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../graphs/lightgcn/PairwiseLightGCNTrainer.html">lenskit.graphs.lightgcn.PairwiseLightGCNTrainer</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Implementation Helpers</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../lazy/index.html">lenskit.lazy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../lazy/Lazy.html">lenskit.lazy.Lazy</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../logging/index.html">lenskit.logging</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../logging/multiprocess/index.html">lenskit.logging.multiprocess</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../logging/multiprocess/Monitor.html">lenskit.logging.multiprocess.Monitor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../logging/multiprocess/RecordSink.html">lenskit.logging.multiprocess.RecordSink</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../logging/multiprocess/WorkerContext.html">lenskit.logging.multiprocess.WorkerContext</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../logging/multiprocess/WorkerLogConfig.html">lenskit.logging.multiprocess.WorkerLogConfig</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../logging/progress/index.html">lenskit.logging.progress</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../logging/progress/Progress.html">lenskit.logging.progress.Progress</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../logging/tasks/index.html">lenskit.logging.tasks</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../logging/tasks/TaskStatus.html">lenskit.logging.tasks.TaskStatus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../logging/tasks/Task.html">lenskit.logging.tasks.Task</a></li>
+</ul>
+</details></li>
+<li class="toctree-l2"><a class="reference internal" href="../logging/LoggingConfig.html">lenskit.logging.LoggingConfig</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logging/ResourceMeasurement.html">lenskit.logging.ResourceMeasurement</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logging/Stopwatch.html">lenskit.logging.Stopwatch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../logging/Tracer.html">lenskit.logging.Tracer</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../math/index.html">lenskit.math</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../math/solve/index.html">lenskit.math.solve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../math/sparse/index.html">lenskit.math.sparse</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../parallel/index.html">lenskit.parallel</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../parallel/config/index.html">lenskit.parallel.config</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../parallel/ray/index.html">lenskit.parallel.ray</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l3"><a class="reference internal" href="../parallel/ray/TaskLimiter.html">lenskit.parallel.ray.TaskLimiter</a></li>
+</ul>
+</details></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../random/index.html">lenskit.random</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../random/RNGFactory.html">lenskit.random.RNGFactory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../random/FixedRNG.html">lenskit.random.FixedRNG</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../random/DerivingRNG.html">lenskit.random.DerivingRNG</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../stats/index.html">lenskit.stats</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../testing/index.html">lenskit.testing</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../testing/BasicComponentTests.html">lenskit.testing.BasicComponentTests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/ScorerTests.html">lenskit.testing.ScorerTests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../testing/DemoRecs.html">lenskit.testing.DemoRecs</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../torch/index.html">lenskit.torch</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">API Reference</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">lenskit.knn</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="module-lenskit.knn">
+<span id="lenskit-knn"></span><h1>lenskit.knn<a class="headerlink" href="#module-lenskit.knn" title="Link to this heading">#</a></h1>
+<p>k-nearest-neighbor models.</p>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="ease/index.html#module-lenskit.knn.ease" title="lenskit.knn.ease"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ease</span></code></a></p></td>
+<td><p>EASE scoring model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="item/index.html#module-lenskit.knn.item" title="lenskit.knn.item"><code class="xref py py-obj docutils literal notranslate"><span class="pre">item</span></code></a></p></td>
+<td><p>Item-based k-NN collaborative filtering.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="slim/index.html#module-lenskit.knn.slim" title="lenskit.knn.slim"><code class="xref py py-obj docutils literal notranslate"><span class="pre">slim</span></code></a></p></td>
+<td><p>Sparse LInear Methods for Recommendation <span id="id1">[<a class="reference internal" href="../../../references.html#id47" title="Xia Ning and George Karypis. SLIM: Sparse Linear Methods for Top-N Recommender Systems. In ICDM '11, 497–506. Washington, DC, USA, 2011. IEEE Computer Society. doi:10.1109/ICDM.2011.134.">NK11</a>]</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="user/index.html#module-lenskit.knn.user" title="lenskit.knn.user"><code class="xref py py-obj docutils literal notranslate"><span class="pre">user</span></code></a></p></td>
+<td><p>User-based k-NN collaborative filtering.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="toctree-wrapper compound">
+</div>
+</section>
+<section id="exported-aliases">
+<h2>Exported Aliases<a class="headerlink" href="#exported-aliases" title="Link to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.knn.lenskit.knn.EASEConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.knn.</span></span><span class="sig-name descname"><span class="pre">EASEConfig</span></span><a class="headerlink" href="#lenskit.knn.lenskit.knn.EASEConfig" title="Link to this definition">#</a></dt>
+<dd><p>Re-exported alias for <a class="reference internal" href="ease/EASEConfig.html#lenskit.knn.ease.EASEConfig" title="lenskit.knn.ease.EASEConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.knn.ease.EASEConfig</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.knn.lenskit.knn.EASEScorer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.knn.</span></span><span class="sig-name descname"><span class="pre">EASEScorer</span></span><a class="headerlink" href="#lenskit.knn.lenskit.knn.EASEScorer" title="Link to this definition">#</a></dt>
+<dd><p>Re-exported alias for <a class="reference internal" href="ease/EASEScorer.html#lenskit.knn.ease.EASEScorer" title="lenskit.knn.ease.EASEScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.knn.ease.EASEScorer</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.knn.lenskit.knn.ItemKNNConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.knn.</span></span><span class="sig-name descname"><span class="pre">ItemKNNConfig</span></span><a class="headerlink" href="#lenskit.knn.lenskit.knn.ItemKNNConfig" title="Link to this definition">#</a></dt>
+<dd><p>Re-exported alias for <a class="reference internal" href="item/ItemKNNConfig.html#lenskit.knn.item.ItemKNNConfig" title="lenskit.knn.item.ItemKNNConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.knn.item.ItemKNNConfig</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.knn.lenskit.knn.ItemKNNScorer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.knn.</span></span><span class="sig-name descname"><span class="pre">ItemKNNScorer</span></span><a class="headerlink" href="#lenskit.knn.lenskit.knn.ItemKNNScorer" title="Link to this definition">#</a></dt>
+<dd><p>Re-exported alias for <a class="reference internal" href="item/ItemKNNScorer.html#lenskit.knn.item.ItemKNNScorer" title="lenskit.knn.item.ItemKNNScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.knn.item.ItemKNNScorer</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.knn.lenskit.knn.SLIMConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.knn.</span></span><span class="sig-name descname"><span class="pre">SLIMConfig</span></span><a class="headerlink" href="#lenskit.knn.lenskit.knn.SLIMConfig" title="Link to this definition">#</a></dt>
+<dd><p>Re-exported alias for <a class="reference internal" href="slim/SLIMConfig.html#lenskit.knn.slim.SLIMConfig" title="lenskit.knn.slim.SLIMConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.knn.slim.SLIMConfig</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.knn.lenskit.knn.SLIMScorer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.knn.</span></span><span class="sig-name descname"><span class="pre">SLIMScorer</span></span><a class="headerlink" href="#lenskit.knn.lenskit.knn.SLIMScorer" title="Link to this definition">#</a></dt>
+<dd><p>Re-exported alias for <a class="reference internal" href="slim/SLIMScorer.html#lenskit.knn.slim.SLIMScorer" title="lenskit.knn.slim.SLIMScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.knn.slim.SLIMScorer</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.knn.lenskit.knn.UserKNNConfig">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.knn.</span></span><span class="sig-name descname"><span class="pre">UserKNNConfig</span></span><a class="headerlink" href="#lenskit.knn.lenskit.knn.UserKNNConfig" title="Link to this definition">#</a></dt>
+<dd><p>Re-exported alias for <a class="reference internal" href="user/UserKNNConfig.html#lenskit.knn.user.UserKNNConfig" title="lenskit.knn.user.UserKNNConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.knn.user.UserKNNConfig</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="lenskit.knn.lenskit.knn.UserKNNScorer">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">lenskit.knn.</span></span><span class="sig-name descname"><span class="pre">UserKNNScorer</span></span><a class="headerlink" href="#lenskit.knn.lenskit.knn.UserKNNScorer" title="Link to this definition">#</a></dt>
+<dd><p>Re-exported alias for <a class="reference internal" href="user/UserKNNScorer.html#lenskit.knn.user.UserKNNScorer" title="lenskit.knn.user.UserKNNScorer"><code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.knn.user.UserKNNScorer</span></code></a>.</p>
+</dd></dl>
+
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../funksvd/FunkSVDScorer.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">lenskit.funksvd.FunkSVDScorer</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="ease/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">lenskit.knn.ease</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exported-aliases">Exported Aliases</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.lenskit.knn.EASEConfig"><code class="docutils literal notranslate"><span class="pre">lenskit.knn.EASEConfig</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.lenskit.knn.EASEScorer"><code class="docutils literal notranslate"><span class="pre">lenskit.knn.EASEScorer</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.lenskit.knn.ItemKNNConfig"><code class="docutils literal notranslate"><span class="pre">lenskit.knn.ItemKNNConfig</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.lenskit.knn.ItemKNNScorer"><code class="docutils literal notranslate"><span class="pre">lenskit.knn.ItemKNNScorer</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.lenskit.knn.SLIMConfig"><code class="docutils literal notranslate"><span class="pre">lenskit.knn.SLIMConfig</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.lenskit.knn.SLIMScorer"><code class="docutils literal notranslate"><span class="pre">lenskit.knn.SLIMScorer</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.lenskit.knn.UserKNNConfig"><code class="docutils literal notranslate"><span class="pre">lenskit.knn.UserKNNConfig</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.knn.lenskit.knn.UserKNNScorer"><code class="docutils literal notranslate"><span class="pre">lenskit.knn.UserKNNScorer</span></code></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../../_sources/api/lenskit/knn/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2018–2025 Drexel University, Boise State University, and collaborators.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">LensKit version 2026.1.0.</div>
+      
+        <div class="footer-item"><p>
+    This material is partially based upon work supported by the National Science Foundation under
+    Grant Nos. <a href="https://md.ekstrandom.net/research/career" target="_blank">17-51278</a> and
+    24-15042. Any opinions, findings, and conclusions or recommendations expressed in this material
+    are those of the author(s) and do not necessarily reflect the views of the
+    National Science Foundation, Drexel University, or Boise State University.</p>
+</p></div>
+      
+        <div class="footer-item"><script data-goatcounter="https://lenskit.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script></div>
+      
+    </div>
+  
+  
+  
+</div>
+
+  </footer>
+  </body>
+</html>
