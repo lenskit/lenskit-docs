@@ -52,7 +52,7 @@ lenskit.metrics.MeasurementCollector
 
 
 
-   .. py:method:: measure_list(output, test, **keys)
+   .. py:method:: add_list_measurement(output, test, **keys)
 
       Measure a single list and accumulate the intermediate results.
 
@@ -62,13 +62,26 @@ lenskit.metrics.MeasurementCollector
 
 
 
-   .. py:method:: measure_collection(outputs, test, **keys)
+   .. py:method:: add_collection_measurements(outputs, test, **keys)
 
       Measure a collection of item lists against truth data.
 
       :param outputs: The item lists to measure.
       :param test: Test data item lists.
       :param keys: Additional keys to label measurements from these lists.
+
+
+
+   .. py:method:: measure_run(outputs, test)
+
+      Convenience method to measure a set of recommendations and return the
+      results.
+
+      The measurement collector must be empty.  The provided lists are
+      measured, but their measurements are **not** added to this collector.
+
+      This method is intended to free up users from the need to manage
+      collector state.
 
 
 

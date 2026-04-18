@@ -14,7 +14,7 @@
 <meta property="og:description" content="Computing metrics over individual lists isn’t enough for evaluating a recommender system — we usually want to compute metrics for pipelines over entire test sets. For simple metrics, it is possible..." />
 <meta name="description" content="Computing metrics over individual lists isn’t enough for evaluating a recommender system — we usually want to compute metrics for pipelines over entire test sets. For simple metrics, it is possible..." />
 
-    <title>Collecting and Aggregating Metrics &#8212; LensKit 2026.1.0b2.dev18+g7c96dbfe documentation</title>
+    <title>Collecting and Aggregating Metrics &#8212; LensKit 2026.1.0b2.dev21+g89ff4be7 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=31d53caa"></script>
+    <script src="../../_static/documentation_options.js?v=c9a3d3ea"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.1.0b2.dev18+g7c96dbfe documentation - Home"/>
-    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.1.0b2.dev18+g7c96dbfe documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.1.0b2.dev21+g89ff4be7 documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.1.0b2.dev21+g89ff4be7 documentation - Home"/>
   
   
 </a></div>
@@ -588,14 +588,46 @@ replaced <code class="xref py py-class docutils literal notranslate"><span class
 <section id="basic-principles">
 <h2>Basic Principles<a class="headerlink" href="#basic-principles" title="Link to this heading">#</a></h2>
 <p>A single measurement collector collects metrics for recommendation lists in a
-<strong>single run</strong>: evaluating one pipeline on one test set.  The basic use pattern
-is as follows:</p>
+<strong>single run</strong>: evaluating one pipeline on one test set.  The simple way to use
+a collector is as follows:</p>
+<ol class="arabic simple">
+<li><p>Create a <a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a>.</p></li>
+<li><p>Add metrics to collector with <a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector.add_metric" title="lenskit.metrics.MeasurementCollector.add_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_metric()</span></code></a>.</p></li>
+<li><p>Measure a run with <a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector.measure_run" title="lenskit.metrics.MeasurementCollector.measure_run"><code class="xref py py-meth docutils literal notranslate"><span class="pre">measure_run()</span></code></a> to get both
+summary metrics and per-list metrics.</p></li>
+</ol>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
+<p>If you have a dictionary of recommendation results in <code class="docutils literal notranslate"><span class="pre">run_recs</span></code>, you can
+measure them with:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">base_mc</span> <span class="o">=</span> <span class="n">MeasurementCollector</span><span class="p">()</span>
+<span class="n">base_mc</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">NDCG</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">base_mc</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RBP</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">base_mc</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RecipRank</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
+
+<span class="n">run_list_metrics</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">run_summaries</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">recs</span> <span class="ow">in</span> <span class="n">run_recs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">measure_run</span><span class="p">(</span><span class="n">recs</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span>
+    <span class="n">run_summaries</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">summary_metrics</span>
+    <span class="n">run_list_metrics</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">list_metrics</span>
+
+<span class="n">list_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">run_list_metrics</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;recommender&#39;</span><span class="p">])</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">run_summaries</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="advanced-usage">
+<h2>Advanced Usage<a class="headerlink" href="#advanced-usage" title="Link to this heading">#</a></h2>
+<p>The measurement collector is <strong>stateful</strong>, and can be used with state as follows:</p>
 <ol class="arabic simple">
 <li><p>Create a <a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a>.</p></li>
 <li><p>Add metrics to collector with <a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector.add_metric" title="lenskit.metrics.MeasurementCollector.add_metric"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_metric()</span></code></a>.</p></li>
 <li><p>Measure individual lists and their corresponding truth with
-<a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector.measure_list" title="lenskit.metrics.MeasurementCollector.measure_list"><code class="xref py py-meth docutils literal notranslate"><span class="pre">measure_list()</span></code></a> or an entire collection of
-recommendations with <a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector.measure_collection" title="lenskit.metrics.MeasurementCollector.measure_collection"><code class="xref py py-meth docutils literal notranslate"><span class="pre">measure_collection()</span></code></a>.</p></li>
+<a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector.add_list_measurement" title="lenskit.metrics.MeasurementCollector.add_list_measurement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_list_measurement()</span></code></a> or an entire collection
+of recommendations with
+<a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector.add_collection_measurements" title="lenskit.metrics.MeasurementCollector.add_collection_measurements"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_collection_measurements()</span></code></a>.</p></li>
 <li><p>Obtain individual list metrics with
 <a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector.list_metrics" title="lenskit.metrics.MeasurementCollector.list_metrics"><code class="xref py py-meth docutils literal notranslate"><span class="pre">list_metrics()</span></code></a> (returning data frame with one
 row per list), or aggregate metrics and summary statistics with
@@ -624,28 +656,6 @@ statistics at the highest level that may be specific to recommendation.
 Further analysis can be done by collecting metric results (either summary or
 per-list) into larger data frames and analyzing with your preferred
 analytics library.</p>
-</div>
-</section>
-<section id="example">
-<h2>Example<a class="headerlink" href="#example" title="Link to this heading">#</a></h2>
-<p>If you have a dictionary of recommendation results in <code class="docutils literal notranslate"><span class="pre">run_recs</span></code>, you can
-measure them with:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">base_mc</span> <span class="o">=</span> <span class="n">MeasurementCollector</span><span class="p">()</span>
-<span class="n">base_mc</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">NDCG</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
-<span class="n">base_mc</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RBP</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
-<span class="n">base_mc</span><span class="o">.</span><span class="n">add_metric</span><span class="p">(</span><span class="n">RecipRank</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span>
-
-<span class="n">run_list_metrics</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="n">run_summaries</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">recs</span> <span class="ow">in</span> <span class="n">run_recs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">mc</span> <span class="o">=</span> <span class="n">base_mc</span><span class="o">.</span><span class="n">empty_copy</span><span class="p">()</span>
-    <span class="n">mc</span><span class="o">.</span><span class="n">measure_collection</span><span class="p">(</span><span class="n">recs</span><span class="p">,</span> <span class="n">test</span><span class="p">)</span>
-    <span class="n">run_list_metrics</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">list_metrics</span><span class="p">()</span>
-    <span class="n">run_summaries</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">mc</span><span class="o">.</span><span class="n">summary_metrics</span><span class="p">()</span>
-
-<span class="n">list_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">run_list_metrics</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;recommender&#39;</span><span class="p">])</span>
-<span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">run_summaries</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
-</pre></div>
 </div>
 </section>
 </section>
@@ -699,6 +709,7 @@ measure them with:</p>
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-principles">Basic Principles</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-usage">Advanced Usage</a></li>
 </ul>
   </nav></div>
 
@@ -742,7 +753,7 @@ measure them with:</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.1.0b2.dev18+g7c96dbfe.</div>
+        <div class="footer-item">LensKit version 2026.1.0b2.dev21+g89ff4be7.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
