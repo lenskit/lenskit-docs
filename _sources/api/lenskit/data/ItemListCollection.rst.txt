@@ -129,6 +129,26 @@ lenskit.data.ItemListCollection
 
 
 
+   .. py:method:: to_json_data(*, object: Literal[True]) -> dict[lenskit.data.types.ID, list[dict[str, pydantic.JsonValue]]]
+                  to_json_data(*, object: Literal[False] = False) -> list[dict[str, pydantic.JsonValue]]
+                  to_json_data(*, object: bool) -> list[dict[str, pydantic.JsonValue]] | dict[lenskit.data.types.ID, list[dict[str, pydantic.JsonValue]]]
+
+      Convert this item list collection to JSON-compatible data.
+
+      :param object: If ``True``, construct as a dictionary whose keys are the item
+                     list keys.  This mode is only supported when there is a single
+                     key field.
+
+                     If ``False``, return a list of objects.
+
+
+
+   .. py:method:: to_json(*, object = False)
+
+      Convert this item list collection to JSON.  Wrapper around :meth:`to_json_data`.
+
+
+
    .. py:method:: to_dataset(class_name: str = 'interaction', *, result: Literal['dataset'] = 'dataset') -> lenskit.data._dataset.Dataset
                   to_dataset(class_name: str = 'interaction', *, result: Literal['container']) -> lenskit.data._container.DataContainer
                   to_dataset(class_name: str = 'interaction', *, result: Literal['builder']) -> lenskit.data._builder.DatasetBuilder
