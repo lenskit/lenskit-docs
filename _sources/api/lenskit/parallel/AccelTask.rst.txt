@@ -1,0 +1,48 @@
+lenskit.parallel.AccelTask
+==========================
+
+.. py:class:: lenskit.parallel.AccelTask[R]
+   :canonical: lenskit.parallel._task.AccelTask
+
+   Bases: :py:obj:`Protocol`
+
+
+   An accelerated task, implemented by the accelerator backend.
+
+   This protocol is implemented by long-running accelerator tasks, and is used
+   by :func:`run_accel_task` to run these tasks with cancellation, progress
+   reporting, and suitable thread pool management.
+
+   The runner will spawn a background thread and call the task's :meth:`invoke`
+   method in that thread.  The main thread will poll for completion and
+   progress reports.
+
+
+   .. py:method:: invoke()
+
+      Run this task and return its result.  Must only be called once for a
+      given accelerator task.  Will be run on the offloaded execution thread.
+
+
+
+   .. py:method:: cancel()
+
+      Cancel this task.
+
+      .. note::
+
+          Will usually **not** be called from the same thread as
+          :meth:`invoke`.
+
+
+
+   .. py:method:: current_progress()
+
+      Poll the current progress of this task.
+
+      .. note::
+
+          Will usually **not** be called from the same thread as
+          :meth:`invoke`.
+
+
