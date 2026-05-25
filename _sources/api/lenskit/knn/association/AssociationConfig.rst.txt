@@ -1,0 +1,41 @@
+lenskit.knn.association.AssociationConfig
+=========================================
+
+.. py:class:: lenskit.knn.association.AssociationConfig
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Configuration options for :class:`AssociationScorer`.
+
+
+   .. py:attribute:: method
+      :type:  AssociationMethod
+      :value: 'probability'
+
+
+      The formula to use for computing item association level.
+
+
+   .. py:attribute:: damping
+      :type:  pydantic.NonNegativeFloat
+      :value: 0.0
+
+
+      Damping factor (:math:`\kappa`) for `biased lift`_.
+
+      .. _biased lift: https://md.ekstrandom.net/blog/2025/01/biased-lift
+
+
+   .. py:attribute:: max_nbrs
+      :type:  pydantic.PositiveInt | None
+      :value: None
+
+
+      Maximum number of reference items used to score each target item.  If
+      ``None``, items are scored by the mean of their score with respect to each
+      reference item.  If a positive integer :math:`n`, then only the :math:`n`
+      most-related reference items are used.  :math:`n=1` is equivalent to using
+      only the maximum relatedness.
+

@@ -14,7 +14,7 @@
 <meta property="og:description" content="2026 builds on the foundation of 2025 to improve the ergonomics of data access, querying, and metrics, and clean up some APIs that seemed good at the time, while making it even easier to use LensKi..." />
 <meta name="description" content="2026 builds on the foundation of 2025 to improve the ergonomics of data access, querying, and metrics, and clean up some APIs that seemed good at the time, while making it even easier to use LensKi..." />
 
-    <title>2026 Releases &#8212; LensKit 2026.1.0 documentation</title>
+    <title>2026 Releases &#8212; LensKit 2026.2.0 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=b916904f"></script>
+    <script src="../_static/documentation_options.js?v=2b694ea4"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -75,7 +75,7 @@
     <link rel="prev" title="Release Notes" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.1.0" />
+  <meta name="docsearch:version" content="2026.2.0" />
   </head>
   
   
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.1.0 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.1.0 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.2.0 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.2.0 documentation - Home"/>
   
   
 </a></div>
@@ -519,7 +519,34 @@ scenarios besides ID-based personalized recommendation.</p>
 components work as they do in the 2025 series, but with more features, some
 rough corners polished off the interfaces, and hopefully fewer bugs.</p>
 <section id="id1">
-<span id="id2"></span><h2>2026.1.0<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<span id="id2"></span><h2>2026.2.0<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<p>Second release in the 2026 series, bringing a few smaller feature updates:</p>
+<ul class="simple">
+<li><p>Added <a class="reference internal" href="../api/lenskit/data/EntityAttribute.html#lenskit.data.EntityAttribute.list" title="lenskit.data.EntityAttribute.list"><code class="xref py py-meth docutils literal notranslate"><span class="pre">list()</span></code></a> and
+<a class="reference internal" href="../api/lenskit/data/EntityAttribute.html#lenskit.data.EntityAttribute.value" title="lenskit.data.EntityAttribute.value"><code class="xref py py-meth docutils literal notranslate"><span class="pre">value()</span></code></a> accessors to entity attributes.</p></li>
+<li><p>Improved typecasting of entity IDs in <a class="reference internal" href="../api/lenskit/data/Vocabulary.html#lenskit.data.Vocabulary.numbers" title="lenskit.data.Vocabulary.numbers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.data.Vocabulary.numbers()</span></code></a>.</p></li>
+<li><p>Added JSON export to <a class="reference internal" href="../api/lenskit/data/ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemList</span></code></a> and
+<a class="reference internal" href="../api/lenskit/data/ItemListCollection.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemListCollection</span></code></a> (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1089" rel="noreferrer" target="_blank">⛙ 1089</a>).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">--releated-items</span></code> and <code class="docutils literal notranslate"><span class="pre">--json</span></code> options to the <code class="docutils literal notranslate"><span class="pre">lenskit</span> <span class="pre">recommend</span></code>
+command (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1087" rel="noreferrer" target="_blank">⛙ 1087</a>).</p></li>
+<li><p>Added a new scorer, <code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.knn.AssociationScorer</span></code>, implementing
+conditional probability and lift-based association rule recommendations for
+both personalized and related-item recommendations (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/930" rel="noreferrer" target="_blank">🐞 930</a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1086" rel="noreferrer" target="_blank">⛙ 1086</a>).</p></li>
+<li><p>Fixed a bug in pipeline merging that required derived pipelines to specify
+component classes in order to configure component options (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/1097" rel="noreferrer" target="_blank">🐞 1097</a>,
+<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1099" rel="noreferrer" target="_blank">⛙ 1099</a>).</p></li>
+<li><p>Added a <code class="docutils literal notranslate"><span class="pre">lenskit</span> <span class="pre">pipeline</span> <span class="pre">expand</span></code> command to render a pipeline configuration
+to complete JSON for debugging / inspection (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/1098" rel="noreferrer" target="_blank">🐞 1098</a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1099" rel="noreferrer" target="_blank">⛙ 1099</a>).</p></li>
+<li><p>Added a new <code class="docutils literal notranslate"><span class="pre">lenskit</span> <span class="pre">pipeline</span> <span class="pre">diagram</span></code> command to render a pipeline configuration
+to a Mermaid diagram for visualization (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1100" rel="noreferrer" target="_blank">⛙ 1100</a>).</p></li>
+<li><p>Re-add support for Pandas 2.2 to improve Google Colab support (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/1103" rel="noreferrer" target="_blank">🐞 1103</a>,
+<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1104" rel="noreferrer" target="_blank">⛙ 1104</a>).</p></li>
+<li><p>Handle parameterized types for component inputs (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/1101" rel="noreferrer" target="_blank">🐞 1101</a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1102" rel="noreferrer" target="_blank">⛙ 1102</a>).</p></li>
+</ul>
+<p>PRs and issues are listed in <a class="reference external" href="https://github.com/lenskit/lkpy/issues?q=is%3Aclosed%20milestone%3A%222026.2%22" rel="noreferrer" target="_blank">milestone 2026.2</a>.</p>
+</section>
+<section id="id3">
+<span id="id4"></span><h2>2026.1.0<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
 <p>This is the first major feature and update release of the 2026 series!  Key
 highlights:</p>
 <ul class="simple">
@@ -716,7 +743,8 @@ locks out of the work path (<a class="extlink-pr reference external" href="https
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2026.1.0</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2026.2.0</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">2026.1.0</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking Changes</a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#major-breaking-changes">Major Breaking Changes</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#other-breaking-changes">Other Breaking Changes</a></li>
@@ -770,7 +798,7 @@ locks out of the work path (<a class="extlink-pr reference external" href="https
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.1.0.</div>
+        <div class="footer-item">LensKit version 2026.2.0.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
