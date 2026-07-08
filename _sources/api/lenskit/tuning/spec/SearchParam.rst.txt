@@ -8,29 +8,44 @@ lenskit.tuning.spec.SearchParam
 
 
    .. py:attribute:: type
-      :type:  Literal['int', 'float']
+      :type:  Literal['int', 'float', 'bool', 'choice']
 
       The type of this parameter.
 
 
    .. py:attribute:: min
-      :type:  int | float
+      :type:  int | float | None
+      :value: None
+
 
       Minimum parameter value.
 
 
    .. py:attribute:: max
-      :type:  int | float
+      :type:  int | float | None
+      :value: None
+
 
       Maximum parameter value.
 
 
    .. py:attribute:: scale
-      :type:  Literal['uniform', 'log']
+      :type:  Literal['uniform', 'log', 'pow2']
       :value: 'uniform'
 
 
       Search scale for parameter values.
+
+      The value ``"pow2"`` only applies to integer parameters, and
+      constrains them to be integer powers of 2.
+
+
+   .. py:attribute:: choices
+      :type:  list[str | int | float | bool]
+      :value: []
+
+
+      Choices for a ``"choice"`` search parameter.
 
 
    .. py:attribute:: base
