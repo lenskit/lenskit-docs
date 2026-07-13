@@ -14,7 +14,7 @@
 <meta property="og:description" content="The lenskit.metrics.ranking module contains the core top- N ranking accuracy metrics (including rank-oblivious list metrics like precision, recall, and hit rate). Ranking metrics extend the Ranking..." />
 <meta name="description" content="The lenskit.metrics.ranking module contains the core top- N ranking accuracy metrics (including rank-oblivious list metrics like precision, recall, and hit rate). Ranking metrics extend the Ranking..." />
 
-    <title>Evaluating Top-N Rankings &#8212; LensKit 2026.2.1 documentation</title>
+    <title>Evaluating Top-N Rankings &#8212; LensKit 2025.8.1 documentation</title>
   
   
   
@@ -37,9 +37,9 @@
 <link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=9d9b0268" />
   
@@ -49,16 +49,17 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=8f11cabd"></script>
-    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
-    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/documentation_options.js?v=881247ce"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'guide/evaluation/rankings';</script>
     <script>
         DOCUMENTATION_OPTIONS.theme_version = '0.16.1';
@@ -75,7 +76,7 @@
     <link rel="prev" title="Evaluating Recommender Output" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.2.1" />
+  <meta name="docsearch:version" content="2025.8.1" />
   </head>
   
   
@@ -141,8 +142,8 @@
       
     
     
-    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.2.1 documentation - Home"/>
-    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.2.1 documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2025.8.1 documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.8.1 documentation - Home"/>
   
   
 </a></div>
@@ -470,11 +471,11 @@
 </ul>
 </details></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Components and Models</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../conventions.html">Component Conventions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../scorers.html">Scoring Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../flexmf.html">Flexible Matrix Factorization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../scorers.html">Scoring Models</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rankers.html">Ranking Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other-components.html">Other Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../implementing.html">Implementing Components</a></li>
@@ -488,7 +489,6 @@
 <li class="toctree-l2"><a class="reference internal" href="predictions.html">Evaluating Rating Predictions</a></li>
 </ul>
 </details></li>
-<li class="toctree-l1"><a class="reference internal" href="collection.html">Collecting and Aggregating Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../documenting.html">Documenting Experiments</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Utilities and Diagnostics</span></p>
@@ -565,25 +565,16 @@
                   
   <section id="evaluating-top-n-rankings">
 <h1>Evaluating Top-N Rankings<a class="headerlink" href="#evaluating-top-n-rankings" title="Link to this heading">#</a></h1>
-<p id="eval-topn">The <a class="reference internal" href="../../api/lenskit/metrics/ranking/index.html#module-lenskit.metrics.ranking" title="lenskit.metrics.ranking"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.metrics.ranking</span></code></a> module contains the core top-<em>N</em> ranking
+<p id="eval-topn">The <code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.metrics.ranking</span></code> module contains the core top-<em>N</em> ranking
 accuracy metrics (including rank-oblivious list metrics like precision, recall,
 and hit rate).</p>
-<p>Ranking metrics extend the <a class="reference internal" href="../../api/lenskit/metrics/ranking/RankingMetricBase.html#lenskit.metrics.ranking.RankingMetricBase" title="lenskit.metrics.ranking.RankingMetricBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">RankingMetricBase</span></code></a> base class, often in
-addition to <code class="xref py py-class docutils literal notranslate"><span class="pre">ListMetric</span></code>, and return a score given a recommendation
-list and a test rating list, both as <a class="reference internal" href="../../api/lenskit/data/ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">item</span> <span class="pre">lists</span></code></a>; most metrics require the recommendation item list to
-be <a class="reference internal" href="../../api/lenskit/data/ItemList.html#lenskit.data.ItemList.ordered" title="lenskit.data.ItemList.ordered"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ordered</span></code></a>.</p>
-<p>All LensKit ranking metrics take <code class="docutils literal notranslate"><span class="pre">n</span></code> as a constructor argument to control the
+<p>Ranking metrics extend the <code class="xref py py-class docutils literal notranslate"><span class="pre">RankingMetricBase</span></code> base class in addition
+to <code class="xref py py-class docutils literal notranslate"><span class="pre">ListMetric</span></code> and/or <code class="xref py py-class docutils literal notranslate"><span class="pre">GlobalMetric</span></code>, return a score given
+a recommendation list and a test rating list, both as <a class="reference internal" href="../../api/lenskit.data.ItemList.html#lenskit.data.ItemList" title="lenskit.data.ItemList"><code class="xref py py-class docutils literal notranslate"><span class="pre">item</span> <span class="pre">lists</span></code></a>; most metrics require the recommendation item list to
+be <a class="reference internal" href="../../api/lenskit.data.ItemList.html#lenskit.data.ItemList.ordered" title="lenskit.data.ItemList.ordered"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ordered</span></code></a>.</p>
+<p>All LensKit ranking metrics take <cite>k</cite> as a constructor argument to control the
 list of the length that is considered; this allows multiple measurements (e.g.
 HR&#64;5 and <a class="reference external" href="mailto:HR&#37;&#52;&#48;10" rel="noreferrer" target="_blank">HR<span>&#64;</span>10</a>) to be computed from a single set of rankings.</p>
-<p>Metrics can be used on their own, but it is usually easiest to use them with
-<a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a> to handle some of edge cases
-around data availability, etc., as well as to support metric-specific
-aggregation (see <a class="reference internal" href="collection.html#eval-collection"><span class="std std-ref">Collecting and Aggregating Metrics</span></a> for more details).</p>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 2026.1: </span>The argument for the list length has changed from <code class="docutils literal notranslate"><span class="pre">k</span></code> to <code class="docutils literal notranslate"><span class="pre">n</span></code>, for
-consistency across LensKit.  <code class="docutils literal notranslate"><span class="pre">k</span></code> is kept as a deprecated alias until
-2027.1.</p>
-</div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 2025.1: </span>The top-N accuracy metric interface has changed to use item lists, and to
 be simpler to implement.</p>
@@ -597,13 +588,13 @@ positions of items within it.</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Hit</span></code></p></td>
-<td><p>Compute whether or not a list is a hit; any list with at least one</p></td>
+<td><p>Compute whether or not a list is a hit; any list with at least one relevant item in the first <span class="math notranslate nohighlight">\(k\)</span> positions (<span class="math notranslate nohighlight">\(L_{\le k} \cap I_u^{\mathrm{test}} \ne \emptyset\)</span>) is scored as 1, and lists with no relevant items as 0.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Precision</span></code></p></td>
-<td><p>Compute recommendation precision.  This is computed as:</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../api/lenskit.metrics.Precision.html#lenskit.metrics.Precision" title="lenskit.metrics.Precision"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Precision</span></code></a></p></td>
+<td><p>Compute recommendation precision.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">Recall</span></code></p></td>
-<td><p>Compute recommendation recall.  This is computed as:</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../api/lenskit.metrics.Recall.html#lenskit.metrics.Recall" title="lenskit.metrics.Recall"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Recall</span></code></a></p></td>
+<td><p>Compute recommendation recall.</p></td>
 </tr>
 </tbody>
 </table>
@@ -616,13 +607,13 @@ or may not be relevant; some also support different item utilities (e.g. ratings
 or graded relevance scores).</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">RecipRank</span></code></p></td>
-<td><p>Compute the reciprocal rank <span id="id1">[<a class="reference internal" href="../../references.html#id66" title="Paul B Kantor and Ellen Voorhees. Report on the TREC-5 Confusion Track. In The Fifth Text REtrieval Conference (TREC-5). October 1997. URL: http://trec.nist.gov/pubs/trec5/t5_proceedings.html.">KV97</a>]</span> of the first relevant</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../api/lenskit.metrics.RecipRank.html#lenskit.metrics.RecipRank" title="lenskit.metrics.RecipRank"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RecipRank</span></code></a></p></td>
+<td><p>Compute the reciprocal rank <span id="id1">[<a class="reference internal" href="../../references.html#id66" title="Paul B Kantor and Ellen Voorhees. Report on the TREC-5 Confusion Track. In The Fifth Text REtrieval Conference (TREC-5). October 1997. URL: http://trec.nist.gov/pubs/trec5/t5_proceedings.html.">KV97</a>]</span> of the first relevant item in a list of recommendations.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">RBP</span></code></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="../../api/lenskit.metrics.RBP.html#lenskit.metrics.RBP" title="lenskit.metrics.RBP"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RBP</span></code></a></p></td>
 <td><p>Evaluate recommendations with rank-biased precision <span id="id2">[<a class="reference internal" href="../../references.html#id54" title="Alistair Moffat and Justin Zobel. Rank-biased precision for measurement of retrieval effectiveness. Transactions on Information Systems, 27(1):2:1-27, December 2008. doi:10.1145/1416950.1416952.">MZ08</a>]</span>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDCG</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../api/lenskit.metrics.NDCG.html#lenskit.metrics.NDCG" title="lenskit.metrics.NDCG"><code class="xref py py-obj docutils literal notranslate"><span class="pre">NDCG</span></code></a></p></td>
 <td><p>Compute the normalized discounted cumulative gain <span id="id3">[<a class="reference internal" href="../../references.html#id45" title="Kalervo Järvelin and Jaana Kekäläinen. Cumulated gain-based evaluation of IR techniques. ACM Transactions on Information Systems, 20(4):422–446, October 2002. doi:10.1145/582415.582418.">JarvelinKekalainen02</a>]</span>.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">DCG</span></code></p></td>
@@ -638,7 +629,7 @@ or graded relevance scores).</p>
 as popularity/obscurity or diversity.</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">MeanPopRank</span></code></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="../../api/lenskit.metrics.MeanPopRank.html#lenskit.metrics.MeanPopRank" title="lenskit.metrics.MeanPopRank"><code class="xref py py-obj docutils literal notranslate"><span class="pre">MeanPopRank</span></code></a></p></td>
 <td><p>Compute the _obscurity_ (mean popularity rank) of the recommendations.</p></td>
 </tr>
 </tbody>
@@ -695,7 +686,7 @@ as popularity/obscurity or diversity.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#included-effectiveness-metrics">Included Effectiveness Metrics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#included-effectiveness-metrics">Included Effectiveness Metrics</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#list-and-set-metrics">List and Set Metrics</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ranked-list-metrics">Ranked List Metrics</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beyond-accuracy">Beyond Accuracy</a></li>
@@ -744,7 +735,7 @@ as popularity/obscurity or diversity.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.2.1.</div>
+        <div class="footer-item">LensKit version 2025.8.1.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
