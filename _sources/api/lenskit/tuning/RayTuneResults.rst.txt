@@ -1,0 +1,62 @@
+lenskit.tuning.RayTuneResults
+=============================
+
+.. py:class:: lenskit.tuning.RayTuneResults
+   :canonical: lenskit.tuning._ray.RayTuneResults
+
+   Bases: :py:obj:`lenskit.tuning._base.TuneResults`
+
+
+   Helper class that provides a standard way to create an ABC using
+   inheritance.
+
+
+   .. py:attribute:: iterative
+      :type:  bool
+
+
+   .. py:attribute:: results
+      :type:  ray.tune.ResultGrid
+
+
+   .. py:method:: num_trials()
+
+      Get the number of completed trials in this search.
+
+
+
+   .. py:method:: trials()
+
+      Iterate over individual trials in this search.  Each dictionary contains
+      metric(s), the configuration (as ``"config"``), and other tuner-specific fields.
+
+
+
+   .. py:method:: epochs()
+
+      Iterate over individual iterations within trials.  The dictionary contains
+      columns identifying both the iteration and the trial.
+
+
+
+   .. py:method:: best_config(*, scope = 'all')
+
+      Get the best configuration.
+
+      :param scope: The metric search scope for iterative training.  Set to
+                    ``"last"`` to use the last iteration instead of the best
+                    iteration.  See :meth:`ray.tune.ResultGrid.get_best_result` for
+                    details.
+
+
+
+   .. py:method:: best_result(*, scope = 'all')
+
+      Get the best configuration and its validation metrics.
+
+      :param scope: The metric search scope for iterative training.  Set to
+                    ``"last"`` to use the last iteration instead of the best
+                    iteration.  See :meth:`ray.tune.ResultGrid.get_best_result` for
+                    details.
+
+
