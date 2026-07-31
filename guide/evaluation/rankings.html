@@ -14,7 +14,7 @@
 <meta property="og:description" content="The lenskit.metrics.ranking module contains the core top- N ranking accuracy metrics (including rank-oblivious list metrics like precision, recall, and hit rate). Ranking metrics extend the Ranking..." />
 <meta name="description" content="The lenskit.metrics.ranking module contains the core top- N ranking accuracy metrics (including rank-oblivious list metrics like precision, recall, and hit rate). Ranking metrics extend the Ranking..." />
 
-    <title>Evaluating Top-N Rankings &#8212; LensKit 2026.3.0b2.dev2+g2fbd9c73 documentation</title>
+    <title>Evaluating Top-N Rankings &#8212; LensKit 2026.3.0b2.dev3+g0b626b55 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=aa2bbfed"></script>
+    <script src="../../_static/documentation_options.js?v=df75d6cf"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.3.0b2.dev2+g2fbd9c73 documentation - Home"/>
-    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.3.0b2.dev2+g2fbd9c73 documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.3.0b2.dev3+g0b626b55 documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.3.0b2.dev3+g0b626b55 documentation - Home"/>
   
   
 </a></div>
@@ -588,6 +588,24 @@ consistency across LensKit.  <code class="docutils literal notranslate"><span cl
 <p><span class="versionmodified changed">Changed in version 2025.1: </span>The top-N accuracy metric interface has changed to use item lists, and to
 be simpler to implement.</p>
 </div>
+<section id="descriptive-metrics">
+<h2>Descriptive Metrics<a class="headerlink" href="#descriptive-metrics" title="Link to this heading">#</a></h2>
+<p>These metrics provide basic descriptive statistics of the recommendations and evaluation.</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ListLength</span></code></p></td>
+<td><p>Report the length of the output (recommendation list or predictions).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">TestItemCount</span></code></p></td>
+<td><p>Report the number of test items.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">UniqueItemCount</span></code></p></td>
+<td><p>Count the number of unique items in the recommendation lists.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 <section id="included-effectiveness-metrics">
 <h2>Included Effectiveness Metrics<a class="headerlink" href="#included-effectiveness-metrics" title="Link to this heading">#</a></h2>
 <section id="list-and-set-metrics">
@@ -632,8 +650,9 @@ or graded relevance scores).</p>
 </table>
 </div>
 </section>
+</section>
 <section id="beyond-accuracy">
-<h3>Beyond Accuracy<a class="headerlink" href="#beyond-accuracy" title="Link to this heading">#</a></h3>
+<h2>Beyond Accuracy<a class="headerlink" href="#beyond-accuracy" title="Link to this heading">#</a></h2>
 <p>These metrics measure <strong>non-accuracy</strong> properties of recommendation lists, such
 as popularity/obscurity or diversity.</p>
 <div class="pst-scrollable-table-container"><table class="autosummary longtable table">
@@ -641,10 +660,15 @@ as popularity/obscurity or diversity.</p>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">MeanPopRank</span></code></p></td>
 <td><p>Compute the _obscurity_ (mean popularity rank) of the recommendations.</p></td>
 </tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ListGini</span></code></p></td>
+<td><p>Measure item diversity of recommendations with the Gini coefficient.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">ExposureGini</span></code></p></td>
+<td><p>Measure exposure distribution of recommendations with the Gini coefficient.</p></td>
+</tr>
 </tbody>
 </table>
 </div>
-</section>
 </section>
 </section>
 
@@ -695,12 +719,13 @@ as popularity/obscurity or diversity.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#descriptive-metrics">Descriptive Metrics</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#included-effectiveness-metrics">Included Effectiveness Metrics</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#list-and-set-metrics">List and Set Metrics</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ranked-list-metrics">Ranked List Metrics</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beyond-accuracy">Beyond Accuracy</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#beyond-accuracy">Beyond Accuracy</a></li>
 </ul>
   </nav></div>
 
@@ -744,7 +769,7 @@ as popularity/obscurity or diversity.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.3.0b2.dev2+g2fbd9c73.</div>
+        <div class="footer-item">LensKit version 2026.3.0b2.dev3+g0b626b55.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
