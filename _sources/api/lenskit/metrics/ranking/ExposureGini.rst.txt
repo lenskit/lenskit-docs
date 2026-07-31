@@ -1,0 +1,37 @@
+lenskit.metrics.ranking.ExposureGini
+====================================
+
+.. py:class:: lenskit.metrics.ranking.ExposureGini(n = None, *, k = None, items, weight = GeometricRankWeight())
+   :canonical: lenskit.metrics.ranking._gini.ExposureGini
+
+   Bases: :py:obj:`GiniBase`
+
+
+   Measure exposure distribution of recommendations with the Gini coefficient.
+
+   This uses a weighting model to compute the exposure of each item in each list,
+   and computes the Gini coefficient of the total exposure.
+
+   :param n: The maximum recommendation list length.
+   :param items: The item vocabulary or a dataset from which to extract the items.
+   :param weight: The rank weighting model to use.  Defaults to
+                  :class:`GeometricRankWeight` with the specified patience parameter.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: weight
+      :type:  lenskit.metrics.ranking._weighting.RankWeight
+
+
+   .. py:method:: measure_list(output, test)
+
+      Compute measurements for a single list.
+
+      :returns:
+
+                - A float for simple metrics
+                - Intermediate data for decomposed metrics
+                - A dict mapping metric names to values for multi-metric classes
+
+

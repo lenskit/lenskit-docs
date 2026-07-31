@@ -1,0 +1,136 @@
+lenskit.testing
+===============
+
+.. py:module:: lenskit.testing
+
+.. autoapi-nested-parse::
+
+   LensKit test harnesses and utilities.
+
+   This package contains utility code for testing LensKit and its components,
+   including in derived packages.  It relies on PyTest and Hypothesis.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.testing.ml_100k_zip
+   lenskit.testing.ml_test_dir
+
+
+Classes
+-------
+
+.. toctree::
+   :hidden:
+
+   /api/lenskit/testing/BasicComponentTests
+   /api/lenskit/testing/ScorerTests
+   /api/lenskit/testing/DemoRecs
+
+.. autoapisummary::
+
+   lenskit.testing.BasicComponentTests
+   lenskit.testing.ScorerTests
+   lenskit.testing.DemoRecs
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.testing.coo_arrays
+   lenskit.testing.scored_lists
+   lenskit.testing.sparse_arrays
+   lenskit.testing.sparse_tensors
+   lenskit.testing.demo_recs
+   lenskit.testing.ml_20m
+   lenskit.testing.ml_100k
+   lenskit.testing.ml_ds
+   lenskit.testing.ml_ds_unchecked
+   lenskit.testing.ml_ratings
+   lenskit.testing.pop_recs
+   lenskit.testing.msweb
+   lenskit.testing.set_env_var
+
+
+
+Package Contents
+----------------
+
+.. py:function:: coo_arrays(shape=None, dtype=nph.floating_dtypes(endianness='=', sizes=[32, 64]), elements=st.floats(-1000000.0, 1000000.0, allow_nan=False, allow_infinity=False, width=32))
+
+.. py:function:: scored_lists(*, n = st.integers(0, 1000), scores = None)
+
+   Hypothesis generator that produces scored lists.
+
+
+.. py:function:: sparse_arrays(*, layout='csr', **kwargs)
+
+.. py:function:: sparse_tensors(*, layout='csr', **kwargs)
+
+.. py:function:: demo_recs()
+
+   A demo set of train, test, and recommendation data.
+
+
+.. py:function:: ml_20m()
+
+.. py:function:: ml_100k()
+
+   Fixture to load the MovieLens 100K dataset (currently as a data frame).  It skips
+   the test if the ML100K data is not available.
+
+
+.. py:data:: ml_100k_zip
+
+.. py:function:: ml_ds(ml_ds_unchecked)
+
+   Fixture to load the MovieLens test dataset.  To use this, just include it as
+   a parameter in your test::
+
+       def test_thing_with_data(ml_ds: Dataset):
+           ...
+
+   .. note::
+       This is imported in ``conftest.py`` so it is always available in LensKit tests.
+
+
+.. py:function:: ml_ds_unchecked()
+
+   Fixture to load the MovieLens dataset, without checking for modifications.
+
+   Usually use :func:`ml_ds` instead.
+
+
+.. py:function:: ml_ratings()
+
+   Fixture to load the test MovieLens ratings as a data frame. To use this,
+   just include it as a parameter in your test::
+
+       def test_thing_with_data(ml_ratings: pd.DataFrame):
+           ...
+
+   .. note::
+       This is imported in ``conftest.py`` so it is always available in LensKit tests.
+
+
+.. py:data:: ml_test_dir
+
+.. py:function:: pop_recs()
+
+   A demo set of train, test, and recommendation data, from most-popular.
+
+
+.. py:function:: msweb()
+
+.. py:function:: set_env_var(var, val)
+
+   Set an environment variable & restore it.
+
+
+

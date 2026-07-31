@@ -1,0 +1,55 @@
+lenskit.flexmf.FlexMFScorerBase
+===============================
+
+.. py:class:: lenskit.flexmf.FlexMFScorerBase(config = None, **kwargs)
+   :canonical: lenskit.flexmf._base.FlexMFScorerBase
+
+   Bases: :py:obj:`lenskit.training.UsesTrainer`, :py:obj:`lenskit.pipeline.Component`
+
+
+   Base class for the FlexMF scorers, providing common Torch support.
+
+   :Stability: Experimental
+
+
+   .. py:attribute:: config
+      :type:  FlexMFConfigBase
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: users
+      :type:  lenskit.data.Vocabulary
+
+
+   .. py:attribute:: items
+      :type:  lenskit.data.Vocabulary
+
+
+   .. py:attribute:: model
+      :type:  lenskit.flexmf._model.FlexMFModel
+
+
+   .. py:method:: to(device)
+
+      Move the model to a different device.
+
+
+
+   .. py:method:: __call__(query, items)
+
+      Generate item scores for a user.
+
+      Note that user and items are both user and item IDs, not positions.
+
+
+
+   .. py:method:: score_items(users, items)
+
+      Score for users and items, after resolivng them and limiting to known
+      users and items.
+
+

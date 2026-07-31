@@ -1,0 +1,48 @@
+lenskit.basic.history.UserTrainingHistoryLookup
+===============================================
+
+.. py:class:: lenskit.basic.history.UserTrainingHistoryLookup(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ], :py:obj:`lenskit.training.Trainable`
+
+
+   Look up a user's history from the training data.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: config
+      :type:  LookupConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: interactions
+      :type:  lenskit.data.MatrixRelationshipSet | None
+
+
+   .. py:method:: is_trained()
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options = TrainingOptions())
+
+      Train the model to learn its parameters from a training dataset.
+
+      :param data: The training dataset.
+      :param options: The training options.
+
+
+
+   .. py:method:: __call__(query)
+
+      Look up the user's data from the training history (if needed), and
+      ensure a fully-populated :class:`RecQuery`.
+
+

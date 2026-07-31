@@ -1,0 +1,194 @@
+lenskit.data
+============
+
+.. py:module:: lenskit.data
+
+.. autoapi-nested-parse::
+
+   Data abstractions and data set access.
+
+
+
+Submodules
+----------
+
+.. autoapisummary::
+
+   lenskit.data.accum
+   lenskit.data.amazon
+   lenskit.data.matrix
+   lenskit.data.movielens
+   lenskit.data.msweb
+   lenskit.data.repr
+   lenskit.data.schema
+   lenskit.data.sources
+   lenskit.data.types
+
+.. toctree::
+    :hidden:
+    :maxdepth: 1
+
+    /api/lenskit/data/accum/index
+    /api/lenskit/data/amazon/index
+    /api/lenskit/data/matrix/index
+    /api/lenskit/data/movielens/index
+    /api/lenskit/data/msweb/index
+    /api/lenskit/data/repr/index
+    /api/lenskit/data/schema/index
+    /api/lenskit/data/sources/index
+    /api/lenskit/data/types/index
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.data.GenericKey
+   lenskit.data.QueryInput
+   lenskit.data.QueryItemSource
+
+
+Classes
+-------
+
+.. toctree::
+   :hidden:
+
+   /api/lenskit/data/EntityAttribute
+   /api/lenskit/data/BatchedRange
+   /api/lenskit/data/DatasetBuilder
+   /api/lenskit/data/ItemListCollection
+   /api/lenskit/data/ItemListCollector
+   /api/lenskit/data/ListILC
+   /api/lenskit/data/MutableItemListCollection
+   /api/lenskit/data/QueryIDKey
+   /api/lenskit/data/UserIDKey
+   /api/lenskit/data/DataContainer
+   /api/lenskit/data/Dataset
+   /api/lenskit/data/EntitySet
+   /api/lenskit/data/ItemList
+   /api/lenskit/data/RecQuery
+   /api/lenskit/data/MatrixRelationshipSet
+   /api/lenskit/data/RelationshipSet
+   /api/lenskit/data/Vocabulary
+
+.. autoapisummary::
+
+   lenskit.data.EntityAttribute
+   lenskit.data.BatchedRange
+   lenskit.data.DatasetBuilder
+   lenskit.data.ItemListCollection
+   lenskit.data.ItemListCollector
+   lenskit.data.ListILC
+   lenskit.data.MutableItemListCollection
+   lenskit.data.QueryIDKey
+   lenskit.data.UserIDKey
+   lenskit.data.DataContainer
+   lenskit.data.Dataset
+   lenskit.data.EntitySet
+   lenskit.data.ItemList
+   lenskit.data.RecQuery
+   lenskit.data.MatrixRelationshipSet
+   lenskit.data.RelationshipSet
+   lenskit.data.Vocabulary
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.data.from_interactions_df
+   lenskit.data.key_dict
+   lenskit.data.flatten_dict
+   lenskit.data.unflatten_dict
+
+
+
+Package Contents
+----------------
+
+.. py:function:: from_interactions_df(df, *, user_col = None, item_col = None, rating_col = None, timestamp_col = None, users = None, items = None, class_name = 'rating')
+
+   Create a dataset from a data frame of ratings or other user-item
+   interactions.
+
+   :Stability: Caller
+
+   :param df: The user-item interactions (e.g. ratings).  The dataset code takes
+              ownership of this data frame and may modify it.
+   :param user_col: The name of the user ID column.  By default, looks for columns named
+                    ``user``, ``user_id``, or ``userId``, with several case variants.
+   :param item_col: The name of the item ID column.  By default, looks for columns named
+                    ``item``, ``item_id``, or ``itemId``, with several case variants.
+   :param rating_col: The name of the rating column.
+   :param timestamp_col: The name of the timestamp column.
+   :param user_ids: A vocabulary of user IDs.  The data frame is subset to this set of IDs.
+   :param item_ids: A vocabulary of item IDs.  The data frame is subset to this set of IDs.
+   :param name: The interaction class name.
+
+   :returns: The initiated data set.
+
+
+.. py:type:: GenericKey
+   :canonical: tuple[ID, ...]
+
+
+   A generic collection key with no bounds or type information.  Key types must
+   also be *named* tuples (the Python type system does not allow us to express
+   this).
+
+.. py:function:: key_dict(kt)
+
+.. py:function:: flatten_dict(data)
+
+.. py:function:: unflatten_dict(data, *, sep='.')
+
+.. py:type:: QueryInput
+   :canonical: RecQuery | ID | ItemList | None
+
+
+   Types that can be converted to a query by :meth:`RecQuery.create`.
+
+.. py:type:: QueryItemSource
+   :canonical: Literal['history', 'session', 'context']
+
+
+   Valid sources for query items.
+
+
+Exported Aliases
+----------------
+
+.. py:exception:: lenskit.data.FieldError
+
+    Re-exported alias for :py:exc:`lenskit.diagnostics.FieldError`.
+
+.. py:function:: lenskit.data.load_ms_web
+
+    Re-exported alias for :py:func:`lenskit.data.msweb.load_ms_web`.
+
+.. py:function:: lenskit.data.load_amazon_ratings
+
+    Re-exported alias for :py:func:`lenskit.data.sources.amazon.load_amazon_ratings`.
+
+.. py:function:: lenskit.data.load_movielens
+
+    Re-exported alias for :py:func:`lenskit.data.sources.movielens.load_movielens`.
+
+.. py:function:: lenskit.data.load_movielens_df
+
+    Re-exported alias for :py:func:`lenskit.data.sources.movielens.load_movielens_df`.
+
+.. py:data:: lenskit.data.ID
+
+    Re-exported alias for :py:data:`lenskit.data.types.ID`.
+
+.. py:data:: lenskit.data.NPID
+
+    Re-exported alias for :py:data:`lenskit.data.types.NPID`.
+
+.. py:data:: lenskit.data.FeedbackType
+
+    Re-exported alias for :py:data:`lenskit.data.types.FeedbackType`.
+

@@ -1,0 +1,173 @@
+lenskit.random
+==============
+
+.. py:module:: lenskit.random
+
+.. autoapi-nested-parse::
+
+   Utilities to manage randomness in LensKit and LensKit experiments.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.random.SeedLike
+   lenskit.random.RNGLike
+   lenskit.random.RNGInput
+   lenskit.random.ConfiguredSeed
+   lenskit.random.SeedDependency
+   lenskit.random.DerivableSeed
+
+
+Classes
+-------
+
+.. toctree::
+   :hidden:
+
+   /api/lenskit/random/RNGFactory
+   /api/lenskit/random/FixedRNG
+   /api/lenskit/random/DerivingRNG
+
+.. autoapisummary::
+
+   lenskit.random.RNGFactory
+   lenskit.random.FixedRNG
+   lenskit.random.DerivingRNG
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.random.load_seed
+   lenskit.random.set_global_rng
+   lenskit.random.init_global_rng
+   lenskit.random.random_generator
+   lenskit.random.spawn_seed
+   lenskit.random.int_seed
+   lenskit.random.make_seed
+   lenskit.random.derivable_rng
+
+
+
+Module Contents
+---------------
+
+.. py:type:: SeedLike
+   :canonical: int | Sequence[int] | np.random.SeedSequence
+
+
+   Type for RNG seeds (see `SPEC 7`_).
+
+   .. _SPEC 7: https://scientific-python.org/specs/spec-0007/
+
+.. py:type:: RNGLike
+   :canonical: np.random.Generator | np.random.BitGenerator
+
+
+   Type for random number generators as inputs (see `SPEC 7`_).
+
+   .. _SPEC 7: https://scientific-python.org/specs/spec-0007/
+
+.. py:type:: RNGInput
+   :canonical: SeedLike | RNGLike | None
+
+
+   Type for RNG inputs (see `SPEC 7`_).
+
+   .. _SPEC 7: https://scientific-python.org/specs/spec-0007/
+
+.. py:type:: ConfiguredSeed
+   :canonical: int | Sequence[int] | None
+
+
+   Random number seed that can be configured.
+
+.. py:data:: SeedDependency
+
+.. py:type:: DerivableSeed
+   :canonical: ConfiguredSeed | SeedDependency | tuple[ConfiguredSeed, SeedDependency]
+
+
+.. py:function:: load_seed(file, key = 'random.seed')
+
+   Load a seed from a configuration file.
+
+   .. deprecated:: 2025.3.0
+
+       No longer supported, use :ref:`settings` instead.
+
+   :param file: The path to the configuration file.
+   :param key: The path within the configuration object to the random seed.
+
+
+.. py:function:: set_global_rng(seed)
+
+   Set the global default RNG.
+
+   .. deprecated: 2025.3.0
+       Deprecated alias for :func:`init_global_rng`.
+
+
+.. py:function:: init_global_rng(seed, *, seed_stdlib = True, seed_numpy = True, seed_pytorch = True)
+
+   Set the global default RNG.
+
+   :param seed: The seed to set.
+   :param seed_stdlib: If ``True``, also seed the Python standard library RNG.
+   :param seed_numpy: If ``True``, also seed the deprecated NumPy global RNG.
+   :param seed_torch: If ``True``, also seed PyTorch.
+
+
+.. py:function:: random_generator(seed: RNGInput = None, *, type: Literal['numpy'] = 'numpy') -> numpy.random.Generator
+                 random_generator(seed: RNGInput = None, *, type: Literal['torch']) -> torch.Generator
+
+   Create a a random generator with the given seed, falling back to a global
+   generator if no seed is provided.  If no global generator has been
+   configured with :func:`set_global_rng`, it returns a fresh random RNG.
+
+
+.. py:function:: spawn_seed(seed = None)
+
+   Spawn a derived seed from a seed or input.
+
+
+.. py:function:: int_seed(seed)
+
+   Convert a seed sequence into an integer seed.
+
+
+.. py:function:: make_seed(*keys)
+
+   Make an RNG seed from an input key, allowing strings as seed material.
+
+
+.. py:function:: derivable_rng(spec)
+
+   RNGs that may be derivable from data in the query. These are for designs
+   that need to be able to reproducibly derive RNGs for different keys, like
+   user IDs (to make a “random” recommender produce the same sequence for the
+   same user).
+
+   Seed specifications may be any of the following:
+
+   - A seed (:type:`~lenskit.random.SeedLike`).
+   - The value ``'user'``, which will derive a seed from the query user ID.
+   - A tuple of the form ``(seed, 'user')``, that will use ``seed`` as the
+     basis and drive from it a new seed based on the user ID.
+
+   .. seealso:: :ref:`rng`
+
+   :param spec: The seed specification.
+
+   :returns:     A function taking one (or more) key values, like
+                 :func:`derive_seed`, and returning a random number generator.
+   :rtype: function
+
+
+

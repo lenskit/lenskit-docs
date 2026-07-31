@@ -1,0 +1,67 @@
+lenskit.parallel.config
+=======================
+
+.. py:module:: lenskit.parallel.config
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.parallel.config.get_parallel_config
+   lenskit.parallel.config.init_threading
+   lenskit.parallel.config.ensure_parallel_init
+   lenskit.parallel.config.is_free_threaded
+   lenskit.parallel.config.effective_cpu_count
+
+
+
+Module Contents
+---------------
+
+.. py:function:: get_parallel_config()
+
+   Get the active parallel configuration, making sure parallelism is configured
+   first.
+
+
+.. py:function:: init_threading(config = None)
+
+   Set up and configure LensKit parallelism.  This only needs to be called if
+   you want to control when and how parallelism is set up; components using
+   parallelism will call :func:`ensure_init`, which will call this function
+   with its default arguments if it has not been called.
+
+   .. seealso:: :ref:`parallel-config`
+
+
+.. py:function:: ensure_parallel_init()
+
+   Make sure LensKit parallelism is configured, and configure with defaults if
+   it is not.
+
+   Components using parallelism or intensive computations should call this
+   function before they begin training.
+
+
+.. py:function:: is_free_threaded(*, require_active = False)
+
+   Query whether this Python supports free-threading.
+
+   :param require_active: Require that the GIL is actually disabled (i.e., no modules have
+                          re-enabled the GIL) in order to return ``True``.
+
+   :returns: Whether or not this Python supports free-threading.
+
+
+.. py:function:: effective_cpu_count()
+
+   Return the effective CPU count using the best available data.  Tries the following in order:
+
+   1.  :func:`os.process_cpu_count`
+   2.  :func:`os.sched_getaffinity`
+   3.  :func:`os.cpu_count`
+
+
+

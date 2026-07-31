@@ -1,0 +1,47 @@
+lenskit.metrics.predict.PredictMetric
+=====================================
+
+.. py:class:: lenskit.metrics.predict.PredictMetric(missing_scores = 'error', missing_truth = 'error')
+   
+
+   Bases: :py:obj:`lenskit.metrics._base.Metric`
+
+
+   Extension to the metric function interface for prediction metrics.
+
+   In addition to the general metric interface, predict metrics can be called
+   with a single item list (or item list collection) that has both ``scores``
+   and a ``rating`` field.
+
+   :param missing_scores: The action to take when a test item has not been scored.  The
+                          default throws an exception, avoiding situations where non-scored
+                          items are silently excluded from overall statistics.
+   :param missing_truth: The action to take when no test items are available for a scored
+                         item. The default is to also to fail; if you are scoring a superset
+                         of the test items for computational efficiency, set this to
+                         ``"ignore"``.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: default
+      :value: None
+
+
+
+   .. py:attribute:: missing_scores
+      :type:  MissingDisposition
+
+
+   .. py:attribute:: missing_truth
+      :type:  MissingDisposition
+
+
+   .. py:method:: align_scores(predictions, truth = None)
+
+      Align prediction scores and rating values, applying the configured
+      missing dispositions.  The result is two Pandas series, predictions and
+      truth, that are aligned and checked for missing data in accordance with
+      the configured options.
+
+

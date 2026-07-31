@@ -1,0 +1,96 @@
+lenskit.data.schema
+===================
+
+.. py:module:: lenskit.data.schema
+
+.. autoapi-nested-parse::
+
+   Pydantic models for LensKit data schemas.  These models define define the data
+   schema in memory and also define how schemas are serialized to and from
+   configuration files.  See :ref:`data-model` for details.
+
+   .. note::
+
+       The schema does not specify data types directly — data types are inferred
+       from the underlying Arrow data structures.  This reduces duplication of type
+       information and the opportunity for inconsistency.
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   lenskit.data.schema.CURRENT_VERSION
+   lenskit.data.schema.OLDEST_VERSION
+   lenskit.data.schema.LOAD_CONTEXT
+   lenskit.data.schema.NAME_PATTERN
+   lenskit.data.schema.Name
+
+
+Classes
+-------
+
+.. toctree::
+   :hidden:
+
+   /api/lenskit/data/schema/AllowableTroolean
+   /api/lenskit/data/schema/AttrLayout
+   /api/lenskit/data/schema/DataSchema
+   /api/lenskit/data/schema/EntitySchema
+   /api/lenskit/data/schema/RelationshipSchema
+   /api/lenskit/data/schema/ColumnSpec
+
+.. autoapisummary::
+
+   lenskit.data.schema.AllowableTroolean
+   lenskit.data.schema.AttrLayout
+   lenskit.data.schema.DataSchema
+   lenskit.data.schema.EntitySchema
+   lenskit.data.schema.RelationshipSchema
+   lenskit.data.schema.ColumnSpec
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.data.schema.id_col_name
+   lenskit.data.schema.num_col_name
+   lenskit.data.schema.check_name
+
+
+
+Module Contents
+---------------
+
+.. py:data:: CURRENT_VERSION
+   :value: '2025.3'
+
+
+.. py:data:: OLDEST_VERSION
+   :value: '2025.1'
+
+
+.. py:data:: LOAD_CONTEXT
+
+.. py:data:: NAME_PATTERN
+
+.. py:type:: Name
+   :canonical: Annotated[str, StringConstraints(pattern=NAME_PATTERN)]
+
+
+.. py:function:: id_col_name(name)
+
+.. py:function:: num_col_name(name)
+
+.. py:function:: check_name(name)
+
+   Check if a name is valid.
+
+   :raises ValueError: when the name is invalid.
+
+
+

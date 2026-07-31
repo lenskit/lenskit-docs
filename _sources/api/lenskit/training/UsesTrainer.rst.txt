@@ -1,0 +1,52 @@
+lenskit.training.UsesTrainer
+============================
+
+.. py:class:: lenskit.training.UsesTrainer(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.pipeline.components.Component`\ [\ :py:obj:`TCOut`\ ], :py:obj:`abc.ABC`, :py:obj:`Trainable`, :py:obj:`Generic`\ [\ :py:obj:`TCOut`\ ]
+
+
+   Base class for models that implement :class:`Trainable` via a
+   :class:`ModelTrainer`.
+
+   The component's configuration must have an ``epochs`` attribute defining the
+   number of epochs to train.
+
+   :Stability: Full
+
+
+   .. py:attribute:: trained_epochs
+      :type:  int
+      :value: 0
+
+
+
+   .. py:property:: expected_training_epochs
+      :type: int | None
+
+
+      Get the number of training epochs expected to run.  The default
+      implementation looks for an ``epochs`` attribute on the configuration
+      object (``self.config``).
+
+
+   .. py:method:: is_trained()
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options = TrainingOptions())
+
+      Implementation of :meth:`Trainable.train` that uses the model trainer.
+
+
+
+   .. py:method:: create_trainer(data, options)
+      :abstractmethod:
+
+
+      Create a model trainer to train this model.
+
+

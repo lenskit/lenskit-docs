@@ -1,0 +1,73 @@
+lenskit.funksvd.FunkSVDScorer
+=============================
+
+.. py:class:: lenskit.funksvd.FunkSVDScorer(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.training.Trainable`, :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ]
+
+
+   FunkSVD explicit-feedback matrix factoriation.  FunkSVD is a regularized
+   biased matrix factorization technique trained with featurewise stochastic
+   gradient descent.
+
+   See the base class :class:`.MFPredictor` for documentation on the estimated
+   parameters you can extract from a trained model.
+
+   .. deprecated:: LKPY
+
+       This scorer is kept around for historical comparability, but ALS
+       :class:`~lenskit.als.BiasedMF` is usually a better option.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: config
+      :type:  FunkSVDConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: bias
+      :type:  lenskit.basic.BiasModel
+
+
+   .. py:attribute:: users
+      :type:  lenskit.data.Vocabulary
+
+
+   .. py:attribute:: user_embeddings
+      :type:  lenskit.data.types.NPMatrix
+
+
+   .. py:attribute:: items
+      :type:  lenskit.data.Vocabulary
+
+
+   .. py:attribute:: item_embeddings
+      :type:  lenskit.data.types.NPMatrix
+
+
+   .. py:method:: is_trained()
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options = TrainingOptions())
+
+      Train a FunkSVD model.
+
+      :param ratings: the ratings data frame.
+
+
+
+   .. py:method:: __call__(query, items)
+
+      Run the pipeline's operation and produce a result.  This is the key
+      method for components to implement.
+
+

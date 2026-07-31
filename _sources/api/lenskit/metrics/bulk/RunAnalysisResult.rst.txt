@@ -1,0 +1,62 @@
+lenskit.metrics.bulk.RunAnalysisResult
+======================================
+
+.. py:class:: lenskit.metrics.bulk.RunAnalysisResult(lmvs, gmvs, defaults)
+   
+
+   Results of a bulk metric computation.
+
+   .. deprecated:: 2026.1
+
+       This class is deprecated in favor of directly using
+       :class:`~lenskit.metrics.MeasurementCollector`.
+
+   :Stability: Caller
+
+
+   .. py:method:: global_metrics()
+
+      Get the global metric scores.  This is only the results of
+      global metrics; it does not include aggregates of per-list metrics.  For
+      aggregates of per-list metrics, call :meth:`list_summary`.
+
+
+
+   .. py:method:: list_metrics(fill_missing=True)
+
+      Get the per-list scores of the results.  This is a data frame with one
+      row per list (with the list key on the index), and one metric per
+      column.
+
+      :param fill_missing: If ``True`` (the default), fills in missing values with each
+                           metric's default value when available.  Pass ``False`` if you
+                           want to do analyses that need to treat missing values
+                           differently.
+
+
+
+   .. py:method:: list_summary(*keys)
+
+      Summary statistics for the per-list metrics.  Each metric is on its own
+      row, with columns reporting the following:
+
+      ``mean``:
+          The mean metric value.
+      ``median``:
+          The median metric value.
+      ``std``:
+          The (sample) standard deviation of the metric.
+
+      Additional columns are added based on other options.  Missing metric
+      values are filled with their defaults before computing statistics.
+
+      :param keys: Identifiers for different conditions that should be reported
+                   separately (grouping keys for the final result).
+
+
+
+   .. py:method:: merge_from(other)
+
+      Merge another set of analysis results into this one.
+
+

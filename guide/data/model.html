@@ -14,7 +14,7 @@
 <meta property="og:description" content="LensKit defines holistic data model for recommender training (and evaluation) data. The model is graph-structured, but the interfaces and definitions center tabular (data frame) views of that data ..." />
 <meta name="description" content="LensKit defines holistic data model for recommender training (and evaluation) data. The model is graph-structured, but the interfaces and definitions center tabular (data frame) views of that data ..." />
 
-    <title>Data Model &#8212; LensKit 2025.8.1 documentation</title>
+    <title>Data Model &#8212; LensKit 2026.2.1 documentation</title>
   
   
   
@@ -37,9 +37,9 @@
 <link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.8ecb98da25f57f5357bf6f572d296f466b2cfe2517ffebfabe82451661e28f02.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
-    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=9d9b0268" />
   
@@ -49,15 +49,15 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=881247ce"></script>
-    <script src="../../_static/doctools.js?v=9bcbadda"></script>
-    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/documentation_options.js?v=8f11cabd"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
     <script src="../../_static/copybutton.js?v=f281be69"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'guide/data/model';</script>
     <script>
@@ -75,7 +75,7 @@
     <link rel="prev" title="Datasets" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2025.8.1" />
+  <meta name="docsearch:version" content="2026.2.1" />
   </head>
   
   
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2025.8.1 documentation - Home"/>
-    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2025.8.1 documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.2.1 documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.2.1 documentation - Home"/>
   
   
 </a></div>
@@ -470,11 +470,11 @@
 </ul>
 </details></li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Components</span></p>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Components and Models</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="../conventions.html">Component Conventions</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../flexmf.html">Flexible Matrix Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../scorers.html">Scoring Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../flexmf.html">Flexible Matrix Factorization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rankers.html">Ranking Algorithms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other-components.html">Other Components</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../implementing.html">Implementing Components</a></li>
@@ -488,6 +488,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../evaluation/predictions.html">Evaluating Rating Predictions</a></li>
 </ul>
 </details></li>
+<li class="toctree-l1"><a class="reference internal" href="../evaluation/collection.html">Collecting and Aggregating Metrics</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../documenting.html">Documenting Experiments</a></li>
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Utilities and Diagnostics</span></p>
@@ -569,8 +570,8 @@ statistical modeling packages.</p>
 are drawn from there.  Data is transparently converted to NumPy arrays, Pandas
 series or data frames, Torch tensors, etc. as requested.</p>
 <p>Most code will either use one of the predefined dataset loading functions (such
-as <a class="reference internal" href="../../api/lenskit.data.load_movielens.html#lenskit.data.load_movielens" title="lenskit.data.load_movielens"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_movielens()</span></code></a>) or the
-<a class="reference internal" href="../../api/lenskit.data.DatasetBuilder.html#lenskit.data.DatasetBuilder" title="lenskit.data.DatasetBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetBuilder</span></code></a> to create data sets (see <a class="reference internal" href="index.html#data-api"><span class="std std-ref">Datasets</span></a>).</p>
+as <a class="reference internal" href="../../api/lenskit/data/index.html#lenskit.data.lenskit.data.load_movielens" title="lenskit.data.lenskit.data.load_movielens"><code class="xref py py-func docutils literal notranslate"><span class="pre">load_movielens()</span></code></a>) or the
+<a class="reference internal" href="../../api/lenskit/data/DatasetBuilder.html#lenskit.data.DatasetBuilder" title="lenskit.data.DatasetBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetBuilder</span></code></a> to create data sets (see <a class="reference internal" href="index.html#data-api"><span class="std std-ref">Datasets</span></a>).</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Working with the data directly as a heterogeneous graph for integration with
@@ -713,7 +714,7 @@ form <code class="docutils literal notranslate"><span class="pre">$FOO_&lt;ident
 </section>
 <section id="unsupported-features">
 <h3>Unsupported Features<a class="headerlink" href="#unsupported-features" title="Link to this heading">#</a></h3>
-<p>In the initial release of the new LensKit data model (in <a class="reference internal" href="../../releases/2025.html#id25"><span class="std std-ref">2025.1.1</span></a>), not all
+<p>In the initial release of the new LensKit data model (in <a class="reference internal" href="../../releases/2025.html#id23"><span class="std std-ref">2025.1.1</span></a>), not all
 possible attribute and entity or relationship class combinations are supported.
 In particular, relationships can only have scalar attributes.  We intend to
 relax this restriction in the future, with more time to determine an ergonomic
@@ -790,16 +791,16 @@ user or session) to be first.</p>
 <p>A data <em>schema</em> (<code class="xref py py-class docutils literal notranslate"><span class="pre">DataSchema</span></code>) defines the layout of the
 tables, entity types, and relationship types.  Client code will rarely need to
 create or work with the schema directly; it is created and maintained by the
-<a class="reference internal" href="../../api/lenskit.data.DatasetBuilder.html#lenskit.data.DatasetBuilder" title="lenskit.data.DatasetBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetBuilder</span></code></a>.</p>
+<a class="reference internal" href="../../api/lenskit/data/DatasetBuilder.html#lenskit.data.DatasetBuilder" title="lenskit.data.DatasetBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetBuilder</span></code></a>.</p>
 </section>
 <section id="lenskit-native-format">
 <span id="data-format"></span><h2>LensKit Native Format<a class="headerlink" href="#lenskit-native-format" title="Link to this heading">#</a></h2>
 <p>LensKit supports saving and loading data sets in <em>native</em> format: an optimized
 format that can fully serialize and deserialize a dataset, with all supported
-features.  The <a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset.save" title="lenskit.data.Dataset.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.save()</span></code></a> (or <a class="reference internal" href="../../api/lenskit.data.DatasetBuilder.html#lenskit.data.DatasetBuilder.save" title="lenskit.data.DatasetBuilder.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DatasetBuilder.save()</span></code></a>) and
-<a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset.load" title="lenskit.data.Dataset.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.load()</span></code></a> save and load datasets in this format, respectively. The
+features.  The <a class="reference internal" href="../../api/lenskit/data/Dataset.html#lenskit.data.Dataset.save" title="lenskit.data.Dataset.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.save()</span></code></a> (or <a class="reference internal" href="../../api/lenskit/data/DatasetBuilder.html#lenskit.data.DatasetBuilder.save" title="lenskit.data.DatasetBuilder.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">DatasetBuilder.save()</span></code></a>) and
+<a class="reference internal" href="../../api/lenskit/data/Dataset.html#lenskit.data.Dataset.load" title="lenskit.data.Dataset.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.load()</span></code></a> save and load datasets in this format, respectively. The
 native format is not intended to be directly manipulated; loading it with
-<a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset.load" title="lenskit.data.Dataset.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.load()</span></code></a> and extracting data from the resulting <a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> is
+<a class="reference internal" href="../../api/lenskit/data/Dataset.html#lenskit.data.Dataset.load" title="lenskit.data.Dataset.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Dataset.load()</span></code></a> and extracting data from the resulting <a class="reference internal" href="../../api/lenskit/data/Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> is
 the best way to process it.</p>
 <p>LensKit maintains backwards compatibility within the current and previous major
 releases.  That is, data saved with LensKit 2025.3 can be read by any later
@@ -811,7 +812,7 @@ readable by prior versions.</p>
 </section>
 <section id="internal-representation">
 <span id="data-internal"></span><h2>Internal Representation<a class="headerlink" href="#internal-representation" title="Link to this heading">#</a></h2>
-<p>Data should only be accessed through the <a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> API, as
+<p>Data should only be accessed through the <a class="reference internal" href="../../api/lenskit/data/Dataset.html#lenskit.data.Dataset" title="lenskit.data.Dataset"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></a> API, as
 the internal storage is subject to change.</p>
 <p>In the current version, logically, each entity or relationship type is
 represented as a table, consisting of:</p>
@@ -824,7 +825,7 @@ sparse attributes), but this is the logical view. Internally, relationships use
 entity numbers instead of entity IDs to record the entities involved in a
 relationship record.</p>
 <p>As of LensKit 2025.1, the native format for storing a dataset on disk (used by
-<a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset.save" title="lenskit.data.Dataset.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save()</span></code></a> and <a class="reference internal" href="../../api/lenskit.data.Dataset.html#lenskit.data.Dataset.load" title="lenskit.data.Dataset.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load()</span></code></a>) is a
+<a class="reference internal" href="../../api/lenskit/data/Dataset.html#lenskit.data.Dataset.save" title="lenskit.data.Dataset.save"><code class="xref py py-meth docutils literal notranslate"><span class="pre">save()</span></code></a> and <a class="reference internal" href="../../api/lenskit/data/Dataset.html#lenskit.data.Dataset.load" title="lenskit.data.Dataset.load"><code class="xref py py-meth docutils literal notranslate"><span class="pre">load()</span></code></a>) is a
 directory with a <code class="docutils literal notranslate"><span class="pre">schema.json</span></code> file containing the serialized logical schema
 and a Parquet file <code class="docutils literal notranslate"><span class="pre">&lt;class&gt;.parquet</span></code> for each entity or relationship class
 containing the identifiers and attribute values. For entity classes,
@@ -882,7 +883,7 @@ containing the identifiers and attribute values. For entity classes,
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#core-concepts">Core Concepts</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entities">Entities</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a><ul class="nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#attributes">Attributes</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#attribute-name-restrictions">Attribute Name Restrictions</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#unsupported-features">Unsupported Features</a></li>
 </ul>
@@ -935,7 +936,7 @@ containing the identifiers and attribute values. For entity classes,
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2025.8.1.</div>
+        <div class="footer-item">LensKit version 2026.2.1.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

@@ -1,0 +1,103 @@
+lenskit.tuning.spec.SearchConfig
+================================
+
+.. py:class:: lenskit.tuning.spec.SearchConfig
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Configuration options for the hyperparameter search.
+
+
+   .. py:attribute:: method
+      :type:  Literal['tpe', 'random', 'hyperopt'] | None
+      :value: None
+
+
+      The search method to use.
+
+
+   .. py:attribute:: max_points
+      :type:  int | None
+      :value: None
+
+
+      The maximum number of points to try.
+
+
+   .. py:attribute:: default_points
+      :type:  int
+      :value: 60
+
+
+      The default number of search points, if not limited by a maximum configuration.
+
+
+   .. py:attribute:: max_epochs
+      :type:  int
+      :value: 100
+
+
+      The maximum number of epochs to use in iterative training.
+
+
+   .. py:attribute:: min_epochs
+      :type:  int
+      :value: 3
+
+
+      The minimum number of epochs for iterative training.
+
+
+   .. py:attribute:: metric
+      :type:  str | None
+      :value: None
+
+
+      The metric to use.
+
+
+   .. py:attribute:: list_length
+      :type:  int | None
+      :value: None
+
+
+      The length of recommendation lists to use.
+
+
+   .. py:attribute:: num_cpus
+      :type:  int | Literal['threads', 'backend-threads', 'all-threads']
+      :value: 'threads'
+
+
+      The number of CPUs to request from Ray Tune.
+
+
+   .. py:attribute:: num_gpus
+      :type:  int | float
+      :value: 0
+
+
+      The number of GPUs to requrest from Ray Tune.
+
+
+   .. py:attribute:: checkpoint_iters
+      :type:  int
+      :value: 2
+
+
+      The frequency for saving checkpoints.
+
+
+   .. py:method:: update_max_points(n)
+
+      Limit the search points to a new maximum, if it exceeds the current maximum.
+
+
+
+   .. py:method:: num_search_points()
+
+      Get the number of search points to use.
+
+

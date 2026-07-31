@@ -1,0 +1,307 @@
+lenskit.data.ItemListCollection
+===============================
+
+.. py:class:: lenskit.data.ItemListCollection(key)
+   :canonical: lenskit.data._collection.ItemListCollection
+
+   Bases: :py:obj:`Generic`\ [\ :py:obj:`lenskit.data._collection._keys.KL`\ ], :py:obj:`abc.ABC`
+
+
+   A collection of item lists.  This protocol defines read access to the
+   collection; see :class:`ItemListCollector` for the ability to add new lists.
+   See :ref:`item-list-collections` for an introduction to using this class.
+
+   An item list collection consists of a sequence of item lists with associated
+   *keys* following a fixed schema.  Item list collections support iteration
+   (in order) and lookup by key. They are used to represent a variety of
+   things, including test data and the results of a batch run. The length of an
+   item list collection (accessed with :func:`len`) is the number of item lists
+   in the collection, not the total number of items in the lists.
+
+   The key schema can be specified either by a list of field names, or by
+   providing a named tuple class (created by either :func:`namedtuple` or
+   :class:`NamedTuple`) defining the key schema.  Schemas should **not** be
+   nested: field values must be scalars, not tuples or lists.  Keys should also
+   be hashable.
+
+   This protocol and its implementations exist, instead of using raw
+   dictionaries or lists, to consistently handle some of the nuances of
+   multi-valued keys, and different collections having different key fields.
+   For example, if a run produces item lists with both user IDs and sequence
+   numbers, but your test data is only indexed by user ID, the *projected
+   lookup* capabilities make it easy to find the test data to go with an item
+   list in the run.
+
+   Item list collections support indexing by position, like a list, returning a
+   tuple of the key and list; iterating over an item list collection similarly
+   produces ``(key, list)`` pairs (so an item list collection is a
+   :class:`~collections.abc.Sequence` of key/list pairs).
+
+   If the item list is _indexed_ (constructed with ``index=True``), it also
+   supports lookup by _key_ with :meth:`lookup`.  The key can be supplied as
+   either a tuple or an instance of the key type.  If more than one item with
+   the same key is inserted into the collection, then the _last_ one is
+   returned (just like a dictionary), but the others remain in the underlying
+   list when it is iterated.
+
+   .. note::
+
+       Constructing an item list collection yields a
+       :class:`~lenskit.data.ListILC`.
+
+   :param key: The type (a NamedTuple class) or list of field names specifying the
+               key schema.
+   :param index: Whether or not to index lists by key to facilitate fast lookups.
+
+
+   .. py:method:: empty[K: lenskit.data._collection._keys.GenericKey](key: type[K], *, index: bool = True) -> MutableItemListCollection[K]
+                  empty(key: collections.abc.Sequence[str], *, index: bool = True) -> MutableItemListCollection[lenskit.data._collection._keys.GenericKey]
+      :staticmethod:
+
+
+      Create a new empty, mutable item list collection.
+
+
+
+   .. py:method:: from_dict[K: lenskit.data._collection._keys.GenericKey](data: Mapping[lenskit.data._collection._keys.GenericKey | lenskit.data.types.ID, lenskit.data._items.ItemList], key: type[K]) -> ItemListCollection[K]
+                  from_dict(data: Mapping[lenskit.data._collection._keys.GenericKey | lenskit.data.types.ID, lenskit.data._items.ItemList], key: collections.abc.Sequence[str] | str | None = None) -> ItemListCollection[lenskit.data._collection._keys.GenericKey]
+      :staticmethod:
+
+
+      Create an item list collection from a dictionary.
+
+      .. seealso::
+          :meth:`lenskit.data.collection.ListILC.from_dict`
+
+
+
+   .. py:method:: from_df(df, key = None, *others)
+      :staticmethod:
+
+
+      Create an item list collection from a data frame.
+
+      .. seealso::
+          :meth:`lenskit.data.collection.ListILC.from_df`
+
+      .. note::
+
+          Keys with empty item lists will be silently excluded from the output
+          data.
+
+      :param df: The data frame to convert.
+      :param key: The key type or field(s).  Can be specified as a single column
+                  name (or :class:`~lenskit.data.types.AliasedColumn`).
+      :param others: Other columns to consider; primarily used to pass additional
+                     aliased columns to normalize other clumnes like the item ID.
+
+
+
+   .. py:method:: from_arrow(table)
+      :staticmethod:
+
+
+      Convert an Arrow table into an item list collection.  The table must be
+      in ``'native`'' format.
+
+
+
+   .. py:method:: to_df()
+
+      Convert this item list collection to a data frame.
+
+      .. warning::
+
+          If this item list collection has any keys with empty lists, those
+          lists will be excluded from the output.
+
+
+
+   .. py:method:: to_arrow(*, batch_size = 5000, layout = 'native')
+
+      Convert this item list collection to an Arrow table.
+
+      The resulting table has one row per item list, with the item list
+      contents an ``items`` column of a structured list type.  This preserves
+      empty item lists for higher-fidelity data storage.
+
+      :param batch_size: The Arrow record batch size.
+
+
+
+   .. py:method:: to_json_data(*, object: Literal[True]) -> dict[lenskit.data.types.ID, list[dict[str, pydantic.JsonValue]]]
+                  to_json_data(*, object: Literal[False] = False) -> list[dict[str, pydantic.JsonValue]]
+                  to_json_data(*, object: bool) -> list[dict[str, pydantic.JsonValue]] | dict[lenskit.data.types.ID, list[dict[str, pydantic.JsonValue]]]
+
+      Convert this item list collection to JSON-compatible data.
+
+      :param object: If ``True``, construct as a dictionary whose keys are the item
+                     list keys.  This mode is only supported when there is a single
+                     key field.
+
+                     If ``False``, return a list of objects.
+
+
+
+   .. py:method:: to_json(*, object = False)
+
+      Convert this item list collection to JSON.  Wrapper around :meth:`to_json_data`.
+
+
+
+   .. py:method:: to_dataset(class_name: str = 'interaction', *, result: Literal['dataset'] = 'dataset') -> lenskit.data._dataset.Dataset
+                  to_dataset(class_name: str = 'interaction', *, result: Literal['container']) -> lenskit.data._container.DataContainer
+                  to_dataset(class_name: str = 'interaction', *, result: Literal['builder']) -> lenskit.data._builder.DatasetBuilder
+
+      Construct a dataset populated with this item list collection's data as
+      interactions.
+
+      :param cls: The interaction class name.
+      :param result: Whether to return a fully-instantiated dataset, a container,
+                     or a dataset builder.
+
+
+
+   .. py:method:: save_parquet(path, *, layout = 'native', batch_size = 5000, compression = 'zstd', mkdir = True)
+
+      Save this item list collection to a Parquet file.  This supports two
+      types of Parquet files: “native” collections store one row per list,
+      with the item list contents in a repeated structure column named
+      ``items``; this layout fully preserves the item list collection,
+      including empty item lists.  The “flat” layout is easier to work with in
+      software such as Pandas, but cannot store empty item lists.
+
+      :param layout: The table layout to use.
+      :param batch_size: The Arrow record batch size.
+      :param compression: The compression scheme to use.
+      :param mkdir: Whether to create the parent directories if they don't exist.
+
+
+
+   .. py:method:: load_parquet(path: os.PathLike[str] | list[os.PathLike[str]], *, layout: Literal['native'] = 'native') -> ItemListCollection[lenskit.data._collection._keys.GenericKey]
+                  load_parquet(path: os.PathLike[str] | list[os.PathLike[str]], key: type[K] | collections.abc.Sequence[lenskit.data.types.Column] | lenskit.data.types.Column, *, layout: Literal['flat']) -> ItemListCollection[K]
+      :classmethod:
+
+
+      Load this item list from a Parquet file.
+
+      :param path: Path to the Parquet file to load.
+      :param key: The key to use (only when loading tabular layout).
+      :param layout: The layout to use, either LensKit native layout or a flat tabular layout.
+
+
+
+   .. py:method:: record_batches(batch_size = 5000, columns = None, *, layout = 'native')
+
+      Get the item list collection as Arrow record batches (in native layout).
+
+
+
+   .. py:property:: key_fields
+      :type: tuple[str]
+
+
+      The names of the key fields.
+
+
+   .. py:property:: key_type
+      :type: type[lenskit.data._collection._keys.KL]
+
+
+      The type of collection keys.
+
+
+   .. py:property:: list_schema
+      :type: dict[str, pyarrow.DataType]
+
+      :abstractmethod:
+
+
+      Get the schema for the lists in this ILC.
+
+
+   .. py:method:: rename_key(**names)
+
+      Rename one or more keys fields in this collection.
+
+
+
+   .. py:method:: lookup(key: tuple) -> lenskit.data._items.ItemList | None
+                  lookup(*key: lenskit.data.types.ID, **kwkey: lenskit.data.types.ID) -> lenskit.data._items.ItemList | None
+
+      Look up a list by key.  If multiple lists have the same key, this
+      returns the **last** (like a dictionary).
+
+      This method can be called with the key tuple as a single argument (and
+      this can be either the actual named tuple, or an ordinary tuple of the
+      same length), or with the individual key fields as positional or named
+      arguments.
+
+      :param key: The key tuple or key tuple fields.
+
+
+
+   .. py:method:: lookup_projected(key)
+
+      Look up an item list using a *projected* key.  A projected key is a key
+      that may have additional fields beyond those defined by this collection,
+      that are ignored for the purposes of lookup.
+
+      :param key: The key.  Must be a named tuple (e.g. a key obtained from
+                  another item list collection).
+
+      :returns: The item list with the specified key, projected to this collection's
+                key fields, or ``None`` if no such list exists.
+
+
+
+   .. py:method:: total_items()
+
+      Count the total number of items across all lists in this collection.
+
+
+
+   .. py:method:: items()
+      :abstractmethod:
+
+
+      Iterate over item lists and keys.
+
+
+
+   .. py:method:: lists()
+
+      Iterate over item lists without keys.
+
+
+
+   .. py:method:: keys()
+
+      Iterate over keys.
+
+
+
+   .. py:method:: __len__()
+      :abstractmethod:
+
+
+
+   .. py:method:: __iter__()
+
+
+   .. py:method:: __getitem__(pos, /)
+      :abstractmethod:
+
+
+      Get an item list and its key by position.
+
+      :param pos: The position in the list (starting from 0).
+
+      :returns: The key and list at position ``pos``.
+
+      :raises IndexError: when ``pos`` is out-of-bounds.
+
+
+
+   .. py:method:: __str__()
+

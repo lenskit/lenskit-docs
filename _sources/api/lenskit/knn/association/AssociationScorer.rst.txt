@@ -1,0 +1,68 @@
+lenskit.knn.association.AssociationScorer
+=========================================
+
+.. py:class:: lenskit.knn.association.AssociationScorer(config = None, **kwargs)
+   
+
+   Bases: :py:obj:`lenskit.pipeline.Component`\ [\ :py:obj:`lenskit.data.ItemList`\ ], :py:obj:`lenskit.training.Trainable`
+
+
+   Item scorer using association rules to compute item relatedness.
+
+   This scorer can compute item associations with three formulas:
+
+   - Conditional probability (:math:`P[i|j]`), by setting
+     :attr:`~AssociationConfig.method` to ``"probability"``.
+   - Lift (:math:`\frac{P[i,j]}{P[i]P[j]}`), by setting
+     :attr:`~AssociationConfig.method` to ``"lift"`` and
+     :attr:`~AssociationConfig.damping` to 0.
+   - `Biased lift`), by setting :attr:`~AssociationConfig.method` to ``"lift"``
+     and :attr:`~AssociationConfig.damping` (:math:`\kappa`) to a positive
+     value.
+
+   An empty query will recommend no items.
+
+   .. _Biased lift: https://md.ekstrandom.net/blog/2025/01/biased-lift
+
+
+   .. py:attribute:: config
+      :type:  AssociationConfig
+
+      The component configuration object.  Component classes that support
+      configuration **must** redefine this attribute with their specific
+      configuration class type, which can be a Python dataclass or a Pydantic
+      model class.
+
+
+   .. py:attribute:: items
+      :type:  lenskit.data.Vocabulary
+
+
+   .. py:attribute:: assoc_scores
+      :type:  scipy.sparse.csr_array
+
+      Sparse matrix of item association scores, with reference items on rows and
+      target items on columns.
+
+
+   .. py:method:: is_trained()
+
+      Query if this component has already been trained.
+
+
+
+   .. py:method:: train(data, options)
+
+      Train the model to learn its parameters from a training dataset.
+
+      :param data: The training dataset.
+      :param options: The training options.
+
+
+
+   .. py:method:: __call__(query, items)
+
+      Run the pipeline's operation and produce a result.  This is the key
+      method for components to implement.
+
+

@@ -1,0 +1,92 @@
+lenskit.metrics.ranking.RBP
+===========================
+
+.. py:class:: lenskit.metrics.ranking.RBP(n = None, *, k = None, weight = None, patience = 0.85, normalize = False, weight_field = None)
+   :canonical: lenskit.metrics.ranking._rbp.RBP
+
+   Bases: :py:obj:`lenskit.metrics.ranking._base.ListMetric`, :py:obj:`lenskit.metrics.ranking._base.RankingMetricBase`
+
+
+   Evaluate recommendations with rank-biased precision :cite:p:`rbp`.
+
+   If :math:`r_{ui} \in \{0, 1\}` is binary implicit ratings, and the
+   weighting is the default geometric weight with patience :math:`p`, the RBP
+   is computed by:
+
+   .. math::
+       \begin{align*}
+       \operatorname{RBP}_p(L, u) & =(1 - p) \sum_i r_{ui} p^i
+       \end{align*}
+
+   The original RBP metric depends on the idea that the rank-biased sum of
+   binary relevance scores in an infinitely-long, perfectly-precise list has is
+   :math:`1/(1 - p)`.  If RBP is used with a non-standard weighting that does
+   not have a defined infinite series sum, then this metric will normalize by
+   the sum of the discounts for the recommendation list.
+
+   :cite:t:`rbp` provide an extended discussion on choosing the patience
+   parameter :math:`\gamma`.  This metric defaults to :math:`\gamma=0.85`, to
+   provide a relatively shallow curve and reward good items on the first few
+   pages of results (in a 10-per-page setting).  Recommendation systems data
+   has no pooling, so the variance of this estimator may be high as they note
+   in the paper; however, RBP with high patience should be no worse than nDCG
+   (and perhaps even better) in this regard.
+
+   In recommender evaluation, we usually have a small test set, so the maximum
+   achievable RBP is significantly less than the theoretical maximum, and is a
+   function of the number of test items.  With ``normalize=True``, the RBP
+   metric will be normalized by the maximum achievable with the provided test
+   data, like NDCG.
+
+   .. warning::
+
+       The additional normalization is experimental, and should not yet be used
+       for published research results.
+
+   :param n: The maximum recommendation list length.
+   :param weight: The rank weighting model to use.  Defaults to
+                  :class:`GeometricRankWeight` with the specified patience parameter.
+   :param patience: The patience parameter :math:`p`, the probability that the user
+                    continues browsing at each point.  The default is 0.85.
+   :param normalize: Whether to normalize the RBP scores; if ``True``, divides the RBP
+                     score by the maximum achievable with the test data (as in nDCG).
+   :param weight_field: Name of a field in the item list to use as weights. If provided,
+                        weights are read from this field instead of being computed from
+                        the rank model.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: weight
+      :type:  lenskit.metrics.ranking._weighting.RankWeight | None
+
+
+   .. py:attribute:: patience
+      :type:  float
+
+
+   .. py:attribute:: normalize
+      :type:  bool
+
+
+   .. py:attribute:: weight_field
+      :type:  str | None
+
+
+   .. py:property:: label
+
+      The metric's default label in output.
+      The base implementation returns the class name by default.
+
+
+   .. py:method:: measure_list(recs, test)
+
+      Compute measurements for a single list.
+
+      :returns:
+
+                - A float for simple metrics
+                - Intermediate data for decomposed metrics
+                - A dict mapping metric names to values for multi-metric classes
+
+

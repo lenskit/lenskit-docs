@@ -1,0 +1,169 @@
+lenskit.data.EntityAttribute
+============================
+
+.. py:class:: lenskit.data.EntityAttribute(name, spec, table, vocab, rows)
+   :canonical: lenskit.data._attributes.EntityAttribute
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   Base class for an attribute associated with an entity class.  This class
+   effectively represents a _column_ of a data table of entities: the attribute
+   values for one or more entities.  In that regard, it is similar to a Pandas
+   series: it records entity IDs/numbers, like an index, and associated
+   attribute values.
+
+   This is the general interface for all entity attributes.  Not all access
+   methods are supported for all layouts.
+
+   :Stability: caller
+
+
+   .. py:attribute:: name
+      :type:  str
+
+      The name of the attribute.
+
+
+   .. py:attribute:: layout
+      :type:  lenskit.data.schema.AttrLayout
+
+      The attribute layout.
+
+
+   .. py:property:: data_type
+      :type: pyarrow.DataType
+
+      :abstractmethod:
+
+
+      Get the data type of this attribute set.
+
+
+   .. py:method:: ids()
+
+      Get the entity IDs for this collection of entities.
+
+
+
+   .. py:method:: id_index()
+
+      Get the entity IDs as a Pandas index.
+
+
+
+   .. py:method:: numbers()
+
+      Get the entity numbers for the attributes
+
+
+
+   .. py:method:: cat_matrix(*, normalize = None)
+      :abstractmethod:
+
+
+      Compute a categorical matrix representation of the attribute.
+
+      :param normalize: Optional normalization method.
+                        "unit": Normalize each row to unit length.
+                        "distribution": Normalize each row so elements sum to 1
+
+      :returns:
+
+                A tuple containing:
+                    matrix (numpy.ndarray or scipy.sparse.csr_array): The categorical matrix.
+                    vocab (Vocabulary or None): The vocabulary associated with the categories.
+      :rtype: tuple
+
+
+
+   .. py:property:: dim_names
+      :type: list[str] | None
+
+
+      Get the names attached to this attribute's dimensions.
+
+      .. note::
+
+          Only applicable to vector and sparse attributes.
+
+
+   .. py:property:: is_scalar
+      :type: bool
+
+
+      Query whether this attribute is scalar.
+
+
+   .. py:property:: is_list
+      :type: bool
+
+
+      Query whether this attribute is a list.
+
+
+   .. py:property:: is_vector
+      :type: bool
+
+
+      Query whether this attribute is a dense vector.
+
+
+   .. py:property:: is_sparse
+      :type: bool
+
+
+      Query whether this attribute is a sparse vector.
+
+
+   .. py:method:: value()
+
+      If the attribute is for a single entity, get its value as a Python object.
+
+
+
+   .. py:method:: list()
+
+      Get the attribute values as a Python list.
+
+
+
+   .. py:method:: pandas(*, missing = 'null')
+      :abstractmethod:
+
+
+
+   .. py:method:: numpy()
+
+      Get the attribute values as a NumPy array.
+
+      .. note::
+          Undefined attribute values may have undefined contents; they will
+          _usually_ be ``NaN`` or similar, but this is not fully guaranteed.
+
+
+
+   .. py:method:: arrow()
+
+      Get the attribute values as an Arrow array.
+
+
+
+   .. py:method:: scipy()
+
+      Get this attribute as a SciPy sparse array (if it is sparse), or a NumPy
+      array if it is dense.
+
+
+
+   .. py:method:: torch()
+
+
+   .. py:method:: drop_null()
+
+      Subset this attribute set to only entities for which it is defined.
+
+
+
+   .. py:method:: __len__()
+

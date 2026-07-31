@@ -1,0 +1,60 @@
+lenskit.metrics.bulk.RunAnalysis
+================================
+
+.. py:class:: lenskit.metrics.bulk.RunAnalysis(*metrics)
+   
+
+   Compute metrics over a collection of item lists composing a run.
+
+   This class now uses :class:`MetricAccumulator` internally to separate
+   accumulation from looping, while maintaining the same external interface.
+
+   .. versionchanged:: 2026.1
+
+       Global metric outputs from this class have changed column names in some
+       cases, to simplify logic.
+
+   .. deprecated:: 2026.1
+
+       This class is deprecated in favor of directly using
+       :class:`~lenskit.metrics.MeasurementCollector`.
+
+   :param metrics: A list of metrics; you can also add them with :meth:`add_metric`,
+                   which provides more flexibility.
+
+   :Stability: Caller
+
+
+   .. py:attribute:: collector
+      :type:  lenskit.metrics.MeasurementCollector
+
+      The measurement collector for this analysis.
+
+
+   .. py:method:: add_metric(metric, label = None, default = None)
+
+      Add a metric to this metric set.
+
+      :param metric: The metric to add to the set.
+      :param label: The label to use for the metric's results.  If unset, obtains
+                    from the metric.
+      :param default: The default value to use in aggregates when a user does not have
+                      recommendations. If unset, obtains from the metric's ``default``
+                      attribute (if specified).
+
+
+
+   .. py:method:: compute(outputs, test)
+
+      Deprecated alias for :meth:`measure`.
+
+      .. deprecated:: 2025.1.1
+          Use :meth:`measure` instead.
+
+
+
+   .. py:method:: measure(outputs, test)
+
+      Measure a set of outputs against a set of test data.
+
+

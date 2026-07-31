@@ -1,0 +1,54 @@
+lenskit.stochastic.StochasticTopNConfig
+=======================================
+
+.. py:class:: lenskit.stochastic.StochasticTopNConfig
+   :canonical: lenskit.stochastic._ranker.StochasticTopNConfig
+
+   Configuration for :class:`StochasticTopNRanker`.
+
+
+   .. py:attribute:: n
+      :type:  int | None
+      :value: None
+
+
+      The number of items to select. -1 or ``None`` to return all scored items.
+
+
+   .. py:attribute:: rng
+      :type:  lenskit.random.DerivableSeed
+      :value: None
+
+
+      Random number generator configuration.
+
+
+   .. py:attribute:: transform
+      :type:  Literal['softmax', 'linear'] | None
+      :value: 'softmax'
+
+
+      Transformation to convert scores into ranking probabilities.
+
+      softmax
+          Use the softmax of the item scores as the selection probabilities.
+      linear
+          Linearly re-scale item scores to be selection probabilities. This
+          equivalent to min-max scaling the scores, then re-scaling to sum
+          to 1.
+      ``None``
+          No transformation, except negative scores are clamped to (almost)
+          zero.  Not recommended unless your item scorer emits multinomial
+          probabilities.
+
+
+   .. py:attribute:: scale
+      :type:  float
+      :value: 1.0
+
+
+      Scalar multiplier to apply to scores prior to transformation.  This is
+      equivalent to the :math:`\beta` parameter for parameterized softmax
+      transformation.  Larger values will decrease the entropy of the sampled
+      rankings.
+
