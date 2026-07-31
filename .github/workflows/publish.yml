@@ -1,5 +1,5 @@
 name: Publish Documentation Site
-'on':
+"on":
   push:
     branches:
       - main
@@ -25,7 +25,7 @@ jobs:
           fetch-depth: 0
 
       - name: Install mise-en-place
-        uses: jdx/mise-action@v2
+        uses: jdx/mise-action@v4
 
       - name: "🌳 Fix local git branches"
         run: mise run ref-branches
@@ -45,7 +45,7 @@ jobs:
     needs: [build-site]
     environment:
       name: publish
-      url: 'https://lkpy.lenskit.org'
+      url: "https://lkpy.lenskit.org"
     steps:
       - name: Fetch site artifact
         uses: actions/download-artifact@v4
@@ -59,8 +59,8 @@ jobs:
         with:
           args: deploy --dir=site --prod
         env:
-          NETLIFY_AUTH_TOKEN: '${{secrets.NETLIFY_AUTH_TOKEN}}'
-          NETLIFY_SITE_ID: '${{vars.NETLIFY_SITE_ID}}'
+          NETLIFY_AUTH_TOKEN: "${{secrets.NETLIFY_AUTH_TOKEN}}"
+          NETLIFY_SITE_ID: "${{vars.NETLIFY_SITE_ID}}"
 
   publish-github:
     name: Upload to GitHub Pages
