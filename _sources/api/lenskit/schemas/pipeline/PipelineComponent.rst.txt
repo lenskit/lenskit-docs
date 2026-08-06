@@ -1,0 +1,34 @@
+lenskit.schemas.pipeline.PipelineComponent
+==========================================
+
+.. py:class:: lenskit.schemas.pipeline.PipelineComponent
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Specification of a pipeline component.
+
+
+   .. py:attribute:: code
+      :type:  str
+
+      The path to the component's implementation, either a class or a function.
+      This is a Python qualified path of the form ``module:name``.
+
+
+   .. py:attribute:: config
+      :type:  collections.abc.Mapping[str, pydantic.JsonValue] | None
+      :value: None
+
+
+      The component configuration.  If not provided, the component will be created
+      with its default constructor parameters.
+
+
+   .. py:attribute:: inputs
+      :type:  dict[str, str]
+
+      The component's input wirings, mapping input names to node names.  For
+      certain meta-nodes, it is specified as a list instead of a dict.
+

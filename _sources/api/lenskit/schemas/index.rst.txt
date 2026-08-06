@@ -1,0 +1,62 @@
+lenskit.schemas
+===============
+
+.. py:module:: lenskit.schemas
+
+.. autoapi-nested-parse::
+
+   Schemas for LensKit configuration and specification files.
+
+   This package collects the schemas used by various configuration capabilities
+   in one subpackage, so they are easy to find and can reference each other
+   without as many import problems as we have when they live inside the packages
+   for the different subsystems they control.
+
+
+
+Submodules
+----------
+
+.. autoapisummary::
+
+   lenskit.schemas.pipeline
+   lenskit.schemas.settings
+   lenskit.schemas.tuning
+
+.. toctree::
+    :hidden:
+    :maxdepth: 1
+
+    /api/lenskit/schemas/pipeline/index
+    /api/lenskit/schemas/settings/index
+    /api/lenskit/schemas/tuning/index
+
+Functions
+---------
+
+.. autoapisummary::
+
+   lenskit.schemas.load_model_data
+
+
+
+Package Contents
+----------------
+
+.. py:function:: load_model_data(path: pathlib.Path | os.PathLike[str], model: None = None) -> pydantic.JsonValue
+                 load_model_data(path: pathlib.Path | os.PathLike[str], model: type[M]) -> M
+
+   General-purpose function to automatically load configuration data and
+   optionally validate with a model.
+
+   :param path: The path to the configuration file.  The file type is automatically
+                detected.
+   :param model: The Pydantic model class to validate, or ``None`` to load as
+                 JSON-compatible data.
+
+   :returns: The validated data.
+
+   :Stability: Internal
+
+
+

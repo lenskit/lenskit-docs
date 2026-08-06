@@ -73,7 +73,7 @@ Package Contents
 
 
 .. py:function:: sample_records(data: lenskit.data.Dataset, size: int, *, disjoint: bool = True, test_only: bool = False, rng: lenskit.random.RNGInput = None, repeats: None = None) -> lenskit.splitting._split.TTSplit
-                 sample_records(data: lenskit.data.Dataset, size: int, *, repeats: int, disjoint: bool = True, test_only: bool = False, rng: lenskit.random.RNGInput = None) -> Iterator[lenskit.splitting._split.TTSplit]
+                 sample_records(data: lenskit.data.Dataset, size: int, *, repeats: int, disjoint: bool = True, test_only: bool = False, rng: lenskit.random.RNGInput = None) -> collections.abc.Iterator[lenskit.splitting._split.TTSplit]
 
    Create a train-test split of data by randomly sampling individual
    interactions.
@@ -110,8 +110,8 @@ Package Contents
    :returns: A train-test pair or iterator of such pairs (depending on ``repeats``).
 
 
-.. py:function:: split_global_time(data: lenskit.data.Dataset, time: int | float | str | datetime.datetime, end: int | float | str | datetime.datetime | None = None, filter_test_users: bool | int | None = False) -> lenskit.splitting._split.TTSplit
-                 split_global_time(data: lenskit.data.Dataset, time: Sequence[int | float | str | datetime.datetime], end: int | float | str | datetime.datetime | None = None, filter_test_users: bool | int | None = False) -> list[lenskit.splitting._split.TTSplit]
+.. py:function:: split_global_time(data: lenskit.data.Dataset, time: float | str | datetime.datetime, end: float | str | datetime.datetime | None = None, filter_test_users: bool | int | None = False) -> lenskit.splitting._split.TTSplit
+                 split_global_time(data: lenskit.data.Dataset, time: collections.abc.Sequence[int | float | str | datetime.datetime], end: float | str | datetime.datetime | None = None, filter_test_users: bool | int | None = False) -> list[lenskit.splitting._split.TTSplit]
 
    Global temporal train-test split.  This splits a data set into train/test
    pairs using a single global timestamp.  When given multiple timestamps, it
@@ -155,7 +155,7 @@ Package Contents
        The train-test pairs.
 
 
-.. py:function:: sample_users(data: lenskit.data.Dataset, size: int, method: lenskit.splitting._holdout.HoldoutMethod, *, repeats: int, disjoint: bool = True, test_only: bool = False, rng: lenskit.random.RNGInput = None) -> Iterator[lenskit.splitting._split.TTSplit]
+.. py:function:: sample_users(data: lenskit.data.Dataset, size: int, method: lenskit.splitting._holdout.HoldoutMethod, *, repeats: int, disjoint: bool = True, test_only: bool = False, rng: lenskit.random.RNGInput = None) -> collections.abc.Iterator[lenskit.splitting._split.TTSplit]
                  sample_users(data: lenskit.data.Dataset, size: int, method: lenskit.splitting._holdout.HoldoutMethod, *, disjoint: bool = True, rng: lenskit.random.RNGInput = None, test_only: bool = False, repeats: None = None) -> lenskit.splitting._split.TTSplit
 
    Create train-test splits by sampling users.  When ``repeats`` is None,

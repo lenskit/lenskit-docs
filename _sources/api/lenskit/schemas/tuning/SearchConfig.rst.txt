@@ -1,0 +1,153 @@
+lenskit.schemas.tuning.SearchConfig
+===================================
+
+.. py:class:: lenskit.schemas.tuning.SearchConfig
+   
+
+   Bases: :py:obj:`pydantic.BaseModel`
+
+
+   Configuration options for the hyperparameter search.
+
+
+   .. py:attribute:: method
+      :type:  Literal['tpe', 'random', 'hyperopt'] | None
+      :value: None
+
+
+      The search method to use.
+
+
+   .. py:attribute:: max_points
+      :type:  int | None
+      :value: None
+
+
+      The maximum number of points to try.
+
+
+   .. py:attribute:: default_points
+      :type:  int
+      :value: 60
+
+
+      The default number of search points, if not limited by a maximum configuration.
+
+
+   .. py:attribute:: error_action
+      :type:  ErrorAction
+      :value: 'continue'
+
+
+      What to do when one of the search trials fails.
+
+
+   .. py:attribute:: metric
+      :type:  str | None
+      :value: None
+
+
+      The metric to use.
+
+
+   .. py:attribute:: list_length
+      :type:  int | None
+      :value: None
+
+
+      The length of recommendation lists to use.
+
+
+   .. py:attribute:: num_cpus
+      :type:  int | Literal['threads', 'backend-threads', 'all-threads']
+      :value: 'threads'
+
+
+      The number of CPUs to request from Ray Tune.
+
+
+   .. py:attribute:: num_gpus
+      :type:  int | float
+      :value: 0
+
+
+      The number of GPUs to request from Ray Tune.
+
+
+   .. py:attribute:: max_epochs
+      :type:  int
+      :value: 100
+
+
+      The maximum number of epochs to use in iterative training.
+
+
+   .. py:attribute:: min_epochs
+      :type:  int
+      :value: 3
+
+
+      The minimum number of epochs for iterative training.
+
+
+   .. py:attribute:: median_min_trials
+      :type:  int
+      :value: 5
+
+
+      The minimum number of trials at an epoch for the median pruner to
+      consider pruning.
+
+
+   .. py:attribute:: plateau_check_iters
+      :type:  int
+      :value: 3
+
+
+      The number of iterations to check for the plateau stopper.
+
+
+   .. py:attribute:: plateau_min_rel_improvement
+      :type:  float
+      :value: 0.01
+
+
+      The minimum relative improvement to continue the trial.
+
+
+   .. py:attribute:: checkpoint_iters
+      :type:  int
+      :value: 2
+
+
+      The frequency for saving checkpoints (only supported by Ray).
+
+
+   .. py:method:: resolved_direction()
+
+      Get the metric optimization direction.
+
+
+
+   .. py:method:: update_max_points(n)
+
+      Limit the search points to a new maximum, if it exceeds the current maximum.
+
+
+
+   .. py:method:: num_search_points()
+
+      Get the number of search points to use.
+
+
+
+   .. py:method:: merge(other)
+
+      Produce a new configuration by merging another configuration into this one.
+
+      :param other: The other configuration to merge.
+
+      :returns: The combination of ``self`` and ``other``, where values from ``other``
+                are preferred in case of conflict.
+
+

@@ -83,7 +83,7 @@ lenskit.batch.BatchPipelineRunner
 
    .. py:method:: run(pipeline, queries)
 
-      Run the pipeline and return its results.
+      Run the pipeline and collect its results.
 
       .. note::
 
@@ -96,5 +96,30 @@ lenskit.batch.BatchPipelineRunner
 
       :returns: The batch results, mapping output names to item list collections of
                 outputs.
+
+
+
+   .. py:method:: run_iter(pipeline, queries)
+
+      Run the pipeline and yield its results.
+
+      This generator should be closed when it is done or the run is aborted,
+      to ensure resources are properly cleaned up.  The best way to use this
+      method is as follows::
+
+          with closing(runner.run_iter()) as results:
+              for key, outs in results:
+                  # do something with the data
+                  pass
+
+      .. note::
+
+          The runner does **not** guarantee that results are in the same order
+          as the original inputs — with parallelism, they may be yielded in
+          the order they are ready.
+
+      :param pipeline: The pipeline to run.
+      :param queries: The collection of test queries use.  See :ref:`batch-queries`
+                      for details on the various input formats.
 
 

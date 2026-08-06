@@ -14,7 +14,7 @@
 <meta property="og:description" content="2026 builds on the foundation of 2025 to improve the ergonomics of data access, querying, and metrics, and clean up some APIs that seemed good at the time, while making it even easier to use LensKi..." />
 <meta name="description" content="2026 builds on the foundation of 2025 to improve the ergonomics of data access, querying, and metrics, and clean up some APIs that seemed good at the time, while making it even easier to use LensKi..." />
 
-    <title>2026 Releases &#8212; LensKit 2026.2.1 documentation</title>
+    <title>2026 Releases &#8212; LensKit 2026.3.0 documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=8f11cabd"></script>
+    <script src="../_static/documentation_options.js?v=5abc04fd"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -75,7 +75,7 @@
     <link rel="prev" title="Release Notes" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.2.1" />
+  <meta name="docsearch:version" content="2026.3.0" />
   </head>
   
   
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.2.1 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.2.1 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.3.0 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.3.0 documentation - Home"/>
   
   
 </a></div>
@@ -520,7 +520,39 @@ components work as they do in the 2025 series, but with more features, some
 rough corners polished off the interfaces, and hopefully fewer bugs.</p>
 <section id="id1">
 <span id="id2"></span><h2>2026.3.0<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
-<p>Third release in 2026, with more feature updates and bug fixes.</p>
+<p>Third release in 2026, with more feature updates and bug fixes.  A full list of
+fixed issues and merged PRs is on <a class="reference external" href="https://github.com/lenskit/lkpy/milestone/28?closed=1" rel="noreferrer" target="_blank">milestone 2026.3</a>.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This release updates <a class="reference internal" href="../api/lenskit/data/DatasetBuilder.html#lenskit.data.DatasetBuilder.filter_interactions" title="lenskit.data.DatasetBuilder.filter_interactions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.data.DatasetBuilder.filter_interactions()</span></code></a> to
+explicitly and consistently handle time zones, independent of the local time zone.
+In some cases, such as filtering by a numeric timestamp, the previous code was
+(incorrectly) time-zone-dependent.</p>
+</div>
+<ul class="simple">
+<li><p>Fixed bug in FlexMF’s <code class="docutils literal notranslate"><span class="pre">&quot;misranked&quot;</span></code> sampler (for WARP), where it did
+not correctly continue sampling (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1121" rel="noreferrer" target="_blank">⛙ 1121</a>).</p></li>
+<li><p>Fixed a bug in <a class="reference internal" href="../api/lenskit/data/ItemListCollection.html#lenskit.data.ItemListCollection" title="lenskit.data.ItemListCollection"><code class="xref py py-class docutils literal notranslate"><span class="pre">ItemListCollection</span></code></a> where item lists missing
+fields would fail to convert to Arrow (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/1164" rel="noreferrer" target="_blank">🐞 1164</a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1165" rel="noreferrer" target="_blank">⛙ 1165</a>).</p></li>
+<li><p>Made time zone handling in <a class="reference internal" href="../api/lenskit/data/DatasetBuilder.html#lenskit.data.DatasetBuilder.filter_interactions" title="lenskit.data.DatasetBuilder.filter_interactions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">lenskit.data.DatasetBuilder.filter_interactions()</span></code></a> explicit (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1162" rel="noreferrer" target="_blank">⛙ 1162</a>).  This may affect
+filter results by a few hours, because previous behavior was unspecified and time-zone-dependent.</p></li>
+<li><p>Upgraded to Ruff 0.16 and fixed new default lints, including upgrade lints (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1161" rel="noreferrer" target="_blank">⛙ 1161</a>). This also improves the handling modern type aliases in a few places.</p></li>
+<li><p>Reworked type checking logic in the pipeline to fix type bugs with NumPy 2.5, and hopefully reduce brittleness (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1120" rel="noreferrer" target="_blank">⛙ 1120</a>).</p></li>
+<li><p>Added initial support for importing Steam user/item data
+(<a class="reference internal" href="../api/lenskit/data/sources/steam/index.html#module-lenskit.data.sources.steam" title="lenskit.data.sources.steam"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.data.sources.steam</span></code></a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1111" rel="noreferrer" target="_blank">⛙ 1111</a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1178" rel="noreferrer" target="_blank">⛙ 1178</a>).</p></li>
+<li><p>Support simultaneous multithreaded running in accelerator tasks (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/1124" rel="noreferrer" target="_blank">🐞 1124</a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1125" rel="noreferrer" target="_blank">⛙ 1125</a>).</p></li>
+<li><p>Fix Torch compilation support bugs (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1113" rel="noreferrer" target="_blank">⛙ 1113</a>).</p></li>
+<li><p>Optuna fixes for random seeds, continuing when a trial fails, collecting results (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1132" rel="noreferrer" target="_blank">⛙ 1132</a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1134" rel="noreferrer" target="_blank">⛙ 1134</a>).</p></li>
+<li><p>Added support for boolean and categorical hyperparameters to the tuner (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1139" rel="noreferrer" target="_blank">⛙ 1139</a>).</p></li>
+<li><p>Added <code class="docutils literal notranslate"><span class="pre">&quot;pow2&quot;</span></code> scale for integer hyperparameters to select powers of 2 (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1144" rel="noreferrer" target="_blank">⛙ 1144</a>).</p></li>
+<li><p>Optuna now includes the default hyperparameters as the first ones tested (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1145" rel="noreferrer" target="_blank">⛙ 1145</a>).</p></li>
+<li><p>Moved configuration file schemas to <a class="reference internal" href="../api/lenskit/schemas/index.html#module-lenskit.schemas" title="lenskit.schemas"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.schemas</span></code></a> (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1148" rel="noreferrer" target="_blank">⛙ 1148</a>).</p></li>
+<li><p>Expose batch inference results as a row-by-row iterator (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1128" rel="noreferrer" target="_blank">⛙ 1128</a>).</p></li>
+<li><p>Certain per-request warnings in batch inference are now aggregated (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/1113" rel="noreferrer" target="_blank">🐞 1113</a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1168" rel="noreferrer" target="_blank">⛙ 1168</a>).</p></li>
+<li><p>Added <code class="xref py py-class docutils literal notranslate"><span class="pre">lenskit.metrics.UniqueItemCount</span></code> (<a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/1005" rel="noreferrer" target="_blank">🐞 1005</a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1169" rel="noreferrer" target="_blank">⛙ 1169</a>).</p></li>
+<li><p>Added support for <code class="docutils literal notranslate"><span class="pre">interaction=&quot;default&quot;</span></code> to <a class="reference internal" href="../api/lenskit/data/DatasetBuilder.html#lenskit.data.DatasetBuilder.add_relationship_class" title="lenskit.data.DatasetBuilder.add_relationship_class"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_relationship_class()</span></code></a> (<a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1174" rel="noreferrer" target="_blank">⛙ 1174</a>).</p></li>
+<li><p>Fix Steam dataset import to properly import interactions (previously was incomplete and broken, <a class="extlink-issue reference external" href="https://github.com/lenskit/lkpy/issues/1176" rel="noreferrer" target="_blank">🐞 1176</a>, <a class="extlink-pr reference external" href="https://github.com/lenskit/lkpy/pull/1179" rel="noreferrer" target="_blank">⛙ 1179</a>).</p></li>
+</ul>
 </section>
 <section id="id3">
 <span id="id4"></span><h2>2026.2.1<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
@@ -815,7 +847,7 @@ locks out of the work path (<a class="extlink-pr reference external" href="https
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.2.1.</div>
+        <div class="footer-item">LensKit version 2026.3.0.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

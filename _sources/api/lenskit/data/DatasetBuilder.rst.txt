@@ -78,7 +78,8 @@ lenskit.data.DatasetBuilder
       :param entities: The entity classes participating in the relationship class.
       :param allow_repeats: Whether repeated records for the same combination of entities
                             are allowed.
-      :param interaction: Whether this is an interaction relationship.
+      :param interaction: Whether this is an interaction relationship.  The string ``"default"``
+                          marks this as the default interaction relationship.
 
 
 
@@ -167,6 +168,11 @@ lenskit.data.DatasetBuilder
    .. py:method:: filter_interactions(cls, min_time = None, max_time = None, remove = None)
 
       Filter interactions based on timestamp or to remove particular entities.
+
+      .. versionchanged:: 2026.3
+
+          Time stamp filtering is now consistent and independent of the local
+          time zone (unless naïve date/times are passed).
 
       :param cls: The interaction class to filter.
       :param min_time: The minimum interaction time to keep (inclusive).
