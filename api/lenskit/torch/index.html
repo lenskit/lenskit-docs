@@ -14,7 +14,7 @@
 <meta property="og:description" content="PyTorch utility functions. Functions: Module Contents:" />
 <meta name="description" content="PyTorch utility functions. Functions: Module Contents:" />
 
-    <title>lenskit.torch &#8212; LensKit 2026.3.0b2.dev31+g611d699e documentation</title>
+    <title>lenskit.torch &#8212; LensKit 2026.3.1.dev19+g89dbc65d documentation</title>
   
   
   
@@ -49,7 +49,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../../_static/documentation_options.js?v=62f50189"></script>
+    <script src="../../../_static/documentation_options.js?v=48feb03e"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -75,7 +75,7 @@
     <link rel="prev" title="lenskit.testing.DemoRecs" href="../testing/DemoRecs.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.3.0" />
+  <meta name="docsearch:version" content="2026.3.1" />
   </head>
   
   
@@ -141,8 +141,8 @@
       
     
     
-    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.3.0b2.dev31+g611d699e documentation - Home"/>
-    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.3.0b2.dev31+g611d699e documentation - Home"/>
+    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.3.1.dev19+g89dbc65d documentation - Home"/>
+    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.3.1.dev19+g89dbc65d documentation - Home"/>
   
   
 </a></div>
@@ -827,7 +827,6 @@
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../math/index.html">lenskit.math</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
 <li class="toctree-l2"><a class="reference internal" href="../math/solve/index.html">lenskit.math.solve</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../math/sparse/index.html">lenskit.math.sparse</a></li>
 </ul>
 </details></li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../parallel/index.html">lenskit.parallel</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
@@ -924,10 +923,7 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.torch.inference_mode" title="lenskit.torch.inference_mode"><code class="xref py py-obj docutils literal notranslate"><span class="pre">inference_mode</span></code></a>(func)</p></td>
 <td><p>Function decorator that puts PyTorch in inference mode.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.torch.sparse_row" title="lenskit.torch.sparse_row"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sparse_row</span></code></a>(mat, row)</p></td>
-<td><p>Get a row of a sparse (CSR) tensor.  This is needed because indexing a</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#lenskit.torch.safe_tensor" title="lenskit.torch.safe_tensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">safe_tensor</span></code></a>(array)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#lenskit.torch.safe_tensor" title="lenskit.torch.safe_tensor"><code class="xref py py-obj docutils literal notranslate"><span class="pre">safe_tensor</span></code></a>(array)</p></td>
 <td><p>Safely convert an array into a NumPy tensor.  This includes copying it to</p></td>
 </tr>
 </tbody>
@@ -940,24 +936,6 @@
 <dt class="sig sig-object py" id="lenskit.torch.inference_mode">
 <span class="sig-prename descclassname"><span class="pre">lenskit.torch.</span></span><span class="sig-name descname"><span class="pre">inference_mode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.torch.inference_mode" title="Link to this definition">#</a></dt>
 <dd><p>Function decorator that puts PyTorch in inference mode.</p>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="lenskit.torch.sparse_row">
-<span class="sig-prename descclassname"><span class="pre">lenskit.torch.</span></span><span class="sig-name descname"><span class="pre">sparse_row</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">row</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.torch.sparse_row" title="Link to this definition">#</a></dt>
-<dd><p>Get a row of a sparse (CSR) tensor.  This is needed because indexing a
-tensor does not work in inference mode.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>mat</strong> (<a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" rel="noreferrer" target="_blank" title="(in PyTorch v2.13)"><em>torch.Tensor</em></a>)</p></li>
-<li><p><strong>row</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.14)"><em>int</em></a>)</p></li>
-</ul>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" rel="noreferrer" target="_blank" title="(in PyTorch v2.13)">torch.Tensor</a></p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="py function">
@@ -1025,7 +1003,6 @@ writable memory if necessary.</p>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functions">Functions</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module Contents</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.torch.inference_mode"><code class="docutils literal notranslate"><span class="pre">inference_mode()</span></code></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.torch.sparse_row"><code class="docutils literal notranslate"><span class="pre">sparse_row()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.torch.safe_tensor"><code class="docutils literal notranslate"><span class="pre">safe_tensor()</span></code></a></li>
 </ul>
 </li>
@@ -1072,7 +1049,7 @@ writable memory if necessary.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.3.0b2.dev31+g611d699e.</div>
+        <div class="footer-item">LensKit version 2026.3.1.dev19+g89dbc65d.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
