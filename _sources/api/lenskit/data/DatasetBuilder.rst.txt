@@ -106,7 +106,7 @@ lenskit.data.DatasetBuilder
 
 
 
-   .. py:method:: add_relationships(cls, data, *, entities = None, missing = 'error', allow_repeats = True, interaction = False, _warning_parent = 0, remove_repeats = False)
+   .. py:method:: add_relationships(cls, data, *, entities = None, missing = 'error', allow_repeats = True, interaction = False, _warning_parent = 0, remove_repeats = False, timestamp_unit = None)
 
       Add relationship records to the data set.
 
@@ -130,10 +130,13 @@ lenskit.data.DatasetBuilder
                           relationship.
       :param remove_repeats: If ``True``, repeated interactions will be removed. If ``"exact"``,
                              duplicated interactions will be removed.
+      :param timestamp_unit: The unit of numeric values in the ``timestamp`` column. If omitted,
+                             integer units are inferred and floating-point values are assumed to
+                             be seconds. Numeric timestamps are converted to Arrow timestamps.
 
 
 
-   .. py:method:: add_interactions(cls, data, *, entities = None, missing = 'error', allow_repeats = True, default = False, remove_repeats = False)
+   .. py:method:: add_interactions(cls, data, *, entities = None, missing = 'error', allow_repeats = True, default = False, remove_repeats = False, timestamp_unit = None)
 
       Add a interaction records to the data set.
 
@@ -162,6 +165,9 @@ lenskit.data.DatasetBuilder
                       dataset has more than one interaction class).
       :param remove_repeats: If ``True``, repeated interactions will be removed. If ``"exact"``,
                              duplicated interactions will be removed.
+      :param timestamp_unit: The unit of numeric values in the ``timestamp`` column. If omitted,
+                             integer units are inferred and floating-point values are assumed to
+                             be seconds. Numeric timestamps are converted to Arrow timestamps.
 
 
 
