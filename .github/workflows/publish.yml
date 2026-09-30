@@ -39,29 +39,6 @@ jobs:
           name: lenskit-site
           path: site
 
-  publish-netlify:
-    name: Upload to Netlify
-    runs-on: ubuntu-latest
-    needs: [build-site]
-    environment:
-      name: publish
-      url: "https://lkpy.lenskit.org"
-    steps:
-      - name: Fetch site artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: lenskit-site
-          path: .
-
-      - name: "🕸️ Deploy to Netlify"
-        id: deployment
-        uses: netlify/actions/cli@master
-        with:
-          args: deploy --dir=site --prod
-        env:
-          NETLIFY_AUTH_TOKEN: "${{secrets.NETLIFY_AUTH_TOKEN}}"
-          NETLIFY_SITE_ID: "${{vars.NETLIFY_SITE_ID}}"
-
   publish-github:
     name: Upload to GitHub Pages
     runs-on: ubuntu-latest
