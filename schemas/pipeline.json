@@ -1,0 +1,289 @@
+{
+  "$defs": {
+    "JsonValue": {},
+    "PipelineComponent": {
+      "additionalProperties": false,
+      "description": "Specification of a pipeline component.",
+      "properties": {
+        "code": {
+          "default": "!UNSET",
+          "title": "Code",
+          "type": "string"
+        },
+        "config": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "$ref": "#/$defs/JsonValue"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Config"
+        },
+        "inputs": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
+          "title": "Inputs",
+          "type": "object"
+        }
+      },
+      "title": "PipelineComponent",
+      "type": "object"
+    },
+    "PipelineHook": {
+      "description": "A single entry in a pipeline's hook configuration.",
+      "properties": {
+        "function": {
+          "title": "Function",
+          "type": "string"
+        },
+        "priority": {
+          "default": 1,
+          "title": "Priority",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "function"
+      ],
+      "title": "PipelineHook",
+      "type": "object"
+    },
+    "PipelineHooks": {
+      "description": "Hook specifications for a pipeline.",
+      "properties": {
+        "run": {
+          "additionalProperties": {
+            "items": {
+              "$ref": "#/$defs/PipelineHook"
+            },
+            "type": "array"
+          },
+          "default": {},
+          "title": "Run",
+          "type": "object"
+        }
+      },
+      "title": "PipelineHooks",
+      "type": "object"
+    },
+    "PipelineInput": {
+      "additionalProperties": false,
+      "description": "Spcification of a pipeline input.\n\nStability:\n    Full",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "types": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "uniqueItems": true
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Types"
+        }
+      },
+      "required": [
+        "name",
+        "types"
+      ],
+      "title": "PipelineInput",
+      "type": "object"
+    },
+    "PipelineLiteral": {
+      "additionalProperties": false,
+      "description": "Literal nodes represented in the pipeline.\n\nStability:\n    Full",
+      "properties": {
+        "encoding": {
+          "enum": [
+            "json",
+            "base85"
+          ],
+          "title": "Encoding",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/JsonValue"
+        }
+      },
+      "required": [
+        "encoding",
+        "value"
+      ],
+      "title": "PipelineLiteral",
+      "type": "object"
+    },
+    "PipelineMeta": {
+      "additionalProperties": true,
+      "description": "Pipeline metadata.\n\nStability:\n    Full",
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version"
+        },
+        "hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Hash"
+        }
+      },
+      "title": "PipelineMeta",
+      "type": "object"
+    },
+    "PipelineOptions": {
+      "additionalProperties": true,
+      "description": "Options used for pipeline assembly, particularly for extending pipelines.",
+      "properties": {
+        "base": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base"
+        },
+        "default_length": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Default Length"
+        },
+        "fallback_predictor": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fallback Predictor"
+        }
+      },
+      "title": "PipelineOptions",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Root type for serialized pipeline configuration.  A pipeline config contains\nthe full configuration, components, and wiring for the pipeline, but does\nnot contain the learned parameters.\n\nStability:\n    Full",
+  "properties": {
+    "options": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PipelineOptions"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "meta": {
+      "$ref": "#/$defs/PipelineMeta"
+    },
+    "inputs": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/PipelineInput"
+      },
+      "title": "Inputs",
+      "type": "array"
+    },
+    "components": {
+      "additionalProperties": {
+        "$ref": "#/$defs/PipelineComponent"
+      },
+      "title": "Components",
+      "type": "object"
+    },
+    "aliases": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "default": {},
+      "title": "Aliases",
+      "type": "object"
+    },
+    "default": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Default"
+    },
+    "literals": {
+      "additionalProperties": {
+        "$ref": "#/$defs/PipelineLiteral"
+      },
+      "default": {},
+      "title": "Literals",
+      "type": "object"
+    },
+    "hooks": {
+      "$ref": "#/$defs/PipelineHooks",
+      "default": {
+        "run": {}
+      }
+    }
+  },
+  "title": "PipelineConfig",
+  "type": "object"
+}

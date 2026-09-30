@@ -12,9 +12,14 @@
 <meta property="og:url" content="guide/evaluation/collection.html" />
 <meta property="og:site_name" content="LensKit" />
 <meta property="og:description" content="Computing metrics over individual lists isn’t enough for evaluating a recommender system — we usually want to compute metrics for pipelines over entire test sets. For simple metrics, it is possible..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="_images/social_previews/summary_guide_evaluation_collection_e8dead4b.png" />
+<meta property="og:image:alt" content="Computing metrics over individual lists isn’t enough for evaluating a recommender system — we usually want to compute metrics for pipelines over entire test sets. For simple metrics, it is possible..." />
 <meta name="description" content="Computing metrics over individual lists isn’t enough for evaluating a recommender system — we usually want to compute metrics for pipelines over entire test sets. For simple metrics, it is possible..." />
+<meta name="twitter:card" content="summary_large_image" />
 
-    <title>Collecting and Aggregating Metrics &#8212; LensKit 2026.3.0 documentation</title>
+    <title>Collecting and Aggregating Metrics &#8212; LensKit 2026.4.1.dev1+g737b0c9f documentation</title>
   
   
   
@@ -37,10 +42,11 @@
 <link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
     <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-new-tab-link.css?v=d87cb1ac" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/custom.css?v=9d9b0268" />
   
   <!-- So that users can add custom icons -->
@@ -49,7 +55,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=5abc04fd"></script>
+    <script src="../../_static/documentation_options.js?v=986a2fa2"></script>
     <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -67,7 +73,7 @@
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
-    <link rel="canonical" href="https://lenskit.org/stable/guide/evaluation/collection.html" />
+    <link rel="canonical" href="https://lenskit.org/latest/guide/evaluation/collection.html" />
     <link rel="icon" href="../../_static/lenskit-icon.png"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -75,7 +81,7 @@
     <link rel="prev" title="Evaluating Rating Predictions" href="predictions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.3.0" />
+  <meta name="docsearch:version" content="2026.4.1" />
   </head>
   
   
@@ -141,8 +147,8 @@
       
     
     
-    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.3.0 documentation - Home"/>
-    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.3.0 documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.4.1.dev1+g737b0c9f documentation - Home"/>
+    <img src="../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.4.1.dev1+g737b0c9f documentation - Home"/>
   
   
 </a></div>
@@ -583,7 +589,7 @@ recommendation run.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 2026.1: </span><a class="reference internal" href="../../api/lenskit/metrics/MeasurementCollector.html#lenskit.metrics.MeasurementCollector" title="lenskit.metrics.MeasurementCollector"><code class="xref py py-class docutils literal notranslate"><span class="pre">MeasurementCollector</span></code></a> was introduced in LensKit <a class="reference internal" href="../../releases/2025.html#id15"><span class="std std-ref">2025.5.0</span></a>, and
 replaced <code class="xref py py-class docutils literal notranslate"><span class="pre">RunAnalysis</span></code> as the primary metric analysis tool in LensKit
-<a class="reference internal" href="../../releases/2026.html#id7"><span class="std std-ref">2026.1.0</span></a>.</p>
+<a class="reference internal" href="../../releases/2026.html#id9"><span class="std std-ref">2026.1.0</span></a>.</p>
 </div>
 <section id="basic-principles">
 <h2>Basic Principles<a class="headerlink" href="#basic-principles" title="Link to this heading">#</a></h2>
@@ -613,8 +619,8 @@ measure them with:</p>
     <span class="n">run_summaries</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">summary_metrics</span>
     <span class="n">run_list_metrics</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">list_metrics</span>
 
-<span class="n">list_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">run_list_metrics</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;recommender&#39;</span><span class="p">])</span>
-<span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">run_summaries</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;index&quot;</span><span class="p">)</span>
+<span class="n">list_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">run_list_metrics</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="p">[</span><span class="s1">'recommender'</span><span class="p">])</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">run_summaries</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">"index"</span><span class="p">)</span>
 </pre></div>
 </div>
 </section>
@@ -753,7 +759,7 @@ analytics library.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.3.0.</div>
+        <div class="footer-item">LensKit version 2026.4.1.dev1+g737b0c9f.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

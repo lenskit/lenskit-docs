@@ -1,0 +1,607 @@
+{
+  "$defs": {
+    "ErrorAction": {
+      "enum": [
+        "abort",
+        "continue"
+      ],
+      "type": "string"
+    },
+    "JsonValue": {},
+    "PipelineComponent": {
+      "additionalProperties": false,
+      "description": "Specification of a pipeline component.",
+      "properties": {
+        "code": {
+          "default": "!UNSET",
+          "title": "Code",
+          "type": "string"
+        },
+        "config": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "$ref": "#/$defs/JsonValue"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Config"
+        },
+        "inputs": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
+          "title": "Inputs",
+          "type": "object"
+        }
+      },
+      "title": "PipelineComponent",
+      "type": "object"
+    },
+    "PipelineConfig": {
+      "additionalProperties": false,
+      "description": "Root type for serialized pipeline configuration.  A pipeline config contains\nthe full configuration, components, and wiring for the pipeline, but does\nnot contain the learned parameters.\n\nStability:\n    Full",
+      "properties": {
+        "options": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/PipelineOptions"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "meta": {
+          "$ref": "#/$defs/PipelineMeta"
+        },
+        "inputs": {
+          "default": [],
+          "items": {
+            "$ref": "#/$defs/PipelineInput"
+          },
+          "title": "Inputs",
+          "type": "array"
+        },
+        "components": {
+          "additionalProperties": {
+            "$ref": "#/$defs/PipelineComponent"
+          },
+          "title": "Components",
+          "type": "object"
+        },
+        "aliases": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "default": {},
+          "title": "Aliases",
+          "type": "object"
+        },
+        "default": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Default"
+        },
+        "literals": {
+          "additionalProperties": {
+            "$ref": "#/$defs/PipelineLiteral"
+          },
+          "default": {},
+          "title": "Literals",
+          "type": "object"
+        },
+        "hooks": {
+          "$ref": "#/$defs/PipelineHooks",
+          "default": {
+            "run": {}
+          }
+        }
+      },
+      "title": "PipelineConfig",
+      "type": "object"
+    },
+    "PipelineFile": {
+      "additionalProperties": false,
+      "description": "Load a pipeline from a file.",
+      "properties": {
+        "file": {
+          "format": "path",
+          "title": "File",
+          "type": "string"
+        }
+      },
+      "required": [
+        "file"
+      ],
+      "title": "PipelineFile",
+      "type": "object"
+    },
+    "PipelineHook": {
+      "description": "A single entry in a pipeline's hook configuration.",
+      "properties": {
+        "function": {
+          "title": "Function",
+          "type": "string"
+        },
+        "priority": {
+          "default": 1,
+          "title": "Priority",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "function"
+      ],
+      "title": "PipelineHook",
+      "type": "object"
+    },
+    "PipelineHooks": {
+      "description": "Hook specifications for a pipeline.",
+      "properties": {
+        "run": {
+          "additionalProperties": {
+            "items": {
+              "$ref": "#/$defs/PipelineHook"
+            },
+            "type": "array"
+          },
+          "default": {},
+          "title": "Run",
+          "type": "object"
+        }
+      },
+      "title": "PipelineHooks",
+      "type": "object"
+    },
+    "PipelineInput": {
+      "additionalProperties": false,
+      "description": "Spcification of a pipeline input.\n\nStability:\n    Full",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "types": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array",
+              "uniqueItems": true
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Types"
+        }
+      },
+      "required": [
+        "name",
+        "types"
+      ],
+      "title": "PipelineInput",
+      "type": "object"
+    },
+    "PipelineLiteral": {
+      "additionalProperties": false,
+      "description": "Literal nodes represented in the pipeline.\n\nStability:\n    Full",
+      "properties": {
+        "encoding": {
+          "enum": [
+            "json",
+            "base85"
+          ],
+          "title": "Encoding",
+          "type": "string"
+        },
+        "value": {
+          "$ref": "#/$defs/JsonValue"
+        }
+      },
+      "required": [
+        "encoding",
+        "value"
+      ],
+      "title": "PipelineLiteral",
+      "type": "object"
+    },
+    "PipelineMeta": {
+      "additionalProperties": true,
+      "description": "Pipeline metadata.\n\nStability:\n    Full",
+      "properties": {
+        "name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Name"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version"
+        },
+        "hash": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Hash"
+        }
+      },
+      "title": "PipelineMeta",
+      "type": "object"
+    },
+    "PipelineOptions": {
+      "additionalProperties": true,
+      "description": "Options used for pipeline assembly, particularly for extending pipelines.",
+      "properties": {
+        "base": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base"
+        },
+        "default_length": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Default Length"
+        },
+        "fallback_predictor": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Fallback Predictor"
+        }
+      },
+      "title": "PipelineOptions",
+      "type": "object"
+    },
+    "SearchConfig": {
+      "description": "Configuration options for the hyperparameter search.",
+      "properties": {
+        "method": {
+          "anyOf": [
+            {
+              "enum": [
+                "tpe",
+                "random",
+                "hyperopt"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Method"
+        },
+        "max_points": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Points"
+        },
+        "default_points": {
+          "default": 60,
+          "title": "Default Points",
+          "type": "integer"
+        },
+        "error_action": {
+          "$ref": "#/$defs/ErrorAction",
+          "default": "continue"
+        },
+        "metric": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Metric"
+        },
+        "list_length": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "List Length"
+        },
+        "num_cpus": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "enum": [
+                "threads",
+                "backend-threads",
+                "all-threads"
+              ],
+              "type": "string"
+            }
+          ],
+          "default": "threads",
+          "title": "Num Cpus"
+        },
+        "num_gpus": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "default": 0,
+          "title": "Num Gpus"
+        },
+        "max_epochs": {
+          "default": 100,
+          "title": "Max Epochs",
+          "type": "integer"
+        },
+        "min_epochs": {
+          "default": 3,
+          "title": "Min Epochs",
+          "type": "integer"
+        },
+        "median_min_trials": {
+          "default": 5,
+          "title": "Median Min Trials",
+          "type": "integer"
+        },
+        "plateau_check_iters": {
+          "default": 3,
+          "title": "Plateau Check Iters",
+          "type": "integer"
+        },
+        "plateau_min_rel_improvement": {
+          "default": 0.01,
+          "title": "Plateau Min Rel Improvement",
+          "type": "number"
+        },
+        "checkpoint_iters": {
+          "default": 2,
+          "title": "Checkpoint Iters",
+          "type": "integer"
+        }
+      },
+      "title": "SearchConfig",
+      "type": "object"
+    },
+    "SearchParam": {
+      "properties": {
+        "type": {
+          "enum": [
+            "int",
+            "float",
+            "bool",
+            "choice"
+          ],
+          "title": "Type",
+          "type": "string"
+        },
+        "min": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min"
+        },
+        "max": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max"
+        },
+        "scale": {
+          "default": "uniform",
+          "enum": [
+            "uniform",
+            "log",
+            "pow2"
+          ],
+          "title": "Scale",
+          "type": "string"
+        },
+        "choices": {
+          "default": [],
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "boolean"
+              }
+            ]
+          },
+          "title": "Choices",
+          "type": "array"
+        },
+        "base": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Base"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "SearchParam",
+      "type": "object"
+    },
+    "SearchSpace": {
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "$ref": "#/$defs/SearchParam"
+          },
+          {
+            "$ref": "#/$defs/SearchSpace"
+          }
+        ]
+      },
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Data model for hyperparameter tuning specifications.",
+  "properties": {
+    "file_path": {
+      "anyOf": [
+        {
+          "format": "path",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "File Path"
+    },
+    "search": {
+      "$ref": "#/$defs/SearchConfig",
+      "default": {
+        "method": null,
+        "max_points": null,
+        "default_points": 60,
+        "error_action": "continue",
+        "metric": null,
+        "list_length": null,
+        "num_cpus": "threads",
+        "num_gpus": 0,
+        "max_epochs": 100,
+        "min_epochs": 3,
+        "median_min_trials": 5,
+        "plateau_check_iters": 3,
+        "plateau_min_rel_improvement": 0.01,
+        "checkpoint_iters": 2
+      }
+    },
+    "space": {
+      "additionalProperties": {
+        "$ref": "#/$defs/SearchSpace"
+      },
+      "title": "Space",
+      "type": "object"
+    },
+    "pipeline": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/PipelineFile"
+        },
+        {
+          "$ref": "#/$defs/PipelineConfig"
+        }
+      ],
+      "title": "Pipeline"
+    }
+  },
+  "required": [
+    "space",
+    "pipeline"
+  ],
+  "title": "TuningSpec",
+  "type": "object"
+}

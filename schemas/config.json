@@ -1,0 +1,366 @@
+{
+  "$defs": {
+    "ErrorAction": {
+      "enum": [
+        "abort",
+        "continue"
+      ],
+      "type": "string"
+    },
+    "MachineSettings": {
+      "additionalProperties": true,
+      "description": "Definition for a single machine.\n\nA \u201cmachine\u201d is a computer (or cluster) that is in use for running LensKit\nexperiments.  Many users won't use this, but if you want to use the power\nconsumption monitoring, you will need to define how to measure power for the\ndifferent machines in use.",
+      "properties": {
+        "description": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "power_queries": {
+          "$ref": "#/$defs/PowerQueries",
+          "default": {}
+        }
+      },
+      "title": "MachineSettings",
+      "type": "object"
+    },
+    "ParallelSettings": {
+      "additionalProperties": false,
+      "description": "Configuration for LensKit's parallel processing.  These settings are in the\n``[parallel]`` table in ``lenskit.toml``.\n\n.. seealso::\n    :ref:`parallel-config`",
+      "properties": {
+        "num_cpus": {
+          "default": 0,
+          "title": "Num Cpus",
+          "type": "integer"
+        },
+        "use_ray": {
+          "default": false,
+          "title": "Use Ray",
+          "type": "boolean"
+        },
+        "num_batch_jobs": {
+          "default": 0,
+          "title": "Num Batch Jobs",
+          "type": "integer"
+        },
+        "num_procs": {
+          "default": 0,
+          "title": "Num Procs",
+          "type": "integer"
+        },
+        "num_threads": {
+          "default": 0,
+          "title": "Num Threads",
+          "type": "integer"
+        },
+        "num_backend_threads": {
+          "default": 0,
+          "title": "Num Backend Threads",
+          "type": "integer"
+        },
+        "tune_jobs": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Tune Jobs"
+        }
+      },
+      "title": "ParallelSettings",
+      "type": "object"
+    },
+    "PowerQueries": {
+      "additionalProperties": true,
+      "description": "Queries for requesting power consumption data from Prometheus.\n\nEach entry is a Python format string (for :meth:`str.format`), that will be\nused to format a dictionary ``{\"elapsed\": time_ms}``.  The result should be\na valid Prometheus query that returns the power consumption in Joules (watt\nseconds) over the last ``time_ms`` milliseconds.",
+      "properties": {
+        "system": {
+          "title": "System",
+          "type": "string"
+        },
+        "cpu": {
+          "title": "Cpu",
+          "type": "string"
+        },
+        "gpu": {
+          "title": "Gpu",
+          "type": "string"
+        }
+      },
+      "title": "PowerQueries",
+      "type": "object"
+    },
+    "PrometheusSettings": {
+      "description": "Prometheus configuration settings.\n\nLensKit's task logging supports querying Prometheus for task-related metrics\nsuch as power consumption.",
+      "properties": {
+        "url": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Url"
+        }
+      },
+      "title": "PrometheusSettings",
+      "type": "object"
+    },
+    "RandomSettings": {
+      "description": "Random number generator configuration.",
+      "properties": {
+        "seed": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Seed"
+        }
+      },
+      "title": "RandomSettings",
+      "type": "object"
+    },
+    "SearchConfig": {
+      "description": "Configuration options for the hyperparameter search.",
+      "properties": {
+        "method": {
+          "anyOf": [
+            {
+              "enum": [
+                "tpe",
+                "random",
+                "hyperopt"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Method"
+        },
+        "max_points": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Points"
+        },
+        "default_points": {
+          "default": 60,
+          "title": "Default Points",
+          "type": "integer"
+        },
+        "error_action": {
+          "$ref": "#/$defs/ErrorAction",
+          "default": "continue"
+        },
+        "metric": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Metric"
+        },
+        "list_length": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "List Length"
+        },
+        "num_cpus": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "enum": [
+                "threads",
+                "backend-threads",
+                "all-threads"
+              ],
+              "type": "string"
+            }
+          ],
+          "default": "threads",
+          "title": "Num Cpus"
+        },
+        "num_gpus": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "default": 0,
+          "title": "Num Gpus"
+        },
+        "max_epochs": {
+          "default": 100,
+          "title": "Max Epochs",
+          "type": "integer"
+        },
+        "min_epochs": {
+          "default": 3,
+          "title": "Min Epochs",
+          "type": "integer"
+        },
+        "median_min_trials": {
+          "default": 5,
+          "title": "Median Min Trials",
+          "type": "integer"
+        },
+        "plateau_check_iters": {
+          "default": 3,
+          "title": "Plateau Check Iters",
+          "type": "integer"
+        },
+        "plateau_min_rel_improvement": {
+          "default": 0.01,
+          "title": "Plateau Min Rel Improvement",
+          "type": "number"
+        },
+        "checkpoint_iters": {
+          "default": 2,
+          "title": "Checkpoint Iters",
+          "type": "integer"
+        }
+      },
+      "title": "SearchConfig",
+      "type": "object"
+    },
+    "TuneSettings": {
+      "description": "LensKit hyperparameter tuning settings.",
+      "properties": {
+        "jobs": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Jobs"
+        },
+        "gpu_mult": {
+          "default": 1.0,
+          "exclusiveMinimum": 0,
+          "maximum": 1.0,
+          "title": "Gpu Mult",
+          "type": "number"
+        },
+        "defaults": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SearchConfig"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "title": "TuneSettings",
+      "type": "object"
+    }
+  },
+  "additionalProperties": true,
+  "description": "Definition of LensKit settings.\n\nLensKit supports loading various settings from configuration files\nand the environment as a consistent way to control LensKit's various\ncontrol surfaces.\n\nStability:\n    Experimental",
+  "properties": {
+    "random": {
+      "$ref": "#/$defs/RandomSettings",
+      "default": {
+        "seed": null
+      }
+    },
+    "parallel": {
+      "$ref": "#/$defs/ParallelSettings",
+      "default": {
+        "num_cpus": 0,
+        "use_ray": false,
+        "num_batch_jobs": 0,
+        "num_procs": 0,
+        "num_threads": 0,
+        "num_backend_threads": 0,
+        "tune_jobs": null
+      }
+    },
+    "machine": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Machine"
+    },
+    "prometheus": {
+      "$ref": "#/$defs/PrometheusSettings",
+      "default": {
+        "url": null
+      }
+    },
+    "machines": {
+      "additionalProperties": {
+        "$ref": "#/$defs/MachineSettings"
+      },
+      "default": {},
+      "title": "Machines",
+      "type": "object"
+    },
+    "tuning": {
+      "$ref": "#/$defs/TuneSettings",
+      "default": {
+        "jobs": null,
+        "gpu_mult": 1.0,
+        "defaults": null
+      }
+    }
+  },
+  "title": "LenskitSettings",
+  "type": "object"
+}

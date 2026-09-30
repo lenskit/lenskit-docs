@@ -12,9 +12,14 @@
 <meta property="og:url" content="guide/pipeline.html" />
 <meta property="og:site_name" content="LensKit" />
 <meta property="og:description" content="Since version 2025.1.1, LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produce predictio..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="_images/social_previews/summary_guide_pipeline_ac56f785.png" />
+<meta property="og:image:alt" content="Since version 2025.1.1, LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produce predictio..." />
 <meta name="description" content="Since version 2025.1.1, LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produce predictio..." />
+<meta name="twitter:card" content="summary_large_image" />
 
-    <title>Recommendation Pipelines &#8212; LensKit 2026.3.0 documentation</title>
+    <title>Recommendation Pipelines &#8212; LensKit 2026.4.1.dev1+g737b0c9f documentation</title>
   
   
   
@@ -37,10 +42,11 @@
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css?v=8cd3d715" />
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-new-tab-link.css?v=d87cb1ac" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=9d9b0268" />
   
   <!-- So that users can add custom icons -->
@@ -49,7 +55,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=5abc04fd"></script>
+    <script src="../_static/documentation_options.js?v=986a2fa2"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -61,6 +67,8 @@
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
     <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
     <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
 
 
 
@@ -424,7 +432,7 @@ window.runMermaid = runMermaid;</script>
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
-    <link rel="canonical" href="https://lenskit.org/stable/guide/pipeline.html" />
+    <link rel="canonical" href="https://lenskit.org/latest/guide/pipeline.html" />
     <link rel="icon" href="../_static/lenskit-icon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -432,7 +440,7 @@ window.runMermaid = runMermaid;</script>
     <link rel="prev" title="Queries and Operations" href="queries.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.3.0" />
+  <meta name="docsearch:version" content="2026.4.1" />
   </head>
   
   
@@ -498,8 +506,8 @@ window.runMermaid = runMermaid;</script>
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.3.0 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.3.0 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.4.1.dev1+g737b0c9f documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.4.1.dev1+g737b0c9f documentation - Home"/>
   
   
 </a></div>
@@ -961,7 +969,7 @@ that class, do:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">als</span> <span class="o">=</span> <span class="n">ImplicitMFScorer</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
 <span class="n">builder</span> <span class="o">=</span> <span class="n">RecPipelineBuilder</span><span class="p">()</span>
 <span class="n">builder</span><span class="o">.</span><span class="n">scorer</span><span class="p">(</span><span class="n">als</span><span class="p">)</span>
-<span class="n">pipe</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s1">&#39;ALS&#39;</span><span class="p">)</span>
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s1">'ALS'</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>For maximum flexibility, you can directly construct and wire the pipeline
@@ -971,7 +979,7 @@ for things like cycles, and instantiates the components to make a pipeline that
 can be trained and used.</p>
 <p>After any of these methods, you can run the pipeline to produce recommendations
 with:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">user_recs</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;recommender&#39;</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">user_recs</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">'recommender'</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">user_id</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>This is also exposed with a convenience function:</p>
@@ -1027,7 +1035,7 @@ the component input argument.</p></li>
 should be wired.</p>
 <p>You can also use <a class="reference internal" href="../api/lenskit/pipeline/PipelineBuilder.html#lenskit.pipeline.PipelineBuilder.default_connection" title="lenskit.pipeline.PipelineBuilder.default_connection"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PipelineBuilder.default_connection()</span></code></a> to specify default
 connections. For example, you can specify a default for inputs named <code class="docutils literal notranslate"><span class="pre">user</span></code>:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span><span class="o">.</span><span class="n">default_connection</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="n">user_history</span><span class="p">)</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span><span class="o">.</span><span class="n">default_connection</span><span class="p">(</span><span class="s1">'user'</span><span class="p">,</span> <span class="n">user_history</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>With this default in place, if a component has an input named <code class="docutils literal notranslate"><span class="pre">user</span></code> and that
@@ -1211,27 +1219,27 @@ flowchart LR
 </figure>
 <p>The convenience methods are equivalent to the following pipeline code:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">PipelineBuilder</span><span class="p">()</span>
-<span class="c1"># define an input parameter for the user ID (the &#39;query&#39;)</span>
-<span class="n">query</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">&#39;query&#39;</span><span class="p">,</span> <span class="n">ID</span><span class="p">)</span>
+<span class="c1"># define an input parameter for the user ID (the 'query')</span>
+<span class="n">query</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">'query'</span><span class="p">,</span> <span class="n">ID</span><span class="p">)</span>
 <span class="c1"># allow candidate items to be optionally specified</span>
-<span class="n">items</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">&#39;items&#39;</span><span class="p">,</span> <span class="n">ItemList</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-<span class="c1"># look up a user&#39;s history in the training data</span>
-<span class="n">history</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;history-lookup&#39;</span><span class="p">,</span> <span class="n">LookupTrainingHistory</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">)</span>
+<span class="n">items</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">create_input</span><span class="p">(</span><span class="s1">'items'</span><span class="p">,</span> <span class="n">ItemList</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+<span class="c1"># look up a user's history in the training data</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">'history-lookup'</span><span class="p">,</span> <span class="n">LookupTrainingHistory</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">)</span>
 <span class="c1"># find candidates from the training data</span>
 <span class="n">default_candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span>
-    <span class="s1">&#39;candidate-selector&#39;</span><span class="p">,</span>
+    <span class="s1">'candidate-selector'</span><span class="p">,</span>
     <span class="n">TrainingItemsCandidateSelector</span><span class="p">,</span>
     <span class="n">query</span><span class="o">=</span><span class="n">history</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="c1"># if the client provided items as a pipeline input, use those; otherwise</span>
 <span class="c1"># use the candidate selector we just configured.</span>
-<span class="n">candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">use_first_of</span><span class="p">(</span><span class="s1">&#39;candidates&#39;</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">default_candidates</span><span class="p">)</span>
+<span class="n">candidates</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">use_first_of</span><span class="p">(</span><span class="s1">'candidates'</span><span class="p">,</span> <span class="n">items</span><span class="p">,</span> <span class="n">default_candidates</span><span class="p">)</span>
 <span class="c1"># score the candidate items using the specified scorer</span>
-<span class="n">score</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;scorer&#39;</span><span class="p">,</span> <span class="n">scorer</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">candidates</span><span class="p">)</span>
+<span class="n">score</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">'scorer'</span><span class="p">,</span> <span class="n">scorer</span><span class="p">,</span> <span class="n">query</span><span class="o">=</span><span class="n">query</span><span class="p">,</span> <span class="n">items</span><span class="o">=</span><span class="n">candidates</span><span class="p">)</span>
 <span class="c1"># rank the items by score</span>
-<span class="n">recommend</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;ranker&#39;</span><span class="p">,</span> <span class="n">TopNRanker</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;n&#39;</span><span class="p">:</span> <span class="mi">50</span><span class="p">},</span> <span class="n">items</span><span class="o">=</span><span class="n">score</span><span class="p">)</span>
-<span class="n">pipe</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">&#39;recommender&#39;</span><span class="p">,</span> <span class="n">recommend</span><span class="p">)</span>
-<span class="n">pipe</span><span class="o">.</span><span class="n">default_component</span><span class="p">(</span><span class="s1">&#39;recommender&#39;</span><span class="p">)</span>
+<span class="n">recommend</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">'ranker'</span><span class="p">,</span> <span class="n">TopNRanker</span><span class="p">,</span> <span class="p">{</span><span class="s1">'n'</span><span class="p">:</span> <span class="mi">50</span><span class="p">},</span> <span class="n">items</span><span class="o">=</span><span class="n">score</span><span class="p">)</span>
+<span class="n">pipe</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s1">'recommender'</span><span class="p">,</span> <span class="n">recommend</span><span class="p">)</span>
+<span class="n">pipe</span><span class="o">.</span><span class="n">default_component</span><span class="p">(</span><span class="s1">'recommender'</span><span class="p">)</span>
 <span class="n">pipe</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -1367,7 +1375,7 @@ representations for free to all component implementations.</p></li>
 <ul>
 <li><p>Instantiate the component with its configuration options and pass it to
 <a class="reference internal" href="../api/lenskit/pipeline/PipelineBuilder.html#lenskit.pipeline.PipelineBuilder.add_component" title="lenskit.pipeline.PipelineBuilder.add_component"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PipelineBuilder.add_component()</span></code></a>:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">builder</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;component-name&#39;</span><span class="p">,</span> <span class="n">MyComponent</span><span class="p">(</span><span class="n">option</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">))</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">builder</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">'component-name'</span><span class="p">,</span> <span class="n">MyComponent</span><span class="p">(</span><span class="n">option</span><span class="o">=</span><span class="s1">'value'</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>When you convert the pipeline into
@@ -1376,11 +1384,11 @@ configuration.</p>
 </li>
 <li><p>Pass the component class and configuration separately to
 <a class="reference internal" href="../api/lenskit/pipeline/PipelineBuilder.html#lenskit.pipeline.PipelineBuilder.add_component" title="lenskit.pipeline.PipelineBuilder.add_component"><code class="xref py py-meth docutils literal notranslate"><span class="pre">PipelineBuilder.add_component()</span></code></a>:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">builder</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;component-name&#39;</span><span class="p">,</span> <span class="n">MyComponent</span><span class="p">,</span> <span class="n">MyConfig</span><span class="p">(</span><span class="n">option</span><span class="o">=</span><span class="s1">&#39;value&#39;</span><span class="p">))</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">builder</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">'component-name'</span><span class="p">,</span> <span class="n">MyComponent</span><span class="p">,</span> <span class="n">MyConfig</span><span class="p">(</span><span class="n">option</span><span class="o">=</span><span class="s1">'value'</span><span class="p">))</span>
 </pre></div>
 </div>
 <p>Alternatively:</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">builder</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">&#39;component-name&#39;</span><span class="p">,</span> <span class="n">MyComponent</span><span class="p">,</span> <span class="p">{</span><span class="s1">&#39;option&#39;</span><span class="p">:</span> <span class="s1">&#39;value&#39;</span><span class="p">}))</span>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">builder</span><span class="o">.</span><span class="n">add_component</span><span class="p">(</span><span class="s1">'component-name'</span><span class="p">,</span> <span class="n">MyComponent</span><span class="p">,</span> <span class="p">{</span><span class="s1">'option'</span><span class="p">:</span> <span class="s1">'value'</span><span class="p">}))</span>
 </pre></div>
 </div>
 </li>
@@ -1594,7 +1602,7 @@ components together.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.3.0.</div>
+        <div class="footer-item">LensKit version 2026.4.1.dev1+g737b0c9f.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
