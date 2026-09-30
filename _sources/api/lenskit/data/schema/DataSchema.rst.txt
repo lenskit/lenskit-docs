@@ -1,7 +1,7 @@
 lenskit.data.schema.DataSchema
 ==============================
 
-.. py:class:: lenskit.data.schema.DataSchema
+.. py:class:: lenskit.data.schema.DataSchema(/, **data)
    
 
    Bases: :py:obj:`pydantic.BaseModel`
@@ -53,5 +53,23 @@ lenskit.data.schema.DataSchema
 
    .. py:method:: model_validate_json(json_data, *, context = None, **kwargs)
       :classmethod:
+
+
+      !!! abstract "Usage Documentation"
+          [JSON Parsing](../concepts/json.md#json-parsing)
+
+      Validate the given JSON data against the Pydantic model.
+
+      :param json_data: The JSON data to validate.
+      :param strict: Whether to enforce types strictly.
+      :param extra: Whether to ignore, allow, or forbid extra data during model validation.
+                    See the [`extra` configuration value][pydantic.ConfigDict.extra] for details.
+      :param context: Extra variables to pass to the validator.
+      :param by_alias: Whether to use the field's alias when validating against the provided input data.
+      :param by_name: Whether to use the field's name when validating against the provided input data.
+
+      :returns: The validated Pydantic model.
+
+      :raises ValidationError: If `json_data` is not a JSON string or the object could not be validated.
 
 

@@ -14,7 +14,7 @@
 <meta property="og:description" content="The splitting module splits data sets for offline evaluation using cross-validation and other strategies. The various splitters are implemented as functions that operate on a Dataset and return one..." />
 <meta name="description" content="The splitting module splits data sets for offline evaluation using cross-validation and other strategies. The various splitters are implemented as functions that operate on a Dataset and return one..." />
 
-    <title>Splitting Data &#8212; LensKit 2026.3.1.dev108+g80c318d2 documentation</title>
+    <title>Splitting Data &#8212; LensKit 2026.4.1.dev2+g61247de3 documentation</title>
   
   
   
@@ -41,6 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-new-tab-link.css?v=d87cb1ac" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=9d9b0268" />
   
   <!-- So that users can add custom icons -->
@@ -49,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=1ed3db63"></script>
+    <script src="../_static/documentation_options.js?v=34d566e2"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -75,7 +76,7 @@
     <link rel="prev" title="Implementing Components" href="implementing.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.3.1" />
+  <meta name="docsearch:version" content="2026.4.1" />
   </head>
   
   
@@ -141,8 +142,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.3.1.dev108+g80c318d2 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.3.1.dev108+g80c318d2 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.4.1.dev2+g61247de3 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.4.1.dev2+g61247de3 documentation - Home"/>
   
   
 </a></div>
@@ -577,10 +578,10 @@ LensKit:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.data</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_movielens</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">lenskit.splitting</span><span class="w"> </span><span class="kn">import</span> <span class="n">crossfold_users</span><span class="p">,</span> <span class="n">SampleN</span><span class="p">,</span> <span class="n">dict_to_df</span>
-<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_movielens</span><span class="p">(</span><span class="s1">&#39;data/ml-20m.zip&#39;</span><span class="p">)</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_movielens</span><span class="p">(</span><span class="s1">'data/ml-20m.zip'</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">tp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">crossfold_users</span><span class="p">(</span><span class="n">ratings</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">SampleN</span><span class="p">(</span><span class="mi">5</span><span class="p">))):</span>
-    <span class="n">tp</span><span class="o">.</span><span class="n">train_df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ml-20m.exp/train-</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.parquet&#39;</span><span class="p">)</span>
-    <span class="n">tp</span><span class="o">.</span><span class="n">test_df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;ml-20m.exp/test-</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.parquet&#39;</span><span class="p">)</span>
+    <span class="n">tp</span><span class="o">.</span><span class="n">train_df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="sa">f</span><span class="s1">'ml-20m.exp/train-</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.parquet'</span><span class="p">)</span>
+    <span class="n">tp</span><span class="o">.</span><span class="n">test_df</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="sa">f</span><span class="s1">'ml-20m.exp/test-</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">.parquet'</span><span class="p">)</span>
 </pre></div>
 </div>
 <section id="temporal-splitting">
@@ -760,7 +761,7 @@ return callable objects to do the holdout:</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.3.1.dev108+g80c318d2.</div>
+        <div class="footer-item">LensKit version 2026.4.1.dev2+g61247de3.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under

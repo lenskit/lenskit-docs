@@ -14,7 +14,7 @@
 <meta property="og:description" content="This notebook gets you started with a brief nDCG evaluation with LensKit for Python. This notebook is also available on Google Collaboratory and nbviewer. Setup: We first import the LensKit compone..." />
 <meta name="description" content="This notebook gets you started with a brief nDCG evaluation with LensKit for Python. This notebook is also available on Google Collaboratory and nbviewer. Setup: We first import the LensKit compone..." />
 
-    <title>Getting Started &#8212; LensKit 2026.3.1.dev108+g80c318d2 documentation</title>
+    <title>Getting Started &#8212; LensKit 2026.4.1.dev2+g61247de3 documentation</title>
   
   
   
@@ -41,6 +41,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-new-tab-link.css?v=d87cb1ac" />
     <link rel="stylesheet" type="text/css" href="../_static/css/custom.css?v=9d9b0268" />
   
   <!-- So that users can add custom icons -->
@@ -49,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=1ed3db63"></script>
+    <script src="../_static/documentation_options.js?v=34d566e2"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -78,7 +79,7 @@
     <link rel="prev" title="Installing LensKit" href="install.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
-  <meta name="docsearch:version" content="2026.3.1" />
+  <meta name="docsearch:version" content="2026.4.1" />
   </head>
   
   
@@ -144,8 +145,8 @@
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.3.1.dev108+g80c318d2 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.3.1.dev108+g80c318d2 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.4.1.dev2+g61247de3 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.4.1.dev2+g61247de3 documentation - Home"/>
   
   
 </a></div>
@@ -607,15 +608,15 @@
 <p>We’re going to use the ML-100K data set:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ml100k</span> <span class="o">=</span> <span class="n">load_movielens</span><span class="p">(</span><span class="n">here</span><span class="p">(</span><span class="s2">&quot;data/ml-100k.zip&quot;</span><span class="p">))</span>
-<span class="n">ml100k</span><span class="o">.</span><span class="n">interaction_table</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">&quot;pandas&quot;</span><span class="p">,</span> <span class="n">original_ids</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">ml100k</span> <span class="o">=</span> <span class="n">load_movielens</span><span class="p">(</span><span class="n">here</span><span class="p">(</span><span class="s2">"data/ml-100k.zip"</span><span class="p">))</span>
+<span class="n">ml100k</span><span class="o">.</span><span class="n">interaction_table</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">"pandas"</span><span class="p">,</span> <span class="n">original_ids</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/mde48/LensKit/lkpy/src/lenskit/data/movielens.py:143: ParserWarning: Falling back to the &#39;python&#39; engine because the &#39;c&#39; engine does not support regex separators (separators &gt; 1 char and different from &#39;\s+&#39; are interpreted as regex); you can avoid this warning by specifying engine=&#39;python&#39;.
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/Users/mde48/LensKit/lkpy/src/lenskit/data/movielens.py:143: ParserWarning: Falling back to the 'python' engine because the 'c' engine does not support regex separators (separators &gt; 1 char and different from '\s+' are interpreted as regex); you can avoid this warning by specifying engine='python'.
   return pd.read_csv(
-/Users/mde48/LensKit/lkpy/src/lenskit/data/movielens.py:157: ParserWarning: Falling back to the &#39;python&#39; engine because the &#39;c&#39; engine does not support regex separators (separators &gt; 1 char and different from &#39;\s+&#39; are interpreted as regex); you can avoid this warning by specifying engine=&#39;python&#39;.
+/Users/mde48/LensKit/lkpy/src/lenskit/data/movielens.py:157: ParserWarning: Falling back to the 'python' engine because the 'c' engine does not support regex separators (separators &gt; 1 char and different from '\s+' are interpreted as regex); you can avoid this warning by specifying engine='python'.
   return pd.read_csv(
 </pre></div>
 </div>
@@ -778,12 +779,12 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">list_metrics</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
     <span class="p">{</span>
-        <span class="s2">&quot;ALS&quot;</span><span class="p">:</span> <span class="n">als_metrics</span><span class="p">,</span>
-        <span class="s2">&quot;IKNN&quot;</span><span class="p">:</span> <span class="n">iknn_metrics</span><span class="p">,</span>
+        <span class="s2">"ALS"</span><span class="p">:</span> <span class="n">als_metrics</span><span class="p">,</span>
+        <span class="s2">"IKNN"</span><span class="p">:</span> <span class="n">iknn_metrics</span><span class="p">,</span>
     <span class="p">},</span>
-    <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;model&quot;</span><span class="p">],</span>
+    <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s2">"model"</span><span class="p">],</span>
 <span class="p">)</span>
-<span class="n">list_metrics</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;model&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">list_metrics</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"model"</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -836,7 +837,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">list_metrics</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;model&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;NDCG@100&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">list_metrics</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="s2">"model"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">"NDCG@100"</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">"bar"</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
@@ -943,7 +944,7 @@
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.3.1.dev108+g80c318d2.</div>
+        <div class="footer-item">LensKit version 2026.4.1.dev2+g61247de3.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
