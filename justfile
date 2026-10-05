@@ -2,6 +2,7 @@ export PATH := x"$PWD/stdlib.zsh/bin:$PATH"
 
 # create local refs for versioned branches
 ref-branches:
+    which zsh
     ./scripts/ref-branches.sh
 
 # copy static site assets
