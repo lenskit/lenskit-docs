@@ -1,7 +1,4 @@
 #!/usr/bin/env guarsh
-#MISE description="Create version manifest file."
-#MISE depends=["ref-branches"]
-#USAGE flag "-v --verbose" help="Enable verbose log messages."
 
 package require logging
 

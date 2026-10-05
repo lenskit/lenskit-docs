@@ -24,14 +24,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install mise-en-place
-        uses: jdx/mise-action@v4
+      - uses: aquaproj/aqua-installer@96a9bc20066c5bf5e275b41019cfc165b25f4e2e # v4.0.5
+        with:
+          aqua_version: v2.63.0
 
       - name: "🌳 Fix local git branches"
-        run: mise run ref-branches
+        run: just ref-branches
 
       - name: Build site content
-        run: mise run build
+        run: mise build
 
       - name: Upload site artifact
         uses: actions/upload-artifact@v4
