@@ -1,14 +1,12 @@
-#!/bin/zsh
+#!/bin/bash
 
-. stdlib.zsh || exit 2
+set -eo pipefail
 
 extract_version() {
     local v="$1"
-    emulate -L zsh -o pipefail
-    msg "extracting version $1"
+    echo "extracting version $1"
     mkdir -p "site/$v"
     git archive --format=tar "version/$v" | tar xf - -C "site/$v"
-    return $?
 }
 
 VERSIONS=($(jq -r '.[] | .version' <site/versions.json))
@@ -16,8 +14,8 @@ VERSIONS=($(jq -r '.[] | .version' <site/versions.json))
 for ver in "${VERSIONS[@]}"; do
     if [[ $ver = main ]]; then continue; fi
 
-    extract_version "$ver" || die "failed to extract version $ver"
+    extract_version "$ver"
 done
 
-extract_version stable || die "failed to extract stable"
-extract_version latest || die "failed to extract latest"
+extract_version stable
+extract_version latest
