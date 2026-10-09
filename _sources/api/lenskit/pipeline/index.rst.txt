@@ -76,7 +76,7 @@ Functions
 Package Contents
 ----------------
 
-.. py:function:: predict_pipeline(scorer, *, fallback = True, name = None)
+.. py:function:: predict_pipeline(scorer, *, fallback = True, history_lookup = True, name = None)
 
    Create a pipeline that predicts ratings, but does **not** include any
    ranking capabilities.  Mostly userful for testing and historical purposes.
@@ -89,10 +89,12 @@ Package Contents
    :param fallback: Whether to use a fallback predictor when the scorer cannot score.
                     When configured, the `scorer` node is the scorer, and the
                     `rating-predictor` node applies the fallback.
+   :param history_lookup: Look up user history from training data. Set to ``False`` when
+                          queries supply their own history.
    :param name: The pipeline name.
 
 
-.. py:function:: topn_pipeline(scorer, config = None, *, predicts_ratings = False, n = None, name = None)
+.. py:function:: topn_pipeline(scorer, config = None, *, predicts_ratings = False, history_lookup = True, n = None, name = None)
 
    Create a pipeline that produces top-N recommendations using a scoring model.
 
@@ -103,6 +105,8 @@ Package Contents
    :param predicts_ratings: If ``True``, make set up to predict ratings (``rating-predictor``),
                             using ``scorer`` with a fallback of :class:`BiasScorer`; if
                             ``"raw"``, use ``scorer`` directly with no fallback.
+   :param history_lookup: Look up user history from training data. Set to ``False`` when
+                          queries supply their own history.
    :param n: The recommendation list length to configure in the pipeline.
    :param name: The pipeline name.
 

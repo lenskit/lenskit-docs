@@ -14,7 +14,7 @@
 <meta property="og:description" content="Since version 2025.1.1, LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produce predictio..." />
 <meta name="description" content="Since version 2025.1.1, LensKit uses a flexible “pipeline” abstraction to wire together different components such as candidate selectors, personalized item scorers, and rankers to produce predictio..." />
 
-    <title>Recommendation Pipelines &#8212; LensKit 2026.4.1.dev2+g61247de3 documentation</title>
+    <title>Recommendation Pipelines &#8212; LensKit 2026.4.1.dev5+gef889602 documentation</title>
   
   
   
@@ -50,7 +50,7 @@
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../_static/documentation_options.js?v=34d566e2"></script>
+    <script src="../_static/documentation_options.js?v=0672215f"></script>
     <script src="../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -501,8 +501,8 @@ window.runMermaid = runMermaid;</script>
       
     
     
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.4.1.dev2+g61247de3 documentation - Home"/>
-    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.4.1.dev2+g61247de3 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.4.1.dev5+gef889602 documentation - Home"/>
+    <img src="../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.4.1.dev5+gef889602 documentation - Home"/>
   
   
 </a></div>
@@ -967,6 +967,24 @@ that class, do:</p>
 <span class="n">pipe</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="s1">'ALS'</span><span class="p">)</span>
 </pre></div>
 </div>
+<p>If queries provide user history at inference time, disable the training-history
+lookup with <code class="docutils literal notranslate"><span class="pre">history_lookup=False</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">topn_pipeline</span><span class="p">(</span><span class="n">als</span><span class="p">,</span> <span class="n">history_lookup</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The same option is available on <a class="reference internal" href="../api/lenskit/pipeline/RecPipelineBuilder.html#lenskit.pipeline.RecPipelineBuilder" title="lenskit.pipeline.RecPipelineBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecPipelineBuilder</span></code></a> and
+<a class="reference internal" href="../api/lenskit/pipeline/index.html#lenskit.pipeline.predict_pipeline" title="lenskit.pipeline.predict_pipeline"><code class="xref py py-func docutils literal notranslate"><span class="pre">predict_pipeline()</span></code></a>. The pipeline then passes the supplied query directly
+to its scorers and candidate selector, without training or running a history
+lookup component. Supply a <a class="reference internal" href="../api/lenskit/data/RecQuery.html#lenskit.data.RecQuery" title="lenskit.data.RecQuery"><code class="xref py py-class docutils literal notranslate"><span class="pre">RecQuery</span></code></a> with
+<code class="docutils literal notranslate"><span class="pre">history_items</span></code> to use that history for scoring and candidate exclusion.</p>
+<p>For a pipeline configured with a standard base, set the corresponding option:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">options</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">base</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">std:topn</span>
+<span class="w">  </span><span class="nt">history_lookup</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</pre></div>
+</div>
+<p>This also works with <code class="docutils literal notranslate"><span class="pre">std:topn-predict</span></code>. History lookup remains enabled by
+default.</p>
 <p>For maximum flexibility, you can directly construct and wire the pipeline
 yourself; this is described in <a class="reference internal" href="#standard-pipelines"><span class="std std-ref">Standard Pipelines</span></a>.  Pipelines are built
 with a <a class="reference internal" href="../api/lenskit/pipeline/PipelineBuilder.html#lenskit.pipeline.PipelineBuilder" title="lenskit.pipeline.PipelineBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">PipelineBuilder</span></code></a>, which sets up the nodes and connections, checks
@@ -1334,7 +1352,7 @@ serialized to and from JSON-like data structures.</p>
 <p>To support configuration, all a component needs to do is (1) extend
 <code class="xref py py-class docutils literal notranslate"><span class="pre">Component</span></code>, and (2) declare an instance variable whose type is the
 configuration object type.  This configuration object’s class can be either a
-Python dataclass (see <a class="reference external" href="https://docs.python.org/3/library/dataclasses.html#module-dataclasses" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dataclasses</span></code></a>) or a Pydantic model class (see
+Python dataclass (see <a class="reference external" href="https://docs.python.org/3/library/dataclasses.html#module-dataclasses" rel="noreferrer" target="_blank" title="(in Python v3.15)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dataclasses</span></code></a>) or a Pydantic model class (see
 <a class="reference external" href="https://pydantic.dev/docs/validation/latest/api/pydantic/base_model/#pydantic.BaseModel" rel="noreferrer" target="_blank" title="(in Pydantic v0.0.0)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pydantic.BaseModel</span></code></a>); in both cases, they are serialized and validated
 with Pydantic.  <code class="xref py py-class docutils literal notranslate"><span class="pre">Component.__init__</span></code> will take care of storing the
 configuration object if one is provided, or instantiating the configuration
@@ -1597,7 +1615,7 @@ components together.</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.4.1.dev2+g61247de3.</div>
+        <div class="footer-item">LensKit version 2026.4.1.dev5+gef889602.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
