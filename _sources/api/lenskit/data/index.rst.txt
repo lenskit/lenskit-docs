@@ -102,6 +102,7 @@ Functions
    lenskit.data.key_dict
    lenskit.data.flatten_dict
    lenskit.data.unflatten_dict
+   lenskit.data.xopen
 
 
 
@@ -157,6 +158,24 @@ Package Contents
 
 
    Valid sources for query items.
+
+.. py:function:: xopen(path: pathlib.Path | os.PathLike[str] | str, mode: Literal['r', 'rb', 'w', 'wb', 'a', 'ab'] = 'r') -> BinaryIO
+                 xopen(path: pathlib.Path | os.PathLike[str] | str, mode: Literal['rt', 'wt', 'at']) -> TextIO
+
+   Open a file with the appropriate compression mode.
+
+   This is modeled after the ``xopen`` package, but implemented directly
+   without as many external dependencies, preferring Python standard library
+   modules.
+
+   .. note::
+
+       Unlike :func:`open`, but like :func:`gzip.open` and friends, the default
+       mode is binary.
+
+   :param path: The path to the file to open.
+   :param mode: The mode to open the file in.
+
 
 
 Exported Aliases
