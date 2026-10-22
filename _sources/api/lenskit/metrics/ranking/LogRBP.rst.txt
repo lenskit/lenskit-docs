@@ -1,0 +1,118 @@
+lenskit.metrics.ranking.LogRBP
+==============================
+
+.. py:class:: lenskit.metrics.ranking.LogRBP(n = None, *, k = None, patience = 0.85)
+   :canonical: lenskit.metrics.ranking._logrbp.LogRBP
+
+   Bases: :py:obj:`lenskit.metrics.ranking._base.RankingMetricBase`
+
+
+   Evaluate recommendations with the natural logarithm of rank-biased precision,
+   aggregated as :math:`\log(\overline{\operatorname{RBP}})`.
+
+   This metric measures the same quantity as :class:`~lenskit.metrics.RBP`, but
+   carries each list's score in log space so that the summary can be computed as
+   :math:`\log(\operatorname{mean}(\operatorname{RBP}))` rather than
+   :math:`\operatorname{mean}(\operatorname{RBP})`.  The two are different
+   quantities: the summary is obtained by log-sum-exp accumulation,
+
+   .. math::
+       \log\!\left(\frac{1}{n}\sum_i \operatorname{RBP}_i\right)
+       = \operatorname{logsumexp}_i \ln \operatorname{RBP}_i - \ln n,
+
+   which keeps resolving for scores far below the ``float64`` subnormal floor.  With
+   geometric weighting and patience :math:`p`, a single relevant item at rank
+   :math:`r` scores :math:`(1-p)p^{r-1}`; at :math:`p=0.85` and :math:`r=5001` this
+   underflows to exactly ``0.0`` in normal space (its log is :math:`\approx -814.5`)
+   and is therefore still finite here.
+
+   Only the geometric rank weighting used by RBP is supported.  Custom
+   :class:`~lenskit.metrics.RankWeight` objects and ``weight_field`` are
+   deliberately **not** accepted: the base
+   :meth:`~lenskit.metrics.RankWeight.log_weight` falls back to
+   :math:`\ln w = \ln(e^{\ln w})`, which exponentiates the very discounts this metric
+   exists to avoid.
+
+   Like :class:`~lenskit.metrics.RBP`, it distinguishes two different cases that must
+   not be conflated:
+
+   * a list with test items but no retrieved items scores :math:`0`, and is reported
+     as :math:`-\infty` and **retained** in the aggregate (it lowers the mean);
+   * a list with an **empty test list** has no defined score, is reported as
+     ``NaN``, and is **excluded** from both the numerator and the denominator —
+     matching :class:`~lenskit.metrics.RBP` and the existing accumulator behaviour.
+
+   Consequently a collection whose valid lists all score zero aggregates to
+   :math:`-\infty`, while a collection with no valid lists at all aggregates to
+   ``NaN`` rather than a fabricated zero.
+
+   .. note::
+
+       The summary key is provisionally named ``logmean`` and appears in collected
+       results as ``LogRBP.logmean``.  The name is not settled upstream; see
+       :issue:`1159`.
+
+   .. warning::
+
+       Experimental prototype.
+
+   :param n: The maximum recommendation list length.
+   :param patience: The patience parameter :math:`p`, the probability that the user
+                    continues browsing at each point.  The default is 0.85.
+   :param k: Deprecated alias for ``n``.
+
+   :Stability: Experimental
+
+
+   .. py:attribute:: weight
+      :type:  lenskit.metrics.ranking._weighting.GeometricRankWeight
+
+
+   .. py:attribute:: patience
+      :type:  float
+
+
+   .. py:method:: measure_list(recs, test)
+
+      Compute measurements for a single list.
+
+      :returns:
+
+                - A float for simple metrics
+                - Intermediate data for decomposed metrics
+                - A dict mapping metric names to values for multi-metric classes
+
+
+
+   .. py:method:: extract_list_metrics(data)
+
+      Expose the per-list log-RBP value in the collected list metrics.
+
+
+
+   .. py:method:: create_accumulator()
+
+      Create the accumulator implementing this metric's summary semantics.
+
+      The aggregate is :math:`\log(\operatorname{mean}(\operatorname{RBP}))`, computed
+      as :math:`\operatorname{logsumexp}_i \ell_i - \ln n_{\text{valid}}` over the
+      retained per-list log measurements :math:`\ell_i`.  A measurement is retained
+      when it is neither ``None`` nor ``NaN``; :math:`-\infty` **is retained**, since
+      it encodes a genuine zero-valued RBP and contributes :math:`e^{-\infty} = 0`
+      to the sum while still counting in the denominator.  That is what separates
+      this aggregate from the mean of the logs, which would be :math:`-\infty`
+      whenever any list scores zero.
+
+      Returns ``n`` and ``logmean`` only.  It deliberately reports no ``mean``,
+      ``median`` or ``std`` of the log values: those statistics are not meaningful
+      once :math:`-\infty` is a legitimate observation.  ``logmean`` is ``NaN`` when
+      there are no valid measurements, and :math:`-\infty` when every valid
+      measurement came from a zero-scoring list.
+
+      Storage is delegated to :class:`~lenskit.data.accum.ValueStatAccumulator`,
+      whose ``add`` drops exactly ``None`` and ``NaN`` and keeps every other value.
+      ``test_accumulator_drops_missing_keeps_neginf`` pins that :math:`-\infty` is
+      retained, so a future narrowing of ``add`` to finite values fails loudly
+      instead of silently discarding zero-RBP lists.
+
+
