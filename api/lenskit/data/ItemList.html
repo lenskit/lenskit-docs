@@ -11,7 +11,7 @@
 <meta property="og:url" content="api/lenskit/data/ItemList.html" />
 <meta property="og:site_name" content="LensKit" />
 
-    <title>lenskit.data.ItemList &#8212; LensKit 2026.4.1.dev34+gcd64e069 documentation</title>
+    <title>lenskit.data.ItemList &#8212; LensKit 2026.4.1.dev36+gb78dbb65 documentation</title>
   
   
   
@@ -47,7 +47,7 @@
   <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=18bd87630a240e9c25be" />
 <link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=18bd87630a240e9c25be" />
 
-    <script src="../../../_static/documentation_options.js?v=f6af93b7"></script>
+    <script src="../../../_static/documentation_options.js?v=34549be1"></script>
     <script src="../../../_static/doctools.js?v=fd6eb6e6"></script>
     <script src="../../../_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
@@ -147,8 +147,8 @@
       
     
     
-    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.4.1.dev34+gcd64e069 documentation - Home"/>
-    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.4.1.dev34+gcd64e069 documentation - Home"/>
+    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-light" alt="LensKit 2026.4.1.dev36+gb78dbb65 documentation - Home"/>
+    <img src="../../../_static/lenskit-wordmark.png" class="logo__image only-dark pst-js-only" alt="LensKit 2026.4.1.dev36+gb78dbb65 documentation - Home"/>
   
   
 </a></div>
@@ -1323,7 +1323,7 @@ contents.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.data.ItemList.top_n">
-<span class="sig-name descname"><span class="pre">top_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.top_n" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">top_n</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">scores</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_ranks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.top_n" title="Link to this definition">#</a></dt>
 <dd><p>Get the top _N_ items in this list, sorted in decreasing order.</p>
 <p>If any scores are undefined (<code class="docutils literal notranslate"><span class="pre">NaN</span></code>), those items are excluded.</p>
 <dl class="field-list simple">
@@ -1334,6 +1334,8 @@ sorted by score.</p></li>
 <li><p><strong>scores</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/stdtypes.html#str" rel="noreferrer" target="_blank" title="(in Python v3.15)"><em>str</em></a><em> | </em><em>numpy.typing.NDArray</em><em>[</em><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.floating" rel="noreferrer" target="_blank" title="(in NumPy v2.5)"><em>numpy.floating</em></a><em>] </em><em>| </em><a class="reference external" href="https://docs.pytorch.org/docs/stable/tensors.html#torch.Tensor" rel="noreferrer" target="_blank" title="(in PyTorch v2.14)"><em>torch.Tensor</em></a><em> | </em><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.Array.html#pyarrow.Array" rel="noreferrer" target="_blank" title="(in Apache Arrow v26.0.0)"><em>pyarrow.Array</em></a><em> | </em><em>None</em>) – The name of a field containing the scores, or a NumPy vector of
 scores, for selecting the top _N_.  If <code class="docutils literal notranslate"><span class="pre">None</span></code>, the item list’s
 scores are used.</p></li>
+<li><p><strong>save_ranks</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.15)"><em>bool</em></a>) – Save the input ranks in <code class="docutils literal notranslate"><span class="pre">prev_rank</span></code> before reordering. See
+<a class="reference internal" href="#lenskit.data.ItemList.take" title="lenskit.data.ItemList.take"><code class="xref py py-meth docutils literal notranslate"><span class="pre">take()</span></code></a> for rank-preservation behavior.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1405,9 +1407,9 @@ values.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="lenskit.data.ItemList.remove">
-<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="types/index.html#lenskit.data.types.IDSequence" title="lenskit.data.types.IDSequence"><span class="pre">lenskit.data.types.IDSequence</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.15)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../basic/bias/index.html#lenskit.basic.bias.lenskit.basic.bias.ItemList" title="lenskit.basic.bias.lenskit.basic.bias.ItemList"><span class="pre">ItemList</span></a></span></span><a class="headerlink" href="#lenskit.data.ItemList.remove" title="Link to this definition">#</a></dt>
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="types/index.html#lenskit.data.types.IDSequence" title="lenskit.data.types.IDSequence"><span class="pre">lenskit.data.types.IDSequence</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.15)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_ranks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.15)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../basic/bias/index.html#lenskit.basic.bias.lenskit.basic.bias.ItemList" title="lenskit.basic.bias.lenskit.basic.bias.ItemList"><span class="pre">ItemList</span></a></span></span><a class="headerlink" href="#lenskit.data.ItemList.remove" title="Link to this definition">#</a></dt>
 <dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">numbers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.Int32Array.html#pyarrow.Int32Array" rel="noreferrer" target="_blank" title="(in Apache Arrow v26.0.0)"><span class="pre">pyarrow.Int32Array</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="types/index.html#lenskit.data.types.NPVector" title="lenskit.data.types.NPVector"><span class="pre">lenskit.data.types.NPVector</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" rel="noreferrer" target="_blank" title="(in NumPy v2.5)"><span class="pre">numpy.integer</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" rel="noreferrer" target="_blank" title="(in pandas v3.1)"><span class="pre">pandas.Series</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.15)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.15)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../basic/bias/index.html#lenskit.basic.bias.lenskit.basic.bias.ItemList" title="lenskit.basic.bias.lenskit.basic.bias.ItemList"><span class="pre">ItemList</span></a></span></span></dt>
+<span class="sig-name descname"><span class="pre">remove</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">numbers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://arrow.apache.org/docs/python/generated/pyarrow.Int32Array.html#pyarrow.Int32Array" rel="noreferrer" target="_blank" title="(in Apache Arrow v26.0.0)"><span class="pre">pyarrow.Int32Array</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference internal" href="types/index.html#lenskit.data.types.NPVector" title="lenskit.data.types.NPVector"><span class="pre">lenskit.data.types.NPVector</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://numpy.org/doc/stable/reference/arrays.scalars.html#numpy.integer" rel="noreferrer" target="_blank" title="(in NumPy v2.5)"><span class="pre">numpy.integer</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.html#pandas.Series" rel="noreferrer" target="_blank" title="(in pandas v3.1)"><span class="pre">pandas.Series</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#int" rel="noreferrer" target="_blank" title="(in Python v3.15)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/builtins/constants.html#None" rel="noreferrer" target="_blank" title="(in Python v3.15)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_ranks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.15)"><span class="pre">bool</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="../basic/bias/index.html#lenskit.basic.bias.lenskit.basic.bias.ItemList" title="lenskit.basic.bias.lenskit.basic.bias.ItemList"><span class="pre">ItemList</span></a></span></span></dt>
 <dd><p>Return an item list with the specified items removed.</p>
 <p>The items to remove are not required to be in the list.</p>
 <dl class="field-list simple">
@@ -1415,7 +1417,36 @@ values.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ids</strong> – The item IDs to remove.</p></li>
 <li><p><strong>numbers</strong> – The item numbers to remove.</p></li>
+<li><p><strong>save_ranks</strong> – Save the input ranks in <code class="docutils literal notranslate"><span class="pre">prev_rank</span></code> before removal. See
+<a class="reference internal" href="#lenskit.data.ItemList.take" title="lenskit.data.ItemList.take"><code class="xref py py-meth docutils literal notranslate"><span class="pre">take()</span></code></a> for rank-preservation behavior.</p></li>
 </ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="lenskit.data.ItemList.take">
+<span class="sig-name descname"><span class="pre">take</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sel</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_ranks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#lenskit.data.ItemList.take" title="Link to this definition">#</a></dt>
+<dd><p>Select items, optionally preserving their ranks before selection.</p>
+<p>With the default options, this is equivalent to <code class="docutils literal notranslate"><span class="pre">items[sel]</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sel</strong> (<em>ILIndexer</em>) – An integer, slice, sequence of positions, or Boolean mask, as
+accepted by <a class="reference internal" href="#lenskit.data.ItemList.__getitem__" title="lenskit.data.ItemList.__getitem__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__getitem__()</span></code></a>.</p></li>
+<li><p><strong>save_ranks</strong> (<a class="reference external" href="https://docs.python.org/3/builtins/functions.html#bool" rel="noreferrer" target="_blank" title="(in Python v3.15)"><em>bool</em></a>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> and the input list is ordered, store its ranks in
+<code class="docutils literal notranslate"><span class="pre">prev_rank</span></code>. This replaces any existing <code class="docutils literal notranslate"><span class="pre">prev_rank</span></code> field
+with ranks from the immediate input list. Unordered inputs have
+no ranks to save, so their fields are retained unchanged.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>A new item list with the selected items and the input ordering flag.
+Its ranks are recomputed from the new order, independently of
+<code class="docutils literal notranslate"><span class="pre">prev_rank</span></code>. The input list is not modified.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="../basic/bias/index.html#lenskit.basic.bias.lenskit.basic.bias.ItemList" title="lenskit.basic.bias.lenskit.basic.bias.ItemList">ItemList</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -1564,6 +1595,7 @@ list, starting from 0).</p>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.concat"><code class="docutils literal notranslate"><span class="pre">lenskit.data.ItemList.concat()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.update"><code class="docutils literal notranslate"><span class="pre">lenskit.data.ItemList.update()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.remove"><code class="docutils literal notranslate"><span class="pre">lenskit.data.ItemList.remove()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.take"><code class="docutils literal notranslate"><span class="pre">lenskit.data.ItemList.take()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.__len__"><code class="docutils literal notranslate"><span class="pre">lenskit.data.ItemList.__len__()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.__bool__"><code class="docutils literal notranslate"><span class="pre">lenskit.data.ItemList.__bool__()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#lenskit.data.ItemList.__getitem__"><code class="docutils literal notranslate"><span class="pre">lenskit.data.ItemList.__getitem__()</span></code></a></li>
@@ -1616,7 +1648,7 @@ list, starting from 0).</p>
   </p>
 </div>
       
-        <div class="footer-item">LensKit version 2026.4.1.dev34+gcd64e069.</div>
+        <div class="footer-item">LensKit version 2026.4.1.dev36+gb78dbb65.</div>
       
         <div class="footer-item"><p>
     This material is partially based upon work supported by the National Science Foundation under
