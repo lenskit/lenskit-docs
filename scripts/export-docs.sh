@@ -2,11 +2,13 @@
 
 set -eo pipefail
 
+: ${TAR:=tar}
+
 extract_version() {
     local v="$1"
     echo "extracting version $1"
     mkdir -p "site/$v"
-    git archive --format=tar "version/$v" | tar xf - -C "site/$v"
+    git archive --format=tar "version/$v" | $TAR xf - -C "site/$v"
 }
 
 VERSIONS=($(jq -r '.[] | .version' <site/versions.json))
