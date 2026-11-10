@@ -1,6 +1,4 @@
 #!/usr/bin/env bash
-#MISE description="Checkout versions"
-#MISE depends=["versions"]
 
 set -eo pipefail
 
