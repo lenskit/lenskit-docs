@@ -12,7 +12,12 @@
 <meta property="og:url" content="guide/parallelism.html" />
 <meta property="og:site_name" content="LensKit" />
 <meta property="og:description" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its: Batch operations using multi-process execution., Parallel model training. For most models pr..." />
+<meta property="og:image:width" content="1146" />
+<meta property="og:image:height" content="600" />
+<meta property="og:image" content="_images/social_previews/summary_guide_parallelism_1eb847a3.png" />
+<meta property="og:image:alt" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its: Batch operations using multi-process execution., Parallel model training. For most models pr..." />
 <meta name="description" content="LensKit supports various forms of parallel execution, each with an environment variable controlling its: Batch operations using multi-process execution., Parallel model training. For most models pr..." />
+<meta name="twitter:card" content="summary_large_image" />
 
     <title>Parallel Processing &#8212; LensKit 2025.8.1 documentation</title>
   
@@ -67,7 +72,7 @@
         DOCUMENTATION_OPTIONS.show_version_warning_banner =
             true;
         </script>
-    <link rel="canonical" href="https://lenskit.org/archive/2025/guide/parallelism.html" />
+    <link rel="canonical" href="https://lenskit.org/stable/guide/parallelism.html" />
     <link rel="icon" href="../_static/lenskit-icon.png"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -113,6 +118,12 @@
   <div class="pst-async-banner-revealer d-none">
   <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
 </div>
+<aside class="bd-header-announcement" aria-label="Announcement">
+  <div class="bd-header-announcement__content">
+    This is the archived documentation for the LensKit 2025 release series.
+    You probably want to use the <a href="https://lenskit.org/">latest documentation</a>.
+    </div>
+</aside>
 
   
     <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
@@ -603,7 +614,7 @@ of CPUs or 4, whichever is lower.</p>
 <dd><p>The number of threads to use for LensKit’s explicit parallelism (model
 building and inference).  Defaults to the number of CPUs or 8, whichever is
 smaller.</p>
-<p>This number is passed to <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.set_num_interop_threads.html#torch.set_num_interop_threads" rel="noreferrer" target="_blank" title="(in PyTorch v2.13)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_interop_threads()</span></code></a> to set up the
+<p>This number is passed to <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.set_num_interop_threads.html#torch.set_num_interop_threads" rel="noreferrer" target="_blank" title="(in PyTorch v2.15)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_interop_threads()</span></code></a> to set up the
 Torch JIT thread count, and is used to configure the Rayon thread pool used
 by the Rust acceleration module.</p>
 <p>If this variable does not specify a list, worker process thread counts are
@@ -624,7 +635,7 @@ machine:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">max</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">NCPUS</span> <span class="o">//</span> <span class="n">LK_NUM_THREADS</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>This is passed to <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.set_num_threads.html#torch.set_num_threads" rel="noreferrer" target="_blank" title="(in PyTorch v2.13)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_threads()</span></code></a> (to control PyTorch internal
+<p>This is passed to <a class="reference external" href="https://docs.pytorch.org/docs/stable/generated/torch.set_num_threads.html#torch.set_num_threads" rel="noreferrer" target="_blank" title="(in PyTorch v2.15)"><code class="xref py py-func docutils literal notranslate"><span class="pre">torch.set_num_threads()</span></code></a> (to control PyTorch internal
 parallelism), and to the underlying BLAS layer (via <a class="reference external" href="https://github.com/joblib/threadpoolctl" rel="noreferrer" target="_blank">threadpoolctl</a>).</p>
 <p>If this variable does not specify a list and <span class="target" id="index-3"></span><a class="reference internal" href="#envvar-LK_NUM_CHILD_THREADS"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LK_NUM_CHILD_THREADS</span></code></a>
 is not set, worker process thread counts are capped by the process count and
@@ -663,7 +674,7 @@ when run as a script, with a block like this at the end of the file:</p>
 </section>
 <section id="parallel-model-ops">
 <span id="id1"></span><h2>Parallel Model Ops<a class="headerlink" href="#parallel-model-ops" title="Link to this heading">#</a></h2>
-<p>LensKit uses a custom API wrapping <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool" rel="noreferrer" target="_blank" title="(in Python v3.14)"><code class="xref py py-class docutils literal notranslate"><span class="pre">multiprocessing.pool.Pool</span></code></a> to
+<p>LensKit uses a custom API wrapping <a class="reference external" href="https://docs.python.org/3/library/multiprocessing.html#multiprocessing.pool.Pool" rel="noreferrer" target="_blank" title="(in Python v3.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">multiprocessing.pool.Pool</span></code></a> to
 parallelize batch operations (see <a class="reference internal" href="../api/batch.html#module-lenskit.batch" title="lenskit.batch"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lenskit.batch</span></code></a>).</p>
 <p>The basic idea of this API is to create an <em>invoker</em> that has a model and a function,
 and then passing lists of argument sets to the function:</p>
