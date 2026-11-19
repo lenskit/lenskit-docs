@@ -1,0 +1,59 @@
+lenskit.flexmf.FlexMFNCFConfig
+==============================
+
+.. py:class:: lenskit.flexmf.FlexMFNCFConfig(/, **data)
+   :canonical: lenskit.flexmf._ncf.FlexMFNCFConfig
+
+   Bases: :py:obj:`lenskit.flexmf._implicit.FlexMFImplicitConfig`
+
+
+   Configuration for NCF (Neural Collaborative Filtering) Scorer.  It inherits
+   common training options and implicit-feedback settings from
+   :class:`FlexMFImplicitConfig`.  The inherited ``embedding_size`` field is
+   used as the GMF embedding size.
+
+   :Stability: Experimental
+
+
+   .. py:attribute:: mlp_embedding_size
+      :type:  pydantic.PositiveInt
+      :value: 8
+
+
+      The size of the MLP embedding space.
+
+
+   .. py:attribute:: mlp_layer_sizes
+      :type:  list[pydantic.PositiveInt]
+
+      The sizes of the MLP hidden layers.
+
+
+   .. py:attribute:: negative_count
+      :type:  pydantic.PositiveInt
+      :value: 4
+
+
+      The number of negative items to sample for each positive item.  NCF
+      defaults to 4, following the original NCF paper.
+
+
+   .. py:attribute:: user_bias
+      :type:  bool | None
+      :value: False
+
+
+      Whether to learn a user bias term, added to the NCF output score.  NCF
+      defaults to ``False`` to match the original model, since the final
+      prediction layer already has a global bias; set to ``True`` (or ``None``
+      for the implicit-feedback default) to enable it.
+
+
+   .. py:attribute:: item_bias
+      :type:  bool
+      :value: False
+
+
+      Whether to learn an item bias term, added to the NCF output score.  NCF
+      defaults to ``False`` to match the original model.
+

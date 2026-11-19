@@ -265,7 +265,7 @@ lenskit.data.ItemList
 
 
 
-   .. py:method:: top_n(n = None, *, scores = None)
+   .. py:method:: top_n(n = None, *, scores = None, save_ranks = False)
 
       Get the top _N_ items in this list, sorted in decreasing order.
 
@@ -276,6 +276,8 @@ lenskit.data.ItemList
       :param scores: The name of a field containing the scores, or a NumPy vector of
                      scores, for selecting the top _N_.  If ``None``, the item list's
                      scores are used.
+      :param save_ranks: Save the input ranks in ``prev_rank`` before reordering. See
+                         :meth:`take` for rank-preservation behavior.
 
       :returns: An ordered item list containing the top ``n`` items.
 
@@ -326,8 +328,8 @@ lenskit.data.ItemList
 
 
 
-   .. py:method:: remove(*, ids: lenskit.data.types.IDSequence | None = None) -> ItemList
-                  remove(*, numbers: pyarrow.Int32Array | lenskit.data.types.NPVector[numpy.integer] | pandas.Series[int] | None = None) -> ItemList
+   .. py:method:: remove(*, ids: lenskit.data.types.IDSequence | None = None, save_ranks: bool = False) -> ItemList
+                  remove(*, numbers: pyarrow.Int32Array | lenskit.data.types.NPVector[numpy.integer] | pandas.Series[int] | None = None, save_ranks: bool = False) -> ItemList
 
       Return an item list with the specified items removed.
 
@@ -335,6 +337,27 @@ lenskit.data.ItemList
 
       :param ids: The item IDs to remove.
       :param numbers: The item numbers to remove.
+      :param save_ranks: Save the input ranks in ``prev_rank`` before removal. See
+                         :meth:`take` for rank-preservation behavior.
+
+
+
+   .. py:method:: take(sel, *, save_ranks = False)
+
+      Select items, optionally preserving their ranks before selection.
+
+      With the default options, this is equivalent to ``items[sel]``.
+
+      :param sel: An integer, slice, sequence of positions, or Boolean mask, as
+                  accepted by :meth:`__getitem__`.
+      :param save_ranks: If ``True`` and the input list is ordered, store its ranks in
+                         ``prev_rank``. This replaces any existing ``prev_rank`` field
+                         with ranks from the immediate input list. Unordered inputs have
+                         no ranks to save, so their fields are retained unchanged.
+
+      :returns: A new item list with the selected items and the input ordering flag.
+                Its ranks are recomputed from the new order, independently of
+                ``prev_rank``. The input list is not modified.
 
 
 
